@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    config: #Config客户端配置
+      profile: dev #启用配置后缀名称
+      label: master #分支名称
+      uri: http://www.dmall.com:7030 #配置中心地址
+      name: application #配置文件名称
+      username: dmall
+      password: admin123456
+
+#  rabbitmq: #rabbitmq相关配置
+#    host: www.os01.com
+#    port: 5673
+#    username: guest
+#    password: guest
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'refresh'
+
+swagger:
+  enbaled: false

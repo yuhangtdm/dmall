@@ -1,0 +1,43 @@
+server:
+  port: 7010 #运行端口号
+
+spring:
+  application:
+    name: dmall-framework-zuul #服务名称
+
+eureka:
+  client:
+    register-with-eureka: true #注册到Eureka的注册中心
+    fetch-registry: true #获取注册实例列表
+    service-url:
+      defaultZone: http://dmall:admin123456@www.dmall.com:7000/eureka/,http://dmall:admin123456@dmall1:7001/eureka/ #配置注册中心地址
+    healthcheck:
+      enabled: true #开启健康检查
+  instance:
+    prefer-ip-address: true #采用IP注册
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} #定义实例ID格式
+    lease-renewal-interval-in-seconds: 30 #定义服务多久去注册中心续约
+    lease-expiration-duration-in-seconds: 90 #定义服务多久不去续约认为服务失效
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'routes'
+
+zuul:
+  sensitive-headers: Cookie,Set-Cookie,Authorization #配置过滤敏感的请求头信息，设置为空就不会过滤
+  host:
+      connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
+      socket-timeout-millis: 60000   #socket超时
+
+swagger:
+  enabled: true
+  basePackage: com.dmall.service.api
+  title: dmall商城
+  description: dmall商城信息
+  serviceUrl: http://www.dmall.com
+  version: 1.0.0
+  contactName: 余杭
+  contactUrl: http://www.dmall.com:7010/doc.html
+  contactEmail: 649411629@qq.com
+  ignoreProjects: ['dmall-framework-config-server','dmall-framework-dashboard']

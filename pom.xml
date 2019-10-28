@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>dmall-framework</module>
+        <module>dmall-component</module>
+        <module>dmall-common</module>
+        <module>dmall-service-api</module>
+        <module>dmall-service-impl</module>
+        <module>dmall-web</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.8.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+
+    <groupId>com.allInJava</groupId>
+    <artifactId>dmall</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>dmall</name>
+    <description>dmall商城</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+        <appllo.version>1.0.0</appllo.version>
+        <swagger2.version>2.7.0</swagger2.version>
+        <swagger-bootstrap-ui.version>1.8.2</swagger-bootstrap-ui.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--外部依赖-->
+            <!--apollo-->
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client</artifactId>
+                <version>${appllo.version}</version>
+            </dependency>
+            <!--swagger-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger-bootstrap-ui.version}</version>
+            </dependency>
+
+            <!--本项目模块-->
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-component-web</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-api-product</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-api-member</artifactId>
+                <version>${version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

@@ -1,0 +1,20 @@
+server:
+  port: 7000 #运行端口号
+
+spring:
+  application:
+    name: dmall-framework-eureka-server #服务名称
+  security:
+    user:
+      name: dmall #eureka管理页面用户名
+      password: admin123456 #eureka管理页面密码
+
+eureka:
+  client:
+    register-with-eureka: false #注册到Eureka的注册中心
+    fetch-registry: false #获取注册实例列表
+    service-url:
+      defaultZone: http://dmall:admin123456@www.dmall.com:7000/eureka/ #http://dmall:admin123456@dmall1:7001/eureka/ #配置注册中心地址
+    healthcheck:
+      enabled: true #开启健康检查
+

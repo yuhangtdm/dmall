@@ -1,0 +1,51 @@
+server:
+  port: 8190 #运行端口号
+
+spring:
+  application:
+    name: dmall-service-impl-member #服务名称
+
+eureka:
+  client:
+    register-with-eureka: true #注册到Eureka的注册中心
+    fetch-registry: true #获取注册实例列表
+    service-url:
+      defaultZone: http://dmall:admin123456@www.dmall.com:7000/eureka/,http://dmall:admin123456@dmall1:7001/eureka/ #配置注册中心地址
+    healthcheck:
+      enabled: true #开启健康检查
+  instance:
+    prefer-ip-address: true #采用IP注册
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} #定义实例ID格式
+    lease-renewal-interval-in-seconds: 30 #定义服务多久去注册中心续约
+    lease-expiration-duration-in-seconds: 90 #定义服务多久不去续约认为服务失效
+
+feign:
+  hystrix:
+    enabled: true #在Feign中开启Hystrix
+  client:
+    config:
+      default:
+        connectTimeout: 5000 #连接超时5秒
+        readTimeout: 30000 #读取超时30秒
+        loggerLevel: basic #日志等级
+  compression: #GZIP压缩
+    request: #请求
+      enabled: true #开启
+      mime-types: text/xml,application/xml,application/json #开启支持压缩的MIME TYPE
+      min-request-size: 2048 #配置压缩数据大小的下限
+    response: #响应
+      enabled: false #关闭响应GZIP压缩
+
+swagger:
+  enabled: true
+  basePackage: com.dmall.service.impl.business
+  title: dmall会员模块
+  description: dmall会员模块，主要包含会员注册、登录、修改密码、地址管理等
+  serviceUrl: http://www.dmall.com:8190
+  version: 1.0.0
+  contactName: 余杭
+  contactUrl: http://www.dmall.com:7010/doc.html
+  contactEmail: 649411629@qq.com
+
+member:
+  name: 小米
