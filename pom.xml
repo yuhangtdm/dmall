@@ -40,6 +40,8 @@
         <appllo.version>1.0.0</appllo.version>
         <swagger2.version>2.7.0</swagger2.version>
         <swagger-bootstrap-ui.version>1.8.2</swagger-bootstrap-ui.version>
+        <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
+        <druid.version>1.1.10</druid.version>
     </properties>
 
     <dependencyManagement>
@@ -76,6 +78,33 @@
                 <version>${swagger-bootstrap-ui.version}</version>
             </dependency>
 
+            <!-- mybatis-plus begin -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+
+
+            <!--druid数据源-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
             <!--本项目模块-->
             <dependency>
                 <groupId>com.allInJava</groupId>
@@ -90,6 +119,16 @@
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-service-api-member</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-component-dao-mybatisplus</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-impl-member-generator</artifactId>
                 <version>${version}</version>
             </dependency>
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.mms.generator.mapper.MemberStatisticsInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmall.mms.generator.dataobject.MemberStatisticsInfoDO">
+        <id column="id" property="id" />
+        <result column="member_id" property="memberId" />
+        <result column="consume_amount" property="consumeAmount" />
+        <result column="order_count" property="orderCount" />
+        <result column="coupon_count" property="couponCount" />
+        <result column="comment_count" property="commentCount" />
+        <result column="return_order_count" property="returnOrderCount" />
+        <result column="login_count" property="loginCount" />
+        <result column="attend_count" property="attendCount" />
+        <result column="fans_count" property="fansCount" />
+        <result column="collect_product_count" property="collectProductCount" />
+        <result column="collect_subject_count" property="collectSubjectCount" />
+        <result column="collect_merchants_count" property="collectMerchantsCount" />
+        <result column="creator" property="creator" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="modifier" property="modifier" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+</mapper>

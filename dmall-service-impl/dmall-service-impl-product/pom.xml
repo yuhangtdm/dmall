@@ -10,7 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dmall-service-impl-product</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+    <modules>
+        <module>dmall-service-impl-product-generator</module>
+        <module>dmall-service-impl-product-business</module>
+    </modules>
 
     <dependencies>
 

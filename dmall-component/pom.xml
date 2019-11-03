@@ -15,12 +15,17 @@
         <module>dmall-component-web</module>
         <module>dmall-component-es</module>
         <module>dmall-component-cache-redis</module>
+        <module>dmall-component-dao-mybatisplus</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 

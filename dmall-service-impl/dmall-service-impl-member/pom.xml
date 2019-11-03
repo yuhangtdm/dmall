@@ -10,15 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dmall-service-impl-member</artifactId>
-    <packaging>jar</packaging>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-service-api-member</artifactId>
-        </dependency>
-
-    </dependencies>
+    <packaging>pom</packaging>
+    <modules>
+        <module>dmall-service-impl-member-generator</module>
+        <module>dmall-service-impl-member-business</module>
+    </modules>
 
 </project>
