@@ -13,9 +13,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>dmall-component-web</module>
-        <module>dmall-component-es</module>
         <module>dmall-component-cache-redis</module>
         <module>dmall-component-dao-mybatisplus</module>
+        <module>dmall-component-elasticsearch</module>
     </modules>
 
     <dependencies>
@@ -26,6 +26,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.54</version>
         </dependency>
     </dependencies>
 

@@ -1,0 +1,223 @@
+package com.dmall.component.cache.redis.configuration;
+
+import com.alibaba.fastjson.JSON;
+import com.dmall.component.cache.redis.enums.TTLUnitEnum;
+import com.dmall.component.cache.redis.lock.DistributedLock;
+import com.dmall.component.cache.redis.properties.DMallRedisProperties;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.CacheErrorHandler;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.scripting.support.ResourceScriptSource;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @description: redis缓存配置类
+ * @author: created by yuhang on 2019/11/3 21:35
+ */
+@Configuration
+@EnableCaching
+@EnableConfigurationProperties(DMallRedisProperties.class)
+@ConditionalOnProperty(prefix = "dmall.cache.redis", value = "enabled", havingValue = "true")
+@Slf4j
+public class DMallRedisConfiguration extends CachingConfigurerSupport {
+
+    private static final String LUA = "lua/DistributedLock.lua";
+
+    @Autowired
+    private DMallRedisProperties dMallRedisProperties;
+
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
+
+    /**
+     * 缓存key生成器
+     * prefix:cacheName:类名.方法名:参数
+     * 参数: 一个参数 如果do对象 取do的id
+     * 如果是其他参数 属性名|属性值
+     * 多个参数     属性名|属性值,属性名|属性值
+     */
+    @Override
+    public KeyGenerator keyGenerator() {
+        return (o, method, objects) -> {
+            StringBuilder sb = new StringBuilder();
+            String[] cacheNames = method.getAnnotation(Cacheable.class).cacheNames();
+            sb.append(cacheNames[0]).append(":");
+            // 类名
+            sb.append(o.getClass().getName()).append(".").append(method.getName());
+            if (objects.length>0){
+                if (objects.length  == 1){
+                    Field idField = ReflectionUtils.findField(objects[0].getClass(), "id", Long.class);
+                    if (idField != null){
+                        sb.append("id|").append(ReflectionUtils.getField(idField, objects[0]));
+                    }else {
+                        sb.append(getParameterNames(method)[0]).append("|").append(objects[0]);
+                    }
+                }else {
+                    // 参数
+                    String[] parameterNames = getParameterNames(method);
+                    for (int i = 0; i < objects.length; i++) {
+                        sb.append(parameterNames[i]).append("|").append(objects[0]);
+                    }
+                }
+            }
+
+            return sb.toString();
+        };
+    }
+
+    /**
+     * 获取方法的形参名称
+     */
+    private String[] getParameterNames(Method method) {
+        Parameter[] parameters = method.getParameters();
+        String[] parameterNames = new String[parameters.length];
+        for (int i = 0; i < parameters.length; i++) {
+            Parameter param = parameters[i];
+           /* if (!param.isNamePresent()) {
+                return null;
+            }*/
+            parameterNames[i] = param.getName();
+        }
+        return parameterNames;
+    }
+
+    /**
+     * 异常处理，当Redis发生异常时，打印日志，但是程序正常走
+     */
+    @Override
+    @Bean
+    public CacheErrorHandler errorHandler() {
+        log.info("初始化 -> [{}]", "Redis CacheErrorHandler");
+        CacheErrorHandler cacheErrorHandler = new CacheErrorHandler() {
+            @Override
+            public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {
+                log.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
+            }
+
+            @Override
+            public void handleCachePutError(RuntimeException e, Cache cache, Object key, Object value) {
+                log.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]", key, value, e);
+            }
+
+            @Override
+            public void handleCacheEvictError(RuntimeException e, Cache cache, Object key)    {
+                log.error("Redis occur handleCacheEvictError：key -> [{}]", key, e);
+            }
+
+            @Override
+            public void handleCacheClearError(RuntimeException e, Cache cache) {
+                log.error("Redis occur handleCacheClearError：", e);
+            }
+        };
+        return cacheErrorHandler;
+    }
+
+    @Override
+    @Bean
+    public CacheManager cacheManager() {
+        log.info("初始化 -> [{}],属性配置:\n{}", "Redis cacheManager", JSON.toJSONString(dMallRedisProperties, true));
+        // 初始化一个RedisCacheWriter
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
+
+        // 构建缓存配置
+        RedisCacheConfiguration defaultCacheConfig = buildRedisCacheConfiguration(dMallRedisProperties.getCacheKeyPrefix(),
+                dMallRedisProperties.getTtlUnitEnum(), dMallRedisProperties.getTtl());
+
+        // 构建初始化的缓存
+        Map<String, RedisCacheConfiguration> initialCacheConfiguration = new HashMap<>();
+        if (!CollectionUtils.isEmpty(dMallRedisProperties.getCustomCaches())) {
+            dMallRedisProperties.getCustomCaches().stream().filter(customCache -> !StringUtils.isEmpty(customCache.getName()))
+                    .forEach(customCache -> initialCacheConfiguration.put(customCache.getName(),
+                            buildRedisCacheConfiguration(dMallRedisProperties.getCacheKeyPrefix(), customCache.getTtlUnitEnum(), customCache.getTtl())));
+        }
+        return RedisCacheManager.builder(redisCacheWriter)
+                .cacheDefaults(defaultCacheConfig)
+                .withInitialCacheConfigurations(initialCacheConfiguration).build();
+    }
+
+
+    /**
+     * 构建分布式锁的lua对象
+     */
+    @Bean
+    public DefaultRedisScript<Boolean> distributedLockRedisScript() {
+        DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<>();
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource(LUA)));
+        redisScript.setResultType(Boolean.class);
+        return redisScript;
+    }
+
+    /**
+     * 分布式锁对象
+     */
+    @Bean
+    public DistributedLock distributedLock(StringRedisTemplate stringRedisTemplate, DefaultRedisScript<Boolean> redisScript) {
+        return new DistributedLock(stringRedisTemplate, redisScript);
+    }
+
+    /**
+     * 构建初始化缓存
+     *
+     * @param cacheKeyPrefix 缓存前缀
+     * @param ttlUnitEnum    过期单位
+     * @param ttl            过期时间
+     */
+    private RedisCacheConfiguration buildRedisCacheConfiguration(String cacheKeyPrefix, TTLUnitEnum ttlUnitEnum, Long ttl) {
+        return RedisCacheConfiguration.defaultCacheConfig().prefixKeysWith(cacheKeyPrefix + ":").entryTtl(getDuration(ttlUnitEnum, ttl));
+    }
+
+    private Duration getDuration(TTLUnitEnum ttlUnitEnum, Long ttl){
+        Duration duration = null;
+        switch (ttlUnitEnum) {
+            case DAY: {
+                duration = Duration.ofDays(ttl);
+                break;
+            }
+            case HOUR: {
+                duration = Duration.ofHours(ttl);
+                break;
+            }
+            case MINUTE: {
+                duration = Duration.ofMinutes(ttl);
+                break;
+            }
+            case SECOND: {
+                duration = Duration.ofSeconds(ttl);
+                break;
+            }
+            default:{
+
+            }
+        }
+
+        return duration;
+    }
+
+}

@@ -27,7 +27,7 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 @EnableConfigurationProperties({SwaggerProperties.class})
-@ConditionalOnProperty(prefix = "dmall.swagger", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "dMall.swagger", value = "enabled", havingValue = "true")
 public class SwaggerConfiguration {
 
     @Autowired

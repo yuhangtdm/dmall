@@ -2,4 +2,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.dmall.component.web.configuration.SwaggerConfiguration,\
 com.dmall.component.web.configuration.HystrixConfiguration,\
-com.dmall.component.web.configuration.DmallWebConfiguration
+com.dmall.component.web.configuration.DMallWebConfiguration

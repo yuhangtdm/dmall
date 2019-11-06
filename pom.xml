@@ -32,6 +32,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+       <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>-->
+
     </dependencies>
 
     <properties>
@@ -105,6 +112,19 @@
                 <version>${druid.version}</version>
             </dependency>
 
+            <!--es所需依赖-->
+            <dependency>
+                <groupId>io.searchbox</groupId>
+                <artifactId>jest</artifactId>
+                <version>5.3.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>4.5.1</version>
+            </dependency>
+
             <!--本项目模块-->
             <dependency>
                 <groupId>com.allInJava</groupId>
@@ -129,6 +149,11 @@
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-service-impl-member-generator</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-component-cache-redis</artifactId>
                 <version>${version}</version>
             </dependency>
 

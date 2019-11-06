@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author: created by yuhang on 2019/10/16 22:28
  */
 @Configuration
-public class DmallWebConfiguration implements WebMvcConfigurer {
+public class DMallWebConfiguration implements WebMvcConfigurer {
 
     /**
      * 支持所有请求支持跨域

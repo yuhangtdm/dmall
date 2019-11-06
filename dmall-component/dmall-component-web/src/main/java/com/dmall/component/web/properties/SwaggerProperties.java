@@ -9,7 +9,7 @@ import java.util.List;
  * @description: swagger相关配置
  * @author: created by yuhang on 2019/10/27 16:12
  */
-@ConfigurationProperties(prefix = "dmall.swagger")
+@ConfigurationProperties(prefix = "dMall.swagger")
 @Data
 public class SwaggerProperties {
 

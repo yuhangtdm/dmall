@@ -16,9 +16,8 @@ import java.util.List;
  * @description:
  * @author: created by yuhang on 2019/11/2 16:39
  */
-@SpringBootTest(classes = MemberServiceApp.class)
-@RunWith(SpringRunner.class)
-public class BankCardMapperTest {
+
+public class BankCardMapperTest extends BaseTest {
 
     @Autowired
     private BankCardMapper bankCardMapper;

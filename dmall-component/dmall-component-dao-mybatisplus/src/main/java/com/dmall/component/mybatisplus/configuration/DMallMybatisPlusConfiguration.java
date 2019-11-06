@@ -2,7 +2,7 @@ package com.dmall.component.mybatisplus.configuration;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
-import com.dmall.component.mybatisplus.properties.DmallMybatisPlusProperties;
+import com.dmall.component.mybatisplus.properties.DMallMybatisPlusProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,12 +10,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties({DmallMybatisPlusProperties.class})
+@EnableConfigurationProperties({DMallMybatisPlusProperties.class})
 @ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "enabled", havingValue = "true")
-public class DmallMybatisPlusConfiguration {
+public class DMallMybatisPlusConfiguration {
 
     @Autowired
-    private  DmallMybatisPlusProperties dmallMybatisPlusProperties;
+    private DMallMybatisPlusProperties dmallMybatisPlusProperties;
 
     /**
      * 分页插件

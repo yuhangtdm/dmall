@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * @description: 会员响应实体
  * @author: created by yuhang on 2019/10/15 22:27
@@ -11,7 +13,9 @@ import lombok.experimental.Accessors;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
-public class MemberResponseDTO {
+public class MemberResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = -3107714788940587671L;
 
     /**
      * id
