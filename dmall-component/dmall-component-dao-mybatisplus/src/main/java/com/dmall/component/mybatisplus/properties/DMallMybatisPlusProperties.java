@@ -17,12 +17,6 @@ public class DMallMybatisPlusProperties {
     private Boolean enabled = Boolean.TRUE;
 
     /**
-     * 包扫描路径
-     * 配置了该路径 项目才启用mybatisplus配置
-     */
-    private String basePackage;
-
-    /**
      * 性能分析拦截器 是否使用
      */
     private Boolean performance = Boolean.TRUE;

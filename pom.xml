@@ -125,6 +125,13 @@
                 <version>4.5.1</version>
             </dependency>
 
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.0.3</version>
+            </dependency>
+
+
             <!--本项目模块-->
             <dependency>
                 <groupId>com.allInJava</groupId>
@@ -156,7 +163,31 @@
                 <artifactId>dmall-component-cache-redis</artifactId>
                 <version>${version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-common-model</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-common-constants</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-common-enum</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-common-util</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-component-elasticsearch</artifactId>
+                <version>${version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

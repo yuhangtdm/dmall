@@ -15,8 +15,7 @@
         <module>dmall-common-constants</module>
         <module>dmall-common-enum</module>
         <module>dmall-common-util</module>
-        <module>dmall-common-file</module>
-        <module>dmall-common-crawler</module>
+        <module>dmall-common-model</module>
     </modules>
 
 </project>

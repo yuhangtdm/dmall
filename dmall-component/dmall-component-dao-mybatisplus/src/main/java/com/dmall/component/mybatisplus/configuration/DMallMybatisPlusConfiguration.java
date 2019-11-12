@@ -1,18 +1,24 @@
 package com.dmall.component.mybatisplus.configuration;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.dmall.common.model.configuration.BasicConfiguration;
 import com.dmall.component.mybatisplus.properties.DMallMybatisPlusProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+
+@Slf4j
 @Configuration
 @EnableConfigurationProperties({DMallMybatisPlusProperties.class})
 @ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "enabled", havingValue = "true")
-public class DMallMybatisPlusConfiguration {
+public class DMallMybatisPlusConfiguration implements BasicConfiguration {
 
     @Autowired
     private DMallMybatisPlusProperties dmallMybatisPlusProperties;
@@ -22,6 +28,7 @@ public class DMallMybatisPlusConfiguration {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
+        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSON.toJSONString(dmallMybatisPlusProperties, true));
         return new PaginationInterceptor();
     }
 
@@ -35,6 +42,11 @@ public class DMallMybatisPlusConfiguration {
         performanceInterceptor.setMaxTime(dmallMybatisPlusProperties.getMaxTime());
         performanceInterceptor.setFormat(dmallMybatisPlusProperties.getFormat());
         return performanceInterceptor;
+    }
+
+    @Override
+    @PostConstruct
+    public void check() {
     }
 
    /*

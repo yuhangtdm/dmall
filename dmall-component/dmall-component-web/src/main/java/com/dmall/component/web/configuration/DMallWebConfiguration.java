@@ -1,6 +1,7 @@
 package com.dmall.component.web.configuration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -10,12 +11,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @description: web配置
- * 支持功能:
- * 跨域
- * 方法参数校验
+ * 支持功能:跨域
  * @author: created by yuhang on 2019/10/16 22:28
  */
 @Configuration
+@ComponentScan(basePackages = {"com.dmall.component.web.handler","com.dmall.component.web.log"})
 public class DMallWebConfiguration implements WebMvcConfigurer {
 
     /**
@@ -25,14 +25,6 @@ public class DMallWebConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
     }
-
-    /**
-     * 支持服务层方法入参的校验
-     */
-   /* @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor(){
-        return new MethodValidationPostProcessor();
-    }*/
 
     @Bean
     public CorsFilter corsFilter() {

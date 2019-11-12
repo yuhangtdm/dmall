@@ -4,7 +4,6 @@ import com.dmall.component.cache.redis.entity.CustomCache;
 import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.List;
 
 /**
@@ -18,12 +17,12 @@ public class DMallRedisProperties {
     /**
      * 是否可用
      */
-    private Boolean enabled = Boolean.TRUE;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * 缓存前缀
      */
-    private String cacheKeyPrefix = "";
+    private String cacheKeyPrefix;
 
 
     /**

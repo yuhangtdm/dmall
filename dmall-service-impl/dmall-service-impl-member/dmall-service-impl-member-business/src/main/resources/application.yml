@@ -67,6 +67,9 @@ spring:
     timeout: 1000ms
   zipkin:
     base-url: http://www.dmall.com:9411
+  elasticsearch:
+    jest:
+      uris: http://106.15.47.106:9200
 
 eureka:
   client:
@@ -122,16 +125,20 @@ dmall:
     enabled: true
     performance: true
     basePackage: com.dmall.mms.generator.mapper
-  swagger:
-    enabled: true
-    basePackage: com.dmall.service.impl.business
-    title: dmall会员模块
-    description: dmall会员模块，主要包含会员注册、登录、修改密码、地址管理等
-    serviceUrl: http://www.dmall.com:8190
-    version: 1.0.0
-    contactName: 余杭
-    contactUrl: http://www.dmall.com:7010/doc.html
-    contactEmail: 649411629@qq.com
+  web:
+    swagger:
+      enabled: true
+      basePackage: com.dmall.service.impl.business
+      title: dmall会员模块
+      description: dmall会员模块，主要包含会员注册、登录、修改密码、地址管理等
+      serviceUrl: http://www.dmall.com:8190
+      version: 1.0.0
+      contactName: 余杭
+      contactUrl: http://www.dmall.com:7010/doc.html
+      contactEmail: 649411629@qq.com
+    log:
+      enabled: true
+      pointcut: com.dmall.mms
   cache:
     redis:
       enabled: true
@@ -139,6 +146,8 @@ dmall:
       ttlUnitEnum: DAY
       ttl: 1
       customCaches: [{name: demo}]
+  elasticsearch:
+    enabled: true
 
 
 

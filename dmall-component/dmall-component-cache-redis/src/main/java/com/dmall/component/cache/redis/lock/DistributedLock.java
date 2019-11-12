@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.Collections;
 
 /**
- * @description:
+ * @description: 分布式锁
  * @author: created by yuhang on 2019/11/3 23:07
  */
 

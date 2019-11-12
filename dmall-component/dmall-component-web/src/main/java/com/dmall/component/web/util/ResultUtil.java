@@ -1,0 +1,81 @@
+package com.dmall.component.web.util;
+
+import com.dmall.common.enums.base.BasicStatusEnum;
+import com.dmall.common.enums.base.ErrorCodeEnum;
+import com.dmall.common.model.exception.ComponentException;
+import com.dmall.common.model.result.BaseResult;
+import com.dmall.component.web.exception.BusinessException;
+
+/**
+ * @description: 结果返回工具类
+ * @author: created by yuhang on 2019/11/7 22:48
+ */
+public class ResultUtil {
+
+    public static BaseResult success(){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.TRUE);
+        baseResult.setCode(BasicStatusEnum.SUCCESS.getCode());
+        baseResult.setMsg(BasicStatusEnum.SUCCESS.getMsg());
+        return baseResult;
+    }
+
+    public static BaseResult success(ErrorCodeEnum errorCodeEnum){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.TRUE);
+        baseResult.setCode(errorCodeEnum.getCode());
+        baseResult.setMsg(errorCodeEnum.getMsg());
+        return baseResult;
+    }
+
+    public static <T> BaseResult success(T t){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.TRUE);
+        baseResult.setCode(BasicStatusEnum.SUCCESS.getCode());
+        baseResult.setData(t);
+        baseResult.setMsg(BasicStatusEnum.SUCCESS.getMsg());
+        return baseResult;
+    }
+
+    public static <T> BaseResult success(ErrorCodeEnum errorCodeEnum, T t){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.TRUE);
+        baseResult.setCode(errorCodeEnum.getCode());
+        baseResult.setData(t);
+        baseResult.setMsg(errorCodeEnum.getMsg());
+        return baseResult;
+    }
+
+    public static  BaseResult fail(){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.FALSE);
+        baseResult.setCode(BasicStatusEnum.FAIL.getCode());
+        baseResult.setMsg(BasicStatusEnum.FAIL.getMsg());
+        return baseResult;
+    }
+
+    public static  BaseResult fail(ErrorCodeEnum errorCodeEnum){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.FALSE);
+        baseResult.setMsg(errorCodeEnum.getMsg());
+        baseResult.setCode(errorCodeEnum.getCode());
+        return baseResult;
+    }
+
+    public static BaseResult fail(BusinessException businessException){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.FALSE);
+        baseResult.setCode(businessException.getCode());
+        baseResult.setMsg(businessException.getMsg());
+        return baseResult;
+    }
+
+    public static  BaseResult fail(ComponentException componentException){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setCode(componentException.getCode());
+        baseResult.setMsg(componentException.getMsg());
+        baseResult.setResult(Boolean.FALSE);
+        return baseResult;
+    }
+
+}

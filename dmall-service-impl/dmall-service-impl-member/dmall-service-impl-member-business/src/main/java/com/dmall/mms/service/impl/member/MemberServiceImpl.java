@@ -26,4 +26,21 @@ public class MemberServiceImpl implements MemberService {
         memberResponseDTO.setGender(1);
         return memberResponseDTO;
     }
+
+    @Cacheable(cacheNames = "member")
+    public String getName(String name){
+        return name;
+    }
+
+    @Cacheable(cacheNames = "member")
+    public Member getBean(Member member){
+        return member;
+    }
+
+    @Cacheable(cacheNames = "member")
+    public String getManyParams(String name, Integer age){
+        return name + age;
+    }
+
+
 }

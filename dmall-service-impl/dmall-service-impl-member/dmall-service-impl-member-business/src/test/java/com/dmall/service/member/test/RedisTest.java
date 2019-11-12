@@ -1,8 +1,11 @@
 package com.dmall.service.member.test;
 
+import com.dmall.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+
+import java.time.Duration;
 
 /**
  * @description:
@@ -14,6 +17,8 @@ public class RedisTest extends BaseTest {
 
     @Test
     public void testInsert(){
-        stringRedisTemplate.opsForValue().set("msg","helloSpringboot+redis");
+        stringRedisTemplate.opsForValue().set("msg","helloSpringboot+redis", Duration.ofSeconds(50));
     }
+
+
 }

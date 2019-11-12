@@ -1,5 +1,6 @@
 package com.dmall.component.web.configuration;
 
+import com.dmall.common.constants.component.web.WebConstants;
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -14,17 +15,11 @@ public class HystrixConfiguration {
 
     @Bean
     public ServletRegistrationBean getServlet(){
-
         HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
-
         ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
-
         registrationBean.setLoadOnStartup(1);
-
-        registrationBean.addUrlMappings("/actuator/hystrix.stream");
-
-        registrationBean.setName("HystrixMetricsStreamServlet");
-
+        registrationBean.addUrlMappings(WebConstants.ACTUATOR_HYSTRIX_STREAM);
+        registrationBean.setName(WebConstants.HYSTRIX_METRICS_STREAM_SERVLET);
         return registrationBean;
     }
 }

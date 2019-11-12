@@ -1,6 +1,6 @@
 package com.dmall.framework.zuul.config;
 
-import com.dmall.component.web.properties.SwaggerProperties;
+import com.dmall.component.web.properties.DMallSwaggerProperties;
 import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.context.annotation.Primary;
@@ -19,11 +19,11 @@ import java.util.List;
 public class DocumentationConfig implements SwaggerResourcesProvider {
     private final RouteLocator routeLocator;
 
-    private final SwaggerProperties swaggerProperties;
+    private final DMallSwaggerProperties DMallSwaggerProperties;
 
-    public DocumentationConfig(RouteLocator routeLocator, SwaggerProperties swaggerProperties) {
+    public DocumentationConfig(RouteLocator routeLocator, DMallSwaggerProperties DMallSwaggerProperties) {
         this.routeLocator = routeLocator;
-        this.swaggerProperties = swaggerProperties;
+        this.DMallSwaggerProperties = DMallSwaggerProperties;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DocumentationConfig implements SwaggerResourcesProvider {
         List<SwaggerResource> resources = new ArrayList<>();
 
         List<Route> routes = routeLocator.getRoutes();
-        List<String> ignoreProjects = swaggerProperties.getIgnoreProjects();
+        List<String> ignoreProjects = DMallSwaggerProperties.getIgnoreProjects();
 
         routes.forEach(route -> {
             if (!CollectionUtils.isEmpty(ignoreProjects) && !ignoreProjects.contains(route.getId())){
