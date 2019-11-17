@@ -2,15 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>dmall</artifactId>
         <groupId>com.allInJava</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dmall-component</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>dmall-component-web</module>
         <module>dmall-component-cache-redis</module>
@@ -19,31 +21,34 @@
     </modules>
 
     <dependencies>
+
+        <!--配置文件和配置类的对应依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.54</version>
-        </dependency>
+
+        <!--common相关依赖-->
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-enum</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-model</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-constants</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-util</artifactId>

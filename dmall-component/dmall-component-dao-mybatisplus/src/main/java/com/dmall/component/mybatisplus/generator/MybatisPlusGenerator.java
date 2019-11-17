@@ -13,7 +13,10 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @description: dmall的mybatisPlus生成器
+ * @author: created by yuhang on 2019/11/2 16:50
+ */
 public class MybatisPlusGenerator {
 
 
@@ -24,7 +27,7 @@ public class MybatisPlusGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-generator/src/main/java");
+        gc.setOutputDir(projectPath + "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator/src/main/java");
         gc.setAuthor("yuhang");
         gc.setOpen(false);
         gc.setBaseResultMap(true);
@@ -36,7 +39,7 @@ public class MybatisPlusGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://106.15.188.249:3306/dmall_mms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://106.15.188.249:3306/dmall_bms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
@@ -46,7 +49,7 @@ public class MybatisPlusGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.dmall");
-        pc.setModuleName("mms.generator");
+        pc.setModuleName("pms.generator");
         mpg.setPackageInfo(pc);
 
         // 策略配置
@@ -57,7 +60,7 @@ public class MybatisPlusGenerator {
 //        strategy.setInclude("");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setEntityBuilderModel(true);
-        strategy.setTablePrefix( "mms_");
+        strategy.setTablePrefix( "pms_");
         List<TableFill> tableFillList =  new ArrayList<>();
         tableFillList.add(new TableFill("gmt_created", FieldFill.INSERT));
         tableFillList.add(new TableFill("gmt_modified", FieldFill.INSERT_UPDATE));

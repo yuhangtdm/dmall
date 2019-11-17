@@ -8,18 +8,8 @@ spring:
       username: dmall
       password: admin123456
 
-#  rabbitmq: #rabbitmq相关配置
-#    host: www.os01.com
-#    port: 5673
-#    username: guest
-#    password: guest
-
-
 management:
   endpoints:
     web:
       exposure:
         include: 'refresh'
-
-swagger:
-  enbaled: false

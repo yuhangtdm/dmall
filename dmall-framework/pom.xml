@@ -16,6 +16,7 @@
         <module>dmall-framework-zuul</module>
         <module>dmall-framework-dashboard</module>
         <module>dmall-framework-config-server</module>
+        <module>dmall-framework-springboot-admin</module>
     </modules>
 
     <dependencies>
@@ -24,5 +25,14 @@
             <artifactId>apollo-client</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

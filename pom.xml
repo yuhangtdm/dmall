@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.8.RELEASE</version>
+        <version>2.1.10.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -32,13 +32,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
-       <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>-->
-
     </dependencies>
 
     <properties>
@@ -49,6 +42,9 @@
         <swagger-bootstrap-ui.version>1.8.2</swagger-bootstrap-ui.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <druid.version>1.1.10</druid.version>
+        <spring-boot-admin.version>2.1.5</spring-boot-admin.version>
+        <nacos-config-spring-boot.version>0.2.1</nacos-config-spring-boot.version>
+        <fastjson.version>1.2.54</fastjson.version>
     </properties>
 
     <dependencyManagement>
@@ -85,7 +81,7 @@
                 <version>${swagger-bootstrap-ui.version}</version>
             </dependency>
 
-            <!-- mybatis-plus begin -->
+            <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -97,7 +93,6 @@
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
-
 
             <!--druid数据源-->
             <dependency>
@@ -125,12 +120,41 @@
                 <version>4.5.1</version>
             </dependency>
 
+            <!--hutool工具类-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>5.0.3</version>
             </dependency>
 
+            <!--springbootAdmin-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--nacos-->
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-config-spring-boot-starter</artifactId>
+                <version>${nacos-config-spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-config-spring-boot-actuator</artifactId>
+                <version>${nacos-config-spring-boot.version}</version>
+            </dependency>
+
+            <!--fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
 
             <!--本项目模块-->
             <dependency>

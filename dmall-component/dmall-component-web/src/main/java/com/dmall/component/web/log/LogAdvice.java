@@ -3,6 +3,8 @@ package com.dmall.component.web.log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dmall.component.web.entity.WebLog;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -24,10 +26,13 @@ import java.util.Enumeration;
  * @author: created by yuhang on 2019/11/10 18:46
  */
 @Slf4j
+@NoArgsConstructor
+@AllArgsConstructor
 public class LogAdvice implements MethodInterceptor {
 
-    @Autowired
     private Environment environment;
+
+
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -49,7 +54,7 @@ public class LogAdvice implements MethodInterceptor {
             webLog.setStartTime(new Date());
             webLog.setClassName(method.getDeclaringClass().getName());
             webLog.setMethodName(method.getName());
-            webLog.setEnv(environment.getActiveProfiles()[0]);
+            webLog.setEnv("dev");
             webLog.setAppName(environment.getProperty("spring.application.name"));
             webLog.setThreadName(Thread.currentThread().getName());
             webLog.setTitle(webLog.getClassName() + "." + webLog.getMethodName());
@@ -62,7 +67,7 @@ public class LogAdvice implements MethodInterceptor {
             }
             webLog.setRequestHeader(header.toString());
             Object result = invocation.proceed();
-            webLog.setResult(JSON.toJSONString(result, true));
+            webLog.setResult(result);
             return result;
         } catch (Throwable e) {
             webLog.setException(e.getMessage());
@@ -74,6 +79,9 @@ public class LogAdvice implements MethodInterceptor {
         }
     }
 
+    /**
+     * 获取参数
+     */
     private String getParameter(Method method, Object[] args) {
         Parameter[] parameters = method.getParameters();
         if (parameters.length == 0){

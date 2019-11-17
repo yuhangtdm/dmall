@@ -1,5 +1,6 @@
 package com.dmall.framework.config.server;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -11,6 +12,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  */
 @SpringBootApplication
 @EnableConfigServer
+@EnableApolloConfig
 @EnableDiscoveryClient
 public class ConfigServerApp {
 

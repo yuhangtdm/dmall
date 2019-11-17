@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @description:
+ * @description: log属性类
  * @author: created by yuhang on 2019/11/10 19:03
  */
 @Data

@@ -21,6 +21,18 @@
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-service-impl-member-generator</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-elasticsearch</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>5.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>

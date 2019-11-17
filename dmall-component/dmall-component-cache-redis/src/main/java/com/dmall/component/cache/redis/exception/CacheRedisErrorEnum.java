@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description:
+ * @description: redis异常枚举类
  * @author: created by yuhang on 2019/11/12 23:42
  */
 @Getter

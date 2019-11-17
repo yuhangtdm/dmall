@@ -11,5 +11,11 @@
 
     <artifactId>dmall-service-impl-product-business</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-elasticsearch</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

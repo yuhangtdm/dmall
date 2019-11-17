@@ -26,37 +26,13 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!--性能测试依赖-->
-        <dependency>
-            <groupId>org.databene</groupId>
-            <artifactId>contiperf</artifactId>
-            <version>2.3.4</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
 
         <dependency>
@@ -71,11 +47,6 @@
 
         <dependency>
             <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
             <artifactId>dmall-component-dao-mybatisplus</artifactId>
         </dependency>
 
@@ -85,10 +56,28 @@
         </dependency>
 
         <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-elasticsearch</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--性能测试依赖-->
+        <dependency>
+            <groupId>org.databene</groupId>
+            <artifactId>contiperf</artifactId>
+            <version>2.3.4</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

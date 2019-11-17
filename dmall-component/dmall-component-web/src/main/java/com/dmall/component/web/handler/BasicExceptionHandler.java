@@ -123,5 +123,4 @@ public class BasicExceptionHandler {
         return WebConstants.FORWARD_ERROR;
     }
 
-
 }

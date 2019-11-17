@@ -87,7 +87,7 @@ public class WebLog {
      * 返回结果
      */
     @JSONField(ordinal = 12)
-    String result;
+    Object result;
 
     /**
      * 异常信息
@@ -124,4 +124,16 @@ public class WebLog {
      */
     @JSONField(ordinal = 17)
     String appName;
+
+    /**
+     * traceId
+     */
+    @JSONField(ordinal = 18)
+    String traceId;
+
+    /**
+     * spanId
+     */
+    @JSONField(ordinal = 19)
+    String spanId;
 }

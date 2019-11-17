@@ -5,7 +5,7 @@ import com.dmall.common.model.configuration.BasicConfiguration;
 import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;
-import com.dmall.component.cache.redis.lock.DistributedLock;
+import com.dmall.component.cache.redis.lock.DistributedLockService;
 import com.dmall.component.cache.redis.properties.DMallRedisProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -166,8 +166,8 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * 分布式锁对象
      */
     @Bean
-    public DistributedLock distributedLock(StringRedisTemplate stringRedisTemplate, DefaultRedisScript<Boolean> redisScript) {
-        return new DistributedLock(stringRedisTemplate, redisScript);
+    public DistributedLockService distributedLock(StringRedisTemplate stringRedisTemplate, DefaultRedisScript<Boolean> redisScript) {
+        return new DistributedLockService(stringRedisTemplate, redisScript);
     }
 
     /**

@@ -1,3 +1,4 @@
+
 package com.dmall.component.web.properties;
 
 import lombok.Data;
@@ -6,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 
 /**
- * @description: swagger相关配置
+ * @description: swagger属性类
  * @author: created by yuhang on 2019/10/27 16:12
  */
 @Data
@@ -59,7 +60,7 @@ public class DMallSwaggerProperties {
     private String contactEmail;
 
     /**
-     * 无需swagger的配置
+     * 无需swagger的配置 zuul配置
      */
     private List<String> ignoreProjects;
 }

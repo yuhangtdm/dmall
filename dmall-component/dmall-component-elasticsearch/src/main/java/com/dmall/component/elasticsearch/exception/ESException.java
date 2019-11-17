@@ -5,7 +5,7 @@ import com.dmall.common.model.exception.ComponentException;
 import lombok.Getter;
 
 /**
- * @description: elsticSearch异常
+ * @description: elsticSearch异常类
  * @author: created by yuhang on 2019/11/6 23:40
  */
 @Getter

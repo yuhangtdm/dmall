@@ -1,5 +1,6 @@
 package com.dmall.mms;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,12 +17,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableHystrix
-//@EnableApolloConfig
+@EnableApolloConfig
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.dmall.mms.generator.mapper")
 public class MemberServiceApp {
 
     public static void main(String[] args) {
+        // 避免es启动抱错
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(MemberServiceApp.class,args);
     }
 

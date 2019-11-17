@@ -14,6 +14,10 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @description: dmall的mybatisPlus配置类
+ * @author: created by yuhang on 2019/11/2 16:50
+ */
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({DMallMybatisPlusProperties.class})
@@ -28,7 +32,6 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSON.toJSONString(dmallMybatisPlusProperties, true));
         return new PaginationInterceptor();
     }
 
@@ -47,15 +50,8 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
     @Override
     @PostConstruct
     public void check() {
-    }
+        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSON.toJSONString(dmallMybatisPlusProperties, true));
 
-   /*
-    构建该bean时导致注入Properties对象为null
-   @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer() {
-        MapperScannerConfigurer scannerConfigurer = new MapperScannerConfigurer();
-        scannerConfigurer.setBasePackage("com.dmall.mms.generator.mapper");
-        return scannerConfigurer;
-    }*/
+    }
 
 }

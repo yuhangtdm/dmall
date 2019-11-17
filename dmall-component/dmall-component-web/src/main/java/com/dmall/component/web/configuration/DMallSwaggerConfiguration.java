@@ -1,9 +1,12 @@
 package com.dmall.component.web.configuration;
 
 import com.alibaba.fastjson.JSON;
-import com.dmall.common.constants.component.web.WebConstants;
+import com.dmall.common.model.configuration.BasicConfiguration;
+import com.dmall.component.web.exception.WebErrorEnum;
+import com.dmall.component.web.exception.WebException;
 import com.dmall.component.web.properties.DMallSwaggerProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -32,7 +35,7 @@ import java.util.List;
 @EnableSwagger2
 @EnableConfigurationProperties({DMallSwaggerProperties.class})
 @ConditionalOnProperty(prefix = "dmall.web.swagger", value = "enabled", havingValue = "true")
-public class DMallSwaggerConfiguration {
+public class DMallSwaggerConfiguration implements BasicConfiguration {
 
     @Autowired
     private DMallSwaggerProperties dMallSwaggerProperties;
@@ -42,8 +45,6 @@ public class DMallSwaggerConfiguration {
      */
     @Bean
     public Docket createRestApi() {
-        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JSON.toJSONString(dMallSwaggerProperties, true));
-
         /**
          * 配置响应状态码
          */
@@ -77,4 +78,11 @@ public class DMallSwaggerConfiguration {
                 .build();
     }
 
+    @Override
+    public void check() {
+        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JSON.toJSONString(dMallSwaggerProperties, true));
+        if (dMallSwaggerProperties.getEnabled() && StringUtils.isBlank(dMallSwaggerProperties.getBasePackage())){
+            throw new WebException(WebErrorEnum.NO_BASE_PACKAGE);
+        }
+    }
 }
