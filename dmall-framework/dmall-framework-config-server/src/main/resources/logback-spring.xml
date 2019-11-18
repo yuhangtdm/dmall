@@ -5,6 +5,9 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
     <property name="LOG_FILE_PATH" value="${LOG_PATH}/${LOG_FILE}"/>
+    <property name="APP_NAME" value="dmall-framework-config-server"/>
+    <!--日志文件保存路径-->
+    <contextName>${APP_NAME}</contextName>
 
     <!--每天记录日志到文件appender-->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -38,13 +41,15 @@
         </rollingPolicy>
     </appender>
 
+    <springProperty scope="context" name="logstashUrl" source="dmall.logstash.url"/>
 
     <!--输出到logstash的appender-->
-  <!--  <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        &lt;!&ndash;可以访问的logstash日志收集端口&ndash;&gt;
-        <destination>192.168.3.101:4560</destination>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!--可以访问的logstash日志收集端口-->
+        <destination>${logstashUrl}</destination>
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
-    </appender>-->
+    </appender>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>

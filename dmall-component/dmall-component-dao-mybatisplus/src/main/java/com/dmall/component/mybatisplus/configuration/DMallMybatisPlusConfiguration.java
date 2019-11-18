@@ -51,7 +51,6 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
     @PostConstruct
     public void check() {
         log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSON.toJSONString(dmallMybatisPlusProperties, true));
-
     }
 
 }

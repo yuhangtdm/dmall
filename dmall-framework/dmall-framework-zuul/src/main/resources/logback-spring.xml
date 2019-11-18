@@ -9,6 +9,7 @@
     <property name="APP_NAME" value="dmall-framework-zuul"/>
     <!--日志文件保存路径-->
     <contextName>${APP_NAME}</contextName>
+
     <!--每天记录日志到文件appender-->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
@@ -23,7 +24,7 @@
     </appender>
 
     <!-- error日志 -->
-    <appender name="ErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="ERRORFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 过滤日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
@@ -41,17 +42,19 @@
         </rollingPolicy>
     </appender>
 
+    <springProperty scope="context" name="logstashUrl" source="dmall.logstash.url"/>
 
     <!--输出到logstash的appender-->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--可以访问的logstash日志收集端口-->
-        <destination>106.15.47.106:4560</destination>
+        <destination>${logstashUrl}</destination>
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
-        <appender-ref ref="ErrorFile"/>
+        <appender-ref ref="ERRORFILE"/>
         <appender-ref ref="LOGSTASH"/>
     </root>
 </configuration>

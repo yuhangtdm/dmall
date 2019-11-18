@@ -3,6 +3,7 @@ package com.dmall.component.mybatisplus.generator;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
@@ -27,7 +28,7 @@ public class MybatisPlusGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator/src/main/java");
+        gc.setOutputDir(projectPath + "/dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-generator/src/main/java");
         gc.setAuthor("yuhang");
         gc.setOpen(false);
         gc.setBaseResultMap(true);
@@ -39,7 +40,7 @@ public class MybatisPlusGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://106.15.188.249:3306/dmall_bms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://106.15.188.249:3306/dmall_mms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
@@ -49,7 +50,8 @@ public class MybatisPlusGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.dmall");
-        pc.setModuleName("pms.generator");
+        pc.setModuleName("mms.generator");
+        pc.setEntity("dataobject");
         mpg.setPackageInfo(pc);
 
         // 策略配置
@@ -60,12 +62,20 @@ public class MybatisPlusGenerator {
 //        strategy.setInclude("");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setEntityBuilderModel(true);
-        strategy.setTablePrefix( "pms_");
+        strategy.setTablePrefix( "mms_");
         List<TableFill> tableFillList =  new ArrayList<>();
         tableFillList.add(new TableFill("gmt_created", FieldFill.INSERT));
         tableFillList.add(new TableFill("gmt_modified", FieldFill.INSERT_UPDATE));
         strategy.setTableFillList(tableFillList);
         mpg.setStrategy(strategy);
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                // to do nothing
+            }
+        };
+        mpg.setCfg(cfg);
         mpg.execute();
     }
 
