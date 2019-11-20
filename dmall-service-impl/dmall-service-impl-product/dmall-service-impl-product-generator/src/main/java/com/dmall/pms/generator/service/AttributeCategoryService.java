@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author yuhang
- * @since 2019-11-18
+ * @since 2019-11-19
  */
 public interface AttributeCategoryService extends IService<AttributeCategoryDO> {
 

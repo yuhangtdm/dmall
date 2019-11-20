@@ -1,5 +1,6 @@
 package com.dmall.component.web.handler;
 
+import cn.hutool.core.map.MapUtil;
 import com.dmall.common.constants.component.web.WebConstants;
 import com.dmall.common.enums.base.BasicStatusEnum;
 import com.dmall.common.model.exception.ComponentException;
@@ -18,7 +19,9 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -83,12 +86,12 @@ public class BasicExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public String bind(ConstraintViolationException e, HttpServletRequest request) {
         log.info("enter the ConstraintViolationException Handler");
-        StringBuilder sb = new StringBuilder();
+        Map<String,String> map = new LinkedHashMap<>();
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-            sb.append(constraintViolation.getMessage()).append(",");
+            map.put(constraintViolation.getMessageTemplate(),constraintViolation.getMessage());
         }
-        return paramHandle(null, sb.toString(), request);
+        return paramHandle(null, map, request);
     }
 
     /**
@@ -103,15 +106,14 @@ public class BasicExceptionHandler {
     /**
      * 处理参数异常的公共逻辑
      */
-    private String paramHandle(List<FieldError> fieldErrors, String error, HttpServletRequest request) {
-        StringBuilder sb = new StringBuilder();
+    private String paramHandle(List<FieldError> fieldErrors, Map<String,String> error, HttpServletRequest request) {
+        Map<String,String> map = new LinkedHashMap<>();
         if (!CollectionUtils.isEmpty(fieldErrors)) {
             for (FieldError fieldError : fieldErrors) {
-                sb.append(fieldError.getDefaultMessage()).append(",");
+                map.put(fieldError.getField(),fieldError.getDefaultMessage());
             }
         }
-        log.error("catch param exception:{}", sb.length() != 0 ? sb.deleteCharAt(sb.lastIndexOf(",")).toString() : error);
-        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST));
+        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST, MapUtil.isEmpty(error) ? map : error));
     }
 
     /**

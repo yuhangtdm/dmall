@@ -45,6 +45,7 @@
         <spring-boot-admin.version>2.1.5</spring-boot-admin.version>
         <nacos-config-spring-boot.version>0.2.1</nacos-config-spring-boot.version>
         <fastjson.version>1.2.54</fastjson.version>
+        <logstash.logback.version>5.3</logstash.logback.version>
     </properties>
 
     <dependencyManagement>
@@ -113,7 +114,6 @@
                 <artifactId>jest</artifactId>
                 <version>5.3.3</version>
             </dependency>
-
             <dependency>
                 <groupId>net.java.dev.jna</groupId>
                 <artifactId>jna</artifactId>
@@ -142,7 +142,6 @@
                 <artifactId>nacos-config-spring-boot-starter</artifactId>
                 <version>${nacos-config-spring-boot.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>nacos-config-spring-boot-actuator</artifactId>
@@ -155,6 +154,14 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
+
+            <!--logstash-->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.logback.version}</version>
+            </dependency>
+
 
             <!--本项目模块-->
             <dependency>
@@ -210,6 +217,11 @@
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-component-elasticsearch</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-impl-product-generator</artifactId>
                 <version>${version}</version>
             </dependency>
         </dependencies>

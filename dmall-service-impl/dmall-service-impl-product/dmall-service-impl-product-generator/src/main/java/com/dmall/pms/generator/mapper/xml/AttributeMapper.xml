@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.pms.generator.mapper.AttributeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmall.pms.generator.dataobject.AttributeDO">
+        <id column="id" property="id" />
+        <result column="attribute_category_id" property="attributeCategoryId" />
+        <result column="category_id" property="categoryId" />
+        <result column="cascade_category_id" property="cascadeCategoryId" />
+        <result column="name" property="name" />
+        <result column="remark" property="remark" />
+        <result column="type" property="type" />
+        <result column="input_type" property="inputType" />
+        <result column="input_list" property="inputList" />
+        <result column="select_type" property="selectType" />
+        <result column="sort" property="sort" />
+        <result column="hand_add_status" property="handAddStatus" />
+        <result column="value_count" property="valueCount" />
+        <result column="creator" property="creator" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="modifier" property="modifier" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+</mapper>

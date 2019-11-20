@@ -12,10 +12,22 @@
     <artifactId>dmall-service-impl-product-business</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-product</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-impl-product-generator</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-component-elasticsearch</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

@@ -24,7 +24,6 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
     private final DMallSwaggerProperties DMallSwaggerProperties;
 
     public DocumentationConfiguration(RouteLocator routeLocator, DMallSwaggerProperties DMallSwaggerProperties) {
-        log.info("swagger启动成功");
         this.routeLocator = routeLocator;
         this.DMallSwaggerProperties = DMallSwaggerProperties;
     }

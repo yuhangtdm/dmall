@@ -26,11 +26,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-web</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
@@ -60,6 +55,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+
 
         <!--性能测试依赖-->
         <dependency>

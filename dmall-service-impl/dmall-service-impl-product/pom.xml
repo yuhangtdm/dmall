@@ -16,18 +16,4 @@
         <module>dmall-service-impl-product-business</module>
     </modules>
 
-    <dependencies>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-service-api-product</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-elasticsearch</artifactId>
-        </dependency>
-
-    </dependencies>
-
 </project>
