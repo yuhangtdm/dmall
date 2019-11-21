@@ -32,8 +32,6 @@ public class LogAdvice implements MethodInterceptor {
 
     private Environment environment;
 
-
-
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         long start = System.currentTimeMillis();
@@ -65,7 +63,7 @@ public class LogAdvice implements MethodInterceptor {
                 String key = headerNames.nextElement();
                 header.put(key, request.getHeader(key));
             }
-            webLog.setRequestHeader(header.toString());
+            webLog.setRequestHeader(header);
             Object result = invocation.proceed();
             webLog.setResult(result);
             return result;
@@ -82,7 +80,7 @@ public class LogAdvice implements MethodInterceptor {
     /**
      * 获取参数
      */
-    private String getParameter(Method method, Object[] args) {
+    private Object getParameter(Method method, Object[] args) {
         Parameter[] parameters = method.getParameters();
         if (parameters.length == 0){
             return "";
@@ -90,7 +88,7 @@ public class LogAdvice implements MethodInterceptor {
             if (originalParam(parameters[0].getType())){
                 return "";
             }else {
-                return JSON.toJSONString(args[0]);
+                return args[0];
             }
         }else {
             JSONObject params = new JSONObject();
@@ -98,9 +96,9 @@ public class LogAdvice implements MethodInterceptor {
                 if (originalParam(parameters[i].getType())){
                     continue;
                 }
-                params.put(parameters[i].getName(), JSON.toJSONString(args[i]));
+                params.put(parameters[i].getName(), args[i]);
             }
-            return params.toString();
+            return params;
         }
     }
 

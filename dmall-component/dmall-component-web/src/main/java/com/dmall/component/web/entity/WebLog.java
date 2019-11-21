@@ -1,5 +1,6 @@
 package com.dmall.component.web.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -81,7 +82,7 @@ public class WebLog {
      * 方法参数
      */
     @JSONField(ordinal = 11)
-    String params;
+    Object params;
 
     /**
      * 返回结果
@@ -99,7 +100,7 @@ public class WebLog {
      * 请求头信息
      */
     @JSONField(ordinal = 14)
-    String requestHeader;
+    JSONObject requestHeader;
 
     /**
      * 环境

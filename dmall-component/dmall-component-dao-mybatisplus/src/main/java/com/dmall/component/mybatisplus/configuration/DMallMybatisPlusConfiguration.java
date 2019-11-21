@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.dmall.common.model.configuration.BasicConfiguration;
+import com.dmall.component.mybatisplus.autofill.AutoFillHandler;
 import com.dmall.component.mybatisplus.properties.DMallMybatisPlusProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,14 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
         performanceInterceptor.setMaxTime(dmallMybatisPlusProperties.getMaxTime());
         performanceInterceptor.setFormat(dmallMybatisPlusProperties.getFormat());
         return performanceInterceptor;
+    }
+
+    /**
+     * 时间的自动填充处理类
+     */
+    @Bean
+    public AutoFillHandler autoFillHandler(){
+        return new AutoFillHandler(dmallMybatisPlusProperties);
     }
 
     @Override

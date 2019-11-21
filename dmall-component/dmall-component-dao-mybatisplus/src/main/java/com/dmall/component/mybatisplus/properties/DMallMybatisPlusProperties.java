@@ -31,4 +31,19 @@ public class DMallMybatisPlusProperties {
      */
     private Boolean format = Boolean.TRUE;
 
+    /**
+     * 新增时间的列名
+     */
+    private String createTimeColumn = "gmtCreated";
+
+    /**
+     * 更新时间的列名
+     */
+    private String updateTimeColumn = "gmtModified";
+
+    /**
+     * 逻辑删除的列名
+     */
+    private String isDeletedColumn = "isDeleted";
+
 }

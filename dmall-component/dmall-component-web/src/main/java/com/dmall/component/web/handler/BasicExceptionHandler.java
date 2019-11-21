@@ -37,7 +37,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public String businessHandle(BusinessException ex, HttpServletRequest request) {
-        log.info("enter the BusinessException Handler");
+        log.error("enter the BusinessException Handler,",ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -46,7 +46,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(ComponentException.class)
     public String componentHandle(ComponentException ex, HttpServletRequest request) {
-        log.info("enter the ComponentException Handler");
+        log.error("enter the ComponentException Handler,",ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -55,7 +55,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public String NoHandlerFoundHandle(HttpServletRequest request) {
-        log.info("enter the NoHandlerFoundException Handler");
+        log.error("enter the NoHandlerFoundException Handler");
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.NOT_FOUND_REQUEST);
         request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.NOT_FOUND.value());
         request.setAttribute(WebConstants.DATA, fail);
@@ -67,7 +67,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String bind(MethodArgumentNotValidException e, HttpServletRequest request) {
-        log.info("enter the MethodArgumentNotValidException Handler");
+        log.error("enter the MethodArgumentNotValidException Handler");
         return paramHandle(e.getBindingResult().getFieldErrors(), null, request);
     }
 
@@ -76,7 +76,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public String bind(BindException e, HttpServletRequest request) {
-        log.info("enter the BindException Handler");
+        log.error("enter the BindException Handler");
         return paramHandle(e.getBindingResult().getFieldErrors(), null, request);
     }
 
@@ -85,7 +85,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public String bind(ConstraintViolationException e, HttpServletRequest request) {
-        log.info("enter the ConstraintViolationException Handler");
+        log.error("enter the ConstraintViolationException Handler");
         Map<String,String> map = new LinkedHashMap<>();
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
@@ -99,7 +99,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public String exception(Exception ex, HttpServletRequest request) {
-        log.info("enter the Unknown exception Handler");
+        log.error("enter the Unknown exception Handler,",ex);
         return getCustomException(request, ResultUtil.fail());
     }
 

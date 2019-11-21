@@ -16,7 +16,7 @@ import javax.validation.Valid;
  */
 @Api(tags = "品牌管理")
 @RequestMapping("/brand")
-public interface BrandBusinessService {
+public interface BrandService {
 
     @ApiOperation(value = "新增品牌")
     @PostMapping("/")

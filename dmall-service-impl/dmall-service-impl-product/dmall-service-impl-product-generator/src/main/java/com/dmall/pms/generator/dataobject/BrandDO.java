@@ -1,11 +1,8 @@
 package com.dmall.pms.generator.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -83,6 +80,8 @@ public class BrandDO implements Serializable {
     /**
      * 状态 Y-可用;N-不可用
      */
+    @TableLogic
+    @TableField(fill = FieldFill.INSERT)
     private String isDeleted;
 
 
