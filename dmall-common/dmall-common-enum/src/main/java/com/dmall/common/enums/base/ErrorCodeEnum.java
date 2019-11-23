@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @description: 错误码枚举标准类
- * @author: created by yuhang on 2019/11/7 20:59
+ * @author: created by hang.yu on 2019/11/7 20:59
  */
 public interface ErrorCodeEnum extends Serializable {
 

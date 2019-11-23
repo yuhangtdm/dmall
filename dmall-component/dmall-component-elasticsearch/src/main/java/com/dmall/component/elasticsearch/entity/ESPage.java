@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @description: ES分页实体
- * @author: created by yuhang on 2019/11/6 23:28
+ * @author: created by hang.yu on 2019/11/6 23:28
  */
 @Data
 @NoArgsConstructor

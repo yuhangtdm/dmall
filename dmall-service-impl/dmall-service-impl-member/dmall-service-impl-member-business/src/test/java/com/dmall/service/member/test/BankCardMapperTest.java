@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @description:
- * @author: created by yuhang on 2019/11/2 16:39
+ * @author: created by hang.yu on 2019/11/2 16:39
  */
 
 public class BankCardMapperTest extends BaseTest {

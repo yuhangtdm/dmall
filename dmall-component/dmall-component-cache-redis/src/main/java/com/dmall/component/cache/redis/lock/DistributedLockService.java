@@ -7,7 +7,7 @@ import java.util.Collections;
 
 /**
  * @description: 分布式锁服务
- * @author: created by yuhang on 2019/11/3 23:07
+ * @author: created by hang.yu on 2019/11/3 23:07
  */
 
 public class DistributedLockService {

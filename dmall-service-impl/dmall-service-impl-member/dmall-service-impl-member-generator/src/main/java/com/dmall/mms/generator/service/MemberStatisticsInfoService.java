@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 会员统计信息表 服务类
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-11-18
  */
 public interface MemberStatisticsInfoService extends IService<MemberStatisticsInfoDO> {

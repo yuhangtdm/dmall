@@ -8,7 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @description: springbootAdmin启动类
- * @author: created by yuhang on 2019/11/15 23:28
+ * @author: created by hang.yu on 2019/11/15 23:28
  */
 @EnableAdminServer
 @SpringBootApplication

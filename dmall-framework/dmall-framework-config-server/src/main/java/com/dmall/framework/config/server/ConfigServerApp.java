@@ -8,7 +8,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
  * @description: 配置中心服务端
- * @author: created by yuhang on 2019/10/17 21:07
+ * @author: created by hang.yu on 2019/10/17 21:07
  */
 @SpringBootApplication
 @EnableConfigServer

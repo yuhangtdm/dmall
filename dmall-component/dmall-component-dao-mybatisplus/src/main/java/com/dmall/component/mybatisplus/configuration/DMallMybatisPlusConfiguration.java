@@ -12,16 +12,18 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PostConstruct;
 
 /**
  * @description: dmall的mybatisPlus配置类
- * @author: created by yuhang on 2019/11/2 16:50
+ * @author: created by hang.yu on 2019/11/2 16:50
  */
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({DMallMybatisPlusProperties.class})
+@EnableTransactionManagement
 @ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "enabled", havingValue = "true")
 public class DMallMybatisPlusConfiguration implements BasicConfiguration {
 

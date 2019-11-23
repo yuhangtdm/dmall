@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
  * 账户安全表 前端控制器
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-11-19
  */
 @Controller

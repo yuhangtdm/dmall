@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 分类品牌关系表 Mapper 接口
  * </p>
  *
- * @author yuhang
- * @since 2019-11-18
+ * @author hang.yu
+ * @since 2019-11-23
  */
 public interface CategoryBrandMapper extends BaseMapper<CategoryBrandDO> {
 

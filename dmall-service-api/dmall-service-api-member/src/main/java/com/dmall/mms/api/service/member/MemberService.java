@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @description: 会员服务接口
- * @author: created by yuhang on 2019/10/15 22:23
+ * @author: created by hang.yu on 2019/10/15 22:23
  */
 public interface MemberService {
 

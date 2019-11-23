@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @description: 会员服务实现类
- * @author: created by yuhang on 2019/10/15 22:35
+ * @author: created by hang.yu on 2019/10/15 22:35
  */
 @RestController
 //@RefreshScope

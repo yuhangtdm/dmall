@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * @description: 自定义业务异常
- * @author: created by yuhang on 2019/11/7 22:25
+ * @author: created by hang.yu on 2019/11/7 22:25
  */
 @Data
 public class BusinessException extends RuntimeException  {

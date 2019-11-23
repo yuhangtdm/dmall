@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * @description:
- * @author: created by yuhang on 2019/11/10 15:12
+ * @author: created by hang.yu on 2019/11/10 15:12
  */
 public class MemberServiceImplTest extends BaseTest {
 

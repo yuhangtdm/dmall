@@ -1,6 +1,6 @@
 package com.dmall.component.web.handler;
 
-import com.dmall.common.constants.component.web.WebConstants;
+import com.dmall.common.constants.WebConstants;
 import com.dmall.common.model.result.BaseResult;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @description: 定制返回值
- * @author: created by yuhang on 2019/11/7 23:09
+ * @author: created by hang.yu on 2019/11/7 23:09
  */
 @Component
 public class BasicErrorAttributes extends DefaultErrorAttributes {

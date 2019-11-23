@@ -7,7 +7,7 @@ import org.elasticsearch.search.sort.SortOrder;
 
 /**
  * @description: ES排序实体
- * @author: created by yuhang on 2019/11/6 23:31
+ * @author: created by hang.yu on 2019/11/6 23:31
  */
 @Data
 @NoArgsConstructor

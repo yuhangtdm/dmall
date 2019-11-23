@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
  * 会员-帮助关系表 帮助对会员有用 前端控制器
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-11-19
  */
 @Controller

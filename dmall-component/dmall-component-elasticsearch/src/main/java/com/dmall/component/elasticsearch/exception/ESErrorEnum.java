@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @description: elasticSearch的错误枚举类
- * @author: created by yuhang on 2019/11/7 21:41
+ * @author: created by hang.yu on 2019/11/7 21:41
  */
 @Getter
 @AllArgsConstructor

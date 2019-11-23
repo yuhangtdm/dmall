@@ -1,6 +1,6 @@
 package com.dmall.component.web.configuration;
 
-import com.dmall.common.constants.component.web.WebConstants;
+import com.dmall.common.constants.WebConstants;
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @description: hystrix配置
- * @author: created by yuhang on 2019/10/27 23:37
+ * @author: created by hang.yu on 2019/10/27 23:37
  */
 @Configuration
 public class HystrixConfiguration {

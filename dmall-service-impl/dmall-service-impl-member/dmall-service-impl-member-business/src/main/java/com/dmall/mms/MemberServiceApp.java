@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @description: 会员服务启动类
- * @author: created by yuhang on 2019/10/15 22:33
+ * @author: created by hang.yu on 2019/10/15 22:33
  */
 @SpringBootApplication
 @EnableDiscoveryClient

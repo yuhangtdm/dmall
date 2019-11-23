@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @description: 缓存属性配置
- * @author: created by yuhang on 2019/11/3 21:50
+ * @author: created by hang.yu on 2019/11/3 21:50
  */
 @Data
 @ConfigurationProperties(prefix = "dmall.cache.redis")

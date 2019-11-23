@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @description: 商品请求实体
- * @author: created by yuhang on 2019/10/14 21:51
+ * @author: created by hang.yu on 2019/10/14 21:51
  */
 @Data
 @NoArgsConstructor

@@ -13,8 +13,8 @@ import lombok.experimental.Accessors;
  * 品牌表
  * </p>
  *
- * @author yuhang
- * @since 2019-11-18
+ * @author hang.yu
+ * @since 2019-11-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -33,16 +33,19 @@ public class BrandDO implements Serializable {
     /**
      * 名称
      */
+    @TableField(whereStrategy = FieldStrategy.NOT_EMPTY)
     private String name;
 
     /**
      * 英文名称
      */
+    @TableField(whereStrategy = FieldStrategy.NOT_EMPTY)
     private String englishName;
 
     /**
      * 首字母
      */
+    @TableField(whereStrategy = FieldStrategy.NOT_EMPTY)
     private String firstLetter;
 
     /**
@@ -78,10 +81,10 @@ public class BrandDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
-    @TableLogic
     @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private String isDeleted;
 
 

@@ -4,7 +4,7 @@ import org.springframework.beans.BeanUtils;
 
 /**
  * @description: BeanUtil
- * @author: created by yuhang on 2019/11/19 23:42
+ * @author: created by hang.yu on 2019/11/19 23:42
  */
 public class BeanUtil extends BeanUtils {
 

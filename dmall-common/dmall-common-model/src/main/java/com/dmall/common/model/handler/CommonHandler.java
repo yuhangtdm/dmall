@@ -4,28 +4,28 @@ import com.dmall.common.model.result.BaseResult;
 
 /**
  * @description: 公共Handle
- * @author: created by yuhang on 2019/11/19 23:28
+ * @author: created by hang.yu on 2019/11/19 23:28
  */
-public interface CommonHandler<DTO, DO> {
+public interface CommonHandler<ReqDTO, DO, ResDTO> {
 
     /**
      * 校验参数公共方法
      */
-    BaseResult validate(DTO dto);
+    BaseResult validate(ReqDTO dto);
 
     /**
      * 核心处理的方法
      */
-    BaseResult handler(DTO dto);
+    BaseResult handler(ReqDTO dto);
 
     /**
      * DTO转为DO
      */
-    DO dtoConvertDo(DTO dto, Class<DO> doClazz);
+    DO dtoConvertDo(ReqDTO dto, Class<DO> doClazz);
 
     /**
      * DO转换为DTO
      */
-    DTO doConvertDto(DO doo, Class<DTO> doClazz);
+    ResDTO doConvertDto(DO doo, Class<ResDTO> doClazz);
 
 }

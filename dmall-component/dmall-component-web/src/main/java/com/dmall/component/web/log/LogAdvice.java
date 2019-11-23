@@ -23,7 +23,7 @@ import java.util.Enumeration;
 
 /**
  * @description: 日志切面
- * @author: created by yuhang on 2019/11/10 18:46
+ * @author: created by hang.yu on 2019/11/10 18:46
  */
 @Slf4j
 @NoArgsConstructor

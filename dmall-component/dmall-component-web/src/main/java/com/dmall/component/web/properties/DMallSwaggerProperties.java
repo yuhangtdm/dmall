@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @description: swagger属性类
- * @author: created by yuhang on 2019/10/27 16:12
+ * @author: created by hang.yu on 2019/10/27 16:12
  */
 @Data
 @ConfigurationProperties(prefix = "dmall.web.swagger")

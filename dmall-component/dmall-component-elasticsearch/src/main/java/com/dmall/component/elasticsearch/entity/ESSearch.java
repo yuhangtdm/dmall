@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @description: ES搜索实体
- * @author: created by yuhang on 2019/11/6 23:44
+ * @author: created by hang.yu on 2019/11/6 23:44
  */
 @Data
 @Builder

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 /**
  * @description: 商品响应实体
- * @author: created by yuhang on 2019/10/14 21:52
+ * @author: created by hang.yu on 2019/10/14 21:52
  */
 @Data
 @NoArgsConstructor

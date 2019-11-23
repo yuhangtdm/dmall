@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 /**
  * @description: eureka服务端启动类
- * @author: created by yuhang on 2019/10/11 22:29
+ * @author: created by hang.yu on 2019/10/11 22:29
  */
 @SpringBootApplication
 @EnableEurekaServer

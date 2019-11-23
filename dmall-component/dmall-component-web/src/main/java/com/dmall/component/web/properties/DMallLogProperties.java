@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @description: log属性类
- * @author: created by yuhang on 2019/11/10 19:03
+ * @author: created by hang.yu on 2019/11/10 19:03
  */
 @Data
 @ConfigurationProperties(prefix = "dmall.web.log")

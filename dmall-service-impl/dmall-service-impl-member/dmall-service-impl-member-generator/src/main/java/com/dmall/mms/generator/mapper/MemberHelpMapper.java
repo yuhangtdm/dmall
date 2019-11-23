@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 会员-帮助关系表 帮助对会员有用 Mapper 接口
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-10-29
  */
 public interface MemberHelpMapper extends BaseMapper<MemberHelpDO> {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @description: 商品服务实现
- * @author: created by yuhang on 2019/10/14 22:10
+ * @author: created by hang.yu on 2019/10/14 22:10
  */
 @RestController(value = "mockProductServiceImpl")
 public class ProductServiceImpl implements ProductService {

@@ -39,7 +39,7 @@
         <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
         <appllo.version>1.0.0</appllo.version>
         <swagger2.version>2.7.0</swagger2.version>
-        <swagger-bootstrap-ui.version>1.8.2</swagger-bootstrap-ui.version>
+        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <druid.version>1.1.10</druid.version>
         <spring-boot-admin.version>2.1.5</spring-boot-admin.version>

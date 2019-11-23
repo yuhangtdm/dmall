@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * 会员收藏专题表 
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-10-29
  */
 @Data
@@ -49,7 +49,7 @@ public class MemberColletionSubjectDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
     @TableField("is_deleted")
     private String isDeleted;

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @description: 过期单位枚举
- * @author: created by yuhang on 2019/11/3 21:55
+ * @author: created by hang.yu on 2019/11/3 21:55
  */
 @Getter
 @AllArgsConstructor

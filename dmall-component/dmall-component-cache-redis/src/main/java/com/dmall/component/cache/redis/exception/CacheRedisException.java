@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @description: redis自定义异常
- * @author: created by yuhang on 2019/11/12 23:41
+ * @author: created by hang.yu on 2019/11/12 23:41
  */
 @Getter
 public class CacheRedisException extends ComponentException {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description:
- * @author: created by yuhang on 2019/10/15 23:20
+ * @author: created by hang.yu on 2019/10/15 23:20
  */
 @Component
 public class MemberFallbackService implements MemberService {

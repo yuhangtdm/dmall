@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @description:
- * @author: created by yuhang on 2019/11/16 10:07
+ * @author: created by hang.yu on 2019/11/16 10:07
  */
 @SpringBootApplication
 @NacosPropertySource(dataId = "application",groupId = "dmall-web-portal",autoRefreshed = true)

@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * 账户安全表
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-10-29
  */
 @Data
@@ -34,31 +34,31 @@ public class MemberSafeDO implements Serializable {
     private Long id;
 
     /**
-     * 是否绑定手机号 Y-可用;N-不可用
+     * 是否绑定手机号 N-可用;Y-不可用
      */
     @TableField("bind_mobile")
     private String bindMobile;
 
     /**
-     * 是否设置密码 Y-可用;N-不可用
+     * 是否设置密码 N-可用;Y-不可用
      */
     @TableField("set_password")
     private String setPassword;
 
     /**
-     * 是否绑定邮箱 Y-可用;N-不可用
+     * 是否绑定邮箱 N-可用;Y-不可用
      */
     @TableField("bind_email")
     private String bindEmail;
 
     /**
-     * 是否实名认证 Y-可用;N-不可用
+     * 是否实名认证 N-可用;Y-不可用
      */
     @TableField("real_name_authentication")
     private String realNameAuthentication;
 
     /**
-     * 是否锁定账号 Y-可用;N-不可用
+     * 是否锁定账号 N-可用;Y-不可用
      */
     @TableField("lock_account")
     private String lockAccount;
@@ -86,7 +86,7 @@ public class MemberSafeDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
     @TableField("is_deleted")
     private String isDeleted;

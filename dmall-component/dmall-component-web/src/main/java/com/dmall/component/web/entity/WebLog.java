@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * @description: 请求日志实体
- * @author: created by yuhang on 2019/11/10 18:41
+ * @author: created by hang.yu on 2019/11/10 18:41
  */
 @Data
 @AllArgsConstructor

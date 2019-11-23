@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @description:
- * @author: created by yuhang on 2019/11/4 23:33
+ * @author: created by hang.yu on 2019/11/4 23:33
  */
 @SpringBootTest(classes = MemberServiceApp.class)
 @RunWith(SpringRunner.class)

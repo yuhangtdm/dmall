@@ -18,7 +18,7 @@ import org.springframework.core.env.Environment;
 
 /**
  * @description: 日志切面配置类
- * @author: created by yuhang on 2019/11/10 18:47
+ * @author: created by hang.yu on 2019/11/10 18:47
  */
 @Slf4j
 @Configuration

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @description: web配置
  * 支持功能:跨域
- * @author: created by yuhang on 2019/10/16 22:28
+ * @author: created by hang.yu on 2019/10/16 22:28
  */
 @Configuration
 @ComponentScan(basePackages = {"com.dmall.component.web.handler","com.dmall.component.web.log"})

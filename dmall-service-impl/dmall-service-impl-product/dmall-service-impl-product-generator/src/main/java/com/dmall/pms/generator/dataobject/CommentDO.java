@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -16,8 +17,8 @@ import lombok.experimental.Accessors;
  * 商品评价表
  * </p>
  *
- * @author yuhang
- * @since 2019-11-18
+ * @author hang.yu
+ * @since 2019-11-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -146,8 +147,10 @@ public class CommentDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private String isDeleted;
 
 

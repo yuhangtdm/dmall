@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 账户安全表 服务类
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-11-18
  */
 public interface MemberSafeService extends IService<MemberSafeDO> {

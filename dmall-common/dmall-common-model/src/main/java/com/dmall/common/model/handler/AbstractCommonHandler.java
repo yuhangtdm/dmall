@@ -4,15 +4,15 @@ import com.dmall.common.model.result.BaseResult;
 
 /**
  * @description: 抽象Handler
- * @author: created by yuhang on 2019/11/19 23:33
+ * @author: created by hang.yu on 2019/11/19 23:33
  */
-public abstract class AbstractCommonHandler<DTO,DO> implements CommonHandler<DTO,DO> {
+public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements CommonHandler<ReqDTO, DO, ResDTO> {
 
     /**
      * 核心处理的方法
      */
     @Override
-    public BaseResult handler(DTO dto) {
+    public BaseResult handler(ReqDTO dto) {
         BaseResult validate = validate(dto);
         if (validate == null || validate.getResult()){
             return processor(dto);
@@ -21,15 +21,10 @@ public abstract class AbstractCommonHandler<DTO,DO> implements CommonHandler<DTO
     }
 
     /**
-     * 子类实现，处理业务
-     */
-    protected abstract BaseResult processor(DTO dto);
-
-    /**
      * DTO转为DO
      */
     @Override
-    public DO dtoConvertDo(DTO dto,Class<DO> doClazz) {
+    public DO dtoConvertDo(ReqDTO dto,Class<DO> doClazz) {
         DO result = BeanUtil.copyProperties(dto, doClazz);
         customerConvertDo(result);
         return result;
@@ -39,11 +34,21 @@ public abstract class AbstractCommonHandler<DTO,DO> implements CommonHandler<DTO
      * DO转为DTO
      */
     @Override
-    public DTO doConvertDto(DO doo, Class<DTO> doClazz) {
-        DTO result = BeanUtil.copyProperties(doo, doClazz);
+    public ResDTO doConvertDto(DO doo, Class<ResDTO> doClazz) {
+        ResDTO result = BeanUtil.copyProperties(doo, doClazz);
         customerConvertDto(result);
         return result;
     }
+
+    @Override
+    public BaseResult validate(ReqDTO reqDTO) {
+        return null;
+    }
+
+    /**
+     * 子类实现，处理业务
+     */
+    protected abstract BaseResult processor(ReqDTO dto);
 
     /**
      * 子类可以重写,自定义转换do
@@ -54,7 +59,7 @@ public abstract class AbstractCommonHandler<DTO,DO> implements CommonHandler<DTO
     /**
      * 子类可以重写,自定义转换dto
      */
-    protected void  customerConvertDto(DTO result){
+    protected void  customerConvertDto(ResDTO result){
     }
 
 }

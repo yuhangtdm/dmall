@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @description: dmall的mybatisPlus生成器
- * @author: created by yuhang on 2019/11/2 16:50
+ * @author: created by hang.yu on 2019/11/2 16:50
  */
 public class MybatisPlusGenerator {
 
@@ -29,13 +29,14 @@ public class MybatisPlusGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator/src/main/java");
-        gc.setAuthor("yuhang");
+        gc.setAuthor("hang.yu");
         gc.setOpen(false);
         gc.setBaseResultMap(true);
         gc.setDateType(DateType.ONLY_DATE);
         gc.setEntityName("%sDO");
         gc.setServiceName("%sService");
         gc.setIdType(IdType.AUTO);
+        gc.setFileOverride(true);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -66,7 +67,9 @@ public class MybatisPlusGenerator {
         List<TableFill> tableFillList =  new ArrayList<>();
         tableFillList.add(new TableFill("gmt_created", FieldFill.INSERT));
         tableFillList.add(new TableFill("gmt_modified", FieldFill.INSERT_UPDATE));
+        tableFillList.add(new TableFill("is_deleted", FieldFill.INSERT));
         strategy.setTableFillList(tableFillList);
+        strategy.setLogicDeleteFieldName("is_deleted");
         mpg.setStrategy(strategy);
         // 自定义配置
         InjectionConfig cfg = new InjectionConfig() {

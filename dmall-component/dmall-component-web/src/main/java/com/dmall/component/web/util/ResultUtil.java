@@ -8,7 +8,7 @@ import com.dmall.component.web.exception.BusinessException;
 
 /**
  * @description: 结果返回工具类
- * @author: created by yuhang on 2019/11/7 22:48
+ * @author: created by hang.yu on 2019/11/7 22:48
  */
 public class ResultUtil {
 

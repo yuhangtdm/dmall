@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 会员浏览历史记录表 服务实现类
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-11-18
  */
 @Service

@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 会员收藏专题表  Mapper 接口
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-10-29
  */
 public interface MemberColletionSubjectMapper extends BaseMapper<MemberColletionSubjectDO> {

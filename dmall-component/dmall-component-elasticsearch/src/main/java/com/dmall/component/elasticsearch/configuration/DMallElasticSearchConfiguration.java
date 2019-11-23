@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @description: ElasticSearch配置类
- * @author: created by yuhang on 2019/11/6 22:58
+ * @author: created by hang.yu on 2019/11/6 22:58
  */
 @Slf4j
 @Configuration

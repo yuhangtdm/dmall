@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: Security配置类
- * @author: created by yuhang on 2019/10/14 23:06
+ * @author: created by hang.yu on 2019/10/14 23:06
  */
 @Component
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {

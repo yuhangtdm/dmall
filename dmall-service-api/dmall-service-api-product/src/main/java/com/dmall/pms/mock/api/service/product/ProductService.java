@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @description: 商品服务接口
- * @author: created by yuhang on 2019/10/14 21:50
+ * @author: created by hang.yu on 2019/10/14 21:50
  */
 public interface ProductService {
 

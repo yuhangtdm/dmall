@@ -1,7 +1,7 @@
 package com.dmall.component.web.handler;
 
 import cn.hutool.core.map.MapUtil;
-import com.dmall.common.constants.component.web.WebConstants;
+import com.dmall.common.constants.WebConstants;
 import com.dmall.common.enums.base.BasicStatusEnum;
 import com.dmall.common.model.exception.ComponentException;
 import com.dmall.common.model.result.BaseResult;
@@ -15,18 +15,17 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @description: 全局异常处理器
- * @author: created by yuhang on 2019/11/7 22:23
+ * @author: created by hang.yu on 2019/11/7 22:23
  */
 @Slf4j
 @ControllerAdvice
@@ -37,7 +36,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public String businessHandle(BusinessException ex, HttpServletRequest request) {
-        log.error("enter the BusinessException Handler,",ex);
+        log.error("enter the BusinessException Handler,", ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -46,7 +45,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(ComponentException.class)
     public String componentHandle(ComponentException ex, HttpServletRequest request) {
-        log.error("enter the ComponentException Handler,",ex);
+        log.error("enter the ComponentException Handler,", ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -67,7 +66,6 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String bind(MethodArgumentNotValidException e, HttpServletRequest request) {
-        log.error("enter the MethodArgumentNotValidException Handler");
         return paramHandle(e.getBindingResult().getFieldErrors(), null, request);
     }
 
@@ -76,7 +74,6 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public String bind(BindException e, HttpServletRequest request) {
-        log.error("enter the BindException Handler");
         return paramHandle(e.getBindingResult().getFieldErrors(), null, request);
     }
 
@@ -85,13 +82,19 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public String bind(ConstraintViolationException e, HttpServletRequest request) {
-        log.error("enter the ConstraintViolationException Handler");
-        Map<String,String> map = new LinkedHashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-            map.put(constraintViolation.getMessageTemplate(),constraintViolation.getMessage());
+            map.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
         }
+        log.error("enter the ConstraintViolationException Handler,{}", map);
         return paramHandle(null, map, request);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
+        log.error("enter the MethodArgumentTypeMismatchException Handler,", ex);
+        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.PARAM_TYPE_ERROR));
     }
 
     /**
@@ -99,22 +102,26 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public String exception(Exception ex, HttpServletRequest request) {
-        log.error("enter the Unknown exception Handler,",ex);
+        log.error("enter the exception Handler,", ex);
         return getCustomException(request, ResultUtil.fail());
     }
 
     /**
      * 处理参数异常的公共逻辑
      */
-    private String paramHandle(List<FieldError> fieldErrors, Map<String,String> error, HttpServletRequest request) {
-        Map<String,String> map = new LinkedHashMap<>();
+    private String paramHandle(List<FieldError> fieldErrors, Map<String, String> error, HttpServletRequest request) {
+        Map<String, String> map = new LinkedHashMap<>();
         if (!CollectionUtils.isEmpty(fieldErrors)) {
             for (FieldError fieldError : fieldErrors) {
-                map.put(fieldError.getField(),fieldError.getDefaultMessage());
+                map.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
+        }
+        if (MapUtil.isNotEmpty(map)) {
+            log.error("enter the param exception Handler,{}", map);
         }
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST, MapUtil.isEmpty(error) ? map : error));
     }
+
 
     /**
      * 处理异常的公共逻辑

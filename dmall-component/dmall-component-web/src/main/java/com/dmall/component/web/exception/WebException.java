@@ -5,7 +5,7 @@ import com.dmall.common.model.exception.ComponentException;
 
 /**
  * @description: web组件异常
- * @author: created by yuhang on 2019/11/15 23:11
+ * @author: created by hang.yu on 2019/11/15 23:11
  */
 public class WebException extends ComponentException {
 

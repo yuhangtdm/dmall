@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -17,8 +18,8 @@ import lombok.experimental.Accessors;
  * 商品表
  * </p>
  *
- * @author yuhang
- * @since 2019-11-18
+ * @author hang.yu
+ * @since 2019-11-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -189,6 +190,8 @@ public class ProductDO implements Serializable {
     /**
      * 状态 Y,可用;N:不可用
      */
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private String isDeleted;
 
 

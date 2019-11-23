@@ -2,6 +2,7 @@ package com.dmall.component.cache.redis.configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.model.configuration.BasicConfiguration;
+import com.dmall.common.util.ObjectUtil;
 import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;
@@ -41,7 +42,7 @@ import java.util.Map;
 
 /**
  * @description: redis缓存配置类
- * @author: created by yuhang on 2019/11/3 21:35
+ * @author: created by hang.yu on 2019/11/3 21:35
  */
 @Slf4j
 @Configuration
@@ -80,13 +81,18 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
                         ReflectionUtils.makeAccessible(idField);
                         sb.append("id|").append(ReflectionUtils.getField(idField, objects[0]));
                     } else {
-                        sb.append(getParameterNames(method)[0]).append("|").append(objects[0].toString());
+                        if (ObjectUtil.isNotEmpty(objects[0])){
+                            //todo 待优化
+                            sb.append(getParameterNames(method)[0]).append("|").append(objects[0].toString());
+                        }
                     }
                 } else {
                     // 参数
                     String[] parameterNames = getParameterNames(method);
                     for (int i = 0; i < objects.length; i++) {
-                        sb.append(parameterNames[i]).append("|").append(objects[i].toString());
+                        if (ObjectUtil.isNotEmpty(objects[i])){
+                            sb.append(parameterNames[i]).append("|").append(objects[i].toString());
+                        }
                     }
                 }
             }

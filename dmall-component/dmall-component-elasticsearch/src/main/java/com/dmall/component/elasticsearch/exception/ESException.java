@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @description: elsticSearch异常类
- * @author: created by yuhang on 2019/11/6 23:40
+ * @author: created by hang.yu on 2019/11/6 23:40
  */
 @Getter
 public class ESException extends ComponentException {

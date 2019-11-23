@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * @description: 组件异常
- * @author: created by yuhang on 2019/11/7 20:56
+ * @author: created by hang.yu on 2019/11/7 20:56
  */
 @Getter
 public class ComponentException extends RuntimeException {

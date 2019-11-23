@@ -1,8 +1,8 @@
-package com.dmall.common.constants.component.web;
+package com.dmall.common.constants;
 
 /**
  * @description: web组件常量
- * @author: created by yuhang on 2019/11/10 15:40
+ * @author: created by hang.yu on 2019/11/10 15:40
  */
 public interface WebConstants {
 

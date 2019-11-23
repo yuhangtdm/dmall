@@ -8,7 +8,7 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
 
 /**
  * @description: Dashboard启动类
- * @author: created by yuhang on 2019/10/16 21:18
+ * @author: created by hang.yu on 2019/10/16 21:18
  */
 @SpringBootApplication
 @EnableDiscoveryClient

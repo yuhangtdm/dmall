@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 会员-帮助关系表 帮助对会员有用 服务实现类
  * </p>
  *
- * @author yuhang
+ * @author hang.yu
  * @since 2019-11-18
  */
 @Service
