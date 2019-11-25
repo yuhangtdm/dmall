@@ -1,5 +1,7 @@
 package com.dmall.common.enums.base;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -20,6 +22,16 @@ public class EnumUtil {
             }
         }
         return null;
+    }
+
+    public static List<Object>  getAllCode(Class<? extends KeyValueEnum> enumClazz) {
+        List<Object> codeList = new ArrayList<>();
+        if (enumClazz.isEnum()) {
+            for (KeyValueEnum enumConstant : enumClazz.getEnumConstants()) {
+                codeList.add(enumConstant.getCode());
+            }
+        }
+        return codeList;
     }
 
     /**

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author hang.yu
- * @since 2019-11-23
+ * @since 2019-11-24
  */
 public interface CategoryBrandMapper extends BaseMapper<CategoryBrandDO> {
 

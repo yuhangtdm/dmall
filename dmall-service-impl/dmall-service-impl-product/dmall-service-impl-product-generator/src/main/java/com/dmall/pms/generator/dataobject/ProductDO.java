@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author hang.yu
- * @since 2019-11-23
+ * @since 2019-11-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -86,6 +86,11 @@ public class ProductDO implements Serializable {
     private BigDecimal weight;
 
     /**
+     * 品牌名称
+     */
+    private String brandName;
+
+    /**
      * 备注
      */
     private String remark;
@@ -94,11 +99,6 @@ public class ProductDO implements Serializable {
      * 商品属性
      */
     private String productAttribute;
-
-    /**
-     * 品牌名称
-     */
-    private String brandName;
 
     /**
      * 上市时间

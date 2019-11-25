@@ -13,9 +13,11 @@ public enum  BasicStatusEnum implements ErrorCodeEnum{
 
     SUCCESS("0","请求成功"),
     FAIL("500","网络异常，请稍后再试"),
-    BAD_REQUEST("400","入参不合法,请检查入参后再次调用"),
-    NOT_FOUND_REQUEST("404","请检查请求路径"),
-    PARAM_TYPE_ERROR("405","请检查请求参数类型"),
+    BAD_REQUEST("400","请求数据不合法"),
+    NOT_FOUND_REQUEST("404","请求路径不合法"),
+    PARAM_TYPE_ERROR("409","请求参数类型不合法"),
+    MEDIA_PARAM_TYPE_ERROR("406","请求体不合法"),
+    METHOD_NOT_ALLOWED("405","请求方式不合法"),
     ;
 
     /**

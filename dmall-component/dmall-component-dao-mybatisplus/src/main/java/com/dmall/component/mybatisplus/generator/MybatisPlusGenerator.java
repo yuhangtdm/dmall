@@ -34,7 +34,8 @@ public class MybatisPlusGenerator {
         gc.setBaseResultMap(true);
         gc.setDateType(DateType.ONLY_DATE);
         gc.setEntityName("%sDO");
-        gc.setServiceName("%sService");
+//        gc.setServiceName("%sService");
+        gc.setServiceImplName("I%sServiceImpl");
         gc.setIdType(IdType.AUTO);
         gc.setFileOverride(true);
         mpg.setGlobalConfig(gc);
@@ -60,7 +61,7 @@ public class MybatisPlusGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
-//        strategy.setInclude("");
+//        strategy.setInclude("pms__category");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setEntityBuilderModel(true);
         strategy.setTablePrefix( "pms_");

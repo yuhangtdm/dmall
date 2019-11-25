@@ -1,14 +1,13 @@
 package com.dmall.pms.business.service.brand;
 
-import cn.hutool.core.util.EnumUtil;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
-import com.dmall.pms.api.dto.brand.list.ListBrandRequestDTO;
-import com.dmall.pms.api.dto.brand.page.BrandPageRequestDTO;
+import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.request.BrandPageRequestDTO;
 import com.dmall.pms.api.dto.brand.common.BrandCommonResponseDTO;
-import com.dmall.pms.api.dto.brand.save.SaveBrandCommonRequestDTO;
-import com.dmall.pms.api.dto.brand.update.UpdateBrandCommonRequestDTO;
-import com.dmall.pms.api.service.brand.BrandService;
+import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
+import com.dmall.pms.api.service.BrandService;
 import com.dmall.pms.business.service.brand.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,12 +42,12 @@ public class BrandServiceImpl implements BrandService {
     private GetBrandHandler getBrandHandler;
 
     @Override
-    public BaseResult<Long> save(@RequestBody SaveBrandCommonRequestDTO requestDTO) {
+    public BaseResult<Long> save(@RequestBody SaveBrandRequestDTO requestDTO) {
         return saveBrandHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<Long> update(@Valid UpdateBrandCommonRequestDTO requestDTO) {
+    public BaseResult<Long> update(@Valid UpdateBrandRequestDTO requestDTO) {
         return updateBrandHandler.handler(requestDTO);
     }
 
@@ -58,6 +57,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+//    @MapCacheable
     public BaseResult<List<BrandCommonResponseDTO>> list(@RequestBody ListBrandRequestDTO requestDTO) {
         return listBrandHandler.handler(requestDTO);
     }
@@ -68,7 +68,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BaseResult<Long> get(Long id) {
+    public BaseResult<BrandCommonResponseDTO> get(Long id) {
         return getBrandHandler.handler(id);
     }
 

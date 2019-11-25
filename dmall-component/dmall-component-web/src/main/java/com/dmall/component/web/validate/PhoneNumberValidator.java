@@ -1,7 +1,6 @@
 package com.dmall.component.web.validate;
 
-import com.dmall.common.constants.Constants;
-
+import com.dmall.common.constants.RegularConstants;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -16,6 +15,6 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber,Str
         if (phoneField == null) {
             return false;
         }
-        return phoneField.matches(Constants.PHONE_REGULAR) && phoneField.length() > 8 && phoneField.length() < 14;
+        return phoneField.matches(RegularConstants.PHONE) && phoneField.length() > 8 && phoneField.length() < 14;
     }
 }

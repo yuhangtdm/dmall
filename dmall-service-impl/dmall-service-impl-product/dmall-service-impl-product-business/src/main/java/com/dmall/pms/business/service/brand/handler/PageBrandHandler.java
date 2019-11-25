@@ -9,7 +9,7 @@ import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.brand.page.BrandPageRequestDTO;
+import com.dmall.pms.api.dto.brand.request.BrandPageRequestDTO;
 import com.dmall.pms.api.dto.brand.common.BrandCommonResponseDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
@@ -29,7 +29,7 @@ public class PageBrandHandler extends AbstractCommonHandler<BrandPageRequestDTO,
     private BrandMapper brandMapper;
 
     @Override
-    protected BaseResult processor(BrandPageRequestDTO requestDTO) {
+    public BaseResult processor(BrandPageRequestDTO requestDTO) {
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())

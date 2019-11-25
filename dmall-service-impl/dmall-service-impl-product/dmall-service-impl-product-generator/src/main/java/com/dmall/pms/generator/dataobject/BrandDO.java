@@ -1,8 +1,12 @@
 package com.dmall.pms.generator.dataobject;
 
-import com.baomidou.mybatisplus.annotation.*;
-
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +18,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author hang.yu
- * @since 2019-11-23
+ * @since 2019-11-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -33,19 +37,16 @@ public class BrandDO implements Serializable {
     /**
      * 名称
      */
-    @TableField(whereStrategy = FieldStrategy.NOT_EMPTY)
     private String name;
 
     /**
      * 英文名称
      */
-    @TableField(whereStrategy = FieldStrategy.NOT_EMPTY)
     private String englishName;
 
     /**
      * 首字母
      */
-    @TableField(whereStrategy = FieldStrategy.NOT_EMPTY)
     private String firstLetter;
 
     /**
@@ -81,7 +82,7 @@ public class BrandDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 N-可用;Y-不可用
+     * 状态 Y-可用;N-不可用
      */
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

@@ -14,7 +14,7 @@ public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements Commo
     @Override
     public BaseResult handler(ReqDTO dto) {
         BaseResult validate = validate(dto);
-        if (validate == null || validate.getResult()){
+        if (validate == null || validate.getResult()) {
             return processor(dto);
         }
         return validate;
@@ -24,9 +24,9 @@ public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements Commo
      * DTO转为DO
      */
     @Override
-    public DO dtoConvertDo(ReqDTO dto,Class<DO> doClazz) {
+    public DO dtoConvertDo(ReqDTO dto, Class<DO> doClazz) {
         DO result = BeanUtil.copyProperties(dto, doClazz);
-        customerConvertDo(result);
+        customerConvertDo(result, dto);
         return result;
     }
 
@@ -36,7 +36,7 @@ public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements Commo
     @Override
     public ResDTO doConvertDto(DO doo, Class<ResDTO> doClazz) {
         ResDTO result = BeanUtil.copyProperties(doo, doClazz);
-        customerConvertDto(result);
+        customerConvertDto(result, doo);
         return result;
     }
 
@@ -48,18 +48,18 @@ public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements Commo
     /**
      * 子类实现，处理业务
      */
-    protected abstract BaseResult processor(ReqDTO dto);
+    public abstract BaseResult processor(ReqDTO dto);
 
     /**
      * 子类可以重写,自定义转换do
      */
-    protected  void  customerConvertDo(DO result){
+    protected void customerConvertDo(DO result, ReqDTO dto) {
     }
 
     /**
      * 子类可以重写,自定义转换dto
      */
-    protected void  customerConvertDto(ResDTO result){
+    protected void customerConvertDto(ResDTO result, DO doo) {
     }
 
 }

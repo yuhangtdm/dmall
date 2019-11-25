@@ -21,7 +21,7 @@ public class GetBrandHandler extends AbstractCommonHandler<Long, BrandDO, BrandC
     private BrandMapper brandMapper;
 
     @Override
-    protected BaseResult processor(Long id) {
+    public BaseResult processor(Long id) {
         BrandDO brandDO = brandMapper.selectById(id);
         if (brandDO == null){
             return ResultUtil.fail(BrandErrorEnum.BRAND_NOT_EXIST);

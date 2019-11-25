@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author hang.yu
- * @since 2019-11-23
+ * @since 2019-11-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -37,7 +37,7 @@ public class CategoryBrandDO implements Serializable {
     /**
      * 商品分类id
      */
-    private Long productCategoryId;
+    private Long categoryId;
 
     /**
      * 品牌id
@@ -72,7 +72,7 @@ public class CategoryBrandDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 N-可用;Y-不可用
+     * 状态 Y-可用;N-不可用
      */
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

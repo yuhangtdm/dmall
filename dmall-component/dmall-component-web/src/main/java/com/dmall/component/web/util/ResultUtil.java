@@ -20,20 +20,20 @@ public class ResultUtil {
         return baseResult;
     }
 
-    public static BaseResult success(ErrorCodeEnum errorCodeEnum){
-        BaseResult baseResult = new BaseResult();
-        baseResult.setResult(Boolean.TRUE);
-        baseResult.setCode(errorCodeEnum.getCode());
-        baseResult.setMsg(errorCodeEnum.getMsg());
-        return baseResult;
-    }
-
     public static <T> BaseResult<T> success(T t){
         BaseResult<T> baseResult = new BaseResult<T>();
         baseResult.setResult(Boolean.TRUE);
         baseResult.setCode(BasicStatusEnum.SUCCESS.getCode());
         baseResult.setData(t);
         baseResult.setMsg(BasicStatusEnum.SUCCESS.getMsg());
+        return baseResult;
+    }
+
+    public static BaseResult success(ErrorCodeEnum errorCodeEnum){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.TRUE);
+        baseResult.setCode(errorCodeEnum.getCode());
+        baseResult.setMsg(errorCodeEnum.getMsg());
         return baseResult;
     }
 

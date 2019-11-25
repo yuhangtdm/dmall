@@ -1,5 +1,6 @@
 package com.dmall.component.cache.redis.configuration;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.model.configuration.BasicConfiguration;
 import com.dmall.common.util.ObjectUtil;
@@ -7,6 +8,7 @@ import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;
 import com.dmall.component.cache.redis.lock.DistributedLockService;
+import com.dmall.component.cache.redis.mapcache.MapCacheAspect;
 import com.dmall.component.cache.redis.properties.DMallRedisProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +29,7 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
@@ -69,21 +72,21 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     @Override
     public KeyGenerator keyGenerator() {
         return (o, method, objects) -> {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder key = new StringBuilder();
             String[] cacheNames = method.getAnnotation(Cacheable.class).cacheNames();
-            sb.append(cacheNames[0]).append(":");
+            key.append(cacheNames[0]).append(StrUtil.COLON);
             // 类名
-            sb.append(o.getClass().getName()).append(".").append(method.getName()).append(":");
+            key.append(o.getClass().getName()).append(StrUtil.DOT).append(method.getName()).append(StrUtil.COLON);
             if (objects.length > 0) {
                 if (objects.length == 1) {
                     Field idField = ReflectionUtils.findField(objects[0].getClass(), "id", Long.class);
                     if (idField != null) {
                         ReflectionUtils.makeAccessible(idField);
-                        sb.append("id|").append(ReflectionUtils.getField(idField, objects[0]));
+                        key.append("id|").append(ReflectionUtils.getField(idField, objects[0]));
                     } else {
                         if (ObjectUtil.isNotEmpty(objects[0])){
                             //todo 待优化
-                            sb.append(getParameterNames(method)[0]).append("|").append(objects[0].toString());
+                            key.append(getParameterNames(method)[0]).append("|").append(objects[0].toString());
                         }
                     }
                 } else {
@@ -91,13 +94,13 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
                     String[] parameterNames = getParameterNames(method);
                     for (int i = 0; i < objects.length; i++) {
                         if (ObjectUtil.isNotEmpty(objects[i])){
-                            sb.append(parameterNames[i]).append("|").append(objects[i].toString());
+                            key.append(parameterNames[i]).append("|").append(objects[i].toString());
                         }
                     }
                 }
             }
 
-            return sb.toString();
+            return key.toString();
         };
     }
 
@@ -174,6 +177,14 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     @Bean
     public DistributedLockService distributedLock(StringRedisTemplate stringRedisTemplate, DefaultRedisScript<Boolean> redisScript) {
         return new DistributedLockService(stringRedisTemplate, redisScript);
+    }
+
+    /**
+     * mapCache切面
+     */
+    @Bean
+    public MapCacheAspect mapCacheAspect(RedisTemplate redisTemplate){
+        return new MapCacheAspect(redisTemplate, dMallRedisProperties);
     }
 
     /**

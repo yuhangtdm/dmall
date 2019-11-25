@@ -1,6 +1,5 @@
 package com.dmall.component.web.validate;
 
-import com.dmall.common.constants.Constants;
 import com.dmall.common.constants.RegularConstants;
 
 import javax.validation.ConstraintValidator;
