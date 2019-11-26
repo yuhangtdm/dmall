@@ -13,7 +13,7 @@ spring:
   resources:
     add-mappings: false
   zipkin:
-      base-url: http://www.dmall.com:9411
+      base-url: http://106.15.47.106:9411
 
 eureka:
   client:
@@ -48,18 +48,18 @@ feign:
 
 
 
-dmall:
-  web:
-    swagger:
-      enabled: true
-      basePackage: com.dmall.web.admin
-      title: dmall-web
-      description: dmall-web
-      serviceUrl: http://www.dmall.com:8800
-      version: 1.0.0
-      contactName: 余杭
-      contactUrl: http://www.dmall.com:7010/doc.html
-      contactEmail: 649411629@qq.com
-    log:
-      enabled: true
-      pointcut: com.dmall.web.admin
+#dmall:
+#  web:
+#    swagger:
+#      enabled: true
+#      basePackage: com.dmall.web.admin
+#      title: dmall-web
+#      description: dmall-web
+#      serviceUrl: http://www.dmall.com:8800
+#      version: 1.0.0
+#      contactName: 余杭
+#      contactUrl: http://www.dmall.com:7010/doc.html
+#      contactEmail: 649411629@qq.com
+#    log:
+#      enabled: true
+#      pointcut: com.dmall.web.admin

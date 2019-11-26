@@ -1,9 +1,8 @@
 package com.dmall.component.cache.redis.configuration;
 
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.model.configuration.BasicConfiguration;
-import com.dmall.common.util.ObjectUtil;
+import com.dmall.component.cache.redis.entity.CacheKeyGenerator;
 import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;
@@ -17,7 +16,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -32,11 +30,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ReflectionUtils;
+
 import javax.annotation.PostConstruct;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.time.Duration;
@@ -71,37 +69,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      */
     @Override
     public KeyGenerator keyGenerator() {
-        return (o, method, objects) -> {
-            StringBuilder key = new StringBuilder();
-            String[] cacheNames = method.getAnnotation(Cacheable.class).cacheNames();
-            key.append(cacheNames[0]).append(StrUtil.COLON);
-            // 类名
-            key.append(o.getClass().getName()).append(StrUtil.DOT).append(method.getName()).append(StrUtil.COLON);
-            if (objects.length > 0) {
-                if (objects.length == 1) {
-                    Field idField = ReflectionUtils.findField(objects[0].getClass(), "id", Long.class);
-                    if (idField != null) {
-                        ReflectionUtils.makeAccessible(idField);
-                        key.append("id|").append(ReflectionUtils.getField(idField, objects[0]));
-                    } else {
-                        if (ObjectUtil.isNotEmpty(objects[0])){
-                            //todo 待优化
-                            key.append(getParameterNames(method)[0]).append("|").append(objects[0].toString());
-                        }
-                    }
-                } else {
-                    // 参数
-                    String[] parameterNames = getParameterNames(method);
-                    for (int i = 0; i < objects.length; i++) {
-                        if (ObjectUtil.isNotEmpty(objects[i])){
-                            key.append(parameterNames[i]).append("|").append(objects[i].toString());
-                        }
-                    }
-                }
-            }
-
-            return key.toString();
-        };
+        return CacheKeyGenerator::generate;
     }
 
     /**
@@ -158,6 +126,20 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
         return RedisCacheManager.builder(redisCacheWriter)
                 .cacheDefaults(defaultCacheConfig)
                 .withInitialCacheConfigurations(initialCacheConfiguration).build();
+    }
+
+    /**
+     * 自定义的RedisTemplate key和 HashKey 设置为字符串类型
+     */
+    @Bean
+    public RedisTemplate dMallRedisTemplate(RedisConnectionFactory connectionFactory){
+        RedisTemplate redisTemplate=new RedisTemplate();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setKeySerializer(RedisSerializer.string());
+        redisTemplate.setHashKeySerializer(RedisSerializer.string());
+        redisTemplate.setValueSerializer(RedisSerializer.java());
+        redisTemplate.setHashValueSerializer(RedisSerializer.java());
+        return redisTemplate;
     }
 
     /**

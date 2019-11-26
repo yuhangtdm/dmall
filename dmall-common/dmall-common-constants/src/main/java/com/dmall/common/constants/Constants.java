@@ -10,5 +10,7 @@ public interface Constants {
 
     String N = "N";
 
+    String ID= "id";
+
 
 }
