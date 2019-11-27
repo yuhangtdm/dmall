@@ -22,6 +22,7 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -40,6 +41,7 @@ import java.lang.reflect.Parameter;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description: redis缓存配置类
@@ -59,6 +61,9 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
+
+    @Autowired
+    private Environment environment;
 
     /**
      * 缓存key生成器
@@ -166,7 +171,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      */
     @Bean
     public MapCacheAspect mapCacheAspect(RedisTemplate redisTemplate){
-        return new MapCacheAspect(redisTemplate, dMallRedisProperties);
+        return new MapCacheAspect(redisTemplate, dMallRedisProperties, environment);
     }
 
     /**
@@ -176,29 +181,29 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * @param ttlUnitEnum    过期单位
      * @param ttl            过期时间
      */
-    private RedisCacheConfiguration buildRedisCacheConfiguration(String cacheKeyPrefix, TTLUnitEnum ttlUnitEnum, Long ttl) {
+    private RedisCacheConfiguration buildRedisCacheConfiguration(String cacheKeyPrefix, TimeUnit ttlUnitEnum, Long ttl) {
         return RedisCacheConfiguration.defaultCacheConfig().prefixKeysWith(cacheKeyPrefix + ":").entryTtl(getDuration(ttlUnitEnum, ttl));
     }
 
     /**
      * 获取Duration
      */
-    private Duration getDuration(TTLUnitEnum ttlUnitEnum, Long ttl) {
+    private Duration getDuration(TimeUnit ttlUnitEnum, Long ttl) {
         Duration duration = null;
         switch (ttlUnitEnum) {
-            case DAY: {
+            case DAYS: {
                 duration = Duration.ofDays(ttl);
                 break;
             }
-            case HOUR: {
+            case HOURS: {
                 duration = Duration.ofHours(ttl);
                 break;
             }
-            case MINUTE: {
+            case MINUTES: {
                 duration = Duration.ofMinutes(ttl);
                 break;
             }
-            case SECOND: {
+            case SECONDS: {
                 duration = Duration.ofSeconds(ttl);
                 break;
             }

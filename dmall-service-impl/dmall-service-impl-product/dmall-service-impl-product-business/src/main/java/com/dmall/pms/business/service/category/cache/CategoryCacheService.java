@@ -25,7 +25,7 @@ public class CategoryCacheService {
     private CategoryMapper categoryMapper;
 
 //    @MapCacheable(key ="category")
-    @Cacheable(cacheNames = "category")
+    @MapCacheable(cacheNames = "category")
     public List<CategoryDO> list(ListCategoryRequestDTO requestDTO){
         LambdaQueryWrapper<CategoryDO> queryWrapper = Wrappers.<CategoryDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), CategoryDO::getName, requestDTO.getName())

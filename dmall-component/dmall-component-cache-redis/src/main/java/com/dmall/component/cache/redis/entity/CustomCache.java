@@ -3,6 +3,8 @@ package com.dmall.component.cache.redis.entity;
 import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import lombok.Data;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @description: 自定义缓存类
  * @author: created by hang.yu on 2019/11/3 22:13
@@ -23,5 +25,5 @@ public class CustomCache {
     /**
      * 缓存过期单位 默认为天
      */
-    private TTLUnitEnum ttlUnitEnum = TTLUnitEnum.DAY;
+    private TimeUnit ttlUnitEnum = TimeUnit.DAYS;
 }

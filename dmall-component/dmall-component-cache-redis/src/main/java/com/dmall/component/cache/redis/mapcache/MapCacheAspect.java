@@ -1,5 +1,6 @@
 package com.dmall.component.cache.redis.mapcache;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.constants.Constants;
@@ -16,6 +17,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
+
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -52,6 +54,10 @@ public class MapCacheAspect {
     public void mapDeleteCache() {
     }
 
+    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapPutCache)")
+    public void mapPutCache() {
+    }
+
     /**
      * map缓存切面方法 用于获取list的方法
      */
@@ -71,11 +77,11 @@ public class MapCacheAspect {
             } else {
                 String env = environment.getActiveProfiles()[0];
                 key = dMallRedisProperties.getCacheKeyPrefix() + StrUtil.UNDERLINE + env
-                        + StrUtil.UNDERLINE + mapCacheable.cacheName() + StrUtil.COLON + className + StrUtil.COLON + methodName;
+                        + StrUtil.UNDERLINE + mapCacheable.cacheNames() + StrUtil.COLON + className + StrUtil.COLON + methodName;
             }
 
             List values = dmallRedisTemplate.opsForHash().values(key);
-            if (values != null) {
+            if (CollUtil.isNotEmpty(values)) {
                 log.info("cache hit,key:{}", key);
                 return values;
             } else {
@@ -85,6 +91,11 @@ public class MapCacheAspect {
                 for (Object o : list) {
                     Long id = (Long) ReflectUtil.getFieldValue(o, "id");
                     dmallRedisTemplate.opsForHash().put(key, id, o);
+                    if (mapCacheable.timeout() > 0L && mapCacheable.timeUnit() != null){
+                        dmallRedisTemplate.expire(key, mapCacheable.timeout(),mapCacheable.timeUnit());
+                    }else {
+                        dmallRedisTemplate.expire(key, dMallRedisProperties.getTtl(),dMallRedisProperties.getTtlUnitEnum());
+                    }
                 }
                 return result;
             }
@@ -95,6 +106,9 @@ public class MapCacheAspect {
         }
     }
 
+    /**
+     * map缓存切面方法 用于获取对象的方法
+     */
     @Around("mapGetCache()")
     public Object mapGetCache(ProceedingJoinPoint joinPoint) {
         String methodName = "";
@@ -132,7 +146,39 @@ public class MapCacheAspect {
         }
     }
 
+    /**
+     * map缓存切面方法 用于更新对象的方法
+     */
+    @Around("mapPutCache()")
+    public Object mapPutCache(ProceedingJoinPoint joinPoint) {
+        String methodName = "";
+        try {
 
+            Object[] args = joinPoint.getArgs();
+            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            MapPutCache mapPutCache = methodSignature.getMethod().getAnnotation(MapPutCache.class);
+            String className = joinPoint.getTarget().getClass().getName();
+            String key = StrUtil.isNotBlank(mapPutCache.key()) ? mapPutCache.key()
+                    : dMallRedisProperties.getCacheKeyPrefix() + StrUtil.UNDERLINE + environment.getActiveProfiles()[0]
+                    + StrUtil.UNDERLINE + mapPutCache.cacheName() + StrUtil.COLON + className
+                    + StrUtil.COLON + methodName;
+            Object result = joinPoint.proceed(args);
+            dmallRedisTemplate.opsForHash().put(key, result, args[0]);
+            if (mapPutCache.timeout() > 0L && mapPutCache.timeUnit() != null){
+                dmallRedisTemplate.expire(key, mapPutCache.timeout(),mapPutCache.timeUnit());
+            }else {
+                dmallRedisTemplate.expire(key, dMallRedisProperties.getTtl(),dMallRedisProperties.getTtlUnitEnum());
+            }
+            return result;
+        } catch (Throwable e) {
+            log.warn("MapPutCache method:{} catch error", methodName, e);
+            throw new CacheRedisException(CacheRedisErrorEnum.MAP_CACHE_ABLE_ERROR);
+        }
+    }
+
+    /**
+     * map切面缓存方法 用于删除缓存的方法
+     */
     @AfterReturning(pointcut = "mapDeleteCache()", returning = "result")
     public Object mapDeleteCache(JoinPoint joinPoint, Object result) {
         String methodName = "";

@@ -5,6 +5,7 @@ import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description: 缓存属性配置
@@ -28,7 +29,7 @@ public class DMallRedisProperties {
     /**
      * 过期单位,默认是天
      */
-    private TTLUnitEnum ttlUnitEnum = TTLUnitEnum.DAY;
+    private TimeUnit ttlUnitEnum = TimeUnit.DAYS;
 
     /**
      * 默认过期时间 默认是1天
