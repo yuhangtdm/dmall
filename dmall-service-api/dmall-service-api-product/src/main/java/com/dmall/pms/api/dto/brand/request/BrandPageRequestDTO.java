@@ -18,10 +18,8 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "BrandPageRequestDTO", description = "品牌分页请求实体")
-@EqualsAndHashCode(callSuper = false)
 public class BrandPageRequestDTO extends PageRequestDTO {
 
     @ApiModelProperty(value = "品牌名称", position = 1)

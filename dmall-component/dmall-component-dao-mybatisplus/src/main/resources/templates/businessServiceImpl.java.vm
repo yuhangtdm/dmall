@@ -1,0 +1,75 @@
+package ${serviceImplPackage};
+
+import ${requestDtoPackage}.${saveRequestDto};
+import ${requestDtoPackage}.${updateRequestDto};
+import ${requestDtoPackage}.${listRequestDto};
+import ${requestDtoPackage}.${pageRequestDto};
+import ${commonDtoPackage}.${commonResponseDto};
+import ${servicePackage}.${businessService};
+import ${handlerPackage}.*;
+import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.model.result.LayuiPage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
+import java.util.List;
+
+/**
+ * @description: $!{serviceImplComment}
+ * @author: created by ${author} on ${datetime}
+ */
+@RestController
+public class  ${businessServiceImpl} implements ${businessService} {
+
+    @Autowired
+    protected ${saveHandler} ${saveHandlerName};
+
+    @Autowired
+    private ${deleteHandler} ${deleteHandlerName};
+
+    @Autowired
+    private ${updateHandler} ${updateHandlerName};
+
+    @Autowired
+    private ${getHandler} ${getHandlerName};
+
+    @Autowired
+    private ${listHandler} ${listHandlerName};
+
+    @Autowired
+    private ${pageHandler} ${pageHandlerName};
+
+
+    @Override
+    public BaseResult<Long> save(@RequestBody ${saveRequestDto} requestDTO) {
+        return ${saveHandlerName}.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Long> delete(@PathVariable("id") Long id) {
+        return ${deleteHandlerName}.handler(id);
+    }
+
+    @Override
+    public BaseResult<Long> update(@Valid ${updateRequestDto} requestDTO) {
+        return ${updateHandlerName}.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<${commonResponseDto}> get(Long id) {
+        return ${getHandlerName}.handler(id);
+    }
+
+    @Override
+    public BaseResult<List<${commonResponseDto}>> list(@RequestBody ${listRequestDto} requestDTO) {
+        return ${listHandlerName}.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<LayuiPage<${commonResponseDto}>> page(@RequestBody ${pageRequestDto} requestDTO) {
+        return ${pageHandlerName}.handler(requestDTO);
+    }
+
+}

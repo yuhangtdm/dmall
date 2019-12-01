@@ -1,46 +1,75 @@
 package com.dmall.mms.service.impl.member;
 
-import com.dmall.mms.api.service.member.MemberService;
-import com.dmall.mms.api.dto.member.request.MemberRequestDTO;
-import com.dmall.mms.api.dto.member.response.MemberResponseDTO;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import com.dmall.mms.api.dto.member.request.SaveMemberRequestDTO;
+import com.dmall.mms.api.dto.member.request.UpdateMemberRequestDTO;
+import com.dmall.mms.api.dto.member.request.ListMemberRequestDTO;
+import com.dmall.mms.api.dto.member.request.PageMemberRequestDTO;
+import com.dmall.mms.api.dto.member.common.CommonMemberResponseDTO;
+import com.dmall.mms.api.service.MemberService;
+import com.dmall.mms.service.impl.member.handler.*;
+import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.model.result.LayuiPage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
- * @description: 会员服务实现类
- * @author: created by hang.yu on 2019/10/15 22:35
+ * @description: 会员服务实现
+ * @author: created by hang.yu on 2019-12-01 22:56:07
  */
 @RestController
-//@RefreshScope
-public class MemberServiceImpl implements MemberService {
+public class  MemberServiceImpl implements MemberService {
+
+    @Autowired
+    protected SaveMemberHandler saveMemberHandler;
+
+    @Autowired
+    private DeleteMemberHandler deleteMemberHandler;
+
+    @Autowired
+    private UpdateMemberHandler updateMemberHandler;
+
+    @Autowired
+    private GetMemberHandler getMemberHandler;
+
+    @Autowired
+    private ListMemberHandler listMemberHandler;
+
+    @Autowired
+    private PageMemberHandler pageMemberHandler;
+
 
     @Override
-    @Cacheable(cacheNames = "member",key = "1")
-    public MemberResponseDTO getMember(@RequestBody MemberRequestDTO memberRequestDTO) {
-        MemberResponseDTO memberResponseDTO = new MemberResponseDTO();
-        memberResponseDTO.setId(memberRequestDTO.getId());
-        memberResponseDTO.setName(memberRequestDTO.getName());
-        memberResponseDTO.setRealName("");
-        memberResponseDTO.setGender(1);
-        return memberResponseDTO;
+    public BaseResult<Long> save(@RequestBody SaveMemberRequestDTO requestDTO) {
+        return saveMemberHandler.handler(requestDTO);
     }
 
-    @Cacheable(cacheNames = "member")
-    public String getName(String name){
-        return name;
+    @Override
+    public BaseResult<Long> delete(@PathVariable("id") Long id) {
+        return deleteMemberHandler.handler(id);
     }
 
-    @Cacheable(cacheNames = "member")
-    public Member getBean(Member member){
-        return member;
+    @Override
+    public BaseResult<Long> update(@Valid UpdateMemberRequestDTO requestDTO) {
+        return updateMemberHandler.handler(requestDTO);
     }
 
-    @Cacheable(cacheNames = "member")
-    public String getManyParams(String name, Integer age){
-        return name + age;
+    @Override
+    public BaseResult<CommonMemberResponseDTO> get(Long id) {
+        return getMemberHandler.handler(id);
     }
 
+    @Override
+    public BaseResult<List<CommonMemberResponseDTO>> list(@RequestBody ListMemberRequestDTO requestDTO) {
+        return listMemberHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<LayuiPage<CommonMemberResponseDTO>> page(@RequestBody PageMemberRequestDTO requestDTO) {
+        return pageMemberHandler.handler(requestDTO);
+    }
 
 }

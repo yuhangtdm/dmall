@@ -5,13 +5,16 @@ import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: page公共请求实体
  * @author: created by hang.yu on 2019/11/23 11:31
  */
 @Data
-public class PageRequestDTO {
+public class PageRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 5911137056674141847L;
 
     /**
      * 当前页码 默认1页

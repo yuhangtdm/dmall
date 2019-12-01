@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -12,12 +14,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 会员浏览历史记录表
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 会员浏览历史记录表
+ * @author: created by hang.yu on 2019-12-01 22:56:08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -25,7 +23,7 @@ import lombok.experimental.Accessors;
 @TableName("mms_member_view_sku")
 public class MemberViewSkuDO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * id
@@ -35,31 +33,26 @@ public class MemberViewSkuDO implements Serializable {
     /**
      * 会员id
      */
-    @TableField("member_id")
     private Long memberId;
 
     /**
      * skuid
      */
-    @TableField("sku_id")
     private Long skuId;
 
     /**
      * 商品id
      */
-    @TableField("product_id")
     private String productId;
 
     /**
      * 商品编号
      */
-    @TableField("product_no")
     private String productNo;
 
     /**
      * sku编号
      */
-    @TableField("sku_no")
     private String skuNo;
 
     /**
@@ -75,7 +68,7 @@ public class MemberViewSkuDO implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(value = "gmt_created", fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     private Date gmtCreated;
 
     /**
@@ -86,13 +79,14 @@ public class MemberViewSkuDO implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(value = "gmt_modified", fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
     /**
-     * 状态 N-可用;Y-不可用
+     * 状态 Y-可用;N-不可用
      */
-    @TableField("is_deleted")
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private String isDeleted;
 
 

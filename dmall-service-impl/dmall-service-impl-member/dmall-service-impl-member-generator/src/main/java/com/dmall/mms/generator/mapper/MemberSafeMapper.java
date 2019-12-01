@@ -4,12 +4,8 @@ import com.dmall.mms.generator.dataobject.MemberSafeDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * <p>
- * 账户安全表 Mapper 接口
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 账户安全表
+ * @author: created by hang.yu on 2019-12-01 22:56:08
  */
 public interface MemberSafeMapper extends BaseMapper<MemberSafeDO> {
 

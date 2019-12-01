@@ -1,0 +1,23 @@
+package ${requestDtoPackage};
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
+import ${commonDtoPackage}.${commonRequestDto};
+
+/**
+ * @description: $!{updateRequestComment}
+ * @author: created by ${author} on ${datetime}
+ */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value="${updateRequestDto}", description="$!{updateRequestComment}")
+public class ${updateRequestDto} extends ${commonRequestDto} {
+
+    @ApiModelProperty(value = "主键", required = true, position = 0)
+    private Long id;
+
+}

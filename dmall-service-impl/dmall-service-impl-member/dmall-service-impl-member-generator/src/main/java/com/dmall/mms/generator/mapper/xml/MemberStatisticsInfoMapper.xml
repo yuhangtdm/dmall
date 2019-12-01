@@ -24,4 +24,9 @@
         <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, member_id, consume_amount, order_count, coupon_count, comment_count, return_order_count, login_count, attend_count, fans_count, collect_product_count, collect_subject_count, collect_merchants_count, creator, gmt_created, modifier, gmt_modified, is_deleted
+    </sql>
+
 </mapper>

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -12,12 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 会员发票表
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 会员发票表
+ * @author: created by hang.yu on 2019-12-01 22:56:08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -25,7 +22,7 @@ import lombok.experimental.Accessors;
 @TableName("mms_member_invoice")
 public class MemberInvoiceDO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * id
@@ -36,25 +33,21 @@ public class MemberInvoiceDO implements Serializable {
     /**
      * 发票抬头
      */
-    @TableField("bill_header")
     private String billHeader;
 
     /**
      * 收票人姓名
      */
-    @TableField("bill_receiver_name")
     private String billReceiverName;
 
     /**
      * 收票人电话
      */
-    @TableField("bill_receiver_phone")
     private String billReceiverPhone;
 
     /**
      * 收票人邮箱
      */
-    @TableField("bill_receiver_email")
     private String billReceiverEmail;
 
     /**
@@ -65,7 +58,7 @@ public class MemberInvoiceDO implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(value = "gmt_created", fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     private Date gmtCreated;
 
     /**
@@ -76,13 +69,14 @@ public class MemberInvoiceDO implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(value = "gmt_modified", fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
     /**
-     * 状态 N-可用;Y-不可用
+     * 状态 Y-可用;N-不可用
      */
-    @TableField("is_deleted")
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private String isDeleted;
 
 

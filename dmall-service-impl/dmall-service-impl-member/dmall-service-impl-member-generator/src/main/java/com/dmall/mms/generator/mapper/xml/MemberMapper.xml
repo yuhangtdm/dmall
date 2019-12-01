@@ -30,4 +30,9 @@
         <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, password, real_name, nick_name, gender, birthday, phone, email, marital_status, monthly_income, id_card_number, education_degree, industry, icon, source_type, integration, growth, history_integration, creator, gmt_created, modifier, gmt_modified, is_deleted
+    </sql>
+
 </mapper>

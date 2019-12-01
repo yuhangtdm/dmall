@@ -4,12 +4,8 @@ import com.dmall.mms.generator.dataobject.MemberStatisticsInfoDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * <p>
- * 会员统计信息表 Mapper 接口
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 会员统计信息表
+ * @author: created by hang.yu on 2019-12-01 22:56:08
  */
 public interface MemberStatisticsInfoMapper extends BaseMapper<MemberStatisticsInfoDO> {
 

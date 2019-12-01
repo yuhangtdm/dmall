@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -12,12 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 会员表
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 会员表
+ * @author: created by hang.yu on 2019-12-01 22:56:07
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -25,7 +22,7 @@ import lombok.experimental.Accessors;
 @TableName("mms_member")
 public class MemberDO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * id
@@ -46,13 +43,11 @@ public class MemberDO implements Serializable {
     /**
      * 真实姓名
      */
-    @TableField("real_name")
     private String realName;
 
     /**
      * 昵称 可以重复
      */
-    @TableField("nick_name")
     private String nickName;
 
     /**
@@ -78,25 +73,21 @@ public class MemberDO implements Serializable {
     /**
      * 婚姻状况 1-未婚;2-已婚;3-保密
      */
-    @TableField("marital_status")
     private Integer maritalStatus;
 
     /**
      * 月收入 范围
      */
-    @TableField("monthly_income")
     private Integer monthlyIncome;
 
     /**
      * 身份证号码
      */
-    @TableField("id_card_number")
     private String idCardNumber;
 
     /**
      * 教育程度 数据字典
      */
-    @TableField("education_degree")
     private Integer educationDegree;
 
     /**
@@ -112,7 +103,6 @@ public class MemberDO implements Serializable {
     /**
      * 用户来源
      */
-    @TableField("source_type")
     private Integer sourceType;
 
     /**
@@ -128,7 +118,6 @@ public class MemberDO implements Serializable {
     /**
      * 历史积分数量
      */
-    @TableField("history_integration")
     private Integer historyIntegration;
 
     /**
@@ -139,7 +128,7 @@ public class MemberDO implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(value = "gmt_created", fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     private Date gmtCreated;
 
     /**
@@ -150,13 +139,14 @@ public class MemberDO implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(value = "gmt_modified", fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
     /**
-     * 状态 N-可用;Y-不可用
+     * 状态 Y-可用;N-不可用
      */
-    @TableField("is_deleted")
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private String isDeleted;
 
 

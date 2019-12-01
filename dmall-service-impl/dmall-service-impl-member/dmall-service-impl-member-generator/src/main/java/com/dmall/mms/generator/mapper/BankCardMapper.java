@@ -1,17 +1,11 @@
 package com.dmall.mms.generator.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dmall.mms.generator.dataobject.BankCardDO;
 import com.dmall.mms.generator.dataobject.BankCardDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * <p>
- * 会员银行卡表 Mapper 接口
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 会员银行卡表
+ * @author: created by hang.yu on 2019-12-01 22:56:07
  */
 public interface BankCardMapper extends BaseMapper<BankCardDO> {
 

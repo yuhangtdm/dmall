@@ -1,0 +1,34 @@
+package ${handlerPackage};
+
+import ${requestDtoPackage}.${saveRequestDto};
+import ${errorEnumPackage}.${errorEnum};
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.model.handler.AbstractCommonHandler;
+import com.dmall.common.model.result.BaseResult;
+import com.dmall.component.web.util.ResultUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * @description: $!{saveHandlerComment}
+ * @author: created by ${author} on ${datetime}
+ */
+@Component
+public class ${saveHandler} extends AbstractCommonHandler<${saveRequestDto}, ${entity}, Long> {
+
+    @Autowired
+    private ${table.mapperName} ${mapperName};
+
+    @Override
+    public BaseResult<Long> validate(${saveRequestDto} requestDTO) {
+        return ResultUtil.success();
+    }
+
+    @Override
+    public BaseResult<Long> processor(${saveRequestDto} requestDTO) {
+        return ResultUtil.success();
+    }
+
+}

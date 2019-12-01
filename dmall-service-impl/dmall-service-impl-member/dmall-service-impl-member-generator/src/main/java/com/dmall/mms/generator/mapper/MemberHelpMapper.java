@@ -4,12 +4,8 @@ import com.dmall.mms.generator.dataobject.MemberHelpDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * <p>
- * 会员-帮助关系表 帮助对会员有用 Mapper 接口
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 会员-帮助关系表 帮助对会员有用
+ * @author: created by hang.yu on 2019-12-01 22:56:08
  */
 public interface MemberHelpMapper extends BaseMapper<MemberHelpDO> {
 

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -12,12 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 会员收货地址表
- * </p>
- *
- * @author hang.yu
- * @since 2019-10-29
+ * @description: 会员收货地址表
+ * @author: created by hang.yu on 2019-12-01 22:56:08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -25,7 +22,7 @@ import lombok.experimental.Accessors;
 @TableName("mms_member_receive_address")
 public class MemberReceiveAddressDO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * id
@@ -36,7 +33,6 @@ public class MemberReceiveAddressDO implements Serializable {
     /**
      * 会员id
      */
-    @TableField("member_id")
     private Long memberId;
 
     /**
@@ -52,13 +48,11 @@ public class MemberReceiveAddressDO implements Serializable {
     /**
      * 是否为默认地址 Y-是;N-否,注意只有一个默认地址
      */
-    @TableField("default_status")
     private String defaultStatus;
 
     /**
      * 邮政编码
      */
-    @TableField("post_code")
     private String postCode;
 
     /**
@@ -79,7 +73,6 @@ public class MemberReceiveAddressDO implements Serializable {
     /**
      * 详细地址
      */
-    @TableField("detail_address")
     private String detailAddress;
 
     /**
@@ -90,7 +83,7 @@ public class MemberReceiveAddressDO implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(value = "gmt_created", fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     private Date gmtCreated;
 
     /**
@@ -101,13 +94,14 @@ public class MemberReceiveAddressDO implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(value = "gmt_modified", fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
     /**
-     * 状态 N-可用;Y-不可用
+     * 状态 Y-可用;N-不可用
      */
-    @TableField("is_deleted")
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private String isDeleted;
 
 

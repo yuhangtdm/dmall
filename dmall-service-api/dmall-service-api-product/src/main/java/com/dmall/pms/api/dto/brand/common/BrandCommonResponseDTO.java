@@ -1,13 +1,12 @@
 package com.dmall.pms.api.dto.brand.common;
 
-import com.dmall.common.enums.base.IsDeletedEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,11 +15,8 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
 @ApiModel(value = "BrandPageResponseDTO", description = "AllArgsConstructor")
-@EqualsAndHashCode(callSuper = false)
-public class BrandCommonResponseDTO extends BrandCommonRequestDTO {
+public class BrandCommonResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 7256425409372270661L;
 
