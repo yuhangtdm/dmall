@@ -8,7 +8,7 @@ import com.dmall.mms.api.dto.membercolletionsubject.common.CommonMemberColletion
 
 /**
  * @description: 新增会员收藏专题表 请求实体
- * @author: created by hang.yu on 2019-12-01 22:56:08
+ * @author: created by hang.yu on 2019-12-02 23:04:18
  */
 @Data
 @Accessors(chain = true)

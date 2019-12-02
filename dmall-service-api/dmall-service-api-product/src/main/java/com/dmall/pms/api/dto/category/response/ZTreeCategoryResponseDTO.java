@@ -1,13 +1,11 @@
 package com.dmall.pms.api.dto.category.response;
 
-import com.dmall.pms.api.dto.category.common.CategoryResponseDTO;
+import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
@@ -18,11 +16,9 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "ZTreeCategoryResponseDTO", description = "ZTree分类树实体")
 @EqualsAndHashCode(callSuper = false)
-public class ZTreeCategoryResponseDTO extends CategoryResponseDTO {
+@ApiModel(value = "ZTreeCategoryResponseDTO", description = "ZTree分类树实体")
+public class ZTreeCategoryResponseDTO extends CommonCategoryResponseDTO {
 
     @ApiModelProperty(value = "子元素",  position = 23)
     private List<ZTreeCategoryResponseDTO> children= Lists.newArrayList();

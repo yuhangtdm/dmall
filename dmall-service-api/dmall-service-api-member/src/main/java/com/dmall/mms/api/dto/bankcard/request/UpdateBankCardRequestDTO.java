@@ -9,7 +9,7 @@ import com.dmall.mms.api.dto.bankcard.common.CommonBankCardRequestDTO;
 
 /**
  * @description: 修改会员银行卡请求实体
- * @author: created by hang.yu on 2019-12-01 22:56:07
+ * @author: created by hang.yu on 2019-12-02 23:04:17
  */
 @Data
 @Accessors(chain = true)

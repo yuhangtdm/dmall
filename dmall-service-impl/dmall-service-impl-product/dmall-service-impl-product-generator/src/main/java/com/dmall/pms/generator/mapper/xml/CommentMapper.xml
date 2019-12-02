@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.pms.generator.mapper.CommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmall.pms.generator.dataobject.CommentDO">
+        <id column="id" property="id" />
+        <result column="product_id" property="productId" />
+        <result column="sku_id" property="skuId" />
+        <result column="order_id" property="orderId" />
+        <result column="order_item_id" property="orderItemId" />
+        <result column="content" property="content" />
+        <result column="star" property="star" />
+        <result column="level" property="level" />
+        <result column="medias" property="medias" />
+        <result column="member_nick_name" property="memberNickName" />
+        <result column="member_ip" property="memberIp" />
+        <result column="member_icon" property="memberIcon" />
+        <result column="show_status" property="showStatus" />
+        <result column="praise_count" property="praiseCount" />
+        <result column="reply_count" property="replyCount" />
+        <result column="product_no" property="productNo" />
+        <result column="sku_no" property="skuNo" />
+        <result column="order_no" property="orderNo" />
+        <result column="order_item_no" property="orderItemNo" />
+        <result column="creator" property="creator" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="modifier" property="modifier" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, product_id, sku_id, order_id, order_item_id, content, star, level, medias, member_nick_name, member_ip, member_icon, show_status, praise_count, reply_count, product_no, sku_no, order_no, order_item_no, creator, gmt_created, modifier, gmt_modified, is_deleted
+    </sql>
+
+</mapper>

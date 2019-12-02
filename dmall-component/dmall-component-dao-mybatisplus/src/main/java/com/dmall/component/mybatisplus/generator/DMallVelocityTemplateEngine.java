@@ -2,15 +2,26 @@ package com.dmall.component.mybatisplus.generator;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.extension.toolkit.PackageHelper;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.FileOutConfig;
+import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @description: 用于构建模板文件中的变量
  * @author: created by hang.yu on 2019/12/1 14:16
  */
+@Slf4j
 public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
 
     @Override
@@ -33,6 +44,151 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
         return objectMap;
     }
 
+    /**
+     * 重写输出方法达到自定义的功能
+     */
+    @Override
+    public AbstractTemplateEngine batchOutput() {
+        // 先生成自定义文件
+        try {
+            List<TableInfo> tableInfoList = getConfigBuilder().getTableInfoList();
+            for (TableInfo tableInfo : tableInfoList) {
+                Map<String, Object> objectMap = getObjectMap(tableInfo);
+                // 自定义内容
+                InjectionConfig injectionConfig = getConfigBuilder().getInjectionConfig();
+                if (null != injectionConfig) {
+                    injectionConfig.initMap();
+                    List<FileOutConfig> focList = injectionConfig.getFileOutConfigList();
+                    if (CollectionUtils.isNotEmpty(focList)) {
+                        for (FileOutConfig foc : focList) {
+                            switch (foc.getTemplatePath()){
+                                case Constants.TEMPLATES_BUSINESS_SERVICE:{
+                                    if (isCreate(DMallFileType.SERVICE_API, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_BUSINESS_SERVICE_IMPL:{
+                                    if (isCreate(DMallFileType.SERVICE_IMPL, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_DTO:{
+                                    if (isCreate(DMallFileType.DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_COMMON_REQUEST_DTO:{
+                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_COMMON_RESPONSE_DTO:{
+                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_LIST_REQEUST_DTO:{
+                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_PAGE_REQEUST_DTO:{
+                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_SAVE_REQEUST_DTO:{
+                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_UPDATE_REQUEST_DTO:{
+                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_SAVEHANDLER:{
+                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_DELETEHANDLER:{
+                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_UPDATEHANDLER:{
+                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_GETHANDLER:{
+                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_LISTHANDLER:{
+                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_PAGEHANDLER:{
+                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_ERRORENUM:{
+                                    if (isCreate(DMallFileType.ERROR_ENUM, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            log.info("==========================生成自定义文件成功==========================");
+        } catch (Exception e) {
+            log.error("无法创建文件，请检查配置信息！", e);
+        }
+        return super.batchOutput();
+    }
+
+    protected boolean isCreate(DMallFileType fileType, String filePath) {
+        ConfigBuilder cb = getConfigBuilder();
+        // 自定义判断
+        InjectionConfig ic = cb.getInjectionConfig();
+        if (null != ic && null != ic.getFileCreate()) {
+            if (ic.getFileCreate() instanceof DMallFileCreate){
+                DMallFileCreate dc = (DMallFileCreate) ic.getFileCreate();
+                return dc.isCreate(cb, fileType, filePath);
+            }
+        }
+        // 全局判断【默认】
+        File file = new File(filePath);
+        boolean exist = file.exists();
+        if (!exist) {
+            PackageHelper.mkDir(file.getParentFile());
+        }
+        return !exist || getConfigBuilder().getGlobalConfig().isFileOverride();
+    }
 
     /**
      * 设置包名

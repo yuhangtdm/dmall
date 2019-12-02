@@ -14,12 +14,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * sku表
- * </p>
- *
- * @author hang.yu
- * @since 2019-11-24
+ * @description: sku表
+ * @author: created by hang.yu on 2019-12-02 23:55:34
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -253,7 +249,7 @@ public class SkuDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

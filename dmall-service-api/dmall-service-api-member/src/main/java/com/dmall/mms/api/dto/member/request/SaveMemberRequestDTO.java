@@ -8,7 +8,7 @@ import com.dmall.mms.api.dto.member.common.CommonMemberRequestDTO;
 
 /**
  * @description: 新增会员请求实体
- * @author: created by hang.yu on 2019-12-01 22:56:07
+ * @author: created by hang.yu on 2019-12-02 23:04:18
  */
 @Data
 @Accessors(chain = true)

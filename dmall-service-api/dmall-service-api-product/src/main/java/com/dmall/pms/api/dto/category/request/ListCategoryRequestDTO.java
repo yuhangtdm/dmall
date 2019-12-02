@@ -1,26 +1,23 @@
 package com.dmall.pms.api.dto.category.request;
 
+import com.dmall.component.web.validate.ValueInEnum;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
+import java.io.Serializable;
 
 /**
- * @description:
- * @author: created by hang.yu on 2019/11/24 14:18
+ * @description: 商品分类列表请求实体
+ * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "ListCategoryRequestDTO", description = "查询分类列表实体")
-@EqualsAndHashCode(callSuper = false)
-public class ListCategoryRequestDTO {
+@ApiModel(value="ListCategoryRequestDTO", description="商品分类列表请求实体")
+public class ListCategoryRequestDTO implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "分类名称",  position = 1)
     private String name;
@@ -29,5 +26,8 @@ public class ListCategoryRequestDTO {
     private Long parentId;
 
     @ApiModelProperty(value = "级别 1-1级;2-2级;3-3级", position = 35)
-    private LevelEnum level;
+    @ValueInEnum(LevelEnum.class)
+    private Integer level;
+
+
 }

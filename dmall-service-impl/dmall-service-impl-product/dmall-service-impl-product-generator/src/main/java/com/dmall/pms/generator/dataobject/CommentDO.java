@@ -13,12 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 商品评价表
- * </p>
- *
- * @author hang.yu
- * @since 2019-11-24
+ * @description: 商品评价表
+ * @author: created by hang.yu on 2019-12-02 23:55:34
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -60,7 +56,7 @@ public class CommentDO implements Serializable {
     private String content;
 
     /**
-     * 星级 1-5星，1:差评,2,3:中评,4,5:好评
+     * 星级 1-5星，1-差评;2,3-中评;4,5-好评
      */
     private Integer star;
 
@@ -147,7 +143,7 @@ public class CommentDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

@@ -2,16 +2,15 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
-import com.dmall.pms.api.dto.brand.request.BrandPageRequestDTO;
-import com.dmall.pms.api.dto.brand.common.BrandCommonResponseDTO;
+import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -33,11 +32,11 @@ public interface BrandService {
 
     @ApiOperation(value = "品牌分页")
     @PostMapping("/page")
-    BaseResult<LayuiPage<BrandCommonResponseDTO>> page(@RequestBody BrandPageRequestDTO pageRequestDTO);
+    BaseResult<LayuiPage<CommonBrandResponseDTO>> page(@RequestBody PageBrandRequestDTO pageRequestDTO);
 
     @ApiOperation(value = "品牌列表")
     @PostMapping("/list")
-    BaseResult<List<BrandCommonResponseDTO>> list(@RequestBody ListBrandRequestDTO pageRequestDTO);
+    BaseResult<List<CommonBrandResponseDTO>> list(@RequestBody ListBrandRequestDTO pageRequestDTO);
 
     @ApiOperation(value = "删除品牌")
     @ApiImplicitParam(name = "id", value = "品牌id", required = true, dataType = "int", paramType = "path")
@@ -47,6 +46,6 @@ public interface BrandService {
     @ApiOperation(value = "根据id查询品牌")
     @ApiImplicitParam(name = "id", value = "品牌id", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{id}")
-    BaseResult<BrandCommonResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<CommonBrandResponseDTO> get(@PathVariable("id") Long id);
 
 }

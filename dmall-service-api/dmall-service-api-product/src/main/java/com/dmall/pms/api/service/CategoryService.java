@@ -1,7 +1,7 @@
 package com.dmall.pms.api.service;
 
 import com.dmall.common.model.result.BaseResult;
-import com.dmall.pms.api.dto.category.common.CategoryResponseDTO;
+import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public interface CategoryService {
 
     @ApiOperation(value = "分类列表")
     @PostMapping("/list")
-    BaseResult<List<CategoryResponseDTO>> list(@RequestBody ListCategoryRequestDTO requestDTO);
+    BaseResult<List<CommonCategoryResponseDTO>> list(@RequestBody ListCategoryRequestDTO requestDTO);
 
     @ApiOperation(value = "删除分类")
     @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "int", paramType = "path")
@@ -42,7 +41,7 @@ public interface CategoryService {
     @ApiOperation(value = "根据id查询分类")
     @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{id}")
-    BaseResult<CategoryResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<CommonCategoryResponseDTO> get(@PathVariable("id") Long id);
 
     @ApiOperation(value = "分类zTree树")
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")

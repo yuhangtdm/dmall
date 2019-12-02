@@ -13,17 +13,13 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 商品分类表
- * </p>
- *
- * @author hang.yu
- * @since 2019-11-24
+ * @description: 商品分类表
+ * @author: created by hang.yu on 2019-12-02 23:55:34
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("pms__category")
+@TableName("pms_category")
 public class CategoryDO implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -35,7 +31,7 @@ public class CategoryDO implements Serializable {
     private Long id;
 
     /**
-     * 父级id 上级分类编号：0表示一级分类
+     * 父级id 上级分类编号
      */
     private Long parentId;
 
@@ -100,7 +96,7 @@ public class CategoryDO implements Serializable {
     private Integer attributeCount;
 
     /**
-     * 路径 .parentId.id的这种格式
+     * 路径 格式: .parentId.id.
      */
     private String path;
 
@@ -127,7 +123,7 @@ public class CategoryDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

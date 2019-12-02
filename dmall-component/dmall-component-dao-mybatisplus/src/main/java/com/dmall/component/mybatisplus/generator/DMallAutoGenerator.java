@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
+import com.baomidou.mybatisplus.generator.config.IFileCreate;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.FileType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,6 +35,48 @@ public class DMallAutoGenerator extends AutoGenerator {
             public void initMap() {
             }
         };
+
+        injectionConfig.setFileCreate(new DMallFileCreate() {
+            @Override
+            public boolean isCreate(ConfigBuilder configBuilder, DMallFileType fileType, String filePath) {
+                // 判断自定义文件夹是否需要创建,这里调用默认的方法
+                checkDir(filePath);
+                //对于已存在的文件，只需重复生成 entity
+                File file = new File(filePath);
+                boolean exist = file.exists();
+                if(exist){
+                    if (DMallFileType.DTO==fileType){
+                        return true;
+                    }else {
+                        return false;
+                    }
+                }
+                //不存在的文件都需要创建
+                return  true;
+            }
+
+            @Override
+            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
+                // 判断自定义文件夹是否需要创建,这里调用默认的方法
+                checkDir(filePath);
+                //对于已存在的文件，只需重复生成 entity
+                File file = new File(filePath);
+                boolean exist = file.exists();
+                // 自定义的文件不生成
+                if (FileType.OTHER == fileType){
+                    return false;
+                }
+                if(exist){
+                    if (FileType.ENTITY==fileType){
+                        return true;
+                    }else {
+                        return false;
+                    }
+                }
+                //不存在的文件都需要创建
+                return  true;
+            }
+        });
 
         List<FileOutConfig> list = new ArrayList<>();
         // dto

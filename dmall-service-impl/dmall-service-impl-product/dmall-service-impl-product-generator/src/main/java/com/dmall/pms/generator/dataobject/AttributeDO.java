@@ -13,12 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 属性表
- * </p>
- *
- * @author hang.yu
- * @since 2019-11-24
+ * @description: 属性表
+ * @author: created by hang.yu on 2019-12-02 23:55:34
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -37,7 +33,7 @@ public class AttributeDO implements Serializable {
     /**
      * 属性分类id
      */
-    private Long attributeTypeId;
+    private Long attributeCategoryId;
 
     /**
      * 商品分类id
@@ -117,7 +113,7 @@ public class AttributeDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y-可用;N-不可用
+     * 状态 N-可用;Y-不可用
      */
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

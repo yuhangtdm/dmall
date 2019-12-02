@@ -2,7 +2,6 @@ package ${handlerPackage};
 
 import ${commonDtoPackage}.${commonResponseDto};
 import ${requestDtoPackage}.${pageRequestDto};
-import ${errorEnumPackage}.${errorEnum};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import com.dmall.common.model.result.LayuiPage;

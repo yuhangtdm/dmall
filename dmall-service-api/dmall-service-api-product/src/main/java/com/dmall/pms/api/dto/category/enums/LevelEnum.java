@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description:
+ * @description: LevelEnum
  * @author: created by hang.yu on 2019/11/24 14:58
  */
 @Getter
