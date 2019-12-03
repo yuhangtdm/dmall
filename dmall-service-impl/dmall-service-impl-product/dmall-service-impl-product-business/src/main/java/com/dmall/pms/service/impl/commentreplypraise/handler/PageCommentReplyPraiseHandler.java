@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.commentreplypraise.handler;
 
 import com.dmall.pms.api.dto.commentreplypraise.common.CommonCommentReplyPraiseResponseDTO;
 import com.dmall.pms.api.dto.commentreplypraise.request.PageCommentReplyPraiseRequestDTO;
-import com.dmall.pms.service.impl.commentreplypraise.enums.CommentReplyPraiseErrorEnum;
 import com.dmall.pms.generator.dataobject.CommentReplyPraiseDO;
 import com.dmall.pms.generator.mapper.CommentReplyPraiseMapper;
 import com.dmall.common.model.result.LayuiPage;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 回复点赞分页处理器
- * @author: created by hang.yu on 2019-12-02 23:18:01
+ * @author: created by hang.yu on 2019-12-03 19:56:06
  */
 @Component
 public class PageCommentReplyPraiseHandler extends AbstractCommonHandler<PageCommentReplyPraiseRequestDTO, CommentReplyPraiseDO, CommonCommentReplyPraiseResponseDTO> {

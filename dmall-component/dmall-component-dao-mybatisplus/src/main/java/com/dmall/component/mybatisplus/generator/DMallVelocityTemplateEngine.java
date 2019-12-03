@@ -12,7 +12,6 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +75,12 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
                                 }
                                 case Constants.TEMPLATES_DTO:{
                                     if (isCreate(DMallFileType.DTO, foc.outputFile(tableInfo))) {
+                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
+                                    }
+                                    break;
+                                }
+                                case Constants.TEMPLATES_MAPPER_XML:{
+                                    if (isCreate(DMallFileType.XML, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
                                     }
                                     break;

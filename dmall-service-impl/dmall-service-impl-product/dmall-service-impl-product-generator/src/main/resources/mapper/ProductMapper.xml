@@ -15,9 +15,9 @@
         <result column="description" property="description" />
         <result column="unit" property="unit" />
         <result column="weight" property="weight" />
-        <result column="brand_name" property="brandName" />
         <result column="remark" property="remark" />
         <result column="product_attribute" property="productAttribute" />
+        <result column="brand_name" property="brandName" />
         <result column="on_market_time" property="onMarketTime" />
         <result column="max_price" property="maxPrice" />
         <result column="min_price" property="minPrice" />
@@ -37,5 +37,10 @@
         <result column="gmt_modified" property="gmtModified" />
         <result column="is_deleted" property="isDeleted" />
     </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, merchants_id, category_id, brand_id, feight_template_id, product_no, name, pic, description, unit, weight, remark, product_attribute, brand_name, on_market_time, max_price, min_price, sale_count, view_count, comment_count, good_comment_count, middle_comment_count, bad_comment_count, good_rate, comment_score, cascade_category_id, add_services, creator, gmt_created, modifier, gmt_modified, is_deleted
+    </sql>
 
 </mapper>

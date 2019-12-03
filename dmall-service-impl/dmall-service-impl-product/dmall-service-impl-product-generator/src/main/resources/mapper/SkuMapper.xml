@@ -51,4 +51,9 @@
         <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, product_id, merchants_id, category_id, brand_id, sku_no, name, sub_name, description, remark, pic, price, vip_price, market_price, brand_name, stock, low_stock, lock_stock, available_stock, sort, sku_specifications, publish_status, on_publish_time, off_publish_time, recommend_status, new_status, preview_status, audit_status, sale_count, view_count, comment_count, good_comment_count, middle_comment_count, bad_comment_count, good_rate, comment_score, preferential_way, cascade_category_id, detail_html, detail_mobile_html, creator, gmt_created, modifier, gmt_modified, is_deleted
+    </sql>
+
 </mapper>

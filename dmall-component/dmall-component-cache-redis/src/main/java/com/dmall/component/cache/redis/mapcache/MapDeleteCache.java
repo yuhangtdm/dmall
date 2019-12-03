@@ -20,6 +20,6 @@ public @interface MapDeleteCache {
     /**
      * 缓存名称
      */
-    String cacheName() default "";
+    String cacheNames() default "";
 
 }

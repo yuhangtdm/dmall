@@ -135,7 +135,7 @@ public class GeneratorCodeUtil {
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setEntity(Constants.TEMPLATES_ENTITY) // entity模板采用自定义模板
                 .setMapper(Constants.TEMPLATES_MAPPER)// mapper模板采用自定义模板
-                .setXml(Constants.TEMPLATES_MAPPER_XML) // xml采用自定义模板
+                .setXml(null) // xml采用自定义模板
                 .setService(Constants.TEMPLATES_SERVICE) // service接口采用自定义模板
                 .setServiceImpl(Constants.TEMPLATES_SERVICE_IMPL) // serviceImpl模板采用自定义模板
                 .setController(null); // 不生成controller

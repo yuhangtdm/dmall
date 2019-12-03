@@ -45,7 +45,7 @@ public class DMallAutoGenerator extends AutoGenerator {
                 File file = new File(filePath);
                 boolean exist = file.exists();
                 if(exist){
-                    if (DMallFileType.DTO==fileType){
+                    if (DMallFileType.DTO==fileType || DMallFileType.XML==fileType){
                         return true;
                     }else {
                         return false;
@@ -101,6 +101,24 @@ public class DMallAutoGenerator extends AutoGenerator {
             }
         };
         list.add(dtoOutConfig);
+
+        // xml
+        FileOutConfig xmlOutConfig = new FileOutConfig(Constants.TEMPLATES_MAPPER_XML) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
+                StringBuilder append = new StringBuilder()
+                        .append(System.getProperty("user.dir"))
+                        .append(Constants.GENERATOR_MODULE_NAME)
+                        .append(Constants.SRC_MAIN_RESOURCES)
+                        .append("/mapper/")
+                        .append(entityName)
+                        .append("Mapper.xml")
+                        ;
+                return append.toString();
+            }
+        };
+        list.add(xmlOutConfig);
 
         // commonRequest dto
         FileOutConfig commonRequestOutConfig = new FileOutConfig(Constants.TEMPLATES_COMMON_REQUEST_DTO) {
@@ -312,17 +330,6 @@ public class DMallAutoGenerator extends AutoGenerator {
     }
 
     private StringBuilder api(){
-        /*String filePath = System.getProperty("user.dir")
-                + Constants.BUSINESS_MODULE_NAME
-                + Constants.SRC_MAIN_JAVA
-                + Constants.PACKAGE_MODULE_NAME
-                + File.separator
-                + Constants.SERVICE
-                + File.separator
-                + Constants.IMPL
-                + File.separator
-                ;*/
-//        File file = new File(filePath);
         StringBuilder append = new StringBuilder()
                 .append(System.getProperty("user.dir"))
                 .append(Constants.API_MODULE_NAME)
@@ -336,17 +343,6 @@ public class DMallAutoGenerator extends AutoGenerator {
     }
 
     private StringBuilder impl(String entityName){
-        /*String filePath = System.getProperty("user.dir")
-                + Constants.DEFAULT_BUSINESS_MODULE_NAME
-                + Constants.SRC_MAIN_JAVA
-                + Constants.PACKAGE_MODULE_NAME
-                + File.separator
-                + Constants.SERVICE
-                + File.separator
-                + Constants.IMPL
-                + File.separator
-                ;
-        File file = new File(filePath);*/
         StringBuilder append = new StringBuilder()
                 .append(System.getProperty("user.dir"))
                 .append(Constants.BUSINESS_MODULE_NAME)

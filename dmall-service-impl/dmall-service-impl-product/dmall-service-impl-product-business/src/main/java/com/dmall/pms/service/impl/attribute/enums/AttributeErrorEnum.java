@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @description: 属性错误枚举
- * @author: created by hang.yu on 2019-12-02 23:17:59
+ * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Getter
 @AllArgsConstructor

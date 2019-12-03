@@ -27,7 +27,7 @@ public @interface MapCacheable {
     /**
      * 超时时间
      */
-    long timeout() default 0L;
+    long timeout() default 1L;
 
     /**
      * 时间单位

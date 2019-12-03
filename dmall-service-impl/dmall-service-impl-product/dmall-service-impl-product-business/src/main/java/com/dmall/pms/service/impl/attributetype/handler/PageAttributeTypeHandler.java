@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.attributetype.handler;
 
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
-import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.common.model.result.LayuiPage;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 属性分类分页处理器
- * @author: created by hang.yu on 2019-12-02 23:18:00
+ * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
 public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttributeTypeRequestDTO, AttributeTypeDO, CommonAttributeTypeResponseDTO> {

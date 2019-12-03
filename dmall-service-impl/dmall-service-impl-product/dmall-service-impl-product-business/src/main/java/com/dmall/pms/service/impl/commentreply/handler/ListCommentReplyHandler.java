@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.commentreply.handler;
 
 import com.dmall.pms.api.dto.commentreply.common.CommonCommentReplyResponseDTO;
 import com.dmall.pms.api.dto.commentreply.request.ListCommentReplyRequestDTO;
-import com.dmall.pms.service.impl.commentreply.enums.CommentReplyErrorEnum;
 import com.dmall.pms.generator.dataobject.CommentReplyDO;
 import com.dmall.pms.generator.mapper.CommentReplyMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -15,7 +14,7 @@ import java.util.List;
 
 /**
  * @description: 评价回复列表处理器
- * @author: created by hang.yu on 2019-12-02 23:18:01
+ * @author: created by hang.yu on 2019-12-03 19:56:06
  */
 @Component
 public class ListCommentReplyHandler extends AbstractCommonHandler<ListCommentReplyRequestDTO, CommentReplyDO, CommonCommentReplyResponseDTO> {

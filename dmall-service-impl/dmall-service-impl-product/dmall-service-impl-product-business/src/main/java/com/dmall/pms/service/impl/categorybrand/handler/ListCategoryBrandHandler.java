@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.categorybrand.handler;
 
 import com.dmall.pms.api.dto.categorybrand.common.CommonCategoryBrandResponseDTO;
 import com.dmall.pms.api.dto.categorybrand.request.ListCategoryBrandRequestDTO;
-import com.dmall.pms.service.impl.categorybrand.enums.CategoryBrandErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.mapper.CategoryBrandMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -15,7 +14,7 @@ import java.util.List;
 
 /**
  * @description: 分类品牌关系列表处理器
- * @author: created by hang.yu on 2019-12-02 23:18:00
+ * @author: created by hang.yu on 2019-12-03 19:56:06
  */
 @Component
 public class ListCategoryBrandHandler extends AbstractCommonHandler<ListCategoryBrandRequestDTO, CategoryBrandDO, CommonCategoryBrandResponseDTO> {

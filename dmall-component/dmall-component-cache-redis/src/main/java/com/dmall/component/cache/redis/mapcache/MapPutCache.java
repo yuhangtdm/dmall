@@ -20,16 +20,16 @@ public @interface MapPutCache {
     /**
      * 缓存名称
      */
-    String cacheName() default "";
+    String cacheNames() default "";
 
     /**
      * 超时时间
      */
-    long timeout();
+    long timeout() default 1L;
 
     /**
      * 时间单位
      */
-    TimeUnit timeUnit();
+    TimeUnit timeUnit() default TimeUnit.DAYS;
 
 }

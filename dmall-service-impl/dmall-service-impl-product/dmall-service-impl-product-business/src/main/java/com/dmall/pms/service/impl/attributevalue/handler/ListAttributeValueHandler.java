@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.attributevalue.handler;
 
 import com.dmall.pms.api.dto.attributevalue.common.CommonAttributeValueResponseDTO;
 import com.dmall.pms.api.dto.attributevalue.request.ListAttributeValueRequestDTO;
-import com.dmall.pms.service.impl.attributevalue.enums.AttributeValueErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeValueDO;
 import com.dmall.pms.generator.mapper.AttributeValueMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -15,7 +14,7 @@ import java.util.List;
 
 /**
  * @description: 属性值列表处理器
- * @author: created by hang.yu on 2019-12-02 23:18:00
+ * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
 public class ListAttributeValueHandler extends AbstractCommonHandler<ListAttributeValueRequestDTO, AttributeValueDO, CommonAttributeValueResponseDTO> {

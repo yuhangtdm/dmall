@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,9 @@ public class DeleteBrandHandler extends AbstractCommonHandler<Long, BrandDO, Lon
     @Autowired
     private CategoryBrandMapper categoryBrandMapper;
 
+    @Autowired
+    private BrandCacheService brandCacheService;
+
     @Override
     public BaseResult<Long> validate(Long id) {
         BrandDO brandDO = brandMapper.selectById(id);
@@ -54,7 +58,7 @@ public class DeleteBrandHandler extends AbstractCommonHandler<Long, BrandDO, Lon
 
     @Override
     public BaseResult<Long> processor(Long id) {
-        if (brandMapper.deleteById(id) != 1){
+        if (brandCacheService.deleteById(id) != 1){
             return ResultUtil.fail(BrandErrorEnum.DELETE_BRAND_ERROR);
         }
 

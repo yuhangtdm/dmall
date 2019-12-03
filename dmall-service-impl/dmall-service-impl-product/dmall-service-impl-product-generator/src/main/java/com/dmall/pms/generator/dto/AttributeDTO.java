@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: 属性表
- * @author: created by hang.yu on 2019-12-02 23:55:34
+ * @author: created by hang.yu on 2019-12-03 23:31:27
  */
 @Data
 @Accessors(chain = true)

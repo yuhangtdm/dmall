@@ -1,6 +1,7 @@
 package com.dmall.component.cache.redis.mapcache;
 
 import java.lang.annotation.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description: MapGetCache
@@ -20,6 +21,16 @@ public @interface MapGetCache {
     /**
      * 缓存名称
      */
-    String cacheName() default "";
+    String cacheNames() default "";
+
+    /**
+     * 超时时间
+     */
+    long timeout() default 1L;
+
+    /**
+     * 时间单位
+     */
+    TimeUnit timeUnit() default TimeUnit.DAYS;
 
 }

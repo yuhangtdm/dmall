@@ -20,6 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description: mapCache切面
@@ -65,21 +66,12 @@ public class MapCacheAspect {
     public Object mapCacheable(ProceedingJoinPoint joinPoint) {
         String methodName = "";
         try {
-
             Object[] args = joinPoint.getArgs();
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             String className = joinPoint.getTarget().getClass().getName();
             MapCacheable mapCacheable = methodSignature.getMethod().getAnnotation(MapCacheable.class);
-            String key;
-
-            if (StrUtil.isNotBlank(mapCacheable.key())) {
-                key = mapCacheable.key();
-            } else {
-                String env = environment.getActiveProfiles()[0];
-                key = dMallRedisProperties.getCacheKeyPrefix() + StrUtil.UNDERLINE + env
-                        + StrUtil.UNDERLINE + mapCacheable.cacheNames() + StrUtil.COLON + className + StrUtil.COLON + methodName;
-            }
-
+            String key = StrUtil.isNotBlank(mapCacheable.key()) ? mapCacheable.key()
+                    : getkey(mapCacheable.cacheNames(), className);
             List values = dmallRedisTemplate.opsForHash().values(key);
             if (CollUtil.isNotEmpty(values)) {
                 log.info("cache hit,key:{}", key);
@@ -89,13 +81,8 @@ public class MapCacheAspect {
                 Object result = joinPoint.proceed(args);
                 List list = (List) result;
                 for (Object o : list) {
-                    Long id = (Long) ReflectUtil.getFieldValue(o, "id");
-                    dmallRedisTemplate.opsForHash().put(key, id, o);
-                    if (mapCacheable.timeout() > 0L && mapCacheable.timeUnit() != null){
-                        dmallRedisTemplate.expire(key, mapCacheable.timeout(),mapCacheable.timeUnit());
-                    }else {
-                        dmallRedisTemplate.expire(key, dMallRedisProperties.getTtl(),dMallRedisProperties.getTtlUnitEnum());
-                    }
+                    Long id = (Long) ReflectUtil.getFieldValue(o, Constants.ID);
+                    put(key, String.valueOf(id), o, mapCacheable.timeout(), mapCacheable.timeUnit());
                 }
                 return result;
             }
@@ -108,6 +95,7 @@ public class MapCacheAspect {
 
     /**
      * map缓存切面方法 用于获取对象的方法
+     * 入参为id
      */
     @Around("mapGetCache()")
     public Object mapGetCache(ProceedingJoinPoint joinPoint) {
@@ -117,26 +105,17 @@ public class MapCacheAspect {
             Object[] args = joinPoint.getArgs();
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             MapGetCache mapGetCache = methodSignature.getMethod().getAnnotation(MapGetCache.class);
-            String key;
             String className = joinPoint.getTarget().getClass().getName();
-            if (StrUtil.isBlank(mapGetCache.key())) {
-                String env = environment.getActiveProfiles()[0];
-                key = dMallRedisProperties.getCacheKeyPrefix() + StrUtil.UNDERLINE + env
-                        + StrUtil.UNDERLINE + mapGetCache.cacheName() + StrUtil.COLON + className
-                        + StrUtil.COLON + methodName;
-            } else {
-                key = mapGetCache.key();
-            }
-
-            Long id = (Long) ReflectUtil.getFieldValue(args[0], Constants.ID);
-            Object cacheResult = dmallRedisTemplate.opsForHash().get(key, id);
+            String key = StrUtil.isNotBlank(mapGetCache.key()) ? mapGetCache.key()
+                    : getkey(mapGetCache.cacheNames(), className);
+            Object cacheResult = dmallRedisTemplate.opsForHash().get(key, args[0]);
             if (cacheResult != null) {
-                log.info("cache hit,key:{}", key);
+                log.info("cache hit,key:{},hashKey:{}", key, args[0]);
                 return cacheResult;
             } else {
-                log.info("cache miss,key:{}", key);
+                log.info("cache miss,key:{},hashKey:{}", key, args[0]);
                 Object result = joinPoint.proceed(args);
-                dmallRedisTemplate.opsForHash().put(key, id, result);
+                put(key, String.valueOf(args[0]), result, mapGetCache.timeout(), mapGetCache.timeUnit());
                 return result;
             }
 
@@ -147,7 +126,7 @@ public class MapCacheAspect {
     }
 
     /**
-     * map缓存切面方法 用于更新对象的方法
+     * map缓存切面方法 用于新增或更新对象的方法
      */
     @Around("mapPutCache()")
     public Object mapPutCache(ProceedingJoinPoint joinPoint) {
@@ -158,17 +137,10 @@ public class MapCacheAspect {
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             MapPutCache mapPutCache = methodSignature.getMethod().getAnnotation(MapPutCache.class);
             String className = joinPoint.getTarget().getClass().getName();
-            String key = StrUtil.isNotBlank(mapPutCache.key()) ? mapPutCache.key()
-                    : dMallRedisProperties.getCacheKeyPrefix() + StrUtil.UNDERLINE + environment.getActiveProfiles()[0]
-                    + StrUtil.UNDERLINE + mapPutCache.cacheName() + StrUtil.COLON + className
-                    + StrUtil.COLON + methodName;
+            String key = StrUtil.isBlank(mapPutCache.key()) ? getkey(mapPutCache.cacheNames(), className)
+                    : mapPutCache.key();
             Object result = joinPoint.proceed(args);
-            dmallRedisTemplate.opsForHash().put(key, result, args[0]);
-            if (mapPutCache.timeout() > 0L && mapPutCache.timeUnit() != null){
-                dmallRedisTemplate.expire(key, mapPutCache.timeout(),mapPutCache.timeUnit());
-            }else {
-                dmallRedisTemplate.expire(key, dMallRedisProperties.getTtl(),dMallRedisProperties.getTtlUnitEnum());
-            }
+            put(key, String.valueOf(result), args[0], mapPutCache.timeout(), mapPutCache.timeUnit());
             return result;
         } catch (Throwable e) {
             log.warn("MapPutCache method:{} catch error", methodName, e);
@@ -192,9 +164,7 @@ public class MapCacheAspect {
                 if (method.getName().equals(methodName)) {
                     MapDeleteCache mapDeleteCache = method.getAnnotation(MapDeleteCache.class);
                     key = StrUtil.isBlank(mapDeleteCache.key()) ?
-                            dMallRedisProperties.getCacheKeyPrefix() + StrUtil.UNDERLINE + environment.getActiveProfiles()[0]
-                                    + StrUtil.UNDERLINE + mapDeleteCache.cacheName() + StrUtil.COLON + className
-                                    + StrUtil.COLON + methodName
+                            getkey(mapDeleteCache.cacheNames(), className)
                             : mapDeleteCache.key();
                 }
             }
@@ -209,5 +179,31 @@ public class MapCacheAspect {
             log.warn("the method:{} unsuited @MapDeleteCache", methodName);
         }
         return result;
+    }
+
+    /**
+     * 获取key
+     */
+    private String getkey(String cacheName, String className){
+        return new StringBuilder(dMallRedisProperties.getCacheKeyPrefix())
+                .append(StrUtil.UNDERLINE)
+                .append(environment.getActiveProfiles()[0])
+                .append(StrUtil.UNDERLINE)
+                .append(cacheName)
+                .append(StrUtil.COLON)
+                .append(className)
+                .toString();
+    }
+
+    /**
+     * 设置缓存并设置过期时间
+     */
+    public void put(String key, String hashKey, Object result, long timeout, TimeUnit timeUnit){
+        dmallRedisTemplate.opsForHash().put(key, hashKey, result);
+        if (timeout > 0L ) {
+            dmallRedisTemplate.expire(key,timeout, timeUnit);
+        } else {
+            dmallRedisTemplate.expire(key, dMallRedisProperties.getTtl(), dMallRedisProperties.getTtlUnitEnum());
+        }
     }
 }

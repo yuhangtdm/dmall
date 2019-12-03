@@ -1,7 +1,5 @@
 package com.dmall.component.mybatisplus.generator;
 
-import cn.hutool.core.date.DateUtil;
-
 /**
  * @description: 存储常量
  * @author: created by hang.yu on 2019/12/1 14:34
@@ -48,7 +46,6 @@ public interface Constants {
      */
     String PACKAGE_PARENT_NAME = "com.dmall";
 
-    String BUSINESS = "";
     /**
      * 包的模块名
      */
@@ -125,6 +122,8 @@ public interface Constants {
     String TEMPLATES_ERRORENUM = "templates/errorEnum.java.vm";
 
     String SRC_MAIN_JAVA = "/src/main/java";
+
+    String SRC_MAIN_RESOURCES = "/src/main/resources";
 
     String COM_DMALL = "/com/dmall/";
 

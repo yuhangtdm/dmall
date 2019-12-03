@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @description: 属性分类服务实现
- * @author: created by hang.yu on 2019-12-02 23:18:00
+ * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @RestController
 public class  AttributeTypeServiceImpl implements AttributeTypeService {

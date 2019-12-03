@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,9 @@ public class SaveBrandHandler extends AbstractCommonHandler<SaveBrandRequestDTO,
     @Autowired
     private BrandMapper brandMapper;
 
+    @Autowired
+    private BrandCacheService brandCacheService;
+
     @Override
     public BaseResult<Long> validate(SaveBrandRequestDTO requestDTO) {
         BrandDO brandDO = brandMapper.selectOne(Wrappers.<BrandDO>query().eq("name", requestDTO.getName()));
@@ -33,7 +37,7 @@ public class SaveBrandHandler extends AbstractCommonHandler<SaveBrandRequestDTO,
     @Override
     public BaseResult<Long> processor(SaveBrandRequestDTO requestDTO) {
         BrandDO brandDO = dtoConvertDo(requestDTO, BrandDO.class);
-        if (brandMapper.insert(brandDO) != 1) {
+        if (brandCacheService.insert(brandDO) != 1) {
             return ResultUtil.fail(BrandErrorEnum.SAVE_BRAND_ERROR);
         }
         return ResultUtil.success(brandDO.getId());

@@ -170,8 +170,8 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * mapCache切面
      */
     @Bean
-    public MapCacheAspect mapCacheAspect(RedisTemplate redisTemplate){
-        return new MapCacheAspect(redisTemplate, dMallRedisProperties, environment);
+    public MapCacheAspect mapCacheAspect(RedisTemplate dMallRedisTemplate){
+        return new MapCacheAspect(dMallRedisTemplate, dMallRedisProperties, environment);
     }
 
     /**

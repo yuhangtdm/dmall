@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @description: 属性服务实现
- * @author: created by hang.yu on 2019-12-02 23:17:59
+ * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @RestController
 public class  AttributeServiceImpl implements AttributeService {

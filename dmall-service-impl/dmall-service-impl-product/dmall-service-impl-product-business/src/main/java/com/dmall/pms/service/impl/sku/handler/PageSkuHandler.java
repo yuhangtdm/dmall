@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.sku.handler;
 
 import com.dmall.pms.api.dto.sku.common.CommonSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
-import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.common.model.result.LayuiPage;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: sku分页处理器
- * @author: created by hang.yu on 2019-12-02 23:18:01
+ * @author: created by hang.yu on 2019-12-03 19:56:06
  */
 @Component
 public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, SkuDO, CommonSkuResponseDTO> {

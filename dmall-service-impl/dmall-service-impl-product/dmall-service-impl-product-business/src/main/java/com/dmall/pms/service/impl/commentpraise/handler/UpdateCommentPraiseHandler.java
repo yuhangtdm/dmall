@@ -4,7 +4,6 @@ import com.dmall.pms.api.dto.commentpraise.request.UpdateCommentPraiseRequestDTO
 import com.dmall.pms.service.impl.commentpraise.enums.CommentPraiseErrorEnum;
 import com.dmall.pms.generator.dataobject.CommentPraiseDO;
 import com.dmall.pms.generator.mapper.CommentPraiseMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 修改评论点赞数处理器
- * @author: created by hang.yu on 2019-12-02 23:18:01
+ * @author: created by hang.yu on 2019-12-03 19:56:06
  */
 @Component
 public class UpdateCommentPraiseHandler extends AbstractCommonHandler<UpdateCommentPraiseRequestDTO, CommentPraiseDO, Long> {

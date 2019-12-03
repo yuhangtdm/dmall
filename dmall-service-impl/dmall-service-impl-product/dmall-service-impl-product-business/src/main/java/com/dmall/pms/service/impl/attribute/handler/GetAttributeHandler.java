@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 查询属性处理器
- * @author: created by hang.yu on 2019-12-02 23:17:59
+ * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
 public class GetAttributeHandler extends AbstractCommonHandler<Long, AttributeDO, CommonAttributeResponseDTO> {
