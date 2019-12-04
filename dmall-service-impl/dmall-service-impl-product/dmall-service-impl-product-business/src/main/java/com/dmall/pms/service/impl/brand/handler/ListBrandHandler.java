@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +26,8 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
 
     @Override
     public BaseResult<List<CommonBrandResponseDTO>> processor(ListBrandRequestDTO requestDTO) {
-        List<CommonBrandResponseDTO> list = brandCacheService.list(requestDTO).stream()
+        List<CommonBrandResponseDTO> list = brandCacheService.selectList(requestDTO).stream()
+                .filter(Objects::nonNull)
                 .map(doo -> doConvertDto(doo, CommonBrandResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(list);

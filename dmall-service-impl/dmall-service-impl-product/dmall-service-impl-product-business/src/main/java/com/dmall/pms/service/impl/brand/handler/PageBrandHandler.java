@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dmall.common.enums.OrderByEnum;
 import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
@@ -35,7 +36,10 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
-                .eq(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
+                .eq(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getFirstLetter, requestDTO.getFirstLetter())
+                /*.orderBy(StrUtil.isNotBlank(requestDTO.getSort()),
+                        OrderByEnum.ASC.getCode().equalsIgnoreCase(requestDTO.getOrderBy()), requestDTO.getSort())*/
+                ;
 
         Page<BrandDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         IPage<BrandDO> brandDOIPage = brandMapper.selectPage(page, queryWrapper);

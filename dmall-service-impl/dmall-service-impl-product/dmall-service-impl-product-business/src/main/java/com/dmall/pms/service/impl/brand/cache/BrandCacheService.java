@@ -29,7 +29,7 @@ public class BrandCacheService {
      * 查询列表
      */
     @MapCacheable(cacheNames = "brand")
-    public List<BrandDO> list(ListBrandRequestDTO requestDTO) {
+    public List<BrandDO> selectList(ListBrandRequestDTO requestDTO) {
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
@@ -49,7 +49,7 @@ public class BrandCacheService {
      * 修改
      */
     @MapPutCache(cacheNames = "brand")
-    public int update(BrandDO brandDO) {
+    public int updateById(BrandDO brandDO) {
         return brandMapper.updateById(brandDO);
     }
 

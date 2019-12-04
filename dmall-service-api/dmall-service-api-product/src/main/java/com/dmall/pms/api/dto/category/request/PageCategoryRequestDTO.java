@@ -21,7 +21,6 @@ public class PageCategoryRequestDTO  extends PageRequestDTO {
 
 
 
-
     @ApiModelProperty(value = "父级id 上级分类编号", position = 2)
     private Long parentId;
 

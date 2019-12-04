@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.category;
 
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
@@ -70,5 +71,10 @@ public class  CategoryServiceImpl implements CategoryService {
     @Override
     public BaseResult<List<ZTreeCategoryResponseDTO>> zTree(Long parentId) {
         return zTreeCategoryHandler.handler(parentId);
+    }
+
+    @Override
+    public BaseResult<Void> setBrand(@Valid SetBrandRequestDTO requestDTO) {
+        return null;
     }
 }

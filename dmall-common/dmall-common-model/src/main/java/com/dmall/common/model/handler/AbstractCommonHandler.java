@@ -25,6 +25,9 @@ public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements Commo
      */
     @Override
     public DO dtoConvertDo(ReqDTO dto, Class<DO> doClazz) {
+        if (dto == null) {
+            return null;
+        }
         DO result = BeanUtil.copyProperties(dto, doClazz);
         customerConvertDo(result, dto);
         return result;
@@ -35,6 +38,9 @@ public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements Commo
      */
     @Override
     public ResDTO doConvertDto(DO doo, Class<ResDTO> doClazz) {
+        if (doo == null) {
+            return null;
+        }
         ResDTO result = BeanUtil.copyProperties(doo, doClazz);
         customerConvertDto(result, doo);
         return result;

@@ -4,6 +4,7 @@ import com.dmall.common.model.result.BaseResult;
 import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
 import io.swagger.annotations.Api;
@@ -47,4 +48,8 @@ public interface CategoryService {
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")
     @GetMapping("/zTree/{parentId}")
     BaseResult<List<ZTreeCategoryResponseDTO>> zTree(@PathVariable("parentId") Long parentId);
+
+    @ApiOperation(value = "设置品牌")
+    @GetMapping("/setBrand")
+    BaseResult<Void> setBrand(@Valid @RequestBody SetBrandRequestDTO requestDTO);
 }

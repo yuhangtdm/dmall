@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,9 @@ public class UpdateCategoryHandler extends AbstractCommonHandler<UpdateCategoryR
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private CategoryCacheService categoryCacheService;
+
     @Override
     public BaseResult<Long> validate(UpdateCategoryRequestDTO requestDTO) {
         // 分类不存在
@@ -30,7 +34,10 @@ public class UpdateCategoryHandler extends AbstractCommonHandler<UpdateCategoryR
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
         }
         // 分类名称必须唯一
-        CategoryDO nameCategoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getName, requestDTO.getName()));
+        CategoryDO nameCategoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery()
+                .eq(CategoryDO::getName, requestDTO.getName())
+                .eq(CategoryDO::getLevel, requestDTO.getLevel())
+        );
         if (nameCategoryDO != null && ObjectUtil.notEqual(nameCategoryDO.getId(), requestDTO.getId())) {
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NAME_UNIQUE);
         }
@@ -50,7 +57,7 @@ public class UpdateCategoryHandler extends AbstractCommonHandler<UpdateCategoryR
     @Override
     public BaseResult<Long> processor(UpdateCategoryRequestDTO requestDTO) {
         CategoryDO categoryDO = dtoConvertDo(requestDTO, CategoryDO.class);
-        if (categoryMapper.updateById(categoryDO) != 1) {
+        if (categoryCacheService.updateById(categoryDO) != 1) {
             return ResultUtil.fail(CategoryErrorEnum.UPDATE_CATEGORY_ERROR);
         }
         return ResultUtil.success(requestDTO.getId());

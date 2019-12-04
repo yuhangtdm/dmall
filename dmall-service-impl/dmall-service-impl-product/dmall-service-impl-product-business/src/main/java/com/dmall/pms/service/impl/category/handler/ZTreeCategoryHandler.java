@@ -6,9 +6,11 @@ import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private CategoryCacheService categoryCacheService;
+
     @Override
     public BaseResult processor(Long parentId) {
         CategoryDO categoryDO = categoryMapper.selectById(parentId);
@@ -36,7 +41,7 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
         }
         List<CategoryDO> categoryDOList;
         if (parentId == 0L) {
-            categoryDOList = categoryMapper.selectList(Wrappers.emptyWrapper());
+            categoryDOList = categoryCacheService.selectList(new ListCategoryRequestDTO());
         } else {
             categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
                     .like(CategoryDO::getPath, categoryDO.getPath()));
@@ -55,10 +60,10 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
     @Override
     protected void customerConvertDto(ZTreeCategoryResponseDTO result, CategoryDO doo) {
         result.setOpen(Boolean.FALSE);
-        result.setIsParent(result.getLevel() == LevelEnum.ONE.getCode() || result.getLevel() == LevelEnum.TWO.getCode());
+        result.setIsParent(LevelEnum.ONE.getCode().equals(result.getLevel()) || LevelEnum.TWO.getCode().equals(result.getLevel()));
     }
 
-    public List<ZTreeCategoryResponseDTO> tree(Map<Long, ZTreeCategoryResponseDTO> zTreeMap, Long parentId) {
+    private List<ZTreeCategoryResponseDTO> tree(Map<Long, ZTreeCategoryResponseDTO> zTreeMap, Long parentId) {
         List<ZTreeCategoryResponseDTO> tree = Lists.newArrayList();
 
         // 添加parentId自身

@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.*;
 import java.math.*;
@@ -21,6 +24,21 @@ public class CommonBrandResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "品牌id", position = 1)
     private Long id;
+
+    @ApiModelProperty(value = "品牌名称", required = true, position = 2)
+    private String name;
+
+    @ApiModelProperty(value = "英文名称", position = 3)
+    private String englishName;
+
+    @ApiModelProperty(value = "首字母", required = true, position = 4)
+    private String firstLetter;
+
+    @ApiModelProperty(value = "品牌logo", position = 5)
+    private String logo;
+
+    @ApiModelProperty(value = "品牌大图", position = 6)
+    private String bigPic;
 
     @ApiModelProperty(value = "创建人", position = 7)
     private Long creator;

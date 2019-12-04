@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,9 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private CategoryCacheService categoryCacheService;
 
     @Override
     public BaseResult<Long> validate(SaveCategoryRequestDTO requestDTO) {
@@ -47,7 +51,7 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
     @Override
     public BaseResult<Long> processor(SaveCategoryRequestDTO requestDTO) {
         CategoryDO categoryDO = dtoConvertDo(requestDTO, CategoryDO.class);
-        if (categoryMapper.insert(categoryDO) != 1){
+        if (categoryCacheService.insert(categoryDO) != 1){
             return ResultUtil.fail(CategoryErrorEnum.SAVE_CATEGORY_ERROR);
         }
         categoryMapper.updateById(setPath(categoryDO));

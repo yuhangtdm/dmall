@@ -88,7 +88,7 @@ public class MapCacheAspect {
             }
 
         } catch (Throwable e) {
-            log.warn("MapCacheable method:{} catch error", methodName, e);
+            log.error("MapCacheable method:{} catch error", methodName, e);
             throw new CacheRedisException(CacheRedisErrorEnum.MAP_CACHE_ABLE_ERROR);
         }
     }
@@ -108,7 +108,7 @@ public class MapCacheAspect {
             String className = joinPoint.getTarget().getClass().getName();
             String key = StrUtil.isNotBlank(mapGetCache.key()) ? mapGetCache.key()
                     : getkey(mapGetCache.cacheNames(), className);
-            Object cacheResult = dmallRedisTemplate.opsForHash().get(key, args[0]);
+            Object cacheResult = dmallRedisTemplate.opsForHash().get(key, String.valueOf(args[0]));
             if (cacheResult != null) {
                 log.info("cache hit,key:{},hashKey:{}", key, args[0]);
                 return cacheResult;
@@ -120,8 +120,8 @@ public class MapCacheAspect {
             }
 
         } catch (Throwable e) {
-            log.warn("MapGetCache method:{} catch error", methodName, e);
-            throw new CacheRedisException(CacheRedisErrorEnum.MAP_CACHE_ABLE_ERROR);
+            log.error("MapGetCache method:{} catch error", methodName, e);
+            throw new CacheRedisException(CacheRedisErrorEnum.MAP_GET_CACHE_ERROR);
         }
     }
 
@@ -140,45 +140,37 @@ public class MapCacheAspect {
             String key = StrUtil.isBlank(mapPutCache.key()) ? getkey(mapPutCache.cacheNames(), className)
                     : mapPutCache.key();
             Object result = joinPoint.proceed(args);
-            put(key, String.valueOf(result), args[0], mapPutCache.timeout(), mapPutCache.timeUnit());
+            Object fieldValue = ReflectUtil.getFieldValue(args[0], Constants.ID);
+            put(key, String.valueOf(fieldValue), args[0], mapPutCache.timeout(), mapPutCache.timeUnit());
             return result;
         } catch (Throwable e) {
-            log.warn("MapPutCache method:{} catch error", methodName, e);
-            throw new CacheRedisException(CacheRedisErrorEnum.MAP_CACHE_ABLE_ERROR);
+            log.error("MapPutCache method:{} catch error", methodName, e);
+            throw new CacheRedisException(CacheRedisErrorEnum.MAP_PUT_CACHE_ERROR);
         }
     }
 
     /**
      * map切面缓存方法 用于删除缓存的方法
      */
-    @AfterReturning(pointcut = "mapDeleteCache()", returning = "result")
-    public Object mapDeleteCache(JoinPoint joinPoint, Object result) {
+    @Around("mapDeleteCache()")
+    public Object mapDeleteCache(ProceedingJoinPoint joinPoint) {
         String methodName = "";
         try {
+
+            Object[] args = joinPoint.getArgs();
+            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            MapDeleteCache mapDeleteCache = methodSignature.getMethod().getAnnotation(MapDeleteCache.class);
             String className = joinPoint.getTarget().getClass().getName();
-            methodName = joinPoint.getSignature().getName();
-            Class<?> tClass = joinPoint.getTarget().getClass();
-            Method[] declaredMethods = tClass.getDeclaredMethods();
-            String key = null;
-            for (Method method : declaredMethods) {
-                if (method.getName().equals(methodName)) {
-                    MapDeleteCache mapDeleteCache = method.getAnnotation(MapDeleteCache.class);
-                    key = StrUtil.isBlank(mapDeleteCache.key()) ?
-                            getkey(mapDeleteCache.cacheNames(), className)
-                            : mapDeleteCache.key();
-                }
-            }
-
-            Object cacheResult = dmallRedisTemplate.opsForHash().get(key, result);
-            if (cacheResult != null) {
-                dmallRedisTemplate.opsForHash().delete(key, result);
-                log.info("delete cache success,key:{},hashKey:{}", key, result);
-            }
-
-        } catch (Exception e) {
-            log.warn("the method:{} unsuited @MapDeleteCache", methodName);
+            String key = StrUtil.isBlank(mapDeleteCache.key()) ? getkey(mapDeleteCache.cacheNames(), className)
+                    : mapDeleteCache.key();
+            Object result = joinPoint.proceed(args);
+            dmallRedisTemplate.opsForHash().delete(key, String.valueOf(args[0]));
+            log.info("delete cache success,key:{},hashKey:{}", key, args[0]);
+            return result;
+        } catch (Throwable e) {
+            log.warn("MapPutCache method:{} catch error", methodName, e);
+            throw new CacheRedisException(CacheRedisErrorEnum.MAP_DELETE_CACHE_ERROR);
         }
-        return result;
     }
 
     /**

@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,9 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
 
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
+
+    @Autowired
+    private CategoryCacheService categoryCacheService;
 
     @Override
     public BaseResult<Long> validate(Long id) {
@@ -65,7 +69,7 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
 
     @Override
     public BaseResult<Long> processor(Long id) {
-        if (categoryMapper.deleteById(id) != 1){
+        if (categoryCacheService.deleteById(id) != 1){
             return ResultUtil.fail(CategoryErrorEnum.DELETE_CATEGORY_ERROR);
         }
         return ResultUtil.success(id);
