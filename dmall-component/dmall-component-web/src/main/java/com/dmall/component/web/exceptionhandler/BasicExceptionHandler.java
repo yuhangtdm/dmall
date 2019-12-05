@@ -1,4 +1,4 @@
-package com.dmall.component.web.handler;
+package com.dmall.component.web.exceptionhandler;
 
 import cn.hutool.core.map.MapUtil;
 import com.dmall.common.constants.WebConstants;
@@ -9,7 +9,6 @@ import com.dmall.component.web.exception.BusinessException;
 import com.dmall.component.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;

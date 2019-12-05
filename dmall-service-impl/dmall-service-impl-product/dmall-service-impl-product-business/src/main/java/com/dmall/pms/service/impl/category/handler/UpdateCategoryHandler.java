@@ -57,9 +57,7 @@ public class UpdateCategoryHandler extends AbstractCommonHandler<UpdateCategoryR
     @Override
     public BaseResult<Long> processor(UpdateCategoryRequestDTO requestDTO) {
         CategoryDO categoryDO = dtoConvertDo(requestDTO, CategoryDO.class);
-        if (categoryCacheService.updateById(categoryDO) != 1) {
-            return ResultUtil.fail(CategoryErrorEnum.UPDATE_CATEGORY_ERROR);
-        }
+        categoryCacheService.updateById(categoryDO);
         return ResultUtil.success(requestDTO.getId());
     }
 

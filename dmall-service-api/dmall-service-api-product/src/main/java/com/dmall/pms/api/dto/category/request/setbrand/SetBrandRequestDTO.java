@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @description: 设置品牌请求实体

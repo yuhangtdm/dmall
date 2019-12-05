@@ -1,4 +1,4 @@
-package com.dmall.component.web.handler;
+package com.dmall.component.web.exceptionhandler;
 
 import com.dmall.common.constants.WebConstants;
 import com.dmall.common.model.result.BaseResult;

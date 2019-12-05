@@ -81,21 +81,6 @@ public class CategoryDO implements Serializable {
     private String navStatus;
 
     /**
-     * 品牌数量
-     */
-    private Integer brandCount;
-
-    /**
-     * 属性分类数量
-     */
-    private Integer attributeCategoryCount;
-
-    /**
-     * 属性数量
-     */
-    private Integer attributeCount;
-
-    /**
      * 路径 格式: .parentId.id.
      */
     private String path;

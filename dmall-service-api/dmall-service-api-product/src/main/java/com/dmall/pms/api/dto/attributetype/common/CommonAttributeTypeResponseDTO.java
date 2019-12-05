@@ -20,20 +20,16 @@ public class CommonAttributeTypeResponseDTO implements Serializable {
     private static final long serialVersionUID=1L;
 
 
-
     @ApiModelProperty(value = "id", position = 1)
     private Long id;
 
 
-
     @ApiModelProperty(value = "商品分类id", position = 2)
-    private Long productCategoryId;
+    private Long categoryId;
 
 
-
-    @ApiModelProperty(value = "商品分类id集合 如，1/2/3", position = 3)
-    private String cascadeCategoryId;
-
+    @ApiModelProperty(value = "商品分类名称 如 电脑/电脑整机/笔记本", position = 3)
+    private String cascadeCategoryName;
 
 
     @ApiModelProperty(value = "名称", position = 4)

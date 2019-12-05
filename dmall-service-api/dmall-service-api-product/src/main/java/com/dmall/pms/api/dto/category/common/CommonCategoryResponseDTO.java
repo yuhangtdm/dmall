@@ -59,18 +59,6 @@ public class CommonCategoryResponseDTO implements Serializable {
     @ApiModelProperty(value = "是否显示在导航栏 Y-是;N-否", position = 11)
     private String navStatus;
 
-
-    @ApiModelProperty(value = "品牌数量",  position = 12)
-    private Integer brandCount;
-
-
-    @ApiModelProperty(value = "属性分类数量",  position = 13)
-    private Integer attributeCategoryCount;
-
-    @ApiModelProperty(value = "属性数量",  position = 14)
-    private Integer attributeCount;
-
-
     @ApiModelProperty(value = "路径", required = true, position = 15)
     private String path;
 

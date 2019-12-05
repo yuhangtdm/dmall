@@ -21,13 +21,10 @@ public class UpdateAttributeTypeHandler extends AbstractCommonHandler<UpdateAttr
     private AttributeTypeMapper attributeTypeMapper;
 
     @Override
-    public BaseResult<Long> validate(UpdateAttributeTypeRequestDTO requestDTO) {
-        return ResultUtil.success();
-    }
-
-    @Override
     public BaseResult<Long> processor(UpdateAttributeTypeRequestDTO requestDTO) {
-        return ResultUtil.success();
+        AttributeTypeDO attributeTypeDO = dtoConvertDo(requestDTO, AttributeTypeDO.class);
+        attributeTypeMapper.updateById(attributeTypeDO);
+        return ResultUtil.success(attributeTypeDO.getId());
     }
 
 }

@@ -4,6 +4,7 @@ import com.dmall.common.model.result.BaseResult;
 import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
@@ -52,4 +53,8 @@ public interface CategoryService {
     @ApiOperation(value = "设置品牌")
     @GetMapping("/setBrand")
     BaseResult<Void> setBrand(@Valid @RequestBody SetBrandRequestDTO requestDTO);
+
+    @ApiOperation(value = "设置属性分类")
+    @GetMapping("/setAttributeType")
+    BaseResult<Void> setAttributeType(@Valid @RequestBody SetAttributeTypeRequestDTO requestDTO);
 }

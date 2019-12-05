@@ -15,9 +15,6 @@
         <result column="keywords" property="keywords" />
         <result column="hot_status" property="hotStatus" />
         <result column="nav_status" property="navStatus" />
-        <result column="brand_count" property="brandCount" />
-        <result column="attribute_category_count" property="attributeCategoryCount" />
-        <result column="attribute_count" property="attributeCount" />
         <result column="path" property="path" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />

@@ -16,6 +16,7 @@ public enum  AttributeTypeErrorEnum implements ErrorCodeEnum {
     UPDATE_ATTRIBUTETYPE_ERROR("attributeType _002","修改属性分类失败"),
     DELETE_ATTRIBUTETYPE_ERROR("attributeType_003","删除属性分类失败"),
     ATTRIBUTETYPE_NOT_EXIST("attributeType_004","该属性分类不存在"),
+    ATTRIBUTETYPE_HAS_SKU("attributeType_005","该属性分类下有sku，不可删除"),
 
     ;
 

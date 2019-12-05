@@ -21,13 +21,10 @@ public class SaveAttributeTypeHandler extends AbstractCommonHandler<SaveAttribut
     private AttributeTypeMapper attributeTypeMapper;
 
     @Override
-    public BaseResult<Long> validate(SaveAttributeTypeRequestDTO requestDTO) {
-        return ResultUtil.success();
-    }
-
-    @Override
     public BaseResult<Long> processor(SaveAttributeTypeRequestDTO requestDTO) {
-        return ResultUtil.success();
+        AttributeTypeDO attributeTypeDO = dtoConvertDo(requestDTO, AttributeTypeDO.class);
+        attributeTypeMapper.insert(attributeTypeDO);
+        return ResultUtil.success(attributeTypeDO.getId());
     }
 
 }

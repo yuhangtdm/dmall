@@ -43,9 +43,7 @@ public class UpdateBrandHandler extends AbstractCommonHandler<UpdateBrandRequest
     @Override
     public BaseResult<Long> processor(UpdateBrandRequestDTO requestDTO) {
         BrandDO brandDO = dtoConvertDo(requestDTO, BrandDO.class);
-        if (brandCacheService.updateById(brandDO) != 1) {
-            return ResultUtil.fail(BrandErrorEnum.SAVE_BRAND_ERROR);
-        }
+        brandCacheService.updateById(brandDO);
         return ResultUtil.success(brandDO.getId());
     }
 

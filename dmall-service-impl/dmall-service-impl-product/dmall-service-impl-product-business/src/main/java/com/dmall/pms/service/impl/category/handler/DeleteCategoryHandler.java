@@ -69,9 +69,7 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
 
     @Override
     public BaseResult<Long> processor(Long id) {
-        if (categoryCacheService.deleteById(id) != 1){
-            return ResultUtil.fail(CategoryErrorEnum.DELETE_CATEGORY_ERROR);
-        }
+        categoryCacheService.deleteById(id);
         return ResultUtil.success(id);
     }
 

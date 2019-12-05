@@ -41,6 +41,11 @@ public class SkuAttributeDO implements Serializable {
     private Long skuId;
 
     /**
+     * 属性分类id
+     */
+    private Long attributeTypeId;
+
+    /**
      * 属性id
      */
     private Long attributeId;

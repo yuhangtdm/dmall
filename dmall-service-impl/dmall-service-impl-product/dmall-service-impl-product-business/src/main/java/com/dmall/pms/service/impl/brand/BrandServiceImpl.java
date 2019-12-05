@@ -10,7 +10,6 @@ import com.dmall.pms.service.impl.brand.handler.*;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
@@ -48,12 +47,12 @@ public class  BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BaseResult<Long> delete(@PathVariable("id") Long id) {
+    public BaseResult<Long> delete(Long id) {
         return deleteBrandHandler.handler(id);
     }
 
     @Override
-    public BaseResult<Long> update(@Valid UpdateBrandRequestDTO requestDTO) {
+    public BaseResult<Long> update(@RequestBody UpdateBrandRequestDTO requestDTO) {
         return updateBrandHandler.handler(requestDTO);
     }
 

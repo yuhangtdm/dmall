@@ -1,19 +1,19 @@
 package com.dmall.pms.service.impl.attributetype;
 
-import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
-import com.dmall.pms.api.service.AttributeTypeService;
-import com.dmall.pms.service.impl.attributetype.handler.*;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
+import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
+import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
+import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
+import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
+import com.dmall.pms.api.dto.attributetype.response.ListAttributeTypeResponseDTO;
+import com.dmall.pms.api.service.AttributeTypeService;
+import com.dmall.pms.service.impl.attributetype.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
+
 import java.util.List;
 
 /**
@@ -48,12 +48,12 @@ public class  AttributeTypeServiceImpl implements AttributeTypeService {
     }
 
     @Override
-    public BaseResult<Long> delete(@PathVariable("id") Long id) {
+    public BaseResult<Long> delete(Long id) {
         return deleteAttributeTypeHandler.handler(id);
     }
 
     @Override
-    public BaseResult<Long> update(@Valid UpdateAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<Long> update(@RequestBody UpdateAttributeTypeRequestDTO requestDTO) {
         return updateAttributeTypeHandler.handler(requestDTO);
     }
 
@@ -63,7 +63,7 @@ public class  AttributeTypeServiceImpl implements AttributeTypeService {
     }
 
     @Override
-    public BaseResult<List<CommonAttributeTypeResponseDTO>> list(@RequestBody ListAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<List<ListAttributeTypeResponseDTO>> list(@RequestBody ListAttributeTypeRequestDTO requestDTO) {
         return listAttributeTypeHandler.handler(requestDTO);
     }
 

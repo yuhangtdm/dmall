@@ -58,10 +58,7 @@ public class DeleteBrandHandler extends AbstractCommonHandler<Long, BrandDO, Lon
 
     @Override
     public BaseResult<Long> processor(Long id) {
-        if (brandCacheService.deleteById(id) != 1){
-            return ResultUtil.fail(BrandErrorEnum.DELETE_BRAND_ERROR);
-        }
-
+        brandCacheService.deleteById(id);
         return ResultUtil.success(id);
     }
 

@@ -51,9 +51,7 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
     @Override
     public BaseResult<Long> processor(SaveCategoryRequestDTO requestDTO) {
         CategoryDO categoryDO = dtoConvertDo(requestDTO, CategoryDO.class);
-        if (categoryCacheService.insert(categoryDO) != 1){
-            return ResultUtil.fail(CategoryErrorEnum.SAVE_CATEGORY_ERROR);
-        }
+        categoryCacheService.insert(categoryDO);
         categoryMapper.updateById(setPath(categoryDO));
         return ResultUtil.success(categoryDO.getId());
     }

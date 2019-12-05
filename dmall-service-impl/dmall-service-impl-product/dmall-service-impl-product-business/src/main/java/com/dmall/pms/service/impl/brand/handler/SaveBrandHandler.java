@@ -37,9 +37,7 @@ public class SaveBrandHandler extends AbstractCommonHandler<SaveBrandRequestDTO,
     @Override
     public BaseResult<Long> processor(SaveBrandRequestDTO requestDTO) {
         BrandDO brandDO = dtoConvertDo(requestDTO, BrandDO.class);
-        if (brandCacheService.insert(brandDO) != 1) {
-            return ResultUtil.fail(BrandErrorEnum.SAVE_BRAND_ERROR);
-        }
+        brandCacheService.insert(brandDO);
         return ResultUtil.success(brandDO.getId());
     }
 

@@ -44,7 +44,8 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
             categoryDOList = categoryCacheService.selectList(new ListCategoryRequestDTO());
         } else {
             categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
-                    .like(CategoryDO::getPath, categoryDO.getPath()));
+                    .like(CategoryDO::getPath, categoryDO.getPath())
+                    .orderByAsc(CategoryDO::getSort));
         }
         Map<Long, ZTreeCategoryResponseDTO> zTreeMap = categoryDOList.stream()
                 .map(doo -> doConvertDto(doo, ZTreeCategoryResponseDTO.class))

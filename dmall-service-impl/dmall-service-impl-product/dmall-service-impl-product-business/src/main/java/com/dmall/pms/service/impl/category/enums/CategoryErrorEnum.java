@@ -25,7 +25,10 @@ public enum  CategoryErrorEnum implements ErrorCodeEnum {
     NOT_ALLOW_UPDATE_PARENT_ID("category_011","不允许修改上级"),
     BRAND_ID_EMPTY("category_012","品牌id数组为空"),
     BRAND_ID_INVALID("category_013","设置的品牌不存在"),
-    BRAND_IDS_INVALID("category_013","品牌列表有重复"),
+    BRAND_IDS_INVALID("category_014","品牌列表有重复"),
+    ATTRIBUTETYPE_ID_EMPTY("category_015","属性分类id数组为空"),
+    ATTRIBUTETYPE_ID_INVALID("category_016","设置的属性分类不存在"),
+
     ;
 
     /**

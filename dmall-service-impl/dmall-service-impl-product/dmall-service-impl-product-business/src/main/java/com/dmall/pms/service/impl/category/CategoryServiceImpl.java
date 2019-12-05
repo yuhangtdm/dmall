@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.category;
 
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
@@ -42,6 +43,11 @@ public class  CategoryServiceImpl implements CategoryService {
     @Autowired
     private ZTreeCategoryHandler zTreeCategoryHandler;
 
+    @Autowired
+    private SetBrandHandler setBrandHandler;
+
+    @Autowired
+    private SetAttributeTypeHandler setAttributeTypeHandler;
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveCategoryRequestDTO requestDTO) {
@@ -49,12 +55,12 @@ public class  CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public BaseResult<Long> delete(@PathVariable("id") Long id) {
+    public BaseResult<Long> delete(Long id) {
         return deleteCategoryHandler.handler(id);
     }
 
     @Override
-    public BaseResult<Long> update(@Valid UpdateCategoryRequestDTO requestDTO) {
+    public BaseResult<Long> update(@RequestBody UpdateCategoryRequestDTO requestDTO) {
         return updateCategoryHandler.handler(requestDTO);
     }
 
@@ -74,7 +80,12 @@ public class  CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public BaseResult<Void> setBrand(@Valid SetBrandRequestDTO requestDTO) {
-        return null;
+    public BaseResult<Void> setBrand(@RequestBody SetBrandRequestDTO requestDTO) {
+        return setBrandHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Void> setAttributeType(@RequestBody SetAttributeTypeRequestDTO requestDTO) {
+        return setAttributeTypeHandler.handler(requestDTO);
     }
 }

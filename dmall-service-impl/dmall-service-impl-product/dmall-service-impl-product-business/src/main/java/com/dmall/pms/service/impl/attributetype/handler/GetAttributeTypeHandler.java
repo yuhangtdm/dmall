@@ -22,13 +22,12 @@ public class GetAttributeTypeHandler extends AbstractCommonHandler<Long, Attribu
     private AttributeTypeMapper attributeTypeMapper;
 
     @Override
-    public BaseResult<CommonAttributeTypeResponseDTO> validate(Long id) {
-        return ResultUtil.success();
-    }
-
-    @Override
     public BaseResult<CommonAttributeTypeResponseDTO> processor(Long id) {
-        return ResultUtil.success();
+        AttributeTypeDO attributeTypeDO = attributeTypeMapper.selectById(id);
+        if (attributeTypeDO == null){
+            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTETYPE_NOT_EXIST);
+        }
+        return ResultUtil.success(doConvertDto(attributeTypeDO, CommonAttributeTypeResponseDTO.class));
     }
 
 }

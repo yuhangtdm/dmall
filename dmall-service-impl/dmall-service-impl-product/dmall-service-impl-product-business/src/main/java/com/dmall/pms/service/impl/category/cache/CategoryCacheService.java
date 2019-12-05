@@ -30,12 +30,13 @@ public class CategoryCacheService {
      * 查询列表
      */
     @MapCacheable(cacheNames = "category")
-    public List<CategoryDO> selectList(ListCategoryRequestDTO requestDTO){
+    public List<CategoryDO> selectList(ListCategoryRequestDTO requestDTO) {
         LambdaQueryWrapper<CategoryDO> queryWrapper = Wrappers.<CategoryDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), CategoryDO::getName, requestDTO.getName())
                 .eq(ObjectUtil.isNotNull(requestDTO.getParentId()), CategoryDO::getParentId, requestDTO.getParentId())
                 .eq(ObjectUtil.isNotNull(requestDTO.getLevel()), CategoryDO::getLevel,
-                        requestDTO.getLevel() != null ?requestDTO.getLevel() : 0);
+                        requestDTO.getLevel() != null ? requestDTO.getLevel() : 0)
+                .orderByAsc(CategoryDO::getSort);
         return categoryMapper.selectList(queryWrapper);
     }
 

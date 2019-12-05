@@ -1,5 +1,6 @@
 package com.dmall.pms.service.impl.brand.handler;
 
+import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.common.enums.OrderByEnum;
 import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
+import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;

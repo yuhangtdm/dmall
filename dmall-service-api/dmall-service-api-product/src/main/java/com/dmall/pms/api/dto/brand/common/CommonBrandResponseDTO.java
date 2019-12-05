@@ -61,5 +61,8 @@ public class CommonBrandResponseDTO implements Serializable {
     @ApiModelProperty(value = "状态", position = 13)
     private String isDeleted;
 
+    @ApiModelProperty(value = "商品分类名称 如 电脑/电脑整机/笔记本", position = 3)
+    private String cascadeCategoryName;
+
 
 }
