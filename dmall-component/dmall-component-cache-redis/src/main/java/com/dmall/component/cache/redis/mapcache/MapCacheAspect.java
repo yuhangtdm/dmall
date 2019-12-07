@@ -61,6 +61,7 @@ public class MapCacheAspect {
 
     /**
      * map缓存切面方法 用于获取list的方法
+     * 适用于获取所有数据
      */
     @Around("mapCacheable()")
     public Object mapCacheable(ProceedingJoinPoint joinPoint) {

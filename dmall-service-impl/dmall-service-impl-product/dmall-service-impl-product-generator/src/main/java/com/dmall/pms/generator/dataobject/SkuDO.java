@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: sku表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -165,46 +165,6 @@ public class SkuDO implements Serializable {
      * 审核状态 1-未审核;2-审核通过;3-审核不通过
      */
     private Integer auditStatus;
-
-    /**
-     * 销量
-     */
-    private Integer saleCount;
-
-    /**
-     * 浏览量
-     */
-    private Integer viewCount;
-
-    /**
-     * 评论量
-     */
-    private Integer commentCount;
-
-    /**
-     * 好评量
-     */
-    private Integer goodCommentCount;
-
-    /**
-     * 中评量
-     */
-    private Integer middleCommentCount;
-
-    /**
-     * 差评量
-     */
-    private Integer badCommentCount;
-
-    /**
-     * 好评率
-     */
-    private BigDecimal goodRate;
-
-    /**
-     * 平均评分
-     */
-    private BigDecimal commentScore;
 
     /**
      * 优惠方式

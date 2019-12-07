@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: 商品表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @Accessors(chain = true)
@@ -33,7 +33,7 @@ public class ProductDTO implements Serializable {
     private Long brandId;
 
     @ApiModelProperty(value = "运费模板id", position = 5)
-    private Long feightTemplateId;
+    private Long freightTemplateId;
 
     @ApiModelProperty(value = "商品编号", position = 6)
     private String productNo;
@@ -65,55 +65,25 @@ public class ProductDTO implements Serializable {
     @ApiModelProperty(value = "上市时间", position = 15)
     private Date onMarketTime;
 
-    @ApiModelProperty(value = "商品最高价", position = 16)
-    private BigDecimal maxPrice;
-
-    @ApiModelProperty(value = "商品最低价", position = 17)
-    private BigDecimal minPrice;
-
-    @ApiModelProperty(value = "销量", position = 18)
-    private Integer saleCount;
-
-    @ApiModelProperty(value = "浏览量", position = 19)
-    private Integer viewCount;
-
-    @ApiModelProperty(value = "评论量", position = 20)
-    private Integer commentCount;
-
-    @ApiModelProperty(value = "好评量", position = 21)
-    private Integer goodCommentCount;
-
-    @ApiModelProperty(value = "中评量", position = 22)
-    private Integer middleCommentCount;
-
-    @ApiModelProperty(value = "差评量", position = 23)
-    private Integer badCommentCount;
-
-    @ApiModelProperty(value = "好评率", position = 24)
-    private BigDecimal goodRate;
-
-    @ApiModelProperty(value = "平均评分", position = 25)
-    private BigDecimal commentScore;
-
-    @ApiModelProperty(value = "商品分类id集合 如:1/2/3", position = 26)
+    @ApiModelProperty(value = "商品分类path", position = 16)
     private String cascadeCategoryId;
 
-    @ApiModelProperty(value = "增值业务", position = 27)
+    @ApiModelProperty(value = "增值业务", position = 17)
     private String addServices;
 
-    @ApiModelProperty(value = "创建人", position = 28)
+    @ApiModelProperty(value = "创建人", position = 18)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 29)
+    @ApiModelProperty(value = "创建时间", position = 19)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 30)
+    @ApiModelProperty(value = "更新人", position = 20)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 31)
+    @ApiModelProperty(value = "更新时间", position = 21)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 32)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 22)
     private String isDeleted;
 
 }

@@ -13,11 +13,11 @@ public class EnumUtil {
     /**
      * 获取枚举对象
      */
-    public static <CODE> KeyValueEnum<CODE> getKeyValueEnum(Class<? extends KeyValueEnum> enumClazz, CODE code) {
+    public static <E extends KeyValueEnum,CODE> E getKeyValueEnum(Class<E> enumClazz, CODE code) {
         if (enumClazz.isEnum()) {
             for (KeyValueEnum enumConstant : enumClazz.getEnumConstants()) {
                 if (Objects.equals(enumConstant.getCode(), code)) {
-                    return enumConstant;
+                    return (E) enumConstant;
                 }
             }
         }

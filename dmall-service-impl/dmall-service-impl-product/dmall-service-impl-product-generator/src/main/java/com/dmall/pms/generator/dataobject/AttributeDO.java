@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 属性表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -33,7 +33,7 @@ public class AttributeDO implements Serializable {
     /**
      * 属性分类id
      */
-    private Long attributeCategoryId;
+    private Long attributeTypeId;
 
     /**
      * 商品分类id
@@ -41,7 +41,7 @@ public class AttributeDO implements Serializable {
     private Long categoryId;
 
     /**
-     * 商品分类id集合 如，1/2/3
+     * 商品分类path
      */
     private String cascadeCategoryId;
 
@@ -84,11 +84,6 @@ public class AttributeDO implements Serializable {
      * 是否支持手动新增 Y-支持;N-不支持
      */
     private String handAddStatus;
-
-    /**
-     * 属性值数量
-     */
-    private Integer valueCount;
 
     /**
      * 创建人

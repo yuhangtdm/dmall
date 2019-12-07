@@ -1,12 +1,15 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
-import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
-import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
-import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.mapper.AttributeTypeMapper;
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
+import com.dmall.pms.generator.dataobject.AttributeTypeDO;
+import com.dmall.pms.generator.mapper.AttributeTypeMapper;
+import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
+import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +21,30 @@ import org.springframework.stereotype.Component;
 public class UpdateAttributeTypeHandler extends AbstractCommonHandler<UpdateAttributeTypeRequestDTO, AttributeTypeDO, Long> {
 
     @Autowired
+    private AttributeTypeCacheService attributeTypeCacheService;
+
+    @Autowired
     private AttributeTypeMapper attributeTypeMapper;
+
+    @Override
+    public BaseResult validate(UpdateAttributeTypeRequestDTO requestDTO) {
+        AttributeTypeDO attributeTypeDO = attributeTypeMapper.selectById(requestDTO.getId());
+        if (attributeTypeDO == null) {
+            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTETYPE_NOT_EXIST);
+        }
+        // 名称唯一
+        AttributeTypeDO nameAttributeType = attributeTypeMapper.selectOne(Wrappers.<AttributeTypeDO>lambdaQuery()
+                .eq(AttributeTypeDO::getName, requestDTO.getName()));
+        if (nameAttributeType != null && ObjectUtil.notEqual(nameAttributeType.getId(), requestDTO.getId())) {
+            return ResultUtil.fail(AttributeTypeErrorEnum.SAVE_ATTRIBUTETYPE_ERROR);
+        }
+        return ResultUtil.success();
+    }
 
     @Override
     public BaseResult<Long> processor(UpdateAttributeTypeRequestDTO requestDTO) {
         AttributeTypeDO attributeTypeDO = dtoConvertDo(requestDTO, AttributeTypeDO.class);
-        attributeTypeMapper.updateById(attributeTypeDO);
+        attributeTypeCacheService.updateById(attributeTypeDO);
         return ResultUtil.success(attributeTypeDO.getId());
     }
 

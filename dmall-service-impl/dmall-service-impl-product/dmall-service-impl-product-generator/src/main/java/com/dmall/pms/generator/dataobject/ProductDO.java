@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 商品表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -49,7 +49,7 @@ public class ProductDO implements Serializable {
     /**
      * 运费模板id
      */
-    private Long feightTemplateId;
+    private Long freightTemplateId;
 
     /**
      * 商品编号
@@ -102,57 +102,7 @@ public class ProductDO implements Serializable {
     private Date onMarketTime;
 
     /**
-     * 商品最高价
-     */
-    private BigDecimal maxPrice;
-
-    /**
-     * 商品最低价
-     */
-    private BigDecimal minPrice;
-
-    /**
-     * 销量
-     */
-    private Integer saleCount;
-
-    /**
-     * 浏览量
-     */
-    private Integer viewCount;
-
-    /**
-     * 评论量
-     */
-    private Integer commentCount;
-
-    /**
-     * 好评量
-     */
-    private Integer goodCommentCount;
-
-    /**
-     * 中评量
-     */
-    private Integer middleCommentCount;
-
-    /**
-     * 差评量
-     */
-    private Integer badCommentCount;
-
-    /**
-     * 好评率
-     */
-    private BigDecimal goodRate;
-
-    /**
-     * 平均评分
-     */
-    private BigDecimal commentScore;
-
-    /**
-     * 商品分类id集合 如:1/2/3
+     * 商品分类path
      */
     private String cascadeCategoryId;
 

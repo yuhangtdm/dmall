@@ -15,7 +15,6 @@ import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 /**

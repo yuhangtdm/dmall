@@ -1,5 +1,6 @@
 package com.dmall.pms.api.dto.category.common;
 
+import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class CommonCategoryResponseDTO implements Serializable {
 
 
     @ApiModelProperty(value = "级别",required = true, position = 6)
-    private Integer level;
+    private LevelEnum level;
 
 
     @ApiModelProperty(value = "描述",  position = 7)

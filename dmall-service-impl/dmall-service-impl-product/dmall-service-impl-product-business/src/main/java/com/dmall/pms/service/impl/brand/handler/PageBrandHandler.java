@@ -1,25 +1,20 @@
 package com.dmall.pms.service.impl.brand.handler;
 
-import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dmall.common.enums.OrderByEnum;
-import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
-import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
-import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
-import com.dmall.pms.generator.dataobject.BrandDO;
-import com.dmall.pms.generator.mapper.BrandMapper;
-import com.dmall.common.model.result.LayuiPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.model.result.LayuiPage;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
+import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
+import com.dmall.pms.generator.dataobject.BrandDO;
+import com.dmall.pms.generator.mapper.BrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,8 +34,6 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
                 .eq(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getFirstLetter, requestDTO.getFirstLetter())
-                /*.orderBy(StrUtil.isNotBlank(requestDTO.getSort()),
-                        OrderByEnum.ASC.getCode().equalsIgnoreCase(requestDTO.getOrderBy()), requestDTO.getSort())*/
                 ;
 
         Page<BrandDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());

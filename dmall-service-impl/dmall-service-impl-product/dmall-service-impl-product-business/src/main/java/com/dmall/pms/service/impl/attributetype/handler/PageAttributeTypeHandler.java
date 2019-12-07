@@ -1,7 +1,5 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
-import cn.hutool.core.util.CharUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,14 +10,12 @@ import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
-import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.handler.GetCategoryHandler;
+import com.dmall.pms.service.impl.category.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,10 +30,7 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     private AttributeTypeMapper attributeTypeMapper;
 
     @Autowired
-    private CategoryCacheService categoryCacheService;
-
-    @Autowired
-    private GetCategoryHandler getCategoryHandler;
+    private CategorySupport categorySupport;
 
     @Override
     public BaseResult<LayuiPage<CommonAttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
@@ -53,7 +46,7 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
 
     @Override
     protected void customerConvertDto(CommonAttributeTypeResponseDTO result, AttributeTypeDO doo) {
-        result.setCascadeCategoryName(getCategoryHandler.getCascadeCategoryName(doo.getCategoryId()));
+        result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
     }
 
 }

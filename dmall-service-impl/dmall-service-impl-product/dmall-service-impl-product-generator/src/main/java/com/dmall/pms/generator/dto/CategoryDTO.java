@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: 商品分类表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @Accessors(chain = true)
@@ -53,31 +53,22 @@ public class CategoryDTO implements Serializable {
     @ApiModelProperty(value = "是否显示在导航栏 Y-是;N-否", position = 11)
     private String navStatus;
 
-    @ApiModelProperty(value = "品牌数量", position = 12)
-    private Integer brandCount;
-
-    @ApiModelProperty(value = "属性分类数量", position = 13)
-    private Integer attributeCategoryCount;
-
-    @ApiModelProperty(value = "属性数量", position = 14)
-    private Integer attributeCount;
-
-    @ApiModelProperty(value = "路径 格式: .parentId.id.", position = 15)
+    @ApiModelProperty(value = "路径 格式: .parentId.id.", position = 12)
     private String path;
 
-    @ApiModelProperty(value = "创建人", position = 16)
+    @ApiModelProperty(value = "创建人", position = 13)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 17)
+    @ApiModelProperty(value = "创建时间", position = 14)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 18)
+    @ApiModelProperty(value = "更新人", position = 15)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 19)
+    @ApiModelProperty(value = "更新时间", position = 16)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 20)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 17)
     private String isDeleted;
 
 }

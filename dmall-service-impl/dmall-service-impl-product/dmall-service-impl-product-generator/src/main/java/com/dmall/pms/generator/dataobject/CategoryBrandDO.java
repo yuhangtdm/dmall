@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 分类品牌关系表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

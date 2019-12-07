@@ -70,6 +70,18 @@ public class ObjectUtil extends StringUtils {
         return false;
     }
 
+    /**
+     * 判断一组对象 是否全部为空
+     */
+    public static boolean allEmpty(Object... obj) {
+        for (Object o : obj) {
+            if (isNotEmpty(o)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * 判断一组对象 是否全部不为空

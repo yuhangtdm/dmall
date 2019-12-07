@@ -11,25 +11,26 @@ import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.api.dto.category.request.setattributetype.AttributeTypeIdsDTO;
 import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.BrandIdsDTO;
+import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.generator.service.IAttributeCategoryService;
+import com.dmall.pms.generator.service.IAttributeService;
 import com.dmall.pms.generator.service.IAttributeTypeService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @description:
+ * @description: 设置分类处理器
  * @author: created by hang.yu on 2019/12/5 21:19
  */
 @Component
@@ -44,6 +45,9 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
 
+    @Autowired
+    private IAttributeService iAttributeService;
+
 
     @Override
     public BaseResult validate(SetAttributeTypeRequestDTO requestDTO) {
@@ -57,7 +61,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
             return ResultUtil.fail(CategoryErrorEnum.BRAND_IDS_INVALID);
         }
         Collection<AttributeTypeDO> attributeTypeDOS = iAttributeTypeService.listByIds(attributeTypeIds);
-        // 属性分类id都要存在
+        // 属性分类id要存在
         if (attributeTypeDOS.size() != attributeTypeIds.size()) {
             return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTETYPE_ID_INVALID);
         }
@@ -82,26 +86,31 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
                     .map(AttributeTypeDO::getId)
                     .filter(attributeTypeId -> !requestDTO.getAttributeTypeIds().contains(attributeTypeId))
                     .collect(Collectors.toList());
-            deleteAttributeTypeIds.stream().forEach(attributeTypeId -> {
-                AttributeTypeDO attributeTypeDO = new AttributeTypeDO();
-                attributeTypeDO.setId(attributeTypeId);
+            deleteAttributeTypeIds.forEach(attributeTypeId -> {
                 LambdaUpdateWrapper<AttributeTypeDO> updateWrapper = Wrappers.<AttributeTypeDO>update().lambda()
+                        .eq(AttributeTypeDO::getId,attributeTypeId)
                         .set(AttributeTypeDO::getCategoryId, null)
                         .set(AttributeTypeDO::getCascadeCategoryId, null);
-                // todo 待验证
-                attributeTypeMapper.update(attributeTypeDO, updateWrapper);
+                attributeTypeMapper.update(null, updateWrapper);
             });
         }
-        List<AttributeTypeDO> collect = requestDTO.getAttributeTypeIds().stream().map(attributeTypeIdsDTO -> {
+        requestDTO.getAttributeTypeIds().forEach(attributeTypeIdsDTO ->{
             AttributeTypeDO attributeTypeDO = new AttributeTypeDO();
             attributeTypeDO.setId(attributeTypeIdsDTO.getAttributeTypeId());
             attributeTypeDO.setSort(attributeTypeIdsDTO.getSort());
             attributeTypeDO.setCategoryId(requestDTO.getCategoryId());
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             attributeTypeDO.setCascadeCategoryId(categoryDO.getPath());
-            return attributeTypeDO;
-        }).collect(Collectors.toList());
-        iAttributeTypeService.updateBatchById(collect);
+            // 更新属性分类
+            iAttributeTypeService.updateById(attributeTypeDO);
+            // 批量更新属性
+            iAttributeService.update(Wrappers.<AttributeDO>update().lambda()
+                    .eq(AttributeDO::getAttributeTypeId, attributeTypeIdsDTO.getAttributeTypeId())
+                    .set(AttributeDO::getCategoryId, attributeTypeDO.getCategoryId())
+                    .set(AttributeDO::getCascadeCategoryId, attributeTypeDO.getCascadeCategoryId())
+            );
+        });
+
         return ResultUtil.success();
     }
 }

@@ -31,7 +31,6 @@ public class PageRequestDTO implements Serializable {
     @ApiModelProperty(value = "排序字段")
     private String sortField;
 
-
     @ApiModelProperty(value = "排序方向, asc:升序,desc:降序", required = true)
     @ValueInEnum(OrderByEnum.class)
     private String orderBy;

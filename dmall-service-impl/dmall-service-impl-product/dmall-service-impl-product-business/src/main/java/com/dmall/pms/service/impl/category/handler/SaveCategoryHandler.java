@@ -56,14 +56,6 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
         return ResultUtil.success(categoryDO.getId());
     }
 
-    @Override
-    protected void customerConvertDo(CategoryDO result, SaveCategoryRequestDTO requestDTO) {
-        // 初始值都是0
-        result.setBrandCount(0);
-        result.setAttributeCategoryCount(0);
-        result.setAttributeCount(0);
-    }
-
     /**
      * 设置path
      */

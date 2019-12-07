@@ -1,6 +1,8 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
+import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
@@ -18,12 +20,26 @@ import org.springframework.stereotype.Component;
 public class SaveAttributeTypeHandler extends AbstractCommonHandler<SaveAttributeTypeRequestDTO, AttributeTypeDO, Long> {
 
     @Autowired
+    private AttributeTypeCacheService attributeTypeCacheService;
+
+    @Autowired
     private AttributeTypeMapper attributeTypeMapper;
+
+    @Override
+    public BaseResult validate(SaveAttributeTypeRequestDTO requestDTO) {
+        AttributeTypeDO attributeTypeDO = attributeTypeMapper.selectOne(Wrappers.<AttributeTypeDO>lambdaQuery()
+                .eq(AttributeTypeDO::getName, requestDTO.getName()));
+        // 名称唯一
+        if (attributeTypeDO != null) {
+            return ResultUtil.fail(AttributeTypeErrorEnum.SAVE_ATTRIBUTETYPE_ERROR);
+        }
+        return ResultUtil.success();
+    }
 
     @Override
     public BaseResult<Long> processor(SaveAttributeTypeRequestDTO requestDTO) {
         AttributeTypeDO attributeTypeDO = dtoConvertDo(requestDTO, AttributeTypeDO.class);
-        attributeTypeMapper.insert(attributeTypeDO);
+        attributeTypeCacheService.insert(attributeTypeDO);
         return ResultUtil.success(attributeTypeDO.getId());
     }
 

@@ -5,21 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: 属性选择类型
- * @author: created by hang.yu on 2019/12/5 23:10
+ * @description: HandAddStatusEnum
+ * @author: created by hang.yu on 2019/12/7 23:01
  */
 @Getter
 @AllArgsConstructor
-public enum  SelectTypeEnum implements KeyValueEnum<Integer> {
+public enum  HandAddStatusEnum implements KeyValueEnum<String> {
 
-    HANDLE(1,"单选"),
-
-    LIST(2,"多选")
+    Y("Y","支持"),
+    N("N","不支持"),
     ;
 
-
-    private Integer code;
+    private String code;
 
     private String desc;
 }
-

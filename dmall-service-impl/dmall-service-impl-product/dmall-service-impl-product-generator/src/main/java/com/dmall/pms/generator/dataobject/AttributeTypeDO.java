@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 属性分类表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,7 +36,7 @@ public class AttributeTypeDO implements Serializable {
     private Long categoryId;
 
     /**
-     * 商品分类id集合 如，1/2/3
+     * 商品分类path
      */
     private String cascadeCategoryId;
 
@@ -59,11 +59,6 @@ public class AttributeTypeDO implements Serializable {
      * 规格数量
      */
     private Integer specificationsCount;
-
-    /**
-     * 参数数量
-     */
-    private Integer paramCount;
 
     /**
      * 创建人

@@ -1,11 +1,10 @@
 package com.dmall.pms.service.impl.brand.handler;
 
-import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
-import com.dmall.pms.generator.dataobject.BrandDO;
-import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
+import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,8 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: sku属性表
- * @author: created by hang.yu on 2019-12-03 23:31:28
+ * @description: sku属性值表
+ * @author: created by hang.yu on 2019-12-07 23:18:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -43,22 +43,12 @@ public class SkuAttributeDO implements Serializable {
     /**
      * 属性分类id
      */
-    private Long attributeTypeId;
+    private String attributeTypeId;
 
     /**
      * 属性id
      */
     private Long attributeId;
-
-    /**
-     * 属性值id
-     */
-    private Long valueId;
-
-    /**
-     * 属性名称
-     */
-    private String attributeName;
 
     /**
      * 属性值
@@ -68,10 +58,10 @@ public class SkuAttributeDO implements Serializable {
     /**
      * 类型 1-规格;2-参数
      */
-    private Integer type;
+    private Integer attributeType;
 
     /**
-     * 规格配图
+     * 规格配图 规格可能有配图
      */
     private String pic;
 

@@ -1,13 +1,10 @@
 package com.dmall.pms.service.impl.brand.cache;
 
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.component.cache.redis.mapcache.MapCacheable;
 import com.dmall.component.cache.redis.mapcache.MapDeleteCache;
 import com.dmall.component.cache.redis.mapcache.MapGetCache;
 import com.dmall.component.cache.redis.mapcache.MapPutCache;
-import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +26,8 @@ public class BrandCacheService {
      * 查询列表
      */
     @MapCacheable(cacheNames = "brand")
-    public List<BrandDO> selectList(ListBrandRequestDTO requestDTO) {
-        LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
-                .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
-                .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
-                .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
-        return brandMapper.selectList(queryWrapper);
+    public List<BrandDO> selectAll() {
+        return brandMapper.selectList(Wrappers.emptyWrapper());
     }
 
     /**

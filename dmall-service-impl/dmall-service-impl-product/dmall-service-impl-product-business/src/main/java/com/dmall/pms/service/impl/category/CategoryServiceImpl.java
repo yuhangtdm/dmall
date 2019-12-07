@@ -11,6 +11,7 @@ import com.dmall.pms.api.service.CategoryService;
 import com.dmall.pms.service.impl.category.handler.*;
 import com.dmall.common.model.result.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,6 +86,7 @@ public class  CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Void> setAttributeType(@RequestBody SetAttributeTypeRequestDTO requestDTO) {
         return setAttributeTypeHandler.handler(requestDTO);
     }

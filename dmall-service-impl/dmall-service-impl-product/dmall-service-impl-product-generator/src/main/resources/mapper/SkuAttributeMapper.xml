@@ -7,12 +7,10 @@
         <id column="id" property="id" />
         <result column="product_id" property="productId" />
         <result column="sku_id" property="skuId" />
-        <result column="attribute_type_id" property="attributeId" />
+        <result column="attribute__type_id" property="attributeTypeId" />
         <result column="attribute_id" property="attributeId" />
-        <result column="value_id" property="valueId" />
-        <result column="attribute_name" property="attributeName" />
         <result column="value" property="value" />
-        <result column="type" property="type" />
+        <result column="attribute_type" property="attributeType" />
         <result column="pic" property="pic" />
         <result column="product_no" property="productNo" />
         <result column="sku_no" property="skuNo" />
@@ -25,7 +23,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, product_id, sku_id, attribute_id, value_id, attribute_name, value, type, pic, product_no, sku_no, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, product_id, sku_id, attribute__type_id, attribute_id, value, attribute_type, pic, product_no, sku_no, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

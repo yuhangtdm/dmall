@@ -20,8 +20,6 @@ public class CommonAttributeRequestDTO implements Serializable {
     private static final long serialVersionUID=1L;
 
 
-
-
     @ApiModelProperty(value = "属性分类id", position = 2)
     private Long attributeCategoryId;
 
@@ -64,20 +62,6 @@ public class CommonAttributeRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 12)
     private String handAddStatus;
-
-
-    @ApiModelProperty(value = "属性值数量", position = 13)
-    private Integer valueCount;
-
-
-
-
-
-
-
-
-
-
 
 
 }

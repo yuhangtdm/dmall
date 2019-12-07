@@ -1,13 +1,12 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
-import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
-import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
-import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.mapper.AttributeTypeMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
+import com.dmall.pms.generator.dataobject.AttributeTypeDO;
+import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
+import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +18,13 @@ import org.springframework.stereotype.Component;
 public class GetAttributeTypeHandler extends AbstractCommonHandler<Long, AttributeTypeDO, CommonAttributeTypeResponseDTO> {
 
     @Autowired
-    private AttributeTypeMapper attributeTypeMapper;
+    private AttributeTypeCacheService attributeTypeCacheService;
+
 
     @Override
     public BaseResult<CommonAttributeTypeResponseDTO> processor(Long id) {
-        AttributeTypeDO attributeTypeDO = attributeTypeMapper.selectById(id);
-        if (attributeTypeDO == null){
+        AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(id);
+        if (attributeTypeDO == null) {
             return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTETYPE_NOT_EXIST);
         }
         return ResultUtil.success(doConvertDto(attributeTypeDO, CommonAttributeTypeResponseDTO.class));
