@@ -52,7 +52,7 @@ public class LogAdvice implements MethodInterceptor {
             webLog.setStartTime(new Date());
             webLog.setClassName(method.getDeclaringClass().getName());
             webLog.setMethodName(method.getName());
-            webLog.setEnv("dev");
+            webLog.setEnv(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "dev");
             webLog.setAppName(environment.getProperty("spring.application.name"));
             webLog.setThreadName(Thread.currentThread().getName());
             webLog.setTitle(webLog.getClassName() + "." + webLog.getMethodName());

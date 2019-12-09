@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 属性表
- * @author: created by hang.yu on 2019-12-07 23:18:21
+ * @author: created by hang.yu on 2019-12-09 22:36:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -69,11 +69,6 @@ public class AttributeDO implements Serializable {
      * 可选值列表 以逗号隔开
      */
     private String inputList;
-
-    /**
-     * 属性选择类型 1-单选;2-多选
-     */
-    private String selectType;
 
     /**
      * 排序

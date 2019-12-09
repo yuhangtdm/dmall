@@ -29,7 +29,6 @@ public class PageBrandRequestDTO  extends PageRequestDTO {
     private String englishName;
 
     @ApiModelProperty(value = "首字母", position = 4)
-    @NotBlank(message = "首字母不能为空")
     @Length(max = 1,min = 1,message = "首字母长度固定一位")
     private String firstLetter;
 

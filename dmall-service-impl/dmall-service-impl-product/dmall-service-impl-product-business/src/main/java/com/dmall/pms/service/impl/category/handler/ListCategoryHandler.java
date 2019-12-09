@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.enums.base.EnumUtil;
+import com.dmall.common.enums.base.YNEnum;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
@@ -16,7 +17,9 @@ import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,7 +40,7 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
         List<CategoryDO> categoryDOList;
         if (com.dmall.common.util.ObjectUtil.allEmpty(requestDTO.getName(), requestDTO.getParentId(), requestDTO.getLevel())) {
             categoryDOList = categoryCacheService.selectAll();
-        }else {
+        } else {
             LambdaQueryWrapper<CategoryDO> queryWrapper = Wrappers.<CategoryDO>lambdaQuery()
                     .like(StrUtil.isNotBlank(requestDTO.getName()), CategoryDO::getName, requestDTO.getName())
                     .eq(ObjectUtil.isNotNull(requestDTO.getParentId()), CategoryDO::getParentId, requestDTO.getParentId())
@@ -47,6 +50,7 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
             categoryDOList = categoryMapper.selectList(queryWrapper);
         }
         List<CommonCategoryResponseDTO> list = categoryDOList.stream()
+                .filter(Objects::nonNull)
                 .map(doo -> doConvertDto(doo, CommonCategoryResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(list);
@@ -54,6 +58,8 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
 
     @Override
     protected void customerConvertDto(CommonCategoryResponseDTO result, CategoryDO doo) {
+        result.setHotStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getHotStatus()));
         result.setLevel(EnumUtil.getKeyValueEnum(LevelEnum.class, doo.getLevel()));
+        result.setNavStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getNavStatus()));
     }
 }

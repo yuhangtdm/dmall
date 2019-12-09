@@ -7,6 +7,7 @@ import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
+import com.dmall.pms.service.impl.category.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,14 +21,22 @@ public class GetAttributeTypeHandler extends AbstractCommonHandler<Long, Attribu
     @Autowired
     private AttributeTypeCacheService attributeTypeCacheService;
 
+    @Autowired
+    private CategorySupport categorySupport;
 
     @Override
     public BaseResult<CommonAttributeTypeResponseDTO> processor(Long id) {
         AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(id);
         if (attributeTypeDO == null) {
-            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTETYPE_NOT_EXIST);
+            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
         }
         return ResultUtil.success(doConvertDto(attributeTypeDO, CommonAttributeTypeResponseDTO.class));
     }
 
+    @Override
+    protected void customerConvertDto(CommonAttributeTypeResponseDTO result, AttributeTypeDO doo) {
+        if (doo.getCategoryId() != null) {
+            result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
+        }
+    }
 }

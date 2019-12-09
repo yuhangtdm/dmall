@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
@@ -24,5 +26,6 @@ public class SetBrandRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "品牌列表", required = true, position = 2)
     @NotNull(message = "品牌列表不能为空")
+    @Valid
     private List<BrandIdsDTO> brandIds;
 }

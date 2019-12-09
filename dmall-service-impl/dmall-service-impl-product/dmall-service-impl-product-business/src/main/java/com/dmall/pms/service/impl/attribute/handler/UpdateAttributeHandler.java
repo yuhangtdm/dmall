@@ -1,6 +1,8 @@
 package com.dmall.pms.service.impl.attribute.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
@@ -35,7 +37,7 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
     public BaseResult<Long> validate(UpdateAttributeRequestDTO requestDTO) {
         // 查询分类
         AttributeDO attributeDO = attributeCacheService.selectById(requestDTO.getId());
-        if (attributeDO == null){
+        if (attributeDO == null) {
             return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_NOT_EXIST);
         }
         // 同一属性分类下名称必须相同
@@ -43,10 +45,9 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
                 .eq(AttributeDO::getAttributeTypeId, attributeDO.getAttributeTypeId())
                 .eq(AttributeDO::getName, requestDTO.getName()));
         // 属性分类下的属性名称必须唯一
-        if (nameAttributeDO != null && ObjectUtil.notEqual(nameAttributeDO.getId(), requestDTO.getId())){
+        if (nameAttributeDO != null && ObjectUtil.notEqual(nameAttributeDO.getId(), requestDTO.getId())) {
             return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_NAME_UNIQUE);
         }
-
 
         return ResultUtil.success();
     }
@@ -60,6 +61,7 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
 
     @Override
     protected void customerConvertDo(AttributeDO result, UpdateAttributeRequestDTO requestDTO) {
+        result.setInputList(CollUtil.join(requestDTO.getInputList(), StrUtil.COMMA));
         AttributeDO attributeDO = attributeCacheService.selectById(result.getId());
         AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(attributeDO.getAttributeTypeId());
         // 设置商品分类id 值可能为null

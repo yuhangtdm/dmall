@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @RestController
-public class  AttributeServiceImpl implements AttributeService {
+public class AttributeServiceImpl implements AttributeService {
 
     @Autowired
     protected SaveAttributeHandler saveAttributeHandler;
@@ -37,10 +38,6 @@ public class  AttributeServiceImpl implements AttributeService {
 
     @Autowired
     private ListAttributeHandler listAttributeHandler;
-
-    @Autowired
-    private PageAttributeHandler pageAttributeHandler;
-
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveAttributeRequestDTO requestDTO) {
@@ -65,11 +62,6 @@ public class  AttributeServiceImpl implements AttributeService {
     @Override
     public BaseResult<List<CommonAttributeResponseDTO>> list(@RequestBody ListAttributeRequestDTO requestDTO) {
         return listAttributeHandler.handler(requestDTO);
-    }
-
-    @Override
-    public BaseResult<LayuiPage<CommonAttributeResponseDTO>> page(@RequestBody PageAttributeRequestDTO requestDTO) {
-        return pageAttributeHandler.handler(requestDTO);
     }
 
 }

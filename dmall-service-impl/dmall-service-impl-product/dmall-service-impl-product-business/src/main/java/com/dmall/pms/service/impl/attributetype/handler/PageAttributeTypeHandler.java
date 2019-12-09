@@ -2,20 +2,25 @@ package com.dmall.pms.service.impl.attributetype.handler;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
+import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
+import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
 import com.dmall.pms.service.impl.category.handler.GetCategoryHandler;
 import com.dmall.pms.service.impl.category.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +37,9 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     @Autowired
     private CategorySupport categorySupport;
 
+    @Autowired
+    private AttributeMapper attributeMapper;
+
     @Override
     public BaseResult<LayuiPage<CommonAttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
@@ -46,7 +54,20 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
 
     @Override
     protected void customerConvertDto(CommonAttributeTypeResponseDTO result, AttributeTypeDO doo) {
-        result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
+        if (doo.getCategoryId() != null) {
+            result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
+        }
+        Integer specificationsCount = attributeMapper.selectCount(Wrappers.<AttributeDO>lambdaQuery()
+                .eq(AttributeDO::getAttributeTypeId, doo.getId())
+                .eq(AttributeDO::getType, AttributeTypeEnum.SPECIFICATIONS.getCode())
+        );
+        result.setSpecificationsCount(specificationsCount);
+        Integer paramsCount = attributeMapper.selectCount(Wrappers.<AttributeDO>lambdaQuery()
+                .eq(AttributeDO::getAttributeTypeId, doo.getId())
+                .eq(AttributeDO::getType, AttributeTypeEnum.PARAMS.getCode())
+        );
+        result.setParamsCount(paramsCount);
+
     }
 
 }

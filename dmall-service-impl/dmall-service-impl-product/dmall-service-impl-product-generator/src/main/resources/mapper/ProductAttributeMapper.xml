@@ -8,6 +8,7 @@
         <result column="product_id" property="productId" />
         <result column="attribute_type_id" property="attributeTypeId" />
         <result column="attribute_id" property="attributeId" />
+        <result column="attribute_value" property="attributeValue" />
         <result column="attribute_type" property="attributeType" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
@@ -18,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, product_id, attribute_type_id, attribute_id, attribute_type, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, product_id, attribute_type_id, attribute_id, attribute_value, attribute_type, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

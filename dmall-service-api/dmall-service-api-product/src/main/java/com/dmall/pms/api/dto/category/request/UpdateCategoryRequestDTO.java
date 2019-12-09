@@ -22,12 +22,9 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value="UpdateCategoryRequestDTO", description="修改商品分类请求实体")
 public class UpdateCategoryRequestDTO {
 
-    @ApiModelProperty(value = "主键", required = true, position = 0)
+    @ApiModelProperty(value = "主键", required = true, position = 1)
     @NotNull(message = "分类id不能为空")
     private Long id;
-
-    @ApiModelProperty(value = "上级id", required = true, position = 1)
-    private Long parentId;
 
     @ApiModelProperty(value = "分类名称", required = true, position = 2)
     private String name;
@@ -37,10 +34,6 @@ public class UpdateCategoryRequestDTO {
 
     @ApiModelProperty(value = "移动端图标", position = 4)
     private String mobileIcon;
-
-    @ApiModelProperty(value = "级别,1-1级，2-2级，3-3级", required = true, position = 5)
-    @ValueInEnum(LevelEnum.class)
-    private Integer level;
 
     @ApiModelProperty(value = "描述",  position = 6)
     private String description;

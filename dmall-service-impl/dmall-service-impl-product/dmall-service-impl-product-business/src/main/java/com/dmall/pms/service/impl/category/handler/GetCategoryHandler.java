@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import com.dmall.common.enums.base.EnumUtil;
+import com.dmall.common.enums.base.YNEnum;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
@@ -25,15 +26,17 @@ public class GetCategoryHandler extends AbstractCommonHandler<Long, CategoryDO, 
     @Override
     public BaseResult<CommonCategoryResponseDTO> processor(Long id) {
         CategoryDO categoryDO = categoryCacheService.selectById(id);
-        if (categoryDO == null){
+        if (categoryDO == null) {
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
         }
-        return ResultUtil.success(doConvertDto(categoryDO,CommonCategoryResponseDTO.class));
+        return ResultUtil.success(doConvertDto(categoryDO, CommonCategoryResponseDTO.class));
     }
 
     @Override
     protected void customerConvertDto(CommonCategoryResponseDTO result, CategoryDO doo) {
         result.setLevel(EnumUtil.getKeyValueEnum(LevelEnum.class, doo.getLevel()));
+        result.setHotStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getHotStatus()));
+        result.setNavStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getNavStatus()));
     }
 
 }

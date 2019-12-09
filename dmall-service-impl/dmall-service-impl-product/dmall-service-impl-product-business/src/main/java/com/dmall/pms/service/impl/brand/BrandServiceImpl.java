@@ -12,6 +12,7 @@ import com.dmall.common.model.result.LayuiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @RestController
-public class  BrandServiceImpl implements BrandService {
+public class BrandServiceImpl implements BrandService {
 
     @Autowired
     protected SaveBrandHandler saveBrandHandler;

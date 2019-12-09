@@ -10,7 +10,6 @@
         <result column="name" property="name" />
         <result column="show_name" property="showName" />
         <result column="sort" property="sort" />
-        <result column="specifications_count" property="specificationsCount" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />

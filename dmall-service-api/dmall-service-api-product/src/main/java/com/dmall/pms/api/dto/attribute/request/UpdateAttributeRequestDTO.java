@@ -1,5 +1,9 @@
 package com.dmall.pms.api.dto.attribute.request;
 
+import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
+import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
+import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,6 +13,7 @@ import com.dmall.pms.api.dto.attribute.common.CommonAttributeRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @description: 修改属性请求实体
@@ -30,19 +35,21 @@ public class UpdateAttributeRequestDTO {
     private String remark;
 
     @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 4)
+    @ValueInEnum(AttributeTypeEnum.class)
     private Integer type;
 
     @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 5)
+    @ValueInEnum(InputTypeEnum.class)
     private Integer inputType;
 
-    @ApiModelProperty(value = "可选值列表 以逗号隔开", position = 6)
-    private String inputList;
-
+    @ApiModelProperty(value = "可选值列表", position = 6)
+    private List<String> inputList;
 
     @ApiModelProperty(value = "排序", position = 8)
     private Integer sort;
 
     @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 9)
+    @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
 
 }

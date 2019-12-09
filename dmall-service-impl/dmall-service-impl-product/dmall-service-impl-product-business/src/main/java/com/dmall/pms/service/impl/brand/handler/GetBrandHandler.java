@@ -24,10 +24,10 @@ public class GetBrandHandler extends AbstractCommonHandler<Long, BrandDO, Common
     @Override
     public BaseResult<CommonBrandResponseDTO> processor(Long id) {
         BrandDO brandDO = brandCacheService.selectById(id);
-        if (brandDO == null){
+        if (brandDO == null) {
             return ResultUtil.fail(BrandErrorEnum.BRAND_NOT_EXIST);
         }
-        return ResultUtil.success(doConvertDto(brandDO,CommonBrandResponseDTO.class));
+        return ResultUtil.success(doConvertDto(brandDO, CommonBrandResponseDTO.class));
     }
 
 }

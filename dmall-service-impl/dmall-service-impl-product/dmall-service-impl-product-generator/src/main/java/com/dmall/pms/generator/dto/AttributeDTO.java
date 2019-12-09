@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: 属性表
- * @author: created by hang.yu on 2019-12-07 23:18:20
+ * @author: created by hang.yu on 2019-12-09 22:36:21
  */
 @Data
 @Accessors(chain = true)
@@ -47,28 +47,25 @@ public class AttributeDTO implements Serializable {
     @ApiModelProperty(value = "可选值列表 以逗号隔开", position = 9)
     private String inputList;
 
-    @ApiModelProperty(value = "属性选择类型 1-单选;2-多选", position = 10)
-    private String selectType;
-
-    @ApiModelProperty(value = "排序", position = 11)
+    @ApiModelProperty(value = "排序", position = 10)
     private Integer sort;
 
-    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 12)
+    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 11)
     private String handAddStatus;
 
-    @ApiModelProperty(value = "创建人", position = 13)
+    @ApiModelProperty(value = "创建人", position = 12)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 14)
+    @ApiModelProperty(value = "创建时间", position = 13)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 15)
+    @ApiModelProperty(value = "更新人", position = 14)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 16)
+    @ApiModelProperty(value = "更新时间", position = 15)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 17)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 16)
     private String isDeleted;
 
 }

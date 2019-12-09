@@ -33,10 +33,8 @@ public class CommonCategoryRequestDTO implements Serializable {
     @NotBlank(message = "分类名称不能为空")
     private String name;
 
-
     @ApiModelProperty(value = "PC图标",  position = 3)
     private String icon;
-
 
     @ApiModelProperty(value = "移动端图标", position = 4)
     private String mobileIcon;
@@ -58,9 +56,6 @@ public class CommonCategoryRequestDTO implements Serializable {
     @ValueInEnum(YNEnum.class)
     private String hotStatus;
 
-    /**
-     * 是否显示在导航栏 Y-是;N-否
-     */
     @ApiModelProperty(value = "是否显示在导航栏 Y-是;N-否", position = 10)
     @ValueInEnum(YNEnum.class)
     private String navStatus;

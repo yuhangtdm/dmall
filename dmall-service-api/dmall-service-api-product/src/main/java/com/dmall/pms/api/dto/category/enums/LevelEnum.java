@@ -16,7 +16,6 @@ public enum  LevelEnum implements KeyValueEnum<Integer> {
     THREE(3,"3级"),
     ;
 
-
     private Integer code;
 
     private String desc;

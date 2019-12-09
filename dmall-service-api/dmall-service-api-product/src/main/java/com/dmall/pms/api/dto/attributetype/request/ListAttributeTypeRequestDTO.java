@@ -19,17 +19,13 @@ public class ListAttributeTypeRequestDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-
     @ApiModelProperty(value = "商品分类id", position = 2)
     private Long categoryId;
-
 
     @ApiModelProperty(value = "名称", position = 4)
     private String name;
 
-
     @ApiModelProperty(value = "展示名称", position = 5)
     private String showName;
-
 
 }

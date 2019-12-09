@@ -13,7 +13,6 @@
         <result column="type" property="type" />
         <result column="input_type" property="inputType" />
         <result column="input_list" property="inputList" />
-        <result column="select_type" property="selectType" />
         <result column="sort" property="sort" />
         <result column="hand_add_status" property="handAddStatus" />
         <result column="creator" property="creator" />
@@ -25,7 +24,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, attribute_type_id, category_id, cascade_category_id, name, remark, type, input_type, input_list, select_type, sort, hand_add_status, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, attribute_type_id, category_id, cascade_category_id, name, remark, type, input_type, input_list, sort, hand_add_status, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

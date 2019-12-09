@@ -31,17 +31,17 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
         // 分类名称唯一
         CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery()
                 .eq(CategoryDO::getName, requestDTO.getName()));
-        if (categoryDO != null){
+        if (categoryDO != null) {
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NAME_UNIQUE);
         }
         CategoryDO parentCategoryDO = categoryMapper.selectById(requestDTO.getParentId());
-        if (requestDTO.getParentId() != 0 ){
+        if (requestDTO.getParentId() != 0) {
             // 上级id是否存在分类
-            if (parentCategoryDO == null){
+            if (parentCategoryDO == null) {
                 return ResultUtil.fail(CategoryErrorEnum.PARENT_CATEGORY_NOT_EXIST);
             }
             // 自己的分类级别要小于上级的
-            if (requestDTO.getLevel() <= parentCategoryDO.getLevel()){
+            if (requestDTO.getLevel() <= parentCategoryDO.getLevel()) {
                 return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
             }
         }
@@ -52,7 +52,7 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
     public BaseResult<Long> processor(SaveCategoryRequestDTO requestDTO) {
         CategoryDO categoryDO = dtoConvertDo(requestDTO, CategoryDO.class);
         categoryCacheService.insert(categoryDO);
-        categoryMapper.updateById(setPath(categoryDO));
+        categoryCacheService.updateById(setPath(categoryDO));
         return ResultUtil.success(categoryDO.getId());
     }
 
@@ -62,17 +62,17 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
     private CategoryDO setPath(CategoryDO result) {
         CategoryDO categoryDO = new CategoryDO();
         StringBuilder path = new StringBuilder();
-        switch (result.getLevel()){
-            case 1:{
+        switch (result.getLevel()) {
+            case 1: {
                 path.append(StrUtil.DOT).append(result.getId()).append(StrUtil.DOT);
                 break;
             }
-            case 2:{
+            case 2: {
                 CategoryDO parentCategoryDO = categoryMapper.selectById(result.getParentId());
-                path.append(parentCategoryDO.getId()).append(result.getId()).append(StrUtil.DOT);
+                path.append(parentCategoryDO.getPath()).append(result.getId()).append(StrUtil.DOT);
                 break;
             }
-            case 3:{
+            case 3: {
                 CategoryDO parentCategoryDO = categoryMapper.selectById(result.getParentId());
                 path.append(parentCategoryDO.getPath()).append(result.getId()).append(StrUtil.DOT);
                 break;

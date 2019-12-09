@@ -36,21 +36,12 @@ public class UpdateCategoryHandler extends AbstractCommonHandler<UpdateCategoryR
         // 分类名称必须唯一
         CategoryDO nameCategoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery()
                 .eq(CategoryDO::getName, requestDTO.getName())
-                .eq(CategoryDO::getLevel, requestDTO.getLevel())
+                .eq(CategoryDO::getLevel, categoryDO.getLevel())
         );
         if (nameCategoryDO != null && ObjectUtil.notEqual(nameCategoryDO.getId(), requestDTO.getId())) {
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NAME_UNIQUE);
         }
 
-        CategoryDO parentCategoryDO = categoryMapper.selectById(requestDTO.getParentId());
-        // 上级分类不存在
-        if (requestDTO.getParentId() != 0 && parentCategoryDO == null) {
-            return ResultUtil.fail(CategoryErrorEnum.PARENT_CATEGORY_NOT_EXIST);
-        }
-        // 不允许修改上级
-        if (ObjectUtil.notEqual(requestDTO.getParentId(), parentCategoryDO.getId())) {
-            return ResultUtil.fail(CategoryErrorEnum.NOT_ALLOW_UPDATE_PARENT_ID);
-        }
         return ResultUtil.success();
     }
 

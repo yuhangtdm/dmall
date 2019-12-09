@@ -13,8 +13,10 @@ import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +35,7 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
-                .eq(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getFirstLetter, requestDTO.getFirstLetter())
-                ;
+                .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
 
         Page<BrandDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         IPage<BrandDO> brandDOIPage = brandMapper.selectPage(page, queryWrapper);

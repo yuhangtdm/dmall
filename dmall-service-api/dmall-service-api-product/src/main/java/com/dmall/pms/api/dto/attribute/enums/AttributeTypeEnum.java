@@ -10,12 +10,11 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  AttributeEnum implements KeyValueEnum<Integer> {
+public enum AttributeTypeEnum implements KeyValueEnum<Integer> {
 
     SPECIFICATIONS(1,"规格"),
     PARAMS(2,"参数"),
     ;
-
 
     private Integer code;
 

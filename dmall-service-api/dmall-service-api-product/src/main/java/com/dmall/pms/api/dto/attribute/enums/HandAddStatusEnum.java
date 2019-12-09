@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: HandAddStatusEnum
+ * @description: 是否支持手动新增
  * @author: created by hang.yu on 2019/12/7 23:01
  */
 @Getter

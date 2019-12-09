@@ -51,10 +51,10 @@ public interface CategoryService {
     BaseResult<List<ZTreeCategoryResponseDTO>> zTree(@PathVariable("parentId") Long parentId);
 
     @ApiOperation(value = "设置品牌")
-    @GetMapping("/setBrand")
+    @PostMapping("/setBrand")
     BaseResult<Void> setBrand(@Valid @RequestBody SetBrandRequestDTO requestDTO);
 
     @ApiOperation(value = "设置属性分类")
-    @GetMapping("/setAttributeType")
+    @PostMapping("/setAttributeType")
     BaseResult<Void> setAttributeType(@Valid @RequestBody SetAttributeTypeRequestDTO requestDTO);
 }

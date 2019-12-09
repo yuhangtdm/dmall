@@ -15,6 +15,7 @@ import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -39,17 +40,17 @@ public class DeleteBrandHandler extends AbstractCommonHandler<Long, BrandDO, Lon
     @Override
     public BaseResult<Long> validate(Long id) {
         BrandDO brandDO = brandMapper.selectById(id);
-        if (brandDO == null){
+        if (brandDO == null) {
             return ResultUtil.fail(BrandErrorEnum.BRAND_NOT_EXIST);
         }
         // 如果品牌下有商品 则不能删除
         List<ProductDO> productDOS = productMapper.selectList(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getBrandId, id));
-        if (CollUtil.isNotEmpty(productDOS)){
+        if (CollUtil.isNotEmpty(productDOS)) {
             return ResultUtil.fail(BrandErrorEnum.CONTAINS_PRODUCT_ERROR);
         }
         // 如果品牌下有商品分类 则不能删除
         List<CategoryBrandDO> categoryBrandDOS = categoryBrandMapper.selectList(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getBrandId, id));
-        if (CollUtil.isNotEmpty(categoryBrandDOS)){
+        if (CollUtil.isNotEmpty(categoryBrandDOS)) {
             return ResultUtil.fail(BrandErrorEnum.CONTAINS_ATTRIBUTE_TYPE_ERROR);
         }
         return ResultUtil.success();

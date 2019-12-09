@@ -16,7 +16,6 @@ public enum InputTypeEnum implements KeyValueEnum<Integer> {
     LIST(2,"从列表获取")
     ;
 
-
     private Integer code;
 
     private String desc;

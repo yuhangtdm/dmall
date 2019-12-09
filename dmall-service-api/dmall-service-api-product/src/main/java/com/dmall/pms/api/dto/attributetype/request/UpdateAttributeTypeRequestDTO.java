@@ -31,9 +31,4 @@ public class UpdateAttributeTypeRequestDTO {
     @ApiModelProperty(value = "展示名称", position = 2)
     private String showName;
 
-
-    @ApiModelProperty(value = "排序", position = 3)
-    @Min(value = 1, message = "排序大于等于1")
-    private Integer sort;
-
 }

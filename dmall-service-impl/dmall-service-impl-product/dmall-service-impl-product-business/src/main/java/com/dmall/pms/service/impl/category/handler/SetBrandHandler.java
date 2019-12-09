@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.api.dto.category.request.setbrand.BrandIdsDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
@@ -13,8 +12,8 @@ import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.service.IBrandService;
 import com.dmall.pms.generator.service.ICategoryBrandService;
-import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.service.impl.category.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +30,13 @@ import java.util.stream.Collectors;
 public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, CategoryDO, Void> {
 
     @Autowired
-    private CategoryCacheService categoryCacheService;
-
-    @Autowired
     private IBrandService iBrandService;
 
     @Autowired
     private ICategoryBrandService iCategoryBrandService;
+
+    @Autowired
+    private CategorySupport categorySupport;
 
     @Override
     public BaseResult validate(SetBrandRequestDTO requestDTO) {
@@ -55,17 +54,7 @@ public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, C
         if (brandDOS.size() != requestDTO.getBrandIds().size()) {
             return ResultUtil.fail(CategoryErrorEnum.BRAND_ID_INVALID);
         }
-        CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-        // 分类id必须存在
-        if (categoryDO == null) {
-            return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
-        }
-        // 分类级别必须是3级
-        if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
-            return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
-        }
-
-        return ResultUtil.success();
+        return categorySupport.validate(requestDTO.getCategoryId());
     }
 
     @Override

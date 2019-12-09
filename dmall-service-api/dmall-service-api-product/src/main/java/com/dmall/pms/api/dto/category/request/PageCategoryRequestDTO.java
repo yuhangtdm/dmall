@@ -19,8 +19,6 @@ import java.math.*;
 @ApiModel(value="PageCategoryRequestDTO", description="商品分类分页请求实体")
 public class PageCategoryRequestDTO  extends PageRequestDTO {
 
-
-
     @ApiModelProperty(value = "父级id 上级分类编号", position = 2)
     private Long parentId;
 
@@ -62,10 +60,6 @@ public class PageCategoryRequestDTO  extends PageRequestDTO {
 
     @ApiModelProperty(value = "路径 格式: .parentId.id.", position = 15)
     private String path;
-
-
-
-
 
 
 }

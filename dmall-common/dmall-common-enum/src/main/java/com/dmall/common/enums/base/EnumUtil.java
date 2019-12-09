@@ -51,7 +51,7 @@ public class EnumUtil {
             return null;
         }
         if (keyValueEnum instanceof KeyValueDataEnum){
-            KeyValueDataEnum<T> keyValueDataEnum = (KeyValueDataEnum) keyValueEnum;
+            KeyValueDataEnum<T,CODE> keyValueDataEnum = (KeyValueDataEnum) keyValueEnum;
             return keyValueDataEnum.getData();
         }
         return null;

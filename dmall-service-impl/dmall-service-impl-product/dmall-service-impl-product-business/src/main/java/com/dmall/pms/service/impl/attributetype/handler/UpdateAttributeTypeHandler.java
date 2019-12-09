@@ -30,13 +30,13 @@ public class UpdateAttributeTypeHandler extends AbstractCommonHandler<UpdateAttr
     public BaseResult validate(UpdateAttributeTypeRequestDTO requestDTO) {
         AttributeTypeDO attributeTypeDO = attributeTypeMapper.selectById(requestDTO.getId());
         if (attributeTypeDO == null) {
-            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTETYPE_NOT_EXIST);
+            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
         }
         // 名称唯一
         AttributeTypeDO nameAttributeType = attributeTypeMapper.selectOne(Wrappers.<AttributeTypeDO>lambdaQuery()
                 .eq(AttributeTypeDO::getName, requestDTO.getName()));
         if (nameAttributeType != null && ObjectUtil.notEqual(nameAttributeType.getId(), requestDTO.getId())) {
-            return ResultUtil.fail(AttributeTypeErrorEnum.SAVE_ATTRIBUTETYPE_ERROR);
+            return ResultUtil.fail(AttributeTypeErrorEnum.SAVE_ATTRIBUTE_TYPE_ERROR);
         }
         return ResultUtil.success();
     }

@@ -9,6 +9,7 @@ import com.dmall.component.web.exception.BusinessException;
 import com.dmall.component.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -57,27 +58,27 @@ public class BasicExceptionHandler {
     public String NoHandlerFoundHandle(HttpServletRequest request) {
         log.error("enter the NoHandlerFoundException Handler");
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.NOT_FOUND_REQUEST);
-        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.NOT_FOUND.value());
+        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
         return WebConstants.FORWARD_ERROR;
     }
 
 
-   /* @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public String httpMessageNotReadableExceptionHandle(HttpServletRequest request) {
         log.error("enter the HttpMessageNotReadableException Handler");
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.MEDIA_PARAM_TYPE_ERROR);
-        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.NOT_ACCEPTABLE.value());
+        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
         return WebConstants.FORWARD_ERROR;
-    }*/
+    }
 
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public String httpRequestMethodNotSupportedExceptionHandle(HttpServletRequest request) {
         log.error("enter the HttpRequestMethodNotSupportedException Handler");
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.METHOD_NOT_ALLOWED);
-        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.METHOD_NOT_ALLOWED.value());
+        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
         return WebConstants.FORWARD_ERROR;
     }
@@ -148,7 +149,7 @@ public class BasicExceptionHandler {
      * 处理异常的公共逻辑
      */
     private String getCustomException(HttpServletRequest request, BaseResult fail) {
-        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
         return WebConstants.FORWARD_ERROR;
     }

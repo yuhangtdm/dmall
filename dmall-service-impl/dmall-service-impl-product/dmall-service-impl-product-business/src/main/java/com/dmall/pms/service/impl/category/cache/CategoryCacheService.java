@@ -1,10 +1,8 @@
 package com.dmall.pms.service.impl.category.cache;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.cache.redis.mapcache.MapCacheable;
-import com.dmall.component.cache.redis.mapcache.MapDeleteCache;
-import com.dmall.component.cache.redis.mapcache.MapGetCache;
-import com.dmall.component.cache.redis.mapcache.MapPutCache;
+import com.dmall.component.cache.redis.constants.CacheNameConstants;
+import com.dmall.component.cache.redis.mapcache.*;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,47 +15,34 @@ import java.util.List;
  * @author: created by hang.yu on 2019/11/25 22:51
  */
 @Component
+@MapCacheable(cacheNames = CacheNameConstants.CATEGORY)
 public class CategoryCacheService {
 
     @Autowired
     private CategoryMapper categoryMapper;
 
-    /**
-     * 查询列表
-     */
-    @MapCacheable(cacheNames = "category")
+    @MapListCache
     public List<CategoryDO> selectAll() {
         return categoryMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    /**
-     * 新增
-     */
-    @MapPutCache(cacheNames = "category")
-    public int insert(CategoryDO brandDO) {
-        return categoryMapper.insert(brandDO);
+    @MapPostCache
+    public int insert(CategoryDO categoryDO) {
+        return categoryMapper.insert(categoryDO);
     }
 
-    /**
-     * 修改
-     */
-    @MapPutCache(cacheNames = "category")
-    public int updateById(CategoryDO brandDO) {
-        return categoryMapper.updateById(brandDO);
+    @MapPutCache
+    public CategoryDO updateById(CategoryDO categoryDO) {
+        categoryMapper.updateById(categoryDO);
+        return categoryMapper.selectById(categoryDO.getId());
     }
 
-    /**
-     * 删除
-     */
-    @MapDeleteCache(cacheNames = "category")
+    @MapDeleteCache
     public int deleteById(Long id) {
         return categoryMapper.deleteById(id);
     }
 
-    /**
-     * 查询对象
-     */
-    @MapGetCache(cacheNames = "category")
+    @MapGetCache
     public CategoryDO selectById(Long id) {
         return categoryMapper.selectById(id);
     }

@@ -12,7 +12,7 @@ import lombok.Getter;
 public enum  BasicStatusEnum implements ErrorCodeEnum{
 
     SUCCESS("0","请求成功"),
-    FAIL("500","网络异常，请稍后再试"),
+    FAIL("500","服务器忙，请稍后再试"),
     BAD_REQUEST("400","请求数据不合法"),
     NOT_FOUND_REQUEST("404","请求路径不合法"),
     PARAM_TYPE_ERROR("409","请求参数类型不合法"),

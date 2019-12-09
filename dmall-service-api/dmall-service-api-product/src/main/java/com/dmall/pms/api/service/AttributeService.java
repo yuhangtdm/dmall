@@ -44,8 +44,4 @@ public interface AttributeService {
     @ApiOperation(value = "属性列表")
     BaseResult<List<CommonAttributeResponseDTO>> list(@RequestBody ListAttributeRequestDTO requestDTO);
 
-    @PostMapping("/page")
-    @ApiOperation(value = "属性分页")
-    BaseResult<LayuiPage<CommonAttributeResponseDTO>> page(@RequestBody PageAttributeRequestDTO requestDTO);
-
 }

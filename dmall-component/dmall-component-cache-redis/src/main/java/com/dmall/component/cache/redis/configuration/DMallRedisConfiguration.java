@@ -8,6 +8,7 @@ import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;
 import com.dmall.component.cache.redis.lock.DistributedLockService;
 import com.dmall.component.cache.redis.mapcache.MapCacheAspect;
+import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.component.cache.redis.properties.DMallRedisProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -166,12 +167,17 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
         return new DistributedLockService(stringRedisTemplate, redisScript);
     }
 
+    @Bean
+    public MapCacheUtil mapCacheUtil(RedisTemplate dMallRedisTemplate){
+        return new MapCacheUtil(dMallRedisTemplate, dMallRedisProperties, environment);
+    }
+
     /**
      * mapCache切面
      */
     @Bean
     public MapCacheAspect mapCacheAspect(RedisTemplate dMallRedisTemplate){
-        return new MapCacheAspect(dMallRedisTemplate, dMallRedisProperties, environment);
+        return new MapCacheAspect(mapCacheUtil(dMallRedisTemplate), dMallRedisTemplate);
     }
 
     /**

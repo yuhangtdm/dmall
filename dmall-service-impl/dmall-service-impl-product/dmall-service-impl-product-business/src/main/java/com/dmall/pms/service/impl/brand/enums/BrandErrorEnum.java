@@ -10,20 +10,20 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  BrandErrorEnum implements ErrorCodeEnum {
+public enum BrandErrorEnum implements ErrorCodeEnum {
 
-    SAVE_BRAND_ERROR("brand-001","新增品牌失败"),
-    UPDATE_BRAND_ERROR("brand _002","修改品牌失败"),
-    DELETE_BRAND_ERROR("brand_003","删除品牌失败"),
-    BRAND_NOT_EXIST("brand_004","该品牌不存在"),
-    CONTAINS_PRODUCT_ERROR("BRAND-005","该品牌下有商品,不允许删除"),
-    CONTAINS_ATTRIBUTE_TYPE_ERROR("BRAND-006","该品牌下有商品分类,不允许删除"),
-    BRAND_NAME_UNIQUE("BRAND-007","品牌名称已存在"),
+    SAVE_BRAND_ERROR("brand-001", "新增品牌失败"),
+    UPDATE_BRAND_ERROR("brand _002", "修改品牌失败"),
+    DELETE_BRAND_ERROR("brand_003", "删除品牌失败"),
+    BRAND_NOT_EXIST("brand_004", "该品牌不存在"),
+    CONTAINS_PRODUCT_ERROR("BRAND-005", "该品牌下有商品,不允许删除"),
+    CONTAINS_ATTRIBUTE_TYPE_ERROR("BRAND-006", "该品牌下有商品分类,不允许删除"),
+    BRAND_NAME_UNIQUE("BRAND-007", "品牌名称已存在"),
     ;
 
     /**
-    * 错误码
-    */
+     * 错误码
+     */
     private String code;
 
     /**

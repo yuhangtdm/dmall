@@ -18,6 +18,9 @@ public enum CacheRedisErrorEnum implements ErrorCodeEnum {
     MAP_GET_CACHE_ERROR("REDIS-004","获取缓存对象失败"),
     MAP_PUT_CACHE_ERROR("REDIS-005","更新缓存失败"),
     MAP_DELETE_CACHE_ERROR("REDIS-006","删除缓存失败"),
+    MAP_POST_CACHE_ERROR("REDIS-007","新增缓存失败"),
+    MAP_CACHEABLE_ERROR("REDIS-008","缓存服务类不规范"),
+
     ;
 
     private String code;

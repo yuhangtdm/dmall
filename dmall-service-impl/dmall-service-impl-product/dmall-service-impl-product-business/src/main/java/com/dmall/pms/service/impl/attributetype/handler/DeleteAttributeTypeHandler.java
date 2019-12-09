@@ -12,6 +12,7 @@ import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class DeleteAttributeTypeHandler extends AbstractCommonHandler<Long, Attr
                 .eq(SkuAttributeDO::getAttributeTypeId, id));
         // 属性分类下不可有sku
         if (CollUtil.isNotEmpty(skuAttributeDOS)) {
-            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTETYPE_HAS_SKU);
+            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_HAS_SKU);
         }
         return ResultUtil.success();
     }

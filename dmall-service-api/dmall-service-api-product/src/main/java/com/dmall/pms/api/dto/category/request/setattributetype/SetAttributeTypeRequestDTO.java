@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="SetAttributeTypeRequestDTO", description="设置属性分类请求实体")
+@ApiModel(value = "SetAttributeTypeRequestDTO", description = "设置属性分类请求实体")
 public class SetAttributeTypeRequestDTO {
 
 

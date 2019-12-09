@@ -1,10 +1,8 @@
 package com.dmall.pms.service.impl.brand.cache;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.cache.redis.mapcache.MapCacheable;
-import com.dmall.component.cache.redis.mapcache.MapDeleteCache;
-import com.dmall.component.cache.redis.mapcache.MapGetCache;
-import com.dmall.component.cache.redis.mapcache.MapPutCache;
+import com.dmall.component.cache.redis.constants.CacheNameConstants;
+import com.dmall.component.cache.redis.mapcache.*;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,48 +15,36 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/3 22:18
  */
 @Component
+@MapCacheable(cacheNames = CacheNameConstants.BRAND)
 public class BrandCacheService {
 
     @Autowired
     private BrandMapper brandMapper;
 
-    /**
-     * 查询列表
-     */
-    @MapCacheable(cacheNames = "brand")
-    public List<BrandDO> selectAll() {
-        return brandMapper.selectList(Wrappers.emptyWrapper());
-    }
-
-    /**
-     * 新增
-     */
-    @MapPutCache(cacheNames = "brand")
+    @MapPostCache
     public int insert(BrandDO brandDO) {
         return brandMapper.insert(brandDO);
     }
 
-    /**
-     * 修改
-     */
-    @MapPutCache(cacheNames = "brand")
-    public int updateById(BrandDO brandDO) {
-        return brandMapper.updateById(brandDO);
+    @MapPutCache
+    public BrandDO updateById(BrandDO brandDO) {
+        brandMapper.updateById(brandDO);
+        return brandMapper.selectById(brandDO.getId());
     }
 
-    /**
-     * 删除
-     */
-    @MapDeleteCache(cacheNames = "brand")
+    @MapDeleteCache
     public int deleteById(Long id) {
         return brandMapper.deleteById(id);
     }
 
-    /**
-     * 查询对象
-     */
-    @MapGetCache(cacheNames = "brand")
+    @MapGetCache
     public BrandDO selectById(Long id) {
         return brandMapper.selectById(id);
     }
+
+    @MapListCache
+    public List<BrandDO> selectAll() {
+        return brandMapper.selectList(Wrappers.emptyWrapper());
+    }
+
 }

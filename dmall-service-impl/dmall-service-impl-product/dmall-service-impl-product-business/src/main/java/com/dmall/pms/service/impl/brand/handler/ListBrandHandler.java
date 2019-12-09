@@ -14,6 +14,7 @@ import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -34,9 +35,9 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
     @Override
     public BaseResult<List<CommonBrandResponseDTO>> processor(ListBrandRequestDTO requestDTO) {
         List<BrandDO> brandDOS;
-        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter())){
+        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter())) {
             brandDOS = brandCacheService.selectAll();
-        }else {
+        } else {
             LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                     .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
                     .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())

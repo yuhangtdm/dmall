@@ -36,12 +36,13 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
     @Override
     public BaseResult processor(Long parentId) {
         CategoryDO categoryDO = categoryMapper.selectById(parentId);
+        // 一级分类或父id必须存在
         if (parentId != 0 && categoryDO == null) {
             return ResultUtil.fail(CategoryErrorEnum.PARENT_CATEGORY_NOT_EXIST);
         }
         List<CategoryDO> categoryDOList;
         if (parentId == 0L) {
-            categoryDOList = categoryCacheService.selectList(new ListCategoryRequestDTO());
+            categoryDOList = categoryCacheService.selectAll();
         } else {
             categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
                     .like(CategoryDO::getPath, categoryDO.getPath())

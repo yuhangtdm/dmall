@@ -19,16 +19,13 @@ import java.math.*;
 @ApiModel(value="PageAttributeRequestDTO", description="属性分页请求实体")
 public class PageAttributeRequestDTO  extends PageRequestDTO {
 
-
-
-
     @ApiModelProperty(value = "属性分类id", position = 2)
-    private Long attributeCategoryId;
+    private Long attributeTypeId;
 
     @ApiModelProperty(value = "商品分类id", position = 3)
     private Long categoryId;
 
-    @ApiModelProperty(value = "商品分类id集合 如，1/2/3", position = 4)
+    @ApiModelProperty(value = "商品分类path", position = 4)
     private String cascadeCategoryId;
 
     @ApiModelProperty(value = "名称", position = 5)
@@ -57,10 +54,5 @@ public class PageAttributeRequestDTO  extends PageRequestDTO {
 
     @ApiModelProperty(value = "属性值数量", position = 13)
     private Integer valueCount;
-
-
-
-
-
 
 }

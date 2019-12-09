@@ -21,16 +21,12 @@ public class CommonAttributeTypeRequestDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-
     @ApiModelProperty(value = "名称", position = 2)
     @NotBlank(message = "名称不能为空")
     private String name;
 
-
     @ApiModelProperty(value = "展示名称", position = 3)
     @NotBlank(message = "展示名称不能为空")
     private String showName;
-
-
 
 }

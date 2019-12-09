@@ -31,7 +31,7 @@ public class SaveAttributeTypeHandler extends AbstractCommonHandler<SaveAttribut
                 .eq(AttributeTypeDO::getName, requestDTO.getName()));
         // 名称唯一
         if (attributeTypeDO != null) {
-            return ResultUtil.fail(AttributeTypeErrorEnum.SAVE_ATTRIBUTETYPE_ERROR);
+            return ResultUtil.fail(AttributeTypeErrorEnum.SAVE_ATTRIBUTE_TYPE_ERROR);
         }
         return ResultUtil.success();
     }

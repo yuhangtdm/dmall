@@ -12,10 +12,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum  AttributeTypeErrorEnum implements ErrorCodeEnum {
 
-    SAVE_ATTRIBUTETYPE_ERROR("attributeType-001","属性分类名称已存在"),
-    DELETE_ATTRIBUTETYPE_ERROR("attributeType_003","删除属性分类失败"),
-    ATTRIBUTETYPE_NOT_EXIST("attributeType_004","该属性分类不存在"),
-    ATTRIBUTETYPE_HAS_SKU("attributeType_005","该属性分类下有sku，不可删除"),
+    SAVE_ATTRIBUTE_TYPE_ERROR("attributeType-001","属性分类名称已存在"),
+    DELETE_ATTRIBUTE_TYPE_ERROR("attributeType_003","删除属性分类失败"),
+    ATTRIBUTE_TYPE_NOT_EXIST("attributeType_004","该属性分类不存在"),
+    ATTRIBUTE_TYPE_HAS_SKU("attributeType_005","该属性分类下有sku，不可删除"),
 
     ;
 

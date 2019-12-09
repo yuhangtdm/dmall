@@ -32,7 +32,7 @@ public interface BrandService {
 
     @ApiOperation(value = "品牌分页")
     @PostMapping("/page")
-    BaseResult<LayuiPage<CommonBrandResponseDTO>> page(@RequestBody PageBrandRequestDTO pageRequestDTO);
+    BaseResult<LayuiPage<CommonBrandResponseDTO>> page(@Valid @RequestBody PageBrandRequestDTO pageRequestDTO);
 
     @ApiOperation(value = "品牌列表")
     @PostMapping("/list")

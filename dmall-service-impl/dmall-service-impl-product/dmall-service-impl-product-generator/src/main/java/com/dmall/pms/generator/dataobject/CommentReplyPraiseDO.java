@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 回复点赞表
- * @author: created by hang.yu on 2019-12-07 23:18:21
+ * @author: created by hang.yu on 2019-12-09 22:36:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

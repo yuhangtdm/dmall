@@ -29,5 +29,4 @@ public class ListCategoryRequestDTO implements Serializable {
     @ValueInEnum(LevelEnum.class)
     private Integer level;
 
-
 }

@@ -18,10 +18,6 @@ public @interface MapGetCache {
      */
     String key() default "";
 
-    /**
-     * 缓存名称
-     */
-    String cacheNames() default "";
 
     /**
      * 超时时间

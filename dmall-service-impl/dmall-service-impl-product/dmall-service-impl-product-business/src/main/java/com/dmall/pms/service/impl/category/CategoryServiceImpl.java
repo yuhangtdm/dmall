@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @RestController
-public class  CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     protected SaveCategoryHandler saveCategoryHandler;

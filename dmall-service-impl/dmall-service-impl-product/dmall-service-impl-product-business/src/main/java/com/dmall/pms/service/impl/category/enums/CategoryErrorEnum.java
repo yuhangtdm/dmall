@@ -26,8 +26,8 @@ public enum  CategoryErrorEnum implements ErrorCodeEnum {
     BRAND_ID_EMPTY("category_012","品牌id数组为空"),
     BRAND_ID_INVALID("category_013","设置的品牌不存在"),
     BRAND_IDS_INVALID("category_014","品牌列表有重复"),
-    ATTRIBUTETYPE_ID_EMPTY("category_015","属性分类id数组为空"),
-    ATTRIBUTETYPE_ID_INVALID("category_016","设置的属性分类不存在"),
+    ATTRIBUTE_TYPE_ID_EMPTY("category_015","属性分类id数组为空"),
+    ATTRIBUTE_TYPE_ID_INVALID("category_016","设置的属性分类不存在"),
 
     ;
 

@@ -4,12 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.*;
-import java.math.*;
+import java.util.Date;
 
 /**
  * @description: 品牌公共响应实体
@@ -43,26 +40,17 @@ public class CommonBrandResponseDTO implements Serializable {
     @ApiModelProperty(value = "创建人", position = 7)
     private Long creator;
 
-    @ApiModelProperty(value = "创建人姓名", position = 8)
-    private String creatorName;
-
     @ApiModelProperty(value = "创建时间", position = 9)
     private Date gmtCreated;
 
     @ApiModelProperty(value = "修改人", position = 10)
     private Long modifier;
 
-    @ApiModelProperty(value = "修改人姓名", position = 11)
-    private String modifierName;
-
     @ApiModelProperty(value = "修改时间", position = 12)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态", position = 13)
+    @ApiModelProperty(value = "状态,N-可用;Y-不可用", position = 13)
     private String isDeleted;
-
-    @ApiModelProperty(value = "商品分类名称 如 电脑/电脑整机/笔记本", position = 3)
-    private String cascadeCategoryName;
 
 
 }

@@ -1,5 +1,6 @@
 package com.dmall.pms.api.dto.category.common;
 
+import com.dmall.common.enums.base.YNEnum;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -53,12 +54,11 @@ public class CommonCategoryResponseDTO implements Serializable {
     private String keywords;
 
 
-    @ApiModelProperty(value = "是否热门 Y-是;N-否",  position = 10)
-    private String hotStatus;
+    @ApiModelProperty(value = "是否热门",  position = 10)
+    private YNEnum hotStatus;
 
-
-    @ApiModelProperty(value = "是否显示在导航栏 Y-是;N-否", position = 11)
-    private String navStatus;
+    @ApiModelProperty(value = "是否显示在导航栏", position = 11)
+    private YNEnum navStatus;
 
     @ApiModelProperty(value = "路径", required = true, position = 15)
     private String path;
@@ -66,17 +66,11 @@ public class CommonCategoryResponseDTO implements Serializable {
     @ApiModelProperty(value = "创建人",  position = 16)
     private Long creator;
 
-    @ApiModelProperty(value = "创建人姓名",  position = 17)
-    private String creatorName;
-
     @ApiModelProperty(value = "创建时间", position = 18)
     private Date gmtCreated;
 
     @ApiModelProperty(value = "更新人", position = 19)
     private Long modifier;
-
-    @ApiModelProperty(value = "更新人姓名",  position = 20)
-    private Long modifierName;
 
     @ApiModelProperty(value = "更新时间",  position = 21)
     private Date gmtModified;

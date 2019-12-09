@@ -17,11 +17,10 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @ApiModel(value="UpdateBrandRequestDTO", description="修改品牌请求实体")
-public class UpdateBrandRequestDTO extends CommonBrandRequestDTO {
+public class UpdateBrandRequestDTO{
 
-    @ApiModelProperty(value = "主键", required = true, position = 0)
+    @ApiModelProperty(value = "主键", required = true, position = 1)
     @NotNull(message = "品牌id不能为空")
     private Long id;
 

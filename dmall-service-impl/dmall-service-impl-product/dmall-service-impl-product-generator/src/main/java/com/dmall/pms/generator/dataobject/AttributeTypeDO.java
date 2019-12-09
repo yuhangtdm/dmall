@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 属性分类表
- * @author: created by hang.yu on 2019-12-07 23:18:21
+ * @author: created by hang.yu on 2019-12-09 22:36:21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -54,11 +54,6 @@ public class AttributeTypeDO implements Serializable {
      * 排序
      */
     private Integer sort;
-
-    /**
-     * 规格数量
-     */
-    private Integer specificationsCount;
 
     /**
      * 创建人

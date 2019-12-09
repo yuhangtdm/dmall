@@ -46,22 +46,22 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
     public BaseResult<Long> validate(Long id) {
         // 分类不存在时
         CategoryDO categoryDO = categoryMapper.selectById(id);
-        if (categoryDO == null){
+        if (categoryDO == null) {
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
         }
         // 如果分类下有商品 则不可删除
         List<ProductDO> productDOS = productMapper.selectList(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getCategoryId, id));
-        if (CollUtil.isNotEmpty(productDOS)){
+        if (CollUtil.isNotEmpty(productDOS)) {
             return ResultUtil.fail(CategoryErrorEnum.CONTAINS_PRODUCT_ERROR);
         }
         // 如果分类下有品牌 则不可删除
         List<CategoryBrandDO> categoryBrandDOS = categoryBrandMapper.selectList(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, id));
-        if (CollUtil.isNotEmpty(categoryBrandDOS)){
+        if (CollUtil.isNotEmpty(categoryBrandDOS)) {
             return ResultUtil.fail(CategoryErrorEnum.CONTAINS_BRAND_ERROR);
         }
         // 如果分类下有属性分类 则不可删除
         List<AttributeTypeDO> attributeTypeDOS = attributeTypeMapper.selectList(Wrappers.<AttributeTypeDO>lambdaQuery().eq(AttributeTypeDO::getCategoryId, id));
-        if (CollUtil.isNotEmpty(attributeTypeDOS)){
+        if (CollUtil.isNotEmpty(attributeTypeDOS)) {
             return ResultUtil.fail(CategoryErrorEnum.CONTAINS_ATTRIBUTE_TYPE_ERROR);
         }
         return ResultUtil.success();
