@@ -77,7 +77,7 @@ public class ProductDO implements Serializable {
     private String unit;
 
     /**
-     * 重量 默认克
+     * 重量
      */
     private BigDecimal weight;
 
@@ -90,11 +90,6 @@ public class ProductDO implements Serializable {
      * 商品属性
      */
     private String productAttribute;
-
-    /**
-     * 品牌名称
-     */
-    private String brandName;
 
     /**
      * 上市时间

@@ -3,7 +3,7 @@ package com.dmall.pms.api.service;
 import com.dmall.pms.api.dto.product.request.ListProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.common.CommonProductResponseDTO;
-import com.dmall.pms.api.dto.product.request.SaveProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.UpdateProductRequestDTO;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;

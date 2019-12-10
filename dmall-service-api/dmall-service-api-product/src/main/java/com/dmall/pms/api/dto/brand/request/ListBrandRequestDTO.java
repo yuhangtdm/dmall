@@ -32,4 +32,7 @@ public class ListBrandRequestDTO implements Serializable {
     @NotBlank(message = "首字母不能为空")
     @Length(max = 1,min = 1,message = "首字母长度固定1位")
     private String firstLetter;
+
+    @ApiModelProperty(value = "商品分类id", position = 4)
+    private Long categoryId;
 }

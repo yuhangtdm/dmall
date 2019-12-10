@@ -51,6 +51,11 @@ public class ProductAttributeDO implements Serializable {
     private String attributeValue;
 
     /**
+     * 属性值配图
+     */
+    private String pic;
+
+    /**
      * 属性类型 1-规格;2-参数
      */
     private Integer attributeType;

@@ -9,6 +9,7 @@
         <result column="attribute_type_id" property="attributeTypeId" />
         <result column="attribute_id" property="attributeId" />
         <result column="attribute_value" property="attributeValue" />
+        <result column="pic" property="pic" />
         <result column="attribute_type" property="attributeType" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />

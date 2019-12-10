@@ -19,9 +19,6 @@ public class CommonProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-
-
-
     @ApiModelProperty(value = "商家店铺id", position = 2)
     private Long merchantsId;
 

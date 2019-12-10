@@ -1,6 +1,6 @@
 package com.dmall.pms.service.impl.product;
 
-import com.dmall.pms.api.dto.product.request.SaveProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.UpdateProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.ListProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;

@@ -12,6 +12,7 @@ import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
+import com.dmall.pms.service.impl.brand.mapper.BrandCategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,9 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
     private BrandMapper brandMapper;
 
     @Autowired
+    private BrandCategoryMapper brandCategoryMapper;
+
+    @Autowired
     private BrandCacheService brandCacheService;
 
     @Override
@@ -38,11 +42,17 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
         if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter())) {
             brandDOS = brandCacheService.selectAll();
         } else {
-            LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
-                    .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
-                    .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
-                    .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
-            brandDOS = brandMapper.selectList(queryWrapper);
+            if (requestDTO.getCategoryId() != null){
+                // 存在分类id时 需要连表查询
+                brandDOS = brandCategoryMapper.selectBrand(requestDTO);
+            }else {
+                LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
+                        .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
+                        .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
+                        .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
+                brandDOS = brandMapper.selectList(queryWrapper);
+            }
+
         }
         List<CommonBrandResponseDTO> list = brandDOS.stream()
                 .filter(Objects::nonNull)
