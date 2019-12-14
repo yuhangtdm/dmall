@@ -19,51 +19,23 @@ public class CommonProductResponseDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-
-
     @ApiModelProperty(value = "id", position = 1)
     private Long id;
-
-
-
-    @ApiModelProperty(value = "商家店铺id", position = 2)
-    private Long merchantsId;
-
-
-
-    @ApiModelProperty(value = "商品分类id", position = 3)
-    private Long categoryId;
-
-
-
-    @ApiModelProperty(value = "品牌id", position = 4)
-    private Long brandId;
-
-
-
-    @ApiModelProperty(value = "运费模板id", position = 5)
-    private Long feightTemplateId;
-
-
 
     @ApiModelProperty(value = "商品编号", position = 6)
     private String productNo;
 
+    @ApiModelProperty(value = "商品分类id", position = 3)
+    private Long categoryId;
 
+    @ApiModelProperty(value = "品牌id", position = 4)
+    private Long brandId;
 
     @ApiModelProperty(value = "商品名称", position = 7)
     private String name;
 
-
-
     @ApiModelProperty(value = "商品图片", position = 8)
     private String pic;
-
-
-
-    @ApiModelProperty(value = "商品描述", position = 9)
-    private String description;
-
 
 
     @ApiModelProperty(value = "单位", position = 10)

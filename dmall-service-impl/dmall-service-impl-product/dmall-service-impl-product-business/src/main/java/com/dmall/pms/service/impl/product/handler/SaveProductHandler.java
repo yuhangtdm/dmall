@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.handler.BeanUtil;
 import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.util.NoUtil;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.api.dto.product.request.save.*;
@@ -54,7 +55,6 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
 
     @Autowired
     private IProductAttributeService iProductAttributeService;
-
 
     @Override
     public BaseResult<Long> validate(SaveProductRequestDTO requestDTO) {
@@ -153,11 +153,10 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
     public BaseResult<Long> processor(SaveProductRequestDTO requestDTO) {
         ProductDO productDO = buildProductDO(requestDTO);
         productMapper.insert(productDO);
-        // 设置 pms_attribute
+        // 保存pms_attribute
         List<ProductAttributeDO> productAttributeDOS = buildProductAttributeDOs(productDO.getId(), requestDTO.getAttribute());
         iProductAttributeService.saveBatch(productAttributeDOS);
 
-        //todo 保存es
         return ResultUtil.success(productDO.getId());
     }
 
@@ -168,11 +167,11 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         BasicProductDTO basicProduct = requestDTO.getBasicProduct();
         ProductAttributeDTO productAttribute = requestDTO.getAttribute();
         ProductDO productDO = BeanUtil.copyProperties(basicProduct, ProductDO.class);
+        productDO.setProductNo(NoUtil.generateProductNo());
         productDO.setCategoryId(productAttribute.getCategoryId());
         CategoryDO categoryDO = categoryCacheService.selectById(productAttribute.getCategoryId());
         productDO.setCascadeCategoryId(categoryDO.getPath());
         productDO.setBrandId(productAttribute.getBrandId());
-        // todo 构建商品编号
         return productDO;
     }
 
