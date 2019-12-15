@@ -20,12 +20,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableApolloConfig
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.dmall.mms.generator.mapper")
-public class MemberServiceApp {
+public class MemberApplication {
 
     public static void main(String[] args) {
         // 避免es启动抱错
         System.setProperty("es.set.netty.runtime.available.processors", "false");
-        SpringApplication.run(MemberServiceApp.class,args);
+        SpringApplication.run(MemberApplication.class,args);
     }
 
 }

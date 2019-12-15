@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.product.request.save;
+package com.dmall.pms.api.dto.product.request.attribute;
 
 import com.dmall.component.web.validate.ValueInEnum;
 import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;

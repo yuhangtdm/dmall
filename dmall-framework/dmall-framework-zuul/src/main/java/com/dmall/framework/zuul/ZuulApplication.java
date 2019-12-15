@@ -1,23 +1,24 @@
-package com.dmall.framework.springboot.admin;
+package com.dmall.framework.zuul;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
-import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 /**
- * @description: springbootAdmin启动类
- * @author: created by hang.yu on 2019/11/15 23:28
+ * @description: 网关启动类
+ * 访问路由规则 : API网关地址+访问的服务名称+接口URI
+ * @author: created by hang.yu on 2019/10/16 20:35
  */
-@EnableAdminServer
 @SpringBootApplication
+@EnableZuulProxy
 @EnableDiscoveryClient
 @EnableApolloConfig
-public class AdminApp {
+public class ZuulApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AdminApp.class, args);
+        SpringApplication.run(ZuulApplication.class, args);
     }
 
 }

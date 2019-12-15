@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.product.request.save;
+package com.dmall.pms.api.dto.product.request.attribute;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

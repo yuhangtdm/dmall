@@ -41,7 +41,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ListCategoryHandler listCategoryHandler;
 
-
     @Autowired
     private ZTreeCategoryHandler zTreeCategoryHandler;
 
@@ -82,6 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Void> setBrand(@RequestBody SetBrandRequestDTO requestDTO) {
         return setBrandHandler.handler(requestDTO);
     }

@@ -4,7 +4,7 @@ spring:
       profile: dev #启用配置后缀名称
       label: master #分支名称
       uri: http://www.dmall.com:7030 #配置中心地址
-      name: application #配置文件名称
+      name: dmall-framework-dashboard #配置文件名称
       username: dmall
       password: admin123456
 

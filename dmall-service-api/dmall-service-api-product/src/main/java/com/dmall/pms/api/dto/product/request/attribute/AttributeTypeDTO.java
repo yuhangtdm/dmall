@@ -1,10 +1,9 @@
-package com.dmall.pms.api.dto.product.request.save;
+package com.dmall.pms.api.dto.product.request.attribute;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;

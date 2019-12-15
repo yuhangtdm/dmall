@@ -4,12 +4,13 @@ import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
 import com.dmall.pms.api.dto.product.common.CommonProductResponseDTO;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
-import com.dmall.pms.api.dto.product.request.UpdateProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
 import com.dmall.pms.api.service.ProductService;
 import com.dmall.pms.service.impl.product.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +25,6 @@ public class  ProductServiceImpl implements ProductService {
     protected SaveProductHandler saveProductHandler;
 
     @Autowired
-    private DeleteProductHandler deleteProductHandler;
-
-    @Autowired
     private UpdateProductHandler updateProductHandler;
 
     @Autowired
@@ -37,6 +35,7 @@ public class  ProductServiceImpl implements ProductService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> save(@RequestBody SaveProductRequestDTO requestDTO) {
         return saveProductHandler.handler(requestDTO);
     }
@@ -47,14 +46,11 @@ public class  ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public BaseResult<Long> delete(Long id) {
-        return deleteProductHandler.handler(id);
-    }
-
-    @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> update(@RequestBody UpdateProductRequestDTO requestDTO) {
         return updateProductHandler.handler(requestDTO);
     }
+
 
     @Override
     public BaseResult<CommonProductResponseDTO> get(Long id) {

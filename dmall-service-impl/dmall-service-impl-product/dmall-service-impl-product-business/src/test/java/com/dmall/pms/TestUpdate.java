@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author: created by hang.yu on 2019/12/7 22:01
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ProductServiceApp.class)
+@SpringBootTest(classes = ProductApplication.class)
 public class TestUpdate {
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;

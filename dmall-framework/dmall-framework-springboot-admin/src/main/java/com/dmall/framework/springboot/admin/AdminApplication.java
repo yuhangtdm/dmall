@@ -1,23 +1,23 @@
-package com.dmall.framework.config.server;
+package com.dmall.framework.springboot.admin;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
- * @description: 配置中心服务端
- * @author: created by hang.yu on 2019/10/17 21:07
+ * @description: springbootAdmin启动类
+ * @author: created by hang.yu on 2019/11/15 23:28
  */
+@EnableAdminServer
 @SpringBootApplication
-@EnableConfigServer
-@EnableApolloConfig
 @EnableDiscoveryClient
-public class ConfigServerApp {
+@EnableApolloConfig
+public class AdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConfigServerApp.class,args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 
 }

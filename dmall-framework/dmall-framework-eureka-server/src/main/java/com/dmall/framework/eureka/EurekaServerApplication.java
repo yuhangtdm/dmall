@@ -10,13 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
  * @description: eureka服务端启动类
  * @author: created by hang.yu on 2019/10/11 22:29
  */
-@SpringBootApplication
 @EnableEurekaServer
 @EnableWebSecurity
 @EnableApolloConfig
-public class EurekaServerApp {
+@SpringBootApplication
+public class EurekaServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EurekaServerApp.class, args);
+        SpringApplication.run(EurekaServerApplication.class, args);
     }
 }

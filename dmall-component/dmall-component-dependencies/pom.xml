@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <modules>
-        <module>dmall-framework</module>
-        <module>dmall-component</module>
-        <module>dmall-common</module>
-        <module>dmall-service-api</module>
-        <module>dmall-service-impl</module>
-        <module>dmall-web</module>
-    </modules>
-
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.10.RELEASE</version>
-        <relativePath/>
+        <artifactId>dmall-component</artifactId>
+        <groupId>com.allInJava</groupId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
+
+    <artifactId>dmall-component-dependencies</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -35,20 +30,6 @@
         <elasticsearch.jna.version>4.5.1</elasticsearch.jna.version>
         <hutool.version>5.0.3</hutool.version>
     </properties>
-
-
-    <groupId>com.allInJava</groupId>
-    <artifactId>dmall</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>

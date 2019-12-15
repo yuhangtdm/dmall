@@ -1,0 +1,26 @@
+server:
+  port: 7020 #运行端口号
+
+spring:
+  application:
+    name: dmall-framework-dashboard #服务名称
+
+eureka:
+  client:
+    register-with-eureka: true #注册到Eureka的注册中心
+    fetch-registry: true #获取注册实例列表
+    service-url:
+      defaultZone: http://dmall:admin123456@www.dmall.com:7000/eureka/,http://dmall:admin123456@dmall1:7001/eureka/ #配置注册中心地址
+    healthcheck:
+      enabled: true #开启健康检查
+  instance:
+    prefer-ip-address: true #采用IP注册
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} #定义实例ID格式
+    lease-renewal-interval-in-seconds: 30 #定义服务多久去注册中心续约
+    lease-expiration-duration-in-seconds: 90 #定义服务多久不去续约认为服务失效
+turbine:
+  app-config: dmall-service-impl-product,dmall-service-impl-member
+  aggregator:
+    cluster-config: default
+  cluster-name-expression: new String("default")
+

@@ -53,6 +53,7 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
             }
         }
 
+        // 品牌id必须存在
         if (requestDTO.getBrandId() != null){
             BrandDO brandDO = brandCacheService.selectById(requestDTO.getBrandId());
             if (brandDO == null){
