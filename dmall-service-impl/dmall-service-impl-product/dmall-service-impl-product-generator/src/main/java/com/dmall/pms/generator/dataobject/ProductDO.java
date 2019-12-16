@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 商品表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:51
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -77,7 +77,7 @@ public class ProductDO implements Serializable {
     private String unit;
 
     /**
-     * 重量
+     * 重量 默认克
      */
     private BigDecimal weight;
 

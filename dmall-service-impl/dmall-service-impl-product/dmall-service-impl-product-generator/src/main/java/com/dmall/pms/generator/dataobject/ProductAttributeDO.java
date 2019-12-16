@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 属性值表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:51
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -51,7 +51,7 @@ public class ProductAttributeDO implements Serializable {
     private String attributeValue;
 
     /**
-     * 属性值配图
+     * 属性配图
      */
     private String pic;
 

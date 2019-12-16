@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: sku表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:51
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -24,7 +24,7 @@ import java.util.List;
 public class BrandServiceImpl implements BrandService {
 
     @Autowired
-    protected SaveBrandHandler saveBrandHandler;
+    private SaveBrandHandler saveBrandHandler;
 
     @Autowired
     private DeleteBrandHandler deleteBrandHandler;

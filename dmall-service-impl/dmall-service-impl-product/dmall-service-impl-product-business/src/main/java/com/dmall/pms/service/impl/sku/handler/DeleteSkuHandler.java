@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 删除sku处理器
- * @author: created by hang.yu on 2019-12-03 19:56:06
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Component
 public class DeleteSkuHandler extends AbstractCommonHandler<Long, SkuDO, Long> {

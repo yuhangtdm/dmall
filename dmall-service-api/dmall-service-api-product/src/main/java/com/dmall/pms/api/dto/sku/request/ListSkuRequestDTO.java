@@ -10,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * @description: sku列表请求实体
- * @author: created by hang.yu on 2019-12-02 23:18:01
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="ListSkuRequestDTO", description="sku列表请求实体")
+@ApiModel(value = "ListSkuRequestDTO", description = "sku列表请求实体")
 public class ListSkuRequestDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -130,51 +130,19 @@ public class ListSkuRequestDTO implements Serializable {
     private Integer auditStatus;
 
 
-    @ApiModelProperty(value = "销量", position = 29)
-    private Integer saleCount;
-
-
-    @ApiModelProperty(value = "浏览量", position = 30)
-    private Integer viewCount;
-
-
-    @ApiModelProperty(value = "评论量", position = 31)
-    private Integer commentCount;
-
-
-    @ApiModelProperty(value = "好评量", position = 32)
-    private Integer goodCommentCount;
-
-
-    @ApiModelProperty(value = "中评量", position = 33)
-    private Integer middleCommentCount;
-
-
-    @ApiModelProperty(value = "差评量", position = 34)
-    private Integer badCommentCount;
-
-
-    @ApiModelProperty(value = "好评率", position = 35)
-    private BigDecimal goodRate;
-
-
-    @ApiModelProperty(value = "平均评分", position = 36)
-    private BigDecimal commentScore;
-
-
-    @ApiModelProperty(value = "优惠方式", position = 37)
+    @ApiModelProperty(value = "优惠方式", position = 29)
     private String preferentialWay;
 
 
-    @ApiModelProperty(value = "商品分类id集合 如:1/2/3", position = 38)
+    @ApiModelProperty(value = "商品分类id集合 如:1/2/3", position = 30)
     private String cascadeCategoryId;
 
 
-    @ApiModelProperty(value = "skuPC端详情富文本", position = 39)
+    @ApiModelProperty(value = "skuPC端详情富文本", position = 31)
     private String detailHtml;
 
 
-    @ApiModelProperty(value = "sku移动端详情富文本", position = 40)
+    @ApiModelProperty(value = "sku移动端详情富文本", position = 32)
     private String detailMobileHtml;
 
 

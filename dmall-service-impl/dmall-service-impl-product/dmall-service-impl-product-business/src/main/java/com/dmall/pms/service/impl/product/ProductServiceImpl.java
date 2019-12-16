@@ -8,10 +8,7 @@ import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import com.dmall.pms.api.service.ProductService;
-import com.dmall.pms.service.impl.product.handler.GetProductHandler;
-import com.dmall.pms.service.impl.product.handler.PageProductHandler;
-import com.dmall.pms.service.impl.product.handler.SaveProductHandler;
-import com.dmall.pms.service.impl.product.handler.UpdateProductHandler;
+import com.dmall.pms.service.impl.product.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    protected SaveProductHandler saveProductHandler;
+    private SaveProductHandler saveProductHandler;
 
     @Autowired
     private UpdateProductHandler updateProductHandler;
@@ -35,6 +32,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private PageProductHandler pageProductHandler;
+
+    @Autowired
+    private DeleteProductHandler deleteProductHandler;
 
 
     @Override
@@ -60,9 +60,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> delete(Long id) {
-        return null;
+        return deleteProductHandler.handler(id);
     }
-
 
 }

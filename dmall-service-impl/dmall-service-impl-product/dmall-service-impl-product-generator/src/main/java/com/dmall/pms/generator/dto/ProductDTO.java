@@ -10,11 +10,11 @@ import java.math.*;
 
 /**
  * @description: 商品表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="ProductDTO", description="商品表")
+@ApiModel(value = "ProductDTO", description = "商品表")
 public class ProductDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -59,31 +59,28 @@ public class ProductDTO implements Serializable {
     @ApiModelProperty(value = "商品属性", position = 13)
     private String productAttribute;
 
-    @ApiModelProperty(value = "品牌名称", position = 14)
-    private String brandName;
-
-    @ApiModelProperty(value = "上市时间", position = 15)
+    @ApiModelProperty(value = "上市时间", position = 14)
     private Date onMarketTime;
 
-    @ApiModelProperty(value = "商品分类path", position = 16)
+    @ApiModelProperty(value = "商品分类path", position = 15)
     private String cascadeCategoryId;
 
-    @ApiModelProperty(value = "增值业务", position = 17)
+    @ApiModelProperty(value = "增值业务", position = 16)
     private String addServices;
 
-    @ApiModelProperty(value = "创建人", position = 18)
+    @ApiModelProperty(value = "创建人", position = 17)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 19)
+    @ApiModelProperty(value = "创建时间", position = 18)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 20)
+    @ApiModelProperty(value = "更新人", position = 19)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 21)
+    @ApiModelProperty(value = "更新时间", position = 20)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 22)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 21)
     private String isDeleted;
 
 }

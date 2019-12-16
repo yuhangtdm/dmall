@@ -27,8 +27,8 @@ public enum ProductErrorEnum implements ErrorCodeEnum {
     PARAMS_ATTRIBUTE_NOT_EXISTS("product-011", "销售参数属性不存在"),
 
     PRODUCT_NAME_EXISTS("product _012", "商品名称已存在"),
-    DELETE_PRODUCT_ERROR("product_003", "删除商品失败"),
-    PRODUCT_NOT_EXIST("product_004", "该商品不存在"),
+    DELETE_PRODUCT_ERROR("product_013", "删除商品失败"),
+    PRODUCT_NOT_EXIST("product_014", "该商品不存在"),
 
     ;
 

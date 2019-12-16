@@ -24,7 +24,7 @@ import java.util.List;
 public class AttributeTypeServiceImpl implements AttributeTypeService {
 
     @Autowired
-    protected SaveAttributeTypeHandler saveAttributeTypeHandler;
+    private SaveAttributeTypeHandler saveAttributeTypeHandler;
 
     @Autowired
     private DeleteAttributeTypeHandler deleteAttributeTypeHandler;

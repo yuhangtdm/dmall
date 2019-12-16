@@ -10,11 +10,11 @@ import java.math.*;
 
 /**
  * @description: 属性分类表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="AttributeTypeDTO", description="属性分类表")
+@ApiModel(value = "AttributeTypeDTO", description = "属性分类表")
 public class AttributeTypeDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -35,11 +35,11 @@ public class AttributeTypeDTO implements Serializable {
     @ApiModelProperty(value = "展示名称", position = 5)
     private String showName;
 
-    @ApiModelProperty(value = "排序", position = 6)
-    private Integer sort;
+    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 6)
+    private Integer type;
 
-    @ApiModelProperty(value = "规格数量", position = 7)
-    private Integer specificationsCount;
+    @ApiModelProperty(value = "排序", position = 7)
+    private Integer sort;
 
     @ApiModelProperty(value = "创建人", position = 8)
     private Long creator;

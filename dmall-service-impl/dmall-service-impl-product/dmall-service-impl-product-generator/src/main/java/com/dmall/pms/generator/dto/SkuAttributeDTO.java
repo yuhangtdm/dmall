@@ -10,11 +10,11 @@ import java.math.*;
 
 /**
  * @description: sku属性值表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="SkuAttributeDTO", description="sku属性值表")
+@ApiModel(value = "SkuAttributeDTO", description = "sku属性值表")
 public class SkuAttributeDTO implements Serializable {
 
     private static final long serialVersionUID=1L;

@@ -10,11 +10,11 @@ import java.math.*;
 
 /**
  * @description: 商品评价表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="CommentDTO", description="商品评价表")
+@ApiModel(value = "CommentDTO", description = "商品评价表")
 public class CommentDTO implements Serializable {
 
     private static final long serialVersionUID=1L;

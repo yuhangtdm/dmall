@@ -1,27 +1,26 @@
-package com.dmall.pms.generator.dto;
+package com.dmall.pms.api.dto.attribute.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
+import lombok.EqualsAndHashCode;
+import com.dmall.component.web.entity.PageRequestDTO;
 import java.util.*;
 import java.math.*;
 
 /**
- * @description: 属性表
+ * @description: 属性分页请求实体
  * @author: created by hang.yu on 2019-12-16 15:14:49
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "AttributeDTO", description = "属性表")
-public class AttributeDTO implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "PageAttributeRequestDTO", description =  "属性分页请求实体")
+public class PageAttributeRequestDTO  extends PageRequestDTO {
 
-    private static final long serialVersionUID=1L;
 
 
-    @ApiModelProperty(value = "id", position = 1)
-    private Long id;
 
     @ApiModelProperty(value = "属性分类id", position = 2)
     private Long attributeTypeId;
@@ -50,19 +49,9 @@ public class AttributeDTO implements Serializable {
     @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 10)
     private String handAddStatus;
 
-    @ApiModelProperty(value = "创建人", position = 11)
-    private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 12)
-    private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 13)
-    private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 14)
-    private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 15)
-    private String isDeleted;
 
 }

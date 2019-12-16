@@ -20,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, category_id, cascade_category_id, name, show_name, sort, specifications_count, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, category_id, cascade_category_id, name, show_name, type, sort, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

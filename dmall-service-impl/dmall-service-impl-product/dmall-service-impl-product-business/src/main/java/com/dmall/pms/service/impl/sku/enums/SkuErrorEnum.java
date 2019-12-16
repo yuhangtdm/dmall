@@ -6,11 +6,11 @@ import lombok.Getter;
 
 /**
  * @description: sku错误枚举
- * @author: created by hang.yu on 2019-12-03 19:56:06
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Getter
 @AllArgsConstructor
-public enum  SkuErrorEnum implements ErrorCodeEnum {
+public enum SkuErrorEnum implements ErrorCodeEnum {
 
     SAVE_SKU_ERROR("sku-001","新增sku失败"),
     UPDATE_SKU_ERROR("sku _002","修改sku失败"),

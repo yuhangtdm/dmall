@@ -23,7 +23,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, attribute_type_id, category_id, cascade_category_id, name, remark, type, input_type, input_list, sort, hand_add_status, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, attribute_type_id, category_id, cascade_category_id, name, remark, input_type, input_list, sort, hand_add_status, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

@@ -27,7 +27,7 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
-    protected SaveCategoryHandler saveCategoryHandler;
+    private SaveCategoryHandler saveCategoryHandler;
 
     @Autowired
     private DeleteCategoryHandler deleteCategoryHandler;

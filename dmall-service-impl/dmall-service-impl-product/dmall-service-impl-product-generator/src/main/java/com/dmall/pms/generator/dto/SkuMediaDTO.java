@@ -10,11 +10,11 @@ import java.math.*;
 
 /**
  * @description: sku媒体对象表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="SkuMediaDTO", description="sku媒体对象表")
+@ApiModel(value = "SkuMediaDTO", description = "sku媒体对象表")
 public class SkuMediaDTO implements Serializable {
 
     private static final long serialVersionUID=1L;

@@ -23,7 +23,7 @@ import java.util.List;
 public class AttributeServiceImpl implements AttributeService {
 
     @Autowired
-    protected SaveAttributeHandler saveAttributeHandler;
+    private SaveAttributeHandler saveAttributeHandler;
 
     @Autowired
     private DeleteAttributeHandler deleteAttributeHandler;

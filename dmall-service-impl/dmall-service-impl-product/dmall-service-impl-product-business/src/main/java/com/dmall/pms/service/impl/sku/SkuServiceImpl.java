@@ -10,21 +10,19 @@ import com.dmall.pms.service.impl.sku.handler.*;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
 import java.util.List;
 
 /**
  * @description: sku服务实现
- * @author: created by hang.yu on 2019-12-03 19:56:06
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @RestController
-public class  SkuServiceImpl implements SkuService {
+public class SkuServiceImpl implements SkuService {
 
     @Autowired
-    protected SaveSkuHandler saveSkuHandler;
+    private SaveSkuHandler saveSkuHandler;
 
     @Autowired
     private DeleteSkuHandler deleteSkuHandler;
@@ -48,12 +46,12 @@ public class  SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public BaseResult<Long> delete(@PathVariable("id") Long id) {
+    public BaseResult<Long> delete(Long id) {
         return deleteSkuHandler.handler(id);
     }
 
     @Override
-    public BaseResult<Long> update(@Valid UpdateSkuRequestDTO requestDTO) {
+    public BaseResult<Long> update(@RequestBody UpdateSkuRequestDTO requestDTO) {
         return updateSkuHandler.handler(requestDTO);
     }
 

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: sku分页处理器
- * @author: created by hang.yu on 2019-12-03 19:56:06
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Component
 public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, SkuDO, CommonSkuResponseDTO> {

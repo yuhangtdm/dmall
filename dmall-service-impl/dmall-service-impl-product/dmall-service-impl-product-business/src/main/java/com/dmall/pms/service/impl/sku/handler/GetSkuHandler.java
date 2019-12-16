@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 查询sku处理器
- * @author: created by hang.yu on 2019-12-03 19:56:06
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Component
 public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, CommonSkuResponseDTO> {

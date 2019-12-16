@@ -10,11 +10,11 @@ import java.math.*;
 
 /**
  * @description: 品牌表
- * @author: created by hang.yu on 2019-12-09 22:36:21
+ * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="BrandDTO", description="品牌表")
+@ApiModel(value = "BrandDTO", description = "品牌表")
 public class BrandDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
