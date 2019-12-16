@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  ${errorEnum} implements ErrorCodeEnum {
+public enum ${errorEnum} implements ErrorCodeEnum {
 
     SAVE_${enumName}_ERROR("${object}-001","新增${comment}失败"),
     UPDATE_${enumName}_ERROR("${object} _002","修改${comment}失败"),

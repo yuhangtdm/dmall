@@ -19,7 +19,7 @@ import java.util.List;
  * @author: created by ${author} on ${datetime}
  */
 @RestController
-public class  ${businessServiceImpl} implements ${businessService} {
+public class ${businessServiceImpl} implements ${businessService} {
 
     @Autowired
     protected ${saveHandler} ${saveHandlerName};

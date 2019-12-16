@@ -1,13 +1,14 @@
 package com.dmall.pms.api.dto.attributetype.common;
 
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
-import java.util.*;
-import java.math.*;
+import java.util.Date;
 
 /**
  * @description: 属性分类公共响应实体
@@ -15,10 +16,10 @@ import java.math.*;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="CommonAttributeTypeResponseDTO", description="属性分类公共响应实体")
+@ApiModel(value = "CommonAttributeTypeResponseDTO", description = "属性分类公共响应实体")
 public class CommonAttributeTypeResponseDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
     private Long id;
@@ -31,21 +32,16 @@ public class CommonAttributeTypeResponseDTO implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cascadeCategoryName;
 
-    @ApiModelProperty(value = "规格数量", position = 3)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer SpecificationsCount;
-
-    @ApiModelProperty(value = "参数数量", position = 3)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer paramsCount;
-
     @ApiModelProperty(value = "名称", position = 4)
     private String name;
 
     @ApiModelProperty(value = "展示名称", position = 5)
     private String showName;
 
-    @ApiModelProperty(value = "排序", position = 6)
+    @ApiModelProperty(value = "类型", position = 6)
+    private AttributeTypeEnum type;
+
+    @ApiModelProperty(value = "排序", position = 7)
     private Integer sort;
 
     @ApiModelProperty(value = "创建人", position = 9)

@@ -6,20 +6,17 @@ import com.dmall.common.model.handler.BeanUtil;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.util.NoUtil;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
-import com.dmall.pms.api.dto.product.request.attribute.AttributeDTO;
 import com.dmall.pms.api.dto.product.request.attribute.AttributeTypeDTO;
-import com.dmall.pms.api.dto.product.request.attribute.AttributeValueDTO;
-import com.dmall.pms.api.dto.product.request.save.*;
-import com.dmall.pms.generator.dataobject.*;
-import com.dmall.pms.generator.mapper.AttributeMapper;
-import com.dmall.pms.generator.mapper.AttributeTypeMapper;
-import com.dmall.pms.generator.mapper.CategoryBrandMapper;
+import com.dmall.pms.api.dto.product.request.save.BasicProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.save.ProductAttributeDTO;
+import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
+import com.dmall.pms.generator.dataobject.CategoryDO;
+import com.dmall.pms.generator.dataobject.ProductAttributeDO;
+import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.generator.service.IProductAttributeService;
-import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
-import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.impl.product.attribute.ProductAttributeBuilder;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
 import com.google.common.collect.Lists;
@@ -27,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @description: 新增商品处理器
@@ -53,7 +49,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         // 商品名称必须唯一
         ProductDO productDO = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery()
                 .eq(ProductDO::getName, requestDTO.getBasicProduct().getName()));
-        if (productDO != null){
+        if (productDO != null) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NAME_EXISTS);
         }
         // 校验销售属性
@@ -74,7 +70,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
      * 构建商品对象
      */
     private ProductDO buildProductDO(SaveProductRequestDTO requestDTO) {
-        BasicProductDTO basicProduct = requestDTO.getBasicProduct();
+        BasicProductRequestDTO basicProduct = requestDTO.getBasicProduct();
         ProductAttributeDTO productAttribute = requestDTO.getAttribute();
         ProductDO productDO = BeanUtil.copyProperties(basicProduct, ProductDO.class);
         productDO.setProductNo(NoUtil.generateProductNo());
@@ -92,31 +88,14 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         List<ProductAttributeDO> productAttributeDOS = Lists.newArrayList();
         AttributeTypeDTO specifications = attribute.getSpecifications();
         // 构建销售规格
-        buildAttributeDOs(productAttributeDOS, productId, specifications.getAttributeTypeId(), specifications.getAttributes());
+        ProductAttributeBuilder.buildAttributeDOs(productAttributeDOS, productId, specifications.getAttributeTypeId(), specifications.getAttributes());
         // 构建销售参数
         List<AttributeTypeDTO> params = attribute.getParams();
         for (AttributeTypeDTO param : params) {
-            buildAttributeDOs(productAttributeDOS, productId, param.getAttributeTypeId(), param.getAttributes());
+            ProductAttributeBuilder.buildAttributeDOs(productAttributeDOS, productId, param.getAttributeTypeId(), param.getAttributes());
         }
         return productAttributeDOS;
     }
 
-    /**
-     * 构建商品-属性值
-     */
-    private void buildAttributeDOs(List<ProductAttributeDO> productAttributeDOS, Long productId, Long attributeTypeId, List<AttributeDTO> attributeDTOS) {
-        for (AttributeDTO specificationsAttribute : attributeDTOS) {
-            for (AttributeValueDTO attributeValue : specificationsAttribute.getAttributeValues()) {
-                ProductAttributeDO productAttributeDO = new ProductAttributeDO();
-                productAttributeDO.setProductId(productId);
-                productAttributeDO.setAttributeTypeId(attributeTypeId);
-                productAttributeDO.setAttributeId(specificationsAttribute.getAttributeId());
-                productAttributeDO.setAttributeValue(attributeValue.getValue());
-                productAttributeDO.setPic(attributeValue.getPic());
-                productAttributeDO.setAttributeType(specificationsAttribute.getAttributeType());
-                productAttributeDOS.add(productAttributeDO);
-            }
-        }
-    }
 
 }

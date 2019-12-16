@@ -1,14 +1,12 @@
 package com.dmall.pms.api.dto.attributetype.request;
 
+import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import lombok.EqualsAndHashCode;
-import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeRequestDTO;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,7 +15,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="UpdateAttributeTypeRequestDTO", description="修改属性分类请求实体")
+@ApiModel(value = "UpdateAttributeTypeRequestDTO", description = "修改属性分类请求实体")
 public class UpdateAttributeTypeRequestDTO {
 
     @ApiModelProperty(value = "主键", required = true)
@@ -27,8 +25,12 @@ public class UpdateAttributeTypeRequestDTO {
     @ApiModelProperty(value = "名称", position = 1)
     private String name;
 
-
     @ApiModelProperty(value = "展示名称", position = 2)
     private String showName;
+
+    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 4)
+    @ValueInEnum(AttributeTypeEnum.class)
+    @NotNull(message = "类型不能为空")
+    private Integer type;
 
 }

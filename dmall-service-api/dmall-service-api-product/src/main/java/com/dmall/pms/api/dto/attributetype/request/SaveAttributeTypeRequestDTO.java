@@ -13,7 +13,7 @@ import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeRequestDTO;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SaveAttributeTypeRequestDTO", description="新增属性分类请求实体")
+@ApiModel(value = "SaveAttributeTypeRequestDTO", description = "新增属性分类请求实体")
 public class SaveAttributeTypeRequestDTO extends CommonAttributeTypeRequestDTO {
 
 }

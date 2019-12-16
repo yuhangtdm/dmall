@@ -1,7 +1,6 @@
 package com.dmall.pms.api.dto.attribute.request;
 
 import com.dmall.component.web.validate.ValueInEnum;
-import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -19,8 +18,8 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="SaveAttributeRequestDTO", description="新增属性请求实体")
-public class SaveAttributeRequestDTO{
+@ApiModel(value = "SaveAttributeRequestDTO", description = "新增属性请求实体")
+public class SaveAttributeRequestDTO {
 
     @ApiModelProperty(value = "属性分类id", position = 1)
     @NotNull(message = "属性分类id不能为空")
@@ -32,11 +31,6 @@ public class SaveAttributeRequestDTO{
 
     @ApiModelProperty(value = "备注", position = 3)
     private String remark;
-
-    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 4)
-    @ValueInEnum(AttributeTypeEnum.class)
-    @NotNull(message = "类型不能为空")
-    private Integer type;
 
     @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 8)
     @ValueInEnum(InputTypeEnum.class)

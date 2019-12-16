@@ -8,8 +8,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.*;
-import java.math.*;
 
 /**
  * @description: 品牌公共请求实体
@@ -17,10 +15,10 @@ import java.math.*;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="CommonBrandRequestDTO", description="品牌公共请求实体")
+@ApiModel(value = "CommonBrandRequestDTO", description = "品牌公共请求实体")
 public class CommonBrandRequestDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "品牌名称", required = true, position = 2)
     @NotBlank(message = "品牌名称不能为空")

@@ -1,13 +1,13 @@
 package com.dmall.pms.api.dto.product.request;
 
+import com.dmall.component.web.entity.PageRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.component.web.entity.PageRequestDTO;
-import java.util.*;
-import java.math.*;
+import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 /**
  * @description: 商品分页请求实体
@@ -16,9 +16,8 @@ import java.math.*;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="PageProductRequestDTO", description="商品分页请求实体")
-public class PageProductRequestDTO  extends PageRequestDTO {
-
+@ApiModel(value = "PageProductRequestDTO", description = "商品分页请求实体")
+public class PageProductRequestDTO extends PageRequestDTO {
 
     @ApiModelProperty(value = "商品分类id", position = 1)
     private Long categoryId;
@@ -37,6 +36,5 @@ public class PageProductRequestDTO  extends PageRequestDTO {
 
     @ApiModelProperty(value = "上市时间至", position = 6)
     private Date onMarketTimeEnd;
-
 
 }

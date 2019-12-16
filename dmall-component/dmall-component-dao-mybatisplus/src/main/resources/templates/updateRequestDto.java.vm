@@ -14,7 +14,7 @@ import ${commonDtoPackage}.${commonRequestDto};
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="${updateRequestDto}", description="$!{updateRequestComment}")
+@ApiModel(value = "${updateRequestDto}", description = "$!{updateRequestComment}")
 public class ${updateRequestDto} extends ${commonRequestDto} {
 
     @ApiModelProperty(value = "主键", required = true, position = 0)

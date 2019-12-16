@@ -10,10 +10,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  LevelEnum implements KeyValueEnum<Integer> {
-    ONE(1,"1级"),
-    TWO(2,"2级"),
-    THREE(3,"3级"),
+public enum LevelEnum implements KeyValueEnum<Integer> {
+    ONE(1, "1级"),
+    TWO(2, "2级"),
+    THREE(3, "3级"),
     ;
 
     private Integer code;

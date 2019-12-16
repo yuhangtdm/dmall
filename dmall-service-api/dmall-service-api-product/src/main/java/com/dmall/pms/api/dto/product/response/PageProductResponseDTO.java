@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,10 +14,10 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="PageProductResponseDTO", description="商品分页响应实体")
+@ApiModel(value = "PageProductResponseDTO", description = "商品分页响应实体")
 public class PageProductResponseDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
     private Long id;

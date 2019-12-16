@@ -11,8 +11,6 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.*;
-import java.math.*;
 
 /**
  * @description: 商品分类公共请求实体
@@ -20,10 +18,10 @@ import java.math.*;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="CommonCategoryRequestDTO", description="商品分类公共请求实体")
+@ApiModel(value = "CommonCategoryRequestDTO", description = "商品分类公共请求实体")
 public class CommonCategoryRequestDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "上级id", required = true, position = 1)
     @NotNull(message = "上级id不能为空")
@@ -33,7 +31,7 @@ public class CommonCategoryRequestDTO implements Serializable {
     @NotBlank(message = "分类名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "PC图标",  position = 3)
+    @ApiModelProperty(value = "PC图标", position = 3)
     private String icon;
 
     @ApiModelProperty(value = "移动端图标", position = 4)
@@ -43,7 +41,7 @@ public class CommonCategoryRequestDTO implements Serializable {
     @ValueInEnum(LevelEnum.class)
     private Integer level;
 
-    @ApiModelProperty(value = "描述",  position = 6)
+    @ApiModelProperty(value = "描述", position = 6)
     private String description;
 
     @ApiModelProperty(value = "排序", position = 7)
@@ -52,7 +50,7 @@ public class CommonCategoryRequestDTO implements Serializable {
     @ApiModelProperty(value = "关键字,用于搜索", position = 8)
     private String keywords;
 
-    @ApiModelProperty(value = "是否热门 Y-是;N-否",  position = 9)
+    @ApiModelProperty(value = "是否热门 Y-是;N-否", position = 9)
     @ValueInEnum(YNEnum.class)
     private String hotStatus;
 

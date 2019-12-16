@@ -5,7 +5,6 @@ import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
-import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
@@ -36,7 +35,6 @@ public class GetAttributeHandler extends AbstractCommonHandler<Long, AttributeDO
     @Override
     protected void customerConvertDto(CommonAttributeResponseDTO result, AttributeDO doo) {
         result.setInputType(EnumUtil.getKeyValueEnum(InputTypeEnum.class, doo.getInputType()));
-        result.setType(EnumUtil.getKeyValueEnum(AttributeTypeEnum.class, doo.getType()));
         result.setHandAddStatus(EnumUtil.getKeyValueEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));
     }
 }

@@ -1,17 +1,12 @@
 package com.dmall.pms.api.dto.attribute.request;
 
 import com.dmall.component.web.validate.ValueInEnum;
-import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import lombok.EqualsAndHashCode;
-import com.dmall.pms.api.dto.attribute.common.CommonAttributeRequestDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -21,7 +16,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="UpdateAttributeRequestDTO", description="修改属性请求实体")
+@ApiModel(value = "UpdateAttributeRequestDTO", description = "修改属性请求实体")
 public class UpdateAttributeRequestDTO {
 
     @ApiModelProperty(value = "主键", required = true, position = 1)
@@ -33,10 +28,6 @@ public class UpdateAttributeRequestDTO {
 
     @ApiModelProperty(value = "备注", position = 3)
     private String remark;
-
-    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 4)
-    @ValueInEnum(AttributeTypeEnum.class)
-    private Integer type;
 
     @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 5)
     @ValueInEnum(InputTypeEnum.class)

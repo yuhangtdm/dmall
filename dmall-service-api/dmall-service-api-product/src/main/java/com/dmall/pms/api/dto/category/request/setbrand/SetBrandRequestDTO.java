@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="SetBrandRequestDTO", description="设置品牌请求实体")
+@ApiModel(value = "SetBrandRequestDTO", description = "设置品牌请求实体")
 public class SetBrandRequestDTO implements Serializable {
     private static final long serialVersionUID = 2020918577643316332L;
 

@@ -1,7 +1,7 @@
 package com.dmall.pms.api.dto.product.request.attribute;
 
 import com.dmall.component.web.validate.ValueInEnum;
-import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @description:
+ * @description: 新增商品属性实体
  * @author: created by hang.yu on 2019/12/10 22:12
  */
 @Data

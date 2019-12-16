@@ -21,7 +21,7 @@ import java.util.List;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @RestController
-public class  AttributeTypeServiceImpl implements AttributeTypeService {
+public class AttributeTypeServiceImpl implements AttributeTypeService {
 
     @Autowired
     protected SaveAttributeTypeHandler saveAttributeTypeHandler;
@@ -40,7 +40,6 @@ public class  AttributeTypeServiceImpl implements AttributeTypeService {
 
     @Autowired
     private PageAttributeTypeHandler pageAttributeTypeHandler;
-
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveAttributeTypeRequestDTO requestDTO) {

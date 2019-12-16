@@ -17,7 +17,6 @@ import java.util.List;
 @ApiModel(value = "SetAttributeTypeRequestDTO", description = "设置属性分类请求实体")
 public class SetAttributeTypeRequestDTO {
 
-
     @ApiModelProperty(value = "分类id", required = true, position = 1)
     @NotNull(message = "分类id不能为空")
     private Long categoryId;

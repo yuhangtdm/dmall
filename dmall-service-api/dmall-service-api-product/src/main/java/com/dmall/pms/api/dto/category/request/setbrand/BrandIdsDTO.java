@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="BrandIdsDTO", description="品牌列表实体")
+@ApiModel(value = "BrandIdsDTO", description = "品牌列表实体")
 public class BrandIdsDTO implements Serializable {
 
     @ApiModelProperty(value = "品牌id", required = true, position = 1)
@@ -24,6 +24,6 @@ public class BrandIdsDTO implements Serializable {
 
     @ApiModelProperty(value = "排序", required = true, position = 2)
     @NotNull(message = "排序不能为空")
-    @Min(value = 1,message = "排序必须大于等于1")
+    @Min(value = 1, message = "排序必须大于等于1")
     private Integer sort;
 }

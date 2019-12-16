@@ -14,10 +14,10 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="CommonBrandResponseDTO", description="品牌公共响应实体")
+@ApiModel(value = "CommonBrandResponseDTO", description = "品牌公共响应实体")
 public class CommonBrandResponseDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "品牌id", position = 1)
     private Long id;

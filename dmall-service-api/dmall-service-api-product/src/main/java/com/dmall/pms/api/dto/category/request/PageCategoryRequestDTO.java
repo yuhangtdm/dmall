@@ -1,13 +1,11 @@
 package com.dmall.pms.api.dto.category.request;
 
+import com.dmall.component.web.entity.PageRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.component.web.entity.PageRequestDTO;
-import java.util.*;
-import java.math.*;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 商品分类分页请求实体
@@ -16,8 +14,8 @@ import java.math.*;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="PageCategoryRequestDTO", description="商品分类分页请求实体")
-public class PageCategoryRequestDTO  extends PageRequestDTO {
+@ApiModel(value = "PageCategoryRequestDTO", description = "商品分类分页请求实体")
+public class PageCategoryRequestDTO extends PageRequestDTO {
 
     @ApiModelProperty(value = "父级id 上级分类编号", position = 2)
     private Long parentId;

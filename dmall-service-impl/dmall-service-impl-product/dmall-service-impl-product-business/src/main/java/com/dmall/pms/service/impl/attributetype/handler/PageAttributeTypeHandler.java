@@ -2,21 +2,18 @@ package com.dmall.pms.service.impl.attributetype.handler;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dmall.common.enums.base.EnumUtil;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
-import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
-import com.dmall.pms.service.impl.category.handler.GetCategoryHandler;
 import com.dmall.pms.service.impl.category.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,13 +34,10 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     @Autowired
     private CategorySupport categorySupport;
 
-    @Autowired
-    private AttributeMapper attributeMapper;
-
     @Override
     public BaseResult<LayuiPage<CommonAttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
-                .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName());
+                .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName(), requestDTO.getType());
         Page<AttributeTypeDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         IPage<AttributeTypeDO> attributeTypeDOIPage = attributeTypeMapper.selectPage(page, queryWrapper);
         List<CommonAttributeTypeResponseDTO> record = attributeTypeDOIPage.getRecords().stream()
@@ -56,18 +50,8 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     protected void customerConvertDto(CommonAttributeTypeResponseDTO result, AttributeTypeDO doo) {
         if (doo.getCategoryId() != null) {
             result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
+            result.setType(EnumUtil.getKeyValueEnum(AttributeTypeEnum.class, doo.getType()));
         }
-        Integer specificationsCount = attributeMapper.selectCount(Wrappers.<AttributeDO>lambdaQuery()
-                .eq(AttributeDO::getAttributeTypeId, doo.getId())
-                .eq(AttributeDO::getType, AttributeTypeEnum.SPECIFICATIONS.getCode())
-        );
-        result.setSpecificationsCount(specificationsCount);
-        Integer paramsCount = attributeMapper.selectCount(Wrappers.<AttributeDO>lambdaQuery()
-                .eq(AttributeDO::getAttributeTypeId, doo.getId())
-                .eq(AttributeDO::getType, AttributeTypeEnum.PARAMS.getCode())
-        );
-        result.setParamsCount(paramsCount);
-
     }
 
 }

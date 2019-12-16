@@ -10,10 +10,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  HandAddStatusEnum implements KeyValueEnum<String> {
+public enum HandAddStatusEnum implements KeyValueEnum<String> {
 
-    Y("Y","支持"),
-    N("N","不支持"),
+    Y("Y", "支持"),
+    N("N", "不支持"),
     ;
 
     private String code;

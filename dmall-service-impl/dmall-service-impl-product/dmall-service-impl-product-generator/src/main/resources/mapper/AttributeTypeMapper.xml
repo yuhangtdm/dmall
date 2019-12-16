@@ -9,6 +9,7 @@
         <result column="cascade_category_id" property="cascadeCategoryId" />
         <result column="name" property="name" />
         <result column="show_name" property="showName" />
+        <result column="type" property="type" />
         <result column="sort" property="sort" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />

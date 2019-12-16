@@ -14,7 +14,7 @@ import java.math.*;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="${commonRequestDto}", description="$!{commonRequestComment}")
+@ApiModel(value = "${commonRequestDto}", description = "$!{commonRequestComment}")
 public class ${commonRequestDto} implements Serializable {
 
     private static final long serialVersionUID=1L;

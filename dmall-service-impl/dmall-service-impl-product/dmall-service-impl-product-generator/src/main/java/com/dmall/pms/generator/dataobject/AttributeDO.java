@@ -56,11 +56,6 @@ public class AttributeDO implements Serializable {
     private String remark;
 
     /**
-     * 类型 1-规格;2-参数;
-     */
-    private Integer type;
-
-    /**
      * 属性录入方式 1-手工录入;2-从列表获取
      */
     private Integer inputType;

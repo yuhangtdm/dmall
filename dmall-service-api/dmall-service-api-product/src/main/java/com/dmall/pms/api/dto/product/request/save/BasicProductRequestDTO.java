@@ -17,8 +17,8 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="BasicProductDTO", description="新增商品基础信息实体")
-public class BasicProductDTO implements Serializable {
+@ApiModel(value = "BasicProductDTO", description = "新增商品基础信息实体")
+public class BasicProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1619159990632457989L;
 
@@ -37,7 +37,7 @@ public class BasicProductDTO implements Serializable {
     @NotNull(message = "商品重量不能为空")
     private BigDecimal weight;
 
-    @ApiModelProperty(value = "上市时间", position =5)
+    @ApiModelProperty(value = "上市时间", position = 5)
     @NotNull(message = "上市时间不能为空")
     private Date onMarketTime;
 

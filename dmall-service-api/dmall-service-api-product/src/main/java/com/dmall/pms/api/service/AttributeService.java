@@ -1,12 +1,10 @@
 package com.dmall.pms.api.service;
 
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
 import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

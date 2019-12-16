@@ -1,6 +1,5 @@
 package com.dmall.pms.api.dto.attribute.request;
 
-import com.dmall.common.enums.base.YNEnum;
 import com.dmall.component.web.validate.ValueInEnum;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
@@ -8,8 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import java.util.*;
-import java.math.*;
+
 import java.io.Serializable;
 
 /**
@@ -28,9 +26,6 @@ public class ListAttributeRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "名称", position = 5)
     private String name;
-
-    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 7)
-    private Integer type;
 
     @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 8)
     @ValueInEnum(InputTypeEnum.class)

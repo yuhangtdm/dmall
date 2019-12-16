@@ -27,7 +27,7 @@ public class AttributeTypeCacheService {
     }
 
     @MapPostCache
-    public int insert(AttributeTypeDO attributeTypeDO){
+    public int insert(AttributeTypeDO attributeTypeDO) {
         return attributeTypeMapper.insert(attributeTypeDO);
     }
 

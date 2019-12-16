@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -14,12 +15,12 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="ListCategoryRequestDTO", description="商品分类列表请求实体")
+@ApiModel(value = "ListCategoryRequestDTO", description = "商品分类列表请求实体")
 public class ListCategoryRequestDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "分类名称",  position = 1)
+    @ApiModelProperty(value = "分类名称", position = 1)
     private String name;
 
     @ApiModelProperty(value = "上级id", position = 2)

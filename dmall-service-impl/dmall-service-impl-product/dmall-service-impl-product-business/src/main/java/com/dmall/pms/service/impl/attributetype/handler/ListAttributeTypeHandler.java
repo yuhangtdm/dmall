@@ -37,11 +37,11 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
     public BaseResult<List<ListAttributeTypeResponseDTO>> processor(ListAttributeTypeRequestDTO requestDTO) {
         List<AttributeTypeDO> attributeTypeDOS;
 
-        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName())) {
+        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName(), requestDTO.getType())) {
             attributeTypeDOS = attributeTypeCacheService.selectAll();
         } else {
             LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
-                    .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName());
+                    .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName(), requestDTO.getType());
             attributeTypeDOS = attributeTypeMapper.selectList(queryWrapper);
         }
         List<ListAttributeTypeResponseDTO> list = attributeTypeDOS.stream()

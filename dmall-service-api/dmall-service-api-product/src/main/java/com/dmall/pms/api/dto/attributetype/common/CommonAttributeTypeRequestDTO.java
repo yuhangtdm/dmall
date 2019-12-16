@@ -1,11 +1,12 @@
 package com.dmall.pms.api.dto.attributetype.common;
 
+import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,10 +17,10 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="CommonAttributeTypeRequestDTO", description="属性分类公共请求实体")
+@ApiModel(value = "CommonAttributeTypeRequestDTO", description = "属性分类公共请求实体")
 public class CommonAttributeTypeRequestDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "名称", position = 2)
     @NotBlank(message = "名称不能为空")
@@ -29,4 +30,8 @@ public class CommonAttributeTypeRequestDTO implements Serializable {
     @NotBlank(message = "展示名称不能为空")
     private String showName;
 
+    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 4)
+    @ValueInEnum(AttributeTypeEnum.class)
+    @NotNull(message = "类型不能为空")
+    private Integer type;
 }

@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="SaveProductRequestDTO", description="新增商品请求实体")
+@ApiModel(value = "SaveProductRequestDTO", description = "新增商品请求实体")
 public class SaveProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -1526848004709212956L;
@@ -23,7 +23,7 @@ public class SaveProductRequestDTO implements Serializable {
     @ApiModelProperty(value = "商品基本信息", position = 1)
     @Valid
     @NotNull(message = "商品基本信息不能为空")
-    private BasicProductDTO basicProduct;
+    private BasicProductRequestDTO basicProduct;
 
     @ApiModelProperty(value = "商品属性信息", position = 2)
     @Valid

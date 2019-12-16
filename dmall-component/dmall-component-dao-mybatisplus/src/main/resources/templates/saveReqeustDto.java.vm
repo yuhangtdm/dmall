@@ -13,7 +13,7 @@ import ${commonDtoPackage}.${commonRequestDto};
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="${saveRequestDto}", description="$!{saveRequestComment}")
+@ApiModel(value = "${saveRequestDto}", description = "$!{saveRequestComment}")
 public class ${saveRequestDto} extends ${commonRequestDto} {
 
 }

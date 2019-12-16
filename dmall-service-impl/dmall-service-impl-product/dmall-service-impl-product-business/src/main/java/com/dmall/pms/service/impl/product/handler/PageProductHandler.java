@@ -21,6 +21,7 @@ import com.dmall.pms.service.impl.category.support.CategorySupport;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,17 +47,17 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
     @Override
     public BaseResult validate(PageProductRequestDTO requestDTO) {
         // 分类id必须存在
-        if (requestDTO.getCategoryId() != null){
+        if (requestDTO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-            if (categoryDO == null){
+            if (categoryDO == null) {
                 return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_EXISTS);
             }
         }
 
         // 品牌id必须存在
-        if (requestDTO.getBrandId() != null){
+        if (requestDTO.getBrandId() != null) {
             BrandDO brandDO = brandCacheService.selectById(requestDTO.getBrandId());
-            if (brandDO == null){
+            if (brandDO == null) {
                 return ResultUtil.fail(ProductErrorEnum.BRAND_NOT_EXISTS);
             }
         }
@@ -72,11 +73,10 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
                 .like(StrUtil.isNotBlank(requestDTO.getProductNo()), ProductDO::getProductNo, requestDTO.getProductNo())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), ProductDO::getName, requestDTO.getName())
                 .ge(requestDTO.getOnMarketTimeStart() != null, ProductDO::getOnMarketTime, requestDTO.getOnMarketTimeStart())
-                .le(requestDTO.getOnMarketTimeEnd() != null , ProductDO::getOnMarketTime, requestDTO.getOnMarketTimeEnd())
-                ;
+                .le(requestDTO.getOnMarketTimeEnd() != null, ProductDO::getOnMarketTime, requestDTO.getOnMarketTimeEnd());
         // 获取分类下的所有子分类
-        if (requestDTO.getCategoryId() != null){
-            wrapper.in(ProductDO::getCategoryId,categorySupport.getSubLevelIds(requestDTO.getCategoryId()));
+        if (requestDTO.getCategoryId() != null) {
+            wrapper.in(ProductDO::getCategoryId, categorySupport.getSubLevelIds(requestDTO.getCategoryId()));
         }
         IPage<ProductDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = productMapper.selectPage(page, wrapper);

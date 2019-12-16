@@ -1,14 +1,15 @@
 package com.dmall.pms.api.dto.attribute.common;
 
-import com.dmall.pms.api.dto.attribute.enums.AttributeTypeEnum;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
 
 /**
  * @description: 属性公共响应实体
@@ -16,10 +17,10 @@ import java.util.*;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="CommonAttributeResponseDTO", description="属性公共响应实体")
+@ApiModel(value = "CommonAttributeResponseDTO", description = "属性公共响应实体")
 public class CommonAttributeResponseDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
     private Long id;

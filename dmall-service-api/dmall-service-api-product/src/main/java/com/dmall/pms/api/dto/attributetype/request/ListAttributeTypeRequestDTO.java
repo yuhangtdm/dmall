@@ -1,11 +1,12 @@
 package com.dmall.pms.api.dto.attributetype.request;
 
+import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import java.util.*;
-import java.math.*;
+
 import java.io.Serializable;
 
 /**
@@ -14,10 +15,10 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="ListAttributeTypeRequestDTO", description="属性分类列表请求实体")
+@ApiModel(value = "ListAttributeTypeRequestDTO", description = "属性分类列表请求实体")
 public class ListAttributeTypeRequestDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "商品分类id", position = 2)
     private Long categoryId;
@@ -27,5 +28,9 @@ public class ListAttributeTypeRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "展示名称", position = 5)
     private String showName;
+
+    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 4)
+    @ValueInEnum(AttributeTypeEnum.class)
+    private Integer type;
 
 }

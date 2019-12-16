@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="UpdateProductRequestDTO", description="修改商品请求实体")
+@ApiModel(value = "UpdateProductRequestDTO", description = "修改商品请求实体")
 public class UpdateProductRequestDTO {
 
     @ApiModelProperty(value = "主键", required = true, position = 0)
@@ -37,7 +37,7 @@ public class UpdateProductRequestDTO {
     @ApiModelProperty(value = "商品重量", position = 4)
     private BigDecimal weight;
 
-    @ApiModelProperty(value = "上市时间", position =5)
+    @ApiModelProperty(value = "上市时间", position = 5)
     private Date onMarketTime;
 
     @ApiModelProperty(value = "销售规格", position = 6)

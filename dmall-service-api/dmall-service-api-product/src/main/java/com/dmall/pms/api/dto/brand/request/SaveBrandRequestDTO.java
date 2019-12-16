@@ -13,7 +13,7 @@ import com.dmall.pms.api.dto.brand.common.CommonBrandRequestDTO;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SaveBrandRequestDTO", description="新增品牌请求实体")
+@ApiModel(value = "SaveBrandRequestDTO", description = "新增品牌请求实体")
 public class SaveBrandRequestDTO extends CommonBrandRequestDTO {
 
 }

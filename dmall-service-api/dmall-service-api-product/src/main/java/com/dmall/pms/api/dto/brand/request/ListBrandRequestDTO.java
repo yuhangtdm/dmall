@@ -7,8 +7,6 @@ import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
-import java.util.*;
-import java.math.*;
 import java.io.Serializable;
 
 /**
@@ -17,10 +15,10 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value="ListBrandRequestDTO", description="品牌列表请求实体")
+@ApiModel(value = "ListBrandRequestDTO", description = "品牌列表请求实体")
 public class ListBrandRequestDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "品牌名称", position = 1)
     private String name;
@@ -30,7 +28,7 @@ public class ListBrandRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "首字母", position = 3)
     @NotBlank(message = "首字母不能为空")
-    @Length(max = 1,min = 1,message = "首字母长度固定1位")
+    @Length(max = 1, min = 1, message = "首字母长度固定1位")
     private String firstLetter;
 
     @ApiModelProperty(value = "商品分类id", position = 4)

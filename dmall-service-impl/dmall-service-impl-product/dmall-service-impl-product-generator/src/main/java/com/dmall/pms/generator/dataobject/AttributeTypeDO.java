@@ -51,6 +51,11 @@ public class AttributeTypeDO implements Serializable {
     private String showName;
 
     /**
+     * 类型 1-规格;2-参数;
+     */
+    private Integer type;
+
+    /**
      * 排序
      */
     private Integer sort;

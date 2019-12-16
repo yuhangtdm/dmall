@@ -1,9 +1,11 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
+import com.dmall.common.enums.base.EnumUtil;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
+import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
@@ -37,6 +39,7 @@ public class GetAttributeTypeHandler extends AbstractCommonHandler<Long, Attribu
     protected void customerConvertDto(CommonAttributeTypeResponseDTO result, AttributeTypeDO doo) {
         if (doo.getCategoryId() != null) {
             result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
+            result.setType(EnumUtil.getKeyValueEnum(AttributeTypeEnum.class, doo.getType()));
         }
     }
 }

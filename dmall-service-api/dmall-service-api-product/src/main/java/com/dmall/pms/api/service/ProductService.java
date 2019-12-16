@@ -2,15 +2,16 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
-import com.dmall.pms.api.dto.product.common.CommonProductResponseDTO;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
-import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
+import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 /**
@@ -33,14 +34,16 @@ public interface ProductService {
     @ApiOperation(value = "修改商品")
     BaseResult<Long> update(@Valid @RequestBody UpdateProductRequestDTO requestDTO);
 
-    /**
-     * TODO sku完成之后再进行开发
-     */
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询商品")
     @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonProductResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<GetProductResponseDTO> get(@PathVariable("id") Long id);
 
+
+    @DeleteMapping("/")
+    @ApiOperation(value = "删除商品")
+    @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
 
 
 }
