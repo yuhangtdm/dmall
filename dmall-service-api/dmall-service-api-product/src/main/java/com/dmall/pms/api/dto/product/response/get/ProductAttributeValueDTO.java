@@ -18,10 +18,13 @@ public class ProductAttributeValueDTO implements Serializable {
 
     private static final long serialVersionUID = -5238483585926410027L;
 
-    @ApiModelProperty(value = "属性值", position = 1)
+    @ApiModelProperty(value = "商品属性值id", position = 1)
+    private Long productAttributeValueId;
+
+    @ApiModelProperty(value = "属性值", position = 2)
     private String attributeValue;
 
-    @ApiModelProperty(value = "属性值图片", position = 2)
+    @ApiModelProperty(value = "属性值图片", position = 3)
     private String attributePic;
 
 }

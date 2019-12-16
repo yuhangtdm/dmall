@@ -5,6 +5,7 @@ import com.dmall.common.model.result.LayuiPage;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
+import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import com.dmall.pms.api.service.ProductService;
@@ -63,6 +64,11 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> delete(Long id) {
         return deleteProductHandler.handler(id);
+    }
+
+    @Override
+    public BaseResult<GetProductAttributeResponseDTO> getProductAttribute(Long id) {
+        return null;
     }
 
 }

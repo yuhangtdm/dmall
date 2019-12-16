@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: sku属性值表
- * @author: created by hang.yu on 2019-12-16 15:14:51
+ * @author: created by hang.yu on 2019-12-16 16:36:38
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,49 +31,14 @@ public class SkuAttributeDO implements Serializable {
     private Long id;
 
     /**
-     * 商品id
-     */
-    private Long productId;
-
-    /**
      * skuid
      */
     private Long skuId;
 
     /**
-     * 属性分类id
+     * product_attribute_id
      */
-    private String attributeTypeId;
-
-    /**
-     * 属性id
-     */
-    private Long attributeId;
-
-    /**
-     * 属性值
-     */
-    private String value;
-
-    /**
-     * 类型 1-规格;2-参数
-     */
-    private Integer attributeType;
-
-    /**
-     * 规格配图 规格可能有配图
-     */
-    private String pic;
-
-    /**
-     * 商品编号
-     */
-    private String productNo;
-
-    /**
-     * sku编号
-     */
-    private String skuNo;
+    private Long productAttributeId;
 
     /**
      * 创建人

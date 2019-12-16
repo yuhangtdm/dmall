@@ -1,18 +1,20 @@
 package com.dmall.pms.api.service;
 
-import com.dmall.pms.api.dto.sku.request.ListSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.common.CommonSkuResponseDTO;
-import com.dmall.pms.api.dto.sku.request.SaveSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.request.UpdateSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
+import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
+import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
+import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @description: sku服务
@@ -22,30 +24,34 @@ import java.util.List;
 @RequestMapping("/sku")
 public interface SkuService {
 
-    @PostMapping("/")
-    @ApiOperation(value = "新增sku")
-    BaseResult<Long> save(@Valid @RequestBody SaveSkuRequestDTO requestDTO);
+    @PostMapping("/saveOrUpdate")
+    @ApiOperation(value = "新增或修改sku基本信息,返回skuId")
+    BaseResult<Long> saveOrUpdate(@Valid @RequestBody SaveSkuRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除sku")
-    @ApiImplicitParam(name = "id", value = "skuid", required = true, dataType = "int", paramType = "path")
-    BaseResult<Long> delete(@PathVariable("id") Long id);
+    @PostMapping("/saveSkuAttribute")
+    @ApiOperation(value = "保存sku属性信息,返回skuId")
+    BaseResult<Long> saveSkuAttribute(@Valid @RequestBody SaveSkuAttributeRequestDTO requestDTO);
+
+    @PostMapping("/saveSkuExt")
+    @ApiOperation(value = "保存sku扩展信息,返回skuId")
+    BaseResult<Long> saveSkuExt(@Valid @RequestBody SaveSkuExtRequestDTO requestDTO);
+
+    //todo 上传sku图片的
 
     @PutMapping("/")
     @ApiOperation(value = "修改sku")
     BaseResult<Long> update(@Valid @RequestBody UpdateSkuRequestDTO requestDTO);
 
-    @GetMapping("/{id}")
-    @ApiOperation(value = "根据id查询sku")
-    @ApiImplicitParam(name = "id", value = "skuid", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonSkuResponseDTO> get(@PathVariable("id") Long id);
-
-    @PostMapping("/list")
-    @ApiOperation(value = "sku列表")
-    BaseResult<List<CommonSkuResponseDTO>> list(@RequestBody ListSkuRequestDTO requestDTO);
-
     @PostMapping("/page")
     @ApiOperation(value = "sku分页")
-    BaseResult<LayuiPage<CommonSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO);
+    BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO);
+
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询sku")
+    @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
+    BaseResult<GetSkuResponseDTO> get(@PathVariable("id") Long id);
+
+
 
 }

@@ -1,6 +1,5 @@
 package com.dmall.pms.generator.dataobject;
 
-import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -14,14 +13,14 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: 商品表
- * @author: created by hang.yu on 2019-12-16 15:14:51
+ * @description: sku扩展表
+ * @author: created by hang.yu on 2019-12-16 15:32:40
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("pms_product")
-public class ProductDO implements Serializable {
+@TableName("pms_sku_ext")
+public class SkuExtDO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -32,74 +31,24 @@ public class ProductDO implements Serializable {
     private Long id;
 
     /**
-     * 商家店铺id
+     * sku_id
      */
-    private Long merchantsId;
+    private Long skuId;
 
     /**
-     * 商品分类id
+     * skuPC端详情富文本
      */
-    private Long categoryId;
+    private String detailHtml;
 
     /**
-     * 品牌id
+     * sku移动端详情富文本
      */
-    private Long brandId;
+    private String detailMobileHtml;
 
     /**
-     * 运费模板id
+     * sku属性集json
      */
-    private Long freightTemplateId;
-
-    /**
-     * 商品编号
-     */
-    private String productNo;
-
-    /**
-     * 商品名称
-     */
-    private String name;
-
-    /**
-     * 商品图片
-     */
-    private String pic;
-
-    /**
-     * 商品描述
-     */
-    private String description;
-
-    /**
-     * 单位
-     */
-    private String unit;
-
-    /**
-     * 重量 默认克
-     */
-    private BigDecimal weight;
-
-    /**
-     * 备注
-     */
-    private String remark;
-
-    /**
-     * 上市时间
-     */
-    private Date onMarketTime;
-
-    /**
-     * 商品分类path
-     */
-    private String cascadeCategoryId;
-
-    /**
-     * 增值业务
-     */
-    private String addServices;
+    private String skuAttributeJson;
 
     /**
      * 创建人

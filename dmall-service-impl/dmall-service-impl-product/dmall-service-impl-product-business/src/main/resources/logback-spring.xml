@@ -9,6 +9,7 @@
     <property name="APP_NAME" value="dmall-service-impl-product"/>
     <!--日志文件保存路径-->
     <contextName>${APP_NAME}</contextName>
+
     <!--每天记录日志到文件appender-->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
@@ -16,7 +17,7 @@
         </encoder>
         <file>${LOG_FILE_PATH}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_FILE_PATH}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>${LOG_FILE_MAX_SIZE:-200MB}</maxFileSize>
             <maxHistory>${LOG_FILE_MAX_HISTORY:-30}</maxHistory>
         </rollingPolicy>

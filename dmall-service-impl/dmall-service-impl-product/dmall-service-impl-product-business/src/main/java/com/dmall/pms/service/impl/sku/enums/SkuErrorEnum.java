@@ -12,7 +12,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SkuErrorEnum implements ErrorCodeEnum {
 
-    SAVE_SKU_ERROR("sku-001","新增sku失败"),
+    PRODUCT_NOT_EXISTS("sku-001","该商品不存在"),
+    SKU_NAME_EXISTS("sku-001","该sku名称已存在"),
     UPDATE_SKU_ERROR("sku _002","修改sku失败"),
     DELETE_SKU_ERROR("sku_003","删除sku失败"),
     SKU_NOT_EXIST("sku_004","该sku不存在"),

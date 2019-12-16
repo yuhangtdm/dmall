@@ -48,27 +48,11 @@ public class ProductValidate {
     private AttributeTypeMapper attributeTypeMapper;
 
     public BaseResult validate(ProductAttributeDTO attributeDTO) {
-        // 校验商品分类是否存在
+        BaseResult validate = basicValidate(attributeDTO.getCategoryId(), attributeDTO.getBrandId());
+        if (!validate.getResult()){
+            return validate;
+        }
         CategoryDO categoryDO = categoryCacheService.selectById(attributeDTO.getCategoryId());
-        if (categoryDO == null) {
-            return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_EXISTS);
-        }
-        // 校验是否是三级分类
-        if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
-            return ResultUtil.fail(ProductErrorEnum.CATEGORY_LEVEL_ERROR);
-        }
-        // 校验品牌是否存在
-        BrandDO brandDO = brandCacheService.selectById(attributeDTO.getBrandId());
-        if (brandDO == null) {
-            return ResultUtil.fail(ProductErrorEnum.BRAND_NOT_EXISTS);
-        }
-        // 校验品牌是否是该商品分类下的
-        CategoryBrandDO categoryBrandDO = categoryBrandMapper.selectOne(Wrappers.<CategoryBrandDO>lambdaQuery()
-                .eq(CategoryBrandDO::getCategoryId, categoryDO.getId())
-                .eq(CategoryBrandDO::getBrandId, brandDO.getId()));
-        if (categoryBrandDO == null) {
-            return ResultUtil.fail(ProductErrorEnum.CATEGORY_BRAND_ERROR);
-        }
         /*
             校验销售规格
          */
@@ -125,6 +109,31 @@ public class ProductValidate {
             return ResultUtil.fail(ProductErrorEnum.PARAMS_ATTRIBUTE_NOT_EXISTS);
         }
         // 校验商品属性是否是商品属性分类下的 不进行校验
+
+        return ResultUtil.success();
+    }
+
+    public BaseResult basicValidate(Long categoryId, Long brandId){
+        CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
+        if (categoryDO == null) {
+            return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_EXISTS);
+        }
+        // 校验是否是三级分类
+        if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
+            return ResultUtil.fail(ProductErrorEnum.CATEGORY_LEVEL_ERROR);
+        }
+        // 校验品牌是否存在
+        BrandDO brandDO = brandCacheService.selectById(brandId);
+        if (brandDO == null) {
+            return ResultUtil.fail(ProductErrorEnum.BRAND_NOT_EXISTS);
+        }
+        // 校验品牌是否是该商品分类下的
+        CategoryBrandDO categoryBrandDO = categoryBrandMapper.selectOne(Wrappers.<CategoryBrandDO>lambdaQuery()
+                .eq(CategoryBrandDO::getCategoryId, categoryDO.getId())
+                .eq(CategoryBrandDO::getBrandId, brandDO.getId()));
+        if (categoryBrandDO == null) {
+            return ResultUtil.fail(ProductErrorEnum.CATEGORY_BRAND_ERROR);
+        }
 
         return ResultUtil.success();
     }

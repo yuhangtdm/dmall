@@ -24,11 +24,11 @@ public class GeneratorCodeUtil {
         /**
          * 表名不传则生成所有表的
          */
-        generateByTables(Constants.GENERATOR_MODULE_NAME, null);
+        generateByTables(Constants.GENERATOR_MODULE_NAME, "pms_sku_attribute");
     }
 
     /**
-     * 通过表名生成相关类
+     * 通过表名生成相关类"
      */
     private static void generateByTables(String module, String... tableNames) {
         moduleGenerator(module, tableNames);

@@ -127,11 +127,6 @@ public class SkuDO implements Serializable {
     private Integer sort;
 
     /**
-     * sku规格
-     */
-    private String skuSpecifications;
-
-    /**
      * 上架状态 Y-上架;N-未上架
      */
     private String publishStatus;
@@ -175,16 +170,6 @@ public class SkuDO implements Serializable {
      * 商品分类id集合 如:1/2/3
      */
     private String cascadeCategoryId;
-
-    /**
-     * skuPC端详情富文本
-     */
-    private String detailHtml;
-
-    /**
-     * sku移动端详情富文本
-     */
-    private String detailMobileHtml;
 
     /**
      * 创建人

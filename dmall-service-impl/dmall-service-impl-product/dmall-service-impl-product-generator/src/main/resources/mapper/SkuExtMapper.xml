@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmall.pms.generator.mapper.SkuAttributeMapper">
+<mapper namespace="com.dmall.pms.generator.mapper.SkuExtMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dmall.pms.generator.dataobject.SkuAttributeDO">
+    <resultMap id="BaseResultMap" type="com.dmall.pms.generator.dataobject.SkuExtDO">
         <id column="id" property="id" />
         <result column="sku_id" property="skuId" />
-        <result column="product_attribute_id" property="productAttributeId" />
+        <result column="detail_html" property="detailHtml" />
+        <result column="detail_mobile_html" property="detailMobileHtml" />
+        <result column="sku_attribute_json" property="skuAttributeJson" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />
@@ -16,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, sku_id, product_attribute_id, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, sku_id, detail_html, detail_mobile_html, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

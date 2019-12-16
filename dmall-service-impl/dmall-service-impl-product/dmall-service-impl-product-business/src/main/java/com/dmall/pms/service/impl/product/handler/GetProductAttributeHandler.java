@@ -1,12 +1,9 @@
 package com.dmall.pms.service.impl.product.handler;
 
 import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.handler.BeanUtil;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
-import com.dmall.pms.api.dto.product.response.get.BasicProductResponseDTO;
-import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
@@ -19,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2019-12-03 19:56:06
  */
 @Component
-public class GetProductHandler extends AbstractCommonHandler<Long, ProductDO, GetProductResponseDTO> {
+public class GetProductAttributeHandler extends AbstractCommonHandler<Long, ProductDO, GetProductAttributeResponseDTO> {
 
     @Autowired
     private ProductMapper productMapper;
@@ -28,28 +25,13 @@ public class GetProductHandler extends AbstractCommonHandler<Long, ProductDO, Ge
     private ProductAttributeSupport productAttributeSupport;
 
     @Override
-    public BaseResult<GetProductResponseDTO> processor(Long id) {
+    public BaseResult<GetProductAttributeResponseDTO> processor(Long id) {
         ProductDO productDO = productMapper.selectById(id);
         if (productDO == null) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NOT_EXIST);
         }
-        GetProductResponseDTO responseDTO = new GetProductResponseDTO();
-        // 设置商品基本信息
-        BasicProductResponseDTO basicProduct = BeanUtil.copyProperties(productDO, BasicProductResponseDTO.class);
-        responseDTO.setBasicProduct(basicProduct);
-        // 设置商品销售规格和参数
-        setSaleAttribute(responseDTO, id);
-        //todo 设置sku
+        GetProductAttributeResponseDTO responseDTO = productAttributeSupport.setSaleAttribute(id);
         return ResultUtil.success(responseDTO);
-    }
-
-    /**
-     * 设置销售规格和参数
-     */
-    private void setSaleAttribute(GetProductResponseDTO responseDTO, Long id) {
-        GetProductAttributeResponseDTO attributeResponseDTO = productAttributeSupport.setSaleAttribute(id);
-        responseDTO.setSpecifications(attributeResponseDTO.getSpecifications());
-        responseDTO.setParams(attributeResponseDTO.getParams());
     }
 
 }

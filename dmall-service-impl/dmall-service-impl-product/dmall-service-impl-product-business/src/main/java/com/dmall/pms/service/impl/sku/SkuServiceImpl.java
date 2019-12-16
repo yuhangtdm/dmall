@@ -1,18 +1,23 @@
 package com.dmall.pms.service.impl.sku;
 
-import com.dmall.pms.api.dto.sku.request.SaveSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.request.UpdateSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.request.ListSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.common.CommonSkuResponseDTO;
-import com.dmall.pms.api.service.SkuService;
-import com.dmall.pms.service.impl.sku.handler.*;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.pms.api.dto.sku.common.CommonSkuResponseDTO;
+import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
+import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
+import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
+import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
+import com.dmall.pms.api.service.SkuService;
+import com.dmall.pms.service.impl.sku.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
+
+import javax.validation.Valid;
 
 /**
  * @description: sku服务实现
@@ -22,10 +27,7 @@ import java.util.List;
 public class SkuServiceImpl implements SkuService {
 
     @Autowired
-    private SaveSkuHandler saveSkuHandler;
-
-    @Autowired
-    private DeleteSkuHandler deleteSkuHandler;
+    private SaveOrUpdateSkuHandler saveOrUpdateSkuHandler;
 
     @Autowired
     private UpdateSkuHandler updateSkuHandler;
@@ -34,20 +36,29 @@ public class SkuServiceImpl implements SkuService {
     private GetSkuHandler getSkuHandler;
 
     @Autowired
-    private ListSkuHandler listSkuHandler;
-
-    @Autowired
     private PageSkuHandler pageSkuHandler;
 
+    @Autowired
+    private SaveSkuAttributeHandler saveSkuAttributeHandler;
+
+    @Autowired
+    private SaveSkuExtHandler saveSkuExtHandler;
 
     @Override
-    public BaseResult<Long> save(@RequestBody SaveSkuRequestDTO requestDTO) {
-        return saveSkuHandler.handler(requestDTO);
+    public BaseResult<Long> saveOrUpdate(@RequestBody SaveSkuRequestDTO requestDTO) {
+        return saveOrUpdateSkuHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<Long> delete(Long id) {
-        return deleteSkuHandler.handler(id);
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> saveSkuAttribute(@Valid SaveSkuAttributeRequestDTO requestDTO) {
+        return saveSkuAttributeHandler.handler(requestDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> saveSkuExt(@Valid SaveSkuExtRequestDTO requestDTO) {
+        return saveSkuExtHandler.handler(requestDTO);
     }
 
     @Override
@@ -56,18 +67,13 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public BaseResult<CommonSkuResponseDTO> get(Long id) {
-        return getSkuHandler.handler(id);
-    }
-
-    @Override
-    public BaseResult<List<CommonSkuResponseDTO>> list(@RequestBody ListSkuRequestDTO requestDTO) {
-        return listSkuHandler.handler(requestDTO);
-    }
-
-    @Override
-    public BaseResult<LayuiPage<CommonSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO) {
+    public BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO) {
         return pageSkuHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<GetSkuResponseDTO> get(Long id) {
+        return getSkuHandler.handler(id);
     }
 
 }
