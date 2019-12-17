@@ -26,10 +26,12 @@ public enum ProductErrorEnum implements ErrorCodeEnum {
     PARAMS_CATEGORY_ATTRIBUTE_TYPE_ERROR("product-010", "商品分类和销售参数分类不匹配"),
     PARAMS_ATTRIBUTE_NOT_EXISTS("product-011", "销售参数属性不存在"),
 
-    PRODUCT_NAME_EXISTS("product _012", "商品名称已存在"),
-    DELETE_PRODUCT_ERROR("product_013", "删除商品失败"),
-    PRODUCT_NOT_EXIST("product_014", "该商品不存在"),
+    PRODUCT_NAME_EXISTS("product-012", "商品名称已存在"),
+    DELETE_PRODUCT_ERROR("product-013", "删除商品失败"),
+    PRODUCT_NOT_EXIST("product-014", "该商品不存在"),
 
+    UPLOAD_PRODUCT_ERROR("product-015","上传商品主图失败"),
+    UPLOAD_PRODUCT_ATTRIBUTE_ERROR("product-016","上传商品规格配图失败"),
     ;
 
     /**

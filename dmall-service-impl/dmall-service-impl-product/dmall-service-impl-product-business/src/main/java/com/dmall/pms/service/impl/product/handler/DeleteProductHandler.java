@@ -4,13 +4,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.generator.dataobject.ProductAttributeDO;
-import com.dmall.pms.generator.dataobject.ProductDO;
-import com.dmall.pms.generator.mapper.ProductAttributeMapper;
-import com.dmall.pms.generator.mapper.ProductMapper;
+import com.dmall.pms.generator.dataobject.*;
+import com.dmall.pms.generator.mapper.*;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
+import com.dmall.pms.service.impl.sku.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @description: 删除商品处理器
@@ -24,6 +25,18 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
 
     @Autowired
     private ProductAttributeMapper productAttributeMapper;
+
+    @Autowired
+    private SkuMapper skuMapper;
+
+    @Autowired
+    private SkuExtMapper skuExtMapper;
+
+    @Autowired
+    private SkuSupport skuSupport;
+
+    @Autowired
+    private SkuMediaMapper skuMediaMapper;
 
     @Override
     public BaseResult<Long> validate(Long id) {
@@ -42,7 +55,14 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
         // 删除商品属性
         productAttributeMapper.delete(Wrappers.<ProductAttributeDO>lambdaQuery()
                 .eq(ProductAttributeDO::getProductId, id));
-        // todo 删除sku
+
+        List<SkuDO> skuDOS = skuSupport.selectByProductId(id);
+        skuDOS.forEach(skuDO -> {
+            skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuDO.getId()));
+            skuMediaMapper.delete(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuDO.getId()));
+        });
+        skuMapper.delete(Wrappers.<SkuDO>lambdaQuery()
+                .eq(SkuDO::getProductId, id));
         return ResultUtil.success(id);
     }
 

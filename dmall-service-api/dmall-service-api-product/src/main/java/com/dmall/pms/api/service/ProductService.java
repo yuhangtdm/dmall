@@ -2,6 +2,7 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
@@ -12,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -40,7 +42,6 @@ public interface ProductService {
     @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
     BaseResult<GetProductResponseDTO> get(@PathVariable("id") Long id);
 
-
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除商品")
     @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
@@ -50,4 +51,13 @@ public interface ProductService {
     @ApiOperation(value = "根据id查询商品属性列表")
     @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
     BaseResult<GetProductAttributeResponseDTO> getProductAttribute(@PathVariable("id") Long id);
+
+    @ApiOperation(value = "上传商品主图")
+    @PostMapping("/uploadProductPic")
+    BaseResult<UploadResult> uploadProductPic(MultipartFile file);
+
+    @ApiOperation(value = "上传商品规格配图")
+    @PostMapping("/uploadProductAttributePic")
+    BaseResult<UploadResult> uploadProductAttributePic(MultipartFile file);
+
 }

@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class DMallLogProperties {
 
     /**
-     * 是否开启log，默认开启
+     * 是否开启log，默认不开启
      */
     private Boolean enabled = false;
 

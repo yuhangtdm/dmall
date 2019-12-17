@@ -2,6 +2,7 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
@@ -11,6 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -48,4 +51,7 @@ public interface BrandService {
     @GetMapping("/{id}")
     BaseResult<CommonBrandResponseDTO> get(@PathVariable("id") Long id);
 
+    @ApiOperation(value = "上传品牌logo")
+    @PostMapping("/uploadLogo")
+    BaseResult<UploadResult> uploadLogo(MultipartFile file);
 }

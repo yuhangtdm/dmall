@@ -9,10 +9,8 @@
         <result column="sku_id" property="skuId" />
         <result column="media_type" property="mediaType" />
         <result column="media_key" property="mediaKey" />
-        <result column="media_url" property="mediaUrl" />
+        <result column="media_hash" property="mediaHash" />
         <result column="sort" property="sort" />
-        <result column="product_no" property="productNo" />
-        <result column="sku_no" property="skuNo" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />

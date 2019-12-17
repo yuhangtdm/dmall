@@ -2,10 +2,12 @@ package com.dmall.pms.service.impl.sku;
 
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
-import com.dmall.pms.api.dto.sku.common.CommonSkuResponseDTO;
+import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.UploadRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
+import com.dmall.pms.api.dto.sku.request.save.SaveSkuMediaRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
@@ -16,8 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @description: sku服务实现
@@ -44,6 +45,12 @@ public class SkuServiceImpl implements SkuService {
     @Autowired
     private SaveSkuExtHandler saveSkuExtHandler;
 
+    @Autowired
+    private UploadSkuHandler uploadSkuHandler;
+
+    @Autowired
+    private SaveMediaHandler saveMediaHandler;
+
     @Override
     public BaseResult<Long> saveOrUpdate(@RequestBody SaveSkuRequestDTO requestDTO) {
         return saveOrUpdateSkuHandler.handler(requestDTO);
@@ -51,17 +58,29 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> saveSkuAttribute(@Valid SaveSkuAttributeRequestDTO requestDTO) {
+    public BaseResult<Long> saveSkuAttribute(@RequestBody SaveSkuAttributeRequestDTO requestDTO) {
         return saveSkuAttributeHandler.handler(requestDTO);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> saveSkuExt(@Valid SaveSkuExtRequestDTO requestDTO) {
+    public BaseResult<Long> saveSkuExt(@RequestBody SaveSkuExtRequestDTO requestDTO) {
         return saveSkuExtHandler.handler(requestDTO);
     }
 
     @Override
+    public BaseResult<UploadResult> upload(Long id, MultipartFile file) {
+        return uploadSkuHandler.handler(new UploadRequestDTO(id, file));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> saveSkuMedia(@RequestBody SaveSkuMediaRequestDTO requestDTO) {
+        return saveMediaHandler.handler(requestDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> update(@RequestBody UpdateSkuRequestDTO requestDTO) {
         return updateSkuHandler.handler(requestDTO);
     }

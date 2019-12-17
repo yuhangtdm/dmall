@@ -13,12 +13,13 @@ import lombok.Getter;
 public enum BrandErrorEnum implements ErrorCodeEnum {
 
     SAVE_BRAND_ERROR("brand-001", "新增品牌失败"),
-    UPDATE_BRAND_ERROR("brand _002", "修改品牌失败"),
-    DELETE_BRAND_ERROR("brand_003", "删除品牌失败"),
-    BRAND_NOT_EXIST("brand_004", "该品牌不存在"),
-    CONTAINS_PRODUCT_ERROR("BRAND-005", "该品牌下有商品,不允许删除"),
-    CONTAINS_ATTRIBUTE_TYPE_ERROR("BRAND-006", "该品牌下有商品分类,不允许删除"),
-    BRAND_NAME_UNIQUE("BRAND-007", "品牌名称已存在"),
+    UPDATE_BRAND_ERROR("brand-002", "修改品牌失败"),
+    DELETE_BRAND_ERROR("brand-003", "删除品牌失败"),
+    BRAND_NOT_EXIST("brand-004", "该品牌不存在"),
+    CONTAINS_PRODUCT_ERROR("brand-005", "该品牌下有商品,不允许删除"),
+    CONTAINS_ATTRIBUTE_TYPE_ERROR("brand-006", "该品牌下有商品分类,不允许删除"),
+    BRAND_NAME_UNIQUE("brand-007", "品牌名称已存在"),
+    UPLOAD_LOGO_ERROR("brand-008","上传品牌logo失败"),
     ;
 
     /**

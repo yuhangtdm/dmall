@@ -38,7 +38,7 @@ public class SkuMediaDO implements Serializable {
     /**
      * skuid
      */
-    private String skuId;
+    private Long skuId;
 
     /**
      * 媒体类型 1-图片;2-视频
@@ -51,24 +51,15 @@ public class SkuMediaDO implements Serializable {
     private String mediaKey;
 
     /**
-     * 媒体url
+     * 媒体hash
      */
-    private String mediaUrl;
+    private String mediaHash;
 
     /**
      * 排序
      */
     private Integer sort;
 
-    /**
-     * 商品编号
-     */
-    private String productNo;
-
-    /**
-     * sku编号
-     */
-    private String skuNo;
 
     /**
      * 创建人

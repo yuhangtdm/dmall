@@ -7,8 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @description: dmall的mybatisPlus配置类
  * @author: created by hang.yu on 2019/11/2 16:50
  */
-@ConfigurationProperties(prefix = "dmall.mybatisplus")
 @Data
+@ConfigurationProperties(prefix = "dmall.mybatisplus")
 public class DMallMybatisPlusProperties {
 
     /**

@@ -1,5 +1,6 @@
 package com.dmall.pms.service.impl.brand;
 
+import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
@@ -12,6 +13,7 @@ import com.dmall.common.model.result.LayuiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -41,6 +43,9 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private PageBrandHandler pageBrandHandler;
 
+    @Autowired
+    private UploadLogoHandler uploadLogoHandler;
+
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveBrandRequestDTO requestDTO) {
@@ -60,6 +65,11 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public BaseResult<CommonBrandResponseDTO> get(Long id) {
         return getBrandHandler.handler(id);
+    }
+
+    @Override
+    public BaseResult<UploadResult> uploadLogo(MultipartFile file) {
+        return uploadLogoHandler.handler(file);
     }
 
     @Override

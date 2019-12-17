@@ -34,6 +34,8 @@
         <elasticsearch.jest.version>5.3.3</elasticsearch.jest.version>
         <elasticsearch.jna.version>4.5.1</elasticsearch.jna.version>
         <hutool.version>5.0.3</hutool.version>
+        <qiniu.version>7.2.28</qiniu.version>
+        <commons-fileupload.version>1.4</commons-fileupload.version>
     </properties>
 
 
@@ -153,6 +155,19 @@
                 <version>${logstash.logback.version}</version>
             </dependency>
 
+            <!-- 七牛云 -->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
+            </dependency>
+            <!--commons-fileupload 上传文件组件-->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons-fileupload.version}</version>
+            </dependency>
+
 
 
             <!--======================本项目模块======================-->
@@ -199,6 +214,13 @@
                 <artifactId>dmall-component-dao-mybatisplus</artifactId>
                 <version>${version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-component-file-qiniu</artifactId>
+                <version>${version}</version>
+            </dependency>
+
+
 
             <!--api-->
             <dependency>

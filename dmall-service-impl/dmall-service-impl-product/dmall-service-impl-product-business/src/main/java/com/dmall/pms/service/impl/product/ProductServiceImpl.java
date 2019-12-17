@@ -2,6 +2,7 @@ package com.dmall.pms.service.impl.product;
 
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @description: 商品服务实现
@@ -36,6 +38,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private DeleteProductHandler deleteProductHandler;
+
+    @Autowired
+    private UploadProductPicHandler uploadProductPicHandler;
 
 
     @Override
@@ -68,6 +73,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResult<GetProductAttributeResponseDTO> getProductAttribute(Long id) {
+        return null;
+    }
+
+    @Override
+    public BaseResult<UploadResult> uploadProductPic(MultipartFile file) {
+        return uploadProductPicHandler.handler(file);
+    }
+
+    @Override
+    public BaseResult<UploadResult> uploadProductAttributePic(MultipartFile file) {
         return null;
     }
 
