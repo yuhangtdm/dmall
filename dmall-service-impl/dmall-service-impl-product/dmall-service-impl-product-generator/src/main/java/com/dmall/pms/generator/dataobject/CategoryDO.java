@@ -85,6 +85,7 @@ public class CategoryDO implements Serializable {
      */
     private String path;
 
+    private String jdCat;
     /**
      * 创建人
      */

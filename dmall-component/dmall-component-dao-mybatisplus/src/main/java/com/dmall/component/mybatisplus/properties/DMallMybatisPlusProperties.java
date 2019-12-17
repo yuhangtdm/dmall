@@ -22,9 +22,9 @@ public class DMallMybatisPlusProperties {
     private Boolean performance = Boolean.TRUE;
 
     /**
-     * 性能分析的最大执行时间 100ms
+     * 性能分析的最大执行时间 1000ms
      */
-    private Long maxTime = 100L;
+    private Long maxTime = 1000L;
 
     /**
      * sql是否格式化

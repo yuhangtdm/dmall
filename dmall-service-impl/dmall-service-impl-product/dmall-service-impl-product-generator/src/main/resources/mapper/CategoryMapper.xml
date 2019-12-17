@@ -16,6 +16,7 @@
         <result column="hot_status" property="hotStatus" />
         <result column="nav_status" property="navStatus" />
         <result column="path" property="path" />
+        <result column="jd_cat" property="jdCat" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />

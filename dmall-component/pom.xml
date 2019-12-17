@@ -18,7 +18,6 @@
         <module>dmall-component-cache-redis</module>
         <module>dmall-component-dao-mybatisplus</module>
         <module>dmall-component-elasticsearch</module>
-        <module>dmall-component-dependencies</module>
         <module>dmall-component-file-qiniu</module>
     </modules>
 

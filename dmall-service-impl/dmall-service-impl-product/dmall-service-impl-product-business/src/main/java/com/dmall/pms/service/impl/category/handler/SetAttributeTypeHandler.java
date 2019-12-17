@@ -52,7 +52,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     @Autowired
     private CategorySupport categorySupport;
 
-    @Autowired
+    @Autowired(required = false)
     private MapCacheUtil mapCacheUtil;
 
     @Override

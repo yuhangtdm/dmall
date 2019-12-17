@@ -30,12 +30,13 @@ public class DeleteAttributeTypeHandler extends AbstractCommonHandler<Long, Attr
 
     @Override
     public BaseResult<Long> validate(Long id) {
-        List<SkuAttributeDO> skuAttributeDOS = skuAttributeMapper.selectList(Wrappers.<SkuAttributeDO>lambdaQuery()
+        // todo
+       /* List<SkuAttributeDO> skuAttributeDOS = skuAttributeMapper.selectList(Wrappers.<SkuAttributeDO>lambdaQuery()
                 .eq(SkuAttributeDO::getAttributeTypeId, id));
         // 属性分类下不可有sku
         if (CollUtil.isNotEmpty(skuAttributeDOS)) {
             return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_HAS_SKU);
-        }
+        }*/
         return ResultUtil.success();
     }
 
