@@ -1,6 +1,12 @@
 package com.dmall.pms.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.pms.generator.dataobject.AttributeDO;
+import com.dmall.pms.generator.dataobject.AttributeTypeDO;
+import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.google.common.collect.Lists;
 import org.jsoup.Jsoup;
@@ -8,8 +14,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 
@@ -19,6 +24,7 @@ import java.util.List;
  */
 public class Test {
     public static void main(String[] args) throws IOException {
+
         String html = "D:\\jd.html";
         Document document = Jsoup.parse(new File(html), "utf-8");
         Element j_cate = document.getElementById("J_cate");
@@ -32,39 +38,77 @@ public class Test {
             for (Element two : twoLevels) {
                 String oo = i < 10 ? "0" + i : "" + i;
                 Elements threeLevel = J_popCtn.select(".cate_detail_con[clstag^=h|keycount|head|category_" + ll + "d" + oo + "]");
-                List<CategoryDO> categoryDOList = Lists.newArrayList();
+
                 for (Element three : threeLevel) {
                     Elements a = three.getElementsByTag("a");
                     for (Element element : a) {
-                        System.out.println(element.attr("href") + "----" + oneLevel.text() + "---" + element.text());
-                        String jdCat = StrUtil.subBetween(element.attr("href"),"?cat=","&");
-                        if (StrUtil.isBlank(jdCat)){
-                            jdCat = StrUtil.subAfter(element.attr("href"),"?cat=", true);
-                        }
-                        System.out.println(jdCat);
-                        Document br = Jsoup.connect(element.attr("href")).get();
-                        Element brandsArea = br.getElementById("brandsArea");
+                        String caName = oneLevel.text() + "-" + two.text() + "-" + element.text();
 
-                        if (brandsArea != null){
-                            Elements liii = brandsArea.getElementsByTag("li");
-                            for (Element element1 : liii) {
-                                Elements brands = element1.getElementsByTag("a");
-                                for (Element brand : brands) {
-                                    /*System.out.println(brand.text() + brand.getElementsByTag("img").attr("src") + "---"
-                                            + element1.attr("data-initial"));
-                                    if (brand.text().contains("（")){
-                                        System.out.println(StrUtil.subBetween(brand.text(),"（", "）"));
-                                    }*/
+                        Document br = null;
+                        try {
+                            br = Jsoup.connect(element.attr("href")).get();
+                        } catch (Exception e) {
+                            try {
+                                FileOutputStream out = new FileOutputStream("D:/file.txt", true);
+                                OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
+                                BufferedWriter bufWrite = new BufferedWriter(outWriter);
+                                bufWrite.write("读取分类失败," + caName);
+                                bufWrite.newLine();
+                                bufWrite.close();
+                                outWriter.close();
+                                out.close();
+                            } catch (Exception e1) {
+                            }
+                            continue;
+                        }
+
+                        Elements elementsByClass = br.getElementsByClass("gl-i-wrap j-sku-item");
+                        if (elementsByClass.size() == 0) {
+                            if (br.getElementsByClass("gl-item").size() == 0) {
+                                continue;
+                            }
+                            elementsByClass = br.getElementsByClass("gl-item").first().getElementsByClass("gl-i-wrap  j-sku-item");
+                            if (elementsByClass.first() == null) {
+                                continue;
+                            }
+                        }
+
+                        for (Element skuElement : elementsByClass) {
+                            String skuUrl = "https://item.jd.com/" + skuElement.attr("data-sku") + ".html#product-detail";
+
+                            Document sku = null;
+                            try {
+                                sku = Jsoup.connect(skuUrl).get();
+                            } catch (Exception e) {
+                                try {
+                                    FileOutputStream out = new FileOutputStream("D:/file.txt", true);
+                                    OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
+                                    BufferedWriter bufWrite = new BufferedWriter(outWriter);
+                                    bufWrite.write("读取商品失败," + caName + "," + skuUrl);
+                                    bufWrite.newLine();
+                                    bufWrite.close();
+                                    outWriter.close();
+                                    out.close();
+                                } catch (Exception e1) {
                                 }
+                                continue;
                             }
 
-                        }
+//                            System.out.println(sku.getElementsByClass("item ellipsis").first().text());
+//                            System.out.println(sku.getElementsByClass("sku-name").first().text());
+                            System.out.println(sku.getElementById("J-detail-content").data());
 
+                        }
                     }
                 }
                 i++;
             }
             k++;
+
         }
+
+
+
     }
+
 }

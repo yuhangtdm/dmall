@@ -18,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, sku_id, detail_html, detail_mobile_html, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, sku_id, detail_html, detail_mobile_html, sku_attribute_json, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

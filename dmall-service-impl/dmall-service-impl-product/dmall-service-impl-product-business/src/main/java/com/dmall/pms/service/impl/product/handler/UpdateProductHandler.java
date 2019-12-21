@@ -50,7 +50,7 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         }
         // 校验销售属性
         ProductAttributeDTO attributeDTO = new ProductAttributeDTO();
-        attributeDTO.setCategoryId(productDO.getCategoryId());
+//        attributeDTO.setCategoryId(productDO.getCategoryId());
         attributeDTO.setBrandId(productDO.getBrandId());
         attributeDTO.setSpecifications(requestDTO.getSpecifications());
         attributeDTO.setParams(requestDTO.getParams());

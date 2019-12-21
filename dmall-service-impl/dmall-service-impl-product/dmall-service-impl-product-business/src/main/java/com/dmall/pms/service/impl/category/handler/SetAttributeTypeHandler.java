@@ -94,8 +94,8 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
                         String.valueOf(attributeTypeId), iAttributeTypeService.getById(attributeTypeId));
                 iAttributeService.update(Wrappers.<AttributeDO>update().lambda()
                         .eq(AttributeDO::getAttributeTypeId, attributeTypeId)
-                        .set(AttributeDO::getCategoryId, null)
-                        .set(AttributeDO::getCascadeCategoryId, null)
+//                        .set(AttributeDO::getCategoryId, null)
+//                        .set(AttributeDO::getCascadeCategoryId, null)
                 );
             });
         }
@@ -113,8 +113,8 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
             // 批量更新属性以及缓存
             iAttributeService.update(Wrappers.<AttributeDO>update().lambda()
                     .eq(AttributeDO::getAttributeTypeId, attributeTypeIdsDTO.getAttributeTypeId())
-                    .set(AttributeDO::getCategoryId, attributeTypeDO.getCategoryId())
-                    .set(AttributeDO::getCascadeCategoryId, attributeTypeDO.getCascadeCategoryId())
+//                    .set(AttributeDO::getCategoryId, attributeTypeDO.getCategoryId())
+//                    .set(AttributeDO::getCascadeCategoryId, attributeTypeDO.getCascadeCategoryId())
             );
             List<AttributeDO> attributeDOS = iAttributeService.list(Wrappers.<AttributeDO>lambdaQuery()
                     .eq(AttributeDO::getAttributeTypeId, attributeTypeIdsDTO.getAttributeTypeId()));

@@ -39,7 +39,7 @@ public class GetAttributeTypeHandler extends AbstractCommonHandler<Long, Attribu
     protected void customerConvertDto(CommonAttributeTypeResponseDTO result, AttributeTypeDO doo) {
         if (doo.getCategoryId() != null) {
             result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
-            result.setType(EnumUtil.getKeyValueEnum(AttributeTypeEnum.class, doo.getType()));
+//            result.setType(EnumUtil.getKeyValueEnum(AttributeTypeEnum.class, doo.getType()));
         }
     }
 }

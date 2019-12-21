@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 商品分类表
- * @author: created by hang.yu on 2019-12-16 15:14:51
+ * @author: created by hang.yu on 2019-12-19 20:57:18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -85,7 +85,11 @@ public class CategoryDO implements Serializable {
      */
     private String path;
 
+    /**
+     * 京东cat
+     */
     private String jdCat;
+
     /**
      * 创建人
      */

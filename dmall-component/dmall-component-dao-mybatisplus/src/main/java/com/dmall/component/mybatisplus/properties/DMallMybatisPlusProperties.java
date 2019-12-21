@@ -24,7 +24,7 @@ public class DMallMybatisPlusProperties {
     /**
      * 性能分析的最大执行时间 1000ms
      */
-    private Long maxTime = 1000L;
+    private Long maxTime = 10000L;
 
     /**
      * sql是否格式化

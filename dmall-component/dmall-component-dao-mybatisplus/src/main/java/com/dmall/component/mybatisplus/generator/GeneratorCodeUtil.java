@@ -24,7 +24,7 @@ public class GeneratorCodeUtil {
         /**
          * 表名不传则生成所有表的
          */
-        generateByTables(Constants.GENERATOR_MODULE_NAME, "pms_sku_attribute");
+        generateByTables(Constants.GENERATOR_MODULE_NAME);
     }
 
     /**

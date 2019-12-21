@@ -32,17 +32,17 @@ public class HttpClientProperties {
     /**
      * 创建连接的最长时间
      */
-    private Integer connectTimeout = 2000;
+    private Integer connectTimeout = 20;
 
     /**
      * 从连接池中获取到连接的最长时间
      */
-    private Integer connectionRequestTimeout = 500;
+    private Integer connectionRequestTimeout = 50;
 
     /**
      * 数据传输的最长时间
      */
-    private Integer socketTimeout = 6000;
+    private Integer socketTimeout = 60;
 
     /**
      * 空闲时间(用于定期清理空闲连接)

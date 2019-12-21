@@ -74,7 +74,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         ProductAttributeDTO productAttribute = requestDTO.getAttribute();
         ProductDO productDO = BeanUtil.copyProperties(basicProduct, ProductDO.class);
         productDO.setProductNo(NoUtil.generateProductNo());
-        productDO.setCategoryId(productAttribute.getCategoryId());
+//        productDO.setCategoryId(productAttribute.getCategoryId());
         CategoryDO categoryDO = categoryCacheService.selectById(productAttribute.getCategoryId());
         productDO.setCascadeCategoryId(categoryDO.getPath());
         productDO.setBrandId(productAttribute.getBrandId());

@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: 分类品牌关系表
- * @author: created by hang.yu on 2019-12-16 15:14:50
+ * @author: created by hang.yu on 2019-12-19 20:57:17
  */
 @Data
 @Accessors(chain = true)

@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: 商品分类表
- * @author: created by hang.yu on 2019-12-16 15:14:50
+ * @author: created by hang.yu on 2019-12-19 20:57:17
  */
 @Data
 @Accessors(chain = true)
@@ -56,19 +56,22 @@ public class CategoryDTO implements Serializable {
     @ApiModelProperty(value = "路径 格式: .parentId.id.", position = 12)
     private String path;
 
-    @ApiModelProperty(value = "创建人", position = 13)
+    @ApiModelProperty(value = "京东cat", position = 13)
+    private String jdCat;
+
+    @ApiModelProperty(value = "创建人", position = 14)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 14)
+    @ApiModelProperty(value = "创建时间", position = 15)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 15)
+    @ApiModelProperty(value = "更新人", position = 16)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 16)
+    @ApiModelProperty(value = "更新时间", position = 17)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 17)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 18)
     private String isDeleted;
 
 }

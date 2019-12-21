@@ -28,7 +28,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, merchants_id, category_id, brand_id, freight_template_id, product_no, name, pic, description, unit, weight, remark, product_attribute, on_market_time, cascade_category_id, add_services, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, merchants_id, category_id, brand_id, freight_template_id, product_no, name, pic, description, unit, weight, remark, on_market_time, cascade_category_id, add_services, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

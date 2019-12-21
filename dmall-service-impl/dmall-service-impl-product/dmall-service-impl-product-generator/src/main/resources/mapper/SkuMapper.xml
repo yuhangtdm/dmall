@@ -18,12 +18,11 @@
         <result column="price" property="price" />
         <result column="vip_price" property="vipPrice" />
         <result column="market_price" property="marketPrice" />
-        <result column="brand_name" property="brandName" />
         <result column="stock" property="stock" />
         <result column="low_stock" property="lowStock" />
         <result column="lock_stock" property="lockStock" />
-        <result column="available_stock" property="availableStock" />
         <result column="sort" property="sort" />
+        <result column="sku_specifications" property="skuSpecifications" />
         <result column="publish_status" property="publishStatus" />
         <result column="on_publish_time" property="onPublishTime" />
         <result column="off_publish_time" property="offPublishTime" />

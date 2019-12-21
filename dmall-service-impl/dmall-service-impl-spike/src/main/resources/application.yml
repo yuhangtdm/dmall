@@ -1,4 +1,0 @@
-dmall:
-  web:
-    httpclient:
-      enabled: true

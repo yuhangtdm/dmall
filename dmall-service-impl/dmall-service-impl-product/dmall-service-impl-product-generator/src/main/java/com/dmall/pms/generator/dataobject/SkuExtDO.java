@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: sku扩展表
- * @author: created by hang.yu on 2019-12-16 15:32:40
+ * @author: created by hang.yu on 2019-12-19 20:57:18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -46,7 +46,7 @@ public class SkuExtDO implements Serializable {
     private String detailMobileHtml;
 
     /**
-     * sku属性集json
+     * sku属性json
      */
     private String skuAttributeJson;
 

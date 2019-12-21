@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 商品表
- * @author: created by hang.yu on 2019-12-16 15:14:51
+ * @author: created by hang.yu on 2019-12-19 20:57:18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -39,7 +39,7 @@ public class ProductDO implements Serializable {
     /**
      * 商品分类id
      */
-    private Long categoryId;
+    private String categoryId;
 
     /**
      * 品牌id

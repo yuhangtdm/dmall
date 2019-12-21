@@ -65,8 +65,8 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
         AttributeDO attributeDO = attributeCacheService.selectById(result.getId());
         AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(attributeDO.getAttributeTypeId());
         // 设置商品分类id 值可能为null
-        result.setCategoryId(attributeTypeDO.getCategoryId());
-        result.setCascadeCategoryId(attributeTypeDO.getCascadeCategoryId());
+//        result.setCategoryId(attributeTypeDO.getCategoryId());
+//        result.setCascadeCategoryId(attributeTypeDO.getCascadeCategoryId());
     }
 
 }

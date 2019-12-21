@@ -88,6 +88,6 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
     @Override
     protected void customerConvertDto(PageProductResponseDTO result, ProductDO doo) {
         result.setBrandName(brandCacheService.selectById(doo.getBrandId()).getName());
-        result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
+//        result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
     }
 }

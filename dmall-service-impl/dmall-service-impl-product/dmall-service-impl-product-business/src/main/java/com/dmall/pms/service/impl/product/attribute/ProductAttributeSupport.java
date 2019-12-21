@@ -54,7 +54,7 @@ public class ProductAttributeSupport {
                 productAttributeType.setAttributeTypeId(attributeTypeId);
                 AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(attributeTypeId);
                 productAttributeType.setAttributeShowName(attributeTypeDO.getShowName());
-                productAttributeType.setType(EnumUtil.getKeyValueEnum(AttributeTypeEnum.class, attributeTypeDO.getType()));
+//                productAttributeType.setType(EnumUtil.getKeyValueEnum(AttributeTypeEnum.class, attributeTypeDO.getType()));
                 // 按照属性id分组
                 Map<Long, List<ProductAttributeDO>> attributeMap = attributeList.stream()
                         .collect(Collectors.groupingBy(ProductAttributeDO::getAttributeId, Collectors.toList()));
@@ -72,11 +72,11 @@ public class ProductAttributeSupport {
                     attributeDTO.setAttributeValues(attributeValues);
                 });
                 // 设置销售规格或参数
-                if (AttributeTypeEnum.SPECIFICATIONS.getCode().equals(attributeTypeDO.getType())) {
+                /*if (AttributeTypeEnum.SPECIFICATIONS.getCode().equals(attributeTypeDO.getType())) {
                     responseDTO.setSpecifications(productAttributeType);
                 } else {
                     params.add(productAttributeType);
-                }
+                }*/
             });
             responseDTO.setParams(params);
         }

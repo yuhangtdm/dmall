@@ -58,7 +58,7 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
     public BaseResult<GetSkuResponseDTO> processor(Long id) {
         SkuDO skuDO = skuMapper.selectById(id);
         BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
-        basicSku.setCascadeCategoryName(categorySupport.getCascadeCategoryName(skuDO.getCategoryId()));
+//        basicSku.setCascadeCategoryName(categorySupport.getCascadeCategoryName(skuDO.getCategoryId()));
         basicSku.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
         basicSku.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getRecommendStatus()));
         basicSku.setBrandName(brandCacheService.selectById(skuDO.getBrandId()).getName());

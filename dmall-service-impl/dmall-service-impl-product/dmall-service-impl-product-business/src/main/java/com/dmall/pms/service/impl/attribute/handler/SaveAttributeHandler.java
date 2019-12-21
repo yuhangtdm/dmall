@@ -65,7 +65,7 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
         result.setInputList(CollUtil.join(requestDTO.getInputList(), StrUtil.COMMA));
         AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(requestDTO.getAttributeTypeId());
         // 设置商品分类id 值可能为null
-        result.setCategoryId(attributeTypeDO.getCategoryId());
-        result.setCascadeCategoryId(attributeTypeDO.getCascadeCategoryId());
+//        result.setCategoryId(attributeTypeDO.getCategoryId());
+//        result.setCascadeCategoryId(attributeTypeDO.getCascadeCategoryId());
     }
 }

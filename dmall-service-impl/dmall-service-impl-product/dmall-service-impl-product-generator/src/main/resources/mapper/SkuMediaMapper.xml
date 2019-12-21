@@ -10,6 +10,7 @@
         <result column="media_type" property="mediaType" />
         <result column="media_key" property="mediaKey" />
         <result column="media_hash" property="mediaHash" />
+        <result column="media_url" property="mediaUrl" />
         <result column="sort" property="sort" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
@@ -20,7 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, product_id, sku_id, media_type, media_key, media_url, sort, product_no, sku_no, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, product_id, sku_id, media_type, media_key, media_hash, sort, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

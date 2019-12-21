@@ -44,7 +44,7 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
             attributeDOS = attributeCacheService.selectAll();
         } else {
             LambdaQueryWrapper<AttributeDO> wrapper = Wrappers.<AttributeDO>lambdaQuery()
-                    .eq(ObjectUtil.isNotEmpty(requestDTO.getAttributeTypeId()), AttributeDO::getCascadeCategoryId, requestDTO.getAttributeTypeId())
+//                    .eq(ObjectUtil.isNotEmpty(requestDTO.getAttributeTypeId()), AttributeDO::getCascadeCategoryId, requestDTO.getAttributeTypeId())
                     .like(StrUtil.isNotBlank(requestDTO.getName()), AttributeDO::getName, requestDTO.getName())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getHandAddStatus()), AttributeDO::getHandAddStatus, requestDTO.getHandAddStatus())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getInputType()), AttributeDO::getInputType, requestDTO.getInputType());

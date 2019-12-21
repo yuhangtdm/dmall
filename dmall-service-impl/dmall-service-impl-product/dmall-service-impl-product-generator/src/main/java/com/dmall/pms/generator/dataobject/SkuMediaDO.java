@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: sku媒体对象表
- * @author: created by hang.yu on 2019-12-16 15:14:51
+ * @author: created by hang.yu on 2019-12-19 20:57:18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -51,15 +51,19 @@ public class SkuMediaDO implements Serializable {
     private String mediaKey;
 
     /**
-     * 媒体hash
+     * 媒体Hash
      */
     private String mediaHash;
+
+    /**
+     * 媒体url
+     */
+    private String mediaUrl;
 
     /**
      * 排序
      */
     private Integer sort;
-
 
     /**
      * 创建人

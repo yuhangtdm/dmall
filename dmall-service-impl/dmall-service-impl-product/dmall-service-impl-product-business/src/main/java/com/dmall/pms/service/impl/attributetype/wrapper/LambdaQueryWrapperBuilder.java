@@ -14,7 +14,7 @@ public class LambdaQueryWrapperBuilder {
     public static LambdaQueryWrapper queryWrapper(Long categoryId, String name, String showName, Integer type) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = Wrappers.<AttributeTypeDO>lambdaQuery()
                 .eq(categoryId != null, AttributeTypeDO::getCategoryId, categoryId)
-                .eq(type != null, AttributeTypeDO::getType, type)
+//                .eq(type != null, AttributeTypeDO::getType, type)
                 .like(StrUtil.isNotBlank(name), AttributeTypeDO::getName, name)
                 .like(StrUtil.isNotBlank(showName), AttributeTypeDO::getShowName, showName)
                 .orderByAsc(AttributeTypeDO::getSort);

@@ -6,13 +6,11 @@
     <resultMap id="BaseResultMap" type="com.dmall.pms.generator.dataobject.AttributeDO">
         <id column="id" property="id" />
         <result column="attribute_type_id" property="attributeTypeId" />
-        <result column="category_id" property="categoryId" />
-        <result column="cascade_category_id" property="cascadeCategoryId" />
         <result column="name" property="name" />
+        <result column="show_name" property="showName" />
         <result column="remark" property="remark" />
         <result column="input_type" property="inputType" />
         <result column="input_list" property="inputList" />
-        <result column="sort" property="sort" />
         <result column="hand_add_status" property="handAddStatus" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
@@ -23,7 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, attribute_type_id, category_id, cascade_category_id, name, remark, input_type, input_list, sort, hand_add_status, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, attribute_type_id, name, show_name, input_type, input_list, hand_add_status, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>
