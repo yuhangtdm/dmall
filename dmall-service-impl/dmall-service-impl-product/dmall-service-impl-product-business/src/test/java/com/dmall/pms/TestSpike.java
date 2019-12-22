@@ -1,5 +1,6 @@
 package com.dmall.pms;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -20,12 +21,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -414,6 +417,7 @@ public class TestSpike {
                                 exists.setInputList(sb.substring(0, sb.length() - 1));
                                 exists.setHandAddStatus("Y");
                                 exists.setCreator(1L);
+                                exists.setType(1);
                                 exists.setModifier(1L);
                                 attributeMapper.insert(exists);
                             }
@@ -458,10 +462,11 @@ public class TestSpike {
                                         attributeMapper.insert(exists);
                                     }
 
-                                    CategoryAttributeDO attribute = categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                                    List<CategoryAttributeDO> attribute = categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
                                             .eq(CategoryAttributeDO::getAttributeId, exists.getId()));
 
-                                    if (attribute != null && !attribute.getCategoryId().equals(categoryDO.getId())) {
+                                    if (exists.getType() != 2 && CollUtil.isNotEmpty(attribute) && !attribute.stream().map(CategoryAttributeDO::getAttributeId)
+                                            .collect(Collectors.toList()).contains(categoryDO.getId())) {
                                         exists.setType(2);
                                         attributeMapper.updateById(exists);
                                     }
@@ -535,15 +540,17 @@ public class TestSpike {
                                     exists.setShowName(dt);
                                     exists.setInputType(2);
                                     exists.setHandAddStatus("Y");
+                                    exists.setType(1);
                                     exists.setCreator(1L);
                                     exists.setModifier(1L);
                                     attributeMapper.insert(exists);
                                 }
 
-                                CategoryAttributeDO attribute = categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                                List<CategoryAttributeDO> attribute = categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
                                         .eq(CategoryAttributeDO::getAttributeId, exists.getId()));
 
-                                if (attribute != null && !attribute.getCategoryId().equals(categoryDO.getId())) {
+                                if (exists.getType() != 2 && CollUtil.isNotEmpty(attribute) && !attribute.stream().map(CategoryAttributeDO::getAttributeId)
+                                        .collect(Collectors.toList()).contains(categoryDO.getId())) {
                                     exists.setType(2);
                                     attributeMapper.updateById(exists);
                                 }
@@ -585,14 +592,16 @@ public class TestSpike {
                                     exists.setInputType(2);
                                     exists.setHandAddStatus("Y");
                                     exists.setCreator(1L);
+                                    exists.setType(1);
                                     exists.setModifier(1L);
                                     attributeMapper.insert(exists);
                                 }
 
-                                CategoryAttributeDO attribute = categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                                List<CategoryAttributeDO> attribute = categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
                                         .eq(CategoryAttributeDO::getAttributeId, exists.getId()));
 
-                                if (attribute != null && !attribute.getCategoryId().equals(categoryDO.getId())) {
+                                if (exists.getType() != 2 && CollUtil.isNotEmpty(attribute) && !attribute.stream().map(CategoryAttributeDO::getAttributeId)
+                                        .collect(Collectors.toList()).contains(categoryDO.getId())) {
                                     exists.setType(2);
                                     attributeMapper.updateById(exists);
                                 }
@@ -631,31 +640,34 @@ public class TestSpike {
 
                                         AttributeDO exists = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getName, attributeName));
                                         if (exists == null) {
-                                            AttributeDO attributeDO = new AttributeDO();
-                                            attributeDO.setName(attributeName);
-                                            attributeDO.setShowName(dt);
-                                            attributeDO.setInputType(2);
-                                            attributeDO.setHandAddStatus("Y");
-                                            attributeDO.setCreator(1L);
-                                            attributeDO.setModifier(1L);
+                                            exists = new AttributeDO();
+                                            exists.setName(attributeName);
+                                            exists.setShowName(dt);
+                                            exists.setInputType(2);
+                                            exists.setHandAddStatus("Y");
+                                            exists.setType(1);
+                                            exists.setCreator(1L);
+                                            exists.setModifier(1L);
                                             if (clearfix.getElementsByClass("content") != null
                                                     && clearfix.getElementsByClass("content").size() > 0) {
-                                                attributeDO.setRemark(clearfix.getElementsByClass("content").first().text());
+                                                exists.setRemark(clearfix.getElementsByClass("content").first().text());
                                             }
-                                            attributeDO.setAttributeTypeId(attributeTypeDO.getId());
-                                            attributeMapper.insert(attributeDO);
+                                            exists.setAttributeTypeId(attributeTypeDO.getId());
+                                            attributeMapper.insert(exists);
                                         } else {
                                             exists.setAttributeTypeId(attributeTypeDO.getId());
                                             attributeMapper.updateById(exists);
                                         }
 
-                                        CategoryAttributeDO attribute = categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                                        List<CategoryAttributeDO> attribute = categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
                                                 .eq(CategoryAttributeDO::getAttributeId, exists.getId()));
 
-                                        if (attribute != null && !attribute.getCategoryId().equals(categoryDO.getId())) {
+                                        if (exists.getType() != 2 && CollUtil.isNotEmpty(attribute) && !attribute.stream().map(CategoryAttributeDO::getAttributeId)
+                                                .collect(Collectors.toList()).contains(categoryDO.getId())) {
                                             exists.setType(2);
                                             attributeMapper.updateById(exists);
                                         }
+
 
                                         CategoryAttributeDO categoryAttribute = categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
                                                 .eq(CategoryAttributeDO::getCategoryId, categoryDO.getId())
@@ -695,6 +707,7 @@ public class TestSpike {
      * sku - 属性值
      */
     @Test
+    @Transactional(rollbackFor = Exception.class)
     public void testProduct() throws Exception {
         String html = "D:\\jd.html";
         Document document = Jsoup.parse(new File(html), "utf-8");
@@ -747,9 +760,18 @@ public class TestSpike {
                             }
                         }
 
+                        int size = 50;
+                        if (k > 8) {
+                            size = 10;
+                        }
+                        int p = 1;
                         for (Element skuElement : elementsByClass) {
+                            if (p > size) {
+                                p++;
+                                break;
+                            }
 
-                            String pic = "https:" + skuElement.getElementsByTag("a").first().attr("src");
+                            String pic = "https:" + skuElement.getElementsByTag("img").first().attr("src");
 
                             String skuUrl = "https://item.jd.com/" + skuElement.attr("data-sku") + ".html#product-detail";
                             Document sku = null;
@@ -772,6 +794,11 @@ public class TestSpike {
 
 
                             String productName = sku.getElementsByClass("item ellipsis").first().text();
+
+                            SkuDO existsSku = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getJdId, skuElement.attr("data-sku")));
+                            if (existsSku != null){
+                                continue;
+                            }
 
                             // 新增或修改商品
                             ProductDO productDO = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getName, productName));
@@ -796,12 +823,12 @@ public class TestSpike {
                                         if (param.text().contains("kg")) {
                                             productDO.setUnit("kg");
                                             String title = param.attr("title");
-                                            title = title.substring(0,title.length()-2);
+                                            title = title.substring(0, title.length() - 2);
                                             productDO.setWeight(new BigDecimal(title));
                                         } else if (param.text().contains("g")) {
                                             productDO.setUnit("g");
                                             String title = param.attr("title");
-                                            title = title.substring(0,title.length()-1);
+                                            title = title.substring(0, title.length() - 1);
                                             productDO.setWeight(new BigDecimal(title));
                                         }
                                         break;
@@ -826,6 +853,7 @@ public class TestSpike {
                             List<SkuDO> skuDOS = skuMapper.selectList(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productDO.getId()));
                             String skuName = sku.getElementsByClass("sku-name").first().text();
                             SkuDO skuDO = new SkuDO();
+                            skuDO.setJdId(skuElement.attr("data-sku"));
                             skuDO.setProductId(productDO.getId());
                             skuDO.setMerchantsId(1L);
                             skuDO.setCategoryId(productDO.getCategoryId());
@@ -836,8 +864,11 @@ public class TestSpike {
                             skuDO.setSubName(subName);
                             skuDO.setRemark(skuUrl);
                             skuDO.setPic(productDO.getPic());
-                            String price = sku.getElementsByClass("p-price").first().text();
-                            skuDO.setPrice(new BigDecimal(price));
+                            String s1 = httpClientUtil.get("https://p.3.cn/prices/mgets?skuids=J_" + skuElement.attr("data-sku"));
+                            JSONObject jsonObject1 = JSONArray.parseArray(s1).getJSONObject(0);
+
+                            skuDO.setPrice(jsonObject1.getBigDecimal("p"));
+                            skuDO.setMarketPrice(jsonObject1.getBigDecimal("op"));
                             skuDO.setStock(10000);
                             skuDO.setLowStock(100);
                             skuDO.setLockStock(0);
@@ -854,7 +885,7 @@ public class TestSpike {
                             skuMapper.insert(skuDO);
 
                             // 存储sku图片
-                            String script = br.select("script").not("[async]").first().data();
+                            String script = sku.select("script").not("[async]").first().data();
                             if (StrUtil.isNotBlank(script)) {
                                 String other_exts = StrUtil.subBetween(script, "imageList: ", "cat: ").trim();
                                 String sub = StrUtil.sub(other_exts, 0, other_exts.length() - 1);
@@ -865,7 +896,7 @@ public class TestSpike {
                                     skuMediaDO.setProductId(productDO.getId());
                                     skuMediaDO.setSkuId(skuDO.getId());
                                     skuMediaDO.setMediaType(1);
-                                    skuMediaDO.setMediaUrl(src);
+                                    skuMediaDO.setMediaUrl("https://img12.360buyimg.com/n1/s450x450_"+src);
                                     skuMediaDO.setSort(i1 + 1);
                                     skuMediaDO.setCreator(1L);
                                     skuMediaDO.setModifier(1L);
@@ -895,7 +926,7 @@ public class TestSpike {
                                         if (item.getElementsByTag("img") != null &&
                                                 item.getElementsByTag("img").size() > 0) {
                                             attributePic = item.getElementsByTag("img").first().attr("src");
-                                            jsonObject.put("pic", attributePic);
+                                            jsonObject.put("pic", "https:"+attributePic);
                                         }
 
                                         ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
@@ -939,7 +970,7 @@ public class TestSpike {
                                     if (exists == null) {
                                         continue;
                                     }
-                                    salePoint.put(at,vt);
+                                    salePoint.put(at, vt);
                                     ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
                                     productAttributeValueDO.setProductId(productDO.getId());
                                     productAttributeValueDO.setAttributeId(exists.getId());
@@ -999,14 +1030,14 @@ public class TestSpike {
 
                                         JSONObject obj = new JSONObject();
 
-                                        obj.put("key",dt);
-                                        obj.put("value",attributeValue);
+                                        obj.put("key", dt);
+                                        obj.put("value", attributeValue);
                                         String ext = null;
                                         if (clearfix.getElementsByClass("content") != null
                                                 && clearfix.getElementsByClass("content").size() > 0) {
                                             ext = clearfix.getElementsByClass("content").first().text().trim();
                                         }
-                                        obj.put("ext",ext);
+                                        obj.put("ext", ext);
                                         value.add(obj);
                                     }
                                     type.put(typeName, value);
@@ -1025,6 +1056,8 @@ public class TestSpike {
                             skuExtDO.setCreator(1L);
                             skuExtDO.setModifier(1L);
                             skuExtMapper.insert(skuExtDO);
+
+                            p++;
                         }
 
                     }
@@ -1037,13 +1070,6 @@ public class TestSpike {
     }
 
 
-
-
-
-
-
-
-
     @Test
     public void testProduct2() throws Exception {
         String html = "D:\\jd.html";
@@ -1052,7 +1078,7 @@ public class TestSpike {
         Elements li = j_cate.getElementsByTag("li");
         int k = 1;
         for (Element oneCategory : li) {
-            if (k<2){
+            if (k < 2) {
                 k++;
                 continue;
             }
@@ -1071,7 +1097,7 @@ public class TestSpike {
                         CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getName, caName)
                                 .eq(CategoryDO::getLevel, 3)
                         );
-                        System.out.println("======================开始解析分类:"+caName + "=======================");
+                        System.out.println("======================开始解析分类:" + caName + "=======================");
                         Document br = null;
                         try {
                             String href = httpClientUtil.get(element.attr("href"));
@@ -1102,9 +1128,20 @@ public class TestSpike {
                             }
                         }
 
+
+                        int size = 50;
+                        if (k > 8) {
+                            size = 10;
+                        }
+                        int p = 1;
                         for (Element skuElement : elementsByClass) {
 
-                            String pic = "https:" + skuElement.getElementsByTag("a").first().attr("src");
+                            if (p > size) {
+                                p++;
+                                break;
+                            }
+
+                            String pic = "https:" + skuElement.getElementsByTag("img").first().attr("src");
 
                             String skuUrl = "https://item.jd.com/" + skuElement.attr("data-sku") + ".html#product-detail";
                             Document sku = null;
@@ -1129,6 +1166,10 @@ public class TestSpike {
                             String productName = sku.getElementsByClass("item ellipsis").first().text();
 
                             // 新增或修改商品
+                            SkuDO existsSku = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getJdId, skuElement.attr("data-sku")));
+                            if (existsSku != null){
+                                continue;
+                            }
 
                             ProductDO productDO = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getName, productName));
                             if (productDO == null) {
@@ -1152,12 +1193,12 @@ public class TestSpike {
                                         if (param.text().contains("kg")) {
                                             productDO.setUnit("kg");
                                             String title = param.attr("title");
-                                            title = title.substring(0,title.length()-2);
+                                            title = title.substring(0, title.length() - 2);
                                             productDO.setWeight(new BigDecimal(title));
                                         } else if (param.text().contains("g")) {
                                             productDO.setUnit("g");
                                             String title = param.attr("title");
-                                            title = title.substring(0,title.length()-1);
+                                            title = title.substring(0, title.length() - 1);
                                             productDO.setWeight(new BigDecimal(title));
                                         }
                                         break;
@@ -1167,7 +1208,7 @@ public class TestSpike {
                                 productDO.setCreator(1L);
                                 productDO.setModifier(1L);
                                 System.out.println("=====新增商品=====");
-                                System.out.println(JSONObject.toJSONString(productDO,true));
+                                System.out.println(JSONObject.toJSONString(productDO, true));
                             } else {
                                 ArrayList<String> strings = Lists.newArrayList(productDO.getCategoryId().split(","));
                                 if (!strings.contains(categoryDO.getId() + "")) {
@@ -1176,7 +1217,7 @@ public class TestSpike {
                                 }
                                 System.out.println("=====修改商品=====");
 
-                                System.out.println(JSONObject.toJSONString(productDO,true));
+                                System.out.println(JSONObject.toJSONString(productDO, true));
                             }
 
 
@@ -1185,6 +1226,7 @@ public class TestSpike {
                             List<SkuDO> skuDOS = skuMapper.selectList(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productDO.getId()));
                             String skuName = sku.getElementsByClass("sku-name").first().text();
                             SkuDO skuDO = new SkuDO();
+                            skuDO.setJdId(skuElement.attr("data-sku"));
                             skuDO.setProductId(productDO.getId());
                             skuDO.setMerchantsId(1L);
                             skuDO.setCategoryId(productDO.getCategoryId());
@@ -1195,9 +1237,11 @@ public class TestSpike {
                             skuDO.setSubName(subName);
                             skuDO.setRemark(skuUrl);
                             skuDO.setPic(productDO.getPic());
-                            String price = sku.getElementsByClass("p-price").first().text().substring(1);
-                            System.out.println(price);
-                            skuDO.setPrice(new BigDecimal(price));
+                            String s1 = httpClientUtil.get("https://p.3.cn/prices/mgets?skuids=J_" + skuElement.attr("data-sku"));
+                            JSONObject jsonObject1 = JSONArray.parseArray(s1).getJSONObject(0);
+
+                            skuDO.setPrice(jsonObject1.getBigDecimal("p"));
+                            skuDO.setMarketPrice(jsonObject1.getBigDecimal("op"));
                             skuDO.setStock(10000);
                             skuDO.setLowStock(100);
                             skuDO.setLockStock(0);
@@ -1211,12 +1255,12 @@ public class TestSpike {
                             skuDO.setCascadeCategoryId(productDO.getCascadeCategoryId());
                             skuDO.setCreator(1L);
                             skuDO.setModifier(1L);
-                            System.out.println(JSONObject.toJSONString(skuDO,true));
+                            System.out.println(JSONObject.toJSONString(skuDO, true));
 
                             // 存储sku图片
                             System.out.println("=====新增sku图片=====");
 
-                            String script = br.select("script").not("[async]").first().data();
+                            String script = sku.select("script").not("[async]").first().data();
                             if (StrUtil.isNotBlank(script)) {
                                 String other_exts = StrUtil.subBetween(script, "imageList: ", "cat: ").trim();
                                 String sub = StrUtil.sub(other_exts, 0, other_exts.length() - 1);
@@ -1231,7 +1275,7 @@ public class TestSpike {
                                     skuMediaDO.setSort(i1 + 1);
                                     skuMediaDO.setCreator(1L);
                                     skuMediaDO.setModifier(1L);
-                                    System.out.println(JSONObject.toJSONString(skuMediaDO,true));
+                                    System.out.println(JSONObject.toJSONString(skuMediaDO, true));
 
                                 }
                             }
@@ -1273,7 +1317,7 @@ public class TestSpike {
                                         productAttributeValueDO.setPic(attributePic);
                                         productAttributeValueDO.setCreator(1L);
                                         productAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(productAttributeValueDO,true));
+                                        System.out.println(JSONObject.toJSONString(productAttributeValueDO, true));
 
                                         jsonArray.add(jsonObject);
 
@@ -1283,7 +1327,7 @@ public class TestSpike {
                                         skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
                                         skuAttributeValueDO.setCreator(1L);
                                         skuAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(skuAttributeValueDO,true));
+                                        System.out.println(JSONObject.toJSONString(skuAttributeValueDO, true));
 
                                     }
                                     skuSpe.put(dt, jsonArray);
@@ -1308,7 +1352,7 @@ public class TestSpike {
                                     if (exists == null) {
                                         continue;
                                     }
-                                    salePoint.put(at,vt);
+                                    salePoint.put(at, vt);
                                     ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
                                     productAttributeValueDO.setProductId(productDO.getId());
                                     productAttributeValueDO.setAttributeId(exists.getId());
@@ -1317,7 +1361,7 @@ public class TestSpike {
                                     productAttributeValueDO.setAttributeValue(vt);
                                     productAttributeValueDO.setCreator(1L);
                                     productAttributeValueDO.setModifier(1L);
-                                    System.out.println(JSONObject.toJSONString(productAttributeValueDO,true));
+                                    System.out.println(JSONObject.toJSONString(productAttributeValueDO, true));
 
 
                                     // 存储 sku 属性值
@@ -1326,7 +1370,7 @@ public class TestSpike {
                                     skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
                                     skuAttributeValueDO.setCreator(1L);
                                     skuAttributeValueDO.setModifier(1L);
-                                    System.out.println(JSONObject.toJSONString(skuAttributeValueDO,true));
+                                    System.out.println(JSONObject.toJSONString(skuAttributeValueDO, true));
 
                                 }
                             }
@@ -1360,7 +1404,7 @@ public class TestSpike {
                                         productAttributeValueDO.setAttributeValue(attributeValue);
                                         productAttributeValueDO.setCreator(1L);
                                         productAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(productAttributeValueDO,true));
+                                        System.out.println(JSONObject.toJSONString(productAttributeValueDO, true));
 
                                         // 存储 sku 属性值
                                         SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
@@ -1368,17 +1412,17 @@ public class TestSpike {
                                         skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
                                         skuAttributeValueDO.setCreator(1L);
                                         skuAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(skuAttributeValueDO,true));
+                                        System.out.println(JSONObject.toJSONString(skuAttributeValueDO, true));
                                         JSONObject obj = new JSONObject();
 
-                                        obj.put("key",dt);
-                                        obj.put("value",attributeValue);
+                                        obj.put("key", dt);
+                                        obj.put("value", attributeValue);
                                         String ext = null;
                                         if (clearfix.getElementsByClass("content") != null
                                                 && clearfix.getElementsByClass("content").size() > 0) {
                                             ext = clearfix.getElementsByClass("content").first().text().trim();
                                         }
-                                        obj.put("ext",ext);
+                                        obj.put("ext", ext);
                                         value.add(obj);
                                     }
                                     type.put(typeName, value);
@@ -1398,7 +1442,7 @@ public class TestSpike {
                             skuExtDO.setModifier(1L);
                             System.out.println("=====新增sku ext=====");
 
-                            System.out.println(JSONObject.toJSONString(skuExtDO,true));
+                            System.out.println(JSONObject.toJSONString(skuExtDO, true));
                         }
 
                     }

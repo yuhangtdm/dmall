@@ -26,7 +26,14 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) throws IOException {
 
+        Document priceDocument = Jsoup.connect("https://item.jd.com/100000177784.html").get() ;
 
+        String script = priceDocument.select("script").not("[async]").first().data();
+
+        System.out.println(script);
+
+        String other_exts = StrUtil.subBetween(script, "imageList: ", "cat: ").trim();
+        System.out.println(other_exts);
     }
 
 }

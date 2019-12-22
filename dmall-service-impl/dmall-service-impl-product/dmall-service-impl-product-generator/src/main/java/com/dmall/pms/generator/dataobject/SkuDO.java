@@ -161,6 +161,9 @@ public class SkuDO implements Serializable {
      */
     private String cascadeCategoryId;
 
+
+    private String jdId;
+
     /**
      * 创建人
      */
