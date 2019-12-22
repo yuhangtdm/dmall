@@ -35,10 +35,16 @@ public class CategoryBrandDO implements Serializable {
      */
     private Long categoryId;
 
+
     /**
      * 品牌id
      */
     private Long brandId;
+
+    /**
+     * 商品分类path
+     */
+    private String cascadeCategoryId;
 
     /**
      * 排序

@@ -106,10 +106,10 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
         if (skuExtDO == null) {
             SkuExtDO skuExt = new SkuExtDO();
             skuExt.setSkuId(skuId);
-            skuExt.setSkuAttributeJson(json);
+//            skuExt.setSkuAttributeJson(json);
             skuExtMapper.insert(skuExt);
         } else {
-            skuExtDO.setSkuAttributeJson(json);
+//            skuExtDO.setSkuAttributeJson(json);
             skuExtMapper.updateById(skuExtDO);
         }
         return ResultUtil.success(skuId);

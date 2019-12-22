@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: sku扩展表
- * @author: created by hang.yu on 2019-12-19 20:57:18
+ * @author: created by hang.yu on 2019-12-22 16:09:01
  */
 @Data
 @Accessors(chain = true)
@@ -32,22 +32,28 @@ public class SkuExtDTO implements Serializable {
     @ApiModelProperty(value = "sku移动端详情富文本", position = 4)
     private String detailMobileHtml;
 
-    @ApiModelProperty(value = "sku属性json", position = 5)
-    private String skuAttributeJson;
+    @ApiModelProperty(value = "sku规格json", position = 5)
+    private String skuSpecificationsJson;
 
-    @ApiModelProperty(value = "创建人", position = 6)
+    @ApiModelProperty(value = "sku卖点json", position = 6)
+    private String skuSalePointJson;
+
+    @ApiModelProperty(value = "sku参数json", position = 7)
+    private String skuParamJson;
+
+    @ApiModelProperty(value = "创建人", position = 8)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 7)
+    @ApiModelProperty(value = "创建时间", position = 9)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 8)
+    @ApiModelProperty(value = "更新人", position = 10)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 9)
+    @ApiModelProperty(value = "更新时间", position = 11)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 10)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 12)
     private String isDeleted;
 
 }

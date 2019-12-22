@@ -16,7 +16,6 @@
         <result column="hot_status" property="hotStatus" />
         <result column="nav_status" property="navStatus" />
         <result column="path" property="path" />
-        <result column="jd_cat" property="jdCat" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />
@@ -26,7 +25,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, parent_id, name, icon, mobile_icon, level, description, sort, keywords, hot_status, nav_status, path, jd_cat, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, parent_id, name, icon, mobile_icon, level, description, sort, keywords, hot_status, nav_status, path,  creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

@@ -86,11 +86,6 @@ public class CategoryDO implements Serializable {
     private String path;
 
     /**
-     * 京东cat
-     */
-    private String jdCat;
-
-    /**
      * 创建人
      */
     private Long creator;

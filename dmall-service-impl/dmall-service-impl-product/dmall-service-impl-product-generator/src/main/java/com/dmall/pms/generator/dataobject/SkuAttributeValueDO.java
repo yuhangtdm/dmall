@@ -13,14 +13,14 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: 属性表
- * @author: created by hang.yu on 2019-12-19 20:57:18
+ * @description: sku属性值表
+ * @author: created by hang.yu on 2019-12-22 15:24:19
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("pms_attribute")
-public class AttributeDO implements Serializable {
+@TableName("pms_sku_attribute_value")
+public class SkuAttributeValueDO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -31,44 +31,14 @@ public class AttributeDO implements Serializable {
     private Long id;
 
     /**
-     * 属性分类id,可以为null
+     * skuid
      */
-    private Long attributeTypeId;
+    private Long skuId;
 
     /**
-     * 名称
+     * product_attribute_id
      */
-    private String name;
-
-    /**
-     * 展示名称
-     */
-    private String showName;
-
-    /**
-     * 备注
-     */
-    private String remark;
-
-    /**
-     * 属性类型 1-普通属性;2-公共属性
-     */
-    private Integer type;
-
-    /**
-     * 属性录入方式 1-手工录入;2-从列表获取
-     */
-    private Integer inputType;
-
-    /**
-     * 可选值列表 以逗号隔开
-     */
-    private String inputList;
-
-    /**
-     * 是否支持手动新增 Y-支持;N-不支持
-     */
-    private String handAddStatus;
+    private Long productAttributeValueId;
 
     /**
      * 创建人

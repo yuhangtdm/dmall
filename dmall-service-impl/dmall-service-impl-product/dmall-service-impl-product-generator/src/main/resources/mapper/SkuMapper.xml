@@ -22,7 +22,6 @@
         <result column="low_stock" property="lowStock" />
         <result column="lock_stock" property="lockStock" />
         <result column="sort" property="sort" />
-        <result column="sku_specifications" property="skuSpecifications" />
         <result column="publish_status" property="publishStatus" />
         <result column="on_publish_time" property="onPublishTime" />
         <result column="off_publish_time" property="offPublishTime" />
@@ -41,7 +40,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, product_id, merchants_id, category_id, brand_id, sku_no, name, sub_name, description, remark, pic, price, vip_price, market_price, brand_name, stock, low_stock, lock_stock, available_stock, sort, sku_specifications, publish_status, on_publish_time, off_publish_time, recommend_status, new_status, preview_status, audit_status, preferential_way, cascade_category_id, detail_html, detail_mobile_html, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, product_id, merchants_id, category_id, brand_id, sku_no, name, sub_name, description, remark, pic, price, vip_price, market_price, stock, low_stock, lock_stock, sort, publish_status, on_publish_time, off_publish_time, recommend_status, new_status, preview_status, audit_status, preferential_way, cascade_category_id, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

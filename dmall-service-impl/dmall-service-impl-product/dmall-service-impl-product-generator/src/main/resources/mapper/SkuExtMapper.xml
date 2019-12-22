@@ -8,7 +8,9 @@
         <result column="sku_id" property="skuId" />
         <result column="detail_html" property="detailHtml" />
         <result column="detail_mobile_html" property="detailMobileHtml" />
-        <result column="sku_attribute_json" property="skuAttributeJson" />
+        <result column="sku_specifications_json" property="skuSpecificationsJson" />
+        <result column="sku_sale_point_json" property="skuSalePointJson" />
+        <result column="sku_param_json" property="skuParamJson" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />
@@ -18,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, sku_id, detail_html, detail_mobile_html, sku_attribute_json, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, sku_id, detail_html, detail_mobile_html, sku_specifications_json, sku_sale_point_json, sku_param_json, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

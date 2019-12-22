@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: sku表
- * @author: created by hang.yu on 2019-12-19 20:57:18
+ * @author: created by hang.yu on 2019-12-22 16:08:20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -72,7 +72,7 @@ public class SkuDO implements Serializable {
     private String description;
 
     /**
-     * 备注
+     * 商品详情
      */
     private String remark;
 
@@ -117,11 +117,6 @@ public class SkuDO implements Serializable {
     private Integer sort;
 
     /**
-     * sku规格
-     */
-    private String skuSpecifications;
-
-    /**
      * 上架状态 Y-上架;N-未上架
      */
     private String publishStatus;
@@ -162,7 +157,7 @@ public class SkuDO implements Serializable {
     private String preferentialWay;
 
     /**
-     * 商品分类id集合 多个用逗号隔开
+     * 商品分类id集合,多个用逗号隔开
      */
     private String cascadeCategoryId;
 
@@ -194,5 +189,6 @@ public class SkuDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
+
 
 }
