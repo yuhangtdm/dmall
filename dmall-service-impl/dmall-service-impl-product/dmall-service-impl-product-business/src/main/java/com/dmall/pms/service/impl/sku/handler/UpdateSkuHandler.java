@@ -55,7 +55,7 @@ public class UpdateSkuHandler extends AbstractCommonHandler<UpdateSkuRequestDTO,
         BasicSkuRequestDTO basicSku = requestDTO.getBasicSkuRequestDTO();
         SkuDO skuDO = BeanUtil.copyProperties(basicSku, SkuDO.class);
         skuMapper.updateById(skuDO);
-        saveSkuAttributeHandler.setProductAttribute(basicSku.getId(), requestDTO.getAttributeValueList());
+//        saveSkuAttributeHandler.setProductAttribute(basicSku.getId(), requestDTO.getAttributeValueList());
         SkuExtDO skuExtDO = skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, basicSku.getId()));
         skuExtDO.setDetailHtml(requestDTO.getDetailHtml());
         skuExtDO.setDetailMobileHtml(requestDTO.getDetailMobileHtml());

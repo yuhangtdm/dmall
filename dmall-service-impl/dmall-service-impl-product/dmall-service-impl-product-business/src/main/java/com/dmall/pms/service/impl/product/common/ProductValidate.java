@@ -74,11 +74,11 @@ public class ProductValidate {
             return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
         }
         // 校验商品属性是否是商品属性分类下的
-        boolean s = attributeDOS.stream().anyMatch(attributeDO ->
-                !attributeDO.getAttributeTypeId().equals(specificationsAttributeTypeDO.getId()));
-        if (s) {
-            return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_TYPE_ATTRIBUTE_ERROR);
-        }
+//        boolean s = attributeDOS.stream().anyMatch(attributeDO ->
+//                !attributeDO.getAttributeTypeId().equals(specificationsAttributeTypeDO.getId()));
+//        if (s) {
+//            return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_TYPE_ATTRIBUTE_ERROR);
+//        }
         /*
             校验销售参数
          */

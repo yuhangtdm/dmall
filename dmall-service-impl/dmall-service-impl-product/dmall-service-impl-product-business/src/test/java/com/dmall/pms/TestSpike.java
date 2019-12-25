@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,12 +82,15 @@ public class TestSpike {
     private SkuAttributeValueMapper skuAttributeValueMapper;
 
     @Autowired
+    private CategorySkuMapper categorySkuMapper;
+
+    @Autowired
     private QiNiuFileManager qiNiuFileManager;
 
     /**
      * 商品分类
      */
-    @Test
+//    @Test
     public void testCategory() throws IOException {
         String html = "D:\\jd.html";
         Document document = Jsoup.parse(new File(html), "utf-8");
@@ -131,10 +135,10 @@ public class TestSpike {
                     Elements a = threeCategory.getElementsByTag("a");
                     int j = 1;
                     for (Element element : a) {
-                        String caName = oneCategory.text().trim() + "_" + twoCategory.text().trim() + "_" + element.text().trim();
+//                        String caName = oneCategory.text().trim() + "_" + twoCategory.text().trim() + "_" + element.text().trim();
                         CategoryDO threeCategoryDO = new CategoryDO();
                         threeCategoryDO.setParentId(twoCategoryDO.getId());
-                        threeCategoryDO.setName(caName);
+                        threeCategoryDO.setName(element.text().trim());
                         threeCategoryDO.setLevel(3);
                         threeCategoryDO.setSort(j);
                         threeCategoryDO.setHotStatus("Y");
@@ -154,7 +158,7 @@ public class TestSpike {
     /**
      * 更新商品分类
      */
-    @Test
+//    @Test
     public void testUpdate() {
         List<CategoryDO> categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getLevel, 2));
         List<CategoryDO> update = Lists.newArrayList();
@@ -172,7 +176,7 @@ public class TestSpike {
      * 品牌
      * 品牌--商品分类
      */
-    @Test
+//    @Test
     public void testBrand() throws Exception {
         String html = "D:\\jd.html";
         Document document = Jsoup.parse(new File(html), "utf-8");
@@ -257,7 +261,7 @@ public class TestSpike {
     /**
      * 属性分类
      */
-    @Test
+//    @Test
     public void testAttributeType() throws Exception {
         String html = "D:\\jd.html";
         Document document = Jsoup.parse(new File(html), "utf-8");
@@ -354,7 +358,7 @@ public class TestSpike {
      * 属性
      * 分类-属性
      */
-    @Test
+//    @Test
     public void testAttribute() throws Exception {
         String html = "D:\\jd.html";
         Document document = Jsoup.parse(new File(html), "utf-8");
@@ -652,10 +656,10 @@ public class TestSpike {
                                                     && clearfix.getElementsByClass("content").size() > 0) {
                                                 exists.setRemark(clearfix.getElementsByClass("content").first().text());
                                             }
-                                            exists.setAttributeTypeId(attributeTypeDO.getId());
+//                                            exists.setAttributeTypeId(attributeTypeDO.getId());
                                             attributeMapper.insert(exists);
                                         } else {
-                                            exists.setAttributeTypeId(attributeTypeDO.getId());
+//                                            exists.setAttributeTypeId(attributeTypeDO.getId());
                                             attributeMapper.updateById(exists);
                                         }
 
@@ -706,8 +710,7 @@ public class TestSpike {
      * 商品-属性值
      * sku - 属性值
      */
-    @Test
-    @Transactional(rollbackFor = Exception.class)
+//    @Test
     public void testProduct() throws Exception {
         String html = "D:\\jd.html";
         Document document = Jsoup.parse(new File(html), "utf-8");
@@ -760,9 +763,15 @@ public class TestSpike {
                             }
                         }
 
-                        int size = 50;
-                        if (k > 8) {
+                        int size = 30;
+                        if (k % 2 == 1) {
                             size = 10;
+                        }
+                        if (k > 7) {
+                            size = 5;
+                        }
+                        if (k > 14) {
+                            size = 0;
                         }
                         int p = 1;
                         for (Element skuElement : elementsByClass) {
@@ -770,8 +779,10 @@ public class TestSpike {
                                 p++;
                                 break;
                             }
-
                             String pic = "https:" + skuElement.getElementsByTag("img").first().attr("src");
+                            if (StrUtil.isBlank(skuElement.getElementsByTag("img").first().attr("src"))) {
+                                pic = "https:" + skuElement.getElementsByTag("img").first().attr("data-lazy-img");
+                            }
 
                             String skuUrl = "https://item.jd.com/" + skuElement.attr("data-sku") + ".html#product-detail";
                             Document sku = null;
@@ -793,10 +804,23 @@ public class TestSpike {
                             }
 
 
-                            String productName = sku.getElementsByClass("item ellipsis").first().text();
+                            String productName = null;
+                            try {
+                                productName = sku.getElementsByClass("item ellipsis").first().text();
+                            } catch (Exception e) {
+                                continue;
+                            }
 
                             SkuDO existsSku = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getJdId, skuElement.attr("data-sku")));
-                            if (existsSku != null){
+                            if (existsSku != null) {
+                                CategorySkuDO categorySkuDO = new CategorySkuDO();
+                                categorySkuDO.setCategoryId(categoryDO.getId());
+                                categorySkuDO.setSkuId(existsSku.getId());
+                                categorySkuDO.setCascadeCategoryId(categoryDO.getPath());
+                                categorySkuDO.setCreator(1L);
+                                categorySkuDO.setModifier(1L);
+                                categorySkuMapper.insert(categorySkuDO);
+
                                 continue;
                             }
 
@@ -808,10 +832,15 @@ public class TestSpike {
                                 productDO.setCategoryId(String.valueOf(categoryDO.getId()));
                                 productDO.setCascadeCategoryId(categoryDO.getPath());
 
-                                String brandName = sku.getElementById("parameter-brand").getElementsByTag("a").first().text();
-                                BrandDO brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, brandName));
-                                if (brandDO == null) {
-                                    brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getEnglishName, brandName));
+                                BrandDO brandDO = null;
+                                try {
+                                    String brandName = sku.getElementById("parameter-brand").getElementsByTag("a").first().text();
+                                    brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, brandName));
+                                    if (brandDO == null) {
+                                        brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getEnglishName, brandName));
+                                    }
+                                } catch (Exception e) {
+
                                 }
                                 productDO.setBrandId(brandDO != null ? brandDO.getId() : null);
                                 productDO.setFreightTemplateId(1L);
@@ -856,12 +885,9 @@ public class TestSpike {
                             skuDO.setJdId(skuElement.attr("data-sku"));
                             skuDO.setProductId(productDO.getId());
                             skuDO.setMerchantsId(1L);
-                            skuDO.setCategoryId(productDO.getCategoryId());
                             skuDO.setBrandId(productDO.getBrandId());
                             skuDO.setSkuNo(NoUtil.generateSkuNo());
                             skuDO.setName(skuName);
-                            String subName = sku.getElementsByClass("item hide").first().attr("title");
-                            skuDO.setSubName(subName);
                             skuDO.setRemark(skuUrl);
                             skuDO.setPic(productDO.getPic());
                             String s1 = httpClientUtil.get("https://p.3.cn/prices/mgets?skuids=J_" + skuElement.attr("data-sku"));
@@ -879,10 +905,18 @@ public class TestSpike {
                             skuDO.setNewStatus("Y");
                             skuDO.setPreviewStatus("Y");
                             skuDO.setAuditStatus(2);
-                            skuDO.setCascadeCategoryId(productDO.getCascadeCategoryId());
                             skuDO.setCreator(1L);
                             skuDO.setModifier(1L);
                             skuMapper.insert(skuDO);
+
+                            // 插入分类-sku表
+                            CategorySkuDO categorySkuDO = new CategorySkuDO();
+                            categorySkuDO.setCategoryId(categoryDO.getId());
+                            categorySkuDO.setSkuId(skuDO.getId());
+                            categorySkuDO.setCascadeCategoryId(categoryDO.getPath());
+                            categorySkuDO.setCreator(1L);
+                            categorySkuDO.setModifier(1L);
+                            categorySkuMapper.insert(categorySkuDO);
 
                             // 存储sku图片
                             String script = sku.select("script").not("[async]").first().data();
@@ -896,7 +930,7 @@ public class TestSpike {
                                     skuMediaDO.setProductId(productDO.getId());
                                     skuMediaDO.setSkuId(skuDO.getId());
                                     skuMediaDO.setMediaType(1);
-                                    skuMediaDO.setMediaUrl("https://img12.360buyimg.com/n1/s450x450_"+src);
+                                    skuMediaDO.setMediaUrl("https://img12.360buyimg.com/n1/s450x450_" + src);
                                     skuMediaDO.setSort(i1 + 1);
                                     skuMediaDO.setCreator(1L);
                                     skuMediaDO.setModifier(1L);
@@ -906,6 +940,7 @@ public class TestSpike {
 
 
                             // 商品属性值
+                            JSONObject productSpe = new JSONObject();
                             JSONObject skuSpe = new JSONObject();
                             // sku的销售规格
                             if (sku.getElementsByClass("li p-choose") != null) {
@@ -925,8 +960,12 @@ public class TestSpike {
                                         String attributePic = null;
                                         if (item.getElementsByTag("img") != null &&
                                                 item.getElementsByTag("img").size() > 0) {
-                                            attributePic = item.getElementsByTag("img").first().attr("src");
-                                            jsonObject.put("pic", "https:"+attributePic);
+                                            attributePic = "https:" + item.getElementsByTag("img").first().attr("src");
+                                            jsonObject.put("pic", attributePic);
+                                        }
+
+                                        if (item.attr("data-sku").equals(skuElement.attr("data-sku"))) {
+                                            skuSpe.put(dt.trim(), attributeValue);
                                         }
 
                                         ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
@@ -949,8 +988,10 @@ public class TestSpike {
                                         skuAttributeValueDO.setCreator(1L);
                                         skuAttributeValueDO.setModifier(1L);
                                         skuAttributeValueMapper.insert(skuAttributeValueDO);
+
+
                                     }
-                                    skuSpe.put(dt, jsonArray);
+                                    productSpe.put(dt, jsonArray);
                                 }
                             }
 
@@ -1049,7 +1090,24 @@ public class TestSpike {
                             // 存储sku ext
                             SkuExtDO skuExtDO = new SkuExtDO();
                             skuExtDO.setSkuId(skuDO.getId());
-                            // skuExtDO.setDetailHtml("");
+
+                            String data = sku.getElementById("J-detail-content").data();
+                            BufferedReader bufferedReader = new BufferedReader(
+                                    new InputStreamReader(new ByteArrayInputStream(data.getBytes(Charset.forName("utf8"))), Charset.forName("utf8")));
+
+                            StringBuilder detailHtml = new StringBuilder();
+                            String line = null;
+                            while ((line = bufferedReader.readLine()) != null) {
+                                if (line.contains("background-image:url(")) {
+                                    detailHtml.append("<br>")
+                                            .append("<img src=\"")
+                                            .append("https:")
+                                            .append(StrUtil.subBetween(line, "background-image:url(", ")"))
+                                            .append("\">")
+                                    ;
+                                }
+                            }
+                            skuExtDO.setDetailHtml(detailHtml.toString());
                             skuExtDO.setSkuSpecificationsJson(skuSpe.toJSONString());
                             skuExtDO.setSkuSalePointJson(salePoint.toJSONString());
                             skuExtDO.setSkuParamJson(param.toJSONString());
@@ -1057,400 +1115,369 @@ public class TestSpike {
                             skuExtDO.setModifier(1L);
                             skuExtMapper.insert(skuExtDO);
 
+                            productDO.setSpecificationsJson(productSpe.toJSONString());
+                            productMapper.updateById(productDO);
                             p++;
                         }
 
                     }
                 }
+                i++;
             }
-            i++;
+            k++;
         }
-        k++;
 
     }
 
 
-    @Test
-    public void testProduct2() throws Exception {
-        String html = "D:\\jd.html";
-        Document document = Jsoup.parse(new File(html), "utf-8");
-        Element j_cate = document.getElementById("J_cate");
-        Elements li = j_cate.getElementsByTag("li");
-        int k = 1;
-        for (Element oneCategory : li) {
-            if (k < 2) {
-                k++;
+//    @Test
+    public void testAddroduct() throws Exception {
+
+        String url = "https://list.jd.com/list.html?cat=9987,653,655&page=2&sort=sort_rank_asc&trans=1&JL=6_0_0&ms=10#J_main";
+        String href = httpClientUtil.get(url);
+        Document br = Jsoup.parse(href);
+        CategoryDO categoryDO = categoryMapper.selectById(6);
+        Elements elementsByClass = br.getElementsByClass("gl-i-wrap j-sku-item");
+        for (Element skuElement : elementsByClass) {
+            String pic = "https:" + skuElement.getElementsByTag("img").first().attr("src");
+            if (StrUtil.isBlank(skuElement.getElementsByTag("img").first().attr("src"))) {
+                pic = "https:" + skuElement.getElementsByTag("img").first().attr("data-lazy-img");
+            }
+
+            String skuUrl = "https://item.jd.com/" + skuElement.attr("data-sku") + ".html#product-detail";
+            Document sku = null;
+            try {
+                sku = Jsoup.connect(skuUrl).get();
+            } catch (Exception e) {
+                try {
+                    FileOutputStream out = new FileOutputStream("D:/AddProduct.txt", true);
+                    OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
+                    BufferedWriter bufWrite = new BufferedWriter(outWriter);
+                    bufWrite.newLine();
+                    bufWrite.close();
+                    outWriter.close();
+                    out.close();
+                } catch (Exception e1) {
+                }
                 continue;
             }
-            Element J_popCtn = document.getElementById("J_popCtn");
-            String ll = k < 10 ? "0" + k : "" + k;
-            Elements twoLevels = J_popCtn.select(".cate_detail_tit[clstag^=h|keycount|head|category_" + ll + "c]");
-            int i = 1;
-            for (Element twoCategory : twoLevels) {
 
-                String oo = i < 10 ? "0" + i : "" + i;
-                Elements threeLevel = J_popCtn.select(".cate_detail_con[clstag^=h|keycount|head|category_" + ll + "d" + oo + "]");
-                for (Element threeCategory : threeLevel) {
-                    Elements a = threeCategory.getElementsByTag("a");
-                    for (Element element : a) {
-                        String caName = oneCategory.text().trim() + "_" + twoCategory.text().trim() + "_" + element.text().trim();
-                        CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getName, caName)
-                                .eq(CategoryDO::getLevel, 3)
-                        );
-                        System.out.println("======================开始解析分类:" + caName + "=======================");
-                        Document br = null;
-                        try {
-                            String href = httpClientUtil.get(element.attr("href"));
-                            br = Jsoup.parse(href);
-                        } catch (Exception e) {
-                            try {
-                                FileOutputStream out = new FileOutputStream("D:/Product.txt", true);
-                                OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
-                                BufferedWriter bufWrite = new BufferedWriter(outWriter);
-                                bufWrite.write("读取分类失败," + caName);
-                                bufWrite.newLine();
-                                bufWrite.close();
-                                outWriter.close();
-                                out.close();
-                            } catch (Exception e1) {
-                            }
+            String productName = null;
+            try {
+                productName = sku.getElementsByClass("item ellipsis").first().text();
+            } catch (Exception e) {
+                continue;
+            }
+
+            SkuDO existsSku = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getJdId, skuElement.attr("data-sku")));
+            if (existsSku != null) {
+                CategorySkuDO categorySkuDO = new CategorySkuDO();
+                categorySkuDO.setCategoryId(categoryDO.getId());
+                categorySkuDO.setSkuId(existsSku.getId());
+                categorySkuDO.setCascadeCategoryId(categoryDO.getPath());
+                categorySkuDO.setCreator(1L);
+                categorySkuDO.setModifier(1L);
+                categorySkuMapper.insert(categorySkuDO);
+
+                continue;
+            }
+
+            // 新增或修改商品
+            ProductDO productDO = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getName, productName));
+            if (productDO == null) {
+                productDO = new ProductDO();
+                productDO.setMerchantsId(1L);
+                productDO.setCategoryId(String.valueOf(categoryDO.getId()));
+                productDO.setCascadeCategoryId(categoryDO.getPath());
+
+                BrandDO brandDO = null;
+                try {
+                    String brandName = sku.getElementById("parameter-brand").getElementsByTag("a").first().text();
+                    brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, brandName));
+                    if (brandDO == null) {
+                        brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getEnglishName, brandName));
+                    }
+                } catch (Exception e) {
+
+                }
+                productDO.setBrandId(brandDO != null ? brandDO.getId() : null);
+                productDO.setFreightTemplateId(1L);
+                productDO.setProductNo(NoUtil.generateProductNo());
+                productDO.setName(productName);
+                productDO.setPic(pic);
+                for (Element param : sku.getElementsByClass("parameter2 p-parameter-list").first().getElementsByTag("li")) {
+                    if (param.text().contains("商品毛重")) {
+                        if (param.text().contains("kg")) {
+                            productDO.setUnit("kg");
+                            String title = param.attr("title");
+                            title = title.substring(0, title.length() - 2);
+                            productDO.setWeight(new BigDecimal(title));
+                        } else if (param.text().contains("g")) {
+                            productDO.setUnit("g");
+                            String title = param.attr("title");
+                            title = title.substring(0, title.length() - 1);
+                            productDO.setWeight(new BigDecimal(title));
+                        }
+                        break;
+                    }
+
+                }
+                productDO.setCreator(1L);
+                productDO.setModifier(1L);
+                productMapper.insert(productDO);
+
+            } else {
+                ArrayList<String> strings = Lists.newArrayList(productDO.getCategoryId().split(","));
+                if (!strings.contains(categoryDO.getId() + "")) {
+                    productDO.setCategoryId(productDO.getCategoryId() + "," + categoryDO.getId());
+                    productDO.setCascadeCategoryId(productDO.getCascadeCategoryId() + "," + categoryDO.getPath());
+                }
+                productMapper.updateById(productDO);
+            }
+
+
+            // 新增sku
+            List<SkuDO> skuDOS = skuMapper.selectList(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productDO.getId()));
+            String skuName = sku.getElementsByClass("sku-name").first().text();
+            SkuDO skuDO = new SkuDO();
+            skuDO.setJdId(skuElement.attr("data-sku"));
+            skuDO.setProductId(productDO.getId());
+            skuDO.setMerchantsId(1L);
+            skuDO.setBrandId(productDO.getBrandId());
+            skuDO.setSkuNo(NoUtil.generateSkuNo());
+            skuDO.setName(skuName);
+            skuDO.setRemark(skuUrl);
+            skuDO.setPic(productDO.getPic());
+            String s1 = httpClientUtil.get("https://p.3.cn/prices/mgets?skuids=J_" + skuElement.attr("data-sku"));
+            JSONObject jsonObject1 = JSONArray.parseArray(s1).getJSONObject(0);
+
+            skuDO.setPrice(jsonObject1.getBigDecimal("p"));
+            skuDO.setMarketPrice(jsonObject1.getBigDecimal("op"));
+            skuDO.setStock(10000);
+            skuDO.setLowStock(100);
+            skuDO.setLockStock(0);
+            skuDO.setSort(skuDOS.size() + 1);
+            skuDO.setPublishStatus("Y");
+            skuDO.setOnPublishTime(new Date());
+            skuDO.setRecommendStatus("Y");
+            skuDO.setNewStatus("Y");
+            skuDO.setPreviewStatus("Y");
+            skuDO.setAuditStatus(2);
+            skuDO.setCreator(1L);
+            skuDO.setModifier(1L);
+            skuMapper.insert(skuDO);
+
+            // 插入分类-sku表
+            CategorySkuDO categorySkuDO = new CategorySkuDO();
+            categorySkuDO.setCategoryId(categoryDO.getId());
+            categorySkuDO.setSkuId(skuDO.getId());
+            categorySkuDO.setCascadeCategoryId(categoryDO.getPath());
+            categorySkuDO.setCreator(1L);
+            categorySkuDO.setModifier(1L);
+            categorySkuMapper.insert(categorySkuDO);
+
+            // 存储sku图片
+            String script = sku.select("script").not("[async]").first().data();
+            if (StrUtil.isNotBlank(script)) {
+                String other_exts = StrUtil.subBetween(script, "imageList: ", "cat: ").trim();
+                String sub = StrUtil.sub(other_exts, 0, other_exts.length() - 1);
+                JSONArray jsonArray = JSONArray.parseArray(sub);
+                for (int i1 = 0; i1 < jsonArray.size(); i1++) {
+                    String src = jsonArray.getString(i1);
+                    SkuMediaDO skuMediaDO = new SkuMediaDO();
+                    skuMediaDO.setProductId(productDO.getId());
+                    skuMediaDO.setSkuId(skuDO.getId());
+                    skuMediaDO.setMediaType(1);
+                    skuMediaDO.setMediaUrl("https://img12.360buyimg.com/n1/s450x450_" + src);
+                    skuMediaDO.setSort(i1 + 1);
+                    skuMediaDO.setCreator(1L);
+                    skuMediaDO.setModifier(1L);
+                    skuMediaMapper.insert(skuMediaDO);
+                }
+            }
+
+
+            // 商品属性值
+            JSONObject productSpe = new JSONObject();
+            JSONObject skuSpe = new JSONObject();
+            // sku的销售规格
+            if (sku.getElementsByClass("li p-choose") != null) {
+                for (Element byClass : sku.getElementsByClass("li p-choose")) {
+                    String dt = byClass.attr("data-type");
+                    String s = "手机 / 运营商 / 数码" + "_" + dt.trim();
+                    AttributeDO exists = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getName, s));
+                    if (exists == null) {
+                        continue;
+                    }
+
+                    JSONArray jsonArray = new JSONArray();
+                    for (Element item : byClass.getElementsByClass("item")) {
+                        JSONObject jsonObject = new JSONObject();
+                        String attributeValue = item.attr("data-value");
+                        jsonObject.put("value", attributeValue);
+                        String attributePic = null;
+                        if (item.getElementsByTag("img") != null &&
+                                item.getElementsByTag("img").size() > 0) {
+                            attributePic = "https:" + item.getElementsByTag("img").first().attr("src");
+                            jsonObject.put("pic", attributePic);
+                        }
+
+                        if (item.attr("data-sku").equals(skuElement.attr("data-sku"))) {
+                            skuSpe.put(dt.trim(), attributeValue);
+                        }
+
+                        ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
+                        productAttributeValueDO.setProductId(productDO.getId());
+                        productAttributeValueDO.setAttributeId(exists.getId());
+                        productAttributeValueDO.setIsSellingPoint("N");
+                        productAttributeValueDO.setIsSpecifications("Y");
+                        productAttributeValueDO.setAttributeValue(attributeValue);
+
+                        productAttributeValueDO.setPic(attributePic);
+                        productAttributeValueDO.setCreator(1L);
+                        productAttributeValueDO.setModifier(1L);
+                        productAttributeValueMapper.insert(productAttributeValueDO);
+                        jsonArray.add(jsonObject);
+
+                        // 存储 sku 属性值
+                        SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
+                        skuAttributeValueDO.setSkuId(skuDO.getId());
+                        skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
+                        skuAttributeValueDO.setCreator(1L);
+                        skuAttributeValueDO.setModifier(1L);
+                        skuAttributeValueMapper.insert(skuAttributeValueDO);
+
+
+                    }
+                    productSpe.put(dt, jsonArray);
+                }
+            }
+
+            // sku详情页的卖点
+            JSONObject salePoint = new JSONObject();
+            if (sku.getElementsByClass("parameter2 p-parameter-list") != null
+                    && sku.getElementsByClass("parameter2 p-parameter-list").size() > 0) {
+                Element first = sku.getElementsByClass("parameter2 p-parameter-list").first();
+                for (Element param : first.getElementsByTag("li")) {
+                    String[] split = param.text().split("：");
+
+                    String at = split[0].trim();
+
+                    String vt = split[1].trim();
+
+                    String s = "手机 / 运营商 / 数码" + "_" + at;
+                    AttributeDO exists = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getName, s));
+                    if (exists == null) {
+                        continue;
+                    }
+                    salePoint.put(at, vt);
+                    ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
+                    productAttributeValueDO.setProductId(productDO.getId());
+                    productAttributeValueDO.setAttributeId(exists.getId());
+                    productAttributeValueDO.setIsSellingPoint("Y");
+                    productAttributeValueDO.setIsSpecifications("N");
+                    productAttributeValueDO.setAttributeValue(vt);
+                    productAttributeValueDO.setCreator(1L);
+                    productAttributeValueDO.setModifier(1L);
+                    productAttributeValueMapper.insert(productAttributeValueDO);
+
+                    // 存储 sku 属性值
+                    SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
+                    skuAttributeValueDO.setSkuId(skuDO.getId());
+                    skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
+                    skuAttributeValueDO.setCreator(1L);
+                    skuAttributeValueDO.setModifier(1L);
+                    skuAttributeValueMapper.insert(skuAttributeValueDO);
+                }
+            }
+
+
+            // sku详情页的更多参数
+            JSONArray param = new JSONArray();
+            Elements Ptable = sku.getElementsByClass("Ptable-item");
+            if (Ptable != null && Ptable.size() > 0) {
+                for (Element table : Ptable) {
+
+                    JSONObject type = new JSONObject();
+                    String typeName = table.getElementsByTag("h3").first().text();
+                    JSONArray value = new JSONArray();
+                    for (Element clearfix : table.getElementsByClass("clearfix")) {
+                        String dt = clearfix.getElementsByTag("dt").first().text();
+                        String s ="手机 / 运营商 / 数码" + "_" + dt.trim();
+                        AttributeDO exists = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getName, s));
+                        if (exists == null) {
                             continue;
                         }
 
-                        Elements elementsByClass = br.getElementsByClass("gl-i-wrap j-sku-item");
-                        if (elementsByClass.size() == 0) {
-                            if (br.getElementsByClass("gl-item").size() == 0) {
-                                continue;
-                            }
-                            elementsByClass = br.getElementsByClass("gl-item").first().getElementsByClass("gl-i-wrap  j-sku-item");
-                            if (elementsByClass.first() == null) {
-                                continue;
-                            }
+                        String attributeValue = clearfix.getElementsByTag("dd").not(".Ptable-tips").first().text().trim();
+                        ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
+                        productAttributeValueDO.setProductId(productDO.getId());
+                        productAttributeValueDO.setAttributeId(exists.getId());
+                        productAttributeValueDO.setIsSellingPoint("N");
+                        productAttributeValueDO.setIsSpecifications("N");
+                        productAttributeValueDO.setAttributeValue(attributeValue);
+                        productAttributeValueDO.setCreator(1L);
+                        productAttributeValueDO.setModifier(1L);
+                        productAttributeValueMapper.insert(productAttributeValueDO);
+
+                        // 存储 sku 属性值
+                        SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
+                        skuAttributeValueDO.setSkuId(skuDO.getId());
+                        skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
+                        skuAttributeValueDO.setCreator(1L);
+                        skuAttributeValueDO.setModifier(1L);
+                        skuAttributeValueMapper.insert(skuAttributeValueDO);
+
+                        JSONObject obj = new JSONObject();
+
+                        obj.put("key", dt);
+                        obj.put("value", attributeValue);
+                        String ext = null;
+                        if (clearfix.getElementsByClass("content") != null
+                                && clearfix.getElementsByClass("content").size() > 0) {
+                            ext = clearfix.getElementsByClass("content").first().text().trim();
                         }
-
-
-                        int size = 50;
-                        if (k > 8) {
-                            size = 10;
-                        }
-                        int p = 1;
-                        for (Element skuElement : elementsByClass) {
-
-                            if (p > size) {
-                                p++;
-                                break;
-                            }
-
-                            String pic = "https:" + skuElement.getElementsByTag("img").first().attr("src");
-
-                            String skuUrl = "https://item.jd.com/" + skuElement.attr("data-sku") + ".html#product-detail";
-                            Document sku = null;
-                            try {
-                                sku = Jsoup.connect(skuUrl).get();
-                            } catch (Exception e) {
-                                try {
-                                    FileOutputStream out = new FileOutputStream("D:/Product.txt", true);
-                                    OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
-                                    BufferedWriter bufWrite = new BufferedWriter(outWriter);
-                                    bufWrite.write("读取商品失败," + caName + "," + skuUrl);
-                                    bufWrite.newLine();
-                                    bufWrite.close();
-                                    outWriter.close();
-                                    out.close();
-                                } catch (Exception e1) {
-                                }
-                                continue;
-                            }
-
-
-                            String productName = sku.getElementsByClass("item ellipsis").first().text();
-
-                            // 新增或修改商品
-                            SkuDO existsSku = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getJdId, skuElement.attr("data-sku")));
-                            if (existsSku != null){
-                                continue;
-                            }
-
-                            ProductDO productDO = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getName, productName));
-                            if (productDO == null) {
-                                productDO = new ProductDO();
-                                productDO.setMerchantsId(1L);
-                                productDO.setCategoryId(String.valueOf(categoryDO.getId()));
-                                productDO.setCascadeCategoryId(categoryDO.getPath());
-
-                                String brandName = sku.getElementById("parameter-brand").getElementsByTag("a").first().text();
-                                BrandDO brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, brandName));
-                                if (brandDO == null) {
-                                    brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getEnglishName, brandName));
-                                }
-                                productDO.setBrandId(brandDO != null ? brandDO.getId() : null);
-                                productDO.setFreightTemplateId(1L);
-                                productDO.setProductNo(NoUtil.generateProductNo());
-                                productDO.setName(productName);
-                                productDO.setPic(pic);
-                                for (Element param : sku.getElementsByClass("parameter2 p-parameter-list").first().getElementsByTag("li")) {
-                                    if (param.text().contains("商品毛重")) {
-                                        if (param.text().contains("kg")) {
-                                            productDO.setUnit("kg");
-                                            String title = param.attr("title");
-                                            title = title.substring(0, title.length() - 2);
-                                            productDO.setWeight(new BigDecimal(title));
-                                        } else if (param.text().contains("g")) {
-                                            productDO.setUnit("g");
-                                            String title = param.attr("title");
-                                            title = title.substring(0, title.length() - 1);
-                                            productDO.setWeight(new BigDecimal(title));
-                                        }
-                                        break;
-                                    }
-
-                                }
-                                productDO.setCreator(1L);
-                                productDO.setModifier(1L);
-                                System.out.println("=====新增商品=====");
-                                System.out.println(JSONObject.toJSONString(productDO, true));
-                            } else {
-                                ArrayList<String> strings = Lists.newArrayList(productDO.getCategoryId().split(","));
-                                if (!strings.contains(categoryDO.getId() + "")) {
-                                    productDO.setCategoryId(productDO.getCategoryId() + "," + categoryDO.getId());
-                                    productDO.setCascadeCategoryId(productDO.getCascadeCategoryId() + "," + categoryDO.getPath());
-                                }
-                                System.out.println("=====修改商品=====");
-
-                                System.out.println(JSONObject.toJSONString(productDO, true));
-                            }
-
-
-                            // 新增sku
-                            System.out.println("=====新增sku=====");
-                            List<SkuDO> skuDOS = skuMapper.selectList(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productDO.getId()));
-                            String skuName = sku.getElementsByClass("sku-name").first().text();
-                            SkuDO skuDO = new SkuDO();
-                            skuDO.setJdId(skuElement.attr("data-sku"));
-                            skuDO.setProductId(productDO.getId());
-                            skuDO.setMerchantsId(1L);
-                            skuDO.setCategoryId(productDO.getCategoryId());
-                            skuDO.setBrandId(productDO.getBrandId());
-                            skuDO.setSkuNo(NoUtil.generateSkuNo());
-                            skuDO.setName(skuName);
-                            String subName = sku.getElementsByClass("item hide").first().attr("title");
-                            skuDO.setSubName(subName);
-                            skuDO.setRemark(skuUrl);
-                            skuDO.setPic(productDO.getPic());
-                            String s1 = httpClientUtil.get("https://p.3.cn/prices/mgets?skuids=J_" + skuElement.attr("data-sku"));
-                            JSONObject jsonObject1 = JSONArray.parseArray(s1).getJSONObject(0);
-
-                            skuDO.setPrice(jsonObject1.getBigDecimal("p"));
-                            skuDO.setMarketPrice(jsonObject1.getBigDecimal("op"));
-                            skuDO.setStock(10000);
-                            skuDO.setLowStock(100);
-                            skuDO.setLockStock(0);
-                            skuDO.setSort(skuDOS.size() + 1);
-                            skuDO.setPublishStatus("Y");
-                            skuDO.setOnPublishTime(new Date());
-                            skuDO.setRecommendStatus("Y");
-                            skuDO.setNewStatus("Y");
-                            skuDO.setPreviewStatus("Y");
-                            skuDO.setAuditStatus(2);
-                            skuDO.setCascadeCategoryId(productDO.getCascadeCategoryId());
-                            skuDO.setCreator(1L);
-                            skuDO.setModifier(1L);
-                            System.out.println(JSONObject.toJSONString(skuDO, true));
-
-                            // 存储sku图片
-                            System.out.println("=====新增sku图片=====");
-
-                            String script = sku.select("script").not("[async]").first().data();
-                            if (StrUtil.isNotBlank(script)) {
-                                String other_exts = StrUtil.subBetween(script, "imageList: ", "cat: ").trim();
-                                String sub = StrUtil.sub(other_exts, 0, other_exts.length() - 1);
-                                JSONArray jsonArray = JSONArray.parseArray(sub);
-                                for (int i1 = 0; i1 < jsonArray.size(); i1++) {
-                                    String src = jsonArray.getString(i1);
-                                    SkuMediaDO skuMediaDO = new SkuMediaDO();
-                                    skuMediaDO.setProductId(productDO.getId());
-                                    skuMediaDO.setSkuId(skuDO.getId());
-                                    skuMediaDO.setMediaType(1);
-                                    skuMediaDO.setMediaUrl(src);
-                                    skuMediaDO.setSort(i1 + 1);
-                                    skuMediaDO.setCreator(1L);
-                                    skuMediaDO.setModifier(1L);
-                                    System.out.println(JSONObject.toJSONString(skuMediaDO, true));
-
-                                }
-                            }
-
-
-                            // 商品属性值
-                            JSONObject skuSpe = new JSONObject();
-                            // sku的销售规格
-                            System.out.println("=====新增sku销售规格=====");
-
-                            if (sku.getElementsByClass("li p-choose") != null) {
-                                for (Element byClass : sku.getElementsByClass("li p-choose")) {
-                                    String dt = byClass.attr("data-type");
-                                    String s = oneCategory.text().trim() + "_" + dt.trim();
-                                    AttributeDO exists = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getName, s));
-                                    if (exists == null) {
-                                        continue;
-                                    }
-
-                                    JSONArray jsonArray = new JSONArray();
-                                    for (Element item : byClass.getElementsByClass("item")) {
-                                        JSONObject jsonObject = new JSONObject();
-                                        String attributeValue = item.attr("data-value");
-                                        jsonObject.put("value", attributeValue);
-                                        String attributePic = null;
-                                        if (item.getElementsByTag("img") != null &&
-                                                item.getElementsByTag("img").size() > 0) {
-                                            attributePic = item.getElementsByTag("img").first().attr("src");
-                                            jsonObject.put("pic", attributePic);
-                                        }
-
-                                        ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
-                                        productAttributeValueDO.setProductId(productDO.getId());
-                                        productAttributeValueDO.setAttributeId(exists.getId());
-                                        productAttributeValueDO.setIsSellingPoint("N");
-                                        productAttributeValueDO.setIsSpecifications("Y");
-                                        productAttributeValueDO.setAttributeValue(attributeValue);
-
-                                        productAttributeValueDO.setPic(attributePic);
-                                        productAttributeValueDO.setCreator(1L);
-                                        productAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(productAttributeValueDO, true));
-
-                                        jsonArray.add(jsonObject);
-
-                                        // 存储 sku 属性值
-                                        SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
-                                        skuAttributeValueDO.setSkuId(skuDO.getId());
-                                        skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
-                                        skuAttributeValueDO.setCreator(1L);
-                                        skuAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(skuAttributeValueDO, true));
-
-                                    }
-                                    skuSpe.put(dt, jsonArray);
-                                }
-                            }
-
-                            // sku详情页的卖点
-                            System.out.println("=====新增sku卖点=====");
-
-                            JSONObject salePoint = new JSONObject();
-                            if (sku.getElementsByClass("parameter2 p-parameter-list") != null
-                                    && sku.getElementsByClass("parameter2 p-parameter-list").size() > 0) {
-                                Element first = sku.getElementsByClass("parameter2 p-parameter-list").first();
-                                for (Element param : first.getElementsByTag("li")) {
-                                    String[] split = param.text().split("：");
-
-                                    String at = split[0].trim();
-
-                                    String vt = split[1].trim();
-                                    String s = oneCategory.text().trim() + "_" + at;
-                                    AttributeDO exists = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getName, s));
-                                    if (exists == null) {
-                                        continue;
-                                    }
-                                    salePoint.put(at, vt);
-                                    ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
-                                    productAttributeValueDO.setProductId(productDO.getId());
-                                    productAttributeValueDO.setAttributeId(exists.getId());
-                                    productAttributeValueDO.setIsSellingPoint("Y");
-                                    productAttributeValueDO.setIsSpecifications("N");
-                                    productAttributeValueDO.setAttributeValue(vt);
-                                    productAttributeValueDO.setCreator(1L);
-                                    productAttributeValueDO.setModifier(1L);
-                                    System.out.println(JSONObject.toJSONString(productAttributeValueDO, true));
-
-
-                                    // 存储 sku 属性值
-                                    SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
-                                    skuAttributeValueDO.setSkuId(skuDO.getId());
-                                    skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
-                                    skuAttributeValueDO.setCreator(1L);
-                                    skuAttributeValueDO.setModifier(1L);
-                                    System.out.println(JSONObject.toJSONString(skuAttributeValueDO, true));
-
-                                }
-                            }
-
-
-                            // sku详情页的更多参数
-                            System.out.println("=====新增sku更多参数=====");
-
-                            JSONArray param = new JSONArray();
-                            Elements Ptable = sku.getElementsByClass("Ptable-item");
-                            if (Ptable != null && Ptable.size() > 0) {
-                                for (Element table : Ptable) {
-
-                                    JSONObject type = new JSONObject();
-                                    String typeName = table.getElementsByTag("h3").first().text();
-                                    JSONArray value = new JSONArray();
-                                    for (Element clearfix : table.getElementsByClass("clearfix")) {
-                                        String dt = clearfix.getElementsByTag("dt").first().text();
-                                        String s = oneCategory.text().trim() + "_" + dt.trim();
-                                        AttributeDO exists = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getName, s));
-                                        if (exists == null) {
-                                            continue;
-                                        }
-
-                                        String attributeValue = clearfix.getElementsByTag("dd").not(".Ptable-tips").first().text().trim();
-                                        ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
-                                        productAttributeValueDO.setProductId(productDO.getId());
-                                        productAttributeValueDO.setAttributeId(exists.getId());
-                                        productAttributeValueDO.setIsSellingPoint("N");
-                                        productAttributeValueDO.setIsSpecifications("N");
-                                        productAttributeValueDO.setAttributeValue(attributeValue);
-                                        productAttributeValueDO.setCreator(1L);
-                                        productAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(productAttributeValueDO, true));
-
-                                        // 存储 sku 属性值
-                                        SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
-                                        skuAttributeValueDO.setSkuId(skuDO.getId());
-                                        skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
-                                        skuAttributeValueDO.setCreator(1L);
-                                        skuAttributeValueDO.setModifier(1L);
-                                        System.out.println(JSONObject.toJSONString(skuAttributeValueDO, true));
-                                        JSONObject obj = new JSONObject();
-
-                                        obj.put("key", dt);
-                                        obj.put("value", attributeValue);
-                                        String ext = null;
-                                        if (clearfix.getElementsByClass("content") != null
-                                                && clearfix.getElementsByClass("content").size() > 0) {
-                                            ext = clearfix.getElementsByClass("content").first().text().trim();
-                                        }
-                                        obj.put("ext", ext);
-                                        value.add(obj);
-                                    }
-                                    type.put(typeName, value);
-                                    param.add(type);
-                                }
-                            }
-
-
-                            // 存储sku ext
-                            SkuExtDO skuExtDO = new SkuExtDO();
-                            skuExtDO.setSkuId(skuDO.getId());
-                            // skuExtDO.setDetailHtml("");
-                            skuExtDO.setSkuSpecificationsJson(skuSpe.toJSONString());
-                            skuExtDO.setSkuSalePointJson(salePoint.toJSONString());
-                            skuExtDO.setSkuParamJson(param.toJSONString());
-                            skuExtDO.setCreator(1L);
-                            skuExtDO.setModifier(1L);
-                            System.out.println("=====新增sku ext=====");
-
-                            System.out.println(JSONObject.toJSONString(skuExtDO, true));
-                        }
-
+                        obj.put("ext", ext);
+                        value.add(obj);
                     }
+                    type.put(typeName, value);
+                    param.add(type);
                 }
             }
-            i++;
+
+
+            // 存储sku ext
+            SkuExtDO skuExtDO = new SkuExtDO();
+            skuExtDO.setSkuId(skuDO.getId());
+
+            String data = sku.getElementById("J-detail-content").data();
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(new ByteArrayInputStream(data.getBytes(Charset.forName("utf8"))), Charset.forName("utf8")));
+
+            StringBuilder detailHtml = new StringBuilder();
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("background-image:url(")) {
+                    detailHtml.append("<br>")
+                            .append("<img src=\"")
+                            .append("https:")
+                            .append(StrUtil.subBetween(line, "background-image:url(", ")"))
+                            .append("\">")
+                    ;
+                }
+            }
+            skuExtDO.setDetailHtml(detailHtml.toString());
+            skuExtDO.setSkuSpecificationsJson(skuSpe.toJSONString());
+            skuExtDO.setSkuSalePointJson(salePoint.toJSONString());
+            skuExtDO.setSkuParamJson(param.toJSONString());
+            skuExtDO.setCreator(1L);
+            skuExtDO.setModifier(1L);
+            skuExtMapper.insert(skuExtDO);
+
+            productDO.setSpecificationsJson(productSpe.toJSONString());
+            productMapper.updateById(productDO);
         }
-        k++;
+
 
     }
 

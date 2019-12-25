@@ -2,22 +2,23 @@ package com.dmall.pms.service.impl.attribute.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
-import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
-import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
-import com.dmall.pms.generator.dataobject.AttributeDO;
-import com.dmall.pms.generator.mapper.AttributeMapper;
+import com.dmall.common.enums.base.YNEnum;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
+import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
+import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
+import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.generator.dataobject.AttributeDO;
+import com.dmall.pms.generator.dataobject.CategoryDO;
+import com.dmall.pms.generator.mapper.CategoryAttributeMapper;
+import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
+import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -28,28 +29,39 @@ import java.util.List;
 public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeRequestDTO, AttributeDO, Long> {
 
     @Autowired
-    private AttributeMapper attributeMapper;
-
-    @Autowired
-    private AttributeTypeCacheService attributeTypeCacheService;
+    private CategoryCacheService categoryCacheService;
 
     @Autowired
     private AttributeCacheService attributeCacheService;
 
     @Override
     public BaseResult<Long> validate(SaveAttributeRequestDTO requestDTO) {
-        AttributeDO attributeDO = attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery()
-                .eq(AttributeDO::getAttributeTypeId, requestDTO.getAttributeTypeId())
-                .eq(AttributeDO::getName, requestDTO.getName()));
-        // 属性分类下的属性名称必须唯一
-        if (attributeDO != null) {
-            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_NAME_UNIQUE);
+        // 分类id必须存在
+        CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
+        if (categoryDO == null) {
+            return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_EXIST);
         }
-        // 属性分类id存在
-        AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(requestDTO.getAttributeTypeId());
-        if (attributeTypeDO == null) {
-            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_TYPE_EXIST);
+
+        // 必须为1级分类
+        if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
+            return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_INVALID);
         }
+
+        // 从列表获取 不支持新增 可选值为空
+        if (requestDTO.getInputType().equals(InputTypeEnum.LIST.getCode()) && CollUtil.isEmpty(requestDTO.getInputList())
+                && YNEnum.N.getCode().equals(requestDTO.getHandAddStatus())) {
+            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_DATA_INVALID);
+        }
+
+        List<String> inputList = requestDTO.getInputList();
+        if (CollUtil.isNotEmpty(inputList)){
+            HashSet<String> strings = new HashSet<>(inputList);
+            if (strings.size() != inputList.size()){
+                return ResultUtil.fail(AttributeErrorEnum.INPUT_LIST_INVALID);
+            }
+        }
+
+
         return ResultUtil.success();
     }
 
@@ -63,9 +75,7 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
     @Override
     protected void customerConvertDo(AttributeDO result, SaveAttributeRequestDTO requestDTO) {
         result.setInputList(CollUtil.join(requestDTO.getInputList(), StrUtil.COMMA));
-        AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(requestDTO.getAttributeTypeId());
-        // 设置商品分类id 值可能为null
-//        result.setCategoryId(attributeTypeDO.getCategoryId());
-//        result.setCascadeCategoryId(attributeTypeDO.getCascadeCategoryId());
+        CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
+        result.setName(StrUtil.format("{}_{}", categoryDO.getName(), requestDTO.getShowName()));
     }
 }

@@ -26,7 +26,7 @@ public class LayuiPage<T> {
     @ApiModelProperty(value = "返回消息",position = 2)
     private String msg = "请求成功";
 
-    @ApiModelProperty(value = "返回记录数",position = 3)
+    @ApiModelProperty(value = "返回总记录数",position = 3)
     private Long count;
 
     @ApiModelProperty(value = "返回数据",position = 4)

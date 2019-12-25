@@ -8,6 +8,7 @@ import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.response.PageBrandResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -29,27 +30,27 @@ public interface BrandService {
     @PostMapping("/")
     BaseResult<Long> save(@Valid @RequestBody SaveBrandRequestDTO requestDTO);
 
-    @ApiOperation(value = "修改品牌")
-    @PutMapping("/")
-    BaseResult<Long> update(@Valid @RequestBody UpdateBrandRequestDTO requestDTO);
-
-    @ApiOperation(value = "品牌分页")
-    @PostMapping("/page")
-    BaseResult<LayuiPage<CommonBrandResponseDTO>> page(@Valid @RequestBody PageBrandRequestDTO pageRequestDTO);
-
-    @ApiOperation(value = "品牌列表")
-    @PostMapping("/list")
-    BaseResult<List<CommonBrandResponseDTO>> list(@RequestBody ListBrandRequestDTO pageRequestDTO);
-
     @ApiOperation(value = "删除品牌")
     @ApiImplicitParam(name = "id", value = "品牌id", required = true, dataType = "int", paramType = "path")
     @DeleteMapping("/{id}")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
+    @ApiOperation(value = "修改品牌")
+    @PutMapping("/")
+    BaseResult<Long> update(@Valid @RequestBody UpdateBrandRequestDTO requestDTO);
+
     @ApiOperation(value = "根据id查询品牌")
     @ApiImplicitParam(name = "id", value = "品牌id", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{id}")
     BaseResult<CommonBrandResponseDTO> get(@PathVariable("id") Long id);
+
+    @ApiOperation(value = "品牌列表")
+    @PostMapping("/list")
+    BaseResult<List<CommonBrandResponseDTO>> list(@RequestBody ListBrandRequestDTO pageRequestDTO);
+
+    @ApiOperation(value = "品牌分页")
+    @PostMapping("/page")
+    BaseResult<LayuiPage<PageBrandResponseDTO>> page(@Valid @RequestBody PageBrandRequestDTO pageRequestDTO);
 
     @ApiOperation(value = "上传品牌logo")
     @PostMapping("/uploadLogo")

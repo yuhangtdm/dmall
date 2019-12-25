@@ -16,8 +16,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-dao-mybatisplus</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
         </dependency>
     </dependencies>
 

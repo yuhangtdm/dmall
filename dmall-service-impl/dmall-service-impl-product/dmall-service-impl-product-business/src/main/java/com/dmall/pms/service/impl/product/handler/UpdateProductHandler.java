@@ -7,10 +7,8 @@ import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.attribute.AttributeTypeDTO;
 import com.dmall.pms.api.dto.product.request.save.ProductAttributeDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
-import com.dmall.pms.generator.dataobject.ProductAttributeDO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.generator.service.IProductAttributeService;
 import com.dmall.pms.service.impl.product.attribute.ProductAttributeBuilder;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
@@ -33,8 +31,8 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     @Autowired
     private ProductValidate productValidate;
 
-    @Autowired
-    private IProductAttributeService iProductAttributeService;
+//    @Autowired
+//    private IProductAttributeService iProductAttributeService;
 
     @Override
     public BaseResult<Long> validate(UpdateProductRequestDTO requestDTO) {
@@ -63,11 +61,11 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         // 更新商品
         productMapper.updateById(productDO);
         // 更新商品-属性
-        updateProductAttribute(requestDTO);
+//        updateProductAttribute(requestDTO);
         return ResultUtil.success(requestDTO.getId());
     }
 
-    private void updateProductAttribute(UpdateProductRequestDTO requestDTO) {
+  /*  private void updateProductAttribute(UpdateProductRequestDTO requestDTO) {
         // 先删后增
         iProductAttributeService.remove(Wrappers.<ProductAttributeDO>lambdaQuery()
                 .eq(ProductAttributeDO::getProductId, requestDTO.getId()));
@@ -81,6 +79,6 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
             ProductAttributeBuilder.buildAttributeDOs(productAttributeDOS, requestDTO.getId(), param.getAttributeTypeId(), param.getAttributes());
         }
         iProductAttributeService.saveBatch(productAttributeDOS);
-    }
+    }*/
 
 }

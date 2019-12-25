@@ -48,17 +48,14 @@ public class DeleteBrandHandler extends AbstractCommonHandler<Long, BrandDO, Lon
         if (CollUtil.isNotEmpty(productDOS)) {
             return ResultUtil.fail(BrandErrorEnum.CONTAINS_PRODUCT_ERROR);
         }
-        // 如果品牌下有商品分类 则不能删除
-        List<CategoryBrandDO> categoryBrandDOS = categoryBrandMapper.selectList(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getBrandId, id));
-        if (CollUtil.isNotEmpty(categoryBrandDOS)) {
-            return ResultUtil.fail(BrandErrorEnum.CONTAINS_ATTRIBUTE_TYPE_ERROR);
-        }
         return ResultUtil.success();
     }
 
     @Override
     public BaseResult<Long> processor(Long id) {
+        // 删除品牌以及和商品分类的对应关系
         brandCacheService.deleteById(id);
+        categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getBrandId, id));
         return ResultUtil.success(id);
     }
 

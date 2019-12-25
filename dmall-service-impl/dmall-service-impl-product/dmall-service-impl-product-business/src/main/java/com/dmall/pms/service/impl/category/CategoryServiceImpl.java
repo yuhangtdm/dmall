@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.category;
 
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
@@ -51,11 +52,13 @@ public class CategoryServiceImpl implements CategoryService {
     private SetAttributeTypeHandler setAttributeTypeHandler;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> save(@RequestBody SaveCategoryRequestDTO requestDTO) {
         return saveCategoryHandler.handler(requestDTO);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> delete(Long id) {
         return deleteCategoryHandler.handler(id);
     }
@@ -90,5 +93,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(rollbackFor = Exception.class)
     public BaseResult<Void> setAttributeType(@RequestBody SetAttributeTypeRequestDTO requestDTO) {
         return setAttributeTypeHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Void> setAttribute(@Valid SetAttributeRequestDTO requestDTO) {
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import com.dmall.common.model.result.BaseResult;
 import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
@@ -27,23 +28,23 @@ public interface CategoryService {
     @PostMapping("/")
     BaseResult<Long> save(@Valid @RequestBody SaveCategoryRequestDTO requestDTO);
 
-    @ApiOperation(value = "修改分类")
-    @PutMapping("/")
-    BaseResult<Long> update(@Valid @RequestBody UpdateCategoryRequestDTO requestDTO);
-
-    @ApiOperation(value = "分类列表")
-    @PostMapping("/list")
-    BaseResult<List<CommonCategoryResponseDTO>> list(@RequestBody ListCategoryRequestDTO requestDTO);
-
     @ApiOperation(value = "删除分类")
     @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "int", paramType = "path")
     @DeleteMapping("/{id}")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
+    @ApiOperation(value = "修改分类")
+    @PutMapping("/")
+    BaseResult<Long> update(@Valid @RequestBody UpdateCategoryRequestDTO requestDTO);
+
     @ApiOperation(value = "根据id查询分类")
     @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{id}")
     BaseResult<CommonCategoryResponseDTO> get(@PathVariable("id") Long id);
+
+    @ApiOperation(value = "分类列表")
+    @PostMapping("/list")
+    BaseResult<List<CommonCategoryResponseDTO>> list(@RequestBody ListCategoryRequestDTO requestDTO);
 
     @ApiOperation(value = "分类zTree树")
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")
@@ -57,4 +58,8 @@ public interface CategoryService {
     @ApiOperation(value = "设置属性分类")
     @PostMapping("/setAttributeType")
     BaseResult<Void> setAttributeType(@Valid @RequestBody SetAttributeTypeRequestDTO requestDTO);
+
+    @ApiOperation(value = "设置属性")
+    @PostMapping("/setAttribute")
+    BaseResult<Void> setAttribute(@Valid @RequestBody SetAttributeRequestDTO requestDTO);
 }

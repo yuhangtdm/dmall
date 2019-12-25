@@ -7,7 +7,7 @@ import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.response.ListAttributeTypeResponseDTO;
+import com.dmall.pms.api.dto.attributetype.response.PageAttributeTypeResponseDTO;
 import com.dmall.pms.api.service.AttributeTypeService;
 import com.dmall.pms.service.impl.attributetype.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,12 +62,12 @@ public class AttributeTypeServiceImpl implements AttributeTypeService {
     }
 
     @Override
-    public BaseResult<List<ListAttributeTypeResponseDTO>> list(@RequestBody ListAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<List<CommonAttributeTypeResponseDTO>> list(@RequestBody ListAttributeTypeRequestDTO requestDTO) {
         return listAttributeTypeHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonAttributeTypeResponseDTO>> page(@RequestBody PageAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<LayuiPage<PageAttributeTypeResponseDTO>> page(@RequestBody PageAttributeTypeRequestDTO requestDTO) {
         return pageAttributeTypeHandler.handler(requestDTO);
     }
 

@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.dataobject.SkuAttributeDO;
-import com.dmall.pms.generator.mapper.SkuAttributeMapper;
+import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +26,18 @@ public class DeleteAttributeTypeHandler extends AbstractCommonHandler<Long, Attr
     private AttributeTypeCacheService attributeTypeCacheService;
 
     @Autowired
-    private SkuAttributeMapper skuAttributeMapper;
+    private AttributeMapper attributeMapper;
+
 
     @Override
     public BaseResult<Long> validate(Long id) {
-        // todo
-       /* List<SkuAttributeDO> skuAttributeDOS = skuAttributeMapper.selectList(Wrappers.<SkuAttributeDO>lambdaQuery()
-                .eq(SkuAttributeDO::getAttributeTypeId, id));
-        // 属性分类下不可有sku
-        if (CollUtil.isNotEmpty(skuAttributeDOS)) {
-            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_HAS_SKU);
+        AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(id);
+        if (attributeTypeDO == null) {
+            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
+        }
+//        List<AttributeDO> attributeDOS = attributeMapper.selectList(Wrappers.<AttributeDO>lambdaQuery().eq(AttributeDO::getAttributeTypeId, id));
+       /* if (CollUtil.isNotEmpty(attributeDOS)) {
+            return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_HAS_ATTRIBUTE);
         }*/
         return ResultUtil.success();
     }

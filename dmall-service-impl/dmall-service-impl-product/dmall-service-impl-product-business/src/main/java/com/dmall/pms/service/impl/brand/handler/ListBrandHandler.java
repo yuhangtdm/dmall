@@ -44,6 +44,7 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
         } else {
             if (requestDTO.getCategoryId() != null){
                 // 存在分类id时 需要连表查询
+                // todo 待测试
                 brandDOS = brandCategoryMapper.selectBrand(requestDTO);
             }else {
                 LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()

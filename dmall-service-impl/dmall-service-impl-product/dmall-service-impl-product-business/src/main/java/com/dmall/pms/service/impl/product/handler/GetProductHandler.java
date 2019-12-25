@@ -47,9 +47,9 @@ public class GetProductHandler extends AbstractCommonHandler<Long, ProductDO, Ge
      * 设置销售规格和参数
      */
     private void setSaleAttribute(GetProductResponseDTO responseDTO, Long id) {
-        GetProductAttributeResponseDTO attributeResponseDTO = productAttributeSupport.setSaleAttribute(id);
-        responseDTO.setSpecifications(attributeResponseDTO.getSpecifications());
-        responseDTO.setParams(attributeResponseDTO.getParams());
+//        GetProductAttributeResponseDTO attributeResponseDTO = productAttributeSupport.setSaleAttribute(id);
+//        responseDTO.setSpecifications(attributeResponseDTO.getSpecifications());
+//        responseDTO.setParams(attributeResponseDTO.getParams());
     }
 
 }

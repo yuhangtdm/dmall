@@ -11,10 +11,8 @@ import com.dmall.pms.api.dto.product.request.save.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.ProductAttributeDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.generator.dataobject.ProductAttributeDO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.generator.service.IProductAttributeService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.product.attribute.ProductAttributeBuilder;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
@@ -38,8 +36,6 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
     @Autowired
     private CategoryCacheService categoryCacheService;
 
-    @Autowired
-    private IProductAttributeService iProductAttributeService;
 
     @Autowired
     private ProductValidate productValidate;
@@ -61,8 +57,8 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         ProductDO productDO = buildProductDO(requestDTO);
         productMapper.insert(productDO);
         // 保存pms_attribute
-        List<ProductAttributeDO> productAttributeDOS = buildProductAttributeDOs(productDO.getId(), requestDTO.getAttribute());
-        iProductAttributeService.saveBatch(productAttributeDOS);
+//        List<ProductAttributeDO> productAttributeDOS = buildProductAttributeDOs(productDO.getId(), requestDTO.getAttribute());
+//        iProductAttributeService.saveBatch(productAttributeDOS);
         return ResultUtil.success(productDO.getId());
     }
 
@@ -84,7 +80,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
     /**
      * 构建销售属性
      */
-    private List<ProductAttributeDO> buildProductAttributeDOs(Long productId, ProductAttributeDTO attribute) {
+ /*   private List<ProductAttributeDO> buildProductAttributeDOs(Long productId, ProductAttributeDTO attribute) {
         List<ProductAttributeDO> productAttributeDOS = Lists.newArrayList();
         AttributeTypeDTO specifications = attribute.getSpecifications();
         // 构建销售规格
@@ -96,6 +92,6 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         }
         return productAttributeDOS;
     }
-
+*/
 
 }

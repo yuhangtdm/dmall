@@ -25,7 +25,7 @@ public class SetBrandRequestDTO implements Serializable {
     private Long categoryId;
 
     @ApiModelProperty(value = "品牌列表", required = true, position = 2)
-    @NotNull(message = "品牌列表不能为空")
     @Valid
+    @NotNull(message = "品牌列表不能为空")
     private List<BrandIdsDTO> brandIds;
 }

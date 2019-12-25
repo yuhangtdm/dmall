@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.pms.service.impl.attribute.mapper.AttributePageMapper">
+
+
+
+    <select id="pageAttribute" resultType="list">
+        select
+          a.id, a.attribute_type_id, a.name, a.show_name, a.input_type, a.input_list, a.hand_add_status, a.creator, a.gmt_created, a.modifier, a.gmt_modified, a.is_deleted
+        from pms_attribute a left join pms_category_attribute ca on a.id = ca.attribute_id
+        <where>
+            <if test="showName != null and showName != ''">
+                a.show_name like  '%${showName}%'
+            </if>
+            <if test="type != null ">
+                a.type = #{type}
+            </if>
+            <if test="inputType != null ">
+                a.input_type = #{inputType}
+            </if>
+            <if test="inputType != null ">
+                a.handAddStatus = #{inputType}
+            </if>
+            <if test="categoryId != null ">
+                ca.category_id = #{categoryId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

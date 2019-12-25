@@ -44,8 +44,7 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
             LambdaQueryWrapper<CategoryDO> queryWrapper = Wrappers.<CategoryDO>lambdaQuery()
                     .like(StrUtil.isNotBlank(requestDTO.getName()), CategoryDO::getName, requestDTO.getName())
                     .eq(ObjectUtil.isNotNull(requestDTO.getParentId()), CategoryDO::getParentId, requestDTO.getParentId())
-                    .eq(ObjectUtil.isNotNull(requestDTO.getLevel()), CategoryDO::getLevel,
-                            requestDTO.getLevel() != null ? requestDTO.getLevel() : 0)
+                    .eq(ObjectUtil.isNotNull(requestDTO.getLevel()), CategoryDO::getLevel, requestDTO.getLevel())
                     .orderByAsc(CategoryDO::getSort);
             categoryDOList = categoryMapper.selectList(queryWrapper);
         }

@@ -1,14 +1,9 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.dataobject.CategoryBrandDO;
-import com.dmall.pms.generator.dataobject.ProductDO;
-import com.dmall.pms.generator.mapper.AttributeTypeMapper;
-import com.dmall.pms.generator.mapper.CategoryBrandMapper;
-import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.generator.mapper.CategoryMapper;
+import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.generator.dataobject.*;
+import com.dmall.pms.generator.mapper.*;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
@@ -31,10 +26,13 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
     private CategoryMapper categoryMapper;
 
     @Autowired
-    private ProductMapper productMapper;
+    private CategorySkuMapper categorySkuMapper;
 
     @Autowired
     private CategoryBrandMapper categoryBrandMapper;
+
+    @Autowired
+    private CategoryAttributeMapper categoryAttributeMapper;
 
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
@@ -44,32 +42,41 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
 
     @Override
     public BaseResult<Long> validate(Long id) {
-        // 分类不存在时
+        // 分类不存在
         CategoryDO categoryDO = categoryMapper.selectById(id);
         if (categoryDO == null) {
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
         }
-        // 如果分类下有商品 则不可删除
-        List<ProductDO> productDOS = productMapper.selectList(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getCategoryId, id));
-        if (CollUtil.isNotEmpty(productDOS)) {
-            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_PRODUCT_ERROR);
+        // 删除1、2级分类必须没有子分类
+        if (categoryDO.getLevel() != LevelEnum.THREE.getCode()){
+            List<CategoryDO> categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getParentId, id));
+            if (CollUtil.isNotEmpty(categoryDOList)){
+                return ResultUtil.fail(CategoryErrorEnum.CONTAINS_SUB_CATEGORY_ERROR);
+            }
         }
-        // 如果分类下有品牌 则不可删除
-        List<CategoryBrandDO> categoryBrandDOS = categoryBrandMapper.selectList(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, id));
-        if (CollUtil.isNotEmpty(categoryBrandDOS)) {
-            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_BRAND_ERROR);
+        // 如果分类下有sku 则不可删除
+        List<CategorySkuDO> productDOS = categorySkuMapper.selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getCategoryId, id));
+        if (CollUtil.isNotEmpty(productDOS)) {
+            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_SKU_ERROR);
         }
         // 如果分类下有属性分类 则不可删除
         List<AttributeTypeDO> attributeTypeDOS = attributeTypeMapper.selectList(Wrappers.<AttributeTypeDO>lambdaQuery().eq(AttributeTypeDO::getCategoryId, id));
         if (CollUtil.isNotEmpty(attributeTypeDOS)) {
             return ResultUtil.fail(CategoryErrorEnum.CONTAINS_ATTRIBUTE_TYPE_ERROR);
         }
+        // 分类下有属性不可删除
+        List<CategoryAttributeDO> categoryAttributeDOS = categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery().eq(CategoryAttributeDO::getCategoryId, id));
+        if (CollUtil.isNotEmpty(categoryAttributeDOS)) {
+            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_ATTRIBUTE_ERROR);
+        }
         return ResultUtil.success();
     }
 
     @Override
     public BaseResult<Long> processor(Long id) {
+        // 删除商品分类以及和品牌的对应关系
         categoryCacheService.deleteById(id);
+        categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, id));
         return ResultUtil.success(id);
     }
 

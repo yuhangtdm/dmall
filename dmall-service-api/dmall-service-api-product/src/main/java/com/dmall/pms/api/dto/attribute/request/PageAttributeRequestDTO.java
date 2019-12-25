@@ -1,13 +1,15 @@
 package com.dmall.pms.api.dto.attribute.request;
 
+import com.dmall.component.web.entity.PageRequestDTO;
+import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
+import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
+import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.component.web.entity.PageRequestDTO;
-import java.util.*;
-import java.math.*;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 属性分页请求实体
@@ -16,42 +18,25 @@ import java.math.*;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageAttributeRequestDTO", description =  "属性分页请求实体")
-public class PageAttributeRequestDTO  extends PageRequestDTO {
+@ApiModel(value = "PageAttributeRequestDTO", description = "属性分页请求实体")
+public class PageAttributeRequestDTO extends PageRequestDTO {
 
-
-
-
-    @ApiModelProperty(value = "属性分类id", position = 2)
-    private Long attributeTypeId;
-
-    @ApiModelProperty(value = "商品分类id", position = 3)
+    @ApiModelProperty(value = "三级分类id", position = 1)
     private Long categoryId;
 
-    @ApiModelProperty(value = "商品分类path", position = 4)
-    private String cascadeCategoryId;
+    @ApiModelProperty(value = "展示名称", position = 2)
+    private String showName;
 
-    @ApiModelProperty(value = "名称", position = 5)
-    private String name;
+    @ApiModelProperty(value = "属性类型 1-普通属性;2-公共属性", position = 3)
+    @ValueInEnum(TypeEnum.class)
+    private Integer type;
 
-    @ApiModelProperty(value = "备注", position = 6)
-    private String remark;
-
-    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 7)
+    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 4)
+    @ValueInEnum(InputTypeEnum.class)
     private Integer inputType;
 
-    @ApiModelProperty(value = "可选值列表 以逗号隔开", position = 8)
-    private String inputList;
-
-    @ApiModelProperty(value = "排序", position = 9)
-    private Integer sort;
-
-    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 10)
+    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 5)
+    @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
-
-
-
-
-
 
 }

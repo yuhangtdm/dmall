@@ -30,8 +30,8 @@ public class GetProductAttributeHandler extends AbstractCommonHandler<Long, Prod
         if (productDO == null) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NOT_EXIST);
         }
-        GetProductAttributeResponseDTO responseDTO = productAttributeSupport.setSaleAttribute(id);
-        return ResultUtil.success(responseDTO);
+//        GetProductAttributeResponseDTO responseDTO = productAttributeSupport.setSaleAttribute(id);
+        return ResultUtil.success();
     }
 
 }

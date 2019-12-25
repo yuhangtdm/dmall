@@ -102,6 +102,11 @@ public class ProductDO implements Serializable {
     private String addServices;
 
     /**
+     * 规格json
+     */
+    private String specificationsJson;
+
+    /**
      * 创建人
      */
     private Long creator;

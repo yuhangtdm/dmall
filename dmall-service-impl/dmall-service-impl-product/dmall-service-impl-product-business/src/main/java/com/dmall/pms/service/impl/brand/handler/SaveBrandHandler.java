@@ -28,6 +28,7 @@ public class SaveBrandHandler extends AbstractCommonHandler<SaveBrandRequestDTO,
     @Override
     public BaseResult<Long> validate(SaveBrandRequestDTO requestDTO) {
         BrandDO brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, requestDTO.getName()));
+        // 名称唯一
         if (brandDO != null) {
             return ResultUtil.fail(BrandErrorEnum.BRAND_NAME_UNIQUE);
         }

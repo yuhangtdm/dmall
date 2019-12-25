@@ -42,11 +42,6 @@ public class SkuDO implements Serializable {
     private Long merchantsId;
 
     /**
-     * 商品分类id,多个用逗号隔开
-     */
-    private String categoryId;
-
-    /**
      * 品牌id
      */
     private Long brandId;
@@ -155,12 +150,6 @@ public class SkuDO implements Serializable {
      * 优惠方式
      */
     private String preferentialWay;
-
-    /**
-     * 商品分类id集合,多个用逗号隔开
-     */
-    private String cascadeCategoryId;
-
 
     private String jdId;
 

@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.product.attribute;
 
 import com.dmall.pms.api.dto.product.request.attribute.AttributeDTO;
 import com.dmall.pms.api.dto.product.request.attribute.AttributeValueDTO;
-import com.dmall.pms.generator.dataobject.ProductAttributeDO;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class ProductAttributeBuilder {
      * @param attributeTypeId     属性分类id
      * @param attributeDTOS       属性列表
      */
-    public static void buildAttributeDOs(List<ProductAttributeDO> productAttributeDOS, Long productId,
+  /*  public static void buildAttributeDOs(List<ProductAttributeDO> productAttributeDOS, Long productId,
                                          Long attributeTypeId, List<AttributeDTO> attributeDTOS) {
         for (AttributeDTO specificationsAttribute : attributeDTOS) {
             for (AttributeValueDTO attributeValue : specificationsAttribute.getAttributeValues()) {
@@ -34,7 +33,7 @@ public class ProductAttributeBuilder {
                 productAttributeDOS.add(productAttributeDO);
             }
         }
-    }
+    }*/
 
 
 

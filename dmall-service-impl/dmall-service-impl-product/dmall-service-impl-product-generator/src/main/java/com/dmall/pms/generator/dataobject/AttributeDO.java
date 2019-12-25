@@ -31,11 +31,6 @@ public class AttributeDO implements Serializable {
     private Long id;
 
     /**
-     * 属性分类id,可以为null
-     */
-    private Long attributeTypeId;
-
-    /**
      * 名称
      */
     private String name;

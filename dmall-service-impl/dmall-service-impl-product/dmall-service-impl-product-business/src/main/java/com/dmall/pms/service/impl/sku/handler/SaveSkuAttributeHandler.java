@@ -8,12 +8,11 @@ import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
-import com.dmall.pms.generator.dataobject.SkuAttributeDO;
+import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuExtDO;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.generator.service.ISkuAttributeService;
 import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019/12/16 16:43
  */
 @Component
-public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttributeRequestDTO, SkuAttributeDO, Long> {
+public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttributeRequestDTO, SkuAttributeValueDO, Long> {
 
     @Autowired
     private SkuMapper skuMapper;
@@ -36,8 +35,8 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
     @Autowired
     private ProductValidate productValidate;
 
-    @Autowired
-    private ISkuAttributeService iSkuAttributeService;
+//    @Autowired
+//    private ISkuAttributeService iSkuAttributeService;
 
     @Autowired
     private ProductAttributeSupport productAttributeSupport;
@@ -57,10 +56,11 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
 
     @Override
     public BaseResult processor(SaveSkuAttributeRequestDTO requestDTO) {
-        return setProductAttribute(requestDTO.getSkuId(), requestDTO.getAttributeValueList());
+//        return setProductAttribute(requestDTO.getSkuId(), requestDTO.getAttributeValueList());
+        return null;
     }
 
-    public BaseResult setProductAttribute(Long skuId, List<Long> attributeValueList) {
+   /* public BaseResult setProductAttribute(Long skuId, List<Long> attributeValueList) {
         List<SkuAttributeDO> oldList = iSkuAttributeService.list(Wrappers.<SkuAttributeDO>lambdaQuery()
                 .eq(SkuAttributeDO::getSkuId, skuId));
 
@@ -113,7 +113,7 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
             skuExtMapper.updateById(skuExtDO);
         }
         return ResultUtil.success(skuId);
-    }
+    }*/
 
     public void changeProductAttribute(GetProductAttributeResponseDTO responseDTO, List<Long> attributeValueList) {
         responseDTO.getSpecifications().getAttributes().forEach(attribute -> {

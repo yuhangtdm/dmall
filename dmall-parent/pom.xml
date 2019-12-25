@@ -251,6 +251,11 @@
                 <artifactId>dmall-common-util</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-common-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--component-->
             <dependency>

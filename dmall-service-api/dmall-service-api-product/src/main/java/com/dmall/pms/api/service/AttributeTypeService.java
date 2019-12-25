@@ -7,7 +7,7 @@ import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
-import com.dmall.pms.api.dto.attributetype.response.ListAttributeTypeResponseDTO;
+import com.dmall.pms.api.dto.attributetype.response.PageAttributeTypeResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -43,10 +43,10 @@ public interface AttributeTypeService {
 
     @PostMapping("/list")
     @ApiOperation(value = "属性分类列表")
-    BaseResult<List<ListAttributeTypeResponseDTO>> list(@RequestBody ListAttributeTypeRequestDTO requestDTO);
+    BaseResult<List<CommonAttributeTypeResponseDTO>> list(@RequestBody ListAttributeTypeRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "属性分类分页")
-    BaseResult<LayuiPage<CommonAttributeTypeResponseDTO>> page(@RequestBody PageAttributeTypeRequestDTO requestDTO);
+    BaseResult<LayuiPage<PageAttributeTypeResponseDTO>> page(@RequestBody PageAttributeTypeRequestDTO requestDTO);
 
 }

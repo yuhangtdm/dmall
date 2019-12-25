@@ -7,12 +7,10 @@ import com.dmall.common.util.ObjectUtil;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
 import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.response.ListAttributeTypeResponseDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
-import com.dmall.pms.service.impl.category.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +23,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttributeTypeRequestDTO, AttributeTypeDO, ListAttributeTypeResponseDTO> {
+public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttributeTypeRequestDTO, AttributeTypeDO, CommonAttributeTypeResponseDTO> {
 
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
@@ -34,19 +32,19 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
     private AttributeTypeCacheService attributeTypeCacheService;
 
     @Override
-    public BaseResult<List<ListAttributeTypeResponseDTO>> processor(ListAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<List<CommonAttributeTypeResponseDTO>> processor(ListAttributeTypeRequestDTO requestDTO) {
         List<AttributeTypeDO> attributeTypeDOS;
 
-        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName(), requestDTO.getType())) {
+        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName())) {
             attributeTypeDOS = attributeTypeCacheService.selectAll();
         } else {
             LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
-                    .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName(), requestDTO.getType());
+                    .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName());
             attributeTypeDOS = attributeTypeMapper.selectList(queryWrapper);
         }
-        List<ListAttributeTypeResponseDTO> list = attributeTypeDOS.stream()
+        List<CommonAttributeTypeResponseDTO> list = attributeTypeDOS.stream()
                 .filter(Objects::nonNull)
-                .map(doo -> doConvertDto(doo, ListAttributeTypeResponseDTO.class))
+                .map(doo -> doConvertDto(doo, CommonAttributeTypeResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(list);
     }

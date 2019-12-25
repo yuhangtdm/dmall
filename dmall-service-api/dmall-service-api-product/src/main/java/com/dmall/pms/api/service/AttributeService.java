@@ -1,10 +1,13 @@
 package com.dmall.pms.api.service;
 
+import com.dmall.common.model.result.LayuiPage;
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
+import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
 import com.dmall.common.model.result.BaseResult;
+import com.dmall.pms.api.dto.attribute.response.PageAttributeResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -41,5 +44,9 @@ public interface AttributeService {
     @PostMapping("/list")
     @ApiOperation(value = "属性列表")
     BaseResult<List<CommonAttributeResponseDTO>> list(@RequestBody ListAttributeRequestDTO requestDTO);
+
+    @PostMapping("/page")
+    @ApiOperation(value = "属性分页")
+    BaseResult<LayuiPage<PageAttributeResponseDTO>> page(@RequestBody PageAttributeRequestDTO requestDTO);
 
 }

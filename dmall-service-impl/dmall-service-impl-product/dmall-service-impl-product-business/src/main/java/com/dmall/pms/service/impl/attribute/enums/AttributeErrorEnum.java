@@ -12,12 +12,15 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum  AttributeErrorEnum implements ErrorCodeEnum {
 
-    SAVE_ATTRIBUTE_ERROR("attribute-001","新增属性失败"),
-    UPDATE_ATTRIBUTE_ERROR("attribute _002","修改属性失败"),
-    DELETE_ATTRIBUTE_ERROR("attribute_003","该属性下有商品"),
-    ATTRIBUTE_NOT_EXIST("attribute_004","该属性不存在"),
-    ATTRIBUTE_NAME_UNIQUE("attribute_005","该属性分类下的属性名称已存在"),
-    ATTRIBUTE_TYPE_EXIST("attribute_005","属性分类不存在"),
+    CATEGORY_NOT_EXIST("attribute_001","商品分类不存在"),
+    CATEGORY_NOT_INVALID("attribute_002","商品分类级别不合法"),
+    ATTRIBUTE_DATA_INVALID("attribute_003","该属性无效"),
+    INPUT_LIST_INVALID("attribute_004","可选值列表不能重复"),
+
+    CONTAINS_PRODUCT("attribute_005","该属性下有商品,删除失败"),
+
+    ATTRIBUTE_NOT_EXIST("attribute_006","该属性不存在"),
+    ATTRIBUTE_TYPE_INVALID("attribute_007","公共属性不可改为普通属性"),
 
     ;
 

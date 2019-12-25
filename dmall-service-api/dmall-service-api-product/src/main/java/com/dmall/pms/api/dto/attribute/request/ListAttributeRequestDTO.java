@@ -3,6 +3,7 @@ package com.dmall.pms.api.dto.attribute.request;
 import com.dmall.component.web.validate.ValueInEnum;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
+import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,17 +22,21 @@ public class ListAttributeRequestDTO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @ApiModelProperty(value = "属性分类id", position = 2)
-    private Long attributeTypeId;
+    @ApiModelProperty(value = "一级分类id", position = 1)
+    private Long categoryId;
 
-    @ApiModelProperty(value = "名称", position = 5)
-    private String name;
+    @ApiModelProperty(value = "展示名称", position = 2)
+    private String showName;
 
-    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 8)
+    @ApiModelProperty(value = "属性类型 1-普通属性;2-公共属性", position = 3)
+    @ValueInEnum(TypeEnum.class)
+    private Integer type;
+
+    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 4)
     @ValueInEnum(InputTypeEnum.class)
     private Integer inputType;
 
-    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 12)
+    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 5)
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
 

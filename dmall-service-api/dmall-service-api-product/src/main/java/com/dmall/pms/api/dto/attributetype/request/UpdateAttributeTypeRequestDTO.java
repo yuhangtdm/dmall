@@ -1,7 +1,5 @@
 package com.dmall.pms.api.dto.attributetype.request;
 
-import com.dmall.component.web.validate.ValueInEnum;
-import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,10 +25,5 @@ public class UpdateAttributeTypeRequestDTO {
 
     @ApiModelProperty(value = "展示名称", position = 2)
     private String showName;
-
-    @ApiModelProperty(value = "类型 1-规格;2-参数;", position = 4)
-    @ValueInEnum(AttributeTypeEnum.class)
-    @NotNull(message = "类型不能为空")
-    private Integer type;
 
 }

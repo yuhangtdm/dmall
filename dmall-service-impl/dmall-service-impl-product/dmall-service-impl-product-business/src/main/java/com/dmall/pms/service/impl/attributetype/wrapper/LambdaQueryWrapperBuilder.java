@@ -11,10 +11,9 @@ import com.dmall.pms.generator.dataobject.AttributeTypeDO;
  */
 public class LambdaQueryWrapperBuilder {
 
-    public static LambdaQueryWrapper queryWrapper(Long categoryId, String name, String showName, Integer type) {
+    public static LambdaQueryWrapper queryWrapper(Long categoryId, String name, String showName) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = Wrappers.<AttributeTypeDO>lambdaQuery()
                 .eq(categoryId != null, AttributeTypeDO::getCategoryId, categoryId)
-//                .eq(type != null, AttributeTypeDO::getType, type)
                 .like(StrUtil.isNotBlank(name), AttributeTypeDO::getName, name)
                 .like(StrUtil.isNotBlank(showName), AttributeTypeDO::getShowName, showName)
                 .orderByAsc(AttributeTypeDO::getSort);

@@ -10,13 +10,10 @@ import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.category.request.setattributetype.AttributeTypeIdsDTO;
 import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
-import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
-import com.dmall.pms.generator.service.IAttributeService;
 import com.dmall.pms.generator.service.IAttributeTypeService;
-import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
@@ -26,7 +23,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,9 +43,6 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     private AttributeTypeMapper attributeTypeMapper;
 
     @Autowired
-    private IAttributeService iAttributeService;
-
-    @Autowired
     private CategorySupport categorySupport;
 
     @Autowired(required = false)
@@ -61,17 +54,17 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
         if (CollUtil.isEmpty(requestDTO.getAttributeTypeIds())) {
             return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_EMPTY);
         }
-        Set<Long> attributeTypeIds = requestDTO.getAttributeTypeIds().stream().map(AttributeTypeIdsDTO::getAttributeTypeId).collect(Collectors.toSet());
+        Set<Long> attributeTypeIds = requestDTO.getAttributeTypeIds().stream()
+                .map(AttributeTypeIdsDTO::getAttributeTypeId).collect(Collectors.toSet());
         // 属性分类id不能有重复
         if (attributeTypeIds.size() != requestDTO.getAttributeTypeIds().size()) {
-            return ResultUtil.fail(CategoryErrorEnum.BRAND_IDS_INVALID);
+            return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_INVALID);
         }
         Collection<AttributeTypeDO> attributeTypeDOS = iAttributeTypeService.listByIds(attributeTypeIds);
         // 属性分类id要存在
         if (attributeTypeDOS.size() != attributeTypeIds.size()) {
             return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_INVALID);
         }
-
         return categorySupport.validate(requestDTO.getCategoryId());
     }
 
@@ -79,11 +72,14 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     public BaseResult processor(SetAttributeTypeRequestDTO requestDTO) {
         List<AttributeTypeDO> list = iAttributeTypeService.list(Wrappers.<AttributeTypeDO>lambdaQuery()
                 .eq(AttributeTypeDO::getCategoryId, requestDTO.getCategoryId()));
+
         if (CollUtil.isNotEmpty(list)) {
             List<Long> deleteAttributeTypeIds = list.stream()
                     .map(AttributeTypeDO::getId)
                     .filter(attributeTypeId -> !requestDTO.getAttributeTypeIds().contains(attributeTypeId))
                     .collect(Collectors.toList());
+
+            // 修改被删除的属性分类以及缓存
             deleteAttributeTypeIds.forEach(attributeTypeId -> {
                 LambdaUpdateWrapper<AttributeTypeDO> updateWrapper = Wrappers.<AttributeTypeDO>update().lambda()
                         .eq(AttributeTypeDO::getId, attributeTypeId)
@@ -92,35 +88,21 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
                 attributeTypeMapper.update(null, updateWrapper);
                 mapCacheUtil.put(mapCacheUtil.getkey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
                         String.valueOf(attributeTypeId), iAttributeTypeService.getById(attributeTypeId));
-                iAttributeService.update(Wrappers.<AttributeDO>update().lambda()
-                        .eq(AttributeDO::getAttributeTypeId, attributeTypeId)
-//                        .set(AttributeDO::getCategoryId, null)
-//                        .set(AttributeDO::getCascadeCategoryId, null)
-                );
             });
         }
-        requestDTO.getAttributeTypeIds().forEach(attributeTypeIdsDTO -> {
+
+        requestDTO.getAttributeTypeIds().forEach(attributeTypeIdDTO -> {
             AttributeTypeDO attributeTypeDO = new AttributeTypeDO();
-            attributeTypeDO.setId(attributeTypeIdsDTO.getAttributeTypeId());
-            attributeTypeDO.setSort(attributeTypeIdsDTO.getSort());
+            attributeTypeDO.setId(attributeTypeIdDTO.getAttributeTypeId());
+            attributeTypeDO.setSort(attributeTypeIdDTO.getSort());
             attributeTypeDO.setCategoryId(requestDTO.getCategoryId());
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             attributeTypeDO.setCascadeCategoryId(categoryDO.getPath());
-            // 更新属性分类以及缓存
+
+            // 更新新增的属性分类以及缓存
             iAttributeTypeService.updateById(attributeTypeDO);
             mapCacheUtil.put(mapCacheUtil.getkey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
                     String.valueOf(attributeTypeDO.getId()), iAttributeTypeService.getById(attributeTypeDO.getId()));
-            // 批量更新属性以及缓存
-            iAttributeService.update(Wrappers.<AttributeDO>update().lambda()
-                    .eq(AttributeDO::getAttributeTypeId, attributeTypeIdsDTO.getAttributeTypeId())
-//                    .set(AttributeDO::getCategoryId, attributeTypeDO.getCategoryId())
-//                    .set(AttributeDO::getCascadeCategoryId, attributeTypeDO.getCascadeCategoryId())
-            );
-            List<AttributeDO> attributeDOS = iAttributeService.list(Wrappers.<AttributeDO>lambdaQuery()
-                    .eq(AttributeDO::getAttributeTypeId, attributeTypeIdsDTO.getAttributeTypeId()));
-            Map<String, Object> attributeCache = attributeDOS.stream().collect(Collectors.toMap(attributeDO ->
-                    String.valueOf(attributeDO.getId()), attributeDO -> attributeDO));
-            mapCacheUtil.batchPut(mapCacheUtil.getkey(CacheNameConstants.ATTRIBUTE, AttributeCacheService.class), attributeCache);
         });
 
         return ResultUtil.success();

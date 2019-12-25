@@ -37,20 +37,4 @@ public class CommonBrandResponseDTO implements Serializable {
     @ApiModelProperty(value = "品牌大图", position = 6)
     private String bigPic;
 
-    @ApiModelProperty(value = "创建人", position = 7)
-    private Long creator;
-
-    @ApiModelProperty(value = "创建时间", position = 9)
-    private Date gmtCreated;
-
-    @ApiModelProperty(value = "修改人", position = 10)
-    private Long modifier;
-
-    @ApiModelProperty(value = "修改时间", position = 12)
-    private Date gmtModified;
-
-    @ApiModelProperty(value = "状态,N-可用;Y-不可用", position = 13)
-    private String isDeleted;
-
-
 }

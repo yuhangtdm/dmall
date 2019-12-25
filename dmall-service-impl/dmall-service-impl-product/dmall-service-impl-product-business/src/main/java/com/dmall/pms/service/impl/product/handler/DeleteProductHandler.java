@@ -24,9 +24,6 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
     private ProductMapper productMapper;
 
     @Autowired
-    private ProductAttributeMapper productAttributeMapper;
-
-    @Autowired
     private SkuMapper skuMapper;
 
     @Autowired
@@ -53,8 +50,6 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
         // 删除商品
         productMapper.deleteById(id);
         // 删除商品属性
-        productAttributeMapper.delete(Wrappers.<ProductAttributeDO>lambdaQuery()
-                .eq(ProductAttributeDO::getProductId, id));
 
         List<SkuDO> skuDOS = skuSupport.selectByProductId(id);
         skuDOS.forEach(skuDO -> {

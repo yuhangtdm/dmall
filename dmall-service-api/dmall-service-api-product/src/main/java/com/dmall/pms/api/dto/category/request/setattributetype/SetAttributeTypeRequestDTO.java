@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class SetAttributeTypeRequestDTO {
     private Long categoryId;
 
     @ApiModelProperty(value = "属性分类列表", required = true, position = 2)
+    @Valid
     @NotNull(message = "属性分类列表不能为空")
     private List<AttributeTypeIdsDTO> attributeTypeIds;
 }

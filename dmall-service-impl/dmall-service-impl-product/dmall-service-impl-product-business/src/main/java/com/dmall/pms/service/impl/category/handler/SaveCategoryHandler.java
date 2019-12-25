@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.util.StrUtil;
+import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
@@ -28,15 +29,9 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
 
     @Override
     public BaseResult<Long> validate(SaveCategoryRequestDTO requestDTO) {
-        // 分类名称唯一
-        CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery()
-                .eq(CategoryDO::getName, requestDTO.getName()));
-        if (categoryDO != null) {
-            return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NAME_UNIQUE);
-        }
-        CategoryDO parentCategoryDO = categoryMapper.selectById(requestDTO.getParentId());
         if (requestDTO.getParentId() != 0) {
-            // 上级id是否存在分类
+            CategoryDO parentCategoryDO = categoryMapper.selectById(requestDTO.getParentId());
+            // 上级id是否存在
             if (parentCategoryDO == null) {
                 return ResultUtil.fail(CategoryErrorEnum.PARENT_CATEGORY_NOT_EXIST);
             }
@@ -67,12 +62,8 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
                 path.append(StrUtil.DOT).append(result.getId()).append(StrUtil.DOT);
                 break;
             }
-            case 2: {
-                CategoryDO parentCategoryDO = categoryMapper.selectById(result.getParentId());
-                path.append(parentCategoryDO.getPath()).append(result.getId()).append(StrUtil.DOT);
-                break;
-            }
-            case 3: {
+            // 2,3级别一致
+            default: {
                 CategoryDO parentCategoryDO = categoryMapper.selectById(result.getParentId());
                 path.append(parentCategoryDO.getPath()).append(result.getId()).append(StrUtil.DOT);
                 break;

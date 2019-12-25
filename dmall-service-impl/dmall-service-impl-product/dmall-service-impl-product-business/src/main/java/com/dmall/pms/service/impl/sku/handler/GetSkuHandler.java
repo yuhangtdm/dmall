@@ -11,10 +11,8 @@ import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
-import com.dmall.pms.generator.dataobject.SkuAttributeDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuExtDO;
-import com.dmall.pms.generator.mapper.SkuAttributeMapper;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
@@ -48,8 +46,8 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
     @Autowired
     private ProductAttributeSupport productAttributeSupport;
 
-    @Autowired
-    private SkuAttributeMapper skuAttributeMapper;
+//    @Autowired
+//    private SkuAttributeMapper skuAttributeMapper;
 
     @Autowired
     private SaveSkuAttributeHandler saveSkuAttributeHandler;
@@ -69,12 +67,12 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
         SkuExtDO skuExtDO = skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, id));
         getSkuResponseDTO.setDetailHtml(skuExtDO.getDetailHtml());
         getSkuResponseDTO.setDetailMobileHtml(skuExtDO.getDetailMobileHtml());
-        GetProductAttributeResponseDTO responseDTO = productAttributeSupport.setSaleAttribute(skuDO.getProductId());
-        List<SkuAttributeDO> skuAttributeDOList = skuAttributeMapper.selectList(Wrappers.<SkuAttributeDO>lambdaQuery().eq(SkuAttributeDO::getSkuId, id));
-        List<Long> attributeValueList = skuAttributeDOList.stream().map(SkuAttributeDO::getProductAttributeId).collect(Collectors.toList());
-        saveSkuAttributeHandler.changeProductAttribute(responseDTO, attributeValueList);
-        getSkuResponseDTO.setSpecifications(responseDTO.getSpecifications());
-        getSkuResponseDTO.setParams(responseDTO.getParams());
+//        GetProductAttributeResponseDTO responseDTO = productAttributeSupport.setSaleAttribute(skuDO.getProductId());
+//        List<SkuAttributeDO> skuAttributeDOList = skuAttributeMapper.selectList(Wrappers.<SkuAttributeDO>lambdaQuery().eq(SkuAttributeDO::getSkuId, id));
+//        List<Long> attributeValueList = skuAttributeDOList.stream().map(SkuAttributeDO::getProductAttributeId).collect(Collectors.toList());
+//        saveSkuAttributeHandler.changeProductAttribute(responseDTO, attributeValueList);
+//        getSkuResponseDTO.setSpecifications(responseDTO.getSpecifications());
+//        getSkuResponseDTO.setParams(responseDTO.getParams());
         return ResultUtil.success();
     }
 
