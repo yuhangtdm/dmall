@@ -9,7 +9,7 @@ import java.util.List;
  * @description: ProductAttributeBuilder
  * @author: created by hang.yu on 2019/12/16 11:00
  */
-public class ProductAttributeBuilder {
+public class ProductAttributeValueBuilder {
 
     /**
      * 构建商品-属性值

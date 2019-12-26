@@ -51,7 +51,7 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
 
     @Override
     public BaseResult<LayuiPage<PageSkuResponseDTO>> validate(PageSkuRequestDTO requestDTO) {
-        return productValidate.basicValidate(requestDTO.getCategoryId(), requestDTO.getBrandId());
+        return productValidate.basicValidate(requestDTO.getBrandId(),requestDTO.getCategoryId());
     }
 
     @Override

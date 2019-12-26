@@ -76,7 +76,7 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
                 .le(requestDTO.getOnMarketTimeEnd() != null, ProductDO::getOnMarketTime, requestDTO.getOnMarketTimeEnd());
         // 获取分类下的所有子分类
         if (requestDTO.getCategoryId() != null) {
-            wrapper.in(ProductDO::getCategoryId, categorySupport.getSubLevelIds(requestDTO.getCategoryId()));
+//            wrapper.in(ProductDO::getCategoryId, categorySupport.getSubLevelIds(requestDTO.getCategoryId()));
         }
         IPage<ProductDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = productMapper.selectPage(page, wrapper);

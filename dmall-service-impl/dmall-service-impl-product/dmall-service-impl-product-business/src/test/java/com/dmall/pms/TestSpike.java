@@ -10,6 +10,7 @@ import com.dmall.component.file.qiniu.QiNiuFileManager;
 import com.dmall.component.web.util.HttpClientUtil;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.*;
+import com.dmall.pms.generator.service.ICategoryProductService;
 import com.dmall.pms.generator.service.ICategoryService;
 import com.google.common.collect.Lists;
 import org.jsoup.Jsoup;
@@ -85,7 +86,7 @@ public class TestSpike {
     private CategorySkuMapper categorySkuMapper;
 
     @Autowired
-    private QiNiuFileManager qiNiuFileManager;
+    private ICategoryProductService iCategoryProductService;
 
     /**
      * 商品分类
@@ -829,8 +830,6 @@ public class TestSpike {
                             if (productDO == null) {
                                 productDO = new ProductDO();
                                 productDO.setMerchantsId(1L);
-                                productDO.setCategoryId(String.valueOf(categoryDO.getId()));
-                                productDO.setCascadeCategoryId(categoryDO.getPath());
 
                                 BrandDO brandDO = null;
                                 try {
@@ -869,11 +868,6 @@ public class TestSpike {
                                 productMapper.insert(productDO);
 
                             } else {
-                                ArrayList<String> strings = Lists.newArrayList(productDO.getCategoryId().split(","));
-                                if (!strings.contains(categoryDO.getId() + "")) {
-                                    productDO.setCategoryId(productDO.getCategoryId() + "," + categoryDO.getId());
-                                    productDO.setCascadeCategoryId(productDO.getCascadeCategoryId() + "," + categoryDO.getPath());
-                                }
                                 productMapper.updateById(productDO);
                             }
 
@@ -1187,8 +1181,6 @@ public class TestSpike {
             if (productDO == null) {
                 productDO = new ProductDO();
                 productDO.setMerchantsId(1L);
-                productDO.setCategoryId(String.valueOf(categoryDO.getId()));
-                productDO.setCascadeCategoryId(categoryDO.getPath());
 
                 BrandDO brandDO = null;
                 try {
@@ -1227,11 +1219,6 @@ public class TestSpike {
                 productMapper.insert(productDO);
 
             } else {
-                ArrayList<String> strings = Lists.newArrayList(productDO.getCategoryId().split(","));
-                if (!strings.contains(categoryDO.getId() + "")) {
-                    productDO.setCategoryId(productDO.getCategoryId() + "," + categoryDO.getId());
-                    productDO.setCascadeCategoryId(productDO.getCascadeCategoryId() + "," + categoryDO.getPath());
-                }
                 productMapper.updateById(productDO);
             }
 
@@ -1480,5 +1467,6 @@ public class TestSpike {
 
 
     }
+
 
 }

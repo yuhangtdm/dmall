@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @description: 新增商品请求实体
@@ -28,6 +29,10 @@ public class SaveProductRequestDTO implements Serializable {
     @ApiModelProperty(value = "商品属性信息", position = 2)
     @Valid
     @NotNull(message = "商品属性信息不能为空")
-    private ProductAttributeDTO attribute;
+    private ProductExtDTO ext;
+
+    @ApiModelProperty(value = "sku列表", position = 3)
+    @Valid
+    private List<SkuDTO> skuList;
 
 }

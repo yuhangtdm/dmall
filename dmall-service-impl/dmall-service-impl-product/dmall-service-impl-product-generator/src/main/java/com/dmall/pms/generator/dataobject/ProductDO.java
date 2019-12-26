@@ -37,11 +37,6 @@ public class ProductDO implements Serializable {
     private Long merchantsId;
 
     /**
-     * 商品分类id
-     */
-    private String categoryId;
-
-    /**
      * 品牌id
      */
     private Long brandId;
@@ -90,11 +85,6 @@ public class ProductDO implements Serializable {
      * 上市时间
      */
     private Date onMarketTime;
-
-    /**
-     * 商品分类path
-     */
-    private String cascadeCategoryId;
 
     /**
      * 增值业务

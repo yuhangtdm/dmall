@@ -4,19 +4,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.product.request.attribute.AttributeTypeDTO;
-import com.dmall.pms.api.dto.product.request.save.ProductAttributeDTO;
+import com.dmall.pms.api.dto.product.request.save.ProductExtDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.service.impl.product.attribute.ProductAttributeBuilder;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @description: 修改商品处理器
@@ -47,11 +42,11 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NAME_EXISTS);
         }
         // 校验销售属性
-        ProductAttributeDTO attributeDTO = new ProductAttributeDTO();
+        ProductExtDTO attributeDTO = new ProductExtDTO();
 //        attributeDTO.setCategoryId(productDO.getCategoryId());
         attributeDTO.setBrandId(productDO.getBrandId());
-        attributeDTO.setSpecifications(requestDTO.getSpecifications());
-        attributeDTO.setParams(requestDTO.getParams());
+//        attributeDTO.setSpecifications(requestDTO.getSpecifications());
+//        attributeDTO.setParams(requestDTO.getParams());
         return productValidate.validate(attributeDTO);
     }
 
