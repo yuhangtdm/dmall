@@ -31,6 +31,11 @@ public class SkuExtDO implements Serializable {
     private Long id;
 
     /**
+     * 商品id
+     */
+    private Long productId;
+
+    /**
      * sku_id
      */
     private Long skuId;

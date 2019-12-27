@@ -6,7 +6,6 @@ import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
-import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import com.dmall.pms.api.service.ProductService;
@@ -42,6 +41,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private UploadProductPicHandler uploadProductPicHandler;
 
+    @Autowired
+    private UploadProductAttributePicHandler uploadProductAttributePicHandler;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -50,8 +51,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public BaseResult<LayuiPage<PageProductResponseDTO>> page(@RequestBody PageProductRequestDTO requestDTO) {
-        return pageProductHandler.handler(requestDTO);
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> delete(Long id) {
+        return deleteProductHandler.handler(id);
     }
 
     @Override
@@ -66,14 +68,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> delete(Long id) {
-        return deleteProductHandler.handler(id);
-    }
-
-    @Override
-    public BaseResult<GetProductAttributeResponseDTO> getProductAttribute(Long id) {
-        return null;
+    public BaseResult<LayuiPage<PageProductResponseDTO>> page(@RequestBody PageProductRequestDTO requestDTO) {
+        return pageProductHandler.handler(requestDTO);
     }
 
     @Override
@@ -83,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResult<UploadResult> uploadProductAttributePic(MultipartFile file) {
-        return null;
+        return uploadProductAttributePicHandler.handler(file);
     }
 
 }

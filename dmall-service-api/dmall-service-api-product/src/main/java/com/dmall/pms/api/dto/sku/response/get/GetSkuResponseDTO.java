@@ -1,6 +1,5 @@
 package com.dmall.pms.api.dto.sku.response.get;
 
-import com.dmall.pms.api.dto.product.response.get.ProductAttributeTypeDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,11 +19,11 @@ public class GetSkuResponseDTO {
     @ApiModelProperty(value = "查询sku基本信息实体", position = 1)
     private BasicSkuResponseDTO basicSku;
 
-    @ApiModelProperty(value = "销售规格", position = 2)
-    private ProductAttributeTypeDTO specifications;
-
-    @ApiModelProperty(value = "销售参数", position = 3)
-    private List<ProductAttributeTypeDTO> params;
+//    @ApiModelProperty(value = "销售规格", position = 2)
+//    private ProductAttributeTypeDTO specifications;
+//
+//    @ApiModelProperty(value = "销售参数", position = 3)
+//    private List<ProductAttributeTypeDTO> params;
 
     @ApiModelProperty(value = "skuPC端详情富文本", position = 4)
     private String detailHtml;

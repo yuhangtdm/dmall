@@ -1,20 +1,9 @@
 package com.dmall.pms.service.impl.product.attribute;
 
-import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
-import com.dmall.pms.api.dto.product.response.get.ProductAttributeDTO;
-import com.dmall.pms.api.dto.product.response.get.ProductAttributeTypeDTO;
-import com.dmall.pms.api.dto.product.response.get.ProductAttributeValueDTO;
-import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @description:

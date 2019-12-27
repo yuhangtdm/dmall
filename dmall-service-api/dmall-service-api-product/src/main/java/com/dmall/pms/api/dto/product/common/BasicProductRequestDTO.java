@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.product.request.save;
+package com.dmall.pms.api.dto.product.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "BasicProductDTO", description = "新增商品基础信息实体")
+@ApiModel(value = "BasicProductRequestDTO", description = "修改商品基础信息实体")
 public class BasicProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1619159990632457989L;
@@ -34,15 +34,13 @@ public class BasicProductRequestDTO implements Serializable {
     private String unit;
 
     @ApiModelProperty(value = "商品重量", position = 4)
-    @NotNull(message = "商品重量不能为空")
+    @NotNull(message = "商品单位不能为空")
     private BigDecimal weight;
 
     @ApiModelProperty(value = "上市时间", position = 5)
-    @NotNull(message = "上市时间不能为空")
     private Date onMarketTime;
 
     @ApiModelProperty(value = "商品图片", position = 6)
-    @NotBlank(message = "商品图片不能为空")
     private String pic;
 
 }

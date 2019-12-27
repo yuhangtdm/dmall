@@ -1,10 +1,5 @@
 package com.dmall.pms.service.impl.product.attribute;
 
-import com.dmall.pms.api.dto.product.request.attribute.AttributeDTO;
-import com.dmall.pms.api.dto.product.request.attribute.AttributeValueDTO;
-
-import java.util.List;
-
 /**
  * @description: ProductAttributeBuilder
  * @author: created by hang.yu on 2019/12/16 11:00

@@ -35,6 +35,12 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
     @Autowired
     private SkuMediaMapper skuMediaMapper;
 
+    @Autowired
+    private ProductAttributeValueMapper productAttributeValueMapper;
+
+    @Autowired
+    private SkuAttributeValueMapper skuAttributeValueMapper;
+
     @Override
     public BaseResult<Long> validate(Long id) {
         // 校验商品是否已删除
@@ -49,12 +55,16 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
     public BaseResult<Long> processor(Long id) {
         // 删除商品
         productMapper.deleteById(id);
-        // 删除商品属性
-
+        // 删除商品属性值
+        productAttributeValueMapper.delete(Wrappers.<ProductAttributeValueDO>lambdaQuery()
+                .eq(ProductAttributeValueDO::getProductId, id));
         List<SkuDO> skuDOS = skuSupport.selectByProductId(id);
+        // 删除sku等信息
         skuDOS.forEach(skuDO -> {
             skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuDO.getId()));
             skuMediaMapper.delete(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuDO.getId()));
+            skuAttributeValueMapper.delete(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                    .eq(SkuAttributeValueDO::getSkuId, skuDO.getId()));
         });
         skuMapper.delete(Wrappers.<SkuDO>lambdaQuery()
                 .eq(SkuDO::getProductId, id));

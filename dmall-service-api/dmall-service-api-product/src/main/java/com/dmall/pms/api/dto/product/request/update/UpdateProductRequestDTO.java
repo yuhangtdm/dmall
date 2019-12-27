@@ -1,6 +1,7 @@
 package com.dmall.pms.api.dto.product.request.update;
 
-import com.dmall.pms.api.dto.product.request.attribute.AttributeTypeDTO;
+import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,9 +9,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * @description: 修改商品请求实体
@@ -19,35 +18,21 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "UpdateProductRequestDTO", description = "修改商品请求实体")
-public class UpdateProductRequestDTO {
+public class UpdateProductRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "主键", required = true, position = 0)
-    @NotNull(message = "id不能为空")
+    private static final long serialVersionUID = -3386130384533011334L;
+
+    @ApiModelProperty(value = "商品id", required = true, position = 1)
+    @NotNull(message = "商品id不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "商品名称", position = 1)
-    private String name;
-
-    @ApiModelProperty(value = "商品介绍", position = 2)
-    private String description;
-
-    @ApiModelProperty(value = "商品单位", position = 3)
-    private String unit;
-
-    @ApiModelProperty(value = "商品重量", position = 4)
-    private BigDecimal weight;
-
-    @ApiModelProperty(value = "上市时间", position = 5)
-    private Date onMarketTime;
-
-    @ApiModelProperty(value = "销售规格", position = 6)
+    @ApiModelProperty(value = "商品基本信息", position = 2)
     @Valid
-    @NotNull(message = "销售规格不能为空")
-    private AttributeTypeDTO specifications;
+    @NotNull(message = "商品基本信息不能为空")
+    private BasicProductRequestDTO basicProduct;
 
-    @ApiModelProperty(value = "销售参数", position = 7)
+    @ApiModelProperty(value = "商品属性信息", position = 3)
     @Valid
-    @NotNull(message = "销售参数不能为空")
-    private List<AttributeTypeDTO> params;
-
+    @NotNull(message = "商品属性信息不能为空")
+    private ProductExtRequestDTO ext;
 }

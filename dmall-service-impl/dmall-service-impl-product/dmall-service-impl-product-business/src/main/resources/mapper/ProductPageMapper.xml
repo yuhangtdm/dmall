@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.pms.service.impl.product.mapper.ProductPageMapper">
+
+    <select id="productPage" resultType="list">
+      select
+        distinct id, product_no, brand_id, name, pic, pb.name as brand_name, on_market_time,unit,weight, creator, gmt_created, modifier, gmt_modified, is_deleted
+      from pms_product pp
+      inner join pms_brand pb on pp.brand_id = pb.id
+      left join pms_category_product pcp on pp.id = pcp.product_id
+      <where>
+          <if test="categoryId!= null">
+              and pcp.category_id = #{categoryId}
+          </if>
+          <if test="brandId!= null">
+              and pp.brand_id = #{brandId}
+          </if>
+          <if test="productNo!= null and productNo!=''">
+              and pp.product_no like '%${productNo}%'
+          </if>
+          <if test="name!= null and name!=''">
+              and pp.name like '%${name}%'
+          </if>
+          <if test="onMarketTimeStart != null">
+              and pp.onMarketTime <![CDATA[ >= ]]>  #{onMarketTimeStart}
+          </if>
+          <if test="onMarketTimeEnd != null">
+              and pp.onMarketTime <![CDATA[ <= ]]>   #{onMarketTimeEnd}
+          </if>
+      </where>
+    </select>
+
+</mapper>

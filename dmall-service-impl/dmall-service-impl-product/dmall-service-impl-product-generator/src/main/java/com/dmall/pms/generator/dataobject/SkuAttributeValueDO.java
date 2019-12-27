@@ -31,6 +31,11 @@ public class SkuAttributeValueDO implements Serializable {
     private Long id;
 
     /**
+     * 商品id
+     */
+    private Long productId;
+
+    /**
      * skuid
      */
     private Long skuId;
@@ -68,6 +73,5 @@ public class SkuAttributeValueDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

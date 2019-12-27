@@ -4,13 +4,13 @@ import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.handler.BeanUtil;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.BasicProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
+import com.dmall.pms.service.impl.product.common.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
+import com.dmall.pms.service.impl.sku.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,10 @@ public class GetProductHandler extends AbstractCommonHandler<Long, ProductDO, Ge
     private ProductMapper productMapper;
 
     @Autowired
-    private ProductAttributeSupport productAttributeSupport;
+    private ProductAttributeValueSupport productAttributeValueSupport;
+
+    @Autowired
+    private SkuSupport skuSupport;
 
     @Override
     public BaseResult<GetProductResponseDTO> processor(Long id) {
@@ -37,19 +40,9 @@ public class GetProductHandler extends AbstractCommonHandler<Long, ProductDO, Ge
         // 设置商品基本信息
         BasicProductResponseDTO basicProduct = BeanUtil.copyProperties(productDO, BasicProductResponseDTO.class);
         responseDTO.setBasicProduct(basicProduct);
-        // 设置商品销售规格和参数
-        setSaleAttribute(responseDTO, id);
-        //todo 设置sku
+        responseDTO.setExt(productAttributeValueSupport.getProductAttributeValue(id, productDO.getBrandId()));
+        responseDTO.setSkuList(skuSupport.getSkuList(id));
         return ResultUtil.success(responseDTO);
-    }
-
-    /**
-     * 设置销售规格和参数
-     */
-    private void setSaleAttribute(GetProductResponseDTO responseDTO, Long id) {
-//        GetProductAttributeResponseDTO attributeResponseDTO = productAttributeSupport.setSaleAttribute(id);
-//        responseDTO.setSpecifications(attributeResponseDTO.getSpecifications());
-//        responseDTO.setParams(attributeResponseDTO.getParams());
     }
 
 }

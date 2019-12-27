@@ -7,7 +7,6 @@ import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.handler.BeanUtil;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
@@ -20,9 +19,6 @@ import com.dmall.pms.service.impl.category.support.CategorySupport;
 import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @description: 查询sku处理器

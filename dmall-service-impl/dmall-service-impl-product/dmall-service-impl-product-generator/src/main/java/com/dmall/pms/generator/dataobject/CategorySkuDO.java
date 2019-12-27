@@ -36,6 +36,11 @@ public class CategorySkuDO implements Serializable {
     private Long categoryId;
 
     /**
+     * 商品id
+     */
+    private Long productId;
+
+    /**
      * skuid
      */
     private Long skuId;

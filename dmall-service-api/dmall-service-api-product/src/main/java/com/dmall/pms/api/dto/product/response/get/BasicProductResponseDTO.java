@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 
 /**
- * @description:
+ * @description: 商品基础信息响应实体
  * @author: created by hang.yu on 2019/12/16 11:20
  */
 @Data
@@ -22,19 +22,16 @@ public class BasicProductResponseDTO {
     @ApiModelProperty(value = "商品编号", position = 2)
     private String productNo;
 
-    @ApiModelProperty(value = "商品分类id", position = 3)
-    private Long categoryId;
-
-    @ApiModelProperty(value = "品牌id", position = 4)
-    private Long brandId;
-
-    @ApiModelProperty(value = "商品名称", position = 5)
+    @ApiModelProperty(value = "商品名称", position = 4)
     private String name;
+
+    @ApiModelProperty(value = "商品介绍", position = 5)
+    private String description;
 
     @ApiModelProperty(value = "商品图片", position = 6)
     private String pic;
 
-    @ApiModelProperty(value = "上市时间", position = 9)
+    @ApiModelProperty(value = "上市时间", position = 7)
     private Date onMarketTime;
 
 }

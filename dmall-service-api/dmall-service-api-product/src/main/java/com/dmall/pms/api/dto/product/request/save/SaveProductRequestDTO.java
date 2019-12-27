@@ -1,5 +1,8 @@
 package com.dmall.pms.api.dto.product.request.save;
 
+import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -29,10 +32,10 @@ public class SaveProductRequestDTO implements Serializable {
     @ApiModelProperty(value = "商品属性信息", position = 2)
     @Valid
     @NotNull(message = "商品属性信息不能为空")
-    private ProductExtDTO ext;
+    private ProductExtRequestDTO ext;
 
     @ApiModelProperty(value = "sku列表", position = 3)
     @Valid
-    private List<SkuDTO> skuList;
+    private List<AddSkuRequestDTO> skuList;
 
 }

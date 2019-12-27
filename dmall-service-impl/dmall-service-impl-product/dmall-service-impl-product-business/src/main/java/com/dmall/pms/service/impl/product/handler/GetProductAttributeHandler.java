@@ -3,7 +3,6 @@ package com.dmall.pms.service.impl.product.handler;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2019-12-03 19:56:06
  */
 @Component
-public class GetProductAttributeHandler extends AbstractCommonHandler<Long, ProductDO, GetProductAttributeResponseDTO> {
+public class GetProductAttributeHandler extends AbstractCommonHandler<Long, ProductDO, Void> {
 
     @Autowired
     private ProductMapper productMapper;
@@ -25,7 +24,7 @@ public class GetProductAttributeHandler extends AbstractCommonHandler<Long, Prod
     private ProductAttributeSupport productAttributeSupport;
 
     @Override
-    public BaseResult<GetProductAttributeResponseDTO> processor(Long id) {
+    public BaseResult<Void> processor(Long id) {
         ProductDO productDO = productMapper.selectById(id);
         if (productDO == null) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NOT_EXIST);

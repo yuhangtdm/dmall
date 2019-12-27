@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 /**
- * @description:
+ * @description: UploadProductAttributePicHandler
  * @author: created by hang.yu on 2019/12/17 12:16
  */
 @Slf4j

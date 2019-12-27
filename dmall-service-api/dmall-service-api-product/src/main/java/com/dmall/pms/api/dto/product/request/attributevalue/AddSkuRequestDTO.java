@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.product.request.save;
+package com.dmall.pms.api.dto.product.request.attributevalue;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,14 +16,14 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SkuDTO", description = "sku实体")
-public class SkuDTO implements Serializable {
+@ApiModel(value = "AddSkuRequestDTO", description = "sku实体")
+public class AddSkuRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 2864165329870133989L;
 
     @ApiModelProperty(value = "sku规格列表", position = 1)
     @NotNull(message = "sku规格列表不能为空")
-    private List<SkuSpecificationsDTO> skuSpecifications;
+    private List<SkuSpecificationsRequestDTO> skuSpecifications;
 
     @ApiModelProperty(value = "价格", position = 2)
     @NotNull(message = "价格不能为空")

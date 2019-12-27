@@ -1,16 +1,11 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import cn.hutool.core.collection.CollUtil;
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
-import com.dmall.pms.generator.dataobject.SkuExtDO;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
@@ -20,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @description: SaveSkuAttributeHandler
@@ -115,18 +109,18 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
         return ResultUtil.success(skuId);
     }*/
 
-    public void changeProductAttribute(GetProductAttributeResponseDTO responseDTO, List<Long> attributeValueList) {
-        responseDTO.getSpecifications().getAttributes().forEach(attribute -> {
-            attribute.getAttributeValues().
-                    removeIf(attributeValue -> !attributeValueList
-                            .contains(attributeValue.getProductAttributeValueId()));
-        });
-        responseDTO.getParams().forEach(attributeType -> {
-            attributeType.getAttributes().forEach(attribute -> {
-                attribute.getAttributeValues().
-                        removeIf(attributeValue -> !attributeValueList
-                                .contains(attributeValue.getProductAttributeValueId()));
-            });
-        });
-    }
+//    public void changeProductAttribute(GetProductAttributeResponseDTO responseDTO, List<Long> attributeValueList) {
+//        responseDTO.getSpecifications().getAttributes().forEach(attribute -> {
+//            attribute.getAttributeValues().
+//                    removeIf(attributeValue -> !attributeValueList
+//                            .contains(attributeValue.getProductAttributeValueId()));
+//        });
+//        responseDTO.getParams().forEach(attributeType -> {
+//            attributeType.getAttributes().forEach(attribute -> {
+//                attribute.getAttributeValues().
+//                        removeIf(attributeValue -> !attributeValueList
+//                                .contains(attributeValue.getProductAttributeValueId()));
+//            });
+//        });
+//    }
 }

@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.product.request.save;
+package com.dmall.pms.api.dto.product.request.attributevalue;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,8 +14,8 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SpecificationsValueDTO", description = "销售规格值")
-public class SpecificationsValueDTO implements Serializable {
+@ApiModel(value = "SpecificationsValueRequestDTO", description = "销售规格值")
+public class SpecificationsValueRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 5158187829046741491L;
 

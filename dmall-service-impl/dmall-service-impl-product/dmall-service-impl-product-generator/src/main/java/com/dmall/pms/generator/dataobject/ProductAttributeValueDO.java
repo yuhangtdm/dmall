@@ -36,19 +36,29 @@ public class ProductAttributeValueDO implements Serializable {
     private Long productId;
 
     /**
+     * 属性分类id
+     */
+    private Long attributeTypeId;
+
+    /**
      * 商品属性id
      */
     private Long attributeId;
 
     /**
-     * Y-是;N-不是
+     * 是否卖点,Y-是;N-不是
      */
     private String isSellingPoint;
 
     /**
-     * Y-是;N-不是
+     * 是否规格,Y-是;N-不是
      */
     private String isSpecifications;
+
+    /**
+     * 是否参数,Y-是;N-不是
+     */
+    private String isParam;
 
     /**
      * 属性值

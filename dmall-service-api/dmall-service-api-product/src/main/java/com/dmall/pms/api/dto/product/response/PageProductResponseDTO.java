@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -25,9 +26,6 @@ public class PageProductResponseDTO implements Serializable {
     @ApiModelProperty(value = "商品编号", position = 2)
     private String productNo;
 
-    @ApiModelProperty(value = "商品分类id", position = 3)
-    private Long categoryId;
-
     @ApiModelProperty(value = "品牌id", position = 4)
     private Long brandId;
 
@@ -40,25 +38,28 @@ public class PageProductResponseDTO implements Serializable {
     @ApiModelProperty(value = "品牌名称", position = 7)
     private String brandName;
 
-    @ApiModelProperty(value = "商品分类名称", position = 8)
-    private String cascadeCategoryName;
-
     @ApiModelProperty(value = "上市时间", position = 9)
     private Date onMarketTime;
 
-    @ApiModelProperty(value = "创建人", position = 10)
+    @ApiModelProperty(value = "单位", position = 10)
+    private String unit;
+
+    @ApiModelProperty(value = "重量", position = 11)
+    private BigDecimal weight;
+
+    @ApiModelProperty(value = "创建人", position = 12)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 11)
+    @ApiModelProperty(value = "创建时间", position = 13)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 12)
+    @ApiModelProperty(value = "更新人", position = 14)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 13)
+    @ApiModelProperty(value = "更新时间", position = 15)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 14)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 16)
     private String isDeleted;
 
 }

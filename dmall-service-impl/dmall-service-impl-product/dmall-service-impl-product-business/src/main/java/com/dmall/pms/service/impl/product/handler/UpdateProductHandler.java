@@ -1,17 +1,24 @@
 package com.dmall.pms.service.impl.product.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
+import com.dmall.common.model.handler.BeanUtil;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.product.request.save.ProductExtDTO;
+import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
+import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
+import com.dmall.pms.generator.mapper.SkuAttributeValueMapper;
+import com.dmall.pms.service.impl.product.common.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @description: 修改商品处理器
@@ -26,8 +33,11 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     @Autowired
     private ProductValidate productValidate;
 
-//    @Autowired
-//    private IProductAttributeService iProductAttributeService;
+    @Autowired
+    private ProductAttributeValueSupport productAttributeValueSupport;
+
+    @Autowired
+    private SkuAttributeValueMapper skuAttributeValueMapper;
 
     @Override
     public BaseResult<Long> validate(UpdateProductRequestDTO requestDTO) {
@@ -36,44 +46,34 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         if (productDO == null) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NOT_EXIST);
         }
+        BasicProductRequestDTO basicProduct = requestDTO.getBasicProduct();
         // 校验商品名称必须唯一
-        ProductDO nameProduct = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getName, requestDTO.getName()));
+        ProductDO nameProduct = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getName, basicProduct.getName()));
         if (nameProduct != null && !nameProduct.getId().equals(requestDTO.getId())) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NAME_EXISTS);
         }
-        // 校验销售属性
-        ProductExtDTO attributeDTO = new ProductExtDTO();
-//        attributeDTO.setCategoryId(productDO.getCategoryId());
-        attributeDTO.setBrandId(productDO.getBrandId());
-//        attributeDTO.setSpecifications(requestDTO.getSpecifications());
-//        attributeDTO.setParams(requestDTO.getParams());
-        return productValidate.validate(attributeDTO);
+        List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueMapper.selectList(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                .eq(SkuAttributeValueDO::getProductId, requestDTO.getId()));
+        if (CollUtil.isEmpty(skuAttributeValueDOS)) {
+            return ResultUtil.success();
+        }
+        return productValidate.validate(requestDTO.getExt());
     }
 
     @Override
     public BaseResult<Long> processor(UpdateProductRequestDTO requestDTO) {
-        ProductDO productDO = dtoConvertDo(requestDTO, ProductDO.class);
+        ProductDO productDO = BeanUtil.copyProperties(requestDTO.getBasicProduct(), ProductDO.class);
+        productDO.setId(requestDTO.getId());
         // 更新商品
         productMapper.updateById(productDO);
-        // 更新商品-属性
-//        updateProductAttribute(requestDTO);
+        // 更新商品-属性 无sku才进行更新
+        List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueMapper.selectList(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                .eq(SkuAttributeValueDO::getProductId, requestDTO.getId()));
+        if (CollUtil.isEmpty(skuAttributeValueDOS)) {
+            productAttributeValueSupport.saveProductAttributeValue(productDO, requestDTO.getExt());
+        }
         return ResultUtil.success(requestDTO.getId());
     }
 
-  /*  private void updateProductAttribute(UpdateProductRequestDTO requestDTO) {
-        // 先删后增
-        iProductAttributeService.remove(Wrappers.<ProductAttributeDO>lambdaQuery()
-                .eq(ProductAttributeDO::getProductId, requestDTO.getId()));
-        List<ProductAttributeDO> productAttributeDOS = Lists.newArrayList();
-        AttributeTypeDTO specifications = requestDTO.getSpecifications();
-        // 构建销售规格
-        ProductAttributeBuilder.buildAttributeDOs(productAttributeDOS, requestDTO.getId(), specifications.getAttributeTypeId(), specifications.getAttributes());
-        // 构建销售参数
-        List<AttributeTypeDTO> params = requestDTO.getParams();
-        for (AttributeTypeDTO param : params) {
-            ProductAttributeBuilder.buildAttributeDOs(productAttributeDOS, requestDTO.getId(), param.getAttributeTypeId(), param.getAttributes());
-        }
-        iProductAttributeService.saveBatch(productAttributeDOS);
-    }*/
 
 }

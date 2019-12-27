@@ -6,7 +6,6 @@ import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
-import com.dmall.pms.api.dto.product.response.GetProductAttributeResponseDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import io.swagger.annotations.Api;
@@ -29,9 +28,10 @@ public interface ProductService {
     @ApiOperation(value = "新增商品")
     BaseResult<Long> save(@Valid @RequestBody SaveProductRequestDTO requestDTO);
 
-    @PostMapping("/page")
-    @ApiOperation(value = "商品分页")
-    BaseResult<LayuiPage<PageProductResponseDTO>> page(@RequestBody PageProductRequestDTO requestDTO);
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除商品")
+    @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
 
     @PutMapping("/")
     @ApiOperation(value = "修改商品")
@@ -42,15 +42,9 @@ public interface ProductService {
     @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
     BaseResult<GetProductResponseDTO> get(@PathVariable("id") Long id);
 
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除商品")
-    @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
-    BaseResult<Long> delete(@PathVariable("id") Long id);
-
-    @GetMapping("/getProductAttribute/{id}")
-    @ApiOperation(value = "根据id查询商品属性列表")
-    @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
-    BaseResult<GetProductAttributeResponseDTO> getProductAttribute(@PathVariable("id") Long id);
+    @PostMapping("/page")
+    @ApiOperation(value = "商品分页")
+    BaseResult<LayuiPage<PageProductResponseDTO>> page(@RequestBody PageProductRequestDTO requestDTO);
 
     @ApiOperation(value = "上传商品主图")
     @PostMapping("/uploadProductPic")

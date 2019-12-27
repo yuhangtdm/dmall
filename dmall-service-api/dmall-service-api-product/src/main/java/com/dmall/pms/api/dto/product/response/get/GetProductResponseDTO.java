@@ -1,7 +1,9 @@
 package com.dmall.pms.api.dto.product.response.get;
 
+import com.dmall.pms.api.dto.product.response.attributevalue.ProductExtResponseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -22,10 +24,10 @@ public class GetProductResponseDTO implements Serializable {
     @ApiModelProperty(value = "商品基本信息", position = 1)
     private BasicProductResponseDTO basicProduct;
 
-    @ApiModelProperty(value = "销售规格", position = 2)
-    private ProductAttributeTypeDTO specifications;
+    @ApiModelProperty(value = "商品属性信息", position = 2)
+    private ProductExtResponseDTO ext;
 
-    @ApiModelProperty(value = "销售参数", position = 3)
-    private List<ProductAttributeTypeDTO> params;
+    @ApiModelProperty(value = "sku列表", position = 3)
+    private List<SkuListResponseDTO> skuList;
 
 }
