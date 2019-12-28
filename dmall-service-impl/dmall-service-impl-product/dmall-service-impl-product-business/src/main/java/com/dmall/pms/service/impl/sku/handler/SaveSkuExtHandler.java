@@ -10,6 +10,7 @@ import com.dmall.pms.generator.dataobject.SkuExtDO;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.service.impl.sku.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,18 +22,15 @@ import org.springframework.stereotype.Component;
 public class SaveSkuExtHandler extends AbstractCommonHandler<SaveSkuExtRequestDTO, SkuExtDO, Long> {
 
     @Autowired
-    private SkuMapper skuMapper;
+    private SkuSupport skuSupport;
 
     @Autowired
     private SkuExtMapper skuExtMapper;
 
     @Override
     public BaseResult validate(SaveSkuExtRequestDTO requestDTO) {
-        SkuDO skuDO = skuMapper.selectById(requestDTO.getSkuId());
-        if (skuDO == null) {
-            return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
-        }
-        return ResultUtil.success();
+        return skuSupport.validate(requestDTO.getSkuId());
+
     }
 
     @Override

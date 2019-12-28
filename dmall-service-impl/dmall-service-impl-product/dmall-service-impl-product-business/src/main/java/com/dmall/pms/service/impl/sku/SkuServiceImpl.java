@@ -58,7 +58,7 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> saveSkuAttribute(@RequestBody SaveSkuAttributeRequestDTO requestDTO) {
+    public BaseResult<Long> saveSkuAttributeValue(@RequestBody SaveSkuAttributeRequestDTO requestDTO) {
         return saveSkuAttributeHandler.handler(requestDTO);
     }
 

@@ -34,7 +34,7 @@ public interface SkuService {
 
     @PostMapping("/saveSkuAttribute")
     @ApiOperation(value = "保存sku属性信息,返回skuId")
-    BaseResult<Long> saveSkuAttribute(@Valid @RequestBody SaveSkuAttributeRequestDTO requestDTO);
+    BaseResult<Long> saveSkuAttributeValue(@Valid @RequestBody SaveSkuAttributeRequestDTO requestDTO);
 
     @PostMapping("/saveSkuExt")
     @ApiOperation(value = "保存sku扩展信息,返回skuId")

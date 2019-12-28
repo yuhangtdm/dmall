@@ -1,20 +1,29 @@
 package com.dmall.pms.service.impl.sku.handler;
 
+import cn.hutool.core.collection.CollUtil;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.product.response.attributevalue.*;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
-import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
-import com.dmall.pms.generator.dataobject.SkuDO;
+import com.dmall.pms.generator.dataobject.*;
+import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
-import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
-import com.dmall.pms.service.impl.product.common.ProductValidate;
+import com.dmall.pms.generator.service.ISkuAttributeValueService;
+import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
+import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
+import com.dmall.pms.service.impl.product.common.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.service.impl.sku.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @description: SaveSkuAttributeHandler
@@ -24,103 +33,162 @@ import java.util.List;
 public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttributeRequestDTO, SkuAttributeValueDO, Long> {
 
     @Autowired
-    private SkuMapper skuMapper;
+    private ProductMapper productMapper;
 
     @Autowired
-    private ProductValidate productValidate;
-
-//    @Autowired
-//    private ISkuAttributeService iSkuAttributeService;
+    private SkuSupport skuSupport;
 
     @Autowired
-    private ProductAttributeSupport productAttributeSupport;
+    private ISkuAttributeValueService iSkuAttributeValueService;
 
     @Autowired
     private SkuExtMapper skuExtMapper;
 
+    @Autowired
+    private ProductAttributeValueSupport productAttributeValueSupport;
+
+    @Autowired
+    private AttributeCacheService attributeCacheService;
+
+    @Autowired
+    private AttributeTypeCacheService attributeTypeCacheService;
+
+    private static final String PARAM_KEY = "key";
+
+    private static final String PARAM_VALUE = "value";
+
 
     @Override
-    public BaseResult validate(SaveSkuAttributeRequestDTO requestDTO) {
-        SkuDO skuDO = skuMapper.selectById(requestDTO.getSkuId());
-        if (skuDO == null) {
-            return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+    public BaseResult<Long> validate(SaveSkuAttributeRequestDTO requestDTO) {
+        // 商品必须存在
+        ProductDO productDO = productMapper.selectById(requestDTO.getProductId());
+        if (productDO == null) {
+            return ResultUtil.fail(SkuErrorEnum.PRODUCT_NOT_EXISTS);
         }
-        return productValidate.basicValidate(requestDTO.getCategoryId(), requestDTO.getBrandId());
+        return skuSupport.validate(requestDTO.getSkuId());
     }
 
     @Override
-    public BaseResult processor(SaveSkuAttributeRequestDTO requestDTO) {
-//        return setProductAttribute(requestDTO.getSkuId(), requestDTO.getAttributeValueList());
-        return null;
+    public BaseResult<Long> processor(SaveSkuAttributeRequestDTO requestDTO) {
+        Long productId = requestDTO.getProductId();
+        Long skuId = requestDTO.getSkuId();
+        List<Long> productAttributeValueList = requestDTO.getProductAttributeValueList();
+        // 设置sku属性值
+        setSkuAttributeValue(productId, skuId, productAttributeValueList);
+        // 设置sku扩展表
+        setSkuExt(productId, skuId, productAttributeValueList);
+        return ResultUtil.success(skuId);
     }
 
-   /* public BaseResult setProductAttribute(Long skuId, List<Long> attributeValueList) {
-        List<SkuAttributeDO> oldList = iSkuAttributeService.list(Wrappers.<SkuAttributeDO>lambdaQuery()
-                .eq(SkuAttributeDO::getSkuId, skuId));
+    /**
+     * 设置sku属性值
+     */
+    private void setSkuAttributeValue(Long productId, Long skuId, List<Long> productAttributeValueList) {
+        List<SkuAttributeValueDO> oldList = iSkuAttributeValueService.list(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                .eq(SkuAttributeValueDO::getSkuId, skuId));
 
         if (CollUtil.isNotEmpty(oldList)) {
-            List<SkuAttributeDO> skuAttributeList = attributeValueList.stream().map(productAttributeId -> {
-                SkuAttributeDO skuAttributeDO = new SkuAttributeDO();
-                skuAttributeDO.setProductAttributeId(productAttributeId);
-                skuAttributeDO.setSkuId(skuId);
-                return skuAttributeDO;
-            }).collect(Collectors.toList());
-            iSkuAttributeService.saveBatch(skuAttributeList);
+            List<SkuAttributeValueDO> skuAttributeList = productAttributeValueList.stream()
+                    .map(productAttributeValueId -> {
+                        SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
+                        skuAttributeValueDO.setProductId(productId);
+                        skuAttributeValueDO.setSkuId(skuId);
+                        skuAttributeValueDO.setProductAttributeValueId(productAttributeValueId);
+                        return skuAttributeValueDO;
+                    }).collect(Collectors.toList());
+            iSkuAttributeValueService.saveBatch(skuAttributeList);
         } else {
-            List<Long> oldAttributeValueIds = oldList.stream().map(SkuAttributeDO::getProductAttributeId)
+            List<Long> oldAttributeValueIds = oldList.stream().map(SkuAttributeValueDO::getProductAttributeValueId)
                     .collect(Collectors.toList());
             // 新增的id集合
-            List<Long> insertIdList = attributeValueList.stream()
+            List<Long> insertIdList = productAttributeValueList.stream()
                     .filter(attributeValueId -> !oldAttributeValueIds.contains(attributeValueId))
                     .collect(Collectors.toList());
             // 删除的id集合
             List<Long> deleteIdList = oldAttributeValueIds.stream()
-                    .filter(oldBrandId -> !attributeValueList.contains(oldBrandId))
+                    .filter(oldBrandId -> !productAttributeValueList.contains(oldBrandId))
                     .collect(Collectors.toList());
 
             if (CollUtil.isNotEmpty(insertIdList)) {
-                List<SkuAttributeDO> insertList = insertIdList.stream().map(productAttributeId -> {
-                    SkuAttributeDO skuAttributeDO = new SkuAttributeDO();
-                    skuAttributeDO.setSkuId(skuId);
-                    skuAttributeDO.setProductAttributeId(productAttributeId);
-                    return skuAttributeDO;
+                List<SkuAttributeValueDO> insertList = insertIdList.stream().map(productAttributeValueId -> {
+                    SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
+                    skuAttributeValueDO.setSkuId(skuId);
+                    skuAttributeValueDO.setProductId(productId);
+                    skuAttributeValueDO.setProductAttributeValueId(productAttributeValueId);
+                    return skuAttributeValueDO;
                 }).collect(Collectors.toList());
-                iSkuAttributeService.saveBatch(insertList);
+                iSkuAttributeValueService.saveBatch(insertList);
             }
             if (CollUtil.isNotEmpty(deleteIdList)) {
-                iSkuAttributeService.remove(Wrappers.<SkuAttributeDO>lambdaQuery().in(SkuAttributeDO::getProductAttributeId, deleteIdList));
+                iSkuAttributeValueService.remove(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                        .in(SkuAttributeValueDO::getProductAttributeValueId, deleteIdList));
             }
         }
-        SkuDO skuDO = skuMapper.selectById(skuId);
-        // 设置json到 sku_ext
-        GetProductAttributeResponseDTO responseDTO = productAttributeSupport.setSaleAttribute(skuDO.getProductId());
-        changeProductAttribute(responseDTO, attributeValueList);
-        String json = JSONObject.toJSONString(responseDTO);
+    }
+
+    /**
+     * 设置sku扩展表
+     */
+    private void setSkuExt(Long productId, Long skuId, List<Long> productAttributeValueList) {
+        ProductExtResponseDTO extResponseDTO = productAttributeValueSupport.getProductAttributeValue(productId, null);
+        // 规格
+        JSONObject specificationsObj = new JSONObject();
+        for (SpecificationsResponseDTO specification : extResponseDTO.getSpecifications()) {
+            AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
+            Optional<ProductAttributeValueResponseDTO> any = specification.getSpecificationsValues().stream()
+                    .filter(specifications -> productAttributeValueList.contains(specifications.getProductAttributeValueId()))
+                    .findAny();
+            any.ifPresent(attributeValue -> specificationsObj.put(attributeDO.getShowName(), attributeValue.getAttributeValue()));
+        }
+
+        // 卖点
+        JSONObject saleObj = new JSONObject();
+        for (SalePointResponseDTO salePoint : extResponseDTO.getSalePoints()) {
+            AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
+            Optional<ProductAttributeValueResponseDTO> any = salePoint.getSalePointValues().stream()
+                    .filter(specificationsDTO -> productAttributeValueList.contains(specificationsDTO.getProductAttributeValueId()))
+                    .findAny();
+            any.ifPresent(productAttributeValue -> saleObj.put(attributeDO.getShowName(), productAttributeValue.getAttributeValue()));
+        }
+
+        // 参数
+        JSONArray paramArr = new JSONArray();
+        for (ParamResponseDTO param : extResponseDTO.getParams()) {
+            JSONObject type = new JSONObject();
+            AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(param.getAttributeTypeId());
+            JSONArray value = new JSONArray();
+            for (ParamValueResponseDTO paramValue : param.getParams()) {
+                AttributeDO attributeDO = attributeCacheService.selectById(paramValue.getAttributeId());
+                Optional<ProductAttributeValueResponseDTO> any = paramValue.getParamValues().stream()
+                        .filter(specificationsDTO -> productAttributeValueList.contains(specificationsDTO.getProductAttributeValueId()))
+                        .findAny();
+                if (any.isPresent()) {
+                    JSONObject obj = new JSONObject();
+                    obj.put(PARAM_KEY, attributeDO.getShowName());
+                    obj.put(PARAM_VALUE, any.get().getAttributeValue());
+                    value.add(obj);
+                }
+            }
+            if (value.size() > 0) {
+                type.put(attributeTypeDO.getShowName(), value);
+                paramArr.add(type);
+            }
+        }
         SkuExtDO skuExtDO = skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuId));
         if (skuExtDO == null) {
             SkuExtDO skuExt = new SkuExtDO();
             skuExt.setSkuId(skuId);
-//            skuExt.setSkuAttributeJson(json);
+            skuExt.setSkuSpecificationsJson(specificationsObj.toJSONString());
+            skuExt.setSkuSalePointJson(saleObj.toJSONString());
+            skuExt.setSkuParamJson(paramArr.toJSONString());
             skuExtMapper.insert(skuExt);
         } else {
-//            skuExtDO.setSkuAttributeJson(json);
+            skuExtDO.setSkuId(skuId);
+            skuExtDO.setSkuSpecificationsJson(specificationsObj.toJSONString());
+            skuExtDO.setSkuSalePointJson(saleObj.toJSONString());
+            skuExtDO.setSkuParamJson(paramArr.toJSONString());
             skuExtMapper.updateById(skuExtDO);
         }
-        return ResultUtil.success(skuId);
-    }*/
+    }
 
-//    public void changeProductAttribute(GetProductAttributeResponseDTO responseDTO, List<Long> attributeValueList) {
-//        responseDTO.getSpecifications().getAttributes().forEach(attribute -> {
-//            attribute.getAttributeValues().
-//                    removeIf(attributeValue -> !attributeValueList
-//                            .contains(attributeValue.getProductAttributeValueId()));
-//        });
-//        responseDTO.getParams().forEach(attributeType -> {
-//            attributeType.getAttributes().forEach(attribute -> {
-//                attribute.getAttributeValues().
-//                        removeIf(attributeValue -> !attributeValueList
-//                                .contains(attributeValue.getProductAttributeValueId()));
-//            });
-//        });
-//    }
 }

@@ -117,7 +117,6 @@ public class ProductAttributeValueSupport {
         productMapper.updateById(productDO);
     }
 
-
     /**
      * 获取商品属性值
      */
