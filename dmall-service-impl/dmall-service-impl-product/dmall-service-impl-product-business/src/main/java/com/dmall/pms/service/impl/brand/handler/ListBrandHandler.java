@@ -39,12 +39,10 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
     @Override
     public BaseResult<List<CommonBrandResponseDTO>> processor(ListBrandRequestDTO requestDTO) {
         List<BrandDO> brandDOS;
-        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter())) {
+        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter(), requestDTO.getCategoryId())) {
             brandDOS = brandCacheService.selectAll();
         } else {
             if (requestDTO.getCategoryId() != null){
-                // 存在分类id时 需要连表查询
-                // todo 待测试
                 brandDOS = brandCategoryMapper.selectBrand(requestDTO);
             }else {
                 LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()

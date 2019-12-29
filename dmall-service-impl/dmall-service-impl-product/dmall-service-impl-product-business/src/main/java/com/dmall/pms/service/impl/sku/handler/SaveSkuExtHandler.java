@@ -5,12 +5,9 @@ import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
-import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuExtDO;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
-import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
-import com.dmall.pms.service.impl.sku.support.SkuSupport;
+import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

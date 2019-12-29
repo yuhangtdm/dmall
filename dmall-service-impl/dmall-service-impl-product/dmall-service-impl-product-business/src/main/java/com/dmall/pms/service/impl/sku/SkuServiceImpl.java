@@ -51,6 +51,9 @@ public class SkuServiceImpl implements SkuService {
     @Autowired
     private SaveMediaHandler saveMediaHandler;
 
+    @Autowired
+    private DeleteSkuHandler deleteSkuHandler;
+
     @Override
     public BaseResult<Long> saveOrUpdate(@RequestBody SaveSkuRequestDTO requestDTO) {
         return saveOrUpdateSkuHandler.handler(requestDTO);
@@ -81,18 +84,24 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> delete(Long id) {
+        return deleteSkuHandler.handler(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> update(@RequestBody UpdateSkuRequestDTO requestDTO) {
         return updateSkuHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO) {
-        return pageSkuHandler.handler(requestDTO);
+    public BaseResult<GetSkuResponseDTO> get(Long id) {
+        return getSkuHandler.handler(id);
     }
 
     @Override
-    public BaseResult<GetSkuResponseDTO> get(Long id) {
-        return getSkuHandler.handler(id);
+    public BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO) {
+        return pageSkuHandler.handler(requestDTO);
     }
 
 }

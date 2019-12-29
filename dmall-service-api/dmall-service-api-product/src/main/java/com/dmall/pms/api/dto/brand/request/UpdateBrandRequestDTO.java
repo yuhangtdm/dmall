@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 修改品牌请求实体
@@ -15,19 +16,21 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "UpdateBrandRequestDTO", description = "修改品牌请求实体")
-public class UpdateBrandRequestDTO {
+public class UpdateBrandRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 4042145404746071053L;
 
     @ApiModelProperty(value = "主键", required = true, position = 1)
     @NotNull(message = "品牌id不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "品牌名称", required = true, position = 2)
+    @ApiModelProperty(value = "品牌名称", position = 2)
     private String name;
 
     @ApiModelProperty(value = "英文名称", position = 3)
     private String englishName;
 
-    @ApiModelProperty(value = "首字母", required = true, position = 4)
+    @ApiModelProperty(value = "首字母", position = 4)
     @Length(max = 1, min = 1, message = "首字母长度固定一位")
     private String firstLetter;
 

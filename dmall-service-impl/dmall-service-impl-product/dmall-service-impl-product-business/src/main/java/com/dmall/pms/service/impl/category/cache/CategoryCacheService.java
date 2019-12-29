@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.category.cache;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.model.service.CommonCacheService;
 import com.dmall.component.cache.redis.constants.CacheNameConstants;
 import com.dmall.component.cache.redis.mapcache.*;
 import com.dmall.pms.generator.dataobject.CategoryDO;
@@ -16,22 +17,22 @@ import java.util.List;
  */
 @Component
 @MapCacheable(cacheNames = CacheNameConstants.CATEGORY)
-public class CategoryCacheService {
+public class CategoryCacheService implements CommonCacheService<CategoryDO> {
 
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @MapListCache
+    @MapListCache(timeout = -1L)
     public List<CategoryDO> selectAll() {
         return categoryMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    @MapPostCache
+    @MapPostCache(timeout = -1L)
     public int insert(CategoryDO categoryDO) {
         return categoryMapper.insert(categoryDO);
     }
 
-    @MapPutCache
+    @MapPutCache(timeout = -1L)
     public CategoryDO updateById(CategoryDO categoryDO) {
         categoryMapper.updateById(categoryDO);
         return categoryMapper.selectById(categoryDO.getId());
@@ -42,7 +43,7 @@ public class CategoryCacheService {
         return categoryMapper.deleteById(id);
     }
 
-    @MapGetCache
+    @MapGetCache(timeout = -1L)
     public CategoryDO selectById(Long id) {
         return categoryMapper.selectById(id);
     }

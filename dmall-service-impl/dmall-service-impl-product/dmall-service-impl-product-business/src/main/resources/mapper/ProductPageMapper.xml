@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dmall.pms.service.impl.product.mapper.ProductPageMapper">
 
-    <select id="productPage" resultType="list">
+    <select id="productPage" resultType="com.dmall.pms.api.dto.product.response.PageProductResponseDTO">
       select
         distinct id, product_no, brand_id, name, pic, pb.name as brand_name, on_market_time,unit,weight, creator, gmt_created, modifier, gmt_modified, is_deleted
       from pms_product pp
-      inner join pms_brand pb on pp.brand_id = pb.id
+      left join pms_brand pb on pp.brand_id = pb.id
       left join pms_category_product pcp on pp.id = pcp.product_id
       <where>
           <if test="categoryId!= null">

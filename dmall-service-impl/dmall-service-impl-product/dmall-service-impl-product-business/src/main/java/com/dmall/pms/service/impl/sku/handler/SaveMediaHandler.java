@@ -10,6 +10,7 @@ import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.generator.service.ISkuMediaService;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.service.impl.support.SkuMediaSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @description:
+ * @description: SaveMediaHandler
  * @author: created by hang.yu on 2019/12/17 14:31
  */
 @Component
@@ -27,7 +28,7 @@ public class SaveMediaHandler extends AbstractCommonHandler<SaveSkuMediaRequestD
     private SkuMapper skuMapper;
 
     @Autowired
-    private ISkuMediaService iSkuMediaService;
+    private SkuMediaSupport skuMediaSupport;
 
     @Override
     public BaseResult processor(SaveSkuMediaRequestDTO requestDTO) {
@@ -38,18 +39,7 @@ public class SaveMediaHandler extends AbstractCommonHandler<SaveSkuMediaRequestD
         if (CollUtil.isEmpty(requestDTO.getMediaList())) {
             return ResultUtil.fail(SkuErrorEnum.MEDIA_NOT_EXIST);
         }
-        List<SkuMediaDO> skuMediaList = requestDTO.getMediaList().stream().map(mediaDTO -> {
-            SkuMediaDO skuMediaDO = new SkuMediaDO();
-            skuMediaDO.setProductId(skuDO.getProductId());
-            skuMediaDO.setSkuId(requestDTO.getSkuId());
-            skuMediaDO.setMediaType(mediaDTO.getMediaType());
-            skuMediaDO.setMediaKey(mediaDTO.getKey());
-            skuMediaDO.setMediaHash(mediaDTO.getHash());
-            skuMediaDO.setSort(mediaDTO.getSort());
-            return skuMediaDO;
-        }).collect(Collectors.toList());
-
-        iSkuMediaService.saveBatch(skuMediaList);
+        skuMediaSupport.saveOrDeleteSkuMedia(skuDO.getProductId(),skuDO.getId(),requestDTO.getMediaList());
         SkuDO sku = new SkuDO();
         sku.setId(requestDTO.getSkuId());
         sku.setPic(requestDTO.getMediaList().get(0).getKey());

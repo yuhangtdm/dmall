@@ -1,7 +1,5 @@
 package com.dmall.pms.service.impl.category.handler;
 
-import java.util.Date;
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
@@ -15,12 +13,11 @@ import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.generator.service.ICategoryAttributeService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
-import com.dmall.pms.service.impl.category.support.CategorySupport;
+import com.dmall.pms.service.impl.support.CategorySupport;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

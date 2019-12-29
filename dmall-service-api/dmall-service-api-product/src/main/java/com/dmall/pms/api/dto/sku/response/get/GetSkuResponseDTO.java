@@ -1,5 +1,6 @@
 package com.dmall.pms.api.dto.sku.response.get;
 
+import com.dmall.pms.api.dto.sku.common.MediaDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,20 +17,15 @@ import java.util.List;
 @ApiModel(value = "GetProductResponseDTO", description =  "查询sku响应实体")
 public class GetSkuResponseDTO {
 
-    @ApiModelProperty(value = "查询sku基本信息实体", position = 1)
+    @ApiModelProperty(value = "sku基本信息实体", position = 1)
     private BasicSkuResponseDTO basicSku;
 
-//    @ApiModelProperty(value = "销售规格", position = 2)
-//    private ProductAttributeTypeDTO specifications;
-//
-//    @ApiModelProperty(value = "销售参数", position = 3)
-//    private List<ProductAttributeTypeDTO> params;
+    @ApiModelProperty(value = "sku媒体实体列表", position = 2)
+    private List<MediaDTO> mediaList;
 
-    @ApiModelProperty(value = "skuPC端详情富文本", position = 4)
-    private String detailHtml;
+    @ApiModelProperty(value = "sku属性值实体", position = 3)
+    private SkuAttributeValueResponseDTO skuAttributeValue;
 
-    @ApiModelProperty(value = "sku移动端详情富文本", position = 5)
-    private String detailMobileHtml;
-
-    //todo 图片信息
+    @ApiModelProperty(value = "sku扩展响应实体", position = 4)
+    private SkuExtResponseDTO skuExt;
 }

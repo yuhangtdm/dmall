@@ -151,8 +151,6 @@ public class SkuDO implements Serializable {
      */
     private String preferentialWay;
 
-    private String jdId;
-
     /**
      * 创建人
      */

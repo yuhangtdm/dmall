@@ -2,7 +2,6 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.model.result.UploadResult;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.common.CommonSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuMediaRequestDTO;
@@ -49,17 +48,22 @@ public interface SkuService {
     @ApiOperation(value = "保存sku图片信息,返回skuId")
     BaseResult<Long> saveSkuMedia(@Valid @RequestBody SaveSkuMediaRequestDTO requestDTO);
 
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除sku")
+    @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
+
     @PutMapping("/")
     @ApiOperation(value = "修改sku")
     BaseResult<Long> update(@Valid @RequestBody UpdateSkuRequestDTO requestDTO);
-
-    @PostMapping("/page")
-    @ApiOperation(value = "sku分页")
-    BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO);
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询sku")
     @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
     BaseResult<GetSkuResponseDTO> get(@PathVariable("id") Long id);
+
+    @PostMapping("/page")
+    @ApiOperation(value = "sku分页")
+    BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO);
 
 }

@@ -15,7 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author: created by hang.yu on 2019/10/16 22:28
  */
 @Configuration
-@ComponentScan(basePackages = {"com.dmall.component.web.exceptionhandler","com.dmall.component.web.log"})
+@ComponentScan(basePackages = {"com.dmall.component.web.exceptionhandler", "com.dmall.component.web.log"
+        , "com.dmall.component.web.util"})
 public class DMallWebConfiguration implements WebMvcConfigurer {
 
     /**

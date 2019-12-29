@@ -1,5 +1,6 @@
 package com.dmall.pms.api.dto.sku.request.update;
 
+import com.dmall.pms.api.dto.sku.common.MediaDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,18 +19,21 @@ import java.util.List;
 @ApiModel(value = "UpdateSkuRequestDTO", description = "修改sku请求实体")
 public class UpdateSkuRequestDTO  {
 
-    @ApiModelProperty(value = "主键", required = true, position = 1)
+    @ApiModelProperty(value = "sku基本信息", position = 1)
     @Valid
     @NotNull(message = "sku基本信息不能为空")
     private BasicSkuRequestDTO basicSkuRequestDTO;
 
     @ApiModelProperty(value = "商品属性值id列表", position = 2)
-    private List<Long> attributeValueList;
+    private List<Long> productAttributeValueList;
 
     @ApiModelProperty(value = "skuPC端详情富文本", position = 3)
     private String detailHtml;
 
     @ApiModelProperty(value = "sku移动端详情富文本", position = 4)
     private String detailMobileHtml;
+
+    @ApiModelProperty(value = "sku媒体列表", position = 5)
+    private List<MediaDTO> mediaList;
 
 }

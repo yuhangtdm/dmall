@@ -43,6 +43,9 @@ public class MapCacheUtil {
      */
     public void put(String key, String hashKey, Object result, long timeout, TimeUnit timeUnit) {
         dmallRedisTemplate.opsForHash().put(key, hashKey, result);
+        if (timeout == 0L){
+            return;
+        }
         if (timeout > 0L) {
             dmallRedisTemplate.expire(key, timeout, timeUnit);
         } else {
@@ -55,7 +58,6 @@ public class MapCacheUtil {
      */
     public void delete(String key, String... hashKey) {
         dmallRedisTemplate.opsForHash().delete(key, hashKey);
-
     }
 
     /**

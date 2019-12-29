@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -23,6 +24,7 @@ public class ListAttributeRequestDTO implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "一级分类id", position = 1)
+    @NotNull(message = "一级分类id不能为空")
     private Long categoryId;
 
     @ApiModelProperty(value = "展示名称", position = 2)

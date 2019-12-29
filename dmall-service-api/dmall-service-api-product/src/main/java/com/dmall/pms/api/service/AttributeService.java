@@ -43,7 +43,7 @@ public interface AttributeService {
 
     @PostMapping("/list")
     @ApiOperation(value = "属性列表")
-    BaseResult<List<CommonAttributeResponseDTO>> list(@RequestBody ListAttributeRequestDTO requestDTO);
+    BaseResult<List<CommonAttributeResponseDTO>> list(@Valid @RequestBody ListAttributeRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "属性分页")

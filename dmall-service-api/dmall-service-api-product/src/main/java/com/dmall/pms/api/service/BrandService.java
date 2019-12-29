@@ -46,7 +46,7 @@ public interface BrandService {
 
     @ApiOperation(value = "品牌列表")
     @PostMapping("/list")
-    BaseResult<List<CommonBrandResponseDTO>> list(@RequestBody ListBrandRequestDTO pageRequestDTO);
+    BaseResult<List<CommonBrandResponseDTO>> list(@Valid @RequestBody ListBrandRequestDTO pageRequestDTO);
 
     @ApiOperation(value = "品牌分页")
     @PostMapping("/page")

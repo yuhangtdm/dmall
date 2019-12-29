@@ -44,7 +44,7 @@ public interface CategoryService {
 
     @ApiOperation(value = "分类列表")
     @PostMapping("/list")
-    BaseResult<List<CommonCategoryResponseDTO>> list(@RequestBody ListCategoryRequestDTO requestDTO);
+    BaseResult<List<CommonCategoryResponseDTO>> list(@Valid @RequestBody ListCategoryRequestDTO requestDTO);
 
     @ApiOperation(value = "分类zTree树")
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")

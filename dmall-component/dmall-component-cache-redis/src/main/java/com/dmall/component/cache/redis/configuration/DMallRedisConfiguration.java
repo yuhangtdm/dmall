@@ -221,19 +221,6 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
         return duration;
     }
 
-    /**
-     * 获取方法的形参名称
-     */
-    private String[] getParameterNames(Method method) {
-        Parameter[] parameters = method.getParameters();
-        String[] parameterNames = new String[parameters.length];
-        for (int i = 0; i < parameters.length; i++) {
-            Parameter param = parameters[i];
-            parameterNames[i] = param.getName();
-        }
-        return parameterNames;
-    }
-
     @Override
     @PostConstruct
     public void check() {

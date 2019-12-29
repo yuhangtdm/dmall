@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.brand.cache;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.model.service.CommonCacheService;
 import com.dmall.component.cache.redis.constants.CacheNameConstants;
 import com.dmall.component.cache.redis.mapcache.*;
 import com.dmall.pms.generator.dataobject.BrandDO;
@@ -16,17 +17,22 @@ import java.util.List;
  */
 @Component
 @MapCacheable(cacheNames = CacheNameConstants.BRAND)
-public class BrandCacheService {
+public class BrandCacheService implements CommonCacheService<BrandDO> {
 
     @Autowired
     private BrandMapper brandMapper;
 
-    @MapPostCache
+    @MapListCache(timeout = -1L)
+    public List<BrandDO> selectAll() {
+        return brandMapper.selectList(Wrappers.emptyWrapper());
+    }
+
+    @MapPostCache(timeout = -1L)
     public int insert(BrandDO brandDO) {
         return brandMapper.insert(brandDO);
     }
 
-    @MapPutCache
+    @MapPutCache(timeout = -1L)
     public BrandDO updateById(BrandDO brandDO) {
         brandMapper.updateById(brandDO);
         return brandMapper.selectById(brandDO.getId());
@@ -37,14 +43,9 @@ public class BrandCacheService {
         return brandMapper.deleteById(id);
     }
 
-    @MapGetCache
+    @MapGetCache(timeout = -1L)
     public BrandDO selectById(Long id) {
         return brandMapper.selectById(id);
-    }
-
-    @MapListCache
-    public List<BrandDO> selectAll() {
-        return brandMapper.selectList(Wrappers.emptyWrapper());
     }
 
 }

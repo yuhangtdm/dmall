@@ -18,13 +18,13 @@ import org.hibernate.validator.constraints.Length;
 @ApiModel(value = "PageBrandRequestDTO", description = "品牌分页请求实体")
 public class PageBrandRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "名称", position = 1)
+    @ApiModelProperty(value = "名称", position = 5)
     private String name;
 
-    @ApiModelProperty(value = "英文名称", position = 2)
+    @ApiModelProperty(value = "英文名称", position = 6)
     private String englishName;
 
-    @ApiModelProperty(value = "首字母", position = 3)
+    @ApiModelProperty(value = "首字母", position = 7)
     @Length(max = 1, min = 1, message = "首字母长度固定一位")
     private String firstLetter;
 

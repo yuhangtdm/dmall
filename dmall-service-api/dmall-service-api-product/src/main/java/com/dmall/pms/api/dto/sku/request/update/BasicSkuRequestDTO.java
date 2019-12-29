@@ -30,7 +30,6 @@ public class BasicSkuRequestDTO {
     private String subName;
 
     @ApiModelProperty(value = "价格", position = 4)
-    @NotNull(message = "价格不能为空")
     private BigDecimal price;
 
     @ApiModelProperty(value = "vip价格", position = 5)

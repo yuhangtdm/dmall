@@ -7,7 +7,7 @@ import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.*;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
-import com.dmall.pms.service.impl.sku.support.SkuSupport;
+import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

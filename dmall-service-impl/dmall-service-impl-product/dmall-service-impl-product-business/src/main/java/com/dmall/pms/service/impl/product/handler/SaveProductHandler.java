@@ -8,24 +8,19 @@ import com.dmall.common.util.NoUtil;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
-import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.dataobject.CategoryProductDO;
 import com.dmall.pms.generator.dataobject.ProductDO;
-import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.CategoryProductMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.product.common.ProductAttributeValueSupport;
+import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
-import com.dmall.pms.service.impl.sku.support.SkuSupport;
+import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @description: 新增商品处理器

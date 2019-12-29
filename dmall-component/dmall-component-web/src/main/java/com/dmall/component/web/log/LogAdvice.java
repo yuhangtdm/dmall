@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -104,7 +105,7 @@ public class LogAdvice implements MethodInterceptor {
 
     private boolean originalParam(Class<?> clazz) {
         return clazz == HttpServletRequest.class || clazz == HttpServletResponse.class
-            || clazz == HttpSession.class;
+            || clazz == HttpSession.class || clazz == MultipartFile.class;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.dmall.pms.service.impl.sku.support;
+package com.dmall.pms.service.impl.support;
 
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -100,7 +100,6 @@ public class SkuSupport {
                     return skuListResponseDTO;
                 }).collect(Collectors.toList());
     }
-
 
     /**
      * 公共校验逻辑

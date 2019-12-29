@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "CommonBrandResponseDTO", description = "品牌公共响应实体")
+@ApiModel(value = "PageBrandResponseDTO", description = "品牌公共响应实体")
 public class PageBrandResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +51,5 @@ public class PageBrandResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "状态,N-可用;Y-不可用", position = 13)
     private String isDeleted;
-
 
 }

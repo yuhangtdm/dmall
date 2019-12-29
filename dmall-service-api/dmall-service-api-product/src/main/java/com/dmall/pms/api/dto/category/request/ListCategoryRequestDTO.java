@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -24,6 +25,7 @@ public class ListCategoryRequestDTO implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "上级id", position = 2)
+    @NotNull(message = "上级id不能为空")
     private Long parentId;
 
     @ApiModelProperty(value = "级别 1-1级;2-2级;3-3级", position = 35)

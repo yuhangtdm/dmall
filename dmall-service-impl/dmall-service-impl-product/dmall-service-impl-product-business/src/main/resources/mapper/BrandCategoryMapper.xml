@@ -19,10 +19,10 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, english_name, first_letter, logo, big_pic, creator, gmt_created, modifier, gmt_modified, is_deleted
+        pb.id, pb.name, pb.english_name, pb.first_letter, pb.logo, pb.big_pic, pb.creator, pb.gmt_created, pb.modifier, pb.gmt_modified, pb.is_deleted
     </sql>
 
-    <select id="selectBrand" resultType="list">
+    <select id="selectBrand" resultType="brandDO">
         select distinct <include refid="Base_Column_List" />
         from pms_brand pb
         INNER JOIN pms_category_brand pcb on pb.id = pcb.brand_id

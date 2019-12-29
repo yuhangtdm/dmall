@@ -19,6 +19,7 @@ import java.util.List;
 @Component
 @Primary
 public class DocumentationConfiguration implements SwaggerResourcesProvider {
+
     private final RouteLocator routeLocator;
 
     private final DMallSwaggerProperties DMallSwaggerProperties;

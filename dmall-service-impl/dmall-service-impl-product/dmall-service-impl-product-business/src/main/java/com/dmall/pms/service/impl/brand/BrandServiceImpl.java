@@ -78,7 +78,6 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public BaseResult<UploadResult> uploadLogo(MultipartFile file) {
-        // todo 待测试
         return uploadLogoHandler.handler(file);
     }
 

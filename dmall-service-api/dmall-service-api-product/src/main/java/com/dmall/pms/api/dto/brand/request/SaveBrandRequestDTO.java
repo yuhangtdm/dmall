@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * @description: 新增品牌请求实体
@@ -15,7 +16,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "SaveBrandRequestDTO", description = "新增品牌请求实体")
-public class SaveBrandRequestDTO {
+public class SaveBrandRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = -2764431828668087336L;
 
     @ApiModelProperty(value = "品牌名称", required = true, position = 1)
     @NotBlank(message = "品牌名称不能为空")

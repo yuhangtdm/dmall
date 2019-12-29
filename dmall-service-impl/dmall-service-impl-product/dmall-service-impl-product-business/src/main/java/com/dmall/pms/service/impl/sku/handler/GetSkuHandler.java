@@ -1,6 +1,5 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.enums.base.EnumUtil;
 import com.dmall.common.enums.base.YNEnum;
 import com.dmall.common.model.handler.AbstractCommonHandler;
@@ -11,12 +10,11 @@ import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
-import com.dmall.pms.generator.dataobject.SkuExtDO;
-import com.dmall.pms.generator.mapper.SkuExtMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
-import com.dmall.pms.service.impl.category.support.CategorySupport;
-import com.dmall.pms.service.impl.product.attribute.ProductAttributeSupport;
+import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.impl.support.SkuExtSupport;
+import com.dmall.pms.service.impl.support.SkuMediaSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,45 +29,41 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
     private SkuMapper skuMapper;
 
     @Autowired
-    private CategorySupport categorySupport;
+    private SkuMediaSupport skuMediaSupport;
 
     @Autowired
-    private BrandCacheService brandCacheService;
+    private SkuAttributeValueSupport skuAttributeValueSupport;
 
     @Autowired
-    private SkuExtMapper skuExtMapper;
-
-    @Autowired
-    private ProductAttributeSupport productAttributeSupport;
-
-//    @Autowired
-//    private SkuAttributeMapper skuAttributeMapper;
-
-    @Autowired
-    private SaveSkuAttributeHandler saveSkuAttributeHandler;
+    private SkuExtSupport skuExtSupport;
 
     @Override
     public BaseResult<GetSkuResponseDTO> processor(Long id) {
         SkuDO skuDO = skuMapper.selectById(id);
-        BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
-//        basicSku.setCascadeCategoryName(categorySupport.getCascadeCategoryName(skuDO.getCategoryId()));
-        basicSku.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
-        basicSku.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getRecommendStatus()));
-        basicSku.setBrandName(brandCacheService.selectById(skuDO.getBrandId()).getName());
-        basicSku.setNewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getNewStatus()));
-        basicSku.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPreviewStatus()));
+        if (skuDO == null) {
+            return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+        }
         GetSkuResponseDTO getSkuResponseDTO = new GetSkuResponseDTO();
-        getSkuResponseDTO.setBasicSku(basicSku);
-        SkuExtDO skuExtDO = skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, id));
-        getSkuResponseDTO.setDetailHtml(skuExtDO.getDetailHtml());
-        getSkuResponseDTO.setDetailMobileHtml(skuExtDO.getDetailMobileHtml());
-//        GetProductAttributeResponseDTO responseDTO = productAttributeSupport.setSaleAttribute(skuDO.getProductId());
-//        List<SkuAttributeDO> skuAttributeDOList = skuAttributeMapper.selectList(Wrappers.<SkuAttributeDO>lambdaQuery().eq(SkuAttributeDO::getSkuId, id));
-//        List<Long> attributeValueList = skuAttributeDOList.stream().map(SkuAttributeDO::getProductAttributeId).collect(Collectors.toList());
-//        saveSkuAttributeHandler.changeProductAttribute(responseDTO, attributeValueList);
-//        getSkuResponseDTO.setSpecifications(responseDTO.getSpecifications());
-//        getSkuResponseDTO.setParams(responseDTO.getParams());
-        return ResultUtil.success();
+        // sku基本信息
+        getSkuResponseDTO.setBasicSku(getBasicSkuResponseDTO(skuDO));
+        // sku媒体列表信息
+        getSkuResponseDTO.setMediaList(skuMediaSupport.getMediaList(id));
+        // sku属性值信息
+        getSkuResponseDTO.setSkuAttributeValue(skuAttributeValueSupport.getSkuAttributeValue(skuDO.getId(), skuDO.getBrandId()));
+        // sku扩展信息
+        getSkuResponseDTO.setSkuExt(skuExtSupport.getSkuExt(id));
+        return ResultUtil.success(getSkuResponseDTO);
     }
+
+
+    private BasicSkuResponseDTO getBasicSkuResponseDTO(SkuDO skuDO) {
+        BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
+        basicSku.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
+        basicSku.setNewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getNewStatus()));
+        basicSku.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getRecommendStatus()));
+        basicSku.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPreviewStatus()));
+        return basicSku;
+    }
+
 
 }

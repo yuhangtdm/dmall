@@ -1,4 +1,4 @@
-package com.dmall.pms.service.impl.category.support;
+package com.dmall.pms.service.impl.support;
 
 import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.StrUtil;
@@ -45,9 +45,9 @@ public class CategorySupport {
     /**
      * 获取子级下所有的三级分类
      */
-    public List<Long> getSubLevelIds(Long categoryId){
+    public List<Long> getSubLevelIds(Long categoryId) {
         CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
-        if (LevelEnum.THREE.getCode().equals(categoryDO.getLevel())){
+        if (LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
             return Lists.newArrayList(categoryDO.getId());
         }
         List<CategoryDO> categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()

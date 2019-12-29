@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 
 /**
  * @description: spring容器工具类
@@ -39,6 +41,13 @@ public class SpringUtil implements ApplicationContextAware {
     // 通过name,以及Clazz返回指定的Bean
     public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
+    }
+
+    /**
+     * 获取指定接口的所有bean
+     */
+    public static <T> Map<String,T> getBeans(Class<T> clazz) {
+        return getApplicationContext().getBeansOfType(clazz);
     }
 
 }

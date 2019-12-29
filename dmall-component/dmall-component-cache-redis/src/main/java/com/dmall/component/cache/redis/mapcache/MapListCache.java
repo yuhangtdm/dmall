@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description: MapCacheable
+ * @description: MapListCache
  * @author: created by hang.yu on 2019/11/23 22:32
  */
 @Target({ElementType.METHOD})

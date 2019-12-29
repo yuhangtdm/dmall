@@ -1,11 +1,10 @@
-package com.dmall.pms.service.impl.product.common;
+package com.dmall.pms.service.impl.support;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.constants.Constants;
-import com.dmall.common.enums.base.YNEnum;
 import com.dmall.pms.api.dto.product.request.attributevalue.*;
 import com.dmall.pms.api.dto.product.response.attributevalue.*;
 import com.dmall.pms.generator.dataobject.AttributeDO;
@@ -131,7 +130,7 @@ public class ProductAttributeValueSupport {
         Map<Long, List<ProductAttributeValueDO>> specificationsMap = list.stream()
                 .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSpecifications()))
                 .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
-        specificationsMap.forEach((k,v) ->{
+        specificationsMap.forEach((k, v) -> {
             SpecificationsResponseDTO specificationsResponseDTO = new SpecificationsResponseDTO();
             specificationsResponseDTO.setAttributeId(k);
             List<ProductAttributeValueResponseDTO> specificationsValues = v.stream().map(productAttributeValue -> {
@@ -149,7 +148,7 @@ public class ProductAttributeValueSupport {
         Map<Long, List<ProductAttributeValueDO>> salePointMap = list.stream()
                 .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSellingPoint()))
                 .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
-        salePointMap.forEach((k,v) ->{
+        salePointMap.forEach((k, v) -> {
             SalePointResponseDTO salePointResponseDTO = new SalePointResponseDTO();
             salePointResponseDTO.setAttributeId(k);
             List<ProductAttributeValueResponseDTO> salePointValues = v.stream().map(productAttributeValue -> {
@@ -166,11 +165,11 @@ public class ProductAttributeValueSupport {
         Map<Long, List<ProductAttributeValueDO>> paramMap = list.stream()
                 .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsParam()))
                 .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeTypeId));
-        paramMap.forEach((k,v) ->{
-            List<ParamValueResponseDTO>  paramValueResponseDTOS = Lists.newArrayList();
+        paramMap.forEach((k, v) -> {
+            List<ParamValueResponseDTO> paramValueResponseDTOS = Lists.newArrayList();
             Map<Long, List<ProductAttributeValueDO>> paramValueMap = v.stream()
                     .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
-            paramValueMap.forEach((key,value) ->{
+            paramValueMap.forEach((key, value) -> {
                 ParamValueResponseDTO paramValueResponseDTO = new ParamValueResponseDTO();
                 paramValueResponseDTO.setAttributeId(key);
                 List<ProductAttributeValueResponseDTO> salePointValues = value.stream().map(productAttributeValue -> {

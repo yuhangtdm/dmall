@@ -1,5 +1,6 @@
 package com.dmall.pms.api.dto.sku.request.save;
 
+import com.dmall.pms.api.dto.sku.common.MediaDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

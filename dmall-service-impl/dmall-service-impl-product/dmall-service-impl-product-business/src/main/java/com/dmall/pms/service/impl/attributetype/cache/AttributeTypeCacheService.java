@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.attributetype.cache;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.model.service.CommonCacheService;
 import com.dmall.component.cache.redis.constants.CacheNameConstants;
 import com.dmall.component.cache.redis.mapcache.*;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
@@ -16,22 +17,22 @@ import java.util.List;
  */
 @Component
 @MapCacheable(cacheNames = CacheNameConstants.ATTRIBUTE_TYPE)
-public class AttributeTypeCacheService {
+public class AttributeTypeCacheService implements CommonCacheService<AttributeTypeDO> {
 
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
 
-    @MapListCache
+    @MapListCache(timeout = -1L)
     public List<AttributeTypeDO> selectAll() {
         return attributeTypeMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    @MapPostCache
+    @MapPostCache(timeout = -1L)
     public int insert(AttributeTypeDO attributeTypeDO) {
         return attributeTypeMapper.insert(attributeTypeDO);
     }
 
-    @MapPutCache
+    @MapPutCache(timeout = -1L)
     public AttributeTypeDO updateById(AttributeTypeDO attributeTypeDO) {
         attributeTypeMapper.updateById(attributeTypeDO);
         return attributeTypeMapper.selectById(attributeTypeDO.getId());
@@ -42,7 +43,7 @@ public class AttributeTypeCacheService {
         return attributeTypeMapper.deleteById(id);
     }
 
-    @MapGetCache
+    @MapGetCache(timeout = -1L)
     public AttributeTypeDO selectById(Long id) {
         return attributeTypeMapper.selectById(id);
     }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.pms.service.impl.sku.mapper.SkuPageMapper">
+
+    <select id="skuPage" resultType="com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO">
+      select
+        distinct
+        id, product_id, merchants_id, brand_id, sku_no, name, sub_name, descriptio, pic, price, vip_price, market_price, stock, low_stock, sort, publish_status, on_publish_time, off_publish_time, recommend_status, new_status, preview_status, audit_status, preferential_way, creator, gmt_created, modifier, gmt_modified, is_deleted
+        from pms_sku ps
+      inner join pms_product pp on pp.id=ps.product_id
+      left join pms_brand pb on pp.brand_id = pb.id
+      left join pms_category_sku pcs on pp.id = pcs.product_id
+      <where>
+          <if test="categoryId!= null">
+              and pcp.category_id = #{categoryId}
+          </if>
+          <if test="brandId!= null">
+              and ps.brand_id = #{brandId}
+          </if>
+          <if test="productNo!= null and productNo!=''">
+              and ps.product_no like '%${productNo}%'
+          </if>
+          <if test="skuNo!= null and skuNo!=''">
+              and ps.sku_no like '%${skuNo}%'
+          </if>
+          <if test="name!= null and name!=''">
+              and ps.name like '%${name}%'
+          </if>
+          <if test="publishStatus!= null and publishStatus!=''">
+              and ps.publish_status  = #{publishStatus}
+          </if>
+          <if test="recommendStatus!= null and recommendStatus!=''">
+              and ps.recommend_status  = #{recommendStatus}
+          </if>
+          <if test="newStatus!= null and newStatus!=''">
+              and ps.new_status  = #{newStatus}
+          </if>
+          <if test="previewStatus!= null and previewStatus!=''">
+              and ps.preview_status  = #{previewStatus}
+          </if>
+          <if test="auditStatus!= null and auditStatus!=''">
+              and ps.audit_status  = #{auditStatus}
+          </if>
+      </where>
+    </select>
+
+</mapper>
