@@ -33,4 +33,11 @@ public class CategoryBrandSupport {
         return categoryBrandMapper.selectList(Wrappers.<CategoryBrandDO>lambdaQuery()
                 .eq(CategoryBrandDO::getBrandId, brandId));
     }
+
+    /**
+     * 根据分类id删除
+     */
+    public void deleteByCategoryId(Long categoryId) {
+        categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, categoryId));
+    }
 }

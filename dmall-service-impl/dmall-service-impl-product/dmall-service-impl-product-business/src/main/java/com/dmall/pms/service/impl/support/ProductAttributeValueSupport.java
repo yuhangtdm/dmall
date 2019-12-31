@@ -199,4 +199,20 @@ public class ProductAttributeValueSupport {
         responseDTO.setParams(params);
         return responseDTO;
     }
+
+    /**
+     * 根据属性分类id查询列表
+     */
+    public List<ProductAttributeValueDO> listByAttributeTypeId(Long attributeTypeId) {
+        return iProductAttributeValueService.list(Wrappers.<ProductAttributeValueDO>lambdaQuery()
+                .eq(ProductAttributeValueDO::getAttributeTypeId, attributeTypeId));
+    }
+
+    /**
+     * 根据属性id查询列表
+     */
+    public List<ProductAttributeValueDO> listByAttributeId(Long attributeId) {
+        return iProductAttributeValueService.list(Wrappers.<ProductAttributeValueDO>lambdaQuery()
+                .eq(ProductAttributeValueDO::getAttributeId, attributeId));
+    }
 }

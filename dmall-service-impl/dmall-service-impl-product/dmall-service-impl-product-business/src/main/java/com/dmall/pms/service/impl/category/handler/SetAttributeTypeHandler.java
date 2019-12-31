@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
@@ -17,6 +18,7 @@ import com.dmall.pms.generator.service.IAttributeTypeService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.service.impl.support.AttributeTypeSupport;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,10 +42,16 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     private CategoryCacheService categoryCacheService;
 
     @Autowired
+    private AttributeTypeCacheService attributeTypeCacheService;
+
+    @Autowired
     private AttributeTypeMapper attributeTypeMapper;
 
     @Autowired
     private CategorySupport categorySupport;
+
+    @Autowired
+    private AttributeTypeSupport attributeTypeSupport;
 
     @Autowired(required = false)
     private MapCacheUtil mapCacheUtil;
@@ -51,13 +59,13 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     @Override
     public BaseResult validate(SetAttributeTypeRequestDTO requestDTO) {
         // 属性分类id不能为空
-        if (CollUtil.isEmpty(requestDTO.getAttributeTypeIds())) {
+        if (CollUtil.isEmpty(requestDTO.getAttributeTypes())) {
             return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_EMPTY);
         }
-        Set<Long> attributeTypeIds = requestDTO.getAttributeTypeIds().stream()
+        Set<Long> attributeTypeIds = requestDTO.getAttributeTypes().stream()
                 .map(AttributeTypeIdsDTO::getAttributeTypeId).collect(Collectors.toSet());
         // 属性分类id不能有重复
-        if (attributeTypeIds.size() != requestDTO.getAttributeTypeIds().size()) {
+        if (attributeTypeIds.size() != requestDTO.getAttributeTypes().size()) {
             return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_INVALID);
         }
         Collection<AttributeTypeDO> attributeTypeDOS = iAttributeTypeService.listByIds(attributeTypeIds);
@@ -70,15 +78,13 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
 
     @Override
     public BaseResult processor(SetAttributeTypeRequestDTO requestDTO) {
-        List<AttributeTypeDO> list = iAttributeTypeService.list(Wrappers.<AttributeTypeDO>lambdaQuery()
-                .eq(AttributeTypeDO::getCategoryId, requestDTO.getCategoryId()));
+        List<AttributeTypeDO> list = attributeTypeSupport.listByCategotyId(requestDTO.getCategoryId());
 
         if (CollUtil.isNotEmpty(list)) {
             List<Long> deleteAttributeTypeIds = list.stream()
                     .map(AttributeTypeDO::getId)
-                    .filter(attributeTypeId -> !requestDTO.getAttributeTypeIds().contains(attributeTypeId))
+                    .filter(attributeTypeId -> !requestDTO.getAttributeTypes().contains(attributeTypeId))
                     .collect(Collectors.toList());
-
             // 修改被删除的属性分类以及缓存
             deleteAttributeTypeIds.forEach(attributeTypeId -> {
                 LambdaUpdateWrapper<AttributeTypeDO> updateWrapper = Wrappers.<AttributeTypeDO>update().lambda()
@@ -91,15 +97,14 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
             });
         }
 
-        requestDTO.getAttributeTypeIds().forEach(attributeTypeIdDTO -> {
-            AttributeTypeDO attributeTypeDO = new AttributeTypeDO();
-            attributeTypeDO.setId(attributeTypeIdDTO.getAttributeTypeId());
+        // 全量的更新属性分类以及缓存
+        requestDTO.getAttributeTypes().forEach(attributeTypeIdDTO -> {
+            AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(attributeTypeIdDTO.getAttributeTypeId());
             attributeTypeDO.setSort(attributeTypeIdDTO.getSort());
             attributeTypeDO.setCategoryId(requestDTO.getCategoryId());
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             attributeTypeDO.setCascadeCategoryId(categoryDO.getPath());
-
-            // 更新新增的属性分类以及缓存
+            attributeTypeDO.setName(StrUtil.format("{}_{}", categoryDO.getName(), attributeTypeDO.getShowName()));
             iAttributeTypeService.updateById(attributeTypeDO);
             mapCacheUtil.put(mapCacheUtil.getkey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
                     String.valueOf(attributeTypeDO.getId()), iAttributeTypeService.getById(attributeTypeDO.getId()));

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * @description: 新增属性分类请求实体
@@ -14,13 +15,11 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "SaveAttributeTypeRequestDTO", description = "新增属性分类请求实体")
-public class SaveAttributeTypeRequestDTO {
+public class SaveAttributeTypeRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "名称,取商品分类名称_展示名称", position = 1)
-    @NotBlank(message = "名称不能为空")
-    private String name;
+    private static final long serialVersionUID = 7821691533714257307L;
 
-    @ApiModelProperty(value = "展示名称", position = 2)
+    @ApiModelProperty(value = "展示名称", required = true, position = 1)
     @NotBlank(message = "展示名称不能为空")
     private String showName;
 }

@@ -17,12 +17,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableHystrix
 @EnableApolloConfig
-@MapperScan(basePackages = {"com.dmall.pms.generator.mapper","com.dmall.pms.service.impl"})
+@MapperScan(basePackages = {"com.dmall.pms.generator.mapper", "com.dmall.pms.service.impl"})
 public class ProductApplication {
 
     public static void main(String[] args) {
         System.setProperty("es.set.netty.runtime.available.processors", "false");
-        SpringApplication.run(ProductApplication.class,args);
+        SpringApplication.run(ProductApplication.class, args);
     }
 
 }

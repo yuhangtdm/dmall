@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.*;
-import java.math.*;
 
 /**
  * @description: 商品分类公共响应实体
@@ -55,18 +53,4 @@ public class CommonCategoryResponseDTO implements Serializable {
     @ApiModelProperty(value = "是否显示在导航栏", position = 11)
     private YNEnum navStatus;
 
-    @ApiModelProperty(value = "创建人", position = 12)
-    private Long creator;
-
-    @ApiModelProperty(value = "创建时间", position = 13)
-    private Date gmtCreated;
-
-    @ApiModelProperty(value = "更新人", position = 14)
-    private Long modifier;
-
-    @ApiModelProperty(value = "更新时间", position = 25)
-    private Date gmtModified;
-
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 16)
-    private String isDeleted;
 }

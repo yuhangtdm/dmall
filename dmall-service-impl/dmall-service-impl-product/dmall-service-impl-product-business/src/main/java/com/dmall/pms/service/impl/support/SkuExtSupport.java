@@ -89,7 +89,7 @@ public class SkuExtSupport {
                 paramArr.add(type);
             }
         }
-        SkuExtDO skuExtDO =getBySkuId(skuId);
+        SkuExtDO skuExtDO = getBySkuId(skuId);
         if (skuExtDO == null) {
             SkuExtDO skuExt = new SkuExtDO();
             skuExt.setSkuId(skuId);
@@ -127,7 +127,7 @@ public class SkuExtSupport {
     /**
      * 根据skuId获取扩展实体
      */
-    public SkuExtDO getBySkuId(Long skuId){
-       return skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuId));
+    public SkuExtDO getBySkuId(Long skuId) {
+        return skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuId));
     }
 }

@@ -19,11 +19,23 @@ public class CategorySkuSupport {
     @Autowired
     private CategorySkuMapper categorySkuMapper;
 
-    public List<CategorySkuDO> getCategorySkus(Long skuId) {
+    /**
+     * 根据skuId查询列表
+     */
+    public List<CategorySkuDO> listBySkuId(Long skuId) {
         return categorySkuMapper.selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getSkuId, skuId));
     }
 
     public List<Long> getCategoryIds(Long skuId) {
-        return getCategorySkus(skuId).stream().map(CategorySkuDO::getCategoryId).collect(Collectors.toList());
+        return listBySkuId(skuId).stream().map(CategorySkuDO::getCategoryId).collect(Collectors.toList());
     }
+
+    /**
+     * 根据分类id查询列表
+     */
+    public List<CategorySkuDO> listByCategoryId(Long categoryId) {
+        return categorySkuMapper.selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getCategoryId, categoryId));
+    }
+
+
 }

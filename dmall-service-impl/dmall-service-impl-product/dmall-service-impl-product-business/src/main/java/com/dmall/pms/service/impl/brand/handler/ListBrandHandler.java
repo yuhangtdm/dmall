@@ -42,9 +42,9 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
         if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter(), requestDTO.getCategoryId())) {
             brandDOS = brandCacheService.selectAll();
         } else {
-            if (requestDTO.getCategoryId() != null){
+            if (requestDTO.getCategoryId() != null) {
                 brandDOS = brandCategoryMapper.selectBrand(requestDTO);
-            }else {
+            } else {
                 LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                         .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
                         .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())

@@ -12,6 +12,8 @@ import com.dmall.pms.generator.mapper.CategoryAttributeMapper;
 import com.dmall.pms.generator.mapper.ProductAttributeValueMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
+import com.dmall.pms.service.impl.support.CategoryAttributeSupport;
+import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,17 +30,20 @@ public class DeleteAttributeHandler extends AbstractCommonHandler<Long, Attribut
     private AttributeCacheService attributeCacheService;
 
     @Autowired
-    private ProductAttributeValueMapper productAttributeValueMapper;
+    private ProductAttributeValueSupport productAttributeValueSupport;
 
     @Autowired
-    private CategoryAttributeMapper categoryAttributeMapper;
+    private CategoryAttributeSupport categoryAttributeSupport;
 
     @Override
     public BaseResult<Long> validate(Long id) {
-        List<ProductAttributeValueDO> productAttributeValueDOS = productAttributeValueMapper
-                .selectList(Wrappers.<ProductAttributeValueDO>lambdaQuery().eq(ProductAttributeValueDO::getAttributeId, id));
-
+        // 属性必须存在
+        AttributeDO attributeDO = attributeCacheService.selectById(id);
+        if (attributeDO == null) {
+            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_NOT_EXIST);
+        }
         // 属性下有商品 则不能删除
+        List<ProductAttributeValueDO> productAttributeValueDOS = productAttributeValueSupport.listByAttributeId(id);
         if (CollUtil.isNotEmpty(productAttributeValueDOS)) {
             return ResultUtil.fail(AttributeErrorEnum.CONTAINS_PRODUCT);
         }
@@ -49,8 +54,7 @@ public class DeleteAttributeHandler extends AbstractCommonHandler<Long, Attribut
     public BaseResult<Long> processor(Long id) {
         // 删除属性 以及 分类-属性
         attributeCacheService.deleteById(id);
-        categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getAttributeId, id));
+        categoryAttributeSupport.deleteByAttributeId(id);
         return ResultUtil.success(id);
     }
 

@@ -1,23 +1,21 @@
 package com.dmall.pms.service.impl.category;
 
+import com.dmall.common.model.result.BaseResult;
+import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
+import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
-import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
-import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
-import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
 import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
 import com.dmall.pms.api.service.CategoryService;
 import com.dmall.pms.service.impl.category.handler.*;
-import com.dmall.common.model.result.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -50,6 +48,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private SetAttributeTypeHandler setAttributeTypeHandler;
+
+    @Autowired
+    private SetAttributeHandler setAttributeHandler;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -96,7 +97,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public BaseResult<Void> setAttribute(@Valid SetAttributeRequestDTO requestDTO) {
-        return null;
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Void> setAttribute(@RequestBody SetAttributeRequestDTO requestDTO) {
+        return setAttributeHandler.handler(requestDTO);
     }
 }

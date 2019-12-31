@@ -6,7 +6,7 @@ import com.dmall.pms.generator.dataobject.BrandDO;
 import java.util.List;
 
 /**
- * @description:
+ * @description: BrandCategoryMapper
  * @author: created by hang.yu on 2019/12/10 21:20
  */
 public interface BrandCategoryMapper {

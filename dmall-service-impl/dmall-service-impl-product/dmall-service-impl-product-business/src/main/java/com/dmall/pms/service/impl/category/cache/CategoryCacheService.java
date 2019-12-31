@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @description:
+ * @description: CategoryCacheService
  * @author: created by hang.yu on 2019/11/25 22:51
  */
 @Component

@@ -35,13 +35,13 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     @Override
     public BaseResult<LayuiPage<PageAttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
-                .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName());
-        Page<AttributeTypeDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
-        IPage<AttributeTypeDO> attributeTypeDOIPage = attributeTypeMapper.selectPage(page, queryWrapper);
-        List<PageAttributeTypeResponseDTO> record = attributeTypeDOIPage.getRecords().stream()
+                .queryWrapper(requestDTO.getCategoryId(), requestDTO.getShowName());
+        IPage<AttributeTypeDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
+        page = attributeTypeMapper.selectPage(page, queryWrapper);
+        List<PageAttributeTypeResponseDTO> record = page.getRecords().stream()
                 .map(doo -> doConvertDto(doo, PageAttributeTypeResponseDTO.class))
                 .collect(Collectors.toList());
-        return ResultUtil.success(new LayuiPage(attributeTypeDOIPage.getTotal(), record));
+        return ResultUtil.success(new LayuiPage(page.getTotal(), record));
     }
 
     @Override

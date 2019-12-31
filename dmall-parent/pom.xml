@@ -16,14 +16,14 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-   <!-- <modules>
-        &lt;!&ndash;dmall-common&ndash;&gt;
+   <modules>
+
         <module>../dmall-common/dmall-common-constants</module>
         <module>../dmall-common/dmall-common-enum</module>
         <module>../dmall-common/dmall-common-util</module>
         <module>../dmall-common/dmall-common-model</module>
+        <module>../dmall-common/dmall-common-service</module>
 
-        &lt;!&ndash;dmall-component&ndash;&gt;
         <module>../dmall-component/dmall-component-web</module>
         <module>../dmall-component/dmall-component-cache-redis</module>
         <module>../dmall-component/dmall-component-dao-mybatisplus</module>
@@ -31,14 +31,12 @@
         <module>../dmall-component/dmall-component-file-qiniu</module>
 
 
-        &lt;!&ndash;dmall-framework&ndash;&gt;
         <module>../dmall-framework/dmall-framework-eureka-server</module>
         <module>../dmall-framework/dmall-framework-zuul</module>
         <module>../dmall-framework/dmall-framework-dashboard</module>
         <module>../dmall-framework/dmall-framework-config-server</module>
         <module>../dmall-framework/dmall-framework-springboot-admin</module>
 
-        &lt;!&ndash;dmall-service-api&ndash;&gt;
         <module>../dmall-service-api/dmall-service-api-product</module>
         <module>../dmall-service-api/dmall-service-api-member</module>
         <module>../dmall-service-api/dmall-service-api-order</module>
@@ -48,14 +46,12 @@
         <module>../dmall-service-api/dmall-service-api-pay</module>
         <module>../dmall-service-api/dmall-service-api-search</module>
 
-        &lt;!&ndash;dmall-service-impl&ndash;&gt;
         <module>../dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator</module>
         <module>../dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business</module>
 
-        &lt;!&ndash;dmall-web&ndash;&gt;
         <module>../dmall-web/dmall-web-admin</module>
         <module>../dmall-web/dmall-web-portal</module>
-    </modules>-->
+    </modules>
 
     <properties>
         <java.version>1.8</java.version>
@@ -290,24 +286,24 @@
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-service-api-product</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-service-api-member</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!--impl-generator -->
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-service-impl-member-generator</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-service-impl-product-generator</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
 
         </dependencies>

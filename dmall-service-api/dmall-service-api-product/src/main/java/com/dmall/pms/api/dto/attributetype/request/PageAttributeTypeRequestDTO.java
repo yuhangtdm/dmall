@@ -20,10 +20,7 @@ public class PageAttributeTypeRequestDTO extends PageRequestDTO {
     @ApiModelProperty(value = "商品分类id", position = 1)
     private Long categoryId;
 
-    @ApiModelProperty(value = "名称", position = 2)
-    private String name;
-
-    @ApiModelProperty(value = "展示名称", position = 3)
+    @ApiModelProperty(value = "展示名称", position = 2)
     private String showName;
 
 }

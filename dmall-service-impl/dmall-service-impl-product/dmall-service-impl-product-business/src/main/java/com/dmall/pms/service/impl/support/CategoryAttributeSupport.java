@@ -24,4 +24,20 @@ public class CategoryAttributeSupport {
         return categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
                 .eq(CategoryAttributeDO::getCategoryId, categoryId));
     }
+
+    /**
+     * 根据分类id删除
+     */
+    public void deleteByCategoryId(Long categoryId) {
+        categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                .eq(CategoryAttributeDO::getCategoryId, categoryId));
+    }
+
+    /**
+     * 根据属性id删除
+     */
+    public void deleteByAttributeId(Long attributeId) {
+        categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                .eq(CategoryAttributeDO::getAttributeId, attributeId));
+    }
 }

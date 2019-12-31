@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "PageAttributeRequestDTO", description = "属性分页请求实体")
 public class PageAttributeRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "三级分类id", position = 1)
+    @ApiModelProperty(value = "分类id", position = 1)
     private Long categoryId;
 
     @ApiModelProperty(value = "展示名称", position = 2)

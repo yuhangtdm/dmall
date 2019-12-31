@@ -25,5 +25,5 @@ public class SetAttributeRequestDTO {
     @ApiModelProperty(value = "属性分类列表", required = true, position = 2)
     @Valid
     @NotNull(message = "属性列表不能为空")
-    private List<AttributeIdsDTO> attributeIds;
+    private List<AttributeIdsDTO> attributes;
 }

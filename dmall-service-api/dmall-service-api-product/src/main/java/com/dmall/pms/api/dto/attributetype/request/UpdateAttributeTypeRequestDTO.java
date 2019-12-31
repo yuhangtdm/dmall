@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 修改属性分类请求实体
@@ -14,14 +15,13 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "UpdateAttributeTypeRequestDTO", description = "修改属性分类请求实体")
-public class UpdateAttributeTypeRequestDTO {
+public class UpdateAttributeTypeRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "主键", required = true)
+    private static final long serialVersionUID = -4616472272818715346L;
+
+    @ApiModelProperty(value = "主键", required = true, position = 1)
     @NotNull(message = "id不能为空")
     private Long id;
-
-    @ApiModelProperty(value = "名称", position = 1)
-    private String name;
 
     @ApiModelProperty(value = "展示名称", position = 2)
     private String showName;

@@ -1,15 +1,17 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
-import com.dmall.pms.generator.dataobject.*;
-import com.dmall.pms.generator.mapper.*;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.generator.dataobject.CategoryDO;
+import com.dmall.pms.generator.dataobject.CategoryProductDO;
+import com.dmall.pms.generator.dataobject.CategorySkuDO;
+import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.service.impl.support.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,19 +28,25 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
     private CategoryMapper categoryMapper;
 
     @Autowired
-    private CategorySkuMapper categorySkuMapper;
+    private CategorySupport categorySupport;
 
     @Autowired
-    private CategoryBrandMapper categoryBrandMapper;
-
-    @Autowired
-    private CategoryAttributeMapper categoryAttributeMapper;
-
-    @Autowired
-    private AttributeTypeMapper attributeTypeMapper;
+    private CategoryBrandSupport categoryBrandSupport;
 
     @Autowired
     private CategoryCacheService categoryCacheService;
+
+    @Autowired
+    private CategoryProductSupport categoryProductSupport;
+
+    @Autowired
+    private CategorySkuSupport categorySkuSupport;
+
+    @Autowired
+    private AttributeTypeSupport attributeTypeSupport;
+
+    @Autowired
+    private CategoryAttributeSupport categoryAttributeSupport;
 
     @Override
     public BaseResult<Long> validate(Long id) {
@@ -48,26 +56,21 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
             return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
         }
         // 删除1、2级分类必须没有子分类
-        if (categoryDO.getLevel() != LevelEnum.THREE.getCode()){
-            List<CategoryDO> categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getParentId, id));
-            if (CollUtil.isNotEmpty(categoryDOList)){
+        if (!categoryDO.getLevel().equals(LevelEnum.THREE.getCode())) {
+            List<CategoryDO> categoryDOList = categorySupport.listByParentId(id);
+            if (CollUtil.isNotEmpty(categoryDOList)) {
                 return ResultUtil.fail(CategoryErrorEnum.CONTAINS_SUB_CATEGORY_ERROR);
             }
         }
+        // 如果分类下有商品,则不可删除
+        List<CategoryProductDO> categoryProductList = categoryProductSupport.listByCategoryId(id);
+        if (CollUtil.isNotEmpty(categoryProductList)) {
+            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_PRODUCT_ERROR);
+        }
         // 如果分类下有sku 则不可删除
-        List<CategorySkuDO> productDOS = categorySkuMapper.selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getCategoryId, id));
+        List<CategorySkuDO> productDOS = categorySkuSupport.listByCategoryId(id);
         if (CollUtil.isNotEmpty(productDOS)) {
             return ResultUtil.fail(CategoryErrorEnum.CONTAINS_SKU_ERROR);
-        }
-        // 如果分类下有属性分类 则不可删除
-        List<AttributeTypeDO> attributeTypeDOS = attributeTypeMapper.selectList(Wrappers.<AttributeTypeDO>lambdaQuery().eq(AttributeTypeDO::getCategoryId, id));
-        if (CollUtil.isNotEmpty(attributeTypeDOS)) {
-            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_ATTRIBUTE_TYPE_ERROR);
-        }
-        // 分类下有属性不可删除
-        List<CategoryAttributeDO> categoryAttributeDOS = categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery().eq(CategoryAttributeDO::getCategoryId, id));
-        if (CollUtil.isNotEmpty(categoryAttributeDOS)) {
-            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_ATTRIBUTE_ERROR);
         }
         return ResultUtil.success();
     }
@@ -76,7 +79,9 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
     public BaseResult<Long> processor(Long id) {
         // 删除商品分类以及和品牌的对应关系
         categoryCacheService.deleteById(id);
-        categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, id));
+        categoryBrandSupport.deleteByCategoryId(id);
+        attributeTypeSupport.deleteByCategoryId(id);
+        categoryAttributeSupport.deleteByCategoryId(id);
         return ResultUtil.success(id);
     }
 

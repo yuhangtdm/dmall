@@ -1,18 +1,17 @@
 package com.dmall.pms.service.impl.attribute;
 
+import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
+import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
 import com.dmall.pms.api.dto.attribute.response.PageAttributeResponseDTO;
 import com.dmall.pms.api.service.AttributeService;
 import com.dmall.pms.service.impl.attribute.handler.*;
-import com.dmall.common.model.result.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,6 +73,5 @@ public class AttributeServiceImpl implements AttributeService {
     public BaseResult<LayuiPage<PageAttributeResponseDTO>> page(PageAttributeRequestDTO requestDTO) {
         return pageAttributeHandler.handler(requestDTO);
     }
-
 
 }

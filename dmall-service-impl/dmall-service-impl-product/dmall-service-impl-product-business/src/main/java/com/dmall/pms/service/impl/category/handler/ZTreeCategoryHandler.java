@@ -6,7 +6,6 @@ import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
-import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
@@ -67,7 +66,6 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
 
     private List<ZTreeCategoryResponseDTO> tree(Map<Long, ZTreeCategoryResponseDTO> zTreeMap, Long parentId) {
         List<ZTreeCategoryResponseDTO> tree = Lists.newArrayList();
-
         // 添加parentId自身
         zTreeMap.forEach((k, v) -> {
             if (parentId == 0L && ObjectUtil.equal(v.getParentId(), parentId)) {
@@ -77,14 +75,12 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
                 tree.add(v);
             }
         });
-
         // 遍历所有元素
         zTreeMap.forEach((k, v) -> {
             if (zTreeMap.get(v.getParentId()) != null) {
                 zTreeMap.get(v.getParentId()).getChildren().add(v);
             }
         });
-
         return tree;
     }
 }

@@ -68,4 +68,11 @@ public class CategorySupport {
         }
         return ResultUtil.success();
     }
+
+    /**
+     * 根据父级id查询子分类列表
+     */
+    public List<CategoryDO> listByParentId(Long parentId) {
+        return categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getParentId, parentId));
+    }
 }

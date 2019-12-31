@@ -1,7 +1,6 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
@@ -13,6 +12,7 @@ import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.generator.service.ICategoryAttributeService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.service.impl.support.AttributeTypeSupport;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,19 +41,20 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     @Autowired
     private ICategoryAttributeService iCategoryAttributeService;
 
+    @Autowired
+    private AttributeTypeSupport attributeTypeSupport;
 
     @Override
     public BaseResult validate(SetAttributeRequestDTO requestDTO) {
         // 属性列表不能为空
-        if (CollUtil.isEmpty(requestDTO.getAttributeIds())) {
+        if (CollUtil.isEmpty(requestDTO.getAttributes())) {
             return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_ID_EMPTY);
         }
         // 属性列表不能重复
-        Set<Long> attributeIds = requestDTO.getAttributeIds().stream()
+        Set<Long> attributeIds = requestDTO.getAttributes().stream()
                 .map(AttributeIdsDTO::getAttributeId)
                 .collect(Collectors.toSet());
-
-        if (requestDTO.getAttributeIds().size() != attributeIds.size()) {
+        if (requestDTO.getAttributes().size() != attributeIds.size()) {
             return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_ID_REPEATED);
         }
         // 属性列表的id都必须存在
@@ -67,11 +68,10 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     @Override
     public BaseResult processor(SetAttributeRequestDTO requestDTO) {
         // 先删除后插入
-        iCategoryAttributeService.remove(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getCategoryId, requestDTO.getCategoryId()));
+        attributeTypeSupport.deleteByCategoryId(requestDTO.getCategoryId());
         CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
         List<CategoryAttributeDO> list = Lists.newArrayList();
-        for (AttributeIdsDTO attributeIdDTO : requestDTO.getAttributeIds()) {
+        for (AttributeIdsDTO attributeIdDTO : requestDTO.getAttributes()) {
             CategoryAttributeDO categoryAttributeDO = new CategoryAttributeDO();
             categoryAttributeDO.setCategoryId(requestDTO.getCategoryId());
             categoryAttributeDO.setCascadeCategoryId(categoryDO.getPath());

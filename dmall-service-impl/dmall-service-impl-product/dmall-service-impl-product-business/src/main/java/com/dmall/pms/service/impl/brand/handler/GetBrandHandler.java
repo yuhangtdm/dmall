@@ -20,7 +20,6 @@ public class GetBrandHandler extends AbstractCommonHandler<Long, BrandDO, Common
     @Autowired
     private BrandCacheService brandCacheService;
 
-
     @Override
     public BaseResult<CommonBrandResponseDTO> processor(Long id) {
         BrandDO brandDO = brandCacheService.selectById(id);

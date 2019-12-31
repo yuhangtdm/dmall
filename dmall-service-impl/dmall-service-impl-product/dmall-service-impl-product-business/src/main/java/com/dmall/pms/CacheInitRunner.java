@@ -24,10 +24,10 @@ public class CacheInitRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Map<String, CommonCacheService> beans = SpringUtil.getBeans(CommonCacheService.class);
 
-        beans.forEach((k,bean) ->{
+        beans.forEach((k, bean) -> {
             Method method = ReflectionUtils.findMethod(bean.getClass(), METHOD_NAME);
             ReflectionUtils.invokeMethod(method, bean);
-            log.info("execute bean:{}, selectAll method success",k);
+            log.info("execute bean:{}, selectAll method success", k);
         });
     }
 }

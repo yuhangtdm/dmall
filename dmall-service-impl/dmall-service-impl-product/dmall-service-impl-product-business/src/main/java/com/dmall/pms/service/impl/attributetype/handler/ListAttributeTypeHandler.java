@@ -11,6 +11,7 @@ import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
+import com.dmall.pms.service.impl.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,15 +32,17 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
     @Autowired
     private AttributeTypeCacheService attributeTypeCacheService;
 
+    @Autowired
+    private CategorySupport categorySupport;
+
     @Override
     public BaseResult<List<CommonAttributeTypeResponseDTO>> processor(ListAttributeTypeRequestDTO requestDTO) {
         List<AttributeTypeDO> attributeTypeDOS;
-
-        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName())) {
+        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getShowName())) {
             attributeTypeDOS = attributeTypeCacheService.selectAll();
         } else {
             LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
-                    .queryWrapper(requestDTO.getCategoryId(), requestDTO.getName(), requestDTO.getShowName());
+                    .queryWrapper(requestDTO.getCategoryId(), requestDTO.getShowName());
             attributeTypeDOS = attributeTypeMapper.selectList(queryWrapper);
         }
         List<CommonAttributeTypeResponseDTO> list = attributeTypeDOS.stream()
@@ -49,5 +52,10 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
         return ResultUtil.success(list);
     }
 
-
+    @Override
+    protected void customerConvertDto(CommonAttributeTypeResponseDTO result, AttributeTypeDO doo) {
+        if (doo.getCategoryId() != null) {
+            result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
+        }
+    }
 }

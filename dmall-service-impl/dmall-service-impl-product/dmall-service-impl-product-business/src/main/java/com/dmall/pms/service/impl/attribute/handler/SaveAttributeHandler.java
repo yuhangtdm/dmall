@@ -14,6 +14,7 @@ import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryAttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
+import com.dmall.pms.service.impl.attribute.validate.AttributeValidate;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,23 +47,7 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
         if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
             return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_INVALID);
         }
-
-        // 从列表获取 不支持新增 可选值为空
-        if (requestDTO.getInputType().equals(InputTypeEnum.LIST.getCode()) && CollUtil.isEmpty(requestDTO.getInputList())
-                && YNEnum.N.getCode().equals(requestDTO.getHandAddStatus())) {
-            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_DATA_INVALID);
-        }
-
-        List<String> inputList = requestDTO.getInputList();
-        if (CollUtil.isNotEmpty(inputList)){
-            HashSet<String> strings = new HashSet<>(inputList);
-            if (strings.size() != inputList.size()){
-                return ResultUtil.fail(AttributeErrorEnum.INPUT_LIST_INVALID);
-            }
-        }
-
-
-        return ResultUtil.success();
+        return AttributeValidate.validate(requestDTO.getInputType(), requestDTO.getInputList(), requestDTO.getHandAddStatus());
     }
 
     @Override

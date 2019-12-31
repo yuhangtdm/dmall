@@ -45,7 +45,7 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
 
     @Override
     public BaseResult validate(ListAttributeRequestDTO requestDTO) {
-
+        // 分类必须存在 且必须是一级分类
         if (requestDTO.getCategoryId() != null){
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             if (categoryDO == null){
@@ -55,7 +55,6 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
                 return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_INVALID);
             }
         }
-
         return ResultUtil.success();
     }
 
@@ -67,12 +66,12 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
             attributeDOS = attributeCacheService.selectAll();
         } else {
             String categoryName = null;
-            if (requestDTO.getCategoryId() != null){
+            if (requestDTO.getCategoryId() != null) {
                 CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
                 categoryName = categoryDO.getName();
             }
             LambdaQueryWrapper<AttributeDO> wrapper = Wrappers.<AttributeDO>lambdaQuery()
-                    .likeRight(StrUtil.isNotBlank(categoryName),AttributeDO::getName,categoryName)
+                    .likeRight(StrUtil.isNotBlank(categoryName), AttributeDO::getName, categoryName)
                     .like(StrUtil.isNotBlank(requestDTO.getShowName()), AttributeDO::getShowName, requestDTO.getShowName())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getType()), AttributeDO::getType, requestDTO.getType())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getInputType()), AttributeDO::getInputType, requestDTO.getInputType())

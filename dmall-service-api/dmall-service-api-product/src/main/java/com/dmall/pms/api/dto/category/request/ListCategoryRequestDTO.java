@@ -19,7 +19,7 @@ import java.io.Serializable;
 @ApiModel(value = "ListCategoryRequestDTO", description = "商品分类列表请求实体")
 public class ListCategoryRequestDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8793905767538242175L;
 
     @ApiModelProperty(value = "分类名称", position = 1)
     private String name;

@@ -62,4 +62,5 @@ public interface CategoryService {
     @ApiOperation(value = "设置属性")
     @PostMapping("/setAttribute")
     BaseResult<Void> setAttribute(@Valid @RequestBody SetAttributeRequestDTO requestDTO);
+
 }

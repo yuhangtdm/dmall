@@ -1,15 +1,16 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import cn.hutool.core.util.StrUtil;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
+import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,26 +25,22 @@ public class UpdateAttributeTypeHandler extends AbstractCommonHandler<UpdateAttr
     private AttributeTypeCacheService attributeTypeCacheService;
 
     @Autowired
+    private CategoryCacheService categoryCacheService;
+
+    @Autowired
     private AttributeTypeMapper attributeTypeMapper;
 
     @Override
-    public BaseResult validate(UpdateAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<Long> processor(UpdateAttributeTypeRequestDTO requestDTO) {
         AttributeTypeDO attributeTypeDO = attributeTypeMapper.selectById(requestDTO.getId());
         if (attributeTypeDO == null) {
             return ResultUtil.fail(AttributeTypeErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
         }
-        // 名称唯一
-        AttributeTypeDO nameAttributeType = attributeTypeMapper.selectOne(Wrappers.<AttributeTypeDO>lambdaQuery()
-                .eq(AttributeTypeDO::getName, requestDTO.getName()));
-        if (nameAttributeType != null && ObjectUtil.notEqual(nameAttributeType.getId(), requestDTO.getId())) {
-            return ResultUtil.fail(AttributeTypeErrorEnum.SAVE_ATTRIBUTE_TYPE_ERROR);
+        attributeTypeDO.setShowName(requestDTO.getShowName());
+        if (attributeTypeDO.getCategoryId() != null) {
+            CategoryDO categoryDO = categoryCacheService.selectById(attributeTypeDO.getCategoryId());
+            attributeTypeDO.setName(StrUtil.format("{}_{}", categoryDO.getName(), requestDTO.getShowName()));
         }
-        return ResultUtil.success();
-    }
-
-    @Override
-    public BaseResult<Long> processor(UpdateAttributeTypeRequestDTO requestDTO) {
-        AttributeTypeDO attributeTypeDO = dtoConvertDo(requestDTO, AttributeTypeDO.class);
         attributeTypeCacheService.updateById(attributeTypeDO);
         return ResultUtil.success(attributeTypeDO.getId());
     }

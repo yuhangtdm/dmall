@@ -59,8 +59,4 @@ public class DMallSwaggerProperties {
      */
     private String contactEmail;
 
-    /**
-     * 无需swagger的配置 zuul配置
-     */
-    private List<String> ignoreProjects;
 }

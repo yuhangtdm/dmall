@@ -39,6 +39,7 @@ public class DeleteBrandHandler extends AbstractCommonHandler<Long, BrandDO, Lon
 
     @Override
     public BaseResult<Long> validate(Long id) {
+        // 品牌必须存在
         BrandDO brandDO = brandMapper.selectById(id);
         if (brandDO == null) {
             return ResultUtil.fail(BrandErrorEnum.BRAND_NOT_EXIST);
