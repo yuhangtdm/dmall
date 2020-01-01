@@ -11,16 +11,19 @@ import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @description: 商品服务
  * @author: created by hang.yu on 2019-12-02 23:18:01
  */
 @Api(tags = "商品服务")
+@Validated
 @RequestMapping("/product")
 public interface ProductService {
 
@@ -48,10 +51,10 @@ public interface ProductService {
 
     @ApiOperation(value = "上传商品主图")
     @PostMapping("/uploadProductPic")
-    BaseResult<UploadResult> uploadProductPic(MultipartFile file);
+    BaseResult<UploadResult> uploadProductPic(@NotNull(message = "商品主图不能为空") MultipartFile file);
 
     @ApiOperation(value = "上传商品规格配图")
     @PostMapping("/uploadProductAttributePic")
-    BaseResult<UploadResult> uploadProductAttributePic(MultipartFile file);
+    BaseResult<UploadResult> uploadProductAttributePic(@NotNull(message = "商品规格配图不能为空") MultipartFile file);
 
 }

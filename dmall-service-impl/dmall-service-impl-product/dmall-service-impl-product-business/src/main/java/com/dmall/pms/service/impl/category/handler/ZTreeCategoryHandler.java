@@ -2,6 +2,7 @@ package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.enums.base.EnumUtil;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
@@ -41,7 +42,7 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
         }
         List<CategoryDO> categoryDOList;
         if (parentId == 0L) {
-            categoryDOList = categoryCacheService.selectAll();
+            categoryDOList = categoryMapper.selectList(Wrappers.emptyWrapper());
         } else {
             categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
                     .like(CategoryDO::getPath, categoryDO.getPath())
@@ -61,7 +62,9 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
     @Override
     protected void customerConvertDto(ZTreeCategoryResponseDTO result, CategoryDO doo) {
         result.setOpen(Boolean.FALSE);
-        result.setIsParent(LevelEnum.ONE.getCode().equals(result.getLevel()) || LevelEnum.TWO.getCode().equals(result.getLevel()));
+        result.setIsParent(LevelEnum.ONE.getCode().equals(doo.getLevel())
+                || LevelEnum.TWO.getCode().equals(doo.getLevel()));
+        result.setLevel(EnumUtil.getKeyValueEnum(LevelEnum.class, doo.getLevel()));
     }
 
     private List<ZTreeCategoryResponseDTO> tree(Map<Long, ZTreeCategoryResponseDTO> zTreeMap, Long parentId) {

@@ -14,16 +14,19 @@ import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @description: sku服务
  * @author: created by hang.yu on 2019-12-02 23:18:01
  */
 @Api(tags = "sku服务")
+@Validated
 @RequestMapping("/sku")
 public interface SkuService {
 
@@ -42,7 +45,7 @@ public interface SkuService {
     @PostMapping("/upload/{id}")
     @ApiOperation(value = "上传sku图片")
     @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
-    BaseResult<UploadResult> upload(@PathVariable("id") Long id, MultipartFile file);
+    BaseResult<UploadResult> upload(@PathVariable("id") Long id,@NotNull(message = "sku图片不能为空")  MultipartFile file);
 
     @PostMapping("/saveSkuMedia")
     @ApiOperation(value = "保存sku图片信息,返回skuId")

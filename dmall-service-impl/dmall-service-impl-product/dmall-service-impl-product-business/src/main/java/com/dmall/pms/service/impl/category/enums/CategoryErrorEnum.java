@@ -26,21 +26,18 @@ public enum CategoryErrorEnum implements ErrorCodeEnum {
     /**
      * 设置品牌的校验
      */
-    BRAND_ID_EMPTY("category_008", "品牌列表不能为空"),
     BRAND_IDS_REPEATED("category_010", "品牌列表不能重复"),
     BRAND_ID_INVALID("category_009", "品牌不存在"),
 
     /**
      * 设置属性分类的校验
      */
-    ATTRIBUTE_TYPE_ID_EMPTY("category_011", "属性分类列表不能为空"),
     ATTRIBUTE_TYPE_ID_REPEATED("category_012", "属性分类列表不能重复"),
     ATTRIBUTE_TYPE_ID_INVALID("category_013", "属性分类不存在"),
 
     /**
      * 设置属性的校验
      */
-    ATTRIBUTE_ID_EMPTY("category_014", "属性列表不能为空"),
     ATTRIBUTE_ID_REPEATED("category_015", "属性列表不能重复"),
     ATTRIBUTE_ID_INVALID("category_016", "属性不存在"),
 

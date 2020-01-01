@@ -22,17 +22,17 @@ public class BrandCacheService implements CommonCacheService<BrandDO> {
     @Autowired
     private BrandMapper brandMapper;
 
-    @MapListCache(timeout = -1L)
+    @MapListCache
     public List<BrandDO> selectAll() {
         return brandMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    @MapPostCache(timeout = -1L)
+    @MapPostCache
     public int insert(BrandDO brandDO) {
         return brandMapper.insert(brandDO);
     }
 
-    @MapPutCache(timeout = -1L)
+    @MapPutCache
     public BrandDO updateById(BrandDO brandDO) {
         brandMapper.updateById(brandDO);
         return brandMapper.selectById(brandDO.getId());
@@ -43,7 +43,7 @@ public class BrandCacheService implements CommonCacheService<BrandDO> {
         return brandMapper.deleteById(id);
     }
 
-    @MapGetCache(timeout = -1L)
+    @MapGetCache
     public BrandDO selectById(Long id) {
         return brandMapper.selectById(id);
     }

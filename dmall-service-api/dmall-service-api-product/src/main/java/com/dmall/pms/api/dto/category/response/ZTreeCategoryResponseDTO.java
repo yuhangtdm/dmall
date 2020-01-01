@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.category.response;
 
-import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
+import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,14 +19,31 @@ import java.util.List;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "ZTreeCategoryResponseDTO", description = "ZTree分类树实体")
-public class ZTreeCategoryResponseDTO extends CommonCategoryResponseDTO {
+public class ZTreeCategoryResponseDTO implements Serializable {
 
-    @ApiModelProperty(value = "子元素",  position = 23)
-    private List<ZTreeCategoryResponseDTO> children= Lists.newArrayList();
+    private static final long serialVersionUID = 7853335345390628555L;
 
-    @ApiModelProperty(value = "是否打开",  position = 24)
-    private Boolean open=false;
+    @ApiModelProperty(value = "id", position = 1)
+    private Long id;
 
-    @ApiModelProperty(value = "是否为父元素",  position = 25)
-    private Boolean isParent=false;
+    @ApiModelProperty(value = "上级id", position = 2)
+    private Long parentId;
+
+    @ApiModelProperty(value = "分类名称", position = 3)
+    private String name;
+
+    @ApiModelProperty(value = "排序", position = 4)
+    private Integer sort;
+
+    @ApiModelProperty(value = "级别", position = 6)
+    private LevelEnum level;
+
+    @ApiModelProperty(value = "子元素", position = 6)
+    private List<ZTreeCategoryResponseDTO> children = Lists.newArrayList();
+
+    @ApiModelProperty(value = "是否打开", position = 7)
+    private Boolean open = false;
+
+    @ApiModelProperty(value = "是否为父元素", position = 8)
+    private Boolean isParent = false;
 }

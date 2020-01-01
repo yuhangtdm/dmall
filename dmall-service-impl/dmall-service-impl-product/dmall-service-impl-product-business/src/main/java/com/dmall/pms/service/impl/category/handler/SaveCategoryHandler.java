@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
@@ -37,6 +38,10 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
             if (requestDTO.getLevel() <= parentCategoryDO.getLevel()) {
                 return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
             }
+        }
+        // 当ParentId=0时 level必须为1
+        if (requestDTO.getParentId() == 0 && !LevelEnum.ONE.getCode().equals(requestDTO.getLevel())){
+            return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
         }
         return ResultUtil.success();
     }

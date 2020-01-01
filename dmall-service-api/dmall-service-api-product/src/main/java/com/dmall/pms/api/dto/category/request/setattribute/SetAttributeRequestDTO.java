@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -25,5 +26,6 @@ public class SetAttributeRequestDTO {
     @ApiModelProperty(value = "属性分类列表", required = true, position = 2)
     @Valid
     @NotNull(message = "属性列表不能为空")
+    @Size(min = 1, message = "属性列表不能为空")
     private List<AttributeIdsDTO> attributes;
 }

@@ -22,7 +22,7 @@ public class AttributeTypeIdsDTO implements Serializable {
     @NotNull(message = "属性分类id不能为空")
     private Long attributeTypeId;
 
-    @ApiModelProperty(value = "排序", required = true, position = 2)
+    @ApiModelProperty(value = "排序,大于等于1", required = true, position = 2)
     @NotNull(message = "排序不能为空")
     @Min(value = 1, message = "排序必须大于等于1")
     private Integer sort;

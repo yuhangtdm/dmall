@@ -21,17 +21,17 @@ public class AttributeCacheService implements CommonCacheService<AttributeDO> {
     @Autowired
     private AttributeMapper attributeMapper;
 
-    @MapListCache(timeout = -1L)
+    @MapListCache
     public List<AttributeDO> selectAll() {
         return attributeMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    @MapPostCache(timeout = -1L)
+    @MapPostCache
     public int insert(AttributeDO attributeDO) {
         return attributeMapper.insert(attributeDO);
     }
 
-    @MapPutCache(timeout = -1L)
+    @MapPutCache
     public AttributeDO updateById(AttributeDO attributeDO) {
         attributeMapper.updateById(attributeDO);
         return attributeMapper.selectById(attributeDO.getId());
@@ -42,10 +42,9 @@ public class AttributeCacheService implements CommonCacheService<AttributeDO> {
         return attributeMapper.deleteById(id);
     }
 
-    @MapGetCache(timeout = -1L)
+    @MapGetCache
     public AttributeDO selectById(Long id) {
         return attributeMapper.selectById(id);
     }
-
 
 }

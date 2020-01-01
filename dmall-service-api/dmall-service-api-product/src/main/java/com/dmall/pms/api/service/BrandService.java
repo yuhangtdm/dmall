@@ -12,10 +12,13 @@ import com.dmall.pms.api.dto.brand.response.PageBrandResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -23,6 +26,7 @@ import java.util.List;
  * @author: created by hang.yu on 2019/11/19 22:46
  */
 @Api(tags = "品牌管理")
+@Validated
 @RequestMapping("/brand")
 public interface BrandService {
 
@@ -54,5 +58,5 @@ public interface BrandService {
 
     @ApiOperation(value = "上传品牌logo")
     @PostMapping("/uploadLogo")
-    BaseResult<UploadResult> uploadLogo(MultipartFile file);
+    BaseResult<UploadResult> uploadLogo(@NotNull(message = "logo不能为空") MultipartFile file);
 }

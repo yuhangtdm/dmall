@@ -19,8 +19,8 @@ public class ListAttributeTypeRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "商品分类id", required = true, position = 1)
-    @NotNull(message = "商品分类id不能为空")
+    @ApiModelProperty(value = "三级商品分类id", required = true, position = 1)
+    @NotNull(message = "三级商品分类id不能为空")
     private Long categoryId;
 
     @ApiModelProperty(value = "展示名称", position = 2)

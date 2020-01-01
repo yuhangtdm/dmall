@@ -40,10 +40,6 @@ public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, C
 
     @Override
     public BaseResult validate(SetBrandRequestDTO requestDTO) {
-        // 品牌id列表不能为空
-        if (CollUtil.isEmpty(requestDTO.getBrandIds())) {
-            return ResultUtil.fail(CategoryErrorEnum.BRAND_ID_EMPTY);
-        }
         Set<Long> brandIds = requestDTO.getBrandIds().stream().map(BrandIdsDTO::getBrandId).collect(Collectors.toSet());
         // 品牌id不能有重复
         if (brandIds.size() != requestDTO.getBrandIds().size()) {

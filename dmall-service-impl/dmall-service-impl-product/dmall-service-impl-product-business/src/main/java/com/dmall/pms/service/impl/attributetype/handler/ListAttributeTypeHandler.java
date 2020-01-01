@@ -8,8 +8,11 @@ import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
 import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
+import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
+import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
+import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,18 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
 
     @Autowired
     private CategorySupport categorySupport;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
+
+    @Override
+    public BaseResult validate(ListAttributeTypeRequestDTO requestDTO) {
+        CategoryDO categoryDO = categoryMapper.selectById(requestDTO.getCategoryId());
+        if (categoryDO == null) {
+            return ResultUtil.fail(AttributeTypeErrorEnum.CATEGORY_NOT_EXIST);
+        }
+        return ResultUtil.success();
+    }
 
     @Override
     public BaseResult<List<CommonAttributeTypeResponseDTO>> processor(ListAttributeTypeRequestDTO requestDTO) {

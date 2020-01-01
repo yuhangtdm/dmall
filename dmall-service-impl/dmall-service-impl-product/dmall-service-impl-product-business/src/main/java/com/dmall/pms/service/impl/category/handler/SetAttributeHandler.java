@@ -46,10 +46,6 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
 
     @Override
     public BaseResult validate(SetAttributeRequestDTO requestDTO) {
-        // 属性列表不能为空
-        if (CollUtil.isEmpty(requestDTO.getAttributes())) {
-            return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_ID_EMPTY);
-        }
         // 属性列表不能重复
         Set<Long> attributeIds = requestDTO.getAttributes().stream()
                 .map(AttributeIdsDTO::getAttributeId)

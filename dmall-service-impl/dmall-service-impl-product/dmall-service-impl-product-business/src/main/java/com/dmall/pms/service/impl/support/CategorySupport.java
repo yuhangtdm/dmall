@@ -75,4 +75,5 @@ public class CategorySupport {
     public List<CategoryDO> listByParentId(Long parentId) {
         return categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getParentId, parentId));
     }
+
 }

@@ -1,5 +1,6 @@
 package com.dmall.component.web.exceptionhandler;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import com.dmall.common.constants.WebConstants;
 import com.dmall.common.enums.base.BasicStatusEnum;
@@ -7,6 +8,7 @@ import com.dmall.common.model.exception.ComponentException;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.exception.BusinessException;
 import com.dmall.component.web.util.ResultUtil;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -104,13 +106,13 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public String bind(ConstraintViolationException e, HttpServletRequest request) {
-        Map<String, String> map = new LinkedHashMap<>();
+        List<String> data = Lists.newArrayList();
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-            map.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
+            data.add(constraintViolation.getMessage());
         }
-        log.error("enter the ConstraintViolationException Handler,{}", map);
-        return paramHandle(null, map, request);
+        log.error("enter the ConstraintViolationException Handler,{}", data);
+        return paramHandle(null, data, request);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -131,17 +133,19 @@ public class BasicExceptionHandler {
     /**
      * 处理参数异常的公共逻辑
      */
-    private String paramHandle(List<FieldError> fieldErrors, Map<String, String> error, HttpServletRequest request) {
-        Map<String, String> map = new LinkedHashMap<>();
+    private String paramHandle(List<FieldError> fieldErrors,  List<String>  error, HttpServletRequest request) {
+        List<String> data = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(fieldErrors)) {
             for (FieldError fieldError : fieldErrors) {
-                map.put(fieldError.getField(), fieldError.getDefaultMessage());
+                if (!data.contains(fieldError.getDefaultMessage())){
+                    data.add(fieldError.getDefaultMessage());
+                }
             }
         }
-        if (MapUtil.isNotEmpty(map)) {
-            log.error("enter the param exception Handler,{}", map);
+        if (CollUtil.isNotEmpty(data)) {
+            log.error("enter the param exception Handler,{}", data);
         }
-        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST, MapUtil.isEmpty(error) ? map : error));
+        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST, CollUtil.isEmpty(error) ? data : error));
     }
 
 

@@ -22,17 +22,17 @@ public class CategoryCacheService implements CommonCacheService<CategoryDO> {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @MapListCache(timeout = -1L)
+    @MapListCache
     public List<CategoryDO> selectAll() {
         return categoryMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    @MapPostCache(timeout = -1L)
+    @MapPostCache
     public int insert(CategoryDO categoryDO) {
         return categoryMapper.insert(categoryDO);
     }
 
-    @MapPutCache(timeout = -1L)
+    @MapPutCache
     public CategoryDO updateById(CategoryDO categoryDO) {
         categoryMapper.updateById(categoryDO);
         return categoryMapper.selectById(categoryDO.getId());
@@ -43,7 +43,7 @@ public class CategoryCacheService implements CommonCacheService<CategoryDO> {
         return categoryMapper.deleteById(id);
     }
 
-    @MapGetCache(timeout = -1L)
+    @MapGetCache
     public CategoryDO selectById(Long id) {
         return categoryMapper.selectById(id);
     }

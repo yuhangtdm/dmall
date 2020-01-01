@@ -58,15 +58,11 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
 
     @Override
     public BaseResult validate(SetAttributeTypeRequestDTO requestDTO) {
-        // 属性分类id不能为空
-        if (CollUtil.isEmpty(requestDTO.getAttributeTypes())) {
-            return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_EMPTY);
-        }
         Set<Long> attributeTypeIds = requestDTO.getAttributeTypes().stream()
                 .map(AttributeTypeIdsDTO::getAttributeTypeId).collect(Collectors.toSet());
         // 属性分类id不能有重复
         if (attributeTypeIds.size() != requestDTO.getAttributeTypes().size()) {
-            return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_INVALID);
+            return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_TYPE_ID_REPEATED);
         }
         Collection<AttributeTypeDO> attributeTypeDOS = iAttributeTypeService.listByIds(attributeTypeIds);
         // 属性分类id要存在

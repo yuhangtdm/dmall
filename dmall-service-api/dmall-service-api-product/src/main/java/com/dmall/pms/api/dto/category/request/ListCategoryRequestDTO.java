@@ -24,7 +24,7 @@ public class ListCategoryRequestDTO implements Serializable {
     @ApiModelProperty(value = "分类名称", position = 1)
     private String name;
 
-    @ApiModelProperty(value = "上级id", position = 2)
+    @ApiModelProperty(value = "上级id", required = true, position = 2)
     @NotNull(message = "上级id不能为空")
     private Long parentId;
 

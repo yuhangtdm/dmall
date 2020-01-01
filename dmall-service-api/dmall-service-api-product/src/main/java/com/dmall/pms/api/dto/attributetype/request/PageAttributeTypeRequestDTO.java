@@ -17,10 +17,10 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "PageAttributeTypeRequestDTO", description = "属性分类分页请求实体")
 public class PageAttributeTypeRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "商品分类id", position = 1)
+    @ApiModelProperty(value = "商品分类id", position = 5)
     private Long categoryId;
 
-    @ApiModelProperty(value = "展示名称", position = 2)
+    @ApiModelProperty(value = "展示名称", position = 6)
     private String showName;
 
 }
