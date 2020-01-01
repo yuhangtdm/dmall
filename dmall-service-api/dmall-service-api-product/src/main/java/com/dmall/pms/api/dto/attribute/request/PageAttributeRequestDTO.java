@@ -21,21 +21,21 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "PageAttributeRequestDTO", description = "属性分页请求实体")
 public class PageAttributeRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "分类id", position = 1)
+    @ApiModelProperty(value = "分类id", position = 5)
     private Long categoryId;
 
-    @ApiModelProperty(value = "展示名称", position = 2)
+    @ApiModelProperty(value = "展示名称", position = 6)
     private String showName;
 
-    @ApiModelProperty(value = "属性类型 1-普通属性;2-公共属性", position = 3)
+    @ApiModelProperty(value = "属性类型 1-普通属性;2-公共属性", position = 7)
     @ValueInEnum(TypeEnum.class)
     private Integer type;
 
-    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 4)
+    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 8)
     @ValueInEnum(InputTypeEnum.class)
     private Integer inputType;
 
-    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 5)
+    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 9)
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
 

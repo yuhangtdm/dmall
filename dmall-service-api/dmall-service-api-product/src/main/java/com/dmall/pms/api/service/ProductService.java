@@ -47,7 +47,7 @@ public interface ProductService {
 
     @PostMapping("/page")
     @ApiOperation(value = "商品分页")
-    BaseResult<LayuiPage<PageProductResponseDTO>> page(@RequestBody PageProductRequestDTO requestDTO);
+    BaseResult<LayuiPage<PageProductResponseDTO>> page(@Valid @RequestBody PageProductRequestDTO requestDTO);
 
     @ApiOperation(value = "上传商品主图")
     @PostMapping("/uploadProductPic")

@@ -3,26 +3,26 @@
 <mapper namespace="com.dmall.pms.service.impl.attribute.mapper.AttributePageMapper">
 
 
-
-    <select id="pageAttribute" resultType="com.dmall.pms.api.dto.attribute.response.PageAttributeResponseDTO">
+    <select id="pageAttribute" resultType="com.dmall.pms.generator.dataobject.AttributeDO">
         select
-          a.id, a.attribute_type_id, a.name, a.show_name, a.input_type, a.input_list, a.hand_add_status, a.creator, a.gmt_created, a.modifier, a.gmt_modified, a.is_deleted
+        a.id, a.name, a.show_name, a.type, a.input_type, a.input_list, a.hand_add_status, a.creator, a.gmt_created,
+        a.modifier, a.gmt_modified, a.is_deleted
         from pms_attribute a left join pms_category_attribute ca on a.id = ca.attribute_id
         <where>
-            <if test="showName != null and showName != ''">
-                a.show_name like  '%${showName}%'
+            <if test="request.showName != null and request.showName != ''">
+                a.show_name like '%${showName}%'
             </if>
-            <if test="type != null ">
+            <if test="request.type != null ">
                 a.type = #{type}
             </if>
-            <if test="inputType != null ">
-                a.input_type = #{inputType}
+            <if test="request.inputType != null ">
+                a.input_type = #{request.inputType}
             </if>
-            <if test="inputType != null ">
-                a.handAddStatus = #{inputType}
+            <if test="request.handAddStatus != null ">
+                a.hand_add_status = #{request.handAddStatus}
             </if>
-            <if test="categoryId != null ">
-                ca.category_id = #{categoryId}
+            <if test="request.categoryId != null ">
+                ca.category_id = #{request.categoryId}
             </if>
         </where>
     </select>

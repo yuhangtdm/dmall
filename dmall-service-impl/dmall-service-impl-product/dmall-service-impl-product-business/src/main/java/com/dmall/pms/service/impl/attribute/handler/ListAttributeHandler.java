@@ -89,7 +89,7 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
     protected void customerConvertDto(CommonAttributeResponseDTO result, AttributeDO doo) {
         result.setInputType(EnumUtil.getKeyValueEnum(InputTypeEnum.class, doo.getInputType()));
         result.setHandAddStatus(EnumUtil.getKeyValueEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));
-        result.setType(EnumUtil.getKeyValueEnum(TypeEnum.class, doo.getInputType()));
+        result.setType(EnumUtil.getKeyValueEnum(TypeEnum.class, doo.getType()));
     }
 
 }

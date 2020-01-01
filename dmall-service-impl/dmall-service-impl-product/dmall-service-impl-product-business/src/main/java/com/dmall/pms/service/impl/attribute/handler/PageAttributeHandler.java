@@ -82,14 +82,17 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
         }
         // 三级分类需要连表查询
         Page<PageAttributeResponseDTO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
-        page.setRecords(attributePageMapper.pageAttribute(page, requestDTO));
+        List<PageAttributeResponseDTO> collect = attributePageMapper.pageAttribute(page, requestDTO).stream()
+                .map(category -> doConvertDto(category, PageAttributeResponseDTO.class))
+                .collect(Collectors.toList());
+        page.setRecords(collect);
         return ResultUtil.success(new LayuiPage<>(page.getTotal(), page.getRecords()));
     }
 
     @Override
     protected void customerConvertDto(PageAttributeResponseDTO result, AttributeDO doo) {
         result.setInputType(EnumUtil.getKeyValueEnum(InputTypeEnum.class, doo.getInputType()));
-        result.setType(EnumUtil.getKeyValueEnum(TypeEnum.class, doo.getInputType()));
+        result.setType(EnumUtil.getKeyValueEnum(TypeEnum.class, doo.getType()));
         result.setHandAddStatus(EnumUtil.getKeyValueEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));
     }
 }

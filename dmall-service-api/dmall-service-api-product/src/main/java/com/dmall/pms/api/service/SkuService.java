@@ -67,6 +67,6 @@ public interface SkuService {
 
     @PostMapping("/page")
     @ApiOperation(value = "sku分页")
-    BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO);
+    BaseResult<LayuiPage<PageSkuResponseDTO>> page(@Valid @RequestBody PageSkuRequestDTO requestDTO);
 
 }

@@ -8,11 +8,16 @@ import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
 import com.dmall.pms.generator.dataobject.AttributeDO;
+import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
+import com.dmall.pms.generator.mapper.CategoryAttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
 import com.dmall.pms.service.impl.attribute.validate.AttributeValidate;
+import com.dmall.pms.service.impl.support.CategoryAttributeSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @description: 修改属性处理器
@@ -24,6 +29,9 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
     @Autowired
     private AttributeCacheService attributeCacheService;
 
+    @Autowired
+    private CategoryAttributeSupport categoryAttributeSupport;
+
     @Override
     public BaseResult validate(UpdateAttributeRequestDTO requestDTO) {
         // 查询属性
@@ -33,7 +41,10 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
         }
         // 公共属性不能修改为普通属性
         if (TypeEnum.PUBLIC.getCode().equals(attributeDO.getType()) && TypeEnum.NORMAL.getCode().equals(requestDTO.getType())) {
-            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_TYPE_INVALID);
+            List<CategoryAttributeDO> list = categoryAttributeSupport.listByAttributeId(requestDTO.getId());
+            if (CollUtil.isNotEmpty(list) && list.size() > 1) {
+                return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_TYPE_INVALID);
+            }
         }
         return AttributeValidate.validate(requestDTO.getInputType(), requestDTO.getInputList(), requestDTO.getHandAddStatus());
 

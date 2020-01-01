@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description: 商品分页处理器
@@ -58,8 +59,13 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
     @Override
     public BaseResult<LayuiPage<PageProductResponseDTO>> processor(PageProductRequestDTO requestDTO) {
         Page<PageProductResponseDTO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
-        List<PageProductResponseDTO> responseDTOS = productPageMapper.productPage(page, requestDTO);
+        List<PageProductResponseDTO> responseDTOS = productPageMapper.productPage(page, requestDTO).stream()
+                .map(productDO -> doConvertDto(productDO, PageProductResponseDTO.class)).collect(Collectors.toList());
         return ResultUtil.success(new LayuiPage(page.getTotal(), responseDTOS));
     }
 
+    @Override
+    protected void customerConvertDto(PageProductResponseDTO result, ProductDO doo) {
+        result.setBrandName(brandCacheService.selectById(doo.getBrandId()).getName());
+    }
 }

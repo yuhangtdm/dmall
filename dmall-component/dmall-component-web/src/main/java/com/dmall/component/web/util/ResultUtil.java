@@ -4,7 +4,11 @@ import com.dmall.common.enums.base.BasicStatusEnum;
 import com.dmall.common.enums.base.ErrorCodeEnum;
 import com.dmall.common.model.exception.ComponentException;
 import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.model.result.LayuiPage;
 import com.dmall.component.web.exception.BusinessException;
+import org.springframework.util.Assert;
+
+import java.util.Collection;
 
 /**
  * @description: 结果返回工具类
@@ -21,11 +25,16 @@ public class ResultUtil {
     }
 
     public static <T> BaseResult<T> success(T t){
-        BaseResult<T> baseResult = new BaseResult<T>();
+        Assert.notNull(t,"data不可为null");
+        BaseResult<T> baseResult = new BaseResult();
         baseResult.setResult(Boolean.TRUE);
         baseResult.setCode(BasicStatusEnum.SUCCESS.getCode());
         baseResult.setData(t);
         baseResult.setMsg(BasicStatusEnum.SUCCESS.getMsg());
+        if (t instanceof Collection){
+            Collection c = (Collection) t;
+            baseResult.setCount(c.size());
+        }
         return baseResult;
     }
 

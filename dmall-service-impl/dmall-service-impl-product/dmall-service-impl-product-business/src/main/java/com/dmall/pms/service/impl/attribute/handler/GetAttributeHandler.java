@@ -35,7 +35,7 @@ public class GetAttributeHandler extends AbstractCommonHandler<Long, AttributeDO
 
     @Override
     protected void customerConvertDto(CommonAttributeResponseDTO result, AttributeDO doo) {
-        result.setType(EnumUtil.getKeyValueEnum(TypeEnum.class, doo.getInputType()));
+        result.setType(EnumUtil.getKeyValueEnum(TypeEnum.class, doo.getType()));
         result.setInputType(EnumUtil.getKeyValueEnum(InputTypeEnum.class, doo.getInputType()));
         result.setHandAddStatus(EnumUtil.getKeyValueEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));
     }

@@ -21,7 +21,7 @@ public class AttributeValidate {
      */
     public static BaseResult validate(Integer inputType, List<String> inputList, String handAddStatus){
         // 从列表获取 不支持新增 可选值为空
-        if (inputType.equals(InputTypeEnum.LIST.getCode()) && CollUtil.isEmpty(inputList)
+        if (InputTypeEnum.LIST.getCode().equals(inputType) && CollUtil.isEmpty(inputList)
                 && YNEnum.N.getCode().equals(handAddStatus)) {
             return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_DATA_INVALID);
         }

@@ -47,6 +47,6 @@ public interface AttributeService {
 
     @PostMapping("/page")
     @ApiOperation(value = "属性分页")
-    BaseResult<LayuiPage<PageAttributeResponseDTO>> page(@RequestBody PageAttributeRequestDTO requestDTO);
+    BaseResult<LayuiPage<PageAttributeResponseDTO>> page(@Valid @RequestBody PageAttributeRequestDTO requestDTO);
 
 }

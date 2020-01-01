@@ -26,6 +26,14 @@ public class CategoryAttributeSupport {
     }
 
     /**
+     * 根据属性id查询
+     */
+    public List<CategoryAttributeDO> listByAttributeId(Long attributeId) {
+        return categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                .eq(CategoryAttributeDO::getAttributeId, attributeId));
+    }
+
+    /**
      * 根据分类id删除
      */
     public void deleteByCategoryId(Long categoryId) {

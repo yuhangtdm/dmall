@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description: sku分页处理器
@@ -38,9 +39,9 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
 
     @Override
     public BaseResult<LayuiPage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
-        // todo 待测试
         Page<PageSkuResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
-        List<PageSkuResponseDTO> skuList = skuPageMapper.skuPage(page, requestDTO);
+        List<PageSkuResponseDTO> skuList = skuPageMapper.skuPage(page, requestDTO).stream()
+                .map(skuDO -> doConvertDto(skuDO, PageSkuResponseDTO.class)).collect(Collectors.toList());
         return ResultUtil.success(new LayuiPage<>(page.getTotal(), skuList));
     }
 
