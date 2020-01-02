@@ -108,8 +108,7 @@ public class ProductAttributeValueSupport {
         }
 
         // 保存商品属性值
-        iProductAttributeValueService.remove(Wrappers.<ProductAttributeValueDO>lambdaQuery()
-                .eq(ProductAttributeValueDO::getProductId, productId));
+        deleteByProductId(productId);
         iProductAttributeValueService.saveBatch(list);
         // 修改商品的规格
         productDO.setSpecificationsJson(productSpecifications.toJSONString());
@@ -214,5 +213,13 @@ public class ProductAttributeValueSupport {
     public List<ProductAttributeValueDO> listByAttributeId(Long attributeId) {
         return iProductAttributeValueService.list(Wrappers.<ProductAttributeValueDO>lambdaQuery()
                 .eq(ProductAttributeValueDO::getAttributeId, attributeId));
+    }
+
+    /**
+     * 根据商品id删除
+     */
+    public void deleteByProductId(Long productId){
+        iProductAttributeValueService.remove(Wrappers.<ProductAttributeValueDO>lambdaQuery()
+                .eq(ProductAttributeValueDO::getProductId, productId));
     }
 }

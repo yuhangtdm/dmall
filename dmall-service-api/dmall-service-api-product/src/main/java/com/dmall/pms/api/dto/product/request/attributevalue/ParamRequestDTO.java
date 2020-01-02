@@ -5,7 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,11 +22,13 @@ public class ParamRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -4423360556545433218L;
 
-    @ApiModelProperty(value = "属性分类id", position = 1)
-    @NotNull(message = "属性分类id不能为空")
+    @ApiModelProperty(value = "参数属性分类id", required = true, position = 1)
+    @NotNull(message = "参数属性分类id不能为空")
     private Long attributeTypeId;
 
-    @ApiModelProperty(value = "属性列表", position = 2)
-    @NotNull(message = "属性列表不能为空")
+    @ApiModelProperty(value = "参数属性列表", required = true, position = 2)
+    @Valid
+    @NotNull(message = "参数属性列表不能为空")
+    @Size(min = 1, message = "参数属性列表不能为空")
     private List<ParamValueRequestDTO> paramAttributes;
 }

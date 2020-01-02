@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,12 +21,13 @@ public class SalePointRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1441839800494180753L;
 
-    @ApiModelProperty(value = "属性id", position = 1)
-    @NotNull(message = "属性id不能为空")
+    @ApiModelProperty(value = "卖点属性id", required = true, position = 1)
+    @NotNull(message = "卖点属性id不能为空")
     private Long attributeId;
 
-    @ApiModelProperty(value = "属性值列表", position = 2)
-    @NotNull(message = "属性值列表不能为空")
+    @ApiModelProperty(value = "卖点属性值列表",required = true,  position = 2)
+    @NotNull(message = "卖点属性值列表不能为空")
+    @Size(min = 1, message = "卖点属性值列表不能为空")
     private List<String> salePointValues;
 
 }

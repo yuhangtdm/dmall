@@ -36,7 +36,7 @@ public class SkuSupport {
     private SkuMapper skuMapper;
 
     @Autowired
-    private SkuExtMapper skuExtMapper;
+    private SkuExtSupport skuExtSupport;
 
     @Autowired
     private CategoryCacheService categoryCacheService;
@@ -68,6 +68,7 @@ public class SkuSupport {
             skuDO.setPublishStatus(YNEnum.N.getCode());
             skuDO.setSort(i + 1);
             skuMapper.insert(skuDO);
+            // skuExtDo
             for (Long categoryId : categoryIds) {
                 CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
                 CategorySkuDO categorySkuDO = new CategorySkuDO();
@@ -92,11 +93,12 @@ public class SkuSupport {
                     skuListResponseDTO.setSkuNo(skuDO.getSkuNo());
                     skuListResponseDTO.setPrice(skuDO.getPrice());
                     skuListResponseDTO.setStock(skuDO.getStock());
-                    SkuExtDO skuExtDO = skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery()
-                            .eq(SkuExtDO::getSkuId, skuDO.getId()));
-                    String skuSpecificationsJson = skuExtDO.getSkuSpecificationsJson();
-                    JSONObject skuSpecifications = JSONObject.parseObject(skuSpecificationsJson);
-                    skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), ","));
+                    SkuExtDO skuExtDO = skuExtSupport.getBySkuId(skuDO.getId());
+                    if (skuExtDO != null){
+                        String skuSpecificationsJson = skuExtDO.getSkuSpecificationsJson();
+                        JSONObject skuSpecifications = JSONObject.parseObject(skuSpecificationsJson);
+                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), ","));
+                    }
                     return skuListResponseDTO;
                 }).collect(Collectors.toList());
     }

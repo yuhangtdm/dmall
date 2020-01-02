@@ -22,6 +22,9 @@ import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 /**
  * @description: 新增商品处理器
  * @author: created by hang.yu on 2019-12-03 19:56:06
@@ -64,9 +67,10 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         // 保存商品
         ProductDO productDO = saveProductDO(requestDTO);
         // 保存商品属性值
-        productAttributeValueSupport.saveProductAttributeValue(productDO, requestDTO.getExt());
+        ProductExtRequestDTO ext = requestDTO.getExt();
+        productAttributeValueSupport.saveProductAttributeValue(productDO, ext);
         // 保存sku
-        skuSupport.saveSku(productDO.getId(), requestDTO.getExt().getCategoryIds(), requestDTO.getExt().getBrandId(), requestDTO.getSkuList());
+        skuSupport.saveSku(productDO.getId(), ext.getCategoryIds(), ext.getBrandId(), requestDTO.getSkuList());
         return ResultUtil.success(productDO.getId());
     }
 

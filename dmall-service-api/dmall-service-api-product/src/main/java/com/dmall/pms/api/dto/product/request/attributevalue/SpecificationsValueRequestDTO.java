@@ -5,11 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * @description:
+ * @description: 销售规格值
  * @author: created by hang.yu on 2019/12/26 22:29
  */
 @Data
@@ -19,11 +20,11 @@ public class SpecificationsValueRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 5158187829046741491L;
 
-    @ApiModelProperty(value = "属性值", position = 1)
-    @NotNull(message = "属性值不能为空")
+    @ApiModelProperty(value = "销售规格值", required = true, position = 1)
+    @NotBlank(message = "销售规格值不能为空")
     private String attributeValue;
 
-    @ApiModelProperty(value = "属性值配图", position = 2)
+    @ApiModelProperty(value = "销售规格值配图", position = 2)
     private String pic;
 
 }

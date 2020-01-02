@@ -24,12 +24,12 @@ public class SaveProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -1526848004709212956L;
 
-    @ApiModelProperty(value = "商品基本信息", position = 1)
+    @ApiModelProperty(value = "商品基本信息", required = true, position = 1)
     @Valid
     @NotNull(message = "商品基本信息不能为空")
     private BasicProductRequestDTO basicProduct;
 
-    @ApiModelProperty(value = "商品属性信息", position = 2)
+    @ApiModelProperty(value = "商品属性信息", required = true, position = 2)
     @Valid
     @NotNull(message = "商品属性信息不能为空")
     private ProductExtRequestDTO ext;

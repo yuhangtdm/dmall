@@ -12,9 +12,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ProductErrorEnum implements ErrorCodeEnum {
 
-    CATEGORY_NOT_EXISTS("product_001", "商品分类不存在"),
-    CATEGORY_LEVEL_ERROR("product_002", "商品分类级别不合法"),
-    BRAND_NOT_EXISTS("product_003", "品牌不存在"),
+    CATEGORY_NOT_EXISTS("product_100", "商品分类不存在"),
+    CATEGORY_LEVEL_ERROR("product_101", "商品分类级别不合法"),
+    BRAND_NOT_EXISTS("product_102", "品牌不存在"),
+    CATEGORY_NOT_REPEATED("product_102", "商品分类重复"),
 
     ATTRIBUTE_NOT_EXISTS("product_004", "属性不存在"),
 

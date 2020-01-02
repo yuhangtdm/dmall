@@ -22,7 +22,7 @@ public @interface MapGetCache {
     /**
      * 超时时间
      */
-    long timeout() default 1L;
+    long timeout() default 0L;
 
     /**
      * 时间单位

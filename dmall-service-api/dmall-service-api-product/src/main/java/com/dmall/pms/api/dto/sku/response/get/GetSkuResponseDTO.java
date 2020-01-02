@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "GetProductResponseDTO", description =  "查询sku响应实体")
+@ApiModel(value = "GetSkuResponseDTO", description = "查询sku响应实体")
 public class GetSkuResponseDTO {
 
     @ApiModelProperty(value = "sku基本信息实体", position = 1)

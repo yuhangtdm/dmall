@@ -1,6 +1,7 @@
 package com.dmall.component.web.validate;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.KeyEnum;
+
 import javax.validation.Constraint;
 import java.lang.annotation.*;
 
@@ -15,7 +16,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = EnumValidator.class)
 public @interface ValueInEnum {
 
-    Class<? extends KeyValueEnum> value();
+    Class<? extends KeyEnum> value();
 
     String message() default "入参值不在枚举中";
 

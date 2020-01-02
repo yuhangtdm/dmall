@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -19,12 +20,12 @@ public class SkuSpecificationsRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -8325127816306812382L;
 
-    @ApiModelProperty(value = "属性id", position = 1)
+    @ApiModelProperty(value = "属性id", required = true, position = 1)
     @NotNull(message = "属性id不能为空")
     private Long attributeId;
 
-    @ApiModelProperty(value = "属性值", position = 2)
-    @NotNull(message = "属性值不能为空")
+    @ApiModelProperty(value = "属性值", required = true, position = 2)
+    @NotBlank(message = "属性值不能为空")
     private String attributeValue;
 
     @ApiModelProperty(value = "属性值配图", position = 3)

@@ -13,7 +13,7 @@ public class EnumUtil {
     /**
      * 获取枚举对象
      */
-    public static <E extends KeyValueEnum,CODE> E getKeyValueEnum(Class<E> enumClazz, CODE code) {
+    public static <E extends KeyValueEnum, CODE> E getKeyValueEnum(Class<E> enumClazz, CODE code) {
         if (enumClazz.isEnum()) {
             for (KeyValueEnum enumConstant : enumClazz.getEnumConstants()) {
                 if (Objects.equals(enumConstant.getCode(), code)) {
@@ -24,10 +24,10 @@ public class EnumUtil {
         return null;
     }
 
-    public static List<Object>  getAllCode(Class<? extends KeyValueEnum> enumClazz) {
+    public static List<Object> getAllCode(Class<? extends KeyEnum> enumClazz) {
         List<Object> codeList = new ArrayList<>();
         if (enumClazz.isEnum()) {
-            for (KeyValueEnum enumConstant : enumClazz.getEnumConstants()) {
+            for (KeyEnum enumConstant : enumClazz.getEnumConstants()) {
                 codeList.add(enumConstant.getCode());
             }
         }
@@ -37,7 +37,7 @@ public class EnumUtil {
     /**
      * 获取枚举描述
      */
-    public static <CODE> String getDesc(Class<? extends KeyValueEnum> enumClazz, CODE code){
+    public static <CODE> String getDesc(Class<? extends KeyValueEnum> enumClazz, CODE code) {
         KeyValueEnum<CODE> keyValueEnum = getKeyValueEnum(enumClazz, code);
         return keyValueEnum == null ? null : keyValueEnum.getDesc();
     }
@@ -45,13 +45,13 @@ public class EnumUtil {
     /**
      * 获取枚举数据
      */
-    public static <CODE,T> T getData(Class<? extends KeyValueEnum> enumClazz, CODE code){
+    public static <CODE, T> T getData(Class<? extends KeyValueEnum> enumClazz, CODE code) {
         KeyValueEnum<CODE> keyValueEnum = getKeyValueEnum(enumClazz, code);
-        if (keyValueEnum == null){
+        if (keyValueEnum == null) {
             return null;
         }
-        if (keyValueEnum instanceof KeyValueDataEnum){
-            KeyValueDataEnum<T,CODE> keyValueDataEnum = (KeyValueDataEnum) keyValueEnum;
+        if (keyValueEnum instanceof KeyValueDataEnum) {
+            KeyValueDataEnum<T, CODE> keyValueDataEnum = (KeyValueDataEnum) keyValueEnum;
             return keyValueDataEnum.getData();
         }
         return null;

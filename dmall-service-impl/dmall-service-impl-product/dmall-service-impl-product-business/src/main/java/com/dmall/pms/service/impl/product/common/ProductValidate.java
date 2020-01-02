@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @description: 商品公共校验逻辑
@@ -41,32 +43,39 @@ public class ProductValidate {
     public BaseResult validate(ProductExtRequestDTO extDTO) {
         List<Long> categoryIds = extDTO.getCategoryIds();
         Long[] aLong = new Long[categoryIds.size()];
+        Set<Long> set = new HashSet<>(categoryIds);
+        // 商品分类不能重复
+        if (set.size() != categoryIds.size()){
+            return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_REPEATED);
+        }
+        // 分类存在 且是三级分类,品牌存在
         BaseResult validate = basicValidate(extDTO.getBrandId(), categoryIds.toArray(aLong));
-        if (!validate.getResult()){
+        if (!validate.getResult()) {
             return validate;
         }
+        // 属性存在
         for (SpecificationsRequestDTO specification : extDTO.getSpecifications()) {
             AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
-            if (attributeDO == null){
+            if (attributeDO == null) {
                 return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
             }
         }
-
+        // 属性存在
         for (SalePointRequestDTO salePoint : extDTO.getSalePoints()) {
             AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
-            if (attributeDO == null){
+            if (attributeDO == null) {
                 return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
             }
         }
-
+        // 属性分类存在
         for (ParamRequestDTO param : extDTO.getParams()) {
             AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(param.getAttributeTypeId());
-            if (attributeTypeDO == null){
+            if (attributeTypeDO == null) {
                 return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_TYPE_NOT_EXISTS);
             }
             for (ParamValueRequestDTO paramAttribute : param.getParamAttributes()) {
                 AttributeDO attributeDO = attributeCacheService.selectById(paramAttribute.getAttributeId());
-                if (attributeDO == null){
+                if (attributeDO == null) {
                     return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
                 }
             }
@@ -74,10 +83,10 @@ public class ProductValidate {
         return ResultUtil.success();
     }
 
-    public BaseResult basicValidate(Long brandId,Long... categoryIds){
+    public BaseResult basicValidate(Long brandId, Long... categoryIds) {
         for (Long categoryId : categoryIds) {
             CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
-            if (categoryDO == null){
+            if (categoryDO == null) {
                 return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_EXISTS);
             }
             // 校验是否是三级分类

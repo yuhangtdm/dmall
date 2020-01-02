@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,11 +21,12 @@ public class ParamValueRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 2436674140152898894L;
 
-    @ApiModelProperty(value = "属性id", position = 1)
-    @NotNull(message = "属性id不能为空")
+    @ApiModelProperty(value = "参数属性id", required = true, position = 1)
+    @NotNull(message = "参数属性id不能为空")
     private Long attributeId;
 
-    @ApiModelProperty(value = "属性值", position = 2)
-    @NotNull(message = "属性值不能为空")
+    @ApiModelProperty(value = "参数属性值列表", required = true, position = 2)
+    @NotNull(message = "参数属性值列表不能为空")
+    @Size(min = 1, message = "参数属性值列表不能为空")
     private List<String> paramValues;
 }

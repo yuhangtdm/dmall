@@ -1,5 +1,7 @@
 package com.dmall.pms.api.dto.product.common;
 
+import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.pms.api.dto.product.enums.UnitEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,7 +24,7 @@ public class BasicProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1619159990632457989L;
 
-    @ApiModelProperty(value = "商品名称", position = 1)
+    @ApiModelProperty(value = "商品名称", required = true, position = 1)
     @NotBlank(message = "商品名称不能为空")
     private String name;
 
@@ -30,11 +32,10 @@ public class BasicProductRequestDTO implements Serializable {
     private String description;
 
     @ApiModelProperty(value = "商品单位", position = 3)
-    @NotBlank(message = "商品单位不能为空")
+    @ValueInEnum(UnitEnum.class)
     private String unit;
 
     @ApiModelProperty(value = "商品重量", position = 4)
-    @NotNull(message = "商品单位不能为空")
     private BigDecimal weight;
 
     @ApiModelProperty(value = "上市时间", position = 5)
