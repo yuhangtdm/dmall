@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("pms_category_brand" )
+@TableName("pms_category_brand")
 public class CategoryBrandDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class CategoryBrandDO implements Serializable {
     /**
      * id
      */
-    @TableId(value = "id" , type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**

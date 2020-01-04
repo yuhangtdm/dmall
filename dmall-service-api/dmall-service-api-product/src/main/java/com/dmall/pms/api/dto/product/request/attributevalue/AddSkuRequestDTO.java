@@ -18,23 +18,23 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "AddSkuRequestDTO" , description = "sku实体" )
+@ApiModel(value = "AddSkuRequestDTO", description = "sku实体")
 public class AddSkuRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 2864165329870133989L;
 
-    @ApiModelProperty(value = "sku规格列表" , required = true, position = 1)
+    @ApiModelProperty(value = "sku规格列表", required = true, position = 1)
     @Valid
-    @NotNull(message = "sku规格列表不能为空" )
-    @Size(min = 1, message = "sku规格列表不能为空" )
+    @NotNull(message = "sku规格列表不能为空")
+    @Size(min = 1, message = "sku规格列表不能为空")
     private List<SkuSpecificationsRequestDTO> skuSpecifications;
 
-    @ApiModelProperty(value = "价格" , required = true, position = 2)
-    @NotNull(message = "价格不能为空" )
+    @ApiModelProperty(value = "价格", required = true, position = 2)
+    @NotNull(message = "价格不能为空")
     private BigDecimal price;
 
-    @ApiModelProperty(value = "库存" , required = true, position = 3)
-    @NotNull(message = "库存不能为空" )
+    @ApiModelProperty(value = "库存", required = true, position = 3)
+    @NotNull(message = "库存不能为空")
     private Integer stock;
 
 }

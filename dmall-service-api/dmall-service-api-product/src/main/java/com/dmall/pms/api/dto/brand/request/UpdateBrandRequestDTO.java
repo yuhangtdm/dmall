@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -15,29 +16,30 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "UpdateBrandRequestDTO" , description = "修改品牌请求实体" )
+@ApiModel(value = "UpdateBrandRequestDTO", description = "修改品牌请求实体")
 public class UpdateBrandRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 4042145404746071053L;
 
-    @ApiModelProperty(value = "主键" , required = true, position = 1)
-    @NotNull(message = "品牌id不能为空" )
+    @ApiModelProperty(value = "主键", required = true, position = 1)
+    @NotNull(message = "品牌id不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "品牌名称" , position = 2)
+    @ApiModelProperty(value = "品牌名称", required = true, position = 2)
+    @NotBlank(message = "品牌名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "英文名称" , position = 3)
+    @ApiModelProperty(value = "英文名称", position = 3)
     private String englishName;
 
-    @ApiModelProperty(value = "首字母" , position = 4)
-    @Length(max = 1, min = 1, message = "首字母长度固定一位" )
+    @ApiModelProperty(value = "首字母", position = 4)
+    @Length(max = 1, min = 1, message = "首字母长度固定一位")
     private String firstLetter;
 
-    @ApiModelProperty(value = "品牌logo" , position = 5)
+    @ApiModelProperty(value = "品牌logo", position = 5)
     private String logo;
 
-    @ApiModelProperty(value = "品牌大图" , position = 6)
+    @ApiModelProperty(value = "品牌大图", position = 6)
     private String bigPic;
 
 }

@@ -12,8 +12,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum InputTypeEnum implements KeyValueEnum<Integer> {
 
-    HANDLE(1, "手工录入" ),
-    LIST(2, "从列表获取" );
+    HANDLE(1, "手工录入"),
+    LIST(2, "从列表获取");
 
     private Integer code;
 

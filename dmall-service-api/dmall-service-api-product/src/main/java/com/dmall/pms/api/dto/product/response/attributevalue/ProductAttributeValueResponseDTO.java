@@ -13,17 +13,17 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "ProductAttributeValueResponseDTO" , description = "商品属性值响应实体" )
+@ApiModel(value = "ProductAttributeValueResponseDTO", description = "商品属性值响应实体")
 public class ProductAttributeValueResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -4666810266301095465L;
 
-    @ApiModelProperty(value = "属性id" , position = 1)
+    @ApiModelProperty(value = "属性id", position = 1)
     private Long productAttributeValueId;
 
-    @ApiModelProperty(value = "属性值" , position = 1)
+    @ApiModelProperty(value = "属性值", position = 1)
     private String attributeValue;
 
-    @ApiModelProperty(value = "属性值配图" , position = 2)
+    @ApiModelProperty(value = "属性值配图", position = 2)
     private String pic;
 }

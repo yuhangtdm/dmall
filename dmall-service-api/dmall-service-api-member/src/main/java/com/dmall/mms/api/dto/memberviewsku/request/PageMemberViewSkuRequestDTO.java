@@ -16,26 +16,26 @@ import java.math.BigDecimal;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageMemberViewSkuRequestDTO" , description = "会员浏览历史记录分页请求实体" )
+@ApiModel(value = "PageMemberViewSkuRequestDTO", description = "会员浏览历史记录分页请求实体")
 public class PageMemberViewSkuRequestDTO extends PageRequestDTO {
 
 
-    @ApiModelProperty(value = "会员id" , position = 2)
+    @ApiModelProperty(value = "会员id", position = 2)
     private Long memberId;
 
-    @ApiModelProperty(value = "skuid" , position = 3)
+    @ApiModelProperty(value = "skuid", position = 3)
     private Long skuId;
 
-    @ApiModelProperty(value = "商品id" , position = 4)
+    @ApiModelProperty(value = "商品id", position = 4)
     private String productId;
 
-    @ApiModelProperty(value = "商品编号" , position = 5)
+    @ApiModelProperty(value = "商品编号", position = 5)
     private String productNo;
 
-    @ApiModelProperty(value = "sku编号" , position = 6)
+    @ApiModelProperty(value = "sku编号", position = 6)
     private String skuNo;
 
-    @ApiModelProperty(value = "浏览时价格" , position = 7)
+    @ApiModelProperty(value = "浏览时价格", position = 7)
     private BigDecimal price;
 
 

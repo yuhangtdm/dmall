@@ -14,10 +14,10 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "UpdateMemberStatisticsInfoRequestDTO" , description = "修改会员统计信息请求实体" )
+@ApiModel(value = "UpdateMemberStatisticsInfoRequestDTO", description = "修改会员统计信息请求实体")
 public class UpdateMemberStatisticsInfoRequestDTO extends CommonMemberStatisticsInfoRequestDTO {
 
-    @ApiModelProperty(value = "主键" , required = true, position = 0)
+    @ApiModelProperty(value = "主键", required = true, position = 0)
     private Long id;
 
 }

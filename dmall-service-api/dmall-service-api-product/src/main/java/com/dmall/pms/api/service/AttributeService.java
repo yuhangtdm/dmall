@@ -20,34 +20,34 @@ import java.util.List;
  * @description: 属性服务
  * @author: created by hang.yu on 2019-12-02 23:17:59
  */
-@Api(tags = "属性服务" )
-@RequestMapping("/attribute" )
+@Api(tags = "属性服务")
+@RequestMapping("/attribute")
 public interface AttributeService {
 
-    @PostMapping("/" )
-    @ApiOperation(value = "新增属性" )
+    @PostMapping("/")
+    @ApiOperation(value = "新增属性")
     BaseResult<Long> save(@Valid @RequestBody SaveAttributeRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}" )
-    @ApiOperation(value = "删除属性" )
-    @ApiImplicitParam(name = "id" , value = "属性id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<Long> delete(@PathVariable("id" ) Long id);
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除属性")
+    @ApiImplicitParam(name = "id", value = "属性id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/" )
-    @ApiOperation(value = "修改属性" )
+    @PutMapping("/")
+    @ApiOperation(value = "修改属性")
     BaseResult<Long> update(@Valid @RequestBody UpdateAttributeRequestDTO requestDTO);
 
-    @GetMapping("/{id}" )
-    @ApiOperation(value = "根据id查询属性" )
-    @ApiImplicitParam(name = "id" , value = "属性id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<CommonAttributeResponseDTO> get(@PathVariable("id" ) Long id);
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询属性")
+    @ApiImplicitParam(name = "id", value = "属性id", required = true, dataType = "int", paramType = "path")
+    BaseResult<CommonAttributeResponseDTO> get(@PathVariable("id") Long id);
 
-    @PostMapping("/list" )
-    @ApiOperation(value = "属性列表" )
+    @PostMapping("/list")
+    @ApiOperation(value = "属性列表")
     BaseResult<List<CommonAttributeResponseDTO>> list(@Valid @RequestBody ListAttributeRequestDTO requestDTO);
 
-    @PostMapping("/page" )
-    @ApiOperation(value = "属性分页" )
+    @PostMapping("/page")
+    @ApiOperation(value = "属性分页")
     BaseResult<LayuiPage<PageAttributeResponseDTO>> page(@Valid @RequestBody PageAttributeRequestDTO requestDTO);
 
 }

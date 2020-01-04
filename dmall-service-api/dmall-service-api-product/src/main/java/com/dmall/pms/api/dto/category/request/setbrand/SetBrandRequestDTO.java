@@ -17,17 +17,17 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SetBrandRequestDTO" , description = "设置品牌请求实体" )
+@ApiModel(value = "SetBrandRequestDTO", description = "设置品牌请求实体")
 public class SetBrandRequestDTO implements Serializable {
     private static final long serialVersionUID = 2020918577643316332L;
 
-    @ApiModelProperty(value = "分类id" , required = true, position = 1)
-    @NotNull(message = "分类id不能为空" )
+    @ApiModelProperty(value = "分类id", required = true, position = 1)
+    @NotNull(message = "分类id不能为空")
     private Long categoryId;
 
-    @ApiModelProperty(value = "品牌列表" , required = true, position = 2)
+    @ApiModelProperty(value = "品牌列表", required = true, position = 2)
     @Valid
-    @NotNull(message = "品牌列表不能为空" )
-    @Size(min = 1, message = "品牌列表不能为空" )
+    @NotNull(message = "品牌列表不能为空")
+    @Size(min = 1, message = "品牌列表不能为空")
     private List<BrandIdsDTO> brandIds;
 }

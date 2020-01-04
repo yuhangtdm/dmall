@@ -45,15 +45,15 @@ public class LogAdvice implements MethodInterceptor {
             webLog.setRequestIp(request.getRemoteAddr());
             // 用户id和昵称暂时设为空
             webLog.setUserId(0L);
-            webLog.setUserName("" );
+            webLog.setUserName("");
             webLog.setUrl(request.getRequestURL().toString());
             webLog.setUri(request.getRequestURI());
             webLog.setRequestMethod(request.getMethod());
             webLog.setStartTime(new Date());
             webLog.setClassName(method.getDeclaringClass().getName());
             webLog.setMethodName(method.getName());
-            webLog.setEnv(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "dev" );
-            webLog.setAppName(environment.getProperty("spring.application.name" ));
+            webLog.setEnv(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "dev");
+            webLog.setAppName(environment.getProperty("spring.application.name"));
             webLog.setThreadName(Thread.currentThread().getName());
             webLog.setTitle(webLog.getClassName() + "." + webLog.getMethodName());
             webLog.setParams(getParameter(method, invocation.getArguments()));
@@ -72,8 +72,8 @@ public class LogAdvice implements MethodInterceptor {
             throw e;
         } finally {
             long end = System.currentTimeMillis();
-            webLog.setSpendTime((end - start) + "ms" );
-            log.info("\n{}" , JSON.toJSONString(webLog, true));
+            webLog.setSpendTime((end - start) + "ms");
+            log.info("\n{}", JSON.toJSONString(webLog, true));
         }
     }
 
@@ -83,10 +83,10 @@ public class LogAdvice implements MethodInterceptor {
     private Object getParameter(Method method, Object[] args) {
         Parameter[] parameters = method.getParameters();
         if (parameters.length == 0) {
-            return "" ;
+            return "";
         } else if (parameters.length == 1) {
             if (originalParam(parameters[0].getType())) {
-                return "" ;
+                return "";
             } else {
                 return args[0];
             }

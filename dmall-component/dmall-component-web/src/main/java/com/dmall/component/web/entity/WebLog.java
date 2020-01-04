@@ -56,7 +56,7 @@ public class WebLog {
     /**
      * 请求时间
      */
-    @JSONField(ordinal = 7, format = "YYYY-MM-dd hh:mm:ss" )
+    @JSONField(ordinal = 7, format = "YYYY-MM-dd hh:mm:ss")
     Date startTime;
 
     /**

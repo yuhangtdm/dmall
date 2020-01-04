@@ -14,14 +14,14 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageMemberHelpRequestDTO" , description = "会员-帮助关系表 帮助对会员有用分页请求实体" )
+@ApiModel(value = "PageMemberHelpRequestDTO", description = "会员-帮助关系表 帮助对会员有用分页请求实体")
 public class PageMemberHelpRequestDTO extends PageRequestDTO {
 
 
-    @ApiModelProperty(value = "会员id" , position = 2)
+    @ApiModelProperty(value = "会员id", position = 2)
     private Long memberId;
 
-    @ApiModelProperty(value = "帮助id" , position = 3)
+    @ApiModelProperty(value = "帮助id", position = 3)
     private Long helpId;
 
 

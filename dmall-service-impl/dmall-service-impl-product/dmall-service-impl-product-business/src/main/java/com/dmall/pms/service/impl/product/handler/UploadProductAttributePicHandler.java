@@ -32,7 +32,7 @@ public class UploadProductAttributePicHandler extends AbstractCommonHandler<Mult
             UploadResult uploadResult = qiNiuFileManager.upload(file, QiNiuConstants.PRODUCT_ATTRIBUTE_VALUE);
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
-            log.error("upload productAttributeValue pic failed" , e);
+            log.error("upload productAttributeValue pic failed", e);
             return ResultUtil.success(ProductErrorEnum.UPLOAD_PRODUCT_ATTRIBUTE_ERROR);
         }
     }

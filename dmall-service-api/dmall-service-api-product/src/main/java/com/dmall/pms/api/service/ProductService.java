@@ -22,39 +22,39 @@ import javax.validation.constraints.NotNull;
  * @description: 商品服务
  * @author: created by hang.yu on 2019-12-02 23:18:01
  */
-@Api(tags = "商品服务" )
+@Api(tags = "商品服务")
 @Validated
-@RequestMapping("/product" )
+@RequestMapping("/product")
 public interface ProductService {
 
-    @PostMapping("/" )
-    @ApiOperation(value = "新增商品" )
+    @PostMapping("/")
+    @ApiOperation(value = "新增商品")
     BaseResult<Long> save(@Valid @RequestBody SaveProductRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}" )
-    @ApiOperation(value = "删除商品" )
-    @ApiImplicitParam(name = "id" , value = "商品id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<Long> delete(@PathVariable("id" ) Long id);
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除商品")
+    @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/" )
-    @ApiOperation(value = "修改商品" )
+    @PutMapping("/")
+    @ApiOperation(value = "修改商品")
     BaseResult<Long> update(@Valid @RequestBody UpdateProductRequestDTO requestDTO);
 
-    @GetMapping("/{id}" )
-    @ApiOperation(value = "根据id查询商品" )
-    @ApiImplicitParam(name = "id" , value = "商品id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<GetProductResponseDTO> get(@PathVariable("id" ) Long id);
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询商品")
+    @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
+    BaseResult<GetProductResponseDTO> get(@PathVariable("id") Long id);
 
-    @PostMapping("/page" )
-    @ApiOperation(value = "商品分页" )
+    @PostMapping("/page")
+    @ApiOperation(value = "商品分页")
     BaseResult<LayuiPage<PageProductResponseDTO>> page(@Valid @RequestBody PageProductRequestDTO requestDTO);
 
-    @ApiOperation(value = "上传商品主图" )
-    @PostMapping("/uploadProductPic" )
-    BaseResult<UploadResult> uploadProductPic(@NotNull(message = "商品主图不能为空" ) MultipartFile file);
+    @ApiOperation(value = "上传商品主图")
+    @PostMapping("/uploadProductPic")
+    BaseResult<UploadResult> uploadProductPic(@NotNull(message = "商品主图不能为空") MultipartFile file);
 
-    @ApiOperation(value = "上传商品规格配图" )
-    @PostMapping("/uploadProductAttributePic" )
-    BaseResult<UploadResult> uploadProductAttributePic(@NotNull(message = "商品规格配图不能为空" ) MultipartFile file);
+    @ApiOperation(value = "上传商品规格配图")
+    @PostMapping("/uploadProductAttributePic")
+    BaseResult<UploadResult> uploadProductAttributePic(@NotNull(message = "商品规格配图不能为空") MultipartFile file);
 
 }

@@ -16,16 +16,16 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SetAttributeTypeRequestDTO" , description = "设置属性分类请求实体" )
+@ApiModel(value = "SetAttributeTypeRequestDTO", description = "设置属性分类请求实体")
 public class SetAttributeTypeRequestDTO {
 
-    @ApiModelProperty(value = "分类id" , required = true, position = 1)
-    @NotNull(message = "分类id不能为空" )
+    @ApiModelProperty(value = "分类id", required = true, position = 1)
+    @NotNull(message = "分类id不能为空")
     private Long categoryId;
 
-    @ApiModelProperty(value = "属性分类列表" , required = true, position = 2)
+    @ApiModelProperty(value = "属性分类列表", required = true, position = 2)
     @Valid
-    @NotNull(message = "属性分类列表不能为空" )
-    @Size(min = 1, message = "属性分类列表不能为空" )
+    @NotNull(message = "属性分类列表不能为空")
+    @Size(min = 1, message = "属性分类列表不能为空")
     private List<AttributeTypeIdsDTO> attributeTypes;
 }

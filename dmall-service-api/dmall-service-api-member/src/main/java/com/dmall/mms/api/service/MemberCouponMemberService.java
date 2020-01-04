@@ -19,34 +19,34 @@ import java.util.List;
  * @description: 会员-优惠券服务
  * @author: created by hang.yu on 2019-12-01 22:56:08
  */
-@Api(tags = "会员-优惠券服务" )
-@RequestMapping("/memberCouponMember" )
+@Api(tags = "会员-优惠券服务")
+@RequestMapping("/memberCouponMember")
 public interface MemberCouponMemberService {
 
-    @PostMapping("/" )
-    @ApiOperation(value = "新增会员-优惠券" )
+    @PostMapping("/")
+    @ApiOperation(value = "新增会员-优惠券")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberCouponMemberRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}" )
-    @ApiOperation(value = "删除会员-优惠券" )
-    @ApiImplicitParam(name = "id" , value = "会员-优惠券id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<Long> delete(@PathVariable("id" ) Long id);
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除会员-优惠券")
+    @ApiImplicitParam(name = "id", value = "会员-优惠券id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/" )
-    @ApiOperation(value = "修改会员-优惠券" )
+    @PutMapping("/")
+    @ApiOperation(value = "修改会员-优惠券")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberCouponMemberRequestDTO requestDTO);
 
-    @GetMapping("/{id}" )
-    @ApiOperation(value = "根据id查询会员-优惠券" )
-    @ApiImplicitParam(name = "id" , value = "会员-优惠券id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<CommonMemberCouponMemberResponseDTO> get(@PathVariable("id" ) Long id);
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询会员-优惠券")
+    @ApiImplicitParam(name = "id", value = "会员-优惠券id", required = true, dataType = "int", paramType = "path")
+    BaseResult<CommonMemberCouponMemberResponseDTO> get(@PathVariable("id") Long id);
 
-    @PostMapping("/list" )
-    @ApiOperation(value = "会员-优惠券列表" )
+    @PostMapping("/list")
+    @ApiOperation(value = "会员-优惠券列表")
     BaseResult<List<CommonMemberCouponMemberResponseDTO>> list(@RequestBody ListMemberCouponMemberRequestDTO requestDTO);
 
-    @PostMapping("/page" )
-    @ApiOperation(value = "会员-优惠券分页" )
+    @PostMapping("/page")
+    @ApiOperation(value = "会员-优惠券分页")
     BaseResult<LayuiPage<CommonMemberCouponMemberResponseDTO>> page(@RequestBody PageMemberCouponMemberRequestDTO requestDTO);
 
 }

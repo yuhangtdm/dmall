@@ -11,24 +11,24 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "MediaDTO" , description = "媒体实体" )
+@ApiModel(value = "MediaDTO", description = "媒体实体")
 public class MediaDTO {
 
-    @ApiModelProperty(value = "skuMediaId" , position = 1)
+    @ApiModelProperty(value = "skuMediaId", position = 1)
     private Long skuMediaId;
 
-    @ApiModelProperty(value = "key" , position = 2)
+    @ApiModelProperty(value = "key", position = 2)
     private String key;
 
-    @ApiModelProperty(value = "hash" , position = 3)
+    @ApiModelProperty(value = "hash", position = 3)
     private String hash;
 
-    @ApiModelProperty(value = "url" , position = 4)
+    @ApiModelProperty(value = "url", position = 4)
     private String url;
 
-    @ApiModelProperty(value = "媒体类型,1-图片,2-视频" , position = 5)
+    @ApiModelProperty(value = "媒体类型,1-图片,2-视频", position = 5)
     private Integer mediaType;
 
-    @ApiModelProperty(value = "排序" , position = 6)
+    @ApiModelProperty(value = "排序", position = 6)
     private Integer sort;
 }

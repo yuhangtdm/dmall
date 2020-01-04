@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("pms_product" )
+@TableName("pms_product")
 public class ProductDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class ProductDO implements Serializable {
     /**
      * id
      */
-    @TableId(value = "id" , type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**

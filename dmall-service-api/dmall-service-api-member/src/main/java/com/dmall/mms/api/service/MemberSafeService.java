@@ -19,34 +19,34 @@ import java.util.List;
  * @description: 账户安全服务
  * @author: created by hang.yu on 2019-12-01 22:56:08
  */
-@Api(tags = "账户安全服务" )
-@RequestMapping("/memberSafe" )
+@Api(tags = "账户安全服务")
+@RequestMapping("/memberSafe")
 public interface MemberSafeService {
 
-    @PostMapping("/" )
-    @ApiOperation(value = "新增账户安全" )
+    @PostMapping("/")
+    @ApiOperation(value = "新增账户安全")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberSafeRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}" )
-    @ApiOperation(value = "删除账户安全" )
-    @ApiImplicitParam(name = "id" , value = "账户安全id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<Long> delete(@PathVariable("id" ) Long id);
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除账户安全")
+    @ApiImplicitParam(name = "id", value = "账户安全id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/" )
-    @ApiOperation(value = "修改账户安全" )
+    @PutMapping("/")
+    @ApiOperation(value = "修改账户安全")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberSafeRequestDTO requestDTO);
 
-    @GetMapping("/{id}" )
-    @ApiOperation(value = "根据id查询账户安全" )
-    @ApiImplicitParam(name = "id" , value = "账户安全id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<CommonMemberSafeResponseDTO> get(@PathVariable("id" ) Long id);
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询账户安全")
+    @ApiImplicitParam(name = "id", value = "账户安全id", required = true, dataType = "int", paramType = "path")
+    BaseResult<CommonMemberSafeResponseDTO> get(@PathVariable("id") Long id);
 
-    @PostMapping("/list" )
-    @ApiOperation(value = "账户安全列表" )
+    @PostMapping("/list")
+    @ApiOperation(value = "账户安全列表")
     BaseResult<List<CommonMemberSafeResponseDTO>> list(@RequestBody ListMemberSafeRequestDTO requestDTO);
 
-    @PostMapping("/page" )
-    @ApiOperation(value = "账户安全分页" )
+    @PostMapping("/page")
+    @ApiOperation(value = "账户安全分页")
     BaseResult<LayuiPage<CommonMemberSafeResponseDTO>> page(@RequestBody PageMemberSafeRequestDTO requestDTO);
 
 }

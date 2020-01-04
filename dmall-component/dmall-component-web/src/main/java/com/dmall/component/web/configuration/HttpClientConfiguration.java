@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Scope;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({HttpClientProperties.class})
-@ConditionalOnProperty(prefix = "dmall.web.httpclient" , value = "enabled" , havingValue = "true" )
+@ConditionalOnProperty(prefix = "dmall.web.httpclient", value = "enabled", havingValue = "true")
 public class HttpClientConfiguration {
 
     @Autowired
@@ -75,7 +75,7 @@ public class HttpClientConfiguration {
     /**
      * 线程监控清理无效连接
      **/
-    @Bean(destroyMethod = "shutdown" )
+    @Bean(destroyMethod = "shutdown")
     public IdleConnectionEvictor idleConnectionEvictor() {
         return new IdleConnectionEvictor(cm(), httpClientProperties.getMaxIdleTime(), httpClientProperties.getTimeUnit());
     }

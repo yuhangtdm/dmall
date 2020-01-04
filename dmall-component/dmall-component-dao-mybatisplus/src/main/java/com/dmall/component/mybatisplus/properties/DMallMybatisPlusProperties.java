@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: created by hang.yu on 2019/11/2 16:50
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.mybatisplus" )
+@ConfigurationProperties(prefix = "dmall.mybatisplus")
 public class DMallMybatisPlusProperties {
 
     /**
@@ -34,16 +34,16 @@ public class DMallMybatisPlusProperties {
     /**
      * 新增时间的列名
      */
-    private String createTimeColumn = "gmtCreated" ;
+    private String createTimeColumn = "gmtCreated";
 
     /**
      * 更新时间的列名
      */
-    private String updateTimeColumn = "gmtModified" ;
+    private String updateTimeColumn = "gmtModified";
 
     /**
      * 逻辑删除的列名
      */
-    private String isDeletedColumn = "isDeleted" ;
+    private String isDeletedColumn = "isDeleted";
 
 }

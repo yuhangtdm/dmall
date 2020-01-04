@@ -10,7 +10,7 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/30 23:21
  */
 @Data
-@ConfigurationProperties(prefix = "zuul.swagger" )
+@ConfigurationProperties(prefix = "zuul.swagger")
 public class ZuulSwaggerProperties {
 
     /**
@@ -18,5 +18,5 @@ public class ZuulSwaggerProperties {
      */
     private List<String> ignoreProjects;
 
-    private String version = "1.0" ;
+    private String version = "1.0";
 }

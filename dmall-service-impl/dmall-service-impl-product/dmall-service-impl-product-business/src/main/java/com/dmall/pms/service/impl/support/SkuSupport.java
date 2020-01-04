@@ -96,7 +96,7 @@ public class SkuSupport {
                     if (skuExtDO != null) {
                         String skuSpecificationsJson = skuExtDO.getSkuSpecificationsJson();
                         JSONObject skuSpecifications = JSONObject.parseObject(skuSpecificationsJson);
-                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), "," ));
+                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), ","));
                     }
                     return skuListResponseDTO;
                 }).collect(Collectors.toList());

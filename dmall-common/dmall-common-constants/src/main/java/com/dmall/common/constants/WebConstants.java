@@ -9,41 +9,41 @@ public interface WebConstants {
     /**
      * ERROR STATUS CODE
      */
-    String ERROR_STATUS_CODE = "javax.servlet.error.status_code" ;
+    String ERROR_STATUS_CODE = "javax.servlet.error.status_code";
 
     /**
      * data参数
      */
-    String DATA = "data" ;
+    String DATA = "data";
 
     /**
      * 跳转地址
      */
-    String FORWARD_ERROR = "forward:/error" ;
+    String FORWARD_ERROR = "forward:/error";
 
     /**
      * RESULT
      */
-    String RESULT = "result" ;
+    String RESULT = "result";
 
     /**
      * CODE
      */
-    String CODE = "code" ;
+    String CODE = "code";
 
     /**
      * MSG
      */
-    String MSG = "msg" ;
+    String MSG = "msg";
 
     /**
      * /actuator/hystrix.stream
      */
-    String ACTUATOR_HYSTRIX_STREAM = "/actuator/hystrix.stream" ;
+    String ACTUATOR_HYSTRIX_STREAM = "/actuator/hystrix.stream";
 
     /**
      * HystrixMetricsStreamServlet
      */
-    String HYSTRIX_METRICS_STREAM_SERVLET = "HystrixMetricsStreamServlet" ;
+    String HYSTRIX_METRICS_STREAM_SERVLET = "HystrixMetricsStreamServlet";
 
 }

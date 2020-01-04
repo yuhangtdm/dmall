@@ -14,24 +14,24 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "ProductExtResponseDTO" , description = "商品响应扩展信息" )
+@ApiModel(value = "ProductExtResponseDTO", description = "商品响应扩展信息")
 public class ProductExtResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -4383222923230954323L;
 
-    @ApiModelProperty(value = "商品分类id列表" , position = 1)
+    @ApiModelProperty(value = "商品分类id列表", position = 1)
     private List<Long> categoryIds;
 
-    @ApiModelProperty(value = "品牌id" , position = 2)
+    @ApiModelProperty(value = "品牌id", position = 2)
     private Long brandId;
 
-    @ApiModelProperty(value = "销售规格" , position = 3)
+    @ApiModelProperty(value = "销售规格", position = 3)
     private List<SpecificationsResponseDTO> specifications;
 
-    @ApiModelProperty(value = "卖点" , position = 4)
+    @ApiModelProperty(value = "卖点", position = 4)
     private List<SalePointResponseDTO> salePoints;
 
-    @ApiModelProperty(value = "参数" , position = 5)
+    @ApiModelProperty(value = "参数", position = 5)
     private List<ParamResponseDTO> params;
 
 }

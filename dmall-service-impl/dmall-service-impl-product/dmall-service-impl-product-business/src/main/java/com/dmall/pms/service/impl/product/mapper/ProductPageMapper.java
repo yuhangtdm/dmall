@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface ProductPageMapper {
 
-    List<ProductDO> productPage(Page page, @Param("request" ) PageProductRequestDTO requestDTO);
+    List<ProductDO> productPage(Page page, @Param("request") PageProductRequestDTO requestDTO);
 }

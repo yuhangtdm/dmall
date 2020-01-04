@@ -13,29 +13,29 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "CommonMemberSafeRequestDTO" , description = "账户安全公共请求实体" )
+@ApiModel(value = "CommonMemberSafeRequestDTO", description = "账户安全公共请求实体")
 public class CommonMemberSafeRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 
-    @ApiModelProperty(value = "是否绑定手机号 Y-可用;N-不可用" , position = 2)
+    @ApiModelProperty(value = "是否绑定手机号 Y-可用;N-不可用", position = 2)
     private String bindMobile;
 
 
-    @ApiModelProperty(value = "是否设置密码 Y-可用;N-不可用" , position = 3)
+    @ApiModelProperty(value = "是否设置密码 Y-可用;N-不可用", position = 3)
     private String setPassword;
 
 
-    @ApiModelProperty(value = "是否绑定邮箱 Y-可用;N-不可用" , position = 4)
+    @ApiModelProperty(value = "是否绑定邮箱 Y-可用;N-不可用", position = 4)
     private String bindEmail;
 
 
-    @ApiModelProperty(value = "是否实名认证 Y-可用;N-不可用" , position = 5)
+    @ApiModelProperty(value = "是否实名认证 Y-可用;N-不可用", position = 5)
     private String realNameAuthentication;
 
 
-    @ApiModelProperty(value = "是否锁定账号 Y-可用;N-不可用" , position = 6)
+    @ApiModelProperty(value = "是否锁定账号 Y-可用;N-不可用", position = 6)
     private String lockAccount;
 
 

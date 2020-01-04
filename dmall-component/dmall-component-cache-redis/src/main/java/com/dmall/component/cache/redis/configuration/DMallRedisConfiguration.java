@@ -49,10 +49,10 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableCaching
 @EnableConfigurationProperties(DMallRedisProperties.class)
-@ConditionalOnProperty(prefix = "dmall.cache.redis" , value = "enabled" , havingValue = "true" )
+@ConditionalOnProperty(prefix = "dmall.cache.redis", value = "enabled", havingValue = "true")
 public class DMallRedisConfiguration extends CachingConfigurerSupport implements BasicConfiguration {
 
-    private static final String LUA = "lua/DistributedLock.lua" ;
+    private static final String LUA = "lua/DistributedLock.lua";
 
     @Autowired
     private DMallRedisProperties dMallRedisProperties;
@@ -81,26 +81,26 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     @Bean
     @Override
     public CacheErrorHandler errorHandler() {
-        log.info("初始化 -> [{}]" , "Redis CacheErrorHandler" );
+        log.info("初始化 -> [{}]", "Redis CacheErrorHandler");
         CacheErrorHandler cacheErrorHandler = new CacheErrorHandler() {
             @Override
             public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {
-                log.error("Redis occur handleCacheGetError：key -> [{}]" , key, e);
+                log.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
             }
 
             @Override
             public void handleCachePutError(RuntimeException e, Cache cache, Object key, Object value) {
-                log.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]" , key, value, e);
+                log.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]", key, value, e);
             }
 
             @Override
             public void handleCacheEvictError(RuntimeException e, Cache cache, Object key) {
-                log.error("Redis occur handleCacheEvictError：key -> [{}]" , key, e);
+                log.error("Redis occur handleCacheEvictError：key -> [{}]", key, e);
             }
 
             @Override
             public void handleCacheClearError(RuntimeException e, Cache cache) {
-                log.error("Redis occur handleCacheClearError：" , e);
+                log.error("Redis occur handleCacheClearError：", e);
             }
         };
         return cacheErrorHandler;
@@ -185,7 +185,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * @param ttl            过期时间
      */
     private RedisCacheConfiguration buildRedisCacheConfiguration(String cacheKeyPrefix, TimeUnit ttlUnitEnum, Long ttl) {
-        return RedisCacheConfiguration.defaultCacheConfig().prefixKeysWith(cacheKeyPrefix + ":" ).entryTtl(getDuration(ttlUnitEnum, ttl));
+        return RedisCacheConfiguration.defaultCacheConfig().prefixKeysWith(cacheKeyPrefix + ":").entryTtl(getDuration(ttlUnitEnum, ttl));
     }
 
     /**
@@ -221,7 +221,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}" , "DMallRedisProperties" , JSON.toJSONString(dMallRedisProperties, true));
+        log.info("init -> [{}],properties:\n{}", "DMallRedisProperties", JSON.toJSONString(dMallRedisProperties, true));
         if (StringUtils.isBlank(dMallRedisProperties.getCacheKeyPrefix())) {
             throw new CacheRedisException(CacheRedisErrorEnum.NO_CACHE_PREFIX);
         }

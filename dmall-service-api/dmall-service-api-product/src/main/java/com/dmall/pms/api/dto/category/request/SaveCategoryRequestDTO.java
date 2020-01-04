@@ -18,44 +18,44 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SaveCategoryRequestDTO" , description = "新增商品分类请求实体" )
+@ApiModel(value = "SaveCategoryRequestDTO", description = "新增商品分类请求实体")
 public class SaveCategoryRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 5469530708208456631L;
 
-    @ApiModelProperty(value = "上级id" , required = true, position = 1)
-    @NotNull(message = "上级id不能为空" )
+    @ApiModelProperty(value = "上级id", required = true, position = 1)
+    @NotNull(message = "上级id不能为空")
     private Long parentId;
 
-    @ApiModelProperty(value = "分类名称" , required = true, position = 2)
-    @NotBlank(message = "分类名称不能为空" )
+    @ApiModelProperty(value = "分类名称", required = true, position = 2)
+    @NotBlank(message = "分类名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "级别,1-1级，2-2级，3-3级" , required = true, position = 3)
+    @ApiModelProperty(value = "级别,1-1级，2-2级，3-3级", required = true, position = 3)
     @ValueInEnum(LevelEnum.class)
-    @NotNull(message = "级别不能为空" )
+    @NotNull(message = "级别不能为空")
     private Integer level;
 
-    @ApiModelProperty(value = "PC图标" , position = 4)
+    @ApiModelProperty(value = "PC图标", position = 4)
     private String icon;
 
-    @ApiModelProperty(value = "移动端图标" , position = 5)
+    @ApiModelProperty(value = "移动端图标", position = 5)
     private String mobileIcon;
 
-    @ApiModelProperty(value = "描述" , position = 6)
+    @ApiModelProperty(value = "描述", position = 6)
     private String description;
 
-    @ApiModelProperty(value = "排序" , position = 7)
+    @ApiModelProperty(value = "排序", position = 7)
     private Integer sort;
 
-    @ApiModelProperty(value = "关键字,用于搜索" , position = 8)
+    @ApiModelProperty(value = "关键字,用于搜索", position = 8)
     private String keywords;
 
-    @ApiModelProperty(value = "是否热门 Y-是;N-否" , position = 9)
+    @ApiModelProperty(value = "是否热门 Y-是;N-否", position = 9)
     @ValueInEnum(YNEnum.class)
     private String hotStatus;
 
-    @ApiModelProperty(value = "是否显示在导航栏 Y-是;N-否" , position = 10)
+    @ApiModelProperty(value = "是否显示在导航栏 Y-是;N-否", position = 10)
     @ValueInEnum(YNEnum.class)
     private String navStatus;
 

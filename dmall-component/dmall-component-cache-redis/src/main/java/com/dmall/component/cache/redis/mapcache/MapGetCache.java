@@ -16,7 +16,7 @@ public @interface MapGetCache {
     /**
      * 缓存key 优先级最高
      */
-    String key() default "" ;
+    String key() default "";
 
 
     /**

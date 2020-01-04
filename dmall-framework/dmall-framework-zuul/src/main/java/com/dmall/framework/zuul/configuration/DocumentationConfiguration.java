@@ -42,7 +42,7 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
         routes.forEach(route -> {
             if (!CollectionUtils.isEmpty(ignoreProjects) && !ignoreProjects.contains(route.getId())) {
                 resources.add(swaggerResource(route.getId(), route.getFullPath()
-                        .replace("**" , "v2/api-docs" )));
+                        .replace("**", "v2/api-docs")));
             }
         });
         return resources;

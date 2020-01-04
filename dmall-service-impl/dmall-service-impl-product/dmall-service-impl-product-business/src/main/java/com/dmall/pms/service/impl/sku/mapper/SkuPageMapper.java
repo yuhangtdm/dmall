@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface SkuPageMapper {
 
-    List<SkuDO> skuPage(Page page, @Param("request" ) PageSkuRequestDTO requestDTO);
+    List<SkuDO> skuPage(Page page, @Param("request") PageSkuRequestDTO requestDTO);
 }

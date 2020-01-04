@@ -55,6 +55,6 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
     protected void customerConvertDo(AttributeDO result, SaveAttributeRequestDTO requestDTO) {
         result.setInputList(CollUtil.join(requestDTO.getInputList(), StrUtil.COMMA));
         CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-        result.setName(StrUtil.format("{}_{}" , categoryDO.getName(), requestDTO.getShowName()));
+        result.setName(StrUtil.format("{}_{}", categoryDO.getName(), requestDTO.getShowName()));
     }
 }

@@ -15,15 +15,15 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "AttributeIdsDTO" , description = "属性列表实体" )
+@ApiModel(value = "AttributeIdsDTO", description = "属性列表实体")
 public class AttributeIdsDTO {
 
-    @ApiModelProperty(value = "属性id" , required = true, position = 1)
-    @NotNull(message = "属性id不能为空" )
+    @ApiModelProperty(value = "属性id", required = true, position = 1)
+    @NotNull(message = "属性id不能为空")
     private Long attributeId;
 
-    @ApiModelProperty(value = "是否可筛选,1-不可筛选;2-单选;3-多选" , required = true, position = 2)
-    @NotNull(message = "是否可筛选不能为空" )
+    @ApiModelProperty(value = "是否可筛选,1-不可筛选;2-单选;3-多选", required = true, position = 2)
+    @NotNull(message = "是否可筛选不能为空")
     @ValueInEnum(CanScreenEnum.class)
     private Integer canScreen;
 

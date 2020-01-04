@@ -38,7 +38,7 @@ public class ESDao {
      * 新增或更新文档
      */
     public <T> void saveOrUpdate(T t) {
-        Field idField = ReflectionUtils.findField(t.getClass(), "id" , Long.class);
+        Field idField = ReflectionUtils.findField(t.getClass(), "id", Long.class);
         if (idField == null) {
             throw new ESException(ESErrorEnum.NO_ID_FIELD);
         }
@@ -63,7 +63,7 @@ public class ESDao {
                 throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
             }
         } catch (Exception e) {
-            log.error("ESDao.save error,indexName:{},type:{},id:{},do:{}" , indexName, typeName, id, JSON.toJSONString(t), e);
+            log.error("ESDao.save error,indexName:{},type:{},id:{},do:{}", indexName, typeName, id, JSON.toJSONString(t), e);
             throw new ESException();
         }
     }
@@ -94,7 +94,7 @@ public class ESDao {
                 throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
             }
         } catch (IOException e) {
-            log.error("ESDao.delete error,indexName:{},type:{},id:{}," , indexName, typeName, id, e);
+            log.error("ESDao.delete error,indexName:{},type:{},id:{},", indexName, typeName, id, e);
             throw new ESException();
         }
     }
@@ -151,8 +151,8 @@ public class ESDao {
         if (highLightField != null) {
             HighlightBuilder highlightBuilder = new HighlightBuilder();
             highlightBuilder.field(highLightField);
-            highlightBuilder.preTags("<span style='color:red'>" );
-            highlightBuilder.postTags("</span>" );
+            highlightBuilder.preTags("<span style='color:red'>");
+            highlightBuilder.postTags("</span>");
             searchSourceBuilder.highlighter(highlightBuilder);
         }
 
@@ -168,7 +168,7 @@ public class ESDao {
         }
 
         String dslStr = searchSourceBuilder.toString();
-        log.info("dsl:{}" , dslStr);
+        log.info("dsl:{}", dslStr);
         Search search = new Search.Builder(dslStr).addIndex(indexName).addType(typeName).build();
 
         SearchResult execute = null;
@@ -176,7 +176,7 @@ public class ESDao {
             execute = jestClient.execute(search);
         } catch (IOException e) {
             ESSearch<T> esSearch = new ESSearch<>(indexName, typeName, searchFields, filterFields, highLightField, esPage, sortField, clazz);
-            log.error("ESDao.search search,indexName:{},type:{},param:{}" , indexName, typeName, JSON.toJSONString(esSearch), e);
+            log.error("ESDao.search search,indexName:{},type:{},param:{}", indexName, typeName, JSON.toJSONString(esSearch), e);
             throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
         }
         List<SearchResult.Hit<T, Void>> hits = execute.getHits(clazz);

@@ -14,18 +14,18 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "GetSkuResponseDTO" , description = "查询sku响应实体" )
+@ApiModel(value = "GetSkuResponseDTO", description = "查询sku响应实体")
 public class GetSkuResponseDTO {
 
-    @ApiModelProperty(value = "sku基本信息实体" , position = 1)
+    @ApiModelProperty(value = "sku基本信息实体", position = 1)
     private BasicSkuResponseDTO basicSku;
 
-    @ApiModelProperty(value = "sku媒体实体列表" , position = 2)
+    @ApiModelProperty(value = "sku媒体实体列表", position = 2)
     private List<MediaDTO> mediaList;
 
-    @ApiModelProperty(value = "sku属性值实体" , position = 3)
+    @ApiModelProperty(value = "sku属性值实体", position = 3)
     private SkuAttributeValueResponseDTO skuAttributeValue;
 
-    @ApiModelProperty(value = "sku扩展响应实体" , position = 4)
+    @ApiModelProperty(value = "sku扩展响应实体", position = 4)
     private SkuExtResponseDTO skuExt;
 }

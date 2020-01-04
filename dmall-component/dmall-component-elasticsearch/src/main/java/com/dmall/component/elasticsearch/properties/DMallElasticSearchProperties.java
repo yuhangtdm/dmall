@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @description: ES属性类
  * @author: created by hang.yu on 2019/11/6 22:59
  */
-@ConfigurationProperties(prefix = "dmall.elasticsearch" )
+@ConfigurationProperties(prefix = "dmall.elasticsearch")
 @Data
 public class DMallElasticSearchProperties {
 

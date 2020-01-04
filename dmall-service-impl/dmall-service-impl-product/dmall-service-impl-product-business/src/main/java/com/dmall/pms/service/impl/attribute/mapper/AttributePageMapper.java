@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface AttributePageMapper {
 
-    List<AttributeDO> pageAttribute(Page page, @Param("request" ) PageAttributeRequestDTO requestDTO);
+    List<AttributeDO> pageAttribute(Page page, @Param("request") PageAttributeRequestDTO requestDTO);
 }

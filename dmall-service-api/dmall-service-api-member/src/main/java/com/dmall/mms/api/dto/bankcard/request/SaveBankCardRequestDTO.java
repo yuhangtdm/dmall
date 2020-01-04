@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SaveBankCardRequestDTO" , description = "新增会员银行卡请求实体" )
+@ApiModel(value = "SaveBankCardRequestDTO", description = "新增会员银行卡请求实体")
 public class SaveBankCardRequestDTO extends CommonBankCardRequestDTO {
 
 }

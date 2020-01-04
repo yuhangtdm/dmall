@@ -12,8 +12,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MediaTypeEnum implements KeyValueEnum<Integer> {
 
-    PIC(1, "图片" ),
-    VIDEO(2, "视频" ),
+    PIC(1, "图片"),
+    VIDEO(2, "视频"),
     ;
 
     private Integer code;

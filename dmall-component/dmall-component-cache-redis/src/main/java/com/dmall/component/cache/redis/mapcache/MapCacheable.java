@@ -15,6 +15,6 @@ public @interface MapCacheable {
     /**
      * 缓存名称
      */
-    String cacheNames() default "" ;
+    String cacheNames() default "";
 
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 @Component
 public class CacheInitRunner implements CommandLineRunner {
 
-    private static final String METHOD_NAME = "selectAll" ;
+    private static final String METHOD_NAME = "selectAll";
 
     @Override
     public void run(String... args) throws Exception {
@@ -27,7 +27,7 @@ public class CacheInitRunner implements CommandLineRunner {
         beans.forEach((k, bean) -> {
             Method method = ReflectionUtils.findMethod(bean.getClass(), METHOD_NAME);
             ReflectionUtils.invokeMethod(method, bean);
-            log.info("execute bean:{}, selectAll method success" , k);
+            log.info("execute bean:{}, selectAll method success", k);
         });
     }
 }

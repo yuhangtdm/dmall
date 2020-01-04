@@ -29,6 +29,6 @@ public class DMallElasticSearchConfiguration implements BasicConfiguration {
 
     @Override
     public void check() {
-        log.info("init -> [{}],properties:\n{}" , "DMallElasticSearchProperties" , JSON.toJSONString(dMallElasticSearchProperties, true));
+        log.info("init -> [{}],properties:\n{}", "DMallElasticSearchProperties", JSON.toJSONString(dMallElasticSearchProperties, true));
     }
 }

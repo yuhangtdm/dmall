@@ -53,7 +53,7 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
     public BaseResult<Long> processor(UpdateAttributeRequestDTO requestDTO) {
         AttributeDO attributeDO = attributeCacheService.selectById(requestDTO.getId());
         AttributeDO updateDO = dtoConvertDo(requestDTO, AttributeDO.class);
-        updateDO.setName(StrUtil.format("{}_{}" , attributeDO.getName().split("_" )[0], requestDTO.getShowName()));
+        updateDO.setName(StrUtil.format("{}_{}", attributeDO.getName().split("_")[0], requestDTO.getShowName()));
         attributeCacheService.updateById(updateDO);
         return ResultUtil.success();
     }

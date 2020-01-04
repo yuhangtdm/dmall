@@ -14,15 +14,15 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SalePointResponseDTO" , description = "卖点响应实体" )
+@ApiModel(value = "SalePointResponseDTO", description = "卖点响应实体")
 public class SalePointResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 1441839800494180753L;
 
-    @ApiModelProperty(value = "属性id" , position = 1)
+    @ApiModelProperty(value = "属性id", position = 1)
     private Long attributeId;
 
-    @ApiModelProperty(value = "商品属性值列表" , position = 2)
+    @ApiModelProperty(value = "商品属性值列表", position = 2)
     private List<ProductAttributeValueResponseDTO> salePointValues;
 
 }

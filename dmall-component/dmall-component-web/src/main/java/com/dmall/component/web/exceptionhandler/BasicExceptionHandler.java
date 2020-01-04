@@ -40,7 +40,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public String businessHandle(BusinessException ex, HttpServletRequest request) {
-        log.error("enter the BusinessException Handler," , ex);
+        log.error("enter the BusinessException Handler,", ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -49,7 +49,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(ComponentException.class)
     public String componentHandle(ComponentException ex, HttpServletRequest request) {
-        log.error("enter the ComponentException Handler," , ex);
+        log.error("enter the ComponentException Handler,", ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -58,7 +58,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public String NoHandlerFoundHandle(HttpServletRequest request) {
-        log.error("enter the NoHandlerFoundException Handler" );
+        log.error("enter the NoHandlerFoundException Handler");
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.NOT_FOUND_REQUEST);
         request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
@@ -68,7 +68,7 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public String httpMessageNotReadableExceptionHandle(HttpServletRequest request) {
-        log.error("enter the HttpMessageNotReadableException Handler" );
+        log.error("enter the HttpMessageNotReadableException Handler");
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.MEDIA_PARAM_TYPE_ERROR);
         request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
@@ -78,7 +78,7 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public String httpRequestMethodNotSupportedExceptionHandle(HttpServletRequest request) {
-        log.error("enter the HttpRequestMethodNotSupportedException Handler" );
+        log.error("enter the HttpRequestMethodNotSupportedException Handler");
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.METHOD_NOT_ALLOWED);
         request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
@@ -111,13 +111,13 @@ public class BasicExceptionHandler {
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
             data.add(constraintViolation.getMessage());
         }
-        log.error("enter the ConstraintViolationException Handler,{}" , data);
+        log.error("enter the ConstraintViolationException Handler,{}", data);
         return paramHandle(null, data, request);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public String methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
-        log.error("enter the MethodArgumentTypeMismatchException Handler," , ex);
+        log.error("enter the MethodArgumentTypeMismatchException Handler,", ex);
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.PARAM_TYPE_ERROR));
     }
 
@@ -126,7 +126,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public String exception(Exception ex, HttpServletRequest request) {
-        log.error("enter the exception Handler," , ex);
+        log.error("enter the exception Handler,", ex);
         return getCustomException(request, ResultUtil.fail());
     }
 
@@ -143,7 +143,7 @@ public class BasicExceptionHandler {
             }
         }
         if (CollUtil.isNotEmpty(data)) {
-            log.error("enter the param exception Handler,{}" , data);
+            log.error("enter the param exception Handler,{}", data);
         }
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST, CollUtil.isEmpty(error) ? data : error));
     }

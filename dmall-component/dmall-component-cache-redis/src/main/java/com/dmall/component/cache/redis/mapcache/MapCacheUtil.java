@@ -70,7 +70,7 @@ public class MapCacheUtil {
     public String getkey(String cacheName, String className) {
         return new StringBuilder(dMallRedisProperties.getCacheKeyPrefix())
                 .append(StrUtil.UNDERLINE)
-                .append(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "local" )
+                .append(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "local")
                 .append(StrUtil.UNDERLINE)
                 .append(cacheName)
                 .append(StrUtil.COLON)

@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "ListMemberColletionSubjectRequestDTO" , description = "会员收藏专题表 列表请求实体" )
+@ApiModel(value = "ListMemberColletionSubjectRequestDTO", description = "会员收藏专题表 列表请求实体")
 public class ListMemberColletionSubjectRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

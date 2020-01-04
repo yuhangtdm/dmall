@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: created by hang.yu on 2019/10/27 16:12
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.web.swagger" )
+@ConfigurationProperties(prefix = "dmall.web.swagger")
 public class DMallSwaggerProperties {
 
     /**

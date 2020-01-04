@@ -19,34 +19,34 @@ import java.util.List;
  * @description: 会员收货地址服务
  * @author: created by hang.yu on 2019-12-01 22:56:08
  */
-@Api(tags = "会员收货地址服务" )
-@RequestMapping("/memberReceiveAddress" )
+@Api(tags = "会员收货地址服务")
+@RequestMapping("/memberReceiveAddress")
 public interface MemberReceiveAddressService {
 
-    @PostMapping("/" )
-    @ApiOperation(value = "新增会员收货地址" )
+    @PostMapping("/")
+    @ApiOperation(value = "新增会员收货地址")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberReceiveAddressRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}" )
-    @ApiOperation(value = "删除会员收货地址" )
-    @ApiImplicitParam(name = "id" , value = "会员收货地址id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<Long> delete(@PathVariable("id" ) Long id);
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除会员收货地址")
+    @ApiImplicitParam(name = "id", value = "会员收货地址id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/" )
-    @ApiOperation(value = "修改会员收货地址" )
+    @PutMapping("/")
+    @ApiOperation(value = "修改会员收货地址")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberReceiveAddressRequestDTO requestDTO);
 
-    @GetMapping("/{id}" )
-    @ApiOperation(value = "根据id查询会员收货地址" )
-    @ApiImplicitParam(name = "id" , value = "会员收货地址id" , required = true, dataType = "int" , paramType = "path" )
-    BaseResult<CommonMemberReceiveAddressResponseDTO> get(@PathVariable("id" ) Long id);
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询会员收货地址")
+    @ApiImplicitParam(name = "id", value = "会员收货地址id", required = true, dataType = "int", paramType = "path")
+    BaseResult<CommonMemberReceiveAddressResponseDTO> get(@PathVariable("id") Long id);
 
-    @PostMapping("/list" )
-    @ApiOperation(value = "会员收货地址列表" )
+    @PostMapping("/list")
+    @ApiOperation(value = "会员收货地址列表")
     BaseResult<List<CommonMemberReceiveAddressResponseDTO>> list(@RequestBody ListMemberReceiveAddressRequestDTO requestDTO);
 
-    @PostMapping("/page" )
-    @ApiOperation(value = "会员收货地址分页" )
+    @PostMapping("/page")
+    @ApiOperation(value = "会员收货地址分页")
     BaseResult<LayuiPage<CommonMemberReceiveAddressResponseDTO>> page(@RequestBody PageMemberReceiveAddressRequestDTO requestDTO);
 
 }

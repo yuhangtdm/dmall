@@ -24,7 +24,7 @@ public class ResultUtil {
     }
 
     public static <T> BaseResult<T> success(T t) {
-        Assert.notNull(t, "data不可为null" );
+        Assert.notNull(t, "data不可为null");
         BaseResult<T> baseResult = new BaseResult();
         baseResult.setResult(Boolean.TRUE);
         baseResult.setCode(BasicStatusEnum.SUCCESS.getCode());

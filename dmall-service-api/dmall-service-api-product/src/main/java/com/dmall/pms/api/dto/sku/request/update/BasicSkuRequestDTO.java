@@ -16,46 +16,46 @@ import java.math.BigDecimal;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "BasicSkuRequestDTO" , description = "修改sku基本信息实体" )
+@ApiModel(value = "BasicSkuRequestDTO", description = "修改sku基本信息实体")
 public class BasicSkuRequestDTO {
 
-    @ApiModelProperty(value = "skuId" , position = 1)
-    @NotNull(message = "skuId不能为空" )
+    @ApiModelProperty(value = "skuId", position = 1)
+    @NotNull(message = "skuId不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "sku名称" , position = 2)
+    @ApiModelProperty(value = "sku名称", position = 2)
     private String name;
 
-    @ApiModelProperty(value = "sku副名称" , position = 3)
+    @ApiModelProperty(value = "sku副名称", position = 3)
     private String subName;
 
-    @ApiModelProperty(value = "价格" , position = 4)
+    @ApiModelProperty(value = "价格", position = 4)
     private BigDecimal price;
 
-    @ApiModelProperty(value = "vip价格" , position = 5)
+    @ApiModelProperty(value = "vip价格", position = 5)
     private BigDecimal vipPrice;
 
-    @ApiModelProperty(value = "市场价格" , position = 6)
+    @ApiModelProperty(value = "市场价格", position = 6)
     private BigDecimal marketPrice;
 
-    @ApiModelProperty(value = "库存" , position = 7)
+    @ApiModelProperty(value = "库存", position = 7)
     private Integer stock;
 
-    @ApiModelProperty(value = "预警库存" , position = 8)
+    @ApiModelProperty(value = "预警库存", position = 8)
     private Integer lowStock;
 
-    @ApiModelProperty(value = "推荐状态 Y-是;N-否" , position = 9)
+    @ApiModelProperty(value = "推荐状态 Y-是;N-否", position = 9)
     @ValueInEnum(YNEnum.class)
     private String recommendStatus;
 
-    @ApiModelProperty(value = "新品状态 Y-是;N-否" , position = 10)
+    @ApiModelProperty(value = "新品状态 Y-是;N-否", position = 10)
     @ValueInEnum(YNEnum.class)
     private String newStatus;
 
-    @ApiModelProperty(value = "是否是预告sku Y-是;N-否" , position = 11)
+    @ApiModelProperty(value = "是否是预告sku Y-是;N-否", position = 11)
     @ValueInEnum(YNEnum.class)
     private String previewStatus;
 
-    @ApiModelProperty(value = "sku描述" , position = 12)
+    @ApiModelProperty(value = "sku描述", position = 12)
     private String description;
 }

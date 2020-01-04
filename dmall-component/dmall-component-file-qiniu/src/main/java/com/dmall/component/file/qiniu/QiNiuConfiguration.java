@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({QiNiuProperties.class})
-@ConditionalOnProperty(prefix = "dmall.file.qiniu" , value = "enabled" , havingValue = "true" )
+@ConditionalOnProperty(prefix = "dmall.file.qiniu", value = "enabled", havingValue = "true")
 public class QiNiuConfiguration implements BasicConfiguration {
 
     @Autowired
@@ -32,7 +32,7 @@ public class QiNiuConfiguration implements BasicConfiguration {
 
     @Override
     public void check() {
-        log.info("init -> [{}],properties:\n{}" , "QiNiuProperties" , JSON.toJSONString(qiNiuProperties, true));
+        log.info("init -> [{}],properties:\n{}", "QiNiuProperties", JSON.toJSONString(qiNiuProperties, true));
         if (qiNiuProperties.getEnabled()) {
             if (ObjectUtil.containsEmpty(qiNiuProperties.getAccessKey(), qiNiuProperties.getSecretKey()
                     , qiNiuProperties.getBucket(), qiNiuProperties.getDomain())) {

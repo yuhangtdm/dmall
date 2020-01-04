@@ -18,7 +18,7 @@ public @interface ValueInEnum {
 
     Class<? extends KeyEnum> value();
 
-    String message() default "入参值不在枚举中" ;
+    String message() default "入参值不在枚举中";
 
     Class<?>[] groups() default {};
 

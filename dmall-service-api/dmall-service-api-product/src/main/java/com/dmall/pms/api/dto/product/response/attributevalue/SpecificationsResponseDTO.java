@@ -15,16 +15,16 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SpecificationsResponseDTO" , description = "销售规格响应实体" )
+@ApiModel(value = "SpecificationsResponseDTO", description = "销售规格响应实体")
 public class SpecificationsResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -4713638581805218367L;
 
-    @ApiModelProperty(value = "属性id" , position = 2)
-    @NotNull(message = "属性id不能为空" )
+    @ApiModelProperty(value = "属性id", position = 2)
+    @NotNull(message = "属性id不能为空")
     private Long attributeId;
 
-    @ApiModelProperty(value = "商品属性值列表" , position = 2)
+    @ApiModelProperty(value = "商品属性值列表", position = 2)
     private List<ProductAttributeValueResponseDTO> specificationsValues;
 
 }

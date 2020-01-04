@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageMemberColletionSubjectRequestDTO" , description = "会员收藏专题表 分页请求实体" )
+@ApiModel(value = "PageMemberColletionSubjectRequestDTO", description = "会员收藏专题表 分页请求实体")
 public class PageMemberColletionSubjectRequestDTO extends PageRequestDTO {
 
 

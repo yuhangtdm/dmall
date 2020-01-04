@@ -46,7 +46,7 @@ public class UploadSkuHandler extends AbstractCommonHandler<UploadRequestDTO, Sk
             UploadResult uploadResult = qiNiuFileManager.upload(requestDTO.getFile(), QiNiuConstants.SKU);
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
-            log.error("upload sku pic failed" , e);
+            log.error("upload sku pic failed", e);
             return ResultUtil.success(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
         }
     }

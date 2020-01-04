@@ -24,7 +24,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableConfigurationProperties({DMallMybatisPlusProperties.class})
 @EnableTransactionManagement
-@ConditionalOnProperty(prefix = "dmall.mybatisplus" , value = "enabled" , havingValue = "true" )
+@ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "enabled", havingValue = "true")
 public class DMallMybatisPlusConfiguration implements BasicConfiguration {
 
     @Autowired
@@ -42,7 +42,7 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
      * 性能分析拦截器，不建议生产使用
      */
     @Bean
-    @ConditionalOnProperty(prefix = "dmall.mybatisplus" , value = "performance" , havingValue = "true" )
+    @ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "performance", havingValue = "true")
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         performanceInterceptor.setMaxTime(dmallMybatisPlusProperties.getMaxTime());
@@ -61,7 +61,7 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}" , "DMallMybatisPlusProperties" , JSON.toJSONString(dmallMybatisPlusProperties, true));
+        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSON.toJSONString(dmallMybatisPlusProperties, true));
     }
 
 }

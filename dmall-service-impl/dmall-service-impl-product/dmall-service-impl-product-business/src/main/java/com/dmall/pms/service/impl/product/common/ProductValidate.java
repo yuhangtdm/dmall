@@ -41,14 +41,14 @@ public class ProductValidate {
 
     public BaseResult validate(ProductExtRequestDTO extDTO) {
         List<Long> categoryIds = extDTO.getCategoryIds();
-        Long[] aLong = new Long[categoryIds.size()];
+        Long[] categoryIdArray = new Long[categoryIds.size()];
         Set<Long> set = new HashSet<>(categoryIds);
         // 商品分类不能重复
         if (set.size() != categoryIds.size()) {
             return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_REPEATED);
         }
         // 分类存在 且是三级分类,品牌存在
-        BaseResult validate = basicValidate(extDTO.getBrandId(), categoryIds.toArray(aLong));
+        BaseResult validate = basicValidate(extDTO.getBrandId(), categoryIds.toArray(categoryIdArray));
         if (!validate.getResult()) {
             return validate;
         }

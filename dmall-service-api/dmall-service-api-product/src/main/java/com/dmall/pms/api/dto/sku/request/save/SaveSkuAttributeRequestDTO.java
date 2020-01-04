@@ -14,18 +14,18 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SaveSkuAttributeRequestDTO" , description = "新增sku属性实体" )
+@ApiModel(value = "SaveSkuAttributeRequestDTO", description = "新增sku属性实体")
 public class SaveSkuAttributeRequestDTO {
 
-    @ApiModelProperty(value = "商品id" , position = 1)
-    @NotNull(message = "商品id不能为空" )
+    @ApiModelProperty(value = "商品id", position = 1)
+    @NotNull(message = "商品id不能为空")
     private Long productId;
 
-    @ApiModelProperty(value = "属性值id" , position = 2)
-    @NotNull(message = "skuId不能为空" )
+    @ApiModelProperty(value = "属性值id", position = 2)
+    @NotNull(message = "skuId不能为空")
     private Long skuId;
 
-    @ApiModelProperty(value = "商品属性值id列表" , position = 3)
-    @NotNull(message = "商品属性值id不能为空" )
+    @ApiModelProperty(value = "商品属性值id列表", position = 3)
+    @NotNull(message = "商品属性值id不能为空")
     private List<Long> productAttributeValueList;
 }

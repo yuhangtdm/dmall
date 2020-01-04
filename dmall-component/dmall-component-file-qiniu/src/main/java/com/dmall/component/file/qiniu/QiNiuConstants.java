@@ -6,11 +6,11 @@ package com.dmall.component.file.qiniu;
  */
 public interface QiNiuConstants {
 
-    String BRAND = "brand" ;
+    String BRAND = "brand";
 
-    String PRODUCT = "product" ;
+    String PRODUCT = "product";
 
-    String PRODUCT_ATTRIBUTE_VALUE = "productAttributeValue" ;
+    String PRODUCT_ATTRIBUTE_VALUE = "productAttributeValue";
 
-    String SKU = "sku" ;
+    String SKU = "sku";
 }

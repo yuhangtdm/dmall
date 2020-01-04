@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SaveMemberLoginLogRequestDTO" , description = "新增会员登录记录请求实体" )
+@ApiModel(value = "SaveMemberLoginLogRequestDTO", description = "新增会员登录记录请求实体")
 public class SaveMemberLoginLogRequestDTO extends CommonMemberLoginLogRequestDTO {
 
 }

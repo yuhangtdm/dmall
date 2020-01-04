@@ -13,25 +13,25 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "CommonMemberInvoiceRequestDTO" , description = "会员发票公共请求实体" )
+@ApiModel(value = "CommonMemberInvoiceRequestDTO", description = "会员发票公共请求实体")
 public class CommonMemberInvoiceRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 
-    @ApiModelProperty(value = "发票抬头" , position = 2)
+    @ApiModelProperty(value = "发票抬头", position = 2)
     private String billHeader;
 
 
-    @ApiModelProperty(value = "收票人姓名" , position = 3)
+    @ApiModelProperty(value = "收票人姓名", position = 3)
     private String billReceiverName;
 
 
-    @ApiModelProperty(value = "收票人电话" , position = 4)
+    @ApiModelProperty(value = "收票人电话", position = 4)
     private String billReceiverPhone;
 
 
-    @ApiModelProperty(value = "收票人邮箱" , position = 5)
+    @ApiModelProperty(value = "收票人邮箱", position = 5)
     private String billReceiverEmail;
 
 

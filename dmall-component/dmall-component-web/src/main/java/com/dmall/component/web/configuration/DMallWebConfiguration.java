@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author: created by hang.yu on 2019/10/16 22:28
  */
 @Configuration
-@ComponentScan(basePackages = {"com.dmall.component.web.exceptionhandler" , "com.dmall.component.web.log"
+@ComponentScan(basePackages = {"com.dmall.component.web.exceptionhandler", "com.dmall.component.web.log"
         , "com.dmall.component.web.util"})
 public class DMallWebConfiguration implements WebMvcConfigurer {
 
@@ -24,21 +24,21 @@ public class DMallWebConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**" );
+        registry.addMapping("/**");
     }
 
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**" , buildConfig());
+        source.registerCorsConfiguration("/**", buildConfig());
         return new CorsFilter(source);
     }
 
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*" );
-        corsConfiguration.addAllowedHeader("*" );
-        corsConfiguration.addAllowedMethod("*" );
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
         return corsConfiguration;
     }
 

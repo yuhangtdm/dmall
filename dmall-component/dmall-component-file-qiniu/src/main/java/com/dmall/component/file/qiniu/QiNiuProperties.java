@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: created by hang.yu on 2019/12/17 10:16
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.file.qiniu" )
+@ConfigurationProperties(prefix = "dmall.file.qiniu")
 public class QiNiuProperties {
 
     /**

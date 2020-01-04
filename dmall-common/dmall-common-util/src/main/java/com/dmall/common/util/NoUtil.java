@@ -10,9 +10,9 @@ import cn.hutool.core.util.RandomUtil;
  */
 public class NoUtil {
 
-    private static final String PRODUCT_NO_PREFIX = "P" ;
+    private static final String PRODUCT_NO_PREFIX = "P";
 
-    private static final String SKU_NO_PREFIX = "K" ;
+    private static final String SKU_NO_PREFIX = "K";
 
     /**
      * 生成商品编号 P+时间戳+四位随机数

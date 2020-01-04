@@ -25,7 +25,7 @@ public class GeneratorCodeUtil {
         /**
          * 表名不传则生成所有表的
          */
-        generateByTables(Constants.GENERATOR_MODULE_NAME, "pms_category_product" );
+        generateByTables(Constants.GENERATOR_MODULE_NAME, "pms_category_product");
     }
 
     /**
@@ -68,7 +68,7 @@ public class GeneratorCodeUtil {
     private static GlobalConfig getGlobalConfig(String module) {
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setOpen(false)
-                .setOutputDir(System.getProperty("user.dir" ) + module + Constants.SRC_MAIN_JAVA)//生成文件的输出目录
+                .setOutputDir(System.getProperty("user.dir") + module + Constants.SRC_MAIN_JAVA)//生成文件的输出目录
                 .setFileOverride(true)//是否覆盖已有文件
                 .setBaseResultMap(true)
                 .setBaseColumnList(true)

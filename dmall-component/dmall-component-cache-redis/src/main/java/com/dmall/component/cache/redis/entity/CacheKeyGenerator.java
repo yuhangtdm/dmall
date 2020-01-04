@@ -29,7 +29,7 @@ public class CacheKeyGenerator {
                 if (ObjectUtil.isNotEmpty(args[i])) {
                     // 判断是否为简单类型
                     if (ClassUtil.isSimpleValueType(args[i].getClass())) {
-                        key.append(args[i]).append("|" ).append(args[i]);
+                        key.append(args[i]).append("|").append(args[i]);
                     } else {
                         // 非复杂类型时
                         if (!ObjectUtil.isComplexObject(args[i])) {
@@ -37,7 +37,7 @@ public class CacheKeyGenerator {
                             for (Field field : fields) {
                                 Object fieldValue = ReflectUtil.getFieldValue(args[i], field);
                                 if (ObjectUtil.isNotEmpty(fieldValue) && !ObjectUtil.isComplexObject(fieldValue)) {
-                                    key.append(field.getName()).append("|" ).append(fieldValue);
+                                    key.append(field.getName()).append("|").append(fieldValue);
                                 }
                             }
                         }

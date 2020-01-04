@@ -38,7 +38,7 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 @EnableConfigurationProperties({DMallSwaggerProperties.class})
-@ConditionalOnProperty(prefix = "dmall.web.swagger" , value = "enabled" , havingValue = "true" )
+@ConditionalOnProperty(prefix = "dmall.web.swagger", value = "enabled", havingValue = "true")
 public class DMallSwaggerConfiguration implements BasicConfiguration {
 
     @Autowired
@@ -91,7 +91,7 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
 
     @Override
     public void check() {
-        log.info("init -> [{}],properties:\n{}" , "DMallSwaggerProperties" , JSON.toJSONString(dMallSwaggerProperties, true));
+        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JSON.toJSONString(dMallSwaggerProperties, true));
         if (dMallSwaggerProperties.getEnabled() && StringUtils.isBlank(dMallSwaggerProperties.getBasePackage())) {
             throw new WebException(WebErrorEnum.NO_BASE_PACKAGE);
         }

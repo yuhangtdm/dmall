@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum OrderByEnum implements KeyValueEnum<String> {
-    ASC("ASC" , "升序" ),
-    DESC("DESC" , "降序" ),
+    ASC("ASC", "升序"),
+    DESC("DESC", "降序"),
     ;
     private String code;
 

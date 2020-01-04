@@ -19,7 +19,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface LandlineNumber {
 
-    String message() default "座机号不合法" ;
+    String message() default "座机号不合法";
 
     Class[] groups() default {};
 

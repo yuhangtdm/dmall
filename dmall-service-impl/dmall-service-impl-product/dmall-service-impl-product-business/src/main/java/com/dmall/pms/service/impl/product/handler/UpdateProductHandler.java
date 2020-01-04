@@ -15,6 +15,7 @@ import com.dmall.pms.generator.mapper.SkuAttributeValueMapper;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
 import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +40,9 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     @Autowired
     private SkuAttributeValueMapper skuAttributeValueMapper;
 
+    @Autowired
+    private SkuAttributeValueSupport skuAttributeValueSupport;
+
     @Override
     public BaseResult<Long> validate(UpdateProductRequestDTO requestDTO) {
         // 校验id是否存在
@@ -52,8 +56,8 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         if (nameProduct != null && !nameProduct.getId().equals(requestDTO.getId())) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NAME_EXISTS);
         }
-        List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueMapper.selectList(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getProductId, requestDTO.getId()));
+        //
+        List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueSupport.listByProductId(requestDTO.getId());
         if (CollUtil.isEmpty(skuAttributeValueDOS)) {
             return ResultUtil.success();
         }

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @author: created by hang.yu on 2019/12/17 15:09
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.web.httpclient" )
+@ConfigurationProperties(prefix = "dmall.web.httpclient")
 public class HttpClientProperties {
 
     /**

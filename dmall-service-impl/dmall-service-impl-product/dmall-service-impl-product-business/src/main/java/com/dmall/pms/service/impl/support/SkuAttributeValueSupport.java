@@ -91,4 +91,12 @@ public class SkuAttributeValueSupport {
         return iSkuAttributeValueService.list(Wrappers.<SkuAttributeValueDO>lambdaQuery()
                 .eq(SkuAttributeValueDO::getSkuId, skuId));
     }
+
+    /**
+     * 根据productId查询属性值列表
+     */
+    public List<SkuAttributeValueDO> listByProductId(Long productId) {
+        return iSkuAttributeValueService.list(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                .eq(SkuAttributeValueDO::getProductId, productId));
+    }
 }

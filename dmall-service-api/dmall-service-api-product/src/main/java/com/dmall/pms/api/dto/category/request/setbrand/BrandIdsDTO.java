@@ -15,15 +15,15 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "BrandIdsDTO" , description = "品牌列表实体" )
+@ApiModel(value = "BrandIdsDTO", description = "品牌列表实体")
 public class BrandIdsDTO implements Serializable {
 
-    @ApiModelProperty(value = "品牌id" , required = true, position = 1)
-    @NotNull(message = "品牌id不能为空" )
+    @ApiModelProperty(value = "品牌id", required = true, position = 1)
+    @NotNull(message = "品牌id不能为空")
     private Long brandId;
 
-    @ApiModelProperty(value = "排序,大于等于1" , required = true, position = 2)
-    @NotNull(message = "排序不能为空" )
-    @Min(value = 1, message = "排序必须大于等于1" )
+    @ApiModelProperty(value = "排序,大于等于1", required = true, position = 2)
+    @NotNull(message = "排序不能为空")
+    @Min(value = 1, message = "排序必须大于等于1")
     private Integer sort;
 }

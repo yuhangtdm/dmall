@@ -14,10 +14,10 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "UpdateBankCardRequestDTO" , description = "修改会员银行卡请求实体" )
+@ApiModel(value = "UpdateBankCardRequestDTO", description = "修改会员银行卡请求实体")
 public class UpdateBankCardRequestDTO extends CommonBankCardRequestDTO {
 
-    @ApiModelProperty(value = "主键" , required = true, position = 0)
+    @ApiModelProperty(value = "主键", required = true, position = 0)
     private Long id;
 
 }

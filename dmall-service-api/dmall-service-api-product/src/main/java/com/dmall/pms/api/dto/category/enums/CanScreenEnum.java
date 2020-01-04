@@ -12,9 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CanScreenEnum implements KeyValueEnum<Integer> {
 
-    NOT(1, "不可筛选" ),
-    SINGLE(2, "单选" ),
-    MULTI(3, "多选" ),
+    NOT(1, "不可筛选"),
+    SINGLE(2, "单选"),
+    MULTI(3, "多选"),
     ;
 
     private Integer code;

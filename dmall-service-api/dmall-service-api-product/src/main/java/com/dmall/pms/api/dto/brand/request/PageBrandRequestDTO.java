@@ -15,17 +15,17 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageBrandRequestDTO" , description = "品牌分页请求实体" )
+@ApiModel(value = "PageBrandRequestDTO", description = "品牌分页请求实体")
 public class PageBrandRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "名称" , position = 5)
+    @ApiModelProperty(value = "名称", position = 5)
     private String name;
 
-    @ApiModelProperty(value = "英文名称" , position = 6)
+    @ApiModelProperty(value = "英文名称", position = 6)
     private String englishName;
 
-    @ApiModelProperty(value = "首字母" , position = 7)
-    @Length(max = 1, min = 1, message = "首字母长度固定一位" )
+    @ApiModelProperty(value = "首字母", position = 7)
+    @Length(max = 1, min = 1, message = "首字母长度固定一位")
     private String firstLetter;
 
 }

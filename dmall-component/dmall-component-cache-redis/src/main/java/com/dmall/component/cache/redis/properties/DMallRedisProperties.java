@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author: created by hang.yu on 2019/11/3 21:50
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.cache.redis" )
+@ConfigurationProperties(prefix = "dmall.cache.redis")
 public class DMallRedisProperties {
 
     /**

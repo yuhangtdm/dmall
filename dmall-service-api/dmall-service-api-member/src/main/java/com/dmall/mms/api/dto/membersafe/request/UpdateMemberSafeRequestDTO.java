@@ -14,10 +14,10 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "UpdateMemberSafeRequestDTO" , description = "修改账户安全请求实体" )
+@ApiModel(value = "UpdateMemberSafeRequestDTO", description = "修改账户安全请求实体")
 public class UpdateMemberSafeRequestDTO extends CommonMemberSafeRequestDTO {
 
-    @ApiModelProperty(value = "主键" , required = true, position = 0)
+    @ApiModelProperty(value = "主键", required = true, position = 0)
     private Long id;
 
 }
