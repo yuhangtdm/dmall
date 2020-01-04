@@ -31,18 +31,9 @@ public class ProductExtRequestDTO implements Serializable {
     @NotNull(message = "品牌id不能为空")
     private Long brandId;
 
-    @ApiModelProperty(value = "销售规格", required = true, position = 3)
+    @ApiModelProperty(value = "商品请求属性信息", required = true, position = 2)
     @Valid
-    @NotNull(message = "销售规格不能为空")
-    @Size(min = 1, message = "销售规格不能为空")
-    private List<SpecificationsRequestDTO> specifications;
-
-    @ApiModelProperty(value = "卖点", position = 4)
-    @Valid
-    private List<SalePointRequestDTO> salePoints;
-
-    @ApiModelProperty(value = "参数", position = 5)
-    @Valid
-    private List<ParamRequestDTO> params;
+    @NotNull(message = "商品请求属性信息不能为空")
+    private ProductAttributeRequestDTO productAttribute;
 
 }

@@ -130,4 +130,19 @@ public class SkuExtSupport {
     public SkuExtDO getBySkuId(Long skuId) {
         return skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuId));
     }
+
+    /**
+     * 根据skuId删除
+     */
+    public void deleteBySkuId(Long skuId) {
+        skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuId));
+    }
+
+    /**
+     * 根据productId删除
+     */
+    public void deleteByProductId(Long productId) {
+        skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getProductId, productId));
+
+    }
 }

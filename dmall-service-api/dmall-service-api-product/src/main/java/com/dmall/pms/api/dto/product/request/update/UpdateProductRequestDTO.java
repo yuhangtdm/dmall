@@ -1,7 +1,7 @@
 package com.dmall.pms.api.dto.product.request.update;
 
 import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
-import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.ProductAttributeRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,5 +34,5 @@ public class UpdateProductRequestDTO implements Serializable {
     @ApiModelProperty(value = "商品属性信息", required = true, position = 3)
     @Valid
     @NotNull(message = "商品属性信息不能为空")
-    private ProductExtRequestDTO ext;
+    private ProductAttributeRequestDTO ext;
 }

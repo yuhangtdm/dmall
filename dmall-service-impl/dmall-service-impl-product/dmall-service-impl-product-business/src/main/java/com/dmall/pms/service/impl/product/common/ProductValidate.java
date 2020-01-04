@@ -52,36 +52,13 @@ public class ProductValidate {
         if (!validate.getResult()) {
             return validate;
         }
-        // 属性存在
-        for (SpecificationsRequestDTO specification : extDTO.getSpecifications()) {
-            AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
-            if (attributeDO == null) {
-                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
-            }
-        }
-        // 属性存在
-        for (SalePointRequestDTO salePoint : extDTO.getSalePoints()) {
-            AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
-            if (attributeDO == null) {
-                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
-            }
-        }
-        // 属性分类存在
-        for (ParamRequestDTO param : extDTO.getParams()) {
-            AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(param.getAttributeTypeId());
-            if (attributeTypeDO == null) {
-                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_TYPE_NOT_EXISTS);
-            }
-            for (ParamValueRequestDTO paramAttribute : param.getParamAttributes()) {
-                AttributeDO attributeDO = attributeCacheService.selectById(paramAttribute.getAttributeId());
-                if (attributeDO == null) {
-                    return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
-                }
-            }
-        }
-        return ResultUtil.success();
+
+        return attributeValidate(extDTO.getProductAttribute());
     }
 
+    /**
+     * 分类及品牌校验
+     */
     public BaseResult basicValidate(Long brandId, Long... categoryIds) {
         for (Long categoryId : categoryIds) {
             CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
@@ -98,6 +75,40 @@ public class ProductValidate {
         BrandDO brandDO = brandCacheService.selectById(brandId);
         if (brandDO == null) {
             return ResultUtil.fail(ProductErrorEnum.BRAND_NOT_EXISTS);
+        }
+        return ResultUtil.success();
+    }
+
+    /**
+     * 商品属性值校验
+     */
+    public BaseResult attributeValidate(ProductAttributeRequestDTO attributeRequest){
+        // 属性存在
+        for (SpecificationsRequestDTO specification : attributeRequest.getSpecifications()) {
+            AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
+            if (attributeDO == null) {
+                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
+            }
+        }
+        // 属性存在
+        for (SalePointRequestDTO salePoint : attributeRequest.getSalePoints()) {
+            AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
+            if (attributeDO == null) {
+                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
+            }
+        }
+        // 属性分类存在
+        for (ParamRequestDTO param : attributeRequest.getParams()) {
+            AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(param.getAttributeTypeId());
+            if (attributeTypeDO == null) {
+                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_TYPE_NOT_EXISTS);
+            }
+            for (ParamValueRequestDTO paramAttribute : param.getParamAttributes()) {
+                AttributeDO attributeDO = attributeCacheService.selectById(paramAttribute.getAttributeId());
+                if (attributeDO == null) {
+                    return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
+                }
+            }
         }
         return ResultUtil.success();
     }

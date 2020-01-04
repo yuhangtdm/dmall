@@ -65,7 +65,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         ProductDO productDO = saveProductDO(requestDTO);
         // 保存商品属性值
         ProductExtRequestDTO ext = requestDTO.getExt();
-        productAttributeValueSupport.saveProductAttributeValue(productDO, ext);
+        productAttributeValueSupport.saveProductAttributeValue(productDO, ext.getProductAttribute());
         // 保存sku
         skuSupport.saveSku(productDO.getId(), ext.getCategoryIds(), ext.getBrandId(), requestDTO.getSkuList());
         return ResultUtil.success(productDO.getId());

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @description:
+ * @description: SkuMediaSupport
  * @author: created by hang.yu on 2019/12/29 15:42
  */
 @Component
@@ -55,7 +55,7 @@ public class SkuMediaSupport {
     /**
      * 获取skuMedia列表
      */
-    public List<MediaDTO> getMediaList(Long skuId) {
+    public List<MediaDTO> listBySkuId(Long skuId) {
         List<SkuMediaDO> list = iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
         return list.stream().map(skuMediaDO -> {
             MediaDTO mediaDTO = new MediaDTO();
@@ -67,6 +67,21 @@ public class SkuMediaSupport {
             mediaDTO.setSort(skuMediaDO.getSort());
             return mediaDTO;
         }).collect(Collectors.toList());
+    }
+
+    /**
+     * 根据skuId删除
+     */
+    public void deleteBySkuId(Long skuId) {
+        iSkuMediaService.remove(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
+    }
+
+    /**
+     * 根据productId删除
+     */
+    public void deleteByProductId(Long productId) {
+        iSkuMediaService.remove(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getProductId, productId));
+
     }
 
     private SkuMediaDO buildSkuMediaDO(Long productId, Long skuId, MediaDTO mediaDTO) {

@@ -45,7 +45,7 @@ public class ProductAttributeValueSupport {
     /**
      * 保存商品属性值
      */
-    public void saveProductAttributeValue(ProductDO productDO, ProductExtRequestDTO productExtRequestDTO) {
+    public void saveProductAttributeValue(ProductDO productDO, ProductAttributeRequestDTO productExtRequestDTO) {
         List<ProductAttributeValueDO> list = Lists.newArrayList();
         Long productId = productDO.getId();
         // 规格

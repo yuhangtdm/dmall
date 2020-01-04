@@ -11,7 +11,6 @@ import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.generator.mapper.SkuAttributeValueMapper;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
 import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
@@ -38,9 +37,6 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     private ProductAttributeValueSupport productAttributeValueSupport;
 
     @Autowired
-    private SkuAttributeValueMapper skuAttributeValueMapper;
-
-    @Autowired
     private SkuAttributeValueSupport skuAttributeValueSupport;
 
     @Override
@@ -56,12 +52,12 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         if (nameProduct != null && !nameProduct.getId().equals(requestDTO.getId())) {
             return ResultUtil.fail(ProductErrorEnum.PRODUCT_NAME_EXISTS);
         }
-        //
+        // 该商品下已有sku属性值 不用校验商品属性
         List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueSupport.listByProductId(requestDTO.getId());
         if (CollUtil.isEmpty(skuAttributeValueDOS)) {
             return ResultUtil.success();
         }
-        return productValidate.validate(requestDTO.getExt());
+        return productValidate.attributeValidate(requestDTO.getExt());
     }
 
     @Override
@@ -71,8 +67,7 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         // 更新商品
         productMapper.updateById(productDO);
         // 更新商品-属性 无sku才进行更新
-        List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueMapper.selectList(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getProductId, requestDTO.getId()));
+        List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueSupport.listByProductId(requestDTO.getId());
         if (CollUtil.isEmpty(skuAttributeValueDOS)) {
             productAttributeValueSupport.saveProductAttributeValue(productDO, requestDTO.getExt());
         }

@@ -99,4 +99,20 @@ public class SkuAttributeValueSupport {
         return iSkuAttributeValueService.list(Wrappers.<SkuAttributeValueDO>lambdaQuery()
                 .eq(SkuAttributeValueDO::getProductId, productId));
     }
+
+    /**
+     * 根据skuId删除
+     */
+    public void deleteBySkuId(Long skuId) {
+        iSkuAttributeValueService.remove(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                .eq(SkuAttributeValueDO::getSkuId, skuId));
+    }
+
+    /**
+     * 根据productId删除
+     */
+    public void deleteByProductId(Long productId) {
+        iSkuAttributeValueService.remove(Wrappers.<SkuAttributeValueDO>lambdaQuery()
+                .eq(SkuAttributeValueDO::getProductId, productId));
+    }
 }
