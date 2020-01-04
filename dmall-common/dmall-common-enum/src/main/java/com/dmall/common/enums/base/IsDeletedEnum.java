@@ -9,12 +9,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  IsDeletedEnum implements KeyValueEnum {
+public enum IsDeletedEnum implements KeyValueEnum {
 
-    Y("Y","不可用"),
-    N("N","可用")
-
-    ;
+    Y("Y" , "不可用" ),
+    N("N" , "可用" );
     private String code;
 
     private String desc;

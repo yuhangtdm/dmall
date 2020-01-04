@@ -9,11 +9,11 @@ import com.dmall.common.model.exception.ComponentException;
  */
 public class QiNiuException extends ComponentException {
 
-    public QiNiuException(ErrorCodeEnum errorCodeEnum){
+    public QiNiuException(ErrorCodeEnum errorCodeEnum) {
         super(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
     }
 
-    public QiNiuException(String code, String msg){
+    public QiNiuException(String code, String msg) {
         super(code, msg);
     }
 }

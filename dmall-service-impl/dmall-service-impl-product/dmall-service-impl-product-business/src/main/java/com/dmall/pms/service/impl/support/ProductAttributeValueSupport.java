@@ -57,16 +57,16 @@ public class ProductAttributeValueSupport {
                 ProductAttributeValueDO attributeValueDO = new ProductAttributeValueDO();
                 attributeValueDO.setProductId(productId);
                 attributeValueDO.setAttributeId(specification.getAttributeId());
-                attributeValueDO.setIsSellingPoint("N");
-                attributeValueDO.setIsSpecifications("Y");
-                attributeValueDO.setIsParam("N");
+                attributeValueDO.setIsSellingPoint("N" );
+                attributeValueDO.setIsSpecifications("Y" );
+                attributeValueDO.setIsParam("N" );
                 attributeValueDO.setAttributeValue(specificationsValue.getAttributeValue());
                 attributeValueDO.setPic(specificationsValue.getPic());
                 list.add(attributeValueDO);
                 JSONObject object = new JSONObject();
-                object.put("value", specificationsValue.getAttributeValue());
+                object.put("value" , specificationsValue.getAttributeValue());
                 if (StrUtil.isNotBlank(specificationsValue.getPic())) {
-                    object.put("pic", specificationsValue.getPic());
+                    object.put("pic" , specificationsValue.getPic());
                 }
                 jsonArray.add(object);
             }
@@ -81,9 +81,9 @@ public class ProductAttributeValueSupport {
                 ProductAttributeValueDO attributeValueDO = new ProductAttributeValueDO();
                 attributeValueDO.setAttributeId(salePoint.getAttributeId());
                 attributeValueDO.setProductId(productId);
-                attributeValueDO.setIsSellingPoint("Y");
-                attributeValueDO.setIsSpecifications("N");
-                attributeValueDO.setIsParam("N");
+                attributeValueDO.setIsSellingPoint("Y" );
+                attributeValueDO.setIsSpecifications("N" );
+                attributeValueDO.setIsParam("N" );
                 attributeValueDO.setAttributeValue(salePointValue);
                 list.add(attributeValueDO);
             }
@@ -98,9 +98,9 @@ public class ProductAttributeValueSupport {
                     attributeValueDO.setProductId(productId);
                     attributeValueDO.setAttributeTypeId(param.getAttributeTypeId());
                     attributeValueDO.setAttributeId(paramAttribute.getAttributeId());
-                    attributeValueDO.setIsSellingPoint("N");
-                    attributeValueDO.setIsSpecifications("N");
-                    attributeValueDO.setIsParam("Y");
+                    attributeValueDO.setIsSellingPoint("N" );
+                    attributeValueDO.setIsSpecifications("N" );
+                    attributeValueDO.setIsParam("Y" );
                     attributeValueDO.setAttributeValue(paramValue);
                     list.add(attributeValueDO);
                 }
@@ -218,7 +218,7 @@ public class ProductAttributeValueSupport {
     /**
      * 根据商品id删除
      */
-    public void deleteByProductId(Long productId){
+    public void deleteByProductId(Long productId) {
         iProductAttributeValueService.remove(Wrappers.<ProductAttributeValueDO>lambdaQuery()
                 .eq(ProductAttributeValueDO::getProductId, productId));
     }

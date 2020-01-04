@@ -38,7 +38,7 @@ public class ESDao {
      * 新增或更新文档
      */
     public <T> void saveOrUpdate(T t) {
-        Field idField = ReflectionUtils.findField(t.getClass(), "id", Long.class);
+        Field idField = ReflectionUtils.findField(t.getClass(), "id" , Long.class);
         if (idField == null) {
             throw new ESException(ESErrorEnum.NO_ID_FIELD);
         }
@@ -54,16 +54,16 @@ public class ESDao {
      * @param typeName  类型名称
      * @param id        id
      */
-    public <T> void  saveOrUpdate(T t, String indexName, String typeName, Long id) {
+    public <T> void saveOrUpdate(T t, String indexName, String typeName, Long id) {
         basicCheck(indexName, typeName);
         Index index = new Index.Builder(t).index(indexName).type(typeName).id(String.valueOf(id)).build();
         try {
             DocumentResult execute = jestClient.execute(index);
-            if (!execute.isSucceeded()){
+            if (!execute.isSucceeded()) {
                 throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
             }
         } catch (Exception e) {
-            log.error("ESDao.save error,indexName:{},type:{},id:{},do:{}", indexName, typeName, id,JSON.toJSONString(t), e);
+            log.error("ESDao.save error,indexName:{},type:{},id:{},do:{}" , indexName, typeName, id, JSON.toJSONString(t), e);
             throw new ESException();
         }
     }
@@ -90,11 +90,11 @@ public class ESDao {
         Delete index = new Delete.Builder(String.valueOf(id)).index(indexName).type(typeName).build();
         try {
             DocumentResult execute = jestClient.execute(index);
-            if (!execute.isSucceeded()){
+            if (!execute.isSucceeded()) {
                 throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
             }
         } catch (IOException e) {
-            log.error("ESDao.delete error,indexName:{},type:{},id:{},", indexName, typeName, id, e);
+            log.error("ESDao.delete error,indexName:{},type:{},id:{}," , indexName, typeName, id, e);
             throw new ESException();
         }
     }
@@ -104,7 +104,7 @@ public class ESDao {
      * 通过search对象搜索
      */
     public <T> List<T> search(ESSearch<T> esSearch) {
-        if (esSearch == null){
+        if (esSearch == null) {
             throw new ESException(ESErrorEnum.NO_SEARCH);
         }
         basicCheck(esSearch.getIndexName(), esSearch.getTypeName());
@@ -123,14 +123,14 @@ public class ESDao {
      * @param sortField      排序字段
      * @param clazz          查询的返回对象
      */
-    private  <T> List<T> search(String indexName, String typeName, List<SearchField> searchFields, List<FilterField> filterFields,
-                              String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
+    private <T> List<T> search(String indexName, String typeName, List<SearchField> searchFields, List<FilterField> filterFields,
+                               String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
         // 关键词搜索
-        if (!CollectionUtils.isEmpty(searchFields)){
+        if (!CollectionUtils.isEmpty(searchFields)) {
             searchFields.forEach(searchField -> {
                 MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder(searchField.getFieldName(), searchField.getFieldValue());
                 boolQueryBuilder.must(matchQueryBuilder);
@@ -138,7 +138,7 @@ public class ESDao {
         }
 
         // 过滤
-        if (!CollectionUtils.isEmpty(filterFields)){
+        if (!CollectionUtils.isEmpty(filterFields)) {
             filterFields.forEach(filterField -> {
                 QueryBuilder termQueryBuilder = new TermsQueryBuilder(filterField.getFieldName(), filterField.getFieldValue());
                 boolQueryBuilder.filter(termQueryBuilder);
@@ -148,27 +148,27 @@ public class ESDao {
         searchSourceBuilder.query(boolQueryBuilder);
 
         // 设置高亮
-        if (highLightField != null){
+        if (highLightField != null) {
             HighlightBuilder highlightBuilder = new HighlightBuilder();
             highlightBuilder.field(highLightField);
-            highlightBuilder.preTags("<span style='color:red'>");
-            highlightBuilder.postTags("</span>");
+            highlightBuilder.preTags("<span style='color:red'>" );
+            highlightBuilder.postTags("</span>" );
             searchSourceBuilder.highlighter(highlightBuilder);
         }
 
         // 设置分页
-        if (esPage != null){
+        if (esPage != null) {
             searchSourceBuilder.from(esPage.getFrom());
             searchSourceBuilder.size(esPage.getSize());
         }
 
         // 排序
-        if (sortField != null){
+        if (sortField != null) {
             searchSourceBuilder.sort(sortField.getFieldName(), sortField.getSortOrder());
         }
 
         String dslStr = searchSourceBuilder.toString();
-        log.info("dsl:{}", dslStr);
+        log.info("dsl:{}" , dslStr);
         Search search = new Search.Builder(dslStr).addIndex(indexName).addType(typeName).build();
 
         SearchResult execute = null;
@@ -176,7 +176,7 @@ public class ESDao {
             execute = jestClient.execute(search);
         } catch (IOException e) {
             ESSearch<T> esSearch = new ESSearch<>(indexName, typeName, searchFields, filterFields, highLightField, esPage, sortField, clazz);
-            log.error("ESDao.search search,indexName:{},type:{},param:{}", indexName, typeName, JSON.toJSONString(esSearch), e);
+            log.error("ESDao.search search,indexName:{},type:{},param:{}" , indexName, typeName, JSON.toJSONString(esSearch), e);
             throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
         }
         List<SearchResult.Hit<T, Void>> hits = execute.getHits(clazz);
@@ -193,10 +193,10 @@ public class ESDao {
      * 基本校验
      */
     private void basicCheck(String indexName, String typeName) {
-        if (StringUtils.isBlank(indexName)){
+        if (StringUtils.isBlank(indexName)) {
             throw new ESException(ESErrorEnum.NO_INDEX_NAME);
         }
-        if (StringUtils.isBlank(typeName)){
+        if (StringUtils.isBlank(typeName)) {
             throw new ESException(ESErrorEnum.NO_TYPE_NAME);
         }
     }
@@ -204,8 +204,8 @@ public class ESDao {
     /**
      * 校验id
      */
-    private void checkId(Long id){
-        if (id == null){
+    private void checkId(Long id) {
+        if (id == null) {
             throw new ESException(ESErrorEnum.NO_ID);
         }
     }

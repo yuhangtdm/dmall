@@ -6,11 +6,11 @@ package com.dmall.common.constants;
  */
 public interface Constants {
 
-    String Y = "Y";
+    String Y = "Y" ;
 
-    String N = "N";
+    String N = "N" ;
 
-    String ID= "id";
+    String ID = "id" ;
 
 
 }

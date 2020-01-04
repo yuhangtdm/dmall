@@ -9,11 +9,11 @@ import com.dmall.common.model.exception.ComponentException;
  */
 public class WebException extends ComponentException {
 
-    public WebException(ErrorCodeEnum errorCodeEnum){
+    public WebException(ErrorCodeEnum errorCodeEnum) {
         super(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
     }
 
-    public WebException(String code, String msg){
+    public WebException(String code, String msg) {
         super(code, msg);
     }
 }

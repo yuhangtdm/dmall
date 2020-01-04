@@ -16,7 +16,6 @@ import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +44,7 @@ public class ProductValidate {
         Long[] aLong = new Long[categoryIds.size()];
         Set<Long> set = new HashSet<>(categoryIds);
         // 商品分类不能重复
-        if (set.size() != categoryIds.size()){
+        if (set.size() != categoryIds.size()) {
             return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_REPEATED);
         }
         // 分类存在 且是三级分类,品牌存在

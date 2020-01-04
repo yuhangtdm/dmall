@@ -1,9 +1,9 @@
 package com.dmall.pms.generator.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.generator.service.IAttributeTypeService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

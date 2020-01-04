@@ -3,7 +3,6 @@ package com.dmall.component.cache.redis.configuration;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.model.configuration.BasicConfiguration;
 import com.dmall.component.cache.redis.entity.CacheKeyGenerator;
-import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;
 import com.dmall.component.cache.redis.lock.DistributedLockService;
@@ -37,8 +36,6 @@ import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,10 +49,10 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableCaching
 @EnableConfigurationProperties(DMallRedisProperties.class)
-@ConditionalOnProperty(prefix = "dmall.cache.redis", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "dmall.cache.redis" , value = "enabled" , havingValue = "true" )
 public class DMallRedisConfiguration extends CachingConfigurerSupport implements BasicConfiguration {
 
-    private static final String LUA = "lua/DistributedLock.lua";
+    private static final String LUA = "lua/DistributedLock.lua" ;
 
     @Autowired
     private DMallRedisProperties dMallRedisProperties;
@@ -84,26 +81,26 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     @Bean
     @Override
     public CacheErrorHandler errorHandler() {
-        log.info("初始化 -> [{}]", "Redis CacheErrorHandler");
+        log.info("初始化 -> [{}]" , "Redis CacheErrorHandler" );
         CacheErrorHandler cacheErrorHandler = new CacheErrorHandler() {
             @Override
             public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {
-                log.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
+                log.error("Redis occur handleCacheGetError：key -> [{}]" , key, e);
             }
 
             @Override
             public void handleCachePutError(RuntimeException e, Cache cache, Object key, Object value) {
-                log.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]", key, value, e);
+                log.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]" , key, value, e);
             }
 
             @Override
             public void handleCacheEvictError(RuntimeException e, Cache cache, Object key) {
-                log.error("Redis occur handleCacheEvictError：key -> [{}]", key, e);
+                log.error("Redis occur handleCacheEvictError：key -> [{}]" , key, e);
             }
 
             @Override
             public void handleCacheClearError(RuntimeException e, Cache cache) {
-                log.error("Redis occur handleCacheClearError：", e);
+                log.error("Redis occur handleCacheClearError：" , e);
             }
         };
         return cacheErrorHandler;
@@ -138,8 +135,8 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * 自定义的RedisTemplate key和 HashKey 设置为字符串类型
      */
     @Bean
-    public RedisTemplate dMallRedisTemplate(RedisConnectionFactory connectionFactory){
-        RedisTemplate redisTemplate=new RedisTemplate();
+    public RedisTemplate dMallRedisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(RedisSerializer.string());
         redisTemplate.setHashKeySerializer(RedisSerializer.string());
@@ -168,7 +165,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     }
 
     @Bean
-    public MapCacheUtil mapCacheUtil(RedisTemplate dMallRedisTemplate){
+    public MapCacheUtil mapCacheUtil(RedisTemplate dMallRedisTemplate) {
         return new MapCacheUtil(dMallRedisTemplate, dMallRedisProperties, environment);
     }
 
@@ -176,7 +173,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * mapCache切面
      */
     @Bean
-    public MapCacheAspect mapCacheAspect(RedisTemplate dMallRedisTemplate){
+    public MapCacheAspect mapCacheAspect(RedisTemplate dMallRedisTemplate) {
         return new MapCacheAspect(mapCacheUtil(dMallRedisTemplate), dMallRedisTemplate);
     }
 
@@ -188,7 +185,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * @param ttl            过期时间
      */
     private RedisCacheConfiguration buildRedisCacheConfiguration(String cacheKeyPrefix, TimeUnit ttlUnitEnum, Long ttl) {
-        return RedisCacheConfiguration.defaultCacheConfig().prefixKeysWith(cacheKeyPrefix + ":").entryTtl(getDuration(ttlUnitEnum, ttl));
+        return RedisCacheConfiguration.defaultCacheConfig().prefixKeysWith(cacheKeyPrefix + ":" ).entryTtl(getDuration(ttlUnitEnum, ttl));
     }
 
     /**
@@ -224,8 +221,8 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallRedisProperties", JSON.toJSONString(dMallRedisProperties, true));
-        if (StringUtils.isBlank(dMallRedisProperties.getCacheKeyPrefix())){
+        log.info("init -> [{}],properties:\n{}" , "DMallRedisProperties" , JSON.toJSONString(dMallRedisProperties, true));
+        if (StringUtils.isBlank(dMallRedisProperties.getCacheKeyPrefix())) {
             throw new CacheRedisException(CacheRedisErrorEnum.NO_CACHE_PREFIX);
         }
     }

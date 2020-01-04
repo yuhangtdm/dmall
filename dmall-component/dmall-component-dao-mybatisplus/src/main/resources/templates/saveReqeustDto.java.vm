@@ -1,10 +1,9 @@
-package ${requestDtoPackage};
-
-import io.swagger.annotations.ApiModel;
+package ${requestDtoPackage}import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import ${commonDtoPackage}.${commonRequestDto};
+import lombok.experimental.Accessors;
+
+; ${commonDtoPackage}.${commonRequestDto};
 
 /**
  * @description: $!{saveRequestComment}
@@ -13,7 +12,7 @@ import ${commonDtoPackage}.${commonRequestDto};
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "${saveRequestDto}", description = "$!{saveRequestComment}")
+@ApiModel(value = "${saveRequestDto}" , description = "$!{saveRequestComment}" )
 public class ${saveRequestDto} extends ${commonRequestDto} {
 
-}
+        }

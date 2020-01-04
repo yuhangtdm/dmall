@@ -11,21 +11,21 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SkuExtResponseDTO", description = "sku扩展响应实体")
+@ApiModel(value = "SkuExtResponseDTO" , description = "sku扩展响应实体" )
 public class SkuExtResponseDTO {
 
-    @ApiModelProperty(value = "skuPC端详情富文本", position = 1)
+    @ApiModelProperty(value = "skuPC端详情富文本" , position = 1)
     private String detailHtml;
 
-    @ApiModelProperty(value = "sku移动端详情富文本", position = 2)
+    @ApiModelProperty(value = "sku移动端详情富文本" , position = 2)
     private String detailMobileHtml;
 
-    @ApiModelProperty(value = "sku规格json", position = 3)
+    @ApiModelProperty(value = "sku规格json" , position = 3)
     private String skuSpecificationsJson;
 
-    @ApiModelProperty(value = "sku卖点json", position = 4)
+    @ApiModelProperty(value = "sku卖点json" , position = 4)
     private String skuSalePointJson;
 
-    @ApiModelProperty(value = "sku参数json", position = 5)
+    @ApiModelProperty(value = "sku参数json" , position = 5)
     private String skuParamJson;
 }

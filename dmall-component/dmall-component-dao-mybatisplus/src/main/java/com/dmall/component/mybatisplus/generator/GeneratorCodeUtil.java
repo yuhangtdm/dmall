@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,11 @@ import java.util.List;
 @Slf4j
 public class GeneratorCodeUtil {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         /**
          * 表名不传则生成所有表的
          */
-        generateByTables(Constants.GENERATOR_MODULE_NAME,"pms_category_product");
+        generateByTables(Constants.GENERATOR_MODULE_NAME, "pms_category_product" );
     }
 
     /**
@@ -67,7 +68,7 @@ public class GeneratorCodeUtil {
     private static GlobalConfig getGlobalConfig(String module) {
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setOpen(false)
-                .setOutputDir(System.getProperty("user.dir") + module + Constants.SRC_MAIN_JAVA)//生成文件的输出目录
+                .setOutputDir(System.getProperty("user.dir" ) + module + Constants.SRC_MAIN_JAVA)//生成文件的输出目录
                 .setFileOverride(true)//是否覆盖已有文件
                 .setBaseResultMap(true)
                 .setBaseColumnList(true)
@@ -114,11 +115,11 @@ public class GeneratorCodeUtil {
                 .setNaming(NamingStrategy.underline_to_camel)
                 .setColumnNaming(NamingStrategy.underline_to_camel)
                 .setTablePrefix(Constants.PACKAGE_MODULE_NAME + StrUtil.UNDERLINE);
-        if (tableNames != null){
+        if (tableNames != null) {
             strategyConfig.setInclude(tableNames);
         }
 
-        List<TableFill> tableFillList =  new ArrayList<>();
+        List<TableFill> tableFillList = new ArrayList<>();
         tableFillList.add(new TableFill(Constants.GMT_CREATED, FieldFill.INSERT));
         tableFillList.add(new TableFill(Constants.GMT_MODIFIED, FieldFill.INSERT_UPDATE));
         tableFillList.add(new TableFill(Constants.IS_DELETED, FieldFill.INSERT));

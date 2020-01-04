@@ -32,7 +32,7 @@ public class UploadProductPicHandler extends AbstractCommonHandler<MultipartFile
             UploadResult uploadResult = qiNiuFileManager.upload(file, QiNiuConstants.PRODUCT);
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
-            log.error("upload product pic failed", e);
+            log.error("upload product pic failed" , e);
             return ResultUtil.success(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
         }
     }

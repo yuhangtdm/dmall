@@ -23,12 +23,12 @@ public class DMallElasticSearchConfiguration implements BasicConfiguration {
     private DMallElasticSearchProperties dMallElasticSearchProperties;
 
     @Bean
-    public ESDao esDao(){
+    public ESDao esDao() {
         return new ESDao();
     }
 
     @Override
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallElasticSearchProperties", JSON.toJSONString(dMallElasticSearchProperties, true));
+        log.info("init -> [{}],properties:\n{}" , "DMallElasticSearchProperties" , JSON.toJSONString(dMallElasticSearchProperties, true));
     }
 }

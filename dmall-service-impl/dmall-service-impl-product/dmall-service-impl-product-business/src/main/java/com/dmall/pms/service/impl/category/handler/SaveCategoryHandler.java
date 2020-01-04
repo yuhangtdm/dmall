@@ -40,7 +40,7 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
             }
         }
         // 当ParentId=0时 level必须为1
-        if (requestDTO.getParentId() == 0 && !LevelEnum.ONE.getCode().equals(requestDTO.getLevel())){
+        if (requestDTO.getParentId() == 0 && !LevelEnum.ONE.getCode().equals(requestDTO.getLevel())) {
             return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
         }
         return ResultUtil.success();

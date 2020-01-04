@@ -2,25 +2,19 @@ package com.dmall.pms.service.impl.attribute.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dmall.common.enums.base.YNEnum;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.generator.mapper.CategoryAttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
 import com.dmall.pms.service.impl.attribute.validate.AttributeValidate;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * @description: 新增属性处理器
@@ -61,6 +55,6 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
     protected void customerConvertDo(AttributeDO result, SaveAttributeRequestDTO requestDTO) {
         result.setInputList(CollUtil.join(requestDTO.getInputList(), StrUtil.COMMA));
         CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-        result.setName(StrUtil.format("{}_{}", categoryDO.getName(), requestDTO.getShowName()));
+        result.setName(StrUtil.format("{}_{}" , categoryDO.getName(), requestDTO.getShowName()));
     }
 }

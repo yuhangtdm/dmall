@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.IFileCreate;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
@@ -44,15 +43,15 @@ public class DMallAutoGenerator extends AutoGenerator {
                 //对于已存在的文件，只需重复生成 entity
                 File file = new File(filePath);
                 boolean exist = file.exists();
-                if(exist){
-                    if (DMallFileType.DTO==fileType || DMallFileType.XML==fileType){
+                if (exist) {
+                    if (DMallFileType.DTO == fileType || DMallFileType.XML == fileType) {
                         return true;
-                    }else {
+                    } else {
                         return false;
                     }
                 }
                 //不存在的文件都需要创建
-                return  true;
+                return true;
             }
 
             @Override
@@ -63,18 +62,18 @@ public class DMallAutoGenerator extends AutoGenerator {
                 File file = new File(filePath);
                 boolean exist = file.exists();
                 // 自定义的文件不生成
-                if (FileType.OTHER == fileType){
+                if (FileType.OTHER == fileType) {
                     return false;
                 }
-                if(exist){
-                    if (FileType.ENTITY==fileType){
+                if (exist) {
+                    if (FileType.ENTITY == fileType) {
                         return true;
-                    }else {
+                    } else {
                         return false;
                     }
                 }
                 //不存在的文件都需要创建
-                return  true;
+                return true;
             }
         });
 
@@ -84,7 +83,7 @@ public class DMallAutoGenerator extends AutoGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 StringBuilder dtoOutPut = new StringBuilder()
-                        .append(System.getProperty("user.dir"))
+                        .append(System.getProperty("user.dir" ))
                         .append(Constants.GENERATOR_MODULE_NAME)
                         .append(Constants.SRC_MAIN_JAVA)
                         .append(Constants.COM_DMALL)
@@ -94,8 +93,8 @@ public class DMallAutoGenerator extends AutoGenerator {
                         .append(File.separator)
                         .append(Constants.DTO)
                         .append(File.separator)
-                        .append(StrUtil.removeSuffix(tableInfo.getEntityName(), "DO"))
-                        .append("DTO")
+                        .append(StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" ))
+                        .append("DTO" )
                         .append(StringPool.DOT_JAVA);
                 return dtoOutPut.toString();
             }
@@ -106,15 +105,14 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig xmlOutConfig = new FileOutConfig(Constants.TEMPLATES_MAPPER_XML) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
                 StringBuilder append = new StringBuilder()
-                        .append(System.getProperty("user.dir"))
+                        .append(System.getProperty("user.dir" ))
                         .append(Constants.GENERATOR_MODULE_NAME)
                         .append(Constants.SRC_MAIN_RESOURCES)
-                        .append("/mapper/")
+                        .append("/mapper/" )
                         .append(entityName)
-                        .append("Mapper.xml")
-                        ;
+                        .append("Mapper.xml" );
                 return append.toString();
             }
         };
@@ -124,8 +122,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig commonRequestOutConfig = new FileOutConfig(Constants.TEMPLATES_COMMON_REQUEST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.COMMON, "Common", "RequestDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getDtoPath(entityName, Constants.COMMON, "Common" , "RequestDTO" );
             }
         };
         list.add(commonRequestOutConfig);
@@ -134,8 +132,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig commonResponseOutConfig = new FileOutConfig(Constants.TEMPLATES_COMMON_RESPONSE_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.COMMON, "Common", "ResponseDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getDtoPath(entityName, Constants.COMMON, "Common" , "ResponseDTO" );
             }
         };
         list.add(commonResponseOutConfig);
@@ -144,8 +142,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig listOutConfig = new FileOutConfig(Constants.TEMPLATES_LIST_REQEUST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "List", "RequestDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getDtoPath(entityName, Constants.REQUEST, "List" , "RequestDTO" );
             }
         };
         list.add(listOutConfig);
@@ -154,8 +152,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig pageOutConfig = new FileOutConfig(Constants.TEMPLATES_PAGE_REQEUST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "Page", "RequestDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getDtoPath(entityName, Constants.REQUEST, "Page" , "RequestDTO" );
             }
         };
         list.add(pageOutConfig);
@@ -164,8 +162,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig saveOutConfig = new FileOutConfig(Constants.TEMPLATES_SAVE_REQEUST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "Save", "RequestDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getDtoPath(entityName, Constants.REQUEST, "Save" , "RequestDTO" );
             }
         };
         list.add(saveOutConfig);
@@ -174,8 +172,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig updateOutConfig = new FileOutConfig(Constants.TEMPLATES_UPDATE_REQUEST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "Update", "RequestDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getDtoPath(entityName, Constants.REQUEST, "Update" , "RequestDTO" );
             }
         };
         list.add(updateOutConfig);
@@ -184,7 +182,7 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig serviceOutConfig = new FileOutConfig(Constants.TEMPLATES_BUSINESS_SERVICE) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
                 return getServicePath(entityName);
             }
         };
@@ -194,7 +192,7 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig serviceImplOutConfig = new FileOutConfig(Constants.TEMPLATES_BUSINESS_SERVICE_IMPL) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
                 return getServiceImplPath(entityName);
             }
         };
@@ -204,8 +202,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig saveHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_SAVEHANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Save");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getHandlerPath(entityName, "Save" );
             }
         };
         list.add(saveHandlerOutConfig);
@@ -214,8 +212,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig deleteHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_DELETEHANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Delete");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getHandlerPath(entityName, "Delete" );
             }
         };
         list.add(deleteHandlerOutConfig);
@@ -224,8 +222,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig updateHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_UPDATEHANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Update");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getHandlerPath(entityName, "Update" );
             }
         };
         list.add(updateHandlerOutConfig);
@@ -234,8 +232,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig getHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_GETHANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Get");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getHandlerPath(entityName, "Get" );
             }
         };
         list.add(getHandlerOutConfig);
@@ -244,8 +242,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig listHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_LISTHANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "List");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getHandlerPath(entityName, "List" );
             }
         };
         list.add(listHandlerOutConfig);
@@ -254,8 +252,8 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig pageHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_PAGEHANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Page");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
+                return getHandlerPath(entityName, "Page" );
             }
         };
         list.add(pageHandlerOutConfig);
@@ -264,7 +262,7 @@ public class DMallAutoGenerator extends AutoGenerator {
         FileOutConfig enumsOutConfig = new FileOutConfig(Constants.TEMPLATES_ERRORENUM) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO" );
                 return getEnumsPath(entityName);
             }
         };
@@ -295,7 +293,7 @@ public class DMallAutoGenerator extends AutoGenerator {
                 .append(Constants.SERVICE)
                 .append(File.separator)
                 .append(entityName)
-                .append("Service")
+                .append("Service" )
                 .append(StringPool.DOT_JAVA);
         return append.toString();
     }
@@ -303,7 +301,7 @@ public class DMallAutoGenerator extends AutoGenerator {
     private String getServiceImplPath(String entityName) {
         StringBuilder append = impl(entityName)
                 .append(entityName)
-                .append("ServiceImpl")
+                .append("ServiceImpl" )
                 .append(StringPool.DOT_JAVA);
         return append.toString();
     }
@@ -314,7 +312,7 @@ public class DMallAutoGenerator extends AutoGenerator {
                 .append(File.separator)
                 .append(operator)
                 .append(entityName)
-                .append("Handler")
+                .append("Handler" )
                 .append(StringPool.DOT_JAVA);
         return append.toString();
     }
@@ -324,14 +322,14 @@ public class DMallAutoGenerator extends AutoGenerator {
                 .append(Constants.ENUMS)
                 .append(File.separator)
                 .append(entityName)
-                .append("ErrorEnum")
+                .append("ErrorEnum" )
                 .append(StringPool.DOT_JAVA);
         return append.toString();
     }
 
-    private StringBuilder api(){
+    private StringBuilder api() {
         StringBuilder append = new StringBuilder()
-                .append(System.getProperty("user.dir"))
+                .append(System.getProperty("user.dir" ))
                 .append(Constants.API_MODULE_NAME)
                 .append(Constants.SRC_MAIN_JAVA)
                 .append(Constants.COM_DMALL)
@@ -342,9 +340,9 @@ public class DMallAutoGenerator extends AutoGenerator {
         return append;
     }
 
-    private StringBuilder impl(String entityName){
+    private StringBuilder impl(String entityName) {
         StringBuilder append = new StringBuilder()
-                .append(System.getProperty("user.dir"))
+                .append(System.getProperty("user.dir" ))
                 .append(Constants.BUSINESS_MODULE_NAME)
                 .append(Constants.SRC_MAIN_JAVA)
                 .append(Constants.COM_DMALL)
@@ -355,8 +353,7 @@ public class DMallAutoGenerator extends AutoGenerator {
                 .append(Constants.IMPL)
                 .append(File.separator)
                 .append(entityName.toLowerCase())
-                .append(File.separator)
-                ;
+                .append(File.separator);
         return append;
     }
 }

@@ -9,7 +9,6 @@ import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
-import com.dmall.pms.generator.mapper.CategoryAttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
 import com.dmall.pms.service.impl.attribute.validate.AttributeValidate;
@@ -54,7 +53,7 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
     public BaseResult<Long> processor(UpdateAttributeRequestDTO requestDTO) {
         AttributeDO attributeDO = attributeCacheService.selectById(requestDTO.getId());
         AttributeDO updateDO = dtoConvertDo(requestDTO, AttributeDO.class);
-        updateDO.setName(StrUtil.format("{}_{}", attributeDO.getName().split("_")[0], requestDTO.getShowName()));
+        updateDO.setName(StrUtil.format("{}_{}" , attributeDO.getName().split("_" )[0], requestDTO.getShowName()));
         attributeCacheService.updateById(updateDO);
         return ResultUtil.success();
     }

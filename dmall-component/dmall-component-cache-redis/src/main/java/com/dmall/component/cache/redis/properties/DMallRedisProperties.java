@@ -1,9 +1,9 @@
 package com.dmall.component.cache.redis.properties;
 
 import com.dmall.component.cache.redis.entity.CustomCache;
-import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author: created by hang.yu on 2019/11/3 21:50
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.cache.redis")
+@ConfigurationProperties(prefix = "dmall.cache.redis" )
 public class DMallRedisProperties {
 
     /**

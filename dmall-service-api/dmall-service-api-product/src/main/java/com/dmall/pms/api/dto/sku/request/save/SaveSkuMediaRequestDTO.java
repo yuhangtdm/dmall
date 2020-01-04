@@ -15,15 +15,15 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SaveSkuMediaRequestDTO", description = "新增sku图片实体")
+@ApiModel(value = "SaveSkuMediaRequestDTO" , description = "新增sku图片实体" )
 public class SaveSkuMediaRequestDTO {
 
-    @ApiModelProperty(value = "属性值id", position = 1)
-    @NotNull(message = "skuId不能为空")
+    @ApiModelProperty(value = "属性值id" , position = 1)
+    @NotNull(message = "skuId不能为空" )
     private Long skuId;
 
-    @ApiModelProperty(value = "sku媒体列表", position = 2)
-    @NotNull(message = "sku媒体列表不能为空")
+    @ApiModelProperty(value = "sku媒体列表" , position = 2)
+    @NotNull(message = "sku媒体列表不能为空" )
     private List<MediaDTO> mediaList;
 
 }

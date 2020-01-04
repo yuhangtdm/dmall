@@ -10,10 +10,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  WebErrorEnum implements ErrorCodeEnum {
+public enum WebErrorEnum implements ErrorCodeEnum {
 
-    NO_POINTCUT("WEB-001","未配置日志切面的包扫描路径"),
-    NO_BASE_PACKAGE("WEB-002","未配置swagger的包扫描路径"),
+    NO_POINTCUT("WEB-001" , "未配置日志切面的包扫描路径" ),
+    NO_BASE_PACKAGE("WEB-002" , "未配置swagger的包扫描路径" ),
     ;
 
     private String code;

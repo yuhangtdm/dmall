@@ -8,14 +8,10 @@ import com.dmall.pms.api.dto.sku.request.save.SaveSkuMediaRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.generator.service.ISkuMediaService;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
 import com.dmall.pms.service.impl.support.SkuMediaSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @description: SaveMediaHandler
@@ -39,7 +35,7 @@ public class SaveMediaHandler extends AbstractCommonHandler<SaveSkuMediaRequestD
         if (CollUtil.isEmpty(requestDTO.getMediaList())) {
             return ResultUtil.fail(SkuErrorEnum.MEDIA_NOT_EXIST);
         }
-        skuMediaSupport.saveOrDeleteSkuMedia(skuDO.getProductId(),skuDO.getId(),requestDTO.getMediaList());
+        skuMediaSupport.saveOrDeleteSkuMedia(skuDO.getProductId(), skuDO.getId(), requestDTO.getMediaList());
         SkuDO sku = new SkuDO();
         sku.setId(requestDTO.getSkuId());
         sku.setPic(requestDTO.getMediaList().get(0).getKey());

@@ -39,7 +39,7 @@ public class UpdateAttributeTypeHandler extends AbstractCommonHandler<UpdateAttr
         attributeTypeDO.setShowName(requestDTO.getShowName());
         if (attributeTypeDO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(attributeTypeDO.getCategoryId());
-            attributeTypeDO.setName(StrUtil.format("{}_{}", categoryDO.getName(), requestDTO.getShowName()));
+            attributeTypeDO.setName(StrUtil.format("{}_{}" , categoryDO.getName(), requestDTO.getShowName()));
         }
         attributeTypeCacheService.updateById(attributeTypeDO);
         return ResultUtil.success(attributeTypeDO.getId());

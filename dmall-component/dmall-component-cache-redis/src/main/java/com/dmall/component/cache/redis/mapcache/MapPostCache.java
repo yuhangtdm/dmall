@@ -15,7 +15,7 @@ public @interface MapPostCache {
     /**
      * 缓存key 优先级最高
      */
-    String key() default "";
+    String key() default "" ;
 
     /**
      * 超时时间

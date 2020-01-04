@@ -3,14 +3,12 @@ package com.dmall.pms.api.dto.attribute.common;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
-import com.dmall.pms.api.dto.attributetype.enums.AttributeTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @description: 属性公共响应实体
@@ -18,32 +16,31 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "CommonAttributeResponseDTO", description = "属性公共响应实体")
+@ApiModel(value = "CommonAttributeResponseDTO" , description = "属性公共响应实体" )
 public class CommonAttributeResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "id", position = 1)
+    @ApiModelProperty(value = "id" , position = 1)
     private Long id;
 
-    @ApiModelProperty(value = "名称", position = 2)
+    @ApiModelProperty(value = "名称" , position = 2)
     private String name;
 
-    @ApiModelProperty(value = "展示名称", position = 3)
+    @ApiModelProperty(value = "展示名称" , position = 3)
     private String showName;
 
-    @ApiModelProperty(value = "类型", position = 4)
+    @ApiModelProperty(value = "类型" , position = 4)
     private TypeEnum type;
 
-    @ApiModelProperty(value = "属性录入方式", position = 5)
+    @ApiModelProperty(value = "属性录入方式" , position = 5)
     private InputTypeEnum inputType;
 
-    @ApiModelProperty(value = "可选值列表 以逗号隔开", position = 6)
+    @ApiModelProperty(value = "可选值列表 以逗号隔开" , position = 6)
     private String inputList;
 
-    @ApiModelProperty(value = "是否支持手动新增", position = 7)
+    @ApiModelProperty(value = "是否支持手动新增" , position = 7)
     private HandAddStatusEnum handAddStatus;
-
 
 
 }

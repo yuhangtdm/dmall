@@ -32,15 +32,52 @@ import java.util.Map;
  */
 public class HttpClientUtil {
 
+    private static final String DEFAULT_CHARSET = "UTF-8" ;
+    private static final String FILE_PART = "files" ;
     private CloseableHttpClient httpClient;
 
     public HttpClientUtil(CloseableHttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
-    private static final String DEFAULT_CHARSET = "UTF-8";
+    public static void main(String[] args) {
+        sendBrowser();
+    }
 
-    private static final String FILE_PART = "files";
+    /**
+     * 模拟浏览器发送请求
+     */
+    public static String sendBrowser() {
+        //创建httpclient对象
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        RequestConfig config = RequestConfig.custom().build();
+        HttpGet httpget = new HttpGet("D:\\jd.html" );
+        //使用配置
+        httpget.setConfig(config);
+        //设置请求头
+        httpget.setHeader("Accept" , "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8" );
+        httpget.setHeader("Accept-Encoding" , "gzip, deflate" );
+        httpget.setHeader("Accept-Language" , "zh-CN,zh;q=0.8" );
+        httpget.setHeader("User-Agent" , "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36" );
+        String responseContent = null;
+        try {
+            CloseableHttpResponse response = httpClient.execute(httpget);
+            HttpEntity entity = response.getEntity();
+            responseContent = EntityUtils.toString(entity, "utf-8" );
+            System.out.println(responseContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return responseContent;
+    }
 
     /**
      * 执行post请求
@@ -120,7 +157,7 @@ public class HttpClientUtil {
         if (data != null) {
             for (String key : data.keySet()) {
                 ByteArrayBody byteArrayBody = new ByteArrayBody(data.get(key), ContentType.DEFAULT_BINARY, key);
-                meBuilder.addPart("files", byteArrayBody);
+                meBuilder.addPart("files" , byteArrayBody);
             }
         }
         HttpEntity reqEntity = meBuilder.build();
@@ -131,7 +168,7 @@ public class HttpClientUtil {
     public String postFile(String httpUrl, Map<String, Object> data) {
         HttpPost httpPost = new HttpPost(httpUrl);
         MultipartEntityBuilder meBuilder = MultipartEntityBuilder.create();
-        meBuilder.setCharset(Charset.forName("utf-8"));
+        meBuilder.setCharset(Charset.forName("utf-8" ));
         meBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         if (data != null) {
             for (String key : data.keySet()) {
@@ -163,51 +200,12 @@ public class HttpClientUtil {
      */
     public String get(String url) {
         HttpGet httpGet = new HttpGet(url);
-        httpGet.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-        httpGet.setHeader("Accept-Encoding", "gzip, deflate");
-        httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
-        httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36");
+        httpGet.setHeader("Accept" , "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8" );
+        httpGet.setHeader("Accept-Encoding" , "gzip, deflate" );
+        httpGet.setHeader("Accept-Language" , "zh-CN,zh;q=0.8" );
+        httpGet.setHeader("User-Agent" , "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36" );
 
         return sendHttpGet(httpGet);
-    }
-
-    public static void main(String[] args) {
-        sendBrowser();
-    }
-
-    /**
-     * 模拟浏览器发送请求
-     */
-    public static String sendBrowser() {
-        //创建httpclient对象
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        RequestConfig config = RequestConfig.custom().build();
-        HttpGet httpget = new HttpGet("D:\\jd.html");
-        //使用配置
-        httpget.setConfig(config);
-        //设置请求头
-        httpget.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-        httpget.setHeader("Accept-Encoding", "gzip, deflate");
-        httpget.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
-        httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36");
-        String responseContent = null;
-        try {
-            CloseableHttpResponse response = httpClient.execute(httpget);
-            HttpEntity entity = response.getEntity();
-            responseContent = EntityUtils.toString(entity, "utf-8");
-            System.out.println(responseContent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                httpClient.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        return responseContent;
     }
 
     /**
@@ -220,11 +218,11 @@ public class HttpClientUtil {
         try {
             response = httpClient.execute(httpGet);
             httpEntity = response.getEntity();
-            responseContent = EntityUtils.toString(httpEntity, "utf-8");
+            responseContent = EntityUtils.toString(httpEntity, "utf-8" );
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("");
-        }finally {
+            throw new RuntimeException("" );
+        } finally {
             try {
                 if (response != null) {
                     response.close();

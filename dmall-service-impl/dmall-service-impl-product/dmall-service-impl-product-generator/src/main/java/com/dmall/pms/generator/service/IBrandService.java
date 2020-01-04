@@ -1,7 +1,7 @@
 package com.dmall.pms.generator.service;
 
-import com.dmall.pms.generator.dataobject.BrandDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dmall.pms.generator.dataobject.BrandDO;
 
 /**
  * <p>

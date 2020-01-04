@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
         List<String> ignoreProjects = zuulSwaggerProperties.getIgnoreProjects();
 
         routes.forEach(route -> {
-            if (!CollectionUtils.isEmpty(ignoreProjects) && !ignoreProjects.contains(route.getId())){
+            if (!CollectionUtils.isEmpty(ignoreProjects) && !ignoreProjects.contains(route.getId())) {
                 resources.add(swaggerResource(route.getId(), route.getFullPath()
-                        .replace("**", "v2/api-docs")));
+                        .replace("**" , "v2/api-docs" )));
             }
         });
         return resources;

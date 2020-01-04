@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
  * @description: 座机号校验类
  * @author: created by hang.yu on 2019/11/23 17:57
  */
-public class LandlineNumberValidator implements ConstraintValidator<PhoneNumber,String> {
+public class LandlineNumberValidator implements ConstraintValidator<PhoneNumber, String> {
 
     @Override
     public boolean isValid(String phoneField, ConstraintValidatorContext context) {

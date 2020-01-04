@@ -12,34 +12,34 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CategoryErrorEnum implements ErrorCodeEnum {
 
-    CATEGORY_NOT_EXIST("category_001", "该分类不存在"),
-    PARENT_CATEGORY_NOT_EXIST("category_002", "上级分类不存在"),
-    PARENT_LEVEL_ERROR("category_003", "该分类级别不合法"),
+    CATEGORY_NOT_EXIST("category_001" , "该分类不存在" ),
+    PARENT_CATEGORY_NOT_EXIST("category_002" , "上级分类不存在" ),
+    PARENT_LEVEL_ERROR("category_003" , "该分类级别不合法" ),
 
     /**
      * 删除的校验
      */
-    CONTAINS_SKU_ERROR("category_004", "该分类有sku,不允许删除"),
-    CONTAINS_PRODUCT_ERROR("category_005", "该分类有商品,不允许删除"),
-    CONTAINS_SUB_CATEGORY_ERROR("category_007", "该分类有子分类,不允许删除"),
+    CONTAINS_SKU_ERROR("category_004" , "该分类有sku,不允许删除" ),
+    CONTAINS_PRODUCT_ERROR("category_005" , "该分类有商品,不允许删除" ),
+    CONTAINS_SUB_CATEGORY_ERROR("category_007" , "该分类有子分类,不允许删除" ),
 
     /**
      * 设置品牌的校验
      */
-    BRAND_IDS_REPEATED("category_010", "品牌列表不能重复"),
-    BRAND_ID_INVALID("category_009", "品牌不存在"),
+    BRAND_IDS_REPEATED("category_010" , "品牌列表不能重复" ),
+    BRAND_ID_INVALID("category_009" , "品牌不存在" ),
 
     /**
      * 设置属性分类的校验
      */
-    ATTRIBUTE_TYPE_ID_REPEATED("category_012", "属性分类列表不能重复"),
-    ATTRIBUTE_TYPE_ID_INVALID("category_013", "属性分类不存在"),
+    ATTRIBUTE_TYPE_ID_REPEATED("category_012" , "属性分类列表不能重复" ),
+    ATTRIBUTE_TYPE_ID_INVALID("category_013" , "属性分类不存在" ),
 
     /**
      * 设置属性的校验
      */
-    ATTRIBUTE_ID_REPEATED("category_015", "属性列表不能重复"),
-    ATTRIBUTE_ID_INVALID("category_016", "属性不存在"),
+    ATTRIBUTE_ID_REPEATED("category_015" , "属性列表不能重复" ),
+    ATTRIBUTE_ID_INVALID("category_016" , "属性不存在" ),
 
 
     ;

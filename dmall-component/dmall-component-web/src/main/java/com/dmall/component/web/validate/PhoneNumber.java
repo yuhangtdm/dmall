@@ -19,7 +19,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface PhoneNumber {
 
-    String message() default "手机号码不合法";
+    String message() default "手机号码不合法" ;
+
     Class[] groups() default {};
+
     Class[] payload() default {};
 }

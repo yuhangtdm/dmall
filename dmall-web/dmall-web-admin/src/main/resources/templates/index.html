@@ -1,10 +1,10 @@
 <!DOCTYPE html  >
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
     <title>springboot+thymeleaf</title>
-    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" href="../src/css/layui.css" />
+    <link href="../src/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -27,7 +27,7 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img"/>
+                    <img class="layui-nav-img" src="http://t.cn/RCzsdCq"/>
                     贤心
                 </a>
                 <dl class="layui-nav-child">
@@ -42,7 +42,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">所有商品</a>
                     <dl class="layui-nav-child">
@@ -76,10 +76,10 @@
         © layui.com - 底部固定区域
     </div>
 </div>
-<script th:src="@{/layui/layui.js}" src="./lib/layui/layui.js" charset="utf-8"></script>
+<script charset="utf-8" src="./lib/layui/layui.js" th:src="@{/layui/layui.js}"></script>
 <script>
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
 
     });

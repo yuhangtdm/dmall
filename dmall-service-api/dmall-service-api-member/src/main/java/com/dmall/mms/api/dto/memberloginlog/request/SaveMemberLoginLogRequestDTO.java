@@ -1,10 +1,10 @@
 package com.dmall.mms.api.dto.memberloginlog.request;
 
+import com.dmall.mms.api.dto.memberloginlog.common.CommonMemberLoginLogRequestDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.mms.api.dto.memberloginlog.common.CommonMemberLoginLogRequestDTO;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 新增会员登录记录请求实体
@@ -13,7 +13,7 @@ import com.dmall.mms.api.dto.memberloginlog.common.CommonMemberLoginLogRequestDT
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SaveMemberLoginLogRequestDTO", description="新增会员登录记录请求实体")
+@ApiModel(value = "SaveMemberLoginLogRequestDTO" , description = "新增会员登录记录请求实体" )
 public class SaveMemberLoginLogRequestDTO extends CommonMemberLoginLogRequestDTO {
 
 }

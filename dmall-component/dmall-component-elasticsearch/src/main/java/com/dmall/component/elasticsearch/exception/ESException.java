@@ -11,15 +11,15 @@ import lombok.Getter;
 @Getter
 public class ESException extends ComponentException {
 
-    public ESException(){
+    public ESException() {
         super(ESErrorEnum.BASIC_ERROR.getCode(), ESErrorEnum.BASIC_ERROR.getMsg());
     }
 
-    public ESException(ErrorCodeEnum errorCodeEnum){
+    public ESException(ErrorCodeEnum errorCodeEnum) {
         super(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
     }
 
-    public ESException(String code, String msg){
+    public ESException(String code, String msg) {
         super(code, msg);
     }
 

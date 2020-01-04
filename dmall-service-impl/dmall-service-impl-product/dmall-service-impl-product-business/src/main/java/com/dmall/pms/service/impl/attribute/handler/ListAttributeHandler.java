@@ -46,12 +46,12 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
     @Override
     public BaseResult validate(ListAttributeRequestDTO requestDTO) {
         // 分类必须存在 且必须是一级分类
-        if (requestDTO.getCategoryId() != null){
+        if (requestDTO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-            if (categoryDO == null){
+            if (categoryDO == null) {
                 return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_EXIST);
             }
-            if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())){
+            if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
                 return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_INVALID);
             }
         }

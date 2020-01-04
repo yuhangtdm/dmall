@@ -1,7 +1,6 @@
 package com.dmall.component.cache.redis.mapcache;
 
 import java.lang.annotation.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -15,6 +14,6 @@ public @interface MapDeleteCache {
     /**
      * 缓存key 优先级最高
      */
-    String key() default "";
+    String key() default "" ;
 
 }

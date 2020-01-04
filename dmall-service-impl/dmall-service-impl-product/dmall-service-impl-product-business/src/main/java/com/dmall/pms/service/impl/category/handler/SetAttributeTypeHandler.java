@@ -100,7 +100,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
             attributeTypeDO.setCategoryId(requestDTO.getCategoryId());
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             attributeTypeDO.setCascadeCategoryId(categoryDO.getPath());
-            attributeTypeDO.setName(StrUtil.format("{}_{}", categoryDO.getName(), attributeTypeDO.getShowName()));
+            attributeTypeDO.setName(StrUtil.format("{}_{}" , categoryDO.getName(), attributeTypeDO.getShowName()));
             iAttributeTypeService.updateById(attributeTypeDO);
             mapCacheUtil.put(mapCacheUtil.getkey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
                     String.valueOf(attributeTypeDO.getId()), iAttributeTypeService.getById(attributeTypeDO.getId()));

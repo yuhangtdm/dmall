@@ -1,16 +1,17 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.mms.api.dto.membercollectionsku.request.ListMemberCollectionSkuRequestDTO;
-import com.dmall.mms.api.dto.membercollectionsku.request.PageMemberCollectionSkuRequestDTO;
-import com.dmall.mms.api.dto.membercollectionsku.common.CommonMemberCollectionSkuResponseDTO;
-import com.dmall.mms.api.dto.membercollectionsku.request.SaveMemberCollectionSkuRequestDTO;
-import com.dmall.mms.api.dto.membercollectionsku.request.UpdateMemberCollectionSkuRequestDTO;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.model.result.LayuiPage;
+import com.dmall.mms.api.dto.membercollectionsku.common.CommonMemberCollectionSkuResponseDTO;
+import com.dmall.mms.api.dto.membercollectionsku.request.ListMemberCollectionSkuRequestDTO;
+import com.dmall.mms.api.dto.membercollectionsku.request.PageMemberCollectionSkuRequestDTO;
+import com.dmall.mms.api.dto.membercollectionsku.request.SaveMemberCollectionSkuRequestDTO;
+import com.dmall.mms.api.dto.membercollectionsku.request.UpdateMemberCollectionSkuRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -18,34 +19,34 @@ import java.util.List;
  * @description: 会员收藏sku服务
  * @author: created by hang.yu on 2019-12-01 22:56:08
  */
-@Api(tags = "会员收藏sku服务")
-@RequestMapping("/memberCollectionSku")
+@Api(tags = "会员收藏sku服务" )
+@RequestMapping("/memberCollectionSku" )
 public interface MemberCollectionSkuService {
 
-    @PostMapping("/")
-    @ApiOperation(value = "新增会员收藏sku")
+    @PostMapping("/" )
+    @ApiOperation(value = "新增会员收藏sku" )
     BaseResult<Long> save(@Valid @RequestBody SaveMemberCollectionSkuRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除会员收藏sku")
-    @ApiImplicitParam(name = "id", value = "会员收藏skuid", required = true, dataType = "int", paramType = "path")
-    BaseResult<Long> delete(@PathVariable("id") Long id);
+    @DeleteMapping("/{id}" )
+    @ApiOperation(value = "删除会员收藏sku" )
+    @ApiImplicitParam(name = "id" , value = "会员收藏skuid" , required = true, dataType = "int" , paramType = "path" )
+    BaseResult<Long> delete(@PathVariable("id" ) Long id);
 
-    @PutMapping("/")
-    @ApiOperation(value = "修改会员收藏sku")
+    @PutMapping("/" )
+    @ApiOperation(value = "修改会员收藏sku" )
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberCollectionSkuRequestDTO requestDTO);
 
-    @GetMapping("/{id}")
-    @ApiOperation(value = "根据id查询会员收藏sku")
-    @ApiImplicitParam(name = "id", value = "会员收藏skuid", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonMemberCollectionSkuResponseDTO> get(@PathVariable("id") Long id);
+    @GetMapping("/{id}" )
+    @ApiOperation(value = "根据id查询会员收藏sku" )
+    @ApiImplicitParam(name = "id" , value = "会员收藏skuid" , required = true, dataType = "int" , paramType = "path" )
+    BaseResult<CommonMemberCollectionSkuResponseDTO> get(@PathVariable("id" ) Long id);
 
-    @PostMapping("/list")
-    @ApiOperation(value = "会员收藏sku列表")
+    @PostMapping("/list" )
+    @ApiOperation(value = "会员收藏sku列表" )
     BaseResult<List<CommonMemberCollectionSkuResponseDTO>> list(@RequestBody ListMemberCollectionSkuRequestDTO requestDTO);
 
-    @PostMapping("/page")
-    @ApiOperation(value = "会员收藏sku分页")
+    @PostMapping("/page" )
+    @ApiOperation(value = "会员收藏sku分页" )
     BaseResult<LayuiPage<CommonMemberCollectionSkuResponseDTO>> page(@RequestBody PageMemberCollectionSkuRequestDTO requestDTO);
 
 }

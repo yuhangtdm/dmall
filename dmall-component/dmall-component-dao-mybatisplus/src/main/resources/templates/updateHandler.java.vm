@@ -1,14 +1,16 @@
-package ${handlerPackage};
-
-import ${requestDtoPackage}.${updateRequestDto};
-import ${errorEnumPackage}.${errorEnum};
-import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+package ${handlerPackage}import com.dmall.component.web.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+;
+${requestDtoPackage}
+        .${updateRequestDto};
+    ${errorEnumPackage}
+        .${errorEnum};
+    ${package.Entity}
+        .${entity};
+    ${package.Mapper}
+        .${table.mapperName};
 
 /**
  * @description: $!{updateHandlerComment}
@@ -17,17 +19,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ${updateHandler} extends AbstractCommonHandler<${updateRequestDto}, ${entity}, Long> {
 
-    @Autowired
-    private ${table.mapperName} ${mapperName};
+@Autowired
+private ${table.mapperName} ${mapperName};
 
-    @Override
-    public BaseResult<Long> validate(${updateRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> validate(${updateRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-    @Override
-    public BaseResult<Long> processor(${updateRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> processor(${updateRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-}
+        }

@@ -17,15 +17,15 @@ public class SpringUtil implements ApplicationContextAware {
 
     public static ApplicationContext applicationContext;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if(SpringUtil.applicationContext==null){
-            SpringUtil.applicationContext=applicationContext;
-        }
-    }
-
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        if (SpringUtil.applicationContext == null) {
+            SpringUtil.applicationContext = applicationContext;
+        }
     }
 
     // 通过name获取 Bean.
@@ -46,7 +46,7 @@ public class SpringUtil implements ApplicationContextAware {
     /**
      * 获取指定接口的所有bean
      */
-    public static <T> Map<String,T> getBeans(Class<T> clazz) {
+    public static <T> Map<String, T> getBeans(Class<T> clazz) {
         return getApplicationContext().getBeansOfType(clazz);
     }
 

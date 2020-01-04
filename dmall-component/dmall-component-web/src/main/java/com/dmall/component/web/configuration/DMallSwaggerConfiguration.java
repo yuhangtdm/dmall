@@ -24,6 +24,7 @@ import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 @EnableConfigurationProperties({DMallSwaggerProperties.class})
-@ConditionalOnProperty(prefix = "dmall.web.swagger", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "dmall.web.swagger" , value = "enabled" , havingValue = "true" )
 public class DMallSwaggerConfiguration implements BasicConfiguration {
 
     @Autowired
@@ -71,7 +72,7 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
                 ;
     }
 
-    protected void customerStatus(List<ResponseMessage> responseMessageList){
+    protected void customerStatus(List<ResponseMessage> responseMessageList) {
 
     }
 
@@ -90,8 +91,8 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
 
     @Override
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JSON.toJSONString(dMallSwaggerProperties, true));
-        if (dMallSwaggerProperties.getEnabled() && StringUtils.isBlank(dMallSwaggerProperties.getBasePackage())){
+        log.info("init -> [{}],properties:\n{}" , "DMallSwaggerProperties" , JSON.toJSONString(dMallSwaggerProperties, true));
+        if (dMallSwaggerProperties.getEnabled() && StringUtils.isBlank(dMallSwaggerProperties.getBasePackage())) {
             throw new WebException(WebErrorEnum.NO_BASE_PACKAGE);
         }
     }

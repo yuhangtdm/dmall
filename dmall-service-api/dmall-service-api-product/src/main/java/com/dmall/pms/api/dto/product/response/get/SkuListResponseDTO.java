@@ -14,23 +14,23 @@ import java.math.BigDecimal;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SkuListResponseDTO", description = "sku列表响应实体")
+@ApiModel(value = "SkuListResponseDTO" , description = "sku列表响应实体" )
 public class SkuListResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 3640609472202223262L;
 
-    @ApiModelProperty(value = "skuId", position = 1)
+    @ApiModelProperty(value = "skuId" , position = 1)
     private Long skuId;
 
-    @ApiModelProperty(value = "sku编号", position = 2)
+    @ApiModelProperty(value = "sku编号" , position = 2)
     private String skuNo;
 
-    @ApiModelProperty(value = "价格", position = 3)
+    @ApiModelProperty(value = "价格" , position = 3)
     private BigDecimal price;
 
-    @ApiModelProperty(value = "库存", position = 4)
+    @ApiModelProperty(value = "库存" , position = 4)
     private Integer stock;
 
-    @ApiModelProperty(value = "规格", position = 5)
+    @ApiModelProperty(value = "规格" , position = 5)
     private String specifications;
 }

@@ -1,7 +1,7 @@
 package com.dmall.pms.generator.service;
 
-import com.dmall.pms.generator.dataobject.ProductAttributeValueDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dmall.pms.generator.dataobject.ProductAttributeValueDO;
 
 /**
  * @description: 商品属性值表

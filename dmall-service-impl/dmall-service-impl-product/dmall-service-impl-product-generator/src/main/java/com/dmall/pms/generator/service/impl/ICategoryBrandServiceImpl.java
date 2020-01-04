@@ -1,9 +1,9 @@
 package com.dmall.pms.generator.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.mapper.CategoryBrandMapper;
 import com.dmall.pms.generator.service.ICategoryBrandService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

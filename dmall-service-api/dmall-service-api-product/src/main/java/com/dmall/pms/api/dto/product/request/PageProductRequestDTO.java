@@ -16,25 +16,25 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageProductRequestDTO", description = "商品分页请求实体")
+@ApiModel(value = "PageProductRequestDTO" , description = "商品分页请求实体" )
 public class PageProductRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "商品分类id", position = 5)
+    @ApiModelProperty(value = "商品分类id" , position = 5)
     private Long categoryId;
 
-    @ApiModelProperty(value = "品牌id", position = 6)
+    @ApiModelProperty(value = "品牌id" , position = 6)
     private Long brandId;
 
-    @ApiModelProperty(value = "商品编号", position = 7)
+    @ApiModelProperty(value = "商品编号" , position = 7)
     private String productNo;
 
-    @ApiModelProperty(value = "商品名称", position = 8)
+    @ApiModelProperty(value = "商品名称" , position = 8)
     private String name;
 
-    @ApiModelProperty(value = "上市时间起", position = 9)
+    @ApiModelProperty(value = "上市时间起" , position = 9)
     private Date onMarketTimeStart;
 
-    @ApiModelProperty(value = "上市时间至", position = 10)
+    @ApiModelProperty(value = "上市时间至" , position = 10)
     private Date onMarketTimeEnd;
 
 }

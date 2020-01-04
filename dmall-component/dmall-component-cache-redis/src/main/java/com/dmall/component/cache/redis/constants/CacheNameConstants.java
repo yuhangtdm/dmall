@@ -6,12 +6,12 @@ package com.dmall.component.cache.redis.constants;
  */
 public interface CacheNameConstants {
 
-    String BRAND = "brand";
+    String BRAND = "brand" ;
 
-    String CATEGORY = "category";
+    String CATEGORY = "category" ;
 
-    String ATTRIBUTE_TYPE = "attributeType";
+    String ATTRIBUTE_TYPE = "attributeType" ;
 
-    String ATTRIBUTE = "attribute";
+    String ATTRIBUTE = "attribute" ;
 
 }

@@ -12,13 +12,10 @@ import com.dmall.pms.api.dto.brand.response.PageBrandResponseDTO;
 import com.dmall.pms.api.service.BrandService;
 import com.dmall.pms.service.impl.brand.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**

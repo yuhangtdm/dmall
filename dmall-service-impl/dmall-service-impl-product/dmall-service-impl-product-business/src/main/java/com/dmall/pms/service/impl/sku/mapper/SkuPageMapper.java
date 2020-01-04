@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.sku.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,5 +13,5 @@ import java.util.List;
  */
 public interface SkuPageMapper {
 
-    List<SkuDO> skuPage(Page page, @Param("request") PageSkuRequestDTO requestDTO);
+    List<SkuDO> skuPage(Page page, @Param("request" ) PageSkuRequestDTO requestDTO);
 }

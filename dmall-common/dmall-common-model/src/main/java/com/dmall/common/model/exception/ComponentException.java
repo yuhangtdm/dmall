@@ -13,14 +13,14 @@ public class ComponentException extends RuntimeException {
 
     private String msg;
 
-    public ComponentException(String code, String msg){
+    public ComponentException(String code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
     }
 
-    public ComponentException(String msg, Throwable cause){
-        super(msg,cause);
+    public ComponentException(String msg, Throwable cause) {
+        super(msg, cause);
         this.msg = msg;
     }
 

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -15,16 +14,16 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SpecificationsValueRequestDTO", description = "销售规格值")
+@ApiModel(value = "SpecificationsValueRequestDTO" , description = "销售规格值" )
 public class SpecificationsValueRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 5158187829046741491L;
 
-    @ApiModelProperty(value = "销售规格值", required = true, position = 1)
-    @NotBlank(message = "销售规格值不能为空")
+    @ApiModelProperty(value = "销售规格值" , required = true, position = 1)
+    @NotBlank(message = "销售规格值不能为空" )
     private String attributeValue;
 
-    @ApiModelProperty(value = "销售规格值配图", position = 2)
+    @ApiModelProperty(value = "销售规格值配图" , position = 2)
     private String pic;
 
 }

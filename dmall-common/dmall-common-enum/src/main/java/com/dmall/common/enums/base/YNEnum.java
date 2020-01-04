@@ -11,9 +11,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum YNEnum implements KeyValueEnum<String> {
 
-    Y("Y","是"),
-    N("N","否")
-    ;
+    Y("Y" , "是" ),
+    N("N" , "否" );
     private String code;
 
     private String desc;

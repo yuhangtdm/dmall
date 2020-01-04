@@ -4,23 +4,23 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.pms.generator.dataobject.CategoryDO">
-        <id column="id" property="id" />
-        <result column="parent_id" property="parentId" />
-        <result column="name" property="name" />
-        <result column="icon" property="icon" />
-        <result column="mobile_icon" property="mobileIcon" />
-        <result column="level" property="level" />
-        <result column="description" property="description" />
-        <result column="sort" property="sort" />
-        <result column="keywords" property="keywords" />
-        <result column="hot_status" property="hotStatus" />
-        <result column="nav_status" property="navStatus" />
-        <result column="path" property="path" />
-        <result column="creator" property="creator" />
-        <result column="gmt_created" property="gmtCreated" />
-        <result column="modifier" property="modifier" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="is_deleted" property="isDeleted" />
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="icon" property="icon"/>
+        <result column="mobile_icon" property="mobileIcon"/>
+        <result column="level" property="level"/>
+        <result column="description" property="description"/>
+        <result column="sort" property="sort"/>
+        <result column="keywords" property="keywords"/>
+        <result column="hot_status" property="hotStatus"/>
+        <result column="nav_status" property="navStatus"/>
+        <result column="path" property="path"/>
+        <result column="creator" property="creator"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="modifier" property="modifier"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

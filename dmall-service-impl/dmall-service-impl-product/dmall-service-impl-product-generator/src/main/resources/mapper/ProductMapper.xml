@@ -4,26 +4,26 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.pms.generator.dataobject.ProductDO">
-        <id column="id" property="id" />
-        <result column="merchants_id" property="merchantsId" />
-        <result column="category_id" property="categoryId" />
-        <result column="brand_id" property="brandId" />
-        <result column="freight_template_id" property="freightTemplateId" />
-        <result column="product_no" property="productNo" />
-        <result column="name" property="name" />
-        <result column="pic" property="pic" />
-        <result column="description" property="description" />
-        <result column="unit" property="unit" />
-        <result column="weight" property="weight" />
-        <result column="remark" property="remark" />
-        <result column="on_market_time" property="onMarketTime" />
-        <result column="cascade_category_id" property="cascadeCategoryId" />
-        <result column="add_services" property="addServices" />
-        <result column="creator" property="creator" />
-        <result column="gmt_created" property="gmtCreated" />
-        <result column="modifier" property="modifier" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="is_deleted" property="isDeleted" />
+        <id column="id" property="id"/>
+        <result column="merchants_id" property="merchantsId"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="freight_template_id" property="freightTemplateId"/>
+        <result column="product_no" property="productNo"/>
+        <result column="name" property="name"/>
+        <result column="pic" property="pic"/>
+        <result column="description" property="description"/>
+        <result column="unit" property="unit"/>
+        <result column="weight" property="weight"/>
+        <result column="remark" property="remark"/>
+        <result column="on_market_time" property="onMarketTime"/>
+        <result column="cascade_category_id" property="cascadeCategoryId"/>
+        <result column="add_services" property="addServices"/>
+        <result column="creator" property="creator"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="modifier" property="modifier"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

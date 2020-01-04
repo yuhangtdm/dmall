@@ -1,8 +1,7 @@
-package ${errorEnumPackage};
-
-import com.dmall.common.enums.base.ErrorCodeEnum;
-import lombok.AllArgsConstructor;
+package ${errorEnumPackage}import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+;
 
 /**
  * @description: $!{errorEnumComment}
@@ -10,23 +9,23 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ${errorEnum} implements ErrorCodeEnum {
+public enum ${errorEnum} implements ErrorCodeEnum{
 
-    SAVE_${enumName}_ERROR("${object}-001","新增${comment}失败"),
-    UPDATE_${enumName}_ERROR("${object} _002","修改${comment}失败"),
-    DELETE_${enumName}_ERROR("${object}_003","删除${comment}失败"),
-    ${enumName}_NOT_EXIST("${object}_004","该${comment}不存在"),
+        SAVE_${enumName}_ERROR("${object}-001" ,"新增${comment}失败" ),
+        UPDATE_${enumName}_ERROR("${object} _002" ,"修改${comment}失败" ),
+        DELETE_${enumName}_ERROR("${object}_003" ,"删除${comment}失败" ),
+    ${enumName}_NOT_EXIST("${object}_004" ,"该${comment}不存在" ),
 
-    ;
+        ;
 
-    /**
-    * 错误码
-    */
-    private String code;
+/**
+* 错误码
+*/
+private String code;
 
-    /**
-     * 错误描述
-     */
-    private String msg;
+/**
+ * 错误描述
+ */
+private String msg;
 
-}
+        }

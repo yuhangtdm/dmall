@@ -1,16 +1,16 @@
-package ${handlerPackage};
-
-import ${commonDtoPackage}.${commonResponseDto};
-import ${requestDtoPackage}.${listRequestDto};
-import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+package ${handlerPackage}import com.dmall.component.web.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.List;
+
+;
+${commonDtoPackage}
+        .${commonResponseDto};
+    ${requestDtoPackage}
+        .${listRequestDto};
+    ${package.Entity}
+        .${entity};
+    ${package.Mapper}
+        .${table.mapperName};
 
 /**
  * @description: $!{listHandlerComment}
@@ -19,17 +19,17 @@ import java.util.List;
 @Component
 public class ${listHandler} extends AbstractCommonHandler<${listRequestDto}, ${entity}, ${commonResponseDto}> {
 
-    @Autowired
-    private ${table.mapperName} ${mapperName};
+@Autowired
+private ${table.mapperName} ${mapperName};
 
-    @Override
-    public BaseResult<List<${commonResponseDto}>> validate(${listRequestDto} requestDTO) {
+@Override
+public BaseResult<List<${commonResponseDto}>>validate(${listRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-    @Override
-    public BaseResult<List<${commonResponseDto}>> processor(${listRequestDto} requestDTO) {
+@Override
+public BaseResult<List<${commonResponseDto}>>processor(${listRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-}
+        }

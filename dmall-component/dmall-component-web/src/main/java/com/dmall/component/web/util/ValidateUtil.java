@@ -4,6 +4,7 @@ import com.dmall.common.enums.base.BasicStatusEnum;
 import com.dmall.common.model.result.BaseResult;
 import com.google.common.collect.Maps;
 import org.springframework.util.CollectionUtils;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 public class ValidateUtil {
 
-    public static  <T> BaseResult validate(T t) {
+    public static <T> BaseResult validate(T t) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 

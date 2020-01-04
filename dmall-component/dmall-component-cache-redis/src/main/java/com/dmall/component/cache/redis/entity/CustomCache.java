@@ -1,6 +1,5 @@
 package com.dmall.component.cache.redis.entity;
 
-import com.dmall.component.cache.redis.enums.TTLUnitEnum;
 import lombok.Data;
 
 import java.util.concurrent.TimeUnit;

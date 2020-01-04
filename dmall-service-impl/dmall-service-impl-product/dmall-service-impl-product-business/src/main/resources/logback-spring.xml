@@ -42,7 +42,7 @@
         </rollingPolicy>
     </appender>
 
-   <!-- <springProperty scope="context" name="logstashUrl" source="dmall.logstash.url"/>-->
+    <!-- <springProperty scope="context" name="logstashUrl" source="dmall.logstash.url"/>-->
     <!--输出到logstash的appender-->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--可以访问的logstash日志收集端口-->
@@ -53,6 +53,6 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="ErrorFile"/>
-     <!--   <appender-ref ref="LOGSTASH"/>-->
+        <!--   <appender-ref ref="LOGSTASH"/>-->
     </root>
 </configuration>

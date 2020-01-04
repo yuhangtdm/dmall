@@ -1,13 +1,10 @@
 package com.dmall.mms.api.dto.membercolletionsubject.request;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.EqualsAndHashCode;
 import com.dmall.component.web.entity.PageRequestDTO;
-import java.util.*;
-import java.math.*;
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 会员收藏专题表 分页请求实体
@@ -16,14 +13,8 @@ import java.math.*;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="PageMemberColletionSubjectRequestDTO", description="会员收藏专题表 分页请求实体")
-public class PageMemberColletionSubjectRequestDTO  extends PageRequestDTO {
-
-
-
-
-
-
+@ApiModel(value = "PageMemberColletionSubjectRequestDTO" , description = "会员收藏专题表 分页请求实体" )
+public class PageMemberColletionSubjectRequestDTO extends PageRequestDTO {
 
 
 }

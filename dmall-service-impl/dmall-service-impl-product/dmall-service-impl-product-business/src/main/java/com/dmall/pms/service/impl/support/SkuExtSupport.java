@@ -24,9 +24,9 @@ import java.util.Optional;
 @Component
 public class SkuExtSupport {
 
-    private static final String PARAM_KEY = "key";
+    private static final String PARAM_KEY = "key" ;
 
-    private static final String PARAM_VALUE = "value";
+    private static final String PARAM_VALUE = "value" ;
 
     @Autowired
     private ProductAttributeValueSupport productAttributeValueSupport;

@@ -8,6 +8,7 @@ import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**

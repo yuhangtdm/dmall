@@ -1,7 +1,7 @@
 package com.dmall.pms.generator.mapper;
 
-import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 
 /**
  * <p>

@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: created by hang.yu on 2019/11/10 19:03
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.web.log")
+@ConfigurationProperties(prefix = "dmall.web.log" )
 public class DMallLogProperties {
 
     /**

@@ -12,8 +12,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TypeEnum implements KeyValueEnum<Integer> {
 
-    NORMAL(1, "普通属性"),
-    PUBLIC(2, "公共属性");
+    NORMAL(1, "普通属性" ),
+    PUBLIC(2, "公共属性" );
 
     private Integer code;
 

@@ -1,7 +1,7 @@
 package com.dmall.pms.generator.mapper;
 
-import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 
 /**
  * @description: sku属性值表

@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum UnitEnum implements KeyEnum<String> {
-    KG("kg"),
-    G("g"),
+    KG("kg" ),
+    G("g" ),
     ;
     private String code;
 }

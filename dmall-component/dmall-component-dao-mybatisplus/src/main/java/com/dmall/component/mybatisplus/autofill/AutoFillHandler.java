@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.dmall.common.constants.Constants;
 import com.dmall.component.mybatisplus.properties.DMallMybatisPlusProperties;
 import org.apache.ibatis.reflection.MetaObject;
+
 import java.util.Date;
 
 /**
@@ -37,6 +38,6 @@ public class AutoFillHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        setFieldValByName(dMallMybatisPlusProperties.getUpdateTimeColumn(),new Date(), metaObject);
+        setFieldValByName(dMallMybatisPlusProperties.getUpdateTimeColumn(), new Date(), metaObject);
     }
 }

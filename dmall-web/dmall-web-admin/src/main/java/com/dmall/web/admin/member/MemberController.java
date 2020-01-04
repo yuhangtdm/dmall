@@ -14,24 +14,24 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MemberController {
 
-    @GetMapping("/")
-    public String member(){
-        return "index";
+    @GetMapping("/" )
+    public String member() {
+        return "index" ;
     }
 
-    @GetMapping("/member/{id}")
+    @GetMapping("/member/{id}" )
     @ResponseBody
-    public BaseResult<Member> member(@PathVariable Long id){
-        Member member = new Member(id, "张三", 15);
-        if (id == 2L){
+    public BaseResult<Member> member(@PathVariable Long id) {
+        Member member = new Member(id, "张三" , 15);
+        if (id == 2L) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
         return ResultUtil.success(member);
     }
 
-    @PostMapping("/member")
+    @PostMapping("/member" )
     @ResponseBody
-    public BaseResult<Member> member(@RequestBody Member member){
+    public BaseResult<Member> member(@RequestBody Member member) {
         return ResultUtil.success(member);
     }
 }

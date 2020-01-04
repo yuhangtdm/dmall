@@ -17,22 +17,22 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "UpdateProductRequestDTO", description = "修改商品请求实体")
+@ApiModel(value = "UpdateProductRequestDTO" , description = "修改商品请求实体" )
 public class UpdateProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -3386130384533011334L;
 
-    @ApiModelProperty(value = "商品id", required = true, position = 1)
-    @NotNull(message = "商品id不能为空")
+    @ApiModelProperty(value = "商品id" , required = true, position = 1)
+    @NotNull(message = "商品id不能为空" )
     private Long id;
 
-    @ApiModelProperty(value = "商品基本信息", position = 2)
+    @ApiModelProperty(value = "商品基本信息" , position = 2)
     @Valid
-    @NotNull(message = "商品基本信息不能为空")
+    @NotNull(message = "商品基本信息不能为空" )
     private BasicProductRequestDTO basicProduct;
 
-    @ApiModelProperty(value = "商品属性信息", position = 3)
+    @ApiModelProperty(value = "商品属性信息" , position = 3)
     @Valid
-    @NotNull(message = "商品属性信息不能为空")
+    @NotNull(message = "商品属性信息不能为空" )
     private ProductExtRequestDTO ext;
 }

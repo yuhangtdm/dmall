@@ -19,16 +19,16 @@ public class AttributeValidate {
     /**
      * 新增或更新的公共校验
      */
-    public static BaseResult validate(Integer inputType, List<String> inputList, String handAddStatus){
+    public static BaseResult validate(Integer inputType, List<String> inputList, String handAddStatus) {
         // 从列表获取 不支持新增 可选值为空
         if (InputTypeEnum.LIST.getCode().equals(inputType) && CollUtil.isEmpty(inputList)
                 && YNEnum.N.getCode().equals(handAddStatus)) {
             return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_DATA_INVALID);
         }
         // 可选值列表不能重复
-        if (CollUtil.isNotEmpty(inputList)){
+        if (CollUtil.isNotEmpty(inputList)) {
             HashSet<String> strings = new HashSet<>(inputList);
-            if (strings.size() != inputList.size()){
+            if (strings.size() != inputList.size()) {
                 return ResultUtil.fail(AttributeErrorEnum.INPUT_LIST_INVALID);
             }
         }

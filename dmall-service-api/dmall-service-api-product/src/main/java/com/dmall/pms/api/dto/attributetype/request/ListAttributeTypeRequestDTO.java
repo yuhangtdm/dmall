@@ -14,16 +14,16 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "ListAttributeTypeRequestDTO", description = "属性分类列表请求实体")
+@ApiModel(value = "ListAttributeTypeRequestDTO" , description = "属性分类列表请求实体" )
 public class ListAttributeTypeRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "三级商品分类id", required = true, position = 1)
-    @NotNull(message = "三级商品分类id不能为空")
+    @ApiModelProperty(value = "三级商品分类id" , required = true, position = 1)
+    @NotNull(message = "三级商品分类id不能为空" )
     private Long categoryId;
 
-    @ApiModelProperty(value = "展示名称", position = 2)
+    @ApiModelProperty(value = "展示名称" , position = 2)
     private String showName;
 
 }

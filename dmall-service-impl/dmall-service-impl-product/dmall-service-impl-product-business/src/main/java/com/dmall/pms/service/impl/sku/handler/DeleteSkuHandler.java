@@ -1,13 +1,12 @@
 package com.dmall.pms.service.impl.sku.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.pms.api.dto.sku.request.update.BasicSkuRequestDTO;
-import com.dmall.pms.generator.dataobject.*;
-import com.dmall.pms.generator.mapper.*;
-import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.generator.dataobject.*;
+import com.dmall.pms.generator.mapper.*;
+import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,14 +46,14 @@ public class DeleteSkuHandler extends AbstractCommonHandler<Long, SkuDO, Long> {
         // 删除sku
         skuMapper.deleteById(skuId);
         // 删除sku扩展信息
-        skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId,skuId));
+        skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuId));
         // 删除sku图片信息
-        skuMediaMapper.delete(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId,skuId));
+        skuMediaMapper.delete(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
         // 删除sku属性信息
         skuAttributeValueMapper.delete(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-            .eq(SkuAttributeValueDO::getSkuId,skuId));
+                .eq(SkuAttributeValueDO::getSkuId, skuId));
         // 删除分类-sku信息
-        categorySkuMapper.delete(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getSkuId,skuId));
+        categorySkuMapper.delete(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getSkuId, skuId));
         return ResultUtil.success(skuId);
     }
 

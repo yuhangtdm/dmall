@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class ProductAttributeSupport {
 
 
-
     @Autowired
     private AttributeTypeCacheService attributeTypeCacheService;
 

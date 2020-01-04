@@ -98,13 +98,13 @@ public class ObjectUtil extends StringUtils {
     /**
      * 判断是否是复杂的引用类型
      */
-    public static boolean isComplexObject(Object object){
-        if (object == null){
+    public static boolean isComplexObject(Object object) {
+        if (object == null) {
             return false;
         }
-       return object instanceof Collection
-               || object instanceof Map
-               || object.getClass().isArray();
+        return object instanceof Collection
+                || object instanceof Map
+                || object.getClass().isArray();
     }
 
 

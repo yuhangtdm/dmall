@@ -21,18 +21,18 @@ public class RedisTest extends BaseTest {
     private RedisTemplate dMallRedisTemplate;
 
     @Test
-    public void testInsert(){
-        stringRedisTemplate.opsForValue().set("msg","helloSpringboot+redis", Duration.ofSeconds(50));
+    public void testInsert() {
+        stringRedisTemplate.opsForValue().set("msg" , "helloSpringboot+redis" , Duration.ofSeconds(50));
     }
 
     @Test
-    public void testMap(){
-        dMallRedisTemplate.opsForHash().put("phone","iphone","苹果");
+    public void testMap() {
+        dMallRedisTemplate.opsForHash().put("phone" , "iphone" , "苹果" );
     }
 
     @Test
-    public void testGetMap(){
-        Object cache = dMallRedisTemplate.opsForHash().get("phone", "iphone");
+    public void testGetMap() {
+        Object cache = dMallRedisTemplate.opsForHash().get("phone" , "iphone" );
         System.err.println(cache);
     }
 

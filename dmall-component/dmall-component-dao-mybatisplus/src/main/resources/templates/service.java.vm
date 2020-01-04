@@ -1,7 +1,8 @@
 package ${package.Service};
-
-import ${package.Entity}.${entity};
-import ${superServiceClassPackage};
+${package.Entity}
+        .${entity};
+    ${superServiceClassPackage}
+        ;
 
 /**
  * @description: $!{table.comment}
@@ -12,5 +13,5 @@ interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-}
+        }
 #end

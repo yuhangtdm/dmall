@@ -6,7 +6,6 @@ import cn.hutool.core.util.StrUtil;
 import com.dmall.common.constants.Constants;
 import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;
-import com.dmall.component.cache.redis.properties.DMallRedisProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,11 +13,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @description: mapCache切面
@@ -33,23 +30,23 @@ public class MapCacheAspect {
 
     private RedisTemplate dmallRedisTemplate;
 
-    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapListCache)")
+    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapListCache)" )
     public void mapListCache() {
     }
 
-    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapGetCache)")
+    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapGetCache)" )
     public void mapGetCache() {
     }
 
-    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapDeleteCache)")
+    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapDeleteCache)" )
     public void mapDeleteCache() {
     }
 
-    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapPostCache)")
+    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapPostCache)" )
     public void mapPostCache() {
     }
 
-    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapPutCache)")
+    @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapPutCache)" )
     public void mapPutCache() {
     }
 
@@ -57,9 +54,9 @@ public class MapCacheAspect {
      * map缓存切面方法 用于获取list的方法
      * 适用于获取所有数据
      */
-    @Around("mapListCache()")
+    @Around("mapListCache()" )
     public Object mapListCache(ProceedingJoinPoint joinPoint) {
-        String methodName = "";
+        String methodName = "" ;
         try {
             Object[] args = joinPoint.getArgs();
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -70,10 +67,10 @@ public class MapCacheAspect {
                     : mapCacheUtil.getkey(mapCacheable.cacheNames(), className);
             List values = dmallRedisTemplate.opsForHash().values(key);
             if (CollUtil.isNotEmpty(values)) {
-                log.info("cache hit,key:{}", key);
+                log.info("cache hit,key:{}" , key);
                 return values;
             } else {
-                log.info("cache miss,key:{}", key);
+                log.info("cache miss,key:{}" , key);
                 Object result = joinPoint.proceed(args);
                 List list = (List) result;
                 for (Object o : list) {
@@ -84,7 +81,7 @@ public class MapCacheAspect {
             }
 
         } catch (Throwable e) {
-            log.error("MapCacheable method:{} catch error", methodName, e);
+            log.error("MapCacheable method:{} catch error" , methodName, e);
             throw new CacheRedisException(CacheRedisErrorEnum.MAP_CACHE_ABLE_ERROR);
         }
     }
@@ -93,9 +90,9 @@ public class MapCacheAspect {
      * map缓存切面方法 用于获取对象的方法
      * 入参为id
      */
-    @Around("mapGetCache()")
+    @Around("mapGetCache()" )
     public Object mapGetCache(ProceedingJoinPoint joinPoint) {
-        String methodName = "";
+        String methodName = "" ;
         try {
 
             Object[] args = joinPoint.getArgs();
@@ -107,17 +104,17 @@ public class MapCacheAspect {
                     : mapCacheUtil.getkey(mapCacheable.cacheNames(), className);
             Object cacheResult = dmallRedisTemplate.opsForHash().get(key, String.valueOf(args[0]));
             if (cacheResult != null) {
-                log.info("cache hit,key:{},hashKey:{}", key, args[0]);
+                log.info("cache hit,key:{},hashKey:{}" , key, args[0]);
                 return cacheResult;
             } else {
-                log.info("cache miss,key:{},hashKey:{}", key, args[0]);
+                log.info("cache miss,key:{},hashKey:{}" , key, args[0]);
                 Object result = joinPoint.proceed(args);
                 mapCacheUtil.put(key, String.valueOf(args[0]), result, mapGetCache.timeout(), mapGetCache.timeUnit());
                 return result;
             }
 
         } catch (Throwable e) {
-            log.error("MapGetCache method:{} catch error", methodName, e);
+            log.error("MapGetCache method:{} catch error" , methodName, e);
             throw new CacheRedisException(CacheRedisErrorEnum.MAP_GET_CACHE_ERROR);
         }
     }
@@ -125,9 +122,9 @@ public class MapCacheAspect {
     /**
      * map缓存切面方法 用于新增或更新对象的方法
      */
-    @Around("mapPostCache()")
+    @Around("mapPostCache()" )
     public Object mapPostCache(ProceedingJoinPoint joinPoint) {
-        String methodName = "";
+        String methodName = "" ;
         try {
 
             Object[] args = joinPoint.getArgs();
@@ -141,7 +138,7 @@ public class MapCacheAspect {
             mapCacheUtil.put(key, String.valueOf(fieldValue), args[0], mapPostCache.timeout(), mapPostCache.timeUnit());
             return result;
         } catch (Throwable e) {
-            log.error("MapPostCache method:{} catch error", methodName, e);
+            log.error("MapPostCache method:{} catch error" , methodName, e);
             throw new CacheRedisException(CacheRedisErrorEnum.MAP_POST_CACHE_ERROR);
         }
     }
@@ -149,9 +146,9 @@ public class MapCacheAspect {
     /**
      * map缓存切面方法 用于新增或更新对象的方法
      */
-    @Around("mapPutCache()")
+    @Around("mapPutCache()" )
     public Object mapPutCache(ProceedingJoinPoint joinPoint) {
-        String methodName = "";
+        String methodName = "" ;
         try {
             Object[] args = joinPoint.getArgs();
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -165,7 +162,7 @@ public class MapCacheAspect {
             mapCacheUtil.put(key, String.valueOf(fieldValue), result, mapPutCache.timeout(), mapPutCache.timeUnit());
             return result;
         } catch (Throwable e) {
-            log.error("MapPutCache method:{} catch error", methodName, e);
+            log.error("MapPutCache method:{} catch error" , methodName, e);
             throw new CacheRedisException(CacheRedisErrorEnum.MAP_PUT_CACHE_ERROR);
         }
     }
@@ -173,9 +170,9 @@ public class MapCacheAspect {
     /**
      * map切面缓存方法 用于删除缓存的方法
      */
-    @Around("mapDeleteCache()")
+    @Around("mapDeleteCache()" )
     public Object mapDeleteCache(ProceedingJoinPoint joinPoint) {
-        String methodName = "";
+        String methodName = "" ;
         try {
             Object[] args = joinPoint.getArgs();
             MapCacheable mapCacheable = validate(joinPoint);
@@ -186,10 +183,10 @@ public class MapCacheAspect {
                     : mapDeleteCache.key();
             Object result = joinPoint.proceed(args);
             dmallRedisTemplate.opsForHash().delete(key, String.valueOf(args[0]));
-            log.info("delete cache success,key:{},hashKey:{}", key, args[0]);
+            log.info("delete cache success,key:{},hashKey:{}" , key, args[0]);
             return result;
         } catch (Throwable e) {
-            log.warn("MapPutCache method:{} catch error", methodName, e);
+            log.warn("MapPutCache method:{} catch error" , methodName, e);
             throw new CacheRedisException(CacheRedisErrorEnum.MAP_DELETE_CACHE_ERROR);
         }
     }

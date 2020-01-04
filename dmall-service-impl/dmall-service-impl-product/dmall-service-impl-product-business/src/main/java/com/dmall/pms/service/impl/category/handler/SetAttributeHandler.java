@@ -1,6 +1,5 @@
 package com.dmall.pms.service.impl.category.handler;
 
-import cn.hutool.core.collection.CollUtil;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;

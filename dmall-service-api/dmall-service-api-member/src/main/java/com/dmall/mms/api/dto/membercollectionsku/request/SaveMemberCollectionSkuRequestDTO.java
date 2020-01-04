@@ -1,10 +1,10 @@
 package com.dmall.mms.api.dto.membercollectionsku.request;
 
+import com.dmall.mms.api.dto.membercollectionsku.common.CommonMemberCollectionSkuRequestDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.mms.api.dto.membercollectionsku.common.CommonMemberCollectionSkuRequestDTO;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 新增会员收藏sku请求实体
@@ -13,7 +13,7 @@ import com.dmall.mms.api.dto.membercollectionsku.common.CommonMemberCollectionSk
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SaveMemberCollectionSkuRequestDTO", description="新增会员收藏sku请求实体")
+@ApiModel(value = "SaveMemberCollectionSkuRequestDTO" , description = "新增会员收藏sku请求实体" )
 public class SaveMemberCollectionSkuRequestDTO extends CommonMemberCollectionSkuRequestDTO {
 
 }

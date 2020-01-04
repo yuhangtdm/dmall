@@ -18,32 +18,32 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "ZTreeCategoryResponseDTO", description = "ZTree分类树实体")
+@ApiModel(value = "ZTreeCategoryResponseDTO" , description = "ZTree分类树实体" )
 public class ZTreeCategoryResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 7853335345390628555L;
 
-    @ApiModelProperty(value = "id", position = 1)
+    @ApiModelProperty(value = "id" , position = 1)
     private Long id;
 
-    @ApiModelProperty(value = "上级id", position = 2)
+    @ApiModelProperty(value = "上级id" , position = 2)
     private Long parentId;
 
-    @ApiModelProperty(value = "分类名称", position = 3)
+    @ApiModelProperty(value = "分类名称" , position = 3)
     private String name;
 
-    @ApiModelProperty(value = "排序", position = 4)
+    @ApiModelProperty(value = "排序" , position = 4)
     private Integer sort;
 
-    @ApiModelProperty(value = "级别", position = 6)
+    @ApiModelProperty(value = "级别" , position = 6)
     private LevelEnum level;
 
-    @ApiModelProperty(value = "子元素", position = 6)
+    @ApiModelProperty(value = "子元素" , position = 6)
     private List<ZTreeCategoryResponseDTO> children = Lists.newArrayList();
 
-    @ApiModelProperty(value = "是否打开", position = 7)
+    @ApiModelProperty(value = "是否打开" , position = 7)
     private Boolean open = false;
 
-    @ApiModelProperty(value = "是否为父元素", position = 8)
+    @ApiModelProperty(value = "是否为父元素" , position = 8)
     private Boolean isParent = false;
 }

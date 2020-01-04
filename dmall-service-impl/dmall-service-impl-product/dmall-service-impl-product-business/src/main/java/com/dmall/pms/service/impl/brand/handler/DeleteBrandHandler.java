@@ -1,16 +1,16 @@
 package com.dmall.pms.service.impl.brand.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.pms.generator.dataobject.CategoryBrandDO;
-import com.dmall.pms.generator.dataobject.ProductDO;
-import com.dmall.pms.generator.mapper.CategoryBrandMapper;
-import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.generator.dataobject.BrandDO;
-import com.dmall.pms.generator.mapper.BrandMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
+import com.dmall.pms.generator.dataobject.BrandDO;
+import com.dmall.pms.generator.dataobject.CategoryBrandDO;
+import com.dmall.pms.generator.dataobject.ProductDO;
+import com.dmall.pms.generator.mapper.BrandMapper;
+import com.dmall.pms.generator.mapper.CategoryBrandMapper;
+import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;

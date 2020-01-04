@@ -11,15 +11,15 @@ import lombok.Getter;
 @Getter
 public class CacheRedisException extends ComponentException {
 
-    public CacheRedisException(){
+    public CacheRedisException() {
         super(CacheRedisErrorEnum.BASIC_ERROR.getCode(), CacheRedisErrorEnum.BASIC_ERROR.getMsg());
     }
 
-    public CacheRedisException(ErrorCodeEnum errorCodeEnum){
+    public CacheRedisException(ErrorCodeEnum errorCodeEnum) {
         super(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
     }
 
-    public CacheRedisException(String code, String msg){
+    public CacheRedisException(String code, String msg) {
         super(code, msg);
     }
 

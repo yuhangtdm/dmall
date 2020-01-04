@@ -12,11 +12,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TTLUnitEnum implements KeyValueEnum<Integer> {
 
-    SECOND(1, "秒"),
-    MINUTE(2,"分钟"),
-    HOUR(3,"小时"),
-    DAY(3,"天")
-    ;
+    SECOND(1, "秒" ),
+    MINUTE(2, "分钟" ),
+    HOUR(3, "小时" ),
+    DAY(3, "天" );
 
     /**
      * code

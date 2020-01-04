@@ -1,7 +1,8 @@
 package ${package.Mapper};
-
-import ${package.Entity}.${entity};
-import ${superMapperClassPackage};
+${package.Entity}
+        .${entity};
+    ${superMapperClassPackage}
+        ;
 
 /**
  * @description: $!{table.comment}
@@ -12,5 +13,5 @@ interface ${table.mapperName} : ${superMapperClass}<${entity}>
 #else
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 
-}
+        }
 #end

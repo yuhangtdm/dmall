@@ -32,7 +32,7 @@ public class UploadLogoHandler extends AbstractCommonHandler<MultipartFile, Bran
             UploadResult uploadResult = qiNiuFileManager.upload(file, QiNiuConstants.BRAND);
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
-            log.error("upload logo failed", e);
+            log.error("upload logo failed" , e);
             return ResultUtil.success(BrandErrorEnum.UPLOAD_LOGO_ERROR);
         }
     }

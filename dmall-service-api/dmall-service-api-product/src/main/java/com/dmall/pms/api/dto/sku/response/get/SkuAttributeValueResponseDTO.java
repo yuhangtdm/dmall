@@ -13,15 +13,15 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SkuAttributeValueResponseDTO", description = "sku属性值响应实体")
+@ApiModel(value = "SkuAttributeValueResponseDTO" , description = "sku属性值响应实体" )
 public class SkuAttributeValueResponseDTO {
 
-    @ApiModelProperty(value = "商品分类id列表", position = 1)
+    @ApiModelProperty(value = "商品分类id列表" , position = 1)
     private List<Long> categoryIds;
 
-    @ApiModelProperty(value = "品牌id", position = 2)
+    @ApiModelProperty(value = "品牌id" , position = 2)
     private Long brandId;
 
-    @ApiModelProperty(value = "商品属性值id列表", position = 3)
+    @ApiModelProperty(value = "商品属性值id列表" , position = 3)
     private List<Long> productAttributeValueList;
 }

@@ -1,18 +1,22 @@
-package ${serviceImplPackage};
-
-import ${requestDtoPackage}.${saveRequestDto};
-import ${requestDtoPackage}.${updateRequestDto};
-import ${requestDtoPackage}.${listRequestDto};
-import ${requestDtoPackage}.${pageRequestDto};
-import ${commonDtoPackage}.${commonResponseDto};
-import ${servicePackage}.${businessService};
-import ${handlerPackage}.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import org.springframework.beans.factory.annotation.Autowired;
+package ${serviceImplPackage}import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
+
+;
+${requestDtoPackage}
+        .${saveRequestDto};
+    ${requestDtoPackage}
+        .${updateRequestDto};
+    ${requestDtoPackage}
+        .${listRequestDto};
+    ${requestDtoPackage}
+        .${pageRequestDto};
+    ${commonDtoPackage}
+        .${commonResponseDto};
+    ${servicePackage}
+        .${businessService};
+    ${handlerPackage}
+        .*;
 
 /**
  * @description: $!{serviceImplComment}
@@ -21,53 +25,53 @@ import java.util.List;
 @RestController
 public class ${businessServiceImpl} implements ${businessService} {
 
-    @Autowired
-    private ${saveHandler} ${saveHandlerName};
+@Autowired
+private ${saveHandler} ${saveHandlerName};
 
-    @Autowired
-    private ${deleteHandler} ${deleteHandlerName};
+@Autowired
+private ${deleteHandler} ${deleteHandlerName};
 
-    @Autowired
-    private ${updateHandler} ${updateHandlerName};
+@Autowired
+private ${updateHandler} ${updateHandlerName};
 
-    @Autowired
-    private ${getHandler} ${getHandlerName};
+@Autowired
+private ${getHandler} ${getHandlerName};
 
-    @Autowired
-    private ${listHandler} ${listHandlerName};
+@Autowired
+private ${listHandler} ${listHandlerName};
 
-    @Autowired
-    private ${pageHandler} ${pageHandlerName};
+@Autowired
+private ${pageHandler} ${pageHandlerName};
 
 
-    @Override
-    public BaseResult<Long> save(@RequestBody ${saveRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> save(@RequestBody ${saveRequestDto} requestDTO){
         return ${saveHandlerName}.handler(requestDTO);
-    }
+        }
 
-    @Override
-    public BaseResult<Long> delete(Long id) {
+@Override
+public BaseResult<Long> delete(Long id){
         return ${deleteHandlerName}.handler(id);
-    }
+        }
 
-    @Override
-    public BaseResult<Long> update(@RequestBody ${updateRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> update(@RequestBody ${updateRequestDto} requestDTO){
         return ${updateHandlerName}.handler(requestDTO);
-    }
+        }
 
-    @Override
-    public BaseResult<${commonResponseDto}> get(Long id) {
+@Override
+public BaseResult<${commonResponseDto}> get(Long id){
         return ${getHandlerName}.handler(id);
-    }
+        }
 
-    @Override
-    public BaseResult<List<${commonResponseDto}>> list(@RequestBody ${listRequestDto} requestDTO) {
+@Override
+public BaseResult<List<${commonResponseDto}>>list(@RequestBody ${listRequestDto} requestDTO){
         return ${listHandlerName}.handler(requestDTO);
-    }
+        }
 
-    @Override
-    public BaseResult<LayuiPage<${commonResponseDto}>> page(@RequestBody ${pageRequestDto} requestDTO) {
+@Override
+public BaseResult<LayuiPage<${commonResponseDto}>>page(@RequestBody ${pageRequestDto} requestDTO){
         return ${pageHandlerName}.handler(requestDTO);
-    }
+        }
 
-}
+        }

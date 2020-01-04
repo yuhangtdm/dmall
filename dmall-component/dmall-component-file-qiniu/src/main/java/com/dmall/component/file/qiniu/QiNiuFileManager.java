@@ -27,11 +27,9 @@ import java.io.InputStream;
 @Slf4j
 public class QiNiuFileManager {
 
+    private static final String THUMB_BASE = "imageView2/2/w/%s/h/%s" ;
     private QiNiuProperties qiNiuProperties;
-
     private Region defaultRegion = Region.huadong();
-
-    private static final String THUMB_BASE = "imageView2/2/w/%s/h/%s";
 
 
     public QiNiuFileManager(QiNiuProperties qiNiuProperties) {
@@ -61,7 +59,7 @@ public class QiNiuFileManager {
      * 上传文件
      */
     public UploadResult upload(MultipartFile file, String catalog) throws IOException {
-        String fileType = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+        String fileType = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("." ) + 1);
         DefaultPutRet upload = this.upload(file.getInputStream(), catalog, fileType);
         UploadResult uploadResult = new UploadResult();
         uploadResult.setKey(upload.key);
@@ -89,12 +87,12 @@ public class QiNiuFileManager {
             Response response = uploadManager.put(inputStream, key, upToken, null, null);
             //解析上传成功的结果
             DefaultPutRet defaultPutRet = JSONObject.parseObject(response.bodyString(), DefaultPutRet.class);
-            log.info("upload file success,key:{},hash:{}", defaultPutRet.key, defaultPutRet.hash);
+            log.info("upload file success,key:{},hash:{}" , defaultPutRet.key, defaultPutRet.hash);
             return defaultPutRet;
         } catch (QiniuException ex) {
             Response r = ex.response;
             try {
-                log.error("upload file failed,{},{}", r.toString(), r.bodyString());
+                log.error("upload file failed,{},{}" , r.toString(), r.bodyString());
             } catch (QiniuException ex2) {
                 // ignore
             }
@@ -112,9 +110,9 @@ public class QiNiuFileManager {
         BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
             bucketManager.delete(qiNiuProperties.getBucket(), key);
-            log.info("delete file success,key:{}", key);
+            log.info("delete file success,key:{}" , key);
         } catch (QiniuException ex) {
-            log.error("delete file failed，code:{},msg:{}", ex.code(), ex.response.toString());
+            log.error("delete file failed，code:{},msg:{}" , ex.code(), ex.response.toString());
             throw new QiNiuException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
         }
     }
@@ -123,14 +121,14 @@ public class QiNiuFileManager {
      * 获取文件
      */
     public String get(String key) {
-        return StrUtil.format("{}/{}?{}", qiNiuProperties.getDomain(), key, System.currentTimeMillis());
+        return StrUtil.format("{}/{}?{}" , qiNiuProperties.getDomain(), key, System.currentTimeMillis());
     }
 
     /**
      * 获取指定大小的文件
      */
     public String getModel(String key, int size) {
-        return StrUtil.format("{}/{}?v={}&{}", qiNiuProperties.getDomain(), key, System.currentTimeMillis(), getSize(size));
+        return StrUtil.format("{}/{}?v={}&{}" , qiNiuProperties.getDomain(), key, System.currentTimeMillis(), getSize(size));
     }
 
     /**
@@ -140,8 +138,8 @@ public class QiNiuFileManager {
      * @param fileType 文件类型
      */
     public String getKey(String catalog, String fileType) {
-        String key = StrUtil.format("{}.{}", IdUtil.simpleUUID(), fileType);
-        return StrUtil.format("{}/{}/{}", qiNiuProperties.getNamespace(), catalog, key);
+        String key = StrUtil.format("{}.{}" , IdUtil.simpleUUID(), fileType);
+        return StrUtil.format("{}/{}/{}" , qiNiuProperties.getNamespace(), catalog, key);
     }
 
     private String getSize(int size) {

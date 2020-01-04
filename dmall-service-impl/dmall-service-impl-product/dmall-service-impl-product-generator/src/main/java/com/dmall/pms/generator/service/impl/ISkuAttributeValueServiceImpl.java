@@ -1,9 +1,9 @@
 package com.dmall.pms.generator.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.dmall.pms.generator.mapper.SkuAttributeValueMapper;
 import com.dmall.pms.generator.service.ISkuAttributeValueService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

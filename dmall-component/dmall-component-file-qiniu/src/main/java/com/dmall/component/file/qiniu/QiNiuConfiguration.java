@@ -19,23 +19,23 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({QiNiuProperties.class})
-@ConditionalOnProperty(prefix = "dmall.file.qiniu", value = "enabled", havingValue = "true")
-public class QiNiuConfiguration  implements BasicConfiguration {
+@ConditionalOnProperty(prefix = "dmall.file.qiniu" , value = "enabled" , havingValue = "true" )
+public class QiNiuConfiguration implements BasicConfiguration {
 
     @Autowired
     private QiNiuProperties qiNiuProperties;
 
     @Bean
-    public QiNiuFileManager qiNiuFileManager(){
+    public QiNiuFileManager qiNiuFileManager() {
         return new QiNiuFileManager(qiNiuProperties);
     }
 
     @Override
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "QiNiuProperties", JSON.toJSONString(qiNiuProperties, true));
-        if (qiNiuProperties.getEnabled()){
-            if (ObjectUtil.containsEmpty(qiNiuProperties.getAccessKey(),qiNiuProperties.getSecretKey()
-            ,qiNiuProperties.getBucket(), qiNiuProperties.getDomain())){
+        log.info("init -> [{}],properties:\n{}" , "QiNiuProperties" , JSON.toJSONString(qiNiuProperties, true));
+        if (qiNiuProperties.getEnabled()) {
+            if (ObjectUtil.containsEmpty(qiNiuProperties.getAccessKey(), qiNiuProperties.getSecretKey()
+                    , qiNiuProperties.getBucket(), qiNiuProperties.getDomain())) {
                 throw new QiNiuException(QiNiuErrorEnum.QI_NIU_CONFIG_ERROR);
             }
 

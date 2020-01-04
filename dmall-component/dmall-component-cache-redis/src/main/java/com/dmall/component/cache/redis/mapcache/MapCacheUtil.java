@@ -26,8 +26,8 @@ public class MapCacheUtil {
      * 批量设置缓存
      */
     public void batchPut(String key, Map<String, Object> cache) {
-        cache.forEach((k,v) ->{
-            put(key,k,v);
+        cache.forEach((k, v) -> {
+            put(key, k, v);
         });
     }
 
@@ -43,7 +43,7 @@ public class MapCacheUtil {
      */
     public void put(String key, String hashKey, Object result, long timeout, TimeUnit timeUnit) {
         dmallRedisTemplate.opsForHash().put(key, hashKey, result);
-        if (timeout == 0L){
+        if (timeout == 0L) {
             return;
         }
         if (timeout > 0L) {
@@ -70,7 +70,7 @@ public class MapCacheUtil {
     public String getkey(String cacheName, String className) {
         return new StringBuilder(dMallRedisProperties.getCacheKeyPrefix())
                 .append(StrUtil.UNDERLINE)
-                .append(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "local")
+                .append(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "local" )
                 .append(StrUtil.UNDERLINE)
                 .append(cacheName)
                 .append(StrUtil.COLON)

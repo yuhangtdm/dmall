@@ -23,7 +23,7 @@ import org.springframework.core.env.Environment;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({DMallLogProperties.class})
-@ConditionalOnProperty(prefix = "dmall.web.log", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "dmall.web.log" , value = "enabled" , havingValue = "true" )
 public class DMallLogAspectConfiguration implements BasicConfiguration {
 
     @Autowired
@@ -35,23 +35,23 @@ public class DMallLogAspectConfiguration implements BasicConfiguration {
     @Bean
     public AspectJExpressionPointcutAdvisor configurabledvisor() {
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
-        String expression ="@within(org.springframework.web.bind.annotation.RestController) "+
-                  "|| @within(org.springframework.stereotype.Controller) "+
-                  "&& execution(public * " + dMallLogProperties.getPointcut() + "..*(..))";
+        String expression = "@within(org.springframework.web.bind.annotation.RestController) " +
+                "|| @within(org.springframework.stereotype.Controller) " +
+                "&& execution(public * " + dMallLogProperties.getPointcut() + "..*(..))" ;
         advisor.setExpression(expression);
         advisor.setAdvice(logAdvice(environment));
         return advisor;
     }
 
     @Bean
-    public LogAdvice logAdvice(Environment environment){
+    public LogAdvice logAdvice(Environment environment) {
         return new LogAdvice(environment);
 
     }
 
     @Override
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallLogProperties", JSON.toJSONString(dMallLogProperties, true));
+        log.info("init -> [{}],properties:\n{}" , "DMallLogProperties" , JSON.toJSONString(dMallLogProperties, true));
         if (dMallLogProperties.getEnabled() && StringUtils.isBlank(dMallLogProperties.getPointcut())) {
             throw new WebException(WebErrorEnum.NO_POINTCUT);
         }

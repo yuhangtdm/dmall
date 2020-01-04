@@ -15,7 +15,6 @@ import com.dmall.pms.generator.dataobject.CategorySkuDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuExtDO;
 import com.dmall.pms.generator.mapper.CategorySkuMapper;
-import com.dmall.pms.generator.mapper.SkuExtMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
@@ -94,10 +93,10 @@ public class SkuSupport {
                     skuListResponseDTO.setPrice(skuDO.getPrice());
                     skuListResponseDTO.setStock(skuDO.getStock());
                     SkuExtDO skuExtDO = skuExtSupport.getBySkuId(skuDO.getId());
-                    if (skuExtDO != null){
+                    if (skuExtDO != null) {
                         String skuSpecificationsJson = skuExtDO.getSkuSpecificationsJson();
                         JSONObject skuSpecifications = JSONObject.parseObject(skuSpecificationsJson);
-                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), ","));
+                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), "," ));
                     }
                     return skuListResponseDTO;
                 }).collect(Collectors.toList());

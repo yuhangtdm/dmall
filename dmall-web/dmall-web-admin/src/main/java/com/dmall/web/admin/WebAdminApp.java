@@ -18,7 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class WebAdminApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(WebAdminApp.class,args);
+        SpringApplication.run(WebAdminApp.class, args);
     }
 
 }

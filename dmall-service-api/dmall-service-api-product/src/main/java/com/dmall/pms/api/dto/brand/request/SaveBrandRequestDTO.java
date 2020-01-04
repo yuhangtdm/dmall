@@ -15,26 +15,26 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SaveBrandRequestDTO", description = "新增品牌请求实体")
+@ApiModel(value = "SaveBrandRequestDTO" , description = "新增品牌请求实体" )
 public class SaveBrandRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -2764431828668087336L;
 
-    @ApiModelProperty(value = "品牌名称", required = true, position = 1)
-    @NotBlank(message = "品牌名称不能为空")
+    @ApiModelProperty(value = "品牌名称" , required = true, position = 1)
+    @NotBlank(message = "品牌名称不能为空" )
     private String name;
 
-    @ApiModelProperty(value = "英文名称", position = 2)
+    @ApiModelProperty(value = "英文名称" , position = 2)
     private String englishName;
 
-    @ApiModelProperty(value = "首字母", required = true, position = 3)
-    @NotBlank(message = "首字母不能为空")
-    @Length(max = 1, min = 1, message = "首字母长度固定一位")
+    @ApiModelProperty(value = "首字母" , required = true, position = 3)
+    @NotBlank(message = "首字母不能为空" )
+    @Length(max = 1, min = 1, message = "首字母长度固定一位" )
     private String firstLetter;
 
-    @ApiModelProperty(value = "品牌logo", position = 4)
+    @ApiModelProperty(value = "品牌logo" , position = 4)
     private String logo;
 
-    @ApiModelProperty(value = "品牌大图", position = 5)
+    @ApiModelProperty(value = "品牌大图" , position = 5)
     private String bigPic;
 }

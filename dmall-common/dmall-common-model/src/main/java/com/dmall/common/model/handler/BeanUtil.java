@@ -11,9 +11,9 @@ public class BeanUtil extends BeanUtils {
     /**
      * 重写copy属性的方法
      */
-    public static <T> T copyProperties(Object source, Class<T> target){
+    public static <T> T copyProperties(Object source, Class<T> target) {
         T t = instantiateClass(target);
-        copyProperties(source,t);
+        copyProperties(source, t);
         return t;
     }
 

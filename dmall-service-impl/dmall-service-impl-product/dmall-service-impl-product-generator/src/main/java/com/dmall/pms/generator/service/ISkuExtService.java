@@ -1,7 +1,7 @@
 package com.dmall.pms.generator.service;
 
-import com.dmall.pms.generator.dataobject.SkuExtDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dmall.pms.generator.dataobject.SkuExtDO;
 
 /**
  * @description: sku扩展表

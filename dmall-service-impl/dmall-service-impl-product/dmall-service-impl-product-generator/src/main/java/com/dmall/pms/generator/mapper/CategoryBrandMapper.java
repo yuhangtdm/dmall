@@ -1,7 +1,7 @@
 package com.dmall.pms.generator.mapper;
 
-import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 
 /**
  * @description: 分类品牌关系表

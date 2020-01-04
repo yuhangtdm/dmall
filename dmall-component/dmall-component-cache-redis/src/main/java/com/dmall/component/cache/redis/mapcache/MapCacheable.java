@@ -1,7 +1,6 @@
 package com.dmall.component.cache.redis.mapcache;
 
 import java.lang.annotation.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @description: MapCacheable
@@ -16,6 +15,6 @@ public @interface MapCacheable {
     /**
      * 缓存名称
      */
-    String cacheNames() default "";
+    String cacheNames() default "" ;
 
 }

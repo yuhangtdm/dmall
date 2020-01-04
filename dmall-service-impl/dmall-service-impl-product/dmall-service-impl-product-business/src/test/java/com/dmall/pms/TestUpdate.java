@@ -21,7 +21,7 @@ public class TestUpdate {
     private AttributeTypeMapper attributeTypeMapper;
 
     @Test
-    public void test(){
+    public void test() {
         AttributeTypeDO attributeTypeDO = new AttributeTypeDO();
         attributeTypeDO.setId(1L);
         attributeTypeDO.setCategoryId(2L);

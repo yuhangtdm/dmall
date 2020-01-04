@@ -1,6 +1,5 @@
 package com.dmall.component.file.qiniu;
 
-import com.qiniu.common.Zone;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -9,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: created by hang.yu on 2019/12/17 10:16
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.file.qiniu")
+@ConfigurationProperties(prefix = "dmall.file.qiniu" )
 public class QiNiuProperties {
 
     /**
@@ -20,17 +19,17 @@ public class QiNiuProperties {
     /**
      * 公钥
      */
-    private  String accessKey;
+    private String accessKey;
 
     /**
      * 私钥
      */
-    private   String secretKey;
+    private String secretKey;
 
     /**
      * 空间名称
      */
-    private  String  bucket;
+    private String bucket;
 
     /**
      * 访问资源的域名

@@ -33,10 +33,10 @@ public class SaveSkuExtHandler extends AbstractCommonHandler<SaveSkuExtRequestDT
     @Override
     public BaseResult processor(SaveSkuExtRequestDTO requestDTO) {
         SkuExtDO skuExtDO = skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, requestDTO.getSkuId()));
-        if (skuExtDO == null){
+        if (skuExtDO == null) {
             skuExtDO = dtoConvertDo(requestDTO, SkuExtDO.class);
             skuExtMapper.insert(skuExtDO);
-        }else {
+        } else {
             skuExtDO.setDetailHtml(requestDTO.getDetailHtml());
             skuExtDO.setDetailMobileHtml(requestDTO.getDetailMobileHtml());
             skuExtMapper.updateById(skuExtDO);

@@ -2,6 +2,7 @@ package com.dmall.component.cache.redis.lock;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+
 import java.time.Duration;
 import java.util.Collections;
 
@@ -12,9 +13,8 @@ import java.util.Collections;
 
 public class DistributedLockService {
 
-    private StringRedisTemplate stringRedisTemplate;
-
     DefaultRedisScript<Boolean> redisScript;
+    private StringRedisTemplate stringRedisTemplate;
 
     public DistributedLockService(StringRedisTemplate stringRedisTemplate, DefaultRedisScript<Boolean> redisScript) {
         this.stringRedisTemplate = stringRedisTemplate;

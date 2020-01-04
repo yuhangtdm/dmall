@@ -1,7 +1,6 @@
 package com.dmall.component.web.exceptionhandler;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.map.MapUtil;
 import com.dmall.common.constants.WebConstants;
 import com.dmall.common.enums.base.BasicStatusEnum;
 import com.dmall.common.model.exception.ComponentException;
@@ -25,7 +24,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @description: 全局异常处理器
@@ -40,7 +40,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public String businessHandle(BusinessException ex, HttpServletRequest request) {
-        log.error("enter the BusinessException Handler,", ex);
+        log.error("enter the BusinessException Handler," , ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -49,7 +49,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(ComponentException.class)
     public String componentHandle(ComponentException ex, HttpServletRequest request) {
-        log.error("enter the ComponentException Handler,", ex);
+        log.error("enter the ComponentException Handler," , ex);
         return getCustomException(request, ResultUtil.fail(ex));
     }
 
@@ -58,7 +58,7 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public String NoHandlerFoundHandle(HttpServletRequest request) {
-        log.error("enter the NoHandlerFoundException Handler");
+        log.error("enter the NoHandlerFoundException Handler" );
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.NOT_FOUND_REQUEST);
         request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
@@ -68,7 +68,7 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public String httpMessageNotReadableExceptionHandle(HttpServletRequest request) {
-        log.error("enter the HttpMessageNotReadableException Handler");
+        log.error("enter the HttpMessageNotReadableException Handler" );
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.MEDIA_PARAM_TYPE_ERROR);
         request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
@@ -78,7 +78,7 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public String httpRequestMethodNotSupportedExceptionHandle(HttpServletRequest request) {
-        log.error("enter the HttpRequestMethodNotSupportedException Handler");
+        log.error("enter the HttpRequestMethodNotSupportedException Handler" );
         BaseResult fail = ResultUtil.fail(BasicStatusEnum.METHOD_NOT_ALLOWED);
         request.setAttribute(WebConstants.ERROR_STATUS_CODE, HttpStatus.OK.value());
         request.setAttribute(WebConstants.DATA, fail);
@@ -111,13 +111,13 @@ public class BasicExceptionHandler {
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
             data.add(constraintViolation.getMessage());
         }
-        log.error("enter the ConstraintViolationException Handler,{}", data);
+        log.error("enter the ConstraintViolationException Handler,{}" , data);
         return paramHandle(null, data, request);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public String methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
-        log.error("enter the MethodArgumentTypeMismatchException Handler,", ex);
+        log.error("enter the MethodArgumentTypeMismatchException Handler," , ex);
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.PARAM_TYPE_ERROR));
     }
 
@@ -126,24 +126,24 @@ public class BasicExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public String exception(Exception ex, HttpServletRequest request) {
-        log.error("enter the exception Handler,", ex);
+        log.error("enter the exception Handler," , ex);
         return getCustomException(request, ResultUtil.fail());
     }
 
     /**
      * 处理参数异常的公共逻辑
      */
-    private String paramHandle(List<FieldError> fieldErrors,  List<String>  error, HttpServletRequest request) {
+    private String paramHandle(List<FieldError> fieldErrors, List<String> error, HttpServletRequest request) {
         List<String> data = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(fieldErrors)) {
             for (FieldError fieldError : fieldErrors) {
-                if (!data.contains(fieldError.getDefaultMessage())){
+                if (!data.contains(fieldError.getDefaultMessage())) {
                     data.add(fieldError.getDefaultMessage());
                 }
             }
         }
         if (CollUtil.isNotEmpty(data)) {
-            log.error("enter the param exception Handler,{}", data);
+            log.error("enter the param exception Handler,{}" , data);
         }
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST, CollUtil.isEmpty(error) ? data : error));
     }

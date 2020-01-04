@@ -1,10 +1,10 @@
 package com.dmall.mms.api.dto.membersafe.request;
 
+import com.dmall.mms.api.dto.membersafe.common.CommonMemberSafeRequestDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.mms.api.dto.membersafe.common.CommonMemberSafeRequestDTO;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 新增账户安全请求实体
@@ -13,7 +13,7 @@ import com.dmall.mms.api.dto.membersafe.common.CommonMemberSafeRequestDTO;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SaveMemberSafeRequestDTO", description="新增账户安全请求实体")
+@ApiModel(value = "SaveMemberSafeRequestDTO" , description = "新增账户安全请求实体" )
 public class SaveMemberSafeRequestDTO extends CommonMemberSafeRequestDTO {
 
 }

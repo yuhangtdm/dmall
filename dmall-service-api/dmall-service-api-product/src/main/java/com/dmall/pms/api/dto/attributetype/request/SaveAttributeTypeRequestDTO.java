@@ -14,12 +14,12 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SaveAttributeTypeRequestDTO", description = "新增属性分类请求实体")
+@ApiModel(value = "SaveAttributeTypeRequestDTO" , description = "新增属性分类请求实体" )
 public class SaveAttributeTypeRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 7821691533714257307L;
 
-    @ApiModelProperty(value = "展示名称", required = true, position = 1)
-    @NotBlank(message = "展示名称不能为空")
+    @ApiModelProperty(value = "展示名称" , required = true, position = 1)
+    @NotBlank(message = "展示名称不能为空" )
     private String showName;
 }
