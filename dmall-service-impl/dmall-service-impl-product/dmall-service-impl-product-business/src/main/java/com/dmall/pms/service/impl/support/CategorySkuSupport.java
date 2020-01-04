@@ -38,4 +38,10 @@ public class CategorySkuSupport {
     }
 
 
+    /**
+     * 根据skuId删除
+     */
+    public void deleteBySkuId(Long skuId) {
+        categorySkuMapper.delete(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getSkuId, skuId));
+    }
 }

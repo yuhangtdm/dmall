@@ -17,15 +17,15 @@ import java.util.List;
 @ApiModel(value = "SaveSkuAttributeRequestDTO", description = "新增sku属性实体")
 public class SaveSkuAttributeRequestDTO {
 
-    @ApiModelProperty(value = "商品id", position = 1)
+    @ApiModelProperty(value = "商品id", required = true, position = 1)
     @NotNull(message = "商品id不能为空")
     private Long productId;
 
-    @ApiModelProperty(value = "属性值id", position = 2)
+    @ApiModelProperty(value = "属性值id", required = true, position = 2)
     @NotNull(message = "skuId不能为空")
     private Long skuId;
 
-    @ApiModelProperty(value = "商品属性值id列表", position = 3)
+    @ApiModelProperty(value = "商品属性值id列表", required = true, position = 3)
     @NotNull(message = "商品属性值id不能为空")
     private List<Long> productAttributeValueList;
 }

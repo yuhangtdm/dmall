@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dmall.pms.service.impl.sku.mapper.SkuPageMapper">
 
-    <select id="skuPage" resultType="com.dmall.pms.generator.dataobject.SkuDO">
+    <select id="skuPage" resultType="com.dmall.pms.service.impl.sku.mapper.SkuPageVO">
         select
         distinct
-        ps.id, ps.product_id, ps.merchants_id, ps.brand_id, ps.sku_no, ps.name, ps.sub_name, ps.descriptio, ps.pic,
+        ps.id, ps.product_id, ps.merchants_id, ps.brand_id, pb.name brand_name,pp.product_no,ps.sku_no, ps.name,
+        ps.sub_name, ps.description, ps.pic,
         ps.price, ps.vip_price, ps.market_price,
         ps.stock, ps.low_stock, ps.sort, ps.publish_status, ps.on_publish_time, ps.off_publish_time,
         ps.recommend_status, ps.new_status,
@@ -34,7 +35,7 @@
             <if test="request.publishStatus!= null and request.publishStatus!=''">
                 and ps.publish_status = #{request.publishStatus}
             </if>
-            <if test="recommendStatus!= null and recommendStatus!=''">
+            <if test="request.recommendStatus!= null and request.recommendStatus!=''">
                 and ps.recommend_status = #{recommendStatus}
             </if>
             <if test="request.newStatus!= null and request.newStatus!=''">

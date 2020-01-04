@@ -222,4 +222,14 @@ public class ProductAttributeValueSupport {
         iProductAttributeValueService.remove(Wrappers.<ProductAttributeValueDO>lambdaQuery()
                 .eq(ProductAttributeValueDO::getProductId, productId));
     }
+
+    /**
+     * 根据商品id，属性id，属性值 查询实体
+     */
+    public ProductAttributeValueDO getByProductIdAndAttributeValue(Long productId, Long attributeId, String attributeValue) {
+        return iProductAttributeValueService.getOne(Wrappers.<ProductAttributeValueDO>lambdaQuery()
+                .eq(ProductAttributeValueDO::getProductId, productId)
+                .eq(ProductAttributeValueDO::getAttributeId, attributeId)
+                .eq(ProductAttributeValueDO::getAttributeValue, attributeValue));
+    }
 }

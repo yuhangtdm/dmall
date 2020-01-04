@@ -29,8 +29,7 @@ public class SkuAttributeValueSupport {
      * 删除+新增 sku属性值
      */
     public void setSkuAttributeValue(Long productId, Long skuId, List<Long> productAttributeValueList) {
-        List<SkuAttributeValueDO> oldList = iSkuAttributeValueService.list(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getSkuId, skuId));
+        List<SkuAttributeValueDO> oldList = listBySkuId(skuId);
 
         if (CollUtil.isNotEmpty(oldList)) {
             List<SkuAttributeValueDO> skuAttributeList = productAttributeValueList.stream()

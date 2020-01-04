@@ -16,7 +16,7 @@ public class UploadResult {
      * 上传文件后的访问外链
      */
     @ApiModelProperty(value = "上传文件后的访问外链", position = 1)
-    private String src;
+    private String url;
 
     /**
      * 上传文件的key

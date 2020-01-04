@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.sku.response.get;
 
-import com.dmall.pms.api.dto.sku.common.MediaDTO;
+import com.dmall.pms.api.dto.sku.response.MediaResponseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class GetSkuResponseDTO {
     private BasicSkuResponseDTO basicSku;
 
     @ApiModelProperty(value = "sku媒体实体列表", position = 2)
-    private List<MediaDTO> mediaList;
+    private List<MediaResponseDTO> mediaList;
 
     @ApiModelProperty(value = "sku属性值实体", position = 3)
     private SkuAttributeValueResponseDTO skuAttributeValue;

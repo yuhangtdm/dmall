@@ -16,13 +16,18 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value = "SaveSkuExtRequestDTO", description = "新增sku扩展实体")
 public class SaveSkuExtRequestDTO {
 
-    @ApiModelProperty(value = "属性值id", position = 1)
+    @ApiModelProperty(value = "商品id", required = true, position = 1)
+    @NotNull(message = "商品id不能为空")
+    private Long productId;
+
+    @ApiModelProperty(value = "skuId", required = true, position = 2)
     @NotNull(message = "skuId不能为空")
     private Long skuId;
 
-    @ApiModelProperty(value = "skuPC端详情富文本", position = 2)
+    @ApiModelProperty(value = "skuPC端详情富文本", required = true, position = 3)
+    @NotNull(message = "skuPC端详情富文本不能为空")
     private String detailHtml;
 
-    @ApiModelProperty(value = "sku移动端详情富文本", position = 3)
+    @ApiModelProperty(value = "sku移动端详情富文本", position = 4)
     private String detailMobileHtml;
 }

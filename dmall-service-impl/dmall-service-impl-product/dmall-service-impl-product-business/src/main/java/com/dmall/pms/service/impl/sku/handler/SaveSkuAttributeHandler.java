@@ -38,12 +38,7 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
 
     @Override
     public BaseResult<Long> validate(SaveSkuAttributeRequestDTO requestDTO) {
-        // 商品必须存在
-        ProductDO productDO = productMapper.selectById(requestDTO.getProductId());
-        if (productDO == null) {
-            return ResultUtil.fail(SkuErrorEnum.PRODUCT_NOT_EXISTS);
-        }
-        return skuSupport.validate(requestDTO.getSkuId());
+        return skuSupport.validate(requestDTO.getProductId(), requestDTO.getSkuId());
     }
 
     @Override

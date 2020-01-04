@@ -13,6 +13,7 @@ import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageMapper;
+import com.dmall.pms.service.impl.sku.mapper.SkuPageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,32 +25,25 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Component
-public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, SkuDO, PageSkuResponseDTO> {
-
-    @Autowired
-    private ProductValidate productValidate;
+public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, SkuPageVO, PageSkuResponseDTO> {
 
     @Autowired
     private SkuPageMapper skuPageMapper;
 
     @Override
-    public BaseResult<LayuiPage<PageSkuResponseDTO>> validate(PageSkuRequestDTO requestDTO) {
-        return productValidate.basicValidate(requestDTO.getBrandId(), requestDTO.getCategoryId());
-    }
-
-    @Override
     public BaseResult<LayuiPage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
         Page<PageSkuResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<PageSkuResponseDTO> skuList = skuPageMapper.skuPage(page, requestDTO).stream()
-                .map(skuDO -> doConvertDto(skuDO, PageSkuResponseDTO.class)).collect(Collectors.toList());
+                .map(skuPageVO -> doConvertDto(skuPageVO, PageSkuResponseDTO.class)).collect(Collectors.toList());
         return ResultUtil.success(new LayuiPage<>(page.getTotal(), skuList));
     }
 
     @Override
-    protected void customerConvertDto(PageSkuResponseDTO result, SkuDO doo) {
+    protected void customerConvertDto(PageSkuResponseDTO result, SkuPageVO doo) {
         result.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getRecommendStatus()));
         result.setNewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getNewStatus()));
         result.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getPreviewStatus()));
         result.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, doo.getAuditStatus()));
+        result.setPublishStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getPublishStatus()));
     }
 }

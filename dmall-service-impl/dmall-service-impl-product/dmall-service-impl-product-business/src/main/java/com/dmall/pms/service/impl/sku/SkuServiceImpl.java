@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @description: sku服务实现
  * @author: created by hang.yu on 2019-12-16 15:14:50
@@ -73,7 +75,12 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     public BaseResult<UploadResult> upload(Long id, MultipartFile file) {
-        return uploadSkuHandler.handler(new UploadRequestDTO(id, file));
+        return uploadSkuHandler.handler(new UploadRequestDTO(id, new MultipartFile[]{file}));
+    }
+
+    @Override
+    public BaseResult<UploadResult> batchUpload(Long id, @NotNull(message = "sku图片数组不能为空") MultipartFile[] files) {
+        return uploadSkuHandler.handler(new UploadRequestDTO(id, files));
     }
 
     @Override

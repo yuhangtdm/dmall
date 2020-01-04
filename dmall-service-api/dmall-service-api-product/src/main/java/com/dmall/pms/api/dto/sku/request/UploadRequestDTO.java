@@ -16,5 +16,5 @@ public class UploadRequestDTO {
 
     private Long id;
 
-    private MultipartFile file;
+    private MultipartFile[] files;
 }

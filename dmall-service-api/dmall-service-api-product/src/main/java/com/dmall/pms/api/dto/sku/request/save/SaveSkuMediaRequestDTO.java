@@ -1,12 +1,13 @@
 package com.dmall.pms.api.dto.sku.request.save;
 
-import com.dmall.pms.api.dto.sku.common.MediaDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -18,12 +19,14 @@ import java.util.List;
 @ApiModel(value = "SaveSkuMediaRequestDTO", description = "新增sku图片实体")
 public class SaveSkuMediaRequestDTO {
 
-    @ApiModelProperty(value = "属性值id", position = 1)
+    @ApiModelProperty(value = "属性值id", required = true, position = 1)
     @NotNull(message = "skuId不能为空")
     private Long skuId;
 
-    @ApiModelProperty(value = "sku媒体列表", position = 2)
+    @ApiModelProperty(value = "sku媒体列表", required = true, position = 2)
+    @Valid
     @NotNull(message = "sku媒体列表不能为空")
-    private List<MediaDTO> mediaList;
+    @Size(min = 1, message = "sku媒体列表不能为空")
+    private List<MediaRequestDTO> mediaList;
 
 }

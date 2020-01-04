@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -19,11 +20,12 @@ import java.math.BigDecimal;
 @ApiModel(value = "BasicSkuRequestDTO", description = "修改sku基本信息实体")
 public class BasicSkuRequestDTO {
 
-    @ApiModelProperty(value = "skuId", position = 1)
+    @ApiModelProperty(value = "skuId", required = true, position = 1)
     @NotNull(message = "skuId不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "sku名称", position = 2)
+    @ApiModelProperty(value = "sku名称", required = true, position = 2)
+    @NotBlank(message = "sku名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "sku副名称", position = 3)
@@ -58,4 +60,5 @@ public class BasicSkuRequestDTO {
 
     @ApiModelProperty(value = "sku描述", position = 12)
     private String description;
+
 }

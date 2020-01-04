@@ -1,12 +1,15 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
-import com.dmall.pms.generator.dataobject.*;
-import com.dmall.pms.generator.mapper.*;
+import com.dmall.pms.generator.dataobject.SkuDO;
+import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.service.impl.support.CategorySkuSupport;
+import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.impl.support.SkuExtSupport;
+import com.dmall.pms.service.impl.support.SkuMediaSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,16 +24,16 @@ public class DeleteSkuHandler extends AbstractCommonHandler<Long, SkuDO, Long> {
     private SkuMapper skuMapper;
 
     @Autowired
-    private SkuExtMapper skuExtMapper;
+    private SkuExtSupport skuExtSupport;
 
     @Autowired
-    private SkuAttributeValueMapper skuAttributeValueMapper;
+    private SkuAttributeValueSupport skuAttributeValueSupport;
 
     @Autowired
-    private SkuMediaMapper skuMediaMapper;
+    private SkuMediaSupport skuMediaSupport;
 
     @Autowired
-    private CategorySkuMapper categorySkuMapper;
+    private CategorySkuSupport categorySkuSupport;
 
     @Override
     public BaseResult<Long> validate(Long id) {
@@ -46,15 +49,13 @@ public class DeleteSkuHandler extends AbstractCommonHandler<Long, SkuDO, Long> {
         // 删除sku
         skuMapper.deleteById(skuId);
         // 删除sku扩展信息
-        skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, skuId));
+        skuExtSupport.deleteBySkuId(skuId);
         // 删除sku图片信息
-        skuMediaMapper.delete(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
+        skuMediaSupport.deleteBySkuId(skuId);
         // 删除sku属性信息
-        skuAttributeValueMapper.delete(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getSkuId, skuId));
+        skuAttributeValueSupport.deleteBySkuId(skuId);
         // 删除分类-sku信息
-        categorySkuMapper.delete(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getSkuId, skuId));
+        categorySkuSupport.deleteBySkuId(skuId);
         return ResultUtil.success(skuId);
     }
-
 }

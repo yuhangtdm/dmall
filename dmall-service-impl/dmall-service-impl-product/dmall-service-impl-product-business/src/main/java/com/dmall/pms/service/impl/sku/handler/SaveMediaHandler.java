@@ -1,6 +1,5 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import cn.hutool.core.collection.CollUtil;
 import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
@@ -31,9 +30,6 @@ public class SaveMediaHandler extends AbstractCommonHandler<SaveSkuMediaRequestD
         SkuDO skuDO = skuMapper.selectById(requestDTO.getSkuId());
         if (skuDO == null) {
             return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
-        }
-        if (CollUtil.isEmpty(requestDTO.getMediaList())) {
-            return ResultUtil.fail(SkuErrorEnum.MEDIA_NOT_EXIST);
         }
         skuMediaSupport.saveOrDeleteSkuMedia(skuDO.getProductId(), skuDO.getId(), requestDTO.getMediaList());
         SkuDO sku = new SkuDO();

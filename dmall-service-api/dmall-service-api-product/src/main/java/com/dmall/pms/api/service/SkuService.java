@@ -31,15 +31,15 @@ import javax.validation.constraints.NotNull;
 public interface SkuService {
 
     @PostMapping("/saveOrUpdate")
-    @ApiOperation(value = "新增或修改sku基本信息,返回skuId")
+    @ApiOperation(value = "1.新增或修改sku基本信息,返回skuId")
     BaseResult<Long> saveOrUpdate(@Valid @RequestBody SaveSkuRequestDTO requestDTO);
 
     @PostMapping("/saveSkuAttribute")
-    @ApiOperation(value = "保存sku属性信息,返回skuId")
+    @ApiOperation(value = "2.保存sku属性信息,返回skuId")
     BaseResult<Long> saveSkuAttributeValue(@Valid @RequestBody SaveSkuAttributeRequestDTO requestDTO);
 
     @PostMapping("/saveSkuExt")
-    @ApiOperation(value = "保存sku扩展信息,返回skuId")
+    @ApiOperation(value = "3.保存sku扩展信息,返回skuId")
     BaseResult<Long> saveSkuExt(@Valid @RequestBody SaveSkuExtRequestDTO requestDTO);
 
     @PostMapping("/upload/{id}")
@@ -47,8 +47,13 @@ public interface SkuService {
     @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
     BaseResult<UploadResult> upload(@PathVariable("id") Long id, @NotNull(message = "sku图片不能为空") MultipartFile file);
 
+    @PostMapping("/batchUpload/{id}")
+    @ApiOperation(value = "批量上传sku图片")
+    @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
+    BaseResult<UploadResult> batchUpload(@PathVariable("id") Long id, @NotNull(message = "sku图片数组不能为空") MultipartFile[] files);
+
     @PostMapping("/saveSkuMedia")
-    @ApiOperation(value = "保存sku图片信息,返回skuId")
+    @ApiOperation(value = "4.保存sku图片信息,返回skuId")
     BaseResult<Long> saveSkuMedia(@Valid @RequestBody SaveSkuMediaRequestDTO requestDTO);
 
     @DeleteMapping("/{id}")

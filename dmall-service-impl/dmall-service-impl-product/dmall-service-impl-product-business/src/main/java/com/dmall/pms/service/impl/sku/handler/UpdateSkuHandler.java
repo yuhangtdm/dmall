@@ -64,7 +64,6 @@ public class UpdateSkuHandler extends AbstractCommonHandler<UpdateSkuRequestDTO,
         // sku扩展信息
         skuExtSupport.setSkuExt(sku.getProductId(), sku.getId(), requestDTO.getProductAttributeValueList(),
                 requestDTO.getDetailHtml(), requestDTO.getDetailMobileHtml());
-
         return ResultUtil.success(skuDO.getId());
     }
 

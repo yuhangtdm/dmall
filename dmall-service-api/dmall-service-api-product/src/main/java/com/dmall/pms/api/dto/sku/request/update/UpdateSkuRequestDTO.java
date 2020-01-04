@@ -1,6 +1,7 @@
 package com.dmall.pms.api.dto.sku.request.update;
 
-import com.dmall.pms.api.dto.sku.common.MediaDTO;
+import com.dmall.pms.api.dto.sku.request.save.MediaRequestDTO;
+import com.dmall.pms.api.dto.sku.response.MediaResponseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class UpdateSkuRequestDTO {
     @NotNull(message = "sku基本信息不能为空")
     private BasicSkuRequestDTO basicSkuRequestDTO;
 
+
     @ApiModelProperty(value = "商品属性值id列表", position = 2)
     private List<Long> productAttributeValueList;
 
@@ -34,6 +36,7 @@ public class UpdateSkuRequestDTO {
     private String detailMobileHtml;
 
     @ApiModelProperty(value = "sku媒体列表", position = 5)
-    private List<MediaDTO> mediaList;
+    @Valid
+    private List<MediaRequestDTO> mediaList;
 
 }

@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dmall.common.model.result.UploadResult;
 import com.dmall.component.file.qiniu.exception.QiNiuErrorEnum;
 import com.dmall.component.file.qiniu.exception.QiNiuException;
+import com.google.common.collect.Lists;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @description: 七牛云管理类
@@ -58,13 +60,24 @@ public class QiNiuFileManager {
     /**
      * 上传文件
      */
+    public List<UploadResult> upload(MultipartFile[] files, String catalog) throws IOException {
+        List<UploadResult> uploadResults = Lists.newArrayList();
+        for (MultipartFile file : files) {
+            uploadResults.add(upload(file, catalog));
+        }
+        return uploadResults;
+    }
+
+    /**
+     * 上传文件
+     */
     public UploadResult upload(MultipartFile file, String catalog) throws IOException {
         String fileType = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
         DefaultPutRet upload = this.upload(file.getInputStream(), catalog, fileType);
         UploadResult uploadResult = new UploadResult();
         uploadResult.setKey(upload.key);
         uploadResult.setHash(upload.hash);
-        uploadResult.setSrc(this.get(upload.key));
+        uploadResult.setUrl(this.get(upload.key));
         return uploadResult;
     }
 

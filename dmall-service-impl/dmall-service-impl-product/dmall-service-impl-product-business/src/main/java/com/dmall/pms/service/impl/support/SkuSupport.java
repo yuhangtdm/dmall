@@ -1,5 +1,7 @@
 package com.dmall.pms.service.impl.support;
 
+import java.util.Date;
+
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -8,10 +10,13 @@ import com.dmall.common.model.result.BaseResult;
 import com.dmall.common.util.NoUtil;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.SkuSpecificationsRequestDTO;
 import com.dmall.pms.api.dto.product.response.get.SkuListResponseDTO;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.CategorySkuMapper;
+import com.dmall.pms.generator.mapper.ProductMapper;
+import com.dmall.pms.generator.mapper.SkuAttributeValueMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
@@ -32,6 +37,9 @@ public class SkuSupport {
     private SkuMapper skuMapper;
 
     @Autowired
+    private ProductMapper productMapper;
+
+    @Autowired
     private SkuExtSupport skuExtSupport;
 
     @Autowired
@@ -45,6 +53,13 @@ public class SkuSupport {
 
     @Autowired
     private SkuAttributeValueSupport skuAttributeValueSupport;
+
+    @Autowired
+    private ProductAttributeValueSupport productAttributeValueSupport;
+
+    @Autowired
+    private SkuAttributeValueMapper skuAttributeValueMapper;
+
     /**
      * 根据商品id查询列表
      */
@@ -79,6 +94,18 @@ public class SkuSupport {
                 categorySkuDO.setCascadeCategoryId(categoryDO.getPath());
                 categorySkuMapper.insert(categorySkuDO);
             }
+            // skuAttributeValueDO
+            for (SkuSpecificationsRequestDTO skuSpecification : addSkuRequestDTO.getSkuSpecifications()) {
+                ProductAttributeValueDO productAttributeValueDO = productAttributeValueSupport
+                        .getByProductIdAndAttributeValue(productId, skuSpecification.getAttributeId(), skuSpecification.getAttributeValue());
+                if (productAttributeValueDO != null) {
+                    SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
+                    skuAttributeValueDO.setProductId(productId);
+                    skuAttributeValueDO.setSkuId(skuDO.getId());
+                    skuAttributeValueDO.setProductAttributeValueId(productAttributeValueDO.getId());
+                    skuAttributeValueMapper.insert(skuAttributeValueDO);
+                }
+            }
 
         }
     }
@@ -107,7 +134,12 @@ public class SkuSupport {
     /**
      * 公共校验逻辑
      */
-    public BaseResult validate(Long skuId) {
+    public BaseResult validate(Long productId, Long skuId) {
+        // 商品必须存在
+        ProductDO productDO = productMapper.selectById(productId);
+        if (productDO == null) {
+            return ResultUtil.fail(SkuErrorEnum.PRODUCT_NOT_EXISTS);
+        }
         SkuDO skuDO = skuMapper.selectById(skuId);
         if (skuDO == null) {
             return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);

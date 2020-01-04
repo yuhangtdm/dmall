@@ -116,6 +116,9 @@ public class SkuExtSupport {
     public SkuExtResponseDTO getSkuExt(Long skuId) {
         SkuExtResponseDTO responseDTO = new SkuExtResponseDTO();
         SkuExtDO skuExtDO = getBySkuId(skuId);
+        if (skuExtDO == null) {
+            return null;
+        }
         responseDTO.setDetailHtml(skuExtDO.getDetailHtml());
         responseDTO.setDetailMobileHtml(skuExtDO.getDetailMobileHtml());
         responseDTO.setSkuSpecificationsJson(skuExtDO.getSkuSpecificationsJson());

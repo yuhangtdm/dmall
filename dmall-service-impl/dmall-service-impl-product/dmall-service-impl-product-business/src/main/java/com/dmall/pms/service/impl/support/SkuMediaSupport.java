@@ -2,7 +2,8 @@ package com.dmall.pms.service.impl.support;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.pms.api.dto.sku.common.MediaDTO;
+import com.dmall.pms.api.dto.sku.response.MediaResponseDTO;
+import com.dmall.pms.api.dto.sku.request.save.MediaRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.service.ISkuMediaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,17 @@ public class SkuMediaSupport {
     /**
      * 新增或删除skuMedia
      */
-    public void saveOrDeleteSkuMedia(Long productId, Long skuId, List<MediaDTO> mediaList) {
+    public void saveOrDeleteSkuMedia(Long productId, Long skuId, List<MediaRequestDTO> mediaList) {
         List<SkuMediaDO> mediaDoList = iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
         if (CollUtil.isEmpty(mediaDoList)) {
             List<SkuMediaDO> skuMediaList = mediaList.stream()
-                    .map(mediaDTO -> buildSkuMediaDO(productId, skuId, mediaDTO))
+                    .map(mediaRequestDTO -> buildSkuMediaDO(productId, skuId, mediaRequestDTO))
                     .collect(Collectors.toList());
             iSkuMediaService.saveBatch(skuMediaList);
         } else {
             List<Long> oldMediaIds = mediaDoList.stream().map(SkuMediaDO::getId)
                     .collect(Collectors.toList());
-            List<Long> newMediaIds = mediaList.stream().map(MediaDTO::getSkuMediaId).collect(Collectors.toList());
+            List<Long> newMediaIds = mediaList.stream().map(MediaRequestDTO::getSkuMediaId).collect(Collectors.toList());
             // 删除的id集合
             List<Long> deleteIdList = oldMediaIds.stream()
                     .filter(mediaId -> !newMediaIds.contains(mediaId))
@@ -55,17 +56,17 @@ public class SkuMediaSupport {
     /**
      * 获取skuMedia列表
      */
-    public List<MediaDTO> listBySkuId(Long skuId) {
+    public List<MediaResponseDTO> listBySkuId(Long skuId) {
         List<SkuMediaDO> list = iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
         return list.stream().map(skuMediaDO -> {
-            MediaDTO mediaDTO = new MediaDTO();
-            mediaDTO.setSkuMediaId(skuMediaDO.getId());
-            mediaDTO.setKey(skuMediaDO.getMediaKey());
-            mediaDTO.setHash(skuMediaDO.getMediaHash());
-            mediaDTO.setUrl(skuMediaDO.getMediaUrl());
-            mediaDTO.setMediaType(skuMediaDO.getMediaType());
-            mediaDTO.setSort(skuMediaDO.getSort());
-            return mediaDTO;
+            MediaResponseDTO mediaResponseDTO = new MediaResponseDTO();
+            mediaResponseDTO.setSkuMediaId(skuMediaDO.getId());
+            mediaResponseDTO.setKey(skuMediaDO.getMediaKey());
+            mediaResponseDTO.setHash(skuMediaDO.getMediaHash());
+            mediaResponseDTO.setUrl(skuMediaDO.getMediaUrl());
+            mediaResponseDTO.setMediaType(skuMediaDO.getMediaType());
+            mediaResponseDTO.setSort(skuMediaDO.getSort());
+            return mediaResponseDTO;
         }).collect(Collectors.toList());
     }
 
@@ -84,7 +85,7 @@ public class SkuMediaSupport {
 
     }
 
-    private SkuMediaDO buildSkuMediaDO(Long productId, Long skuId, MediaDTO mediaDTO) {
+    private SkuMediaDO buildSkuMediaDO(Long productId, Long skuId, MediaRequestDTO mediaDTO) {
         SkuMediaDO skuMediaDO = new SkuMediaDO();
         skuMediaDO.setProductId(productId);
         skuMediaDO.setSkuId(skuId);
@@ -94,6 +95,5 @@ public class SkuMediaSupport {
         skuMediaDO.setSort(mediaDTO.getSort());
         return skuMediaDO;
     }
-
 
 }

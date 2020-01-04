@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @description:
@@ -33,20 +34,17 @@ public class UploadSkuHandler extends AbstractCommonHandler<UploadRequestDTO, Sk
     @Autowired
     private SkuMapper skuMapper;
 
-    @Autowired
-    private SkuMediaMapper skuMediaMapper;
-
     @Override
-    public BaseResult<UploadResult> processor(UploadRequestDTO requestDTO) {
+    public BaseResult<List<UploadResult>> processor(UploadRequestDTO requestDTO) {
         try {
             SkuDO skuDO = skuMapper.selectById(requestDTO.getId());
             if (skuDO == null) {
                 return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
             }
-            UploadResult uploadResult = qiNiuFileManager.upload(requestDTO.getFile(), QiNiuConstants.SKU);
-            return ResultUtil.success(uploadResult);
+            List<UploadResult> upload = qiNiuFileManager.upload(requestDTO.getFiles(), QiNiuConstants.SKU);
+            return ResultUtil.success(upload);
         } catch (IOException e) {
-            log.error("upload sku pic failed", e);
+            log.error("upload sku pics failed", e);
             return ResultUtil.success(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
         }
     }
