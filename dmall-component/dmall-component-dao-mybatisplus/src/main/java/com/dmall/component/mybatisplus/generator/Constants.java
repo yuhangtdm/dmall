@@ -13,16 +13,16 @@ public interface Constants {
     String DEFAULT_API_MODULE_NAME = "D:/dmall-service-api/dmall-service-api-product";
 
 
-    String GENERATOR_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator";
+    String GENERATOR_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-generator";
 
-    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-product";
+    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-background";
 
-    String BUSINESS_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business";
+    String BUSINESS_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-business";
 
     /**
      * db url
      */
-    String DB_URL = "jdbc:mysql://106.15.188.249:3306/dmall_pms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
+    String DB_URL = "jdbc:mysql://localhost:3306/dmall_bms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
     /**
      * username
      */
@@ -30,7 +30,7 @@ public interface Constants {
     /**
      * password
      */
-    String PASSWORD = "f088df87e10c40fe804c54e88d54b8e4";
+    String PASSWORD = "root";
     /**
      * 驱动
      */
@@ -49,7 +49,7 @@ public interface Constants {
     /**
      * 包的模块名
      */
-    String PACKAGE_MODULE_NAME = "pms";
+    String PACKAGE_MODULE_NAME = "bms";
 
     /**
      * 包的固定名称

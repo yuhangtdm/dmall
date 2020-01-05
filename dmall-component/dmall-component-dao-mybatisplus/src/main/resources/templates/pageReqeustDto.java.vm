@@ -1,11 +1,14 @@
-package ${requestDtoPackage}import com.dmall.component.web.entity.PageRequestDTO;
+package ${requestDtoPackage};
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
+import com.dmall.component.web.entity.PageRequestDTO;
 
-;
+import java.util.*;
+import java.math.*;
 
 /**
  * @description: $!{pageRequestComment}
@@ -14,13 +17,12 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "${pageRequestDto}" , description = "$!{pageRequestComment}" )
+@ApiModel(value = "${pageRequestDto}", description = "$!{pageRequestComment}")
 public class ${pageRequestDto}  extends PageRequestDTO{
 
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
-
     #if(${field.keyFlag})
         #set($keyPropertyName=${field.propertyName})
     #end
@@ -29,10 +31,11 @@ public class ${pageRequestDto}  extends PageRequestDTO{
     && ("$!field.propertyName" != "modifier") && ("$!field.propertyName" != "gmtModified") && (
         "$!field.propertyName" != "isDeleted"))
         #if("$!field.comment" != "")
-        @ApiModelProperty(value = "${field.comment}" , position = ${foreach.count})
+        @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
         #end
     private ${field.propertyType} ${field.propertyName};
     #end
+
 #end
 ## ----------  END 字段循环遍历  ----------
 

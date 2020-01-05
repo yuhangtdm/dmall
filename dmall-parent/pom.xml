@@ -50,7 +50,6 @@
         <module>../dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business</module>
 
         <module>../dmall-web/dmall-web-admin</module>
-        <module>../dmall-web/dmall-web-portal</module>
     </modules>
 
     <properties>
@@ -292,6 +291,11 @@
                 <artifactId>dmall-service-api-member</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-api-background</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--impl-generator -->
             <dependency>
@@ -304,7 +308,11 @@
                 <artifactId>dmall-service-impl-product-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-impl-background-generator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

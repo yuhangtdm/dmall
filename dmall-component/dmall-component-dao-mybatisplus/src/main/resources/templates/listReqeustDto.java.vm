@@ -1,9 +1,13 @@
-package ${requestDtoPackage}import io.swagger.annotations.ApiModel;
+package ${requestDtoPackage};
+
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-;
+import java.util.*;
+import java.math.*;
+import java.io.Serializable;
 
 /**
  * @description: $!{listRequestComment}
@@ -11,14 +15,13 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "${listRequestDto}" , description = "$!{listRequestComment}" )
+@ApiModel(value = "${listRequestDto}", description = "$!{listRequestComment}")
 public class ${listRequestDto} implements Serializable{
 
 private static final long serialVersionUID=1L;
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
-
     #if(${field.keyFlag})
         #set($keyPropertyName=${field.propertyName})
     #end
@@ -27,7 +30,7 @@ private static final long serialVersionUID=1L;
     && ("$!field.propertyName" != "modifier") && ("$!field.propertyName" != "gmtModified") && (
         "$!field.propertyName" != "isDeleted"))
         #if("$!field.comment" != "")
-        @ApiModelProperty(value = "${field.comment}" , position = ${foreach.count})
+        @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
         #end
     private ${field.propertyType} ${field.propertyName};
     #end

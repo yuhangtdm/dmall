@@ -14,5 +14,10 @@
     <artifactId>dmall-service-api-background</artifactId>
     <packaging>jar</packaging>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>

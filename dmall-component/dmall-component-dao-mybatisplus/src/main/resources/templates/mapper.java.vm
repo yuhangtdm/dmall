@@ -1,8 +1,7 @@
 package ${package.Mapper};
-${package.Entity}
-        .${entity};
-    ${superMapperClassPackage}
-        ;
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
 
 /**
  * @description: $!{table.comment}

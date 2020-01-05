@@ -1,16 +1,16 @@
-package ${handlerPackage}import com.dmall.component.web.util.ResultUtil;
+package ${handlerPackage};
+
+import ${commonDtoPackage}.${commonResponseDto};
+import ${requestDtoPackage}.${pageRequestDto};
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import com.dmall.common.model.result.LayuiPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.model.handler.AbstractCommonHandler;
+import com.dmall.common.model.result.BaseResult;
+import com.dmall.component.web.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-;
-${commonDtoPackage}
-        .${commonResponseDto};
-    ${requestDtoPackage}
-        .${pageRequestDto};
-    ${package.Entity}
-        .${entity};
-    ${package.Mapper}
-        .${table.mapperName};
 
 /**
  * @description: $!{pageHandlerComment}

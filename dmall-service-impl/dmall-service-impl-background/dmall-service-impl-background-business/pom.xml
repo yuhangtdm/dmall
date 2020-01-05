@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>dmall-parent</artifactId>
+        <groupId>com.allInJava</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../../dmall-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>dmall-service-impl-background-business</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-common-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-background</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-impl-background-generator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-dao-mybatisplus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-cache-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

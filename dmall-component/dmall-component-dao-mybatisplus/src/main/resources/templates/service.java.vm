@@ -1,8 +1,7 @@
 package ${package.Service};
-${package.Entity}
-        .${entity};
-    ${superServiceClassPackage}
-        ;
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
 
 /**
  * @description: $!{table.comment}

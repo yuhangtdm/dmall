@@ -1,10 +1,11 @@
-package ${requestDtoPackage}import io.swagger.annotations.ApiModel;
+package ${requestDtoPackage};
+
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-; ${commonDtoPackage}.${commonRequestDto};
+import lombok.EqualsAndHashCode;
+import ${commonDtoPackage}.${commonRequestDto};
 
 /**
  * @description: $!{updateRequestComment}
@@ -13,10 +14,10 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "${updateRequestDto}" , description = "$!{updateRequestComment}" )
+@ApiModel(value = "${updateRequestDto}", description = "$!{updateRequestComment}")
 public class ${updateRequestDto} extends ${commonRequestDto} {
 
-@ApiModelProperty(value = "主键" , required = true, position = 0)
+@ApiModelProperty(value = "主键", required = true, position = 0)
 private Long id;
 
         }

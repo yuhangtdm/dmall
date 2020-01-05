@@ -1,22 +1,19 @@
-package ${serviceImplPackage}import org.springframework.beans.factory.annotation.Autowired;
+package ${serviceImplPackage};
+
+import ${requestDtoPackage}.${saveRequestDto};
+import ${requestDtoPackage}.${updateRequestDto};
+import ${requestDtoPackage}.${listRequestDto};
+import ${requestDtoPackage}.${pageRequestDto};
+import ${commonDtoPackage}.${commonResponseDto};
+import ${servicePackage}.${businessService};
+import ${handlerPackage}.*;
+import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.model.result.LayuiPage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-;
-${requestDtoPackage}
-        .${saveRequestDto};
-    ${requestDtoPackage}
-        .${updateRequestDto};
-    ${requestDtoPackage}
-        .${listRequestDto};
-    ${requestDtoPackage}
-        .${pageRequestDto};
-    ${commonDtoPackage}
-        .${commonResponseDto};
-    ${servicePackage}
-        .${businessService};
-    ${handlerPackage}
-        .*;
+import java.util.List;
 
 /**
  * @description: $!{serviceImplComment}
