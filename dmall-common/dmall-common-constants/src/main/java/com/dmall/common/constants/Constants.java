@@ -12,5 +12,9 @@ public interface Constants {
 
     String ID = "id";
 
+    String TOKEN = "token";
 
+    String DEFAULT_CHARSET = "utf-8";
+
+    String ADMIN_USER = "user";
 }

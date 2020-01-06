@@ -41,6 +41,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-sso</artifactId>
+        </dependency>
 
     </dependencies>
 

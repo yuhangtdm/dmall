@@ -18,6 +18,8 @@ public enum BasicStatusEnum implements ErrorCodeEnum {
     PARAM_TYPE_ERROR("409", "请求参数类型不合法"),
     MEDIA_PARAM_TYPE_ERROR("406", "请求体不合法"),
     METHOD_NOT_ALLOWED("405", "请求方式不合法"),
+    USER_NOT_LOGIN("408", "用户未登录"),
+
     ;
 
     /**

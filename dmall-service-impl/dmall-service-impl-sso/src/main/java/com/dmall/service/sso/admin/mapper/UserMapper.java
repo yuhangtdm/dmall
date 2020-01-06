@@ -1,0 +1,12 @@
+package com.dmall.service.sso.admin.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dmall.service.sso.admin.dataobject.UserDO;
+
+/**
+ * @description: 后台用户表
+ * @author: created by hang.yu on 2020-01-05 18:36:38
+ */
+public interface UserMapper extends BaseMapper<UserDO> {
+
+}
