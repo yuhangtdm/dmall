@@ -123,6 +123,8 @@ public class GeneratorCodeUtil {
         tableFillList.add(new TableFill(Constants.GMT_CREATED, FieldFill.INSERT));
         tableFillList.add(new TableFill(Constants.GMT_MODIFIED, FieldFill.INSERT_UPDATE));
         tableFillList.add(new TableFill(Constants.IS_DELETED, FieldFill.INSERT));
+        tableFillList.add(new TableFill(Constants.CREATOR, FieldFill.INSERT));
+        tableFillList.add(new TableFill(Constants.MODIFIER, FieldFill.INSERT_UPDATE));
         strategyConfig.setTableFillList(tableFillList);
         strategyConfig.setLogicDeleteFieldName(Constants.IS_DELETED);
         return strategyConfig;

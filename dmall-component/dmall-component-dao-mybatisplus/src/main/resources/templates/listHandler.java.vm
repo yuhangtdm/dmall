@@ -10,7 +10,6 @@ import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 /**

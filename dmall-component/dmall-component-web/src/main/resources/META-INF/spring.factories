@@ -4,4 +4,6 @@ com.dmall.component.web.configuration.DMallSwaggerConfiguration,\
 com.dmall.component.web.configuration.HystrixConfiguration,\
 com.dmall.component.web.configuration.DMallWebConfiguration,\
 com.dmall.component.web.configuration.DMallLogAspectConfiguration,\
-com.dmall.component.web.configuration.HttpClientConfiguration
+com.dmall.component.web.configuration.HttpClientConfiguration,\
+com.dmall.component.web.configuration.LoginFilterConfiguration,\
+com.dmall.component.web.configuration.FeignRequestConfiguration

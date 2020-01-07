@@ -79,6 +79,10 @@ public interface Constants {
 
     String IS_DELETED = "is_deleted";
 
+    String CREATOR = "creator";
+
+    String MODIFIER = "modifier";
+
     String TEMPLATES_ENTITY = "templates/entity.java.vm";
 
     String TEMPLATES_MAPPER = "templates/mapper.java.vm";

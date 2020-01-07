@@ -1,4 +1,4 @@
-package com.dmall.sso.api.dto;
+package com.dmall.common.model.user;
 
 import lombok.Data;
 
@@ -42,5 +42,10 @@ public class UserDTO implements Serializable {
      * 真实姓名
      */
     private String realName;
+
+    /**
+     * 来源
+     */
+    private String source;
 
 }

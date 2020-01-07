@@ -17,4 +17,6 @@ public interface Constants {
     String DEFAULT_CHARSET = "utf-8";
 
     String ADMIN_USER = "user";
+
+    String SOURCE = "source";
 }

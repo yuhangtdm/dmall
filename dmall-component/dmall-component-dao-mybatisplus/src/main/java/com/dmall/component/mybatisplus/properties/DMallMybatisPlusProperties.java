@@ -46,4 +46,14 @@ public class DMallMybatisPlusProperties {
      */
     private String isDeletedColumn = "isDeleted";
 
+    /**
+     * 新增用户的列名
+     */
+    private String creator = "creator";
+
+    /**
+     * 修改用户的列名
+     */
+    private String modifier = "modifier";
+
 }

@@ -9,7 +9,7 @@ import com.dmall.component.web.util.AjaxUtil;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
 import com.dmall.framework.zuul.feign.LoginServiceFeign;
-import com.dmall.sso.api.dto.UserDTO;
+import com.dmall.common.model.user.UserDTO;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author: created by hang.yu on 2020/1/6 22:35
  */
 @Component
-public class AdminUserFilter extends ZuulFilter {
+public class AdminUserZuulFilter extends ZuulFilter {
 
     /**
      * 免登录白名单
@@ -78,7 +78,6 @@ public class AdminUserFilter extends ZuulFilter {
             // 放行
             return null;
         }
-
         String token = request.getHeader(Constants.TOKEN);
         if (StrUtil.isBlank(token)) {
             requestContext.setSendZuulResponse(false);
@@ -114,10 +113,8 @@ public class AdminUserFilter extends ZuulFilter {
                 return null;
             }
         }
-
         UserDTO userDTO = checkResult.getData();
         requestContext.addZuulRequestHeader(Constants.ADMIN_USER, JSON.toJSONString(userDTO));
-
         return null;
     }
 }

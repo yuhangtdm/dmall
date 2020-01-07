@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
 import com.dmall.component.web.entity.PageRequestDTO;
-
 import java.util.*;
 import java.math.*;
 

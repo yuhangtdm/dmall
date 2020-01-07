@@ -2,6 +2,8 @@ package com.dmall.component.mybatisplus.autofill;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.dmall.common.constants.Constants;
+import com.dmall.common.model.user.AdminUserContextHolder;
+import com.dmall.common.model.user.UserDTO;
 import com.dmall.component.mybatisplus.properties.DMallMybatisPlusProperties;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -34,10 +36,21 @@ public class AutoFillHandler implements MetaObjectHandler {
         if (IsDeletedType == null) {
             setFieldValByName(dMallMybatisPlusProperties.getIsDeletedColumn(), Constants.N, metaObject);
         }
+
+        UserDTO userDTO = AdminUserContextHolder.get();
+        if (userDTO != null) {
+            setFieldValByName(dMallMybatisPlusProperties.getCreator(), userDTO.getId(), metaObject);
+            setFieldValByName(dMallMybatisPlusProperties.getModifier(), userDTO.getId(), metaObject);
+        }
+
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         setFieldValByName(dMallMybatisPlusProperties.getUpdateTimeColumn(), new Date(), metaObject);
+        UserDTO userDTO = AdminUserContextHolder.get();
+        if (userDTO != null) {
+            setFieldValByName(dMallMybatisPlusProperties.getModifier(), userDTO.getId(), metaObject);
+        }
     }
 }
