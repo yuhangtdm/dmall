@@ -4,10 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
+import com.dmall.common.enums.SourceEnum;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.AjaxUtil;
 import com.dmall.component.web.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
+import com.dmall.framework.zuul.configuration.ZuulSwaggerProperties;
 import com.dmall.framework.zuul.feign.LoginServiceFeign;
 import com.dmall.common.model.user.UserDTO;
 import com.netflix.zuul.ZuulFilter;
@@ -29,17 +31,13 @@ import java.util.List;
 @Component
 public class AdminUserZuulFilter extends ZuulFilter {
 
-    /**
-     * 免登录白名单
-     */
-    @Value("dmall.zuul.whiteList")
-    private List<String> whiteList;
 
-    @Value("dmall.zuul.loginUrl")
-    private String loginUrl;
 
     @Autowired
     private LoginServiceFeign loginServiceFeign;
+
+    @Autowired
+    private ZuulSwaggerProperties zuulSwaggerProperties;
 
     /**
      * 过滤器类型，有pre、routing、post、error四种。
@@ -72,10 +70,25 @@ public class AdminUserZuulFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
-
         String uri = request.getRequestURI();
-        if (whiteList.contains(uri)) {
+        for (String white : zuulSwaggerProperties.getWhiteList()) {
+            if (uri.contains(white)) {
+                return null;
+            }
+        }
+        if (zuulSwaggerProperties.getWhiteList().contains(uri)) {
             // 放行
+            return null;
+        }
+
+        String header = request.getHeader(Constants.SOURCE);
+        if (StrUtil.isBlank(header)) {
+            requestContext.setResponseBody(JSON.toJSONString(ResultUtil.fail(AdminUserErrorEnum.SOURCE_BLANK)));
+            requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
+            return null;
+        }
+        // 只拦截后台请求
+        if (!SourceEnum.ADMIN.getCode().equals(header)) {
             return null;
         }
         String token = request.getHeader(Constants.TOKEN);
@@ -88,7 +101,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
             } else {
                 // 重定向到登录地址
                 try {
-                    requestContext.getResponse().sendRedirect(loginUrl);
+                    requestContext.getResponse().sendRedirect(zuulSwaggerProperties.getLoginUrl());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -106,7 +119,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
             } else {
                 // 重定向到登录地址
                 try {
-                    requestContext.getResponse().sendRedirect(loginUrl);
+                    requestContext.getResponse().sendRedirect(zuulSwaggerProperties.getLoginUrl());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -12,7 +12,7 @@ import java.util.List;
  * @description: 登录过滤器配置
  * @author: created by hang.yu on 2020/1/7 22:33
  */
-@Configuration
+//@Configuration
 public class LoginFilterConfiguration {
 
     /**

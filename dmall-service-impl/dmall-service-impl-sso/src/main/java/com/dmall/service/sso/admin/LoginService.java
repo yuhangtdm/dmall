@@ -36,7 +36,7 @@ public class LoginService implements AdminLoginService {
     @Autowired
     private DMallRedisProperties dMallRedisProperties;
 
-    @Value("${dmall.indexUrl}")
+    @Value("${dmall.sso.index.url}")
     private String indexUrl;
 
     /**

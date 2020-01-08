@@ -39,13 +39,13 @@
 
         <module>../dmall-service-api/dmall-service-api-product</module>
         <module>../dmall-service-api/dmall-service-api-member</module>
-        <module>../dmall-service-api/dmall-service-api-order</module>
         <module>../dmall-service-api/dmall-service-api-background</module>
-        <module>../dmall-service-api/dmall-service-api-content</module>
-        <module>../dmall-service-api/dmall-service-api-sale</module>
-        <module>../dmall-service-api/dmall-service-api-pay</module>
-        <module>../dmall-service-api/dmall-service-api-search</module>
         <module>../dmall-service-api/dmall-service-api-sso</module>
+        <!-- <module>../dmall-service-api/dmall-service-api-order</module>
+         <module>../dmall-service-api/dmall-service-api-content</module>
+         <module>../dmall-service-api/dmall-service-api-sale</module>
+         <module>../dmall-service-api/dmall-service-api-pay</module>
+         <module>../dmall-service-api/dmall-service-api-search</module>-->
 
         <module>../dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator</module>
         <module>../dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business</module>

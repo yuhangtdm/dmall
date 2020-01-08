@@ -28,12 +28,10 @@ public class AdminUserFilter implements Filter {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             String header = request.getHeader(Constants.SOURCE);
-
-            if (!SourceEnum.ADMIN.equals(header)) {
+            if (!SourceEnum.ADMIN.getCode().equals(header)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
-
             String userDto = request.getHeader(Constants.ADMIN_USER);
             if (StrUtil.isBlank(userDto)) {
                 response.setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * @description:
  * @author: created by hang.yu on 2019/10/16 22:18
  */
-@Component
+//@Component
 @Slf4j
 public class PreLogFilter extends ZuulFilter {
 

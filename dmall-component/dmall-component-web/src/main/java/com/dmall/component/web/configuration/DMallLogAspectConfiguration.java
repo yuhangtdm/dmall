@@ -16,6 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @description: 日志切面配置类
  * @author: created by hang.yu on 2019/11/10 18:47
@@ -50,6 +52,7 @@ public class DMallLogAspectConfiguration implements BasicConfiguration {
     }
 
     @Override
+    @PostConstruct
     public void check() {
         log.info("init -> [{}],properties:\n{}", "DMallLogProperties", JSON.toJSONString(dMallLogProperties, true));
         if (dMallLogProperties.getEnabled() && StringUtils.isBlank(dMallLogProperties.getPointcut())) {

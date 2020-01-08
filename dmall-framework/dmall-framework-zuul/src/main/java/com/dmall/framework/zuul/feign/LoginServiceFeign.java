@@ -9,4 +9,5 @@ import org.springframework.cloud.openfeign.FeignClient;
  */
 @FeignClient(value = "dmall-service-api-sso")
 public interface LoginServiceFeign extends AdminLoginService {
+
 }

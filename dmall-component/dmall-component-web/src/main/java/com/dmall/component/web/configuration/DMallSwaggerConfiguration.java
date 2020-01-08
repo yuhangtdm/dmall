@@ -25,6 +25,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,7 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
     }
 
     @Override
+    @PostConstruct
     public void check() {
         log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JSON.toJSONString(dMallSwaggerProperties, true));
         if (dMallSwaggerProperties.getEnabled() && StringUtils.isBlank(dMallSwaggerProperties.getBasePackage())) {

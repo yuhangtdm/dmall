@@ -15,12 +15,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-web</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-service</artifactId>
@@ -45,7 +39,6 @@
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-service-api-sso</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>

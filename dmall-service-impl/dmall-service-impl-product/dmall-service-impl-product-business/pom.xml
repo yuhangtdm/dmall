@@ -43,11 +43,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-component-dao-mybatisplus</artifactId>
         </dependency>
@@ -62,14 +57,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!--性能测试依赖-->
-        <!--<dependency>
-            <groupId>org.databene</groupId>
-            <artifactId>contiperf</artifactId>
-            <version>2.3.4</version>
-            <scope>test</scope>
-        </dependency>-->
     </dependencies>
 
     <build>
