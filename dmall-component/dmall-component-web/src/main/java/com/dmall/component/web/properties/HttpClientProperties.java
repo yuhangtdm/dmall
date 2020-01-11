@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description:
+ * @description: HttpClientProperties
  * @author: created by hang.yu on 2019/12/17 15:09
  */
 @Data

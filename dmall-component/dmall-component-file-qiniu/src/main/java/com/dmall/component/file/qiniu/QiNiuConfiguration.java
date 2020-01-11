@@ -1,7 +1,7 @@
 package com.dmall.component.file.qiniu;
 
 import com.alibaba.fastjson.JSON;
-import com.dmall.common.model.configuration.BasicConfiguration;
+import com.dmall.common.model.BasicConfiguration;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.component.file.qiniu.exception.QiNiuErrorEnum;
 import com.dmall.component.file.qiniu.exception.QiNiuException;

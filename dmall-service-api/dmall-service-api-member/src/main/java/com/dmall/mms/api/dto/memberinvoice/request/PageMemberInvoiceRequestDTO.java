@@ -1,6 +1,6 @@
 package com.dmall.mms.api.dto.memberinvoice.request;
 
-import com.dmall.component.web.entity.PageRequestDTO;
+import com.dmall.common.dto.PageRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

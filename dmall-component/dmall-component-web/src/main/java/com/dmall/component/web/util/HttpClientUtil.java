@@ -27,13 +27,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description:
+ * @description: HttpClientUtil
  * @author: created by hang.yu on 2019/12/17 15:21
  */
 public class HttpClientUtil {
 
     private static final String DEFAULT_CHARSET = "UTF-8";
+
     private static final String FILE_PART = "files";
+
     private CloseableHttpClient httpClient;
 
     public HttpClientUtil(CloseableHttpClient httpClient) {

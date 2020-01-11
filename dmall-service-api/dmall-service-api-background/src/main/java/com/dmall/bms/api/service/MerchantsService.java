@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.merchants.request.PageMerchantsRequestDTO;
 import com.dmall.bms.api.dto.merchants.common.CommonMerchantsResponseDTO;
 import com.dmall.bms.api.dto.merchants.request.SaveMerchantsRequestDTO;
 import com.dmall.bms.api.dto.merchants.request.UpdateMerchantsRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface MerchantsService {
 
     @PostMapping("/page")
     @ApiOperation(value = "商家店铺表 1期只有一家店铺分页")
-    BaseResult<LayuiPage<CommonMerchantsResponseDTO>> page(@RequestBody PageMerchantsRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMerchantsResponseDTO>> page(@RequestBody PageMerchantsRequestDTO requestDTO);
 
 }

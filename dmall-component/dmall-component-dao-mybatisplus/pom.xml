@@ -57,22 +57,6 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
 
-        <!--common相关依赖-->
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-common-enum</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-common-model</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-common-constants</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-util</artifactId>

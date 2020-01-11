@@ -4,25 +4,23 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
+import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.SourceEnum;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.AjaxUtil;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.model.user.UserDTO;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
+import com.dmall.framework.zuul.AjaxUtil;
 import com.dmall.framework.zuul.configuration.ZuulSwaggerProperties;
 import com.dmall.framework.zuul.feign.LoginServiceFeign;
-import com.dmall.common.model.user.UserDTO;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
 
 /**
  * @description: 后台用户过滤器
@@ -30,8 +28,6 @@ import java.util.List;
  */
 @Component
 public class AdminUserZuulFilter extends ZuulFilter {
-
-
 
     @Autowired
     private LoginServiceFeign loginServiceFeign;
@@ -52,7 +48,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
      */
     @Override
     public int filterOrder() {
-        return 2;
+        return 1;
     }
 
     /**

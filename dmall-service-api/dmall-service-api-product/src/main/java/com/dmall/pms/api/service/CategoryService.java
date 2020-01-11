@@ -1,6 +1,6 @@
 package com.dmall.pms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.dto.BaseResult;
 import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;

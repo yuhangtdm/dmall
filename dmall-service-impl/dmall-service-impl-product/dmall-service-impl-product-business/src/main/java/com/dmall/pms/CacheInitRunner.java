@@ -1,10 +1,9 @@
 package com.dmall.pms;
 
-import com.dmall.common.model.service.CommonCacheService;
+import com.dmall.common.model.CommonCacheService;
 import com.dmall.component.web.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;

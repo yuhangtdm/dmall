@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.mms.api.dto.membercolletionsubject.common.CommonMemberColletionSubjectResponseDTO;
 import com.dmall.mms.api.dto.membercolletionsubject.request.ListMemberColletionSubjectRequestDTO;
 import com.dmall.mms.api.dto.membercolletionsubject.request.PageMemberColletionSubjectRequestDTO;
@@ -47,6 +47,6 @@ public interface MemberColletionSubjectService {
 
     @PostMapping("/page")
     @ApiOperation(value = "会员收藏专题表 分页")
-    BaseResult<LayuiPage<CommonMemberColletionSubjectResponseDTO>> page(@RequestBody PageMemberColletionSubjectRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMemberColletionSubjectResponseDTO>> page(@RequestBody PageMemberColletionSubjectRequestDTO requestDTO);
 
 }

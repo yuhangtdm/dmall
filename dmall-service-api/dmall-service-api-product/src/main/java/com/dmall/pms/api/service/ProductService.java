@@ -1,8 +1,8 @@
 package com.dmall.pms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import com.dmall.common.model.result.UploadResult;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
@@ -47,7 +47,7 @@ public interface ProductService {
 
     @PostMapping("/page")
     @ApiOperation(value = "商品分页")
-    BaseResult<LayuiPage<PageProductResponseDTO>> page(@Valid @RequestBody PageProductRequestDTO requestDTO);
+    BaseResult<LayUiPage<PageProductResponseDTO>> page(@Valid @RequestBody PageProductRequestDTO requestDTO);
 
     @ApiOperation(value = "上传商品主图")
     @PostMapping("/uploadProductPic")

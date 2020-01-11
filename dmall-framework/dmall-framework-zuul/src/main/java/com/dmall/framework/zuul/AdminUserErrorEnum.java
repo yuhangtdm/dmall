@@ -1,6 +1,6 @@
 package com.dmall.framework.zuul;
 
-import com.dmall.common.enums.base.ErrorCodeEnum;
+import com.dmall.common.enums.error.ErrorCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.dmall.pms.api.dto.sku.request.save;
 
-import com.dmall.common.enums.base.YNEnum;
-import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.dto.validate.ValueInEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

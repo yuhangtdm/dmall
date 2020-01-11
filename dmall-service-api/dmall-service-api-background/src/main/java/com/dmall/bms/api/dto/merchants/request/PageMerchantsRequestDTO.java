@@ -5,10 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.component.web.entity.PageRequestDTO;
-
-import java.util.*;
-import java.math.*;
+import com.dmall.common.dto.PageRequestDTO;
 
 /**
  * @description: 商家店铺表 1期只有一家店铺分页请求实体

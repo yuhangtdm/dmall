@@ -1,6 +1,6 @@
 package com.dmall.component.file.qiniu.exception;
 
-import com.dmall.common.enums.base.ErrorCodeEnum;
+import com.dmall.common.enums.error.ErrorCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

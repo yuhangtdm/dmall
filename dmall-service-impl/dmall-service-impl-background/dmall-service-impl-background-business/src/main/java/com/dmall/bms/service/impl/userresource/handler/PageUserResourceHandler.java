@@ -4,11 +4,10 @@ import com.dmall.bms.api.dto.userresource.common.CommonUserResourceResponseDTO;
 import com.dmall.bms.api.dto.userresource.request.PageUserResourceRequestDTO;
 import com.dmall.bms.generator.dataobject.UserResourceDO;
 import com.dmall.bms.generator.mapper.UserResourceMapper;
-import com.dmall.common.model.result.LayuiPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +22,12 @@ public class PageUserResourceHandler extends AbstractCommonHandler<PageUserResou
     private UserResourceMapper userResourceMapper;
 
     @Override
-    public BaseResult<LayuiPage<CommonUserResourceResponseDTO>> validate(PageUserResourceRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserResourceResponseDTO>> validate(PageUserResourceRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonUserResourceResponseDTO>> processor(PageUserResourceRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserResourceResponseDTO>> processor(PageUserResourceRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 

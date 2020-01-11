@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.mms.api.dto.bankcard.common.CommonBankCardResponseDTO;
 import com.dmall.mms.api.dto.bankcard.request.ListBankCardRequestDTO;
 import com.dmall.mms.api.dto.bankcard.request.PageBankCardRequestDTO;
@@ -47,6 +47,6 @@ public interface BankCardService {
 
     @PostMapping("/page")
     @ApiOperation(value = "会员银行卡分页")
-    BaseResult<LayuiPage<CommonBankCardResponseDTO>> page(@RequestBody PageBankCardRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonBankCardResponseDTO>> page(@RequestBody PageBankCardRequestDTO requestDTO);
 
 }

@@ -1,12 +1,11 @@
 package com.dmall.bms.service.impl.datadictionary.handler;
 
 import com.dmall.bms.api.dto.datadictionary.request.SaveDataDictionaryRequestDTO;
-import com.dmall.bms.service.impl.datadictionary.enums.DataDictionaryErrorEnum;
 import com.dmall.bms.generator.dataobject.DataDictionaryDO;
 import com.dmall.bms.generator.mapper.DataDictionaryMapper;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

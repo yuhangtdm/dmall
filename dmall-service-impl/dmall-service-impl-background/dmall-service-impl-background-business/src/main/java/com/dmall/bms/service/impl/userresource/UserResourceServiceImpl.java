@@ -7,8 +7,8 @@ import com.dmall.bms.api.dto.userresource.request.PageUserResourceRequestDTO;
 import com.dmall.bms.api.dto.userresource.common.CommonUserResourceResponseDTO;
 import com.dmall.bms.api.service.UserResourceService;
 import com.dmall.bms.service.impl.userresource.handler.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +67,7 @@ public class UserResourceServiceImpl implements UserResourceService {
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonUserResourceResponseDTO>> page(@RequestBody PageUserResourceRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserResourceResponseDTO>> page(@RequestBody PageUserResourceRequestDTO requestDTO) {
         return pageUserResourceHandler.handler(requestDTO);
     }
 

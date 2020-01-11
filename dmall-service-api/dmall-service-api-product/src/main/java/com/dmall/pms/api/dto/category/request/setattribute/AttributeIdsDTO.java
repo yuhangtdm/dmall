@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.category.request.setattribute;
 
-import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.pms.api.dto.category.enums.CanScreenEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

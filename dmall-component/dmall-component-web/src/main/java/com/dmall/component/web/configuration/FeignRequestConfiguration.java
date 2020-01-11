@@ -1,8 +1,7 @@
 package com.dmall.component.web.configuration;
 
-import com.dmall.component.web.filter.FeignRequestInterceptor;
+import com.dmall.component.web.interceptor.FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @description: feign配置类

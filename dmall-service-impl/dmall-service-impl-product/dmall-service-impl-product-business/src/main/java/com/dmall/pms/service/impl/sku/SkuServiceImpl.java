@@ -1,8 +1,8 @@
 package com.dmall.pms.service.impl.sku;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import com.dmall.common.model.result.UploadResult;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.UploadRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
@@ -107,7 +107,7 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public BaseResult<LayuiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO) {
         return pageSkuHandler.handler(requestDTO);
     }
 

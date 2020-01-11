@@ -2,9 +2,9 @@ package com.dmall.pms.service.impl.attribute.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;

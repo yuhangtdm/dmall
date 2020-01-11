@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.roleresource.request.PageRoleResourceRequestDTO;
 import com.dmall.bms.api.dto.roleresource.common.CommonRoleResourceResponseDTO;
 import com.dmall.bms.api.dto.roleresource.request.SaveRoleResourceRequestDTO;
 import com.dmall.bms.api.dto.roleresource.request.UpdateRoleResourceRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface RoleResourceService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台角色-资源分页")
-    BaseResult<LayuiPage<CommonRoleResourceResponseDTO>> page(@RequestBody PageRoleResourceRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonRoleResourceResponseDTO>> page(@RequestBody PageRoleResourceRequestDTO requestDTO);
 
 }

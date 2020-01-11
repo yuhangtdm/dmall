@@ -1,7 +1,7 @@
 package com.dmall.component.cache.redis.configuration;
 
 import com.alibaba.fastjson.JSON;
-import com.dmall.common.model.configuration.BasicConfiguration;
+import com.dmall.common.model.BasicConfiguration;
 import com.dmall.component.cache.redis.entity.CacheKeyGenerator;
 import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.exception.CacheRedisException;

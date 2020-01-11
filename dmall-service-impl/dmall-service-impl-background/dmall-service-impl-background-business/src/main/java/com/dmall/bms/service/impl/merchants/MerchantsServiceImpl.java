@@ -7,8 +7,8 @@ import com.dmall.bms.api.dto.merchants.request.PageMerchantsRequestDTO;
 import com.dmall.bms.api.dto.merchants.common.CommonMerchantsResponseDTO;
 import com.dmall.bms.api.service.MerchantsService;
 import com.dmall.bms.service.impl.merchants.handler.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +67,7 @@ public class MerchantsServiceImpl implements MerchantsService {
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonMerchantsResponseDTO>> page(@RequestBody PageMerchantsRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonMerchantsResponseDTO>> page(@RequestBody PageMerchantsRequestDTO requestDTO) {
         return pageMerchantsHandler.handler(requestDTO);
     }
 

@@ -29,6 +29,9 @@ public class ZuulSwaggerProperties {
      */
     private List<String> whiteList;
 
+    /**
+     * 登录地址
+     */
     private String loginUrl;
 
 }

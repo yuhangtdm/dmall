@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.attribute.request;
 
-import com.dmall.component.web.validate.ValueInEnum;
+import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import com.dmall.pms.api.dto.attribute.enums.TypeEnum;

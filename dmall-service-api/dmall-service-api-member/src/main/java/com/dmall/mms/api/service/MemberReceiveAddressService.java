@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.mms.api.dto.memberreceiveaddress.common.CommonMemberReceiveAddressResponseDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.ListMemberReceiveAddressRequestDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.PageMemberReceiveAddressRequestDTO;
@@ -47,6 +47,6 @@ public interface MemberReceiveAddressService {
 
     @PostMapping("/page")
     @ApiOperation(value = "会员收货地址分页")
-    BaseResult<LayuiPage<CommonMemberReceiveAddressResponseDTO>> page(@RequestBody PageMemberReceiveAddressRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMemberReceiveAddressResponseDTO>> page(@RequestBody PageMemberReceiveAddressRequestDTO requestDTO);
 
 }

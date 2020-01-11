@@ -2,11 +2,11 @@ package com.dmall.component.web.exceptionhandler;
 
 import cn.hutool.core.collection.CollUtil;
 import com.dmall.common.constants.WebConstants;
-import com.dmall.common.enums.base.BasicStatusEnum;
+import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.exception.ComponentException;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.exception.BusinessException;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.model.exception.BusinessException;
+import com.dmall.common.util.ResultUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

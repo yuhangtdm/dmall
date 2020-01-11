@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.datadictionary.request.PageDataDictionaryRequestDTO
 import com.dmall.bms.api.dto.datadictionary.common.CommonDataDictionaryResponseDTO;
 import com.dmall.bms.api.dto.datadictionary.request.SaveDataDictionaryRequestDTO;
 import com.dmall.bms.api.dto.datadictionary.request.UpdateDataDictionaryRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface DataDictionaryService {
 
     @PostMapping("/page")
     @ApiOperation(value = "数据字典分页")
-    BaseResult<LayuiPage<CommonDataDictionaryResponseDTO>> page(@RequestBody PageDataDictionaryRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonDataDictionaryResponseDTO>> page(@RequestBody PageDataDictionaryRequestDTO requestDTO);
 
 }

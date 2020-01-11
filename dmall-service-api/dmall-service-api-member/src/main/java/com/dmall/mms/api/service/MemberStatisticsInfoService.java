@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.mms.api.dto.memberstatisticsinfo.common.CommonMemberStatisticsInfoResponseDTO;
 import com.dmall.mms.api.dto.memberstatisticsinfo.request.ListMemberStatisticsInfoRequestDTO;
 import com.dmall.mms.api.dto.memberstatisticsinfo.request.PageMemberStatisticsInfoRequestDTO;
@@ -47,6 +47,6 @@ public interface MemberStatisticsInfoService {
 
     @PostMapping("/page")
     @ApiOperation(value = "会员统计信息分页")
-    BaseResult<LayuiPage<CommonMemberStatisticsInfoResponseDTO>> page(@RequestBody PageMemberStatisticsInfoRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMemberStatisticsInfoResponseDTO>> page(@RequestBody PageMemberStatisticsInfoRequestDTO requestDTO);
 
 }

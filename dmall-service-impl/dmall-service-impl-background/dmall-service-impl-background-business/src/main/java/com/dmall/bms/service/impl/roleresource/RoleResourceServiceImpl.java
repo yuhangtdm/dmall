@@ -7,8 +7,8 @@ import com.dmall.bms.api.dto.roleresource.request.PageRoleResourceRequestDTO;
 import com.dmall.bms.api.dto.roleresource.common.CommonRoleResourceResponseDTO;
 import com.dmall.bms.api.service.RoleResourceService;
 import com.dmall.bms.service.impl.roleresource.handler.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +67,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonRoleResourceResponseDTO>> page(@RequestBody PageRoleResourceRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonRoleResourceResponseDTO>> page(@RequestBody PageRoleResourceRequestDTO requestDTO) {
         return pageRoleResourceHandler.handler(requestDTO);
     }
 

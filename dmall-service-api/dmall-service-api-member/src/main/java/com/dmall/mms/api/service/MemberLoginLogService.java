@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.mms.api.dto.memberloginlog.common.CommonMemberLoginLogResponseDTO;
 import com.dmall.mms.api.dto.memberloginlog.request.ListMemberLoginLogRequestDTO;
 import com.dmall.mms.api.dto.memberloginlog.request.PageMemberLoginLogRequestDTO;
@@ -47,6 +47,6 @@ public interface MemberLoginLogService {
 
     @PostMapping("/page")
     @ApiOperation(value = "会员登录记录分页")
-    BaseResult<LayuiPage<CommonMemberLoginLogResponseDTO>> page(@RequestBody PageMemberLoginLogRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMemberLoginLogResponseDTO>> page(@RequestBody PageMemberLoginLogRequestDTO requestDTO);
 
 }

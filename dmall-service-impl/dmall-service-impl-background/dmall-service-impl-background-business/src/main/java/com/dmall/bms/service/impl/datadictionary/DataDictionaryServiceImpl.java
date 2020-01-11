@@ -7,8 +7,8 @@ import com.dmall.bms.api.dto.datadictionary.request.PageDataDictionaryRequestDTO
 import com.dmall.bms.api.dto.datadictionary.common.CommonDataDictionaryResponseDTO;
 import com.dmall.bms.api.service.DataDictionaryService;
 import com.dmall.bms.service.impl.datadictionary.handler.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +67,7 @@ public class DataDictionaryServiceImpl implements DataDictionaryService {
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonDataDictionaryResponseDTO>> page(@RequestBody PageDataDictionaryRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonDataDictionaryResponseDTO>> page(@RequestBody PageDataDictionaryRequestDTO requestDTO) {
         return pageDataDictionaryHandler.handler(requestDTO);
     }
 

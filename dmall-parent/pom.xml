@@ -18,11 +18,9 @@
 
     <modules>
 
-        <module>../dmall-common/dmall-common-constants</module>
-        <module>../dmall-common/dmall-common-enum</module>
         <module>../dmall-common/dmall-common-util</module>
-        <module>../dmall-common/dmall-common-model</module>
-        <module>../dmall-common/dmall-common-service</module>
+        <module>../dmall-common/dmall-common-service-api</module>
+        <module>../dmall-common/dmall-common-service-impl</module>
 
         <module>../dmall-component/dmall-component-web</module>
         <module>../dmall-component/dmall-component-cache-redis</module>
@@ -233,27 +231,17 @@
             <!--common-->
             <dependency>
                 <groupId>com.allInJava</groupId>
-                <artifactId>dmall-common-model</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.allInJava</groupId>
-                <artifactId>dmall-common-constants</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.allInJava</groupId>
-                <artifactId>dmall-common-enum</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.allInJava</groupId>
                 <artifactId>dmall-common-util</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.allInJava</groupId>
-                <artifactId>dmall-common-service</artifactId>
+                <artifactId>dmall-common-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-common-service-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -283,7 +271,6 @@
                 <artifactId>dmall-component-file-qiniu</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
 
             <!--api-->
             <dependency>

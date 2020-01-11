@@ -1,16 +1,15 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.UploadResult;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.UploadResult;
 import com.dmall.component.file.qiniu.QiNiuConstants;
 import com.dmall.component.file.qiniu.QiNiuFileManager;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.sku.request.UploadRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.generator.mapper.SkuMediaMapper;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
 import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
 import lombok.extern.slf4j.Slf4j;

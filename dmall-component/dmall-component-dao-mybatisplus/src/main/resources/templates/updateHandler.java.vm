@@ -4,7 +4,6 @@ import ${requestDtoPackage}.${updateRequestDto};
 import ${errorEnumPackage}.${errorEnum};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
-import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;

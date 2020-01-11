@@ -1,7 +1,7 @@
 package com.dmall.pms.service.impl.category.cache;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.service.CommonCacheService;
+import com.dmall.common.model.CommonCacheService;
 import com.dmall.component.cache.redis.constants.CacheNameConstants;
 import com.dmall.component.cache.redis.mapcache.*;
 import com.dmall.pms.generator.dataobject.CategoryDO;

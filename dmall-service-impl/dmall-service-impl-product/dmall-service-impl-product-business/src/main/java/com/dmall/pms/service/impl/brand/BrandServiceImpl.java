@@ -1,8 +1,8 @@
 package com.dmall.pms.service.impl.brand;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import com.dmall.common.model.result.UploadResult;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
@@ -72,7 +72,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BaseResult<LayuiPage<PageBrandResponseDTO>> page(@RequestBody PageBrandRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageBrandResponseDTO>> page(@RequestBody PageBrandRequestDTO requestDTO) {
         return pageBrandHandler.handler(requestDTO);
     }
 

@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.user.request.PageUserRequestDTO;
 import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
 import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
 import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface UserService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户分页")
-    BaseResult<LayuiPage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
 
 }

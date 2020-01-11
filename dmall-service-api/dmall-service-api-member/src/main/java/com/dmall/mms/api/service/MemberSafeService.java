@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.mms.api.dto.membersafe.common.CommonMemberSafeResponseDTO;
 import com.dmall.mms.api.dto.membersafe.request.ListMemberSafeRequestDTO;
 import com.dmall.mms.api.dto.membersafe.request.PageMemberSafeRequestDTO;
@@ -47,6 +47,6 @@ public interface MemberSafeService {
 
     @PostMapping("/page")
     @ApiOperation(value = "账户安全分页")
-    BaseResult<LayuiPage<CommonMemberSafeResponseDTO>> page(@RequestBody PageMemberSafeRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMemberSafeResponseDTO>> page(@RequestBody PageMemberSafeRequestDTO requestDTO);
 
 }

@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.userresource.request.PageUserResourceRequestDTO;
 import com.dmall.bms.api.dto.userresource.common.CommonUserResourceResponseDTO;
 import com.dmall.bms.api.dto.userresource.request.SaveUserResourceRequestDTO;
 import com.dmall.bms.api.dto.userresource.request.UpdateUserResourceRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface UserResourceService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户和权限关系表 除角色中定义的权限以外的加减资源，加权限是指用户比角色多出的权限，减权限是指用户比角色少的权限分页")
-    BaseResult<LayuiPage<CommonUserResourceResponseDTO>> page(@RequestBody PageUserResourceRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonUserResourceResponseDTO>> page(@RequestBody PageUserResourceRequestDTO requestDTO);
 
 }

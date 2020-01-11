@@ -4,11 +4,10 @@ import com.dmall.bms.api.dto.roleresource.common.CommonRoleResourceResponseDTO;
 import com.dmall.bms.api.dto.roleresource.request.PageRoleResourceRequestDTO;
 import com.dmall.bms.generator.dataobject.RoleResourceDO;
 import com.dmall.bms.generator.mapper.RoleResourceMapper;
-import com.dmall.common.model.result.LayuiPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +22,12 @@ public class PageRoleResourceHandler extends AbstractCommonHandler<PageRoleResou
     private RoleResourceMapper roleResourceMapper;
 
     @Override
-    public BaseResult<LayuiPage<CommonRoleResourceResponseDTO>> validate(PageRoleResourceRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonRoleResourceResponseDTO>> validate(PageRoleResourceRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonRoleResourceResponseDTO>> processor(PageRoleResourceRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonRoleResourceResponseDTO>> processor(PageRoleResourceRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 

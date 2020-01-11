@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.userrole.request.PageUserRoleRequestDTO;
 import com.dmall.bms.api.dto.userrole.common.CommonUserRoleResponseDTO;
 import com.dmall.bms.api.dto.userrole.request.SaveUserRoleRequestDTO;
 import com.dmall.bms.api.dto.userrole.request.UpdateUserRoleRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface UserRoleService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户-角色分页")
-    BaseResult<LayuiPage<CommonUserRoleResponseDTO>> page(@RequestBody PageUserRoleRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonUserRoleResponseDTO>> page(@RequestBody PageUserRoleRequestDTO requestDTO);
 
 }

@@ -1,6 +1,6 @@
 package com.dmall.component.elasticsearch.exception;
 
-import com.dmall.common.enums.base.ErrorCodeEnum;
+import com.dmall.common.enums.error.ErrorCodeEnum;
 import com.dmall.common.model.exception.ComponentException;
 import lombok.Getter;
 

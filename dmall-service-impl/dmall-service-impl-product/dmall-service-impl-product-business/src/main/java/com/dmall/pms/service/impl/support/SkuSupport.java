@@ -1,14 +1,12 @@
 package com.dmall.pms.service.impl.support;
 
-import java.util.Date;
-
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.enums.base.YNEnum;
-import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.NoUtil;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.SkuSpecificationsRequestDTO;
 import com.dmall.pms.api.dto.product.response.get.SkuListResponseDTO;
@@ -150,7 +148,7 @@ public class SkuSupport {
     /**
      * 根据productId删除sku相关数据
      */
-    public void deleteSkuByProductId(Long productId){
+    public void deleteSkuByProductId(Long productId) {
         skuExtSupport.deleteByProductId(productId);
         skuMediaSupport.deleteByProductId(productId);
         skuAttributeValueSupport.deleteByProductId(productId);
@@ -160,7 +158,7 @@ public class SkuSupport {
     /**
      * 根据productId删除sku
      */
-    public void deleteByProductId(Long productId){
+    public void deleteByProductId(Long productId) {
         skuMapper.delete(Wrappers.<SkuDO>lambdaQuery()
                 .eq(SkuDO::getProductId, productId));
     }

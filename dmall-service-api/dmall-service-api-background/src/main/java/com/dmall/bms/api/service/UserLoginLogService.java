@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.userloginlog.request.PageUserLoginLogRequestDTO;
 import com.dmall.bms.api.dto.userloginlog.common.CommonUserLoginLogResponseDTO;
 import com.dmall.bms.api.dto.userloginlog.request.SaveUserLoginLogRequestDTO;
 import com.dmall.bms.api.dto.userloginlog.request.UpdateUserLoginLogRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface UserLoginLogService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户登录日志分页")
-    BaseResult<LayuiPage<CommonUserLoginLogResponseDTO>> page(@RequestBody PageUserLoginLogRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonUserLoginLogResponseDTO>> page(@RequestBody PageUserLoginLogRequestDTO requestDTO);
 
 }

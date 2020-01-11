@@ -1,11 +1,11 @@
 package com.dmall.pms.service.impl.sku.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.enums.base.YNEnum;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.NoUtil;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;

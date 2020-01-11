@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.sku.response.get;
 
-import com.dmall.common.enums.base.YNEnum;
+import com.dmall.common.enums.YNEnum;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

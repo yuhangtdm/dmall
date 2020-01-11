@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.deliverywarehouse.request.PageDeliveryWarehouseRequ
 import com.dmall.bms.api.dto.deliverywarehouse.common.CommonDeliveryWarehouseResponseDTO;
 import com.dmall.bms.api.dto.deliverywarehouse.request.SaveDeliveryWarehouseRequestDTO;
 import com.dmall.bms.api.dto.deliverywarehouse.request.UpdateDeliveryWarehouseRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface DeliveryWarehouseService {
 
     @PostMapping("/page")
     @ApiOperation(value = "商家发货仓库分页")
-    BaseResult<LayuiPage<CommonDeliveryWarehouseResponseDTO>> page(@RequestBody PageDeliveryWarehouseRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonDeliveryWarehouseResponseDTO>> page(@RequestBody PageDeliveryWarehouseRequestDTO requestDTO);
 
 }

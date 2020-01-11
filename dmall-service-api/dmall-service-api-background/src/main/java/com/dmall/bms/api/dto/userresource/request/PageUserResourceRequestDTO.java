@@ -5,10 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.component.web.entity.PageRequestDTO;
-
-import java.util.*;
-import java.math.*;
+import com.dmall.common.dto.PageRequestDTO;
 
 /**
  * @description: 后台用户和权限关系表 除角色中定义的权限以外的加减资源，加权限是指用户比角色多出的权限，减权限是指用户比角色少的权限分页请求实体

@@ -7,8 +7,8 @@ import com.dmall.bms.api.dto.userloginlog.request.PageUserLoginLogRequestDTO;
 import com.dmall.bms.api.dto.userloginlog.common.CommonUserLoginLogResponseDTO;
 import com.dmall.bms.api.service.UserLoginLogService;
 import com.dmall.bms.service.impl.userloginlog.handler.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +67,7 @@ public class UserLoginLogServiceImpl implements UserLoginLogService {
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonUserLoginLogResponseDTO>> page(@RequestBody PageUserLoginLogRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserLoginLogResponseDTO>> page(@RequestBody PageUserLoginLogRequestDTO requestDTO) {
         return pageUserLoginLogHandler.handler(requestDTO);
     }
 

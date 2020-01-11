@@ -1,6 +1,6 @@
 package com.dmall.pms.service.impl.category.enums;
 
-import com.dmall.common.enums.base.ErrorCodeEnum;
+import com.dmall.common.enums.error.ErrorCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

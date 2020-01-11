@@ -1,7 +1,7 @@
 package com.dmall.pms.service.impl.attributetype;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
 import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
@@ -67,7 +67,7 @@ public class AttributeTypeServiceImpl implements AttributeTypeService {
     }
 
     @Override
-    public BaseResult<LayuiPage<PageAttributeTypeResponseDTO>> page(@RequestBody PageAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageAttributeTypeResponseDTO>> page(@RequestBody PageAttributeTypeRequestDTO requestDTO) {
         return pageAttributeTypeHandler.handler(requestDTO);
     }
 

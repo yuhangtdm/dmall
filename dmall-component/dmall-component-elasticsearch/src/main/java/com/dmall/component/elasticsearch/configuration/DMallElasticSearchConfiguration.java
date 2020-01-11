@@ -1,7 +1,7 @@
 package com.dmall.component.elasticsearch.configuration;
 
 import com.alibaba.fastjson.JSON;
-import com.dmall.common.model.configuration.BasicConfiguration;
+import com.dmall.common.model.BasicConfiguration;
 import com.dmall.component.elasticsearch.ESDao;
 import com.dmall.component.elasticsearch.properties.DMallElasticSearchProperties;
 import lombok.extern.slf4j.Slf4j;

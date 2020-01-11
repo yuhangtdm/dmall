@@ -1,7 +1,8 @@
 package com.dmall.component.web.util;
 
-import com.dmall.common.enums.base.BasicStatusEnum;
-import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.enums.BasicStatusEnum;
+import com.dmall.common.util.ResultUtil;
+import com.dmall.common.dto.BaseResult;
 import com.google.common.collect.Maps;
 import org.springframework.util.CollectionUtils;
 

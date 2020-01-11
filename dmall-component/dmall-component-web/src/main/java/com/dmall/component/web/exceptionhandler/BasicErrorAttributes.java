@@ -1,7 +1,7 @@
 package com.dmall.component.web.exceptionhandler;
 
 import com.dmall.common.constants.WebConstants;
-import com.dmall.common.model.result.BaseResult;
+import com.dmall.common.dto.BaseResult;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;

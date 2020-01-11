@@ -1,10 +1,10 @@
 package com.dmall.pms.service.impl.sku.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.handler.BeanUtil;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.util.BeanUtil;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.sku.request.update.BasicSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;

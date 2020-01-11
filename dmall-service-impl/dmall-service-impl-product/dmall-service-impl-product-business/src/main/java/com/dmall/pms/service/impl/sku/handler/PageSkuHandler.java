@@ -1,17 +1,15 @@
 package com.dmall.pms.service.impl.sku.handler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dmall.common.enums.base.EnumUtil;
-import com.dmall.common.enums.base.YNEnum;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.util.EnumUtil;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
-import com.dmall.pms.generator.dataobject.SkuDO;
-import com.dmall.pms.service.impl.product.common.ProductValidate;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageMapper;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +29,11 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
     private SkuPageMapper skuPageMapper;
 
     @Override
-    public BaseResult<LayuiPage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
         Page<PageSkuResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<PageSkuResponseDTO> skuList = skuPageMapper.skuPage(page, requestDTO).stream()
                 .map(skuPageVO -> doConvertDto(skuPageVO, PageSkuResponseDTO.class)).collect(Collectors.toList());
-        return ResultUtil.success(new LayuiPage<>(page.getTotal(), skuList));
+        return ResultUtil.success(new LayUiPage<>(page.getTotal(), skuList));
     }
 
     @Override

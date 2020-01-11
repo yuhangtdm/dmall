@@ -7,8 +7,8 @@ import com.dmall.bms.api.dto.deliverywarehouse.request.PageDeliveryWarehouseRequ
 import com.dmall.bms.api.dto.deliverywarehouse.common.CommonDeliveryWarehouseResponseDTO;
 import com.dmall.bms.api.service.DeliveryWarehouseService;
 import com.dmall.bms.service.impl.deliverywarehouse.handler.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +67,7 @@ public class DeliveryWarehouseServiceImpl implements DeliveryWarehouseService {
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonDeliveryWarehouseResponseDTO>> page(@RequestBody PageDeliveryWarehouseRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonDeliveryWarehouseResponseDTO>> page(@RequestBody PageDeliveryWarehouseRequestDTO requestDTO) {
         return pageDeliveryWarehouseHandler.handler(requestDTO);
     }
 

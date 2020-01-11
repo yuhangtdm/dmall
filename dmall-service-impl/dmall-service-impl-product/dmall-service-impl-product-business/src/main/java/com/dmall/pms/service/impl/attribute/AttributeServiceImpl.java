@@ -1,7 +1,7 @@
 package com.dmall.pms.service.impl.attribute;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
@@ -70,7 +70,7 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public BaseResult<LayuiPage<PageAttributeResponseDTO>> page(PageAttributeRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageAttributeResponseDTO>> page(PageAttributeRequestDTO requestDTO) {
         return pageAttributeHandler.handler(requestDTO);
     }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmall.bms.generator.mapper.UserMapper">
+<mapper namespace="com.dmall.sso.service.impl.admin.mapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dmall.service.sso.admin.dataobject.UserDO">
+    <resultMap id="BaseResultMap" type="com.dmall.sso.service.impl.admin.dataobject.UserDO">
         <id column="id" property="id"/>
         <result column="merchants_id" property="merchantsId"/>
         <result column="user_name" property="userName"/>

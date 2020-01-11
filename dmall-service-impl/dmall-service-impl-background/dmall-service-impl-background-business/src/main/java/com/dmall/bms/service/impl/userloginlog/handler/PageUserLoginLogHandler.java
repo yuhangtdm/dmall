@@ -4,11 +4,10 @@ import com.dmall.bms.api.dto.userloginlog.common.CommonUserLoginLogResponseDTO;
 import com.dmall.bms.api.dto.userloginlog.request.PageUserLoginLogRequestDTO;
 import com.dmall.bms.generator.dataobject.UserLoginLogDO;
 import com.dmall.bms.generator.mapper.UserLoginLogMapper;
-import com.dmall.common.model.result.LayuiPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +22,12 @@ public class PageUserLoginLogHandler extends AbstractCommonHandler<PageUserLogin
     private UserLoginLogMapper userLoginLogMapper;
 
     @Override
-    public BaseResult<LayuiPage<CommonUserLoginLogResponseDTO>> validate(PageUserLoginLogRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserLoginLogResponseDTO>> validate(PageUserLoginLogRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonUserLoginLogResponseDTO>> processor(PageUserLoginLogRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserLoginLogResponseDTO>> processor(PageUserLoginLogRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 

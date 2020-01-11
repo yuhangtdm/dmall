@@ -3,7 +3,7 @@ package com.dmall.component.mybatisplus.configuration;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
-import com.dmall.common.model.configuration.BasicConfiguration;
+import com.dmall.common.model.BasicConfiguration;
 import com.dmall.component.mybatisplus.autofill.AutoFillHandler;
 import com.dmall.component.mybatisplus.properties.DMallMybatisPlusProperties;
 import lombok.extern.slf4j.Slf4j;

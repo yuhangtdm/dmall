@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.mms.api.dto.memberviewsku.common.CommonMemberViewSkuResponseDTO;
 import com.dmall.mms.api.dto.memberviewsku.request.ListMemberViewSkuRequestDTO;
 import com.dmall.mms.api.dto.memberviewsku.request.PageMemberViewSkuRequestDTO;
@@ -47,6 +47,6 @@ public interface MemberViewSkuService {
 
     @PostMapping("/page")
     @ApiOperation(value = "会员浏览历史记录分页")
-    BaseResult<LayuiPage<CommonMemberViewSkuResponseDTO>> page(@RequestBody PageMemberViewSkuRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMemberViewSkuResponseDTO>> page(@RequestBody PageMemberViewSkuRequestDTO requestDTO);
 
 }

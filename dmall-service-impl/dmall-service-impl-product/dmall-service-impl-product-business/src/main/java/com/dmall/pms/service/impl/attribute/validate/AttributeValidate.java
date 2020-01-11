@@ -1,9 +1,9 @@
 package com.dmall.pms.service.impl.attribute.validate;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.common.enums.base.YNEnum;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
 

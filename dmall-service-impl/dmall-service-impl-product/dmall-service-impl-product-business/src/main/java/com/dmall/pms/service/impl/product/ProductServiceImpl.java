@@ -1,8 +1,9 @@
 package com.dmall.pms.service.impl.product;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import com.dmall.common.model.result.UploadResult;
+
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
@@ -68,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public BaseResult<LayuiPage<PageProductResponseDTO>> page(@RequestBody PageProductRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageProductResponseDTO>> page(@RequestBody PageProductRequestDTO requestDTO) {
         return pageProductHandler.handler(requestDTO);
     }
 

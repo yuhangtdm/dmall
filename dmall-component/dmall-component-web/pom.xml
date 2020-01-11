@@ -15,7 +15,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -29,11 +28,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
         </dependency>
 
         <dependency>
@@ -57,21 +51,6 @@
         </dependency>
 
         <!--common相关依赖-->
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-common-enum</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-common-model</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-common-constants</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-util</artifactId>

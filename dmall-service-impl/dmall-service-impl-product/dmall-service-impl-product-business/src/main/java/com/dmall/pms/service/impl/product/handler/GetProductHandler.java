@@ -1,9 +1,9 @@
 package com.dmall.pms.service.impl.product.handler;
 
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.handler.BeanUtil;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.util.BeanUtil;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.response.get.BasicProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;

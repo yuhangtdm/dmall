@@ -3,7 +3,7 @@ package com.dmall.component.file.qiniu;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.dmall.common.model.result.UploadResult;
+import com.dmall.common.dto.UploadResult;
 import com.dmall.component.file.qiniu.exception.QiNiuErrorEnum;
 import com.dmall.component.file.qiniu.exception.QiNiuException;
 import com.google.common.collect.Lists;

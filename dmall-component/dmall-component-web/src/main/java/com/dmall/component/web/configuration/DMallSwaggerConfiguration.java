@@ -1,10 +1,10 @@
 package com.dmall.component.web.configuration;
 
 import com.alibaba.fastjson.JSON;
-import com.dmall.common.enums.base.BasicStatusEnum;
-import com.dmall.common.model.configuration.BasicConfiguration;
-import com.dmall.component.web.exception.WebErrorEnum;
-import com.dmall.component.web.exception.WebException;
+import com.dmall.common.enums.BasicStatusEnum;
+import com.dmall.common.model.BasicConfiguration;
+import com.dmall.common.model.exception.WebErrorEnum;
+import com.dmall.common.model.exception.WebException;
 import com.dmall.component.web.properties.DMallSwaggerProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

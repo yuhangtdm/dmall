@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>com.allInJava</groupId>
-            <artifactId>dmall-common-service</artifactId>
+            <artifactId>dmall-common-service-impl</artifactId>
         </dependency>
 
         <dependency>

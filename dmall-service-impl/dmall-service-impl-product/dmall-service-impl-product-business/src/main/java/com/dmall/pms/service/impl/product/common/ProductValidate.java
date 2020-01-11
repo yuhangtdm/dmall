@@ -1,7 +1,7 @@
 package com.dmall.pms.service.impl.product.common;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
 import com.dmall.pms.api.dto.product.request.attributevalue.*;
 import com.dmall.pms.generator.dataobject.AttributeDO;
@@ -82,7 +82,7 @@ public class ProductValidate {
     /**
      * 商品属性值校验
      */
-    public BaseResult attributeValidate(ProductAttributeRequestDTO attributeRequest){
+    public BaseResult attributeValidate(ProductAttributeRequestDTO attributeRequest) {
         // 属性存在
         for (SpecificationsRequestDTO specification : attributeRequest.getSpecifications()) {
             AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());

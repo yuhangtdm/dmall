@@ -4,11 +4,10 @@ import com.dmall.bms.api.dto.userrole.common.CommonUserRoleResponseDTO;
 import com.dmall.bms.api.dto.userrole.request.PageUserRoleRequestDTO;
 import com.dmall.bms.generator.dataobject.UserRoleDO;
 import com.dmall.bms.generator.mapper.UserRoleMapper;
-import com.dmall.common.model.result.LayuiPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +22,12 @@ public class PageUserRoleHandler extends AbstractCommonHandler<PageUserRoleReque
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public BaseResult<LayuiPage<CommonUserRoleResponseDTO>> validate(PageUserRoleRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserRoleResponseDTO>> validate(PageUserRoleRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonUserRoleResponseDTO>> processor(PageUserRoleRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserRoleResponseDTO>> processor(PageUserRoleRequestDTO requestDTO) {
         return ResultUtil.success();
     }
 

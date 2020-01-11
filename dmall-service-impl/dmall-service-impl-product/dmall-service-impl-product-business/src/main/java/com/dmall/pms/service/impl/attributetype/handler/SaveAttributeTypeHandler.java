@@ -1,8 +1,8 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;

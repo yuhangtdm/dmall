@@ -7,8 +7,8 @@ import com.dmall.bms.api.dto.userrole.request.PageUserRoleRequestDTO;
 import com.dmall.bms.api.dto.userrole.common.CommonUserRoleResponseDTO;
 import com.dmall.bms.api.service.UserRoleService;
 import com.dmall.bms.service.impl.userrole.handler.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +67,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public BaseResult<LayuiPage<CommonUserRoleResponseDTO>> page(@RequestBody PageUserRoleRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<CommonUserRoleResponseDTO>> page(@RequestBody PageUserRoleRequestDTO requestDTO) {
         return pageUserRoleHandler.handler(requestDTO);
     }
 

@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.response.PageBrandResponseDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
@@ -30,19 +30,19 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
     private BrandMapper brandMapper;
 
     @Override
-    public BaseResult<LayuiPage<PageBrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageBrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
                 .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
 
-        Page<BrandDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
+        Page<BrandDO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         IPage<BrandDO> brandDOIPage = brandMapper.selectPage(page, queryWrapper);
         List<PageBrandResponseDTO> record = brandDOIPage.getRecords().stream()
                 .map(doo -> doConvertDto(doo, PageBrandResponseDTO.class))
                 .collect(Collectors.toList());
 
-        return ResultUtil.success(new LayuiPage(brandDOIPage.getTotal(), record));
+        return ResultUtil.success(new LayUiPage(brandDOIPage.getTotal(), record));
     }
 
 }

@@ -1,13 +1,11 @@
 package com.dmall.bms.service.impl.merchants.handler;
 
 import com.dmall.bms.api.dto.merchants.common.CommonMerchantsResponseDTO;
-import com.dmall.bms.service.impl.merchants.enums.MerchantsErrorEnum;
 import com.dmall.bms.generator.dataobject.MerchantsDO;
 import com.dmall.bms.generator.mapper.MerchantsMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

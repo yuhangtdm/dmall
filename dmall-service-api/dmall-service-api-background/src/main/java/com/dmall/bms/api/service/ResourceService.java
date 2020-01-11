@@ -5,8 +5,8 @@ import com.dmall.bms.api.dto.resource.request.PageResourceRequestDTO;
 import com.dmall.bms.api.dto.resource.common.CommonResourceResponseDTO;
 import com.dmall.bms.api.dto.resource.request.SaveResourceRequestDTO;
 import com.dmall.bms.api.dto.resource.request.UpdateResourceRequestDTO;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +47,6 @@ public interface ResourceService {
 
     @PostMapping("/page")
     @ApiOperation(value = "资源分页")
-    BaseResult<LayuiPage<CommonResourceResponseDTO>> page(@RequestBody PageResourceRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonResourceResponseDTO>> page(@RequestBody PageResourceRequestDTO requestDTO);
 
 }

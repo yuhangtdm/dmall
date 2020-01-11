@@ -1,8 +1,8 @@
 package com.dmall.pms.api.service;
 
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
-import com.dmall.common.model.result.UploadResult;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
@@ -72,6 +72,6 @@ public interface SkuService {
 
     @PostMapping("/page")
     @ApiOperation(value = "sku分页")
-    BaseResult<LayuiPage<PageSkuResponseDTO>> page(@Valid @RequestBody PageSkuRequestDTO requestDTO);
+    BaseResult<LayUiPage<PageSkuResponseDTO>> page(@Valid @RequestBody PageSkuRequestDTO requestDTO);
 
 }

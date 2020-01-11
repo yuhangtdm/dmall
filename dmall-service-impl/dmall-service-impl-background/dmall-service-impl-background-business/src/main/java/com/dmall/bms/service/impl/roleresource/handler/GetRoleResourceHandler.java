@@ -1,13 +1,11 @@
 package com.dmall.bms.service.impl.roleresource.handler;
 
 import com.dmall.bms.api.dto.roleresource.common.CommonRoleResourceResponseDTO;
-import com.dmall.bms.service.impl.roleresource.enums.RoleResourceErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleResourceDO;
 import com.dmall.bms.generator.mapper.RoleResourceMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.model.handler.AbstractCommonHandler;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.component.web.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
