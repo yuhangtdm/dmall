@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.Charset;
 
 /**
- * @description: AdminUserInterceptor
+ * @description: 后台管理用户拦截器
+ * 用来设置user到ThreadLocal中
  * @author: created by hang.yu on 2020/1/6 23:54
  */
 public class AdminUserInterceptor implements HandlerInterceptor {

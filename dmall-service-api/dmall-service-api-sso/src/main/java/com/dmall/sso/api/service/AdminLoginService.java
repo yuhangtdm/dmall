@@ -29,6 +29,13 @@ public interface AdminLoginService {
     BaseResult<AdminLoginResponseDTO> login(@Valid @RequestBody AdminLoginRequestDTO requestDTO);
 
     /**
+     * 登出
+     */
+    @PostMapping("/logout")
+    @ApiOperation(value = "登出")
+    BaseResult<Void> logout(@NotBlank(message = "token不能为空") @RequestParam String token);
+
+    /**
      * 校验token
      */
     @GetMapping("/checkToken")

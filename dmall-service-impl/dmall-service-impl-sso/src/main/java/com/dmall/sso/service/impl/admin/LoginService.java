@@ -14,12 +14,15 @@ import com.dmall.sso.service.impl.admin.mapper.UserMapper;
 import com.dmall.sso.api.dto.AdminLoginRequestDTO;
 import com.dmall.sso.api.dto.AdminLoginResponseDTO;
 import com.dmall.sso.api.service.AdminLoginService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * @description: 登录服务
@@ -51,7 +54,7 @@ public class LoginService implements AdminLoginService {
         if (userDO == null) {
             return ResultUtil.fail(LoginErrorEnum.USER_NAME_INCORRECT);
         }
-        if (requestDTO.getPassword().equals(userDO.getPassword())) {
+        if (!requestDTO.getPassword().equals(userDO.getPassword())) {
             return ResultUtil.fail(LoginErrorEnum.PASSWORD_INCORRECT);
         }
         if (YNEnum.Y.getCode().equals(userDO.getIsDeleted())) {
@@ -66,6 +69,12 @@ public class LoginService implements AdminLoginService {
         responseDTO.setToken(token);
         responseDTO.setUrl(StrUtil.isNotBlank(requestDTO.getUrl()) ? requestDTO.getUrl() : indexUrl);
         return ResultUtil.success(responseDTO);
+    }
+
+    @Override
+    public BaseResult<Void> logout(String token) {
+        redisTemplate.delete(Lists.newArrayList(token));
+        return ResultUtil.success();
     }
 
     /**

@@ -9,6 +9,7 @@ import feign.RequestTemplate;
 
 /**
  * @description: feign拦截器
+ * 设置用户信息到Header中
  * @author: created by hang.yu on 2020/1/7 22:41
  */
 public class FeignRequestInterceptor implements RequestInterceptor {

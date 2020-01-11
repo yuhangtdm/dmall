@@ -35,6 +35,8 @@ public class AdminUserZuulFilter extends ZuulFilter {
     @Autowired
     private ZuulSwaggerProperties zuulSwaggerProperties;
 
+    private static final String SWAGGER = "/v2/api-docs";
+
     /**
      * 过滤器类型，有pre、routing、post、error四种。
      */
@@ -67,18 +69,21 @@ public class AdminUserZuulFilter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String uri = request.getRequestURI();
-        for (String white : zuulSwaggerProperties.getWhiteList()) {
-            if (uri.contains(white)) {
-                return null;
-            }
+        if (uri.contains(SWAGGER)) {
+            return null;
         }
+        // 判断是否在白名单中
         if (zuulSwaggerProperties.getWhiteList().contains(uri)) {
-            // 放行
             return null;
         }
 
+        // 校验source
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {
+            header = request.getParameter(Constants.SOURCE);
+        }
+        if (StrUtil.isBlank(header)) {
+            requestContext.setSendZuulResponse(false);
             requestContext.setResponseBody(JSON.toJSONString(ResultUtil.fail(AdminUserErrorEnum.SOURCE_BLANK)));
             requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
@@ -87,6 +92,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
         if (!SourceEnum.ADMIN.getCode().equals(header)) {
             return null;
         }
+        // 校验token
         String token = request.getHeader(Constants.TOKEN);
         if (StrUtil.isBlank(token)) {
             requestContext.setSendZuulResponse(false);
@@ -106,7 +112,9 @@ public class AdminUserZuulFilter extends ZuulFilter {
         }
         // 调用sso服务验证token
         BaseResult<UserDTO> checkResult = loginServiceFeign.checkToken(token);
+        // 验证未通过
         if (!checkResult.getResult()) {
+            requestContext.setSendZuulResponse(false);
             // token验证失败 未登录
             if (AjaxUtil.isAjax(request)) {
                 requestContext.setResponseBody(JSON.toJSONString(checkResult));
@@ -124,6 +132,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
         }
         UserDTO userDTO = checkResult.getData();
         requestContext.addZuulRequestHeader(Constants.ADMIN_USER, JSON.toJSONString(userDTO));
+        requestContext.addZuulRequestHeader(Constants.SOURCE, header);
         return null;
     }
 }
