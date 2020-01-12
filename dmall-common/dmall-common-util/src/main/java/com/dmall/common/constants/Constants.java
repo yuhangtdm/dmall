@@ -21,4 +21,9 @@ public interface Constants {
     String SOURCE = "source";
 
     String WHITE_LIST = "whiteList";
+
+    String MD5 = "MD5";
+
+    Integer ENCRYPT_TIME = 1024;
+
 }

@@ -5,7 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.common.dto.PageRequestDTO;
+import com.dmall.component.web.entity.PageRequestDTO;
+import java.util.*;
+import java.math.*;
 
 /**
  * @description: $!{pageRequestComment}
@@ -14,8 +16,8 @@ import com.dmall.common.dto.PageRequestDTO;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "${pageRequestDto}", description = "$!{pageRequestComment}")
-public class ${pageRequestDto}  extends PageRequestDTO{
+@ApiModel(value = "${pageRequestDto}", description =  "$!{pageRequestComment}")
+public class ${pageRequestDto}  extends PageRequestDTO {
 
 
 ## ----------  BEGIN 字段循环遍历  ----------
@@ -23,14 +25,12 @@ public class ${pageRequestDto}  extends PageRequestDTO{
     #if(${field.keyFlag})
         #set($keyPropertyName=${field.propertyName})
     #end
-    #if( ("$!field.propertyName" != "id") && ("$!field.propertyName" != "creator") && (
-        "$!field.propertyName" != "gmtCreated")
-    && ("$!field.propertyName" != "modifier") && ("$!field.propertyName" != "gmtModified") && (
-        "$!field.propertyName" != "isDeleted"))
+    #if( ("$!field.propertyName" != "id") && ("$!field.propertyName" != "creator") && ("$!field.propertyName" != "gmtCreated")
+    && ("$!field.propertyName" != "modifier") && ("$!field.propertyName" != "gmtModified") && ("$!field.propertyName" != "isDeleted"))
         #if("$!field.comment" != "")
         @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
         #end
-    private ${field.propertyType} ${field.propertyName};
+        private ${field.propertyType} ${field.propertyName};
     #end
 
 #end

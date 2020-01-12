@@ -5,6 +5,8 @@ import ${requestDtoPackage}.${pageRequestDto};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import com.dmall.common.model.result.LayuiPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +19,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ${pageHandler} extends AbstractCommonHandler<${pageRequestDto}, ${entity}, ${commonResponseDto}> {
 
-@Autowired
-private ${table.mapperName} ${mapperName};
+    @Autowired
+    private ${table.mapperName} ${mapperName};
 
-@Override
-public BaseResult<LayuiPage<${commonResponseDto}>>validate(${pageRequestDto} requestDTO){
+    @Override
+    public BaseResult<LayuiPage<${commonResponseDto}>> validate(${pageRequestDto} requestDTO) {
         return ResultUtil.success();
-        }
+    }
 
-@Override
-public BaseResult<LayuiPage<${commonResponseDto}>>processor(${pageRequestDto} requestDTO){
+    @Override
+    public BaseResult<LayuiPage<${commonResponseDto}>> processor(${pageRequestDto} requestDTO) {
         return ResultUtil.success();
-        }
+    }
 
-        }
+}

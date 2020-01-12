@@ -16,4 +16,4 @@ import ${commonDtoPackage}.${commonRequestDto};
 @ApiModel(value = "${saveRequestDto}", description = "$!{saveRequestComment}")
 public class ${saveRequestDto} extends ${commonRequestDto} {
 
-        }
+}

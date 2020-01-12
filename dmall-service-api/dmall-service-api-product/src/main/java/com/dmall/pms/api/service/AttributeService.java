@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/attribute")
 public interface AttributeService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增属性")
     BaseResult<Long> save(@Valid @RequestBody SaveAttributeRequestDTO requestDTO);
 
@@ -33,7 +33,7 @@ public interface AttributeService {
     @ApiImplicitParam(name = "id", value = "属性id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改属性")
     BaseResult<Long> update(@Valid @RequestBody UpdateAttributeRequestDTO requestDTO);
 

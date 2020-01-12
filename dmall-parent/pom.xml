@@ -27,6 +27,7 @@
         <module>../dmall-component/dmall-component-dao-mybatisplus</module>
         <module>../dmall-component/dmall-component-elasticsearch</module>
         <module>../dmall-component/dmall-component-file-qiniu</module>
+        <module>../dmall-component/dmall-component-rbac-shiro</module>
 
 
         <module>../dmall-framework/dmall-framework-eureka-server</module>
@@ -75,6 +76,7 @@
         <httpclient.version>4.5.10</httpclient.version>
         <jsoup.version>1.12.1</jsoup.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
+        <shiro-spring.version>1.4.0</shiro-spring.version>
     </properties>
 
     <dependencies>
@@ -226,6 +228,13 @@
                 <version>${velocity-engine-core.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
+
+
 
             <!--======================本项目模块======================-->
             <!--common-->
@@ -269,6 +278,11 @@
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-component-file-qiniu</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-component-rbac-shiro</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

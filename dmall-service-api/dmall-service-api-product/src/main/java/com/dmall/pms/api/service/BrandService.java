@@ -30,7 +30,7 @@ import java.util.List;
 public interface BrandService {
 
     @ApiOperation(value = "新增品牌")
-    @PostMapping("/")
+    @PostMapping
     BaseResult<Long> save(@Valid @RequestBody SaveBrandRequestDTO requestDTO);
 
     @ApiOperation(value = "删除品牌")
@@ -39,7 +39,7 @@ public interface BrandService {
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
     @ApiOperation(value = "修改品牌")
-    @PutMapping("/")
+    @PutMapping
     BaseResult<Long> update(@Valid @RequestBody UpdateBrandRequestDTO requestDTO);
 
     @ApiOperation(value = "根据id查询品牌")

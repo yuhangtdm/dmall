@@ -17,7 +17,7 @@ import ${commonDtoPackage}.${commonRequestDto};
 @ApiModel(value = "${updateRequestDto}", description = "$!{updateRequestComment}")
 public class ${updateRequestDto} extends ${commonRequestDto} {
 
-@ApiModelProperty(value = "主键", required = true, position = 0)
-private Long id;
+    @ApiModelProperty(value = "主键", required = true, position = 0)
+    private Long id;
 
-        }
+}

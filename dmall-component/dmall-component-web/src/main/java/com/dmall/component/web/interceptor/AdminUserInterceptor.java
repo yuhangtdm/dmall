@@ -8,6 +8,7 @@ import com.dmall.common.enums.SourceEnum;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.user.AdminUserContextHolder;
 import com.dmall.common.model.user.UserDTO;
+import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,7 +23,6 @@ import java.nio.charset.Charset;
  */
 public class AdminUserInterceptor implements HandlerInterceptor {
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String header = request.getHeader(Constants.SOURCE);
@@ -31,8 +31,7 @@ public class AdminUserInterceptor implements HandlerInterceptor {
         }
         String userDto = request.getHeader(Constants.ADMIN_USER);
         if (StrUtil.isBlank(userDto)) {
-            response.setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
-            response.getWriter().write(JSON.toJSONString(ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN)));
+            ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN));
             return false;
         }
         UserDTO userDTO = JSON.parseObject(userDto, UserDTO.class);

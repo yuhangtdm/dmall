@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/product")
 public interface ProductService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增商品")
     BaseResult<Long> save(@Valid @RequestBody SaveProductRequestDTO requestDTO);
 
@@ -36,7 +36,7 @@ public interface ProductService {
     @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改商品")
     BaseResult<Long> update(@Valid @RequestBody UpdateProductRequestDTO requestDTO);
 

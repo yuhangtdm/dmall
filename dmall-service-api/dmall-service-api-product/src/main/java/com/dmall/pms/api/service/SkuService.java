@@ -61,7 +61,7 @@ public interface SkuService {
     @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改sku")
     BaseResult<Long> update(@Valid @RequestBody UpdateSkuRequestDTO requestDTO);
 

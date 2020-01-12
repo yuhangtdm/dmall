@@ -76,7 +76,6 @@ public class AdminUserZuulFilter extends ZuulFilter {
         if (zuulSwaggerProperties.getWhiteList().contains(uri)) {
             return null;
         }
-
         // 校验source
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {

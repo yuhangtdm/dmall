@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @description: $!{serviceComment}
@@ -22,30 +23,30 @@ import javax.validation.Valid;
 @RequestMapping("$!{requestMapping}")
 public interface ${businessService} {
 
-@PostMapping("/")
-@ApiOperation(value = "${saveOperation}")
+    @PostMapping("/")
+    @ApiOperation(value = "${saveOperation}")
     BaseResult<Long> save(@Valid @RequestBody ${saveRequestDto} requestDTO);
 
-@DeleteMapping("/{id}")
-@ApiOperation(value = "${deleteOperation}")
-@ApiImplicitParam(name = "id", value = "${id}", required = true, dataType = "int", paramType = "path")
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "${deleteOperation}")
+    @ApiImplicitParam(name = "id", value = "${id}", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-@PutMapping("/")
-@ApiOperation(value = "${updateOperation}")
+    @PutMapping("/")
+    @ApiOperation(value = "${updateOperation}")
     BaseResult<Long> update(@Valid @RequestBody ${updateRequestDto} requestDTO);
 
-@GetMapping("/{id}")
-@ApiOperation(value = "${getOperation}")
-@ApiImplicitParam(name = "id", value = "${id}", required = true, dataType = "int", paramType = "path")
+    @GetMapping("/{id}")
+    @ApiOperation(value = "${getOperation}")
+    @ApiImplicitParam(name = "id", value = "${id}", required = true, dataType = "int", paramType = "path")
     BaseResult<${commonResponseDto}> get(@PathVariable("id") Long id);
 
-@PostMapping("/list")
-@ApiOperation(value = "${listOperation}")
+    @PostMapping("/list")
+    @ApiOperation(value = "${listOperation}")
     BaseResult<List<${commonResponseDto}>>list(@RequestBody ${listRequestDto} requestDTO);
 
-@PostMapping("/page")
-@ApiOperation(value = "${pageOperation}")
+    @PostMapping("/page")
+    @ApiOperation(value = "${pageOperation}")
     BaseResult<LayuiPage<${commonResponseDto}>>page(@RequestBody ${pageRequestDto} requestDTO);
 
-        }
+}

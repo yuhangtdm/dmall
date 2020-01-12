@@ -41,11 +41,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-web</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
         </dependency>
@@ -53,6 +48,11 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-web</artifactId>
         </dependency>
     </dependencies>
 

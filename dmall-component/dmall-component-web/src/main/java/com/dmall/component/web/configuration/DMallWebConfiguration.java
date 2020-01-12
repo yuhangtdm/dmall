@@ -15,9 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableConfigurationProperties({DMallLoginProperties.class})
-@ComponentScan(basePackages = {"com.dmall.component.web.exceptionhandler",
-        "com.dmall.component.web.log",
-        "com.dmall.component.web.util"})
+@ComponentScan(basePackages = {"com.dmall.component.web"})
 public class DMallWebConfiguration implements WebMvcConfigurer {
 
     @Autowired
@@ -28,8 +26,8 @@ public class DMallWebConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AdminUserInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns(dMallLoginProperties.getWhiteList());
+        /*registry.addInterceptor(new AdminUserInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns(dMallLoginProperties.getWhiteList());*/
 
     }
 }

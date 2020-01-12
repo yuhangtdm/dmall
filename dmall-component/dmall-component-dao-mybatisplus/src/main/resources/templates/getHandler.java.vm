@@ -4,6 +4,8 @@ import ${commonDtoPackage}.${commonResponseDto};
 import ${errorEnumPackage}.${errorEnum};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.model.handler.AbstractCommonHandler;
 import com.dmall.common.model.result.BaseResult;
 import com.dmall.component.web.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +18,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ${getHandler} extends AbstractCommonHandler<Long, ${entity}, ${commonResponseDto}> {
 
-@Autowired
-private ${table.mapperName} ${mapperName};
+    @Autowired
+    private ${table.mapperName} ${mapperName};
 
-@Override
-public BaseResult<${commonResponseDto}> validate(Long id){
+    @Override
+    public BaseResult<${commonResponseDto}> validate(Long id) {
         return ResultUtil.success();
-        }
+    }
 
-@Override
-public BaseResult<${commonResponseDto}> processor(Long id){
+    @Override
+    public BaseResult<${commonResponseDto}> processor(Long id) {
         return ResultUtil.success();
-        }
+    }
 
-        }
+}
