@@ -12,9 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AttributeTypeErrorEnum implements ErrorCodeEnum {
 
-    ATTRIBUTE_TYPE_NOT_EXIST("attributeType_001", "该属性分类不存在"),
-    ATTRIBUTE_TYPE_HAS_PRODUCT("attributeType_002", "该属性分类下有商品,不可删除"),
-    CATEGORY_NOT_EXIST("attributeType_003", "商品分类不存在"),
+    ATTRIBUTE_TYPE_NOT_EXIST("1001", "该属性分类不存在"),
+    ATTRIBUTE_TYPE_HAS_PRODUCT("1002", "该属性分类下有商品,不可删除"),
+    CATEGORY_NOT_EXIST("1003", "商品分类不存在"),
 
     ;
     /**

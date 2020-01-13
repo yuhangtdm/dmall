@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.rolepermission.common.CommonRolePermissionResponseD
 import com.dmall.bms.api.dto.rolepermission.request.SaveRolePermissionRequestDTO;
 import com.dmall.bms.api.dto.rolepermission.request.UpdateRolePermissionRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 后台角色-资源服务
- * @author: created by hang.yu on 2020-01-11 18:47:50
+ * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Api(tags = "后台角色-资源服务")
 @RequestMapping("/rolePermission")
@@ -43,10 +43,10 @@ public interface RolePermissionService {
 
     @PostMapping("/list")
     @ApiOperation(value = "后台角色-资源列表")
-    BaseResult<List<CommonRolePermissionResponseDTO>> list(@RequestBody ListRolePermissionRequestDTO requestDTO);
+    BaseResult<List<CommonRolePermissionResponseDTO>>list(@RequestBody ListRolePermissionRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "后台角色-资源分页")
-    BaseResult<LayUiPage<CommonRolePermissionResponseDTO>> page(@RequestBody PageRolePermissionRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonRolePermissionResponseDTO>>page(@RequestBody PageRolePermissionRequestDTO requestDTO);
 
 }

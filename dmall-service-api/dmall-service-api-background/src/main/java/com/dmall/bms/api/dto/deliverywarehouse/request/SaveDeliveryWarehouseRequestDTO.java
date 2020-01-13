@@ -8,7 +8,7 @@ import com.dmall.bms.api.dto.deliverywarehouse.common.CommonDeliveryWarehouseReq
 
 /**
  * @description: 新增商家发货仓库请求实体
- * @author: created by hang.yu on 2020-01-05 18:36:36
+ * @author: created by hang.yu on 2020-01-13 23:04:02
  */
 @Data
 @Accessors(chain = true)

@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
 import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
 import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 后台用户服务
- * @author: created by hang.yu on 2020-01-05 18:36:37
+ * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Api(tags = "后台用户服务")
 @RequestMapping("/user")
@@ -43,10 +43,10 @@ public interface UserService {
 
     @PostMapping("/list")
     @ApiOperation(value = "后台用户列表")
-    BaseResult<List<CommonUserResponseDTO>> list(@RequestBody ListUserRequestDTO requestDTO);
+    BaseResult<List<CommonUserResponseDTO>>list(@RequestBody ListUserRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户分页")
-    BaseResult<LayUiPage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonUserResponseDTO>>page(@RequestBody PageUserRequestDTO requestDTO);
 
 }

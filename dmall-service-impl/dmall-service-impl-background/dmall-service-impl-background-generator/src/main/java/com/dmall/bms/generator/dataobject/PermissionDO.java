@@ -13,8 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: 权限表
- * @author: created by hang.yu on 2020-01-11 18:49:25
+ * @description: 资源表
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,6 +31,11 @@ public class PermissionDO implements Serializable {
     private Long id;
 
     /**
+     * 父级id
+     */
+    private Integer parentId;
+
+    /**
      * 权限码
      */
     private String code;
@@ -41,14 +46,21 @@ public class PermissionDO implements Serializable {
     private String name;
 
     /**
-     * 资源地址
+     * 1-接口地址;2-目录;3-菜单
+     */
+    private Integer type;
+
+    /**
+     * 权限地址
      */
     private String uri;
 
+    private String method;
+
     /**
-     * 资源请求方式 1-GET;2-POST;3-PUT;4-DELETE
+     * 图标
      */
-    private Integer method;
+    private String icon;
 
     /**
      * 创建人

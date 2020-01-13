@@ -7,8 +7,8 @@ import ${requestDtoPackage}.${pageRequestDto};
 import ${commonDtoPackage}.${commonResponseDto};
 import ${servicePackage}.${businessService};
 import ${handlerPackage}.*;
-import com.dmall.common.model.result.BaseResult;
-import com.dmall.common.model.result.LayuiPage;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,7 +66,7 @@ public class ${businessServiceImpl} implements ${businessService} {
     }
 
     @Override
-    public BaseResult<LayuiPage<${commonResponseDto}>> page(@RequestBody ${pageRequestDto} requestDTO) {
+    public BaseResult<LayUiPage<${commonResponseDto}>> page(@RequestBody ${pageRequestDto} requestDTO) {
         return ${pageHandlerName}.handler(requestDTO);
     }
 

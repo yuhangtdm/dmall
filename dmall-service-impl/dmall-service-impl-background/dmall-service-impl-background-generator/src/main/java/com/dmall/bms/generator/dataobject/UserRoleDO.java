@@ -2,23 +2,19 @@ package com.dmall.bms.generator.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-
 import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
-
 import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * @description: 后台用户-角色表
- * @author: created by hang.yu on 2020-01-07 23:21:00
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,7 +22,7 @@ import lombok.experimental.Accessors;
 @TableName("bms_user_role")
 public class UserRoleDO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * id

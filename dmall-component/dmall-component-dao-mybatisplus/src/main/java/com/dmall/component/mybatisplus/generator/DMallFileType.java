@@ -7,7 +7,6 @@ package com.dmall.component.mybatisplus.generator;
 public enum DMallFileType {
     SERVICE_API,
     SERVICE_IMPL,
-    DTO,
     XML,
     BUSINESS_DTO,
     ERROR_ENUM,

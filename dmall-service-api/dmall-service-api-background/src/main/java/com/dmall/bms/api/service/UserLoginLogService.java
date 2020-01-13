@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.userloginlog.common.CommonUserLoginLogResponseDTO;
 import com.dmall.bms.api.dto.userloginlog.request.SaveUserLoginLogRequestDTO;
 import com.dmall.bms.api.dto.userloginlog.request.UpdateUserLoginLogRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 后台用户登录日志服务
- * @author: created by hang.yu on 2020-01-05 18:36:37
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Api(tags = "后台用户登录日志服务")
 @RequestMapping("/userLoginLog")
@@ -43,10 +43,10 @@ public interface UserLoginLogService {
 
     @PostMapping("/list")
     @ApiOperation(value = "后台用户登录日志列表")
-    BaseResult<List<CommonUserLoginLogResponseDTO>> list(@RequestBody ListUserLoginLogRequestDTO requestDTO);
+    BaseResult<List<CommonUserLoginLogResponseDTO>>list(@RequestBody ListUserLoginLogRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户登录日志分页")
-    BaseResult<LayUiPage<CommonUserLoginLogResponseDTO>> page(@RequestBody PageUserLoginLogRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonUserLoginLogResponseDTO>>page(@RequestBody PageUserLoginLogRequestDTO requestDTO);
 
 }

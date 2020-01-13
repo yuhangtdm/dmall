@@ -4,18 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.bms.generator.dataobject.DataDictionaryDO">
-        <id column="id" property="id"/>
-        <result column="parent_id" property="parentId"/>
-        <result column="dict_type" property="dictType"/>
-        <result column="dict_name" property="dictName"/>
-        <result column="dict_code" property="dictCode"/>
-        <result column="dict_value" property="dictValue"/>
-        <result column="sort" property="sort"/>
-        <result column="creator" property="creator"/>
-        <result column="gmt_created" property="gmtCreated"/>
-        <result column="modifier" property="modifier"/>
-        <result column="gmt_modified" property="gmtModified"/>
-        <result column="is_deleted" property="isDeleted"/>
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="dict_type" property="dictType" />
+        <result column="dict_name" property="dictName" />
+        <result column="dict_code" property="dictCode" />
+        <result column="dict_value" property="dictValue" />
+        <result column="sort" property="sort" />
+        <result column="creator" property="creator" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="modifier" property="modifier" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->

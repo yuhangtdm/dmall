@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 后台角色-资源表
- * @author: created by hang.yu on 2020-01-12 10:56:01
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

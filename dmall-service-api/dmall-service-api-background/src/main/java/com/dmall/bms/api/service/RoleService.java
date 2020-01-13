@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
 import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
 import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 后台角色服务
- * @author: created by hang.yu on 2020-01-05 18:36:37
+ * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Api(tags = "后台角色服务")
 @RequestMapping("/role")
@@ -43,10 +43,10 @@ public interface RoleService {
 
     @PostMapping("/list")
     @ApiOperation(value = "后台角色列表")
-    BaseResult<List<CommonRoleResponseDTO>> list(@RequestBody ListRoleRequestDTO requestDTO);
+    BaseResult<List<CommonRoleResponseDTO>>list(@RequestBody ListRoleRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "后台角色分页")
-    BaseResult<LayUiPage<CommonRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonRoleResponseDTO>>page(@RequestBody PageRoleRequestDTO requestDTO);
 
 }

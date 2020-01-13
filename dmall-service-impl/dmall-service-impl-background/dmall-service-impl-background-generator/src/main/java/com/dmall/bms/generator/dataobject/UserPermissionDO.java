@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 后台用户和权限关系表 除角色中定义的权限以外的加减资源，加权限是指用户比角色多出的权限，减权限是指用户比角色少的权限
- * @author: created by hang.yu on 2020-01-12 10:56:01
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

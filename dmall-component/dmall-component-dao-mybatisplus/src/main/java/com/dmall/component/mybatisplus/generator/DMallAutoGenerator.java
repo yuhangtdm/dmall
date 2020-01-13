@@ -44,7 +44,7 @@ public class DMallAutoGenerator extends AutoGenerator {
                 File file = new File(filePath);
                 boolean exist = file.exists();
                 if (exist) {
-                    if (DMallFileType.DTO == fileType || DMallFileType.XML == fileType) {
+                    if (DMallFileType.XML == fileType) {
                         return true;
                     } else {
                         return false;
@@ -78,28 +78,6 @@ public class DMallAutoGenerator extends AutoGenerator {
         });
 
         List<FileOutConfig> list = new ArrayList<>();
-        // dto
-        FileOutConfig dtoOutConfig = new FileOutConfig(Constants.TEMPLATES_DTO) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                StringBuilder dtoOutPut = new StringBuilder()
-                        .append(System.getProperty("user.dir"))
-                        .append(Constants.GENERATOR_MODULE_NAME)
-                        .append(Constants.SRC_MAIN_JAVA)
-                        .append(Constants.COM_DMALL)
-                        .append(Constants.PACKAGE_MODULE_NAME)
-                        .append(File.separator)
-                        .append(Constants.PACKAGE_GENERATOR_NAME)
-                        .append(File.separator)
-                        .append(Constants.DTO)
-                        .append(File.separator)
-                        .append(StrUtil.removeSuffix(tableInfo.getEntityName(), "DO"))
-                        .append("DTO")
-                        .append(StringPool.DOT_JAVA);
-                return dtoOutPut.toString();
-            }
-        };
-        list.add(dtoOutConfig);
 
         // xml
         FileOutConfig xmlOutConfig = new FileOutConfig(Constants.TEMPLATES_MAPPER_XML) {

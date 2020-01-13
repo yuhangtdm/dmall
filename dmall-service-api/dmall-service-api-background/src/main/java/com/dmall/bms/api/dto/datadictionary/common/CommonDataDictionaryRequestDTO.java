@@ -4,21 +4,20 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.*;
 import java.math.*;
 
 /**
  * @description: 数据字典公共请求实体
- * @author: created by hang.yu on 2020-01-05 18:36:36
+ * @author: created by hang.yu on 2020-01-13 23:04:02
  */
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "CommonDataDictionaryRequestDTO", description = "数据字典公共请求实体")
 public class CommonDataDictionaryRequestDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
 
     @ApiModelProperty(value = "父id", position = 2)
@@ -38,6 +37,11 @@ public class CommonDataDictionaryRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "排序", position = 7)
     private String sort;
+
+
+
+
+
 
 
 }

@@ -12,10 +12,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SkuErrorEnum implements ErrorCodeEnum {
 
-    PRODUCT_NOT_EXISTS("sku_001", "该商品不存在"),
-    SKU_NAME_EXISTS("sku_002", "该sku名称已存在"),
-    SKU_NOT_EXIST("sku_003", "该sku不存在"),
-    MEDIA_NOT_EXIST("sku_004", "媒体列表为空"),
+    PRODUCT_NOT_EXISTS("1001", "该商品不存在"),
+    SKU_NAME_EXISTS("1002", "该sku名称已存在"),
+    SKU_NOT_EXIST("1003", "该sku不存在"),
+    MEDIA_NOT_EXIST("1004", "媒体列表为空"),
 
     ;
 

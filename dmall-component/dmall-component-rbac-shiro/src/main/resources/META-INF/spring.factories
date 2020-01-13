@@ -1,0 +1,4 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.dmall.component.rbac.shiro.configuration.ShiroConfiguration,\
+com.dmall.component.rbac.shiro.configuration.FeignRequestConfiguration

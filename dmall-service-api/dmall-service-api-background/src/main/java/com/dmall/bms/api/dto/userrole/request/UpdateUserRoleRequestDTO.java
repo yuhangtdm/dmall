@@ -9,7 +9,7 @@ import com.dmall.bms.api.dto.userrole.common.CommonUserRoleRequestDTO;
 
 /**
  * @description: 修改后台用户-角色请求实体
- * @author: created by hang.yu on 2020-01-05 18:36:38
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Data
 @Accessors(chain = true)

@@ -9,7 +9,7 @@ import com.dmall.bms.api.dto.rolepermission.common.CommonRolePermissionRequestDT
 
 /**
  * @description: 修改后台角色-资源请求实体
- * @author: created by hang.yu on 2020-01-11 18:47:50
+ * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Data
 @Accessors(chain = true)
@@ -17,7 +17,7 @@ import com.dmall.bms.api.dto.rolepermission.common.CommonRolePermissionRequestDT
 @ApiModel(value = "UpdateRolePermissionRequestDTO", description = "修改后台角色-资源请求实体")
 public class UpdateRolePermissionRequestDTO extends CommonRolePermissionRequestDTO {
 
-@ApiModelProperty(value = "主键", required = true, position = 0)
-private Long id;
+    @ApiModelProperty(value = "主键", required = true, position = 0)
+    private Long id;
 
-        }
+}

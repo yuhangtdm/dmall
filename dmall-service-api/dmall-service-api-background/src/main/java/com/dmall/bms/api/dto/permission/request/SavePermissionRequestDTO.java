@@ -8,7 +8,7 @@ import com.dmall.bms.api.dto.permission.common.CommonPermissionRequestDTO;
 
 /**
  * @description: 新增资源请求实体
- * @author: created by hang.yu on 2020-01-11 18:47:50
+ * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Data
 @Accessors(chain = true)
@@ -16,4 +16,4 @@ import com.dmall.bms.api.dto.permission.common.CommonPermissionRequestDTO;
 @ApiModel(value = "SavePermissionRequestDTO", description = "新增资源请求实体")
 public class SavePermissionRequestDTO extends CommonPermissionRequestDTO {
 
-        }
+}

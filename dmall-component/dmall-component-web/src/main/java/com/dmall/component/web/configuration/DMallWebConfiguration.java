@@ -1,6 +1,5 @@
 package com.dmall.component.web.configuration;
 
-import com.dmall.component.web.interceptor.AdminUserInterceptor;
 import com.dmall.component.web.properties.DMallLoginProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

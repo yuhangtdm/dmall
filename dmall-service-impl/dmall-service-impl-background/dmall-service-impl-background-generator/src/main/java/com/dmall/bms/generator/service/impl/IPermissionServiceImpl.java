@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * @description: 资源表
- * @author: created by hang.yu on 2020-01-11 18:47:51
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Service
-        public class IPermissionServiceImpl extends ServiceImpl<PermissionMapper, PermissionDO>implements IPermissionService {
+public class IPermissionServiceImpl extends ServiceImpl<PermissionMapper, PermissionDO> implements IPermissionService {
 
-        }
+}

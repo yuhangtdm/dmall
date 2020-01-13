@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.deliverywarehouse.common.CommonDeliveryWarehouseRes
 import com.dmall.bms.api.dto.deliverywarehouse.request.SaveDeliveryWarehouseRequestDTO;
 import com.dmall.bms.api.dto.deliverywarehouse.request.UpdateDeliveryWarehouseRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 商家发货仓库服务
- * @author: created by hang.yu on 2020-01-05 18:36:36
+ * @author: created by hang.yu on 2020-01-13 23:04:02
  */
 @Api(tags = "商家发货仓库服务")
 @RequestMapping("/deliveryWarehouse")
@@ -43,10 +43,10 @@ public interface DeliveryWarehouseService {
 
     @PostMapping("/list")
     @ApiOperation(value = "商家发货仓库列表")
-    BaseResult<List<CommonDeliveryWarehouseResponseDTO>> list(@RequestBody ListDeliveryWarehouseRequestDTO requestDTO);
+    BaseResult<List<CommonDeliveryWarehouseResponseDTO>>list(@RequestBody ListDeliveryWarehouseRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "商家发货仓库分页")
-    BaseResult<LayUiPage<CommonDeliveryWarehouseResponseDTO>> page(@RequestBody PageDeliveryWarehouseRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonDeliveryWarehouseResponseDTO>>page(@RequestBody PageDeliveryWarehouseRequestDTO requestDTO);
 
 }

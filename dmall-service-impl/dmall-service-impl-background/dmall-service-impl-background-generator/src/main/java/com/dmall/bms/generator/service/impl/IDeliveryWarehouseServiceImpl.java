@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @description: 商家发货仓库表
- * @author: created by hang.yu on 2020-01-05 18:36:38
+ * @author: created by hang.yu on 2020-01-13 23:04:04
  */
 @Service
 public class IDeliveryWarehouseServiceImpl extends ServiceImpl<DeliveryWarehouseMapper, DeliveryWarehouseDO> implements IDeliveryWarehouseService {

@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.merchants.common.CommonMerchantsResponseDTO;
 import com.dmall.bms.api.dto.merchants.request.SaveMerchantsRequestDTO;
 import com.dmall.bms.api.dto.merchants.request.UpdateMerchantsRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 商家店铺表 1期只有一家店铺服务
- * @author: created by hang.yu on 2020-01-05 18:36:36
+ * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Api(tags = "商家店铺表 1期只有一家店铺服务")
 @RequestMapping("/merchants")
@@ -43,10 +43,10 @@ public interface MerchantsService {
 
     @PostMapping("/list")
     @ApiOperation(value = "商家店铺表 1期只有一家店铺列表")
-    BaseResult<List<CommonMerchantsResponseDTO>> list(@RequestBody ListMerchantsRequestDTO requestDTO);
+    BaseResult<List<CommonMerchantsResponseDTO>>list(@RequestBody ListMerchantsRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "商家店铺表 1期只有一家店铺分页")
-    BaseResult<LayUiPage<CommonMerchantsResponseDTO>> page(@RequestBody PageMerchantsRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonMerchantsResponseDTO>>page(@RequestBody PageMerchantsRequestDTO requestDTO);
 
 }

@@ -4,21 +4,20 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.*;
 import java.math.*;
 
 /**
  * @description: 商家发货仓库公共请求实体
- * @author: created by hang.yu on 2020-01-05 18:36:36
+ * @author: created by hang.yu on 2020-01-13 23:04:02
  */
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "CommonDeliveryWarehouseRequestDTO", description = "商家发货仓库公共请求实体")
 public class CommonDeliveryWarehouseRequestDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
 
     @ApiModelProperty(value = "商家店铺id", position = 2)
@@ -50,6 +49,11 @@ public class CommonDeliveryWarehouseRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "默认收货地址 Y-是,N-否", position = 11)
     private String receiveStatus;
+
+
+
+
+
 
 
 }

@@ -74,12 +74,6 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
                                     }
                                     break;
                                 }
-                                case Constants.TEMPLATES_DTO: {
-                                    if (isCreate(DMallFileType.DTO, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
                                 case Constants.TEMPLATES_MAPPER_XML: {
                                     if (isCreate(DMallFileType.XML, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));

@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.datadictionary.common.CommonDataDictionaryResponseD
 import com.dmall.bms.api.dto.datadictionary.request.SaveDataDictionaryRequestDTO;
 import com.dmall.bms.api.dto.datadictionary.request.UpdateDataDictionaryRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 数据字典服务
- * @author: created by hang.yu on 2020-01-05 18:36:36
+ * @author: created by hang.yu on 2020-01-13 23:04:02
  */
 @Api(tags = "数据字典服务")
 @RequestMapping("/dataDictionary")
@@ -43,10 +43,10 @@ public interface DataDictionaryService {
 
     @PostMapping("/list")
     @ApiOperation(value = "数据字典列表")
-    BaseResult<List<CommonDataDictionaryResponseDTO>> list(@RequestBody ListDataDictionaryRequestDTO requestDTO);
+    BaseResult<List<CommonDataDictionaryResponseDTO>>list(@RequestBody ListDataDictionaryRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "数据字典分页")
-    BaseResult<LayUiPage<CommonDataDictionaryResponseDTO>> page(@RequestBody PageDataDictionaryRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonDataDictionaryResponseDTO>>page(@RequestBody PageDataDictionaryRequestDTO requestDTO);
 
 }
