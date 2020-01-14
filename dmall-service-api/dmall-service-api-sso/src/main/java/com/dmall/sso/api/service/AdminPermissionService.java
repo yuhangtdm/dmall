@@ -34,6 +34,6 @@ public interface AdminPermissionService {
      * 获取权限列表
      */
     @GetMapping("/listPermissions")
-    @ApiOperation(value = "获取角色列表")
+    @ApiOperation(value = "获取权限列表")
     BaseResult<List<PermissionResponseDTO>> listPermissions(@NotBlank(message = "用户名称不能为空") @RequestParam String userName);
 }

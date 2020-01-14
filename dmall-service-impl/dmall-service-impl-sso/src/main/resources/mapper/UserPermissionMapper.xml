@@ -4,13 +4,14 @@
 
     <select id="listByUserName" resultType="com.dmall.sso.service.impl.admin.dataobject.PermissionDO">
        select
-               p.id, p.code, p.name
-        from pms_permission p
+               distinct p.id, p.code, p.name,p.uri,p.method
+        from bms_permission p
 	    left join bms_role_permission rp on p.id = rp.permission_id
 	    left join bms_role r on r.id = rp.role_id
-	    left join bmd_user_role ur on ur.role_id = r.id
+	    left join bms_user_role ur on ur.role_id = r.id
 	    left join bms_user u on u.id = ur.user_id
-	    where u.username = #{userName}
+	    where u.user_name = #{userName} and p.is_deleted = 'N' and rp.is_deleted = 'N' and r.is_deleted = 'N'
+	    and ur.is_deleted = 'N' and u.is_deleted = 'N'
     </select>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.dmall.component.rbac.shiro.filter;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.enums.BasicStatusEnum;
@@ -44,7 +45,7 @@ public class AdminUserFilter extends PathMatchingFilter {
             ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN));
             return false;
         }
-        UserDTO userDTO = JSON.parseObject(userDto, UserDTO.class);
+        UserDTO userDTO = JSON.parseObject(URLUtil.decode(userDto), UserDTO.class);
         userDTO.setSource(request.getHeader(Constants.SOURCE));
         AdminUserContextHolder.set(userDTO);
         return true;

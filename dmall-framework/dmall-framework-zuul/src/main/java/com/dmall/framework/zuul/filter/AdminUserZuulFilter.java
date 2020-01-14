@@ -1,6 +1,7 @@
 package com.dmall.framework.zuul.filter;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.ContentType;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
@@ -15,11 +16,13 @@ import com.dmall.framework.zuul.feign.LoginServiceFeign;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
 /**
@@ -130,7 +133,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
             }
         }
         UserDTO userDTO = checkResult.getData();
-        requestContext.addZuulRequestHeader(Constants.ADMIN_USER, JSON.toJSONString(userDTO));
+        requestContext.addZuulRequestHeader(Constants.ADMIN_USER, URLUtil.encode(JSON.toJSONString(userDTO)));
         requestContext.addZuulRequestHeader(Constants.SOURCE, header);
         return null;
     }

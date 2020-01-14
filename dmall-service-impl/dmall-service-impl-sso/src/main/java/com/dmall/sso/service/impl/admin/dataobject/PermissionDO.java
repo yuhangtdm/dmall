@@ -59,7 +59,7 @@ public class PermissionDO implements Serializable {
     /**
      * 资源请求方式 1-GET;2-POST;3-PUT;4-DELETE
      */
-    private Integer method;
+    private String method;
 
     /**
      * 创建人

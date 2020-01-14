@@ -3,6 +3,7 @@ package com.dmall.component.rbac.shiro.configuration;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.model.BasicConfiguration;
 import com.dmall.component.rbac.shiro.ShiroProperties;
+import com.dmall.component.rbac.shiro.feign.AdminPermissionFeign;
 import com.dmall.component.rbac.shiro.filter.AdminPermissionFilter;
 import com.dmall.component.rbac.shiro.filter.AdminUserFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,9 @@ public class ShiroConfiguration implements BasicConfiguration {
     @Autowired
     private ShiroProperties shiroProperties;
 
+    @Autowired
+    private AdminPermissionFeign adminPermissionFeign;
+
     @Bean
     public SecurityManager securityManager() {
         return new DefaultWebSecurityManager();
@@ -65,7 +69,7 @@ public class ShiroConfiguration implements BasicConfiguration {
     }
 
     private AdminPermissionFilter adminPermissionFilter() {
-        return new AdminPermissionFilter(shiroProperties);
+        return new AdminPermissionFilter(shiroProperties, adminPermissionFeign);
     }
 
     private AdminUserFilter adminUserFilter() {

@@ -4,11 +4,11 @@
 
     <select id="listByUserName" resultType="com.dmall.sso.service.impl.admin.dataobject.RoleDO">
         select
-           r.id, r.name
+           distinct r.id, r.name
          from bms_role r
 	    left join bms_user_role ur on r.id = ur.role_id
 	    left join bms_user u on u.id = ur.user_id
-	    where u.user_name = #{userName} and r.is_deleted = 'N' and Ur.is_deleted = 'N' and U.is_deleted = 'N'
+	    where u.user_name = #{userName} and r.is_deleted = 'N' and ur.is_deleted = 'N' and u.is_deleted = 'N'
     </select>
 
 </mapper>

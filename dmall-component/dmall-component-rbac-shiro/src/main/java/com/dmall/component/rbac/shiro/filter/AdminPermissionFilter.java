@@ -13,7 +13,6 @@ import com.dmall.component.rbac.shiro.feign.AdminPermissionFeign;
 import com.dmall.component.rbac.shiro.util.SpringUtil;
 import com.dmall.sso.api.dto.PermissionResponseDTO;
 import org.apache.shiro.web.filter.PathMatchingFilter;
-import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -30,14 +29,18 @@ public class AdminPermissionFilter extends PathMatchingFilter {
 
     private ShiroProperties shiroProperties;
 
-    public AdminPermissionFilter(ShiroProperties shiroProperties) {
+    private AdminPermissionFeign adminPermissionFeign;
+
+    public AdminPermissionFilter(ShiroProperties shiroProperties, AdminPermissionFeign adminPermissionFeign) {
         this.shiroProperties = shiroProperties;
+        this.adminPermissionFeign = adminPermissionFeign;
     }
+
+
 
     @Override
     protected boolean onPreHandle(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue)
             throws Exception {
-
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -45,10 +48,12 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         if (filter) {
             return true;
         }
-        String requestMapping = request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString();
-
+        String requestMapping = CommonFilter.getRequestMapping(request);
+        // 非RequestMapping的url
+        if (requestMapping == null){
+            return true;
+        }
         // 调用sso获取权限数据
-        AdminPermissionFeign adminPermissionFeign = SpringUtil.getBean(AdminPermissionFeign.class);
         UserDTO userDTO = AdminUserContextHolder.get();
         BaseResult<List<PermissionResponseDTO>> listBaseResult = adminPermissionFeign.listPermissions(userDTO.getUserName());
         List<PermissionResponseDTO> permissionList = listBaseResult.getData();
@@ -57,7 +62,7 @@ public class AdminPermissionFilter extends PathMatchingFilter {
 
         String method = request.getMethod();
         for (PermissionResponseDTO permission : permissionList) {
-            if (method.equalsIgnoreCase(permission.getMethod()) && match(requestMapping, permission.getUri())) {
+            if (method.equalsIgnoreCase(permission.getMethod()) && requestMapping.equals(permission.getUri())) {
                 return true;
             }
         }
@@ -65,14 +70,9 @@ public class AdminPermissionFilter extends PathMatchingFilter {
             ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_ALLOW));
         } else {
             // 重定向到未授权地址
-            ShiroProperties shiroProperties = SpringUtil.getBean(ShiroProperties.class);
             response.sendRedirect(shiroProperties.getUnauthorizedUrl());
         }
         return false;
-    }
-
-    private boolean match(String requestUri, String permissionUri) {
-        return requestUri.equals(permissionUri);
     }
 
 }
