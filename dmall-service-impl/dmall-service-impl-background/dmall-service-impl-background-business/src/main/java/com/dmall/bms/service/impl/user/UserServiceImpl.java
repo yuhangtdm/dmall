@@ -2,16 +2,19 @@ package com.dmall.bms.service.impl.user;
 
 import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
 import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
-import com.dmall.bms.api.dto.user.request.ListUserRequestDTO;
 import com.dmall.bms.api.dto.user.request.PageUserRequestDTO;
 import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
 import com.dmall.bms.api.service.UserService;
 import com.dmall.bms.service.impl.user.handler.*;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.UploadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -34,10 +37,10 @@ public class UserServiceImpl implements UserService {
     private GetUserHandler getUserHandler;
 
     @Autowired
-    private ListUserHandler listUserHandler;
+    private PageUserHandler pageUserHandler;
 
     @Autowired
-    private PageUserHandler pageUserHandler;
+    private UploadIconHandler uploadIconHandler;
 
 
     @Override
@@ -61,13 +64,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResult<List<CommonUserResponseDTO>> list(@RequestBody ListUserRequestDTO requestDTO) {
-        return listUserHandler.handler(requestDTO);
-    }
-
-    @Override
     public BaseResult<LayUiPage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO) {
         return pageUserHandler.handler(requestDTO);
     }
+
+    @Override
+    public BaseResult<UploadResult> uploadIcon(MultipartFile file) {
+        return uploadIconHandler.handler(file);
+    }
+
 
 }

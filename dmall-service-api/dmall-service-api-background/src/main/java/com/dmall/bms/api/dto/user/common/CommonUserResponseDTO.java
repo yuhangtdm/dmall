@@ -34,32 +34,34 @@ public class CommonUserResponseDTO implements Serializable {
     @ApiModelProperty(value = "手机号", position = 5)
     private String phone;
 
-    @ApiModelProperty(value = "密码", position = 6)
+    @ApiModelProperty(value = "邮箱", position = 6)
+    private String email;
+
+    @ApiModelProperty(value = "密码", position = 7)
     private String password;
 
-    @ApiModelProperty(value = "真实姓名", position = 7)
+    @ApiModelProperty(value = "真实姓名", position = 8)
     private String realName;
 
-    @ApiModelProperty(value = "头像", position = 8)
+    @ApiModelProperty(value = "头像", position = 9)
     private String icon;
 
-    @ApiModelProperty(value = "备注", position = 9)
+    @ApiModelProperty(value = "备注", position = 10)
     private String remark;
 
-    @ApiModelProperty(value = "创建人", position = 10)
+    @ApiModelProperty(value = "创建人", position = 11)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 11)
+    @ApiModelProperty(value = "创建时间", position = 12)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 12)
+    @ApiModelProperty(value = "更新人", position = 13)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 13)
+    @ApiModelProperty(value = "更新时间", position = 14)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 14)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 15)
     private String isDeleted;
-
 
 }

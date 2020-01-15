@@ -28,7 +28,11 @@ public class GetUserHandler extends AbstractCommonHandler<Long, UserDO, CommonUs
 
     @Override
     public BaseResult<CommonUserResponseDTO> processor(Long id) {
-        return ResultUtil.success();
+        UserDO userDO = userMapper.selectById(id);
+        if (userDO == null){
+            return ResultUtil.fail(UserErrorEnum.USER_NOT_EXIST);
+        }
+        return ResultUtil.success(doConvertDto(userDO, CommonUserResponseDTO.class));
     }
 
 }

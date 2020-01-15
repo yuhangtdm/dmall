@@ -12,8 +12,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserErrorEnum implements ErrorCodeEnum {
 
-    USER_NOT_EXIST("user_100","该后台用户不存在"),
+    USER_NAME_EXIST("1000","用户名称已存在"),
 
+    USER_NOT_EXIST("2000","该用户不存在"),
+
+    UPLOAD_PIC_ERROR("3000","上传头像失败"),
     ;
 
    /**

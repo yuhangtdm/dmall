@@ -1,16 +1,19 @@
 package com.dmall.bms.service.impl.role.handler;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
 import com.dmall.bms.api.dto.role.request.ListRoleRequestDTO;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description: 后台角色列表处理器
@@ -23,13 +26,13 @@ public class ListRoleHandler extends AbstractCommonHandler<ListRoleRequestDTO, R
     private RoleMapper roleMapper;
 
     @Override
-    public BaseResult<List<CommonRoleResponseDTO>> validate(ListRoleRequestDTO requestDTO) {
-        return ResultUtil.success();
-    }
-
-    @Override
     public BaseResult<List<CommonRoleResponseDTO>> processor(ListRoleRequestDTO requestDTO) {
-        return ResultUtil.success();
+        List<RoleDO> roleList = roleMapper.selectList(Wrappers.<RoleDO>lambdaQuery()
+                .eq(StrUtil.isNotBlank(requestDTO.getName()), RoleDO::getName, requestDTO.getName()));
+        List<CommonRoleResponseDTO> collect = roleList.stream()
+                .map(roleDO -> doConvertDto(roleDO, CommonRoleResponseDTO.class))
+                .collect(Collectors.toList());
+        return ResultUtil.success(collect);
     }
 
 }

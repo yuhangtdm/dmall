@@ -1,13 +1,11 @@
 package com.dmall.bms.api.dto.role.request;
 
+import com.dmall.common.dto.PageRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.common.dto.PageRequestDTO;
-import java.util.*;
-import java.math.*;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 后台角色分页请求实体
@@ -16,21 +14,10 @@ import java.math.*;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageRoleRequestDTO", description =  "后台角色分页请求实体")
-public class PageRoleRequestDTO  extends PageRequestDTO {
+@ApiModel(value = "PageRoleRequestDTO", description = "后台角色分页请求实体")
+public class PageRoleRequestDTO extends PageRequestDTO {
 
-
-
-        @ApiModelProperty(value = "角色名称", position = 2)
-        private String name;
-
-        @ApiModelProperty(value = "备注", position = 3)
-        private String remark;
-
-
-
-
-
-
+    @ApiModelProperty(value = "角色名称", position = 5)
+    private String name;
 
 }

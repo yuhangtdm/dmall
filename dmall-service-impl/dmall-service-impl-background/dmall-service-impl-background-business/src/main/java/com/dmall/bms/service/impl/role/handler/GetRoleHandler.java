@@ -1,13 +1,11 @@
 package com.dmall.bms.service.impl.role.handler;
 
 import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
-import com.dmall.bms.service.impl.role.enums.RoleErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,13 +20,9 @@ public class GetRoleHandler extends AbstractCommonHandler<Long, RoleDO, CommonRo
     private RoleMapper roleMapper;
 
     @Override
-    public BaseResult<CommonRoleResponseDTO> validate(Long id) {
-        return ResultUtil.success();
-    }
-
-    @Override
     public BaseResult<CommonRoleResponseDTO> processor(Long id) {
-        return ResultUtil.success();
+        RoleDO roleDO = roleMapper.selectById(id);
+        return ResultUtil.success(doConvertDto(roleDO, CommonRoleResponseDTO.class));
     }
 
 }

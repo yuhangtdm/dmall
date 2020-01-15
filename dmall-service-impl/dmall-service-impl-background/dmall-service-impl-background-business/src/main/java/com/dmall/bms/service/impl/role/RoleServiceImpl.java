@@ -5,6 +5,7 @@ import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
 import com.dmall.bms.api.dto.role.request.ListRoleRequestDTO;
 import com.dmall.bms.api.dto.role.request.PageRoleRequestDTO;
 import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
+import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.bms.api.service.RoleService;
 import com.dmall.bms.service.impl.role.handler.*;
 import com.dmall.common.dto.BaseResult;
@@ -66,7 +67,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public BaseResult<LayUiPage<CommonRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO) {
         return pageRoleHandler.handler(requestDTO);
     }
 

@@ -51,6 +51,11 @@ public class UserDO implements Serializable {
     private String phone;
 
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
      * 密码
      */
     private String password;

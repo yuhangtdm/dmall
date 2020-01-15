@@ -4,8 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import lombok.EqualsAndHashCode;
-import com.dmall.bms.api.dto.role.common.CommonRoleRequestDTO;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 修改后台角色请求实体
@@ -13,11 +14,19 @@ import com.dmall.bms.api.dto.role.common.CommonRoleRequestDTO;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "UpdateRoleRequestDTO", description = "修改后台角色请求实体")
-public class UpdateRoleRequestDTO extends CommonRoleRequestDTO {
+public class UpdateRoleRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "主键", required = true, position = 0)
+    private static final long serialVersionUID = -6394071371731325744L;
+
+    @ApiModelProperty(value = "id", required = true, position = 1)
+    @NotNull(message = "id不能为空")
     private Long id;
+
+    @ApiModelProperty(value = "角色名称", position = 2)
+    private String name;
+
+    @ApiModelProperty(value = "备注", position = 3)
+    private String remark;
 
 }

@@ -12,7 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RoleErrorEnum implements ErrorCodeEnum {
 
-    ROLE_NOT_EXIST("role_100","该后台角色不存在"),
+    NAME_EXIST("1000","角色名称已存在"),
+
+    ROLE_NOT_EXIST("2000","该后台角色不存在"),
 
     ;
 

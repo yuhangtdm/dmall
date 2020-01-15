@@ -1,35 +1,47 @@
 package com.dmall.bms.service.impl.role.handler;
 
-import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.bms.api.dto.role.request.PageRoleRequestDTO;
+import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
-import com.dmall.common.dto.LayUiPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description: 后台角色分页处理器
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Component
-public class PageRoleHandler extends AbstractCommonHandler<PageRoleRequestDTO, RoleDO, CommonRoleResponseDTO> {
+public class PageRoleHandler extends AbstractCommonHandler<PageRoleRequestDTO, RoleDO, PageRoleResponseDTO> {
 
     @Autowired
     private RoleMapper roleMapper;
 
     @Override
-    public BaseResult<LayUiPage<CommonRoleResponseDTO>> validate(PageRoleRequestDTO requestDTO) {
-        return ResultUtil.success();
-    }
+    public BaseResult<LayUiPage<PageRoleResponseDTO>> processor(PageRoleRequestDTO requestDTO) {
+        IPage<RoleDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
+        LambdaQueryWrapper<RoleDO> wrapper = Wrappers.<RoleDO>lambdaQuery()
+                .like(StrUtil.isNotBlank(requestDTO.getName()), RoleDO::getName, requestDTO.getName());
 
-    @Override
-    public BaseResult<LayUiPage<CommonRoleResponseDTO>> processor(PageRoleRequestDTO requestDTO) {
-        return ResultUtil.success();
+        page = roleMapper.selectPage(page, wrapper);
+
+        List<PageRoleResponseDTO> collect = page.getRecords().stream()
+                .map(roleDO -> doConvertDto(roleDO, PageRoleResponseDTO.class))
+                .collect(Collectors.toList());
+
+        return ResultUtil.success(new LayUiPage<>(page.getTotal(), collect));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.dmall.bms.service.impl.user.handler;
 
 import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
+import com.dmall.bms.service.impl.support.UserSupport;
 import com.dmall.bms.service.impl.user.enums.UserErrorEnum;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
@@ -22,11 +23,18 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
 
     @Override
     public BaseResult<Long> validate(UpdateUserRequestDTO requestDTO) {
+        // id存在
+        UserDO userDO = userMapper.selectById(requestDTO.getId());
+        if (userDO == null) {
+            return ResultUtil.fail(UserErrorEnum.USER_NOT_EXIST);
+        }
         return ResultUtil.success();
     }
 
     @Override
     public BaseResult<Long> processor(UpdateUserRequestDTO requestDTO) {
+        UserDO userDO = dtoConvertDo(requestDTO, UserDO.class);
+        userMapper.updateById(userDO);
         return ResultUtil.success();
     }
 

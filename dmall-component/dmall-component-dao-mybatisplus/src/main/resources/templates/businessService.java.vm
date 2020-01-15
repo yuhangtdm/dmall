@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("$!{requestMapping}")
 public interface ${businessService} {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "${saveOperation}")
     BaseResult<Long> save(@Valid @RequestBody ${saveRequestDto} requestDTO);
 
@@ -32,7 +32,7 @@ public interface ${businessService} {
     @ApiImplicitParam(name = "id", value = "${id}", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "${updateOperation}")
     BaseResult<Long> update(@Valid @RequestBody ${updateRequestDto} requestDTO);
 

@@ -4,8 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import lombok.EqualsAndHashCode;
-import com.dmall.bms.api.dto.user.common.CommonUserRequestDTO;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 修改后台用户请求实体
@@ -13,11 +14,26 @@ import com.dmall.bms.api.dto.user.common.CommonUserRequestDTO;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "UpdateUserRequestDTO", description = "修改后台用户请求实体")
-public class UpdateUserRequestDTO extends CommonUserRequestDTO {
+public class UpdateUserRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "主键", required = true, position = 0)
+    @ApiModelProperty(value = "id", required = true, position = 1)
+    @NotNull(message = "id不能为空")
     private Long id;
+
+    @ApiModelProperty(value = "昵称", position = 2)
+    private String nickName;
+
+    @ApiModelProperty(value = "手机号", position = 3)
+    private String phone;
+
+    @ApiModelProperty(value = "真实姓名", position = 4)
+    private String realName;
+
+    @ApiModelProperty(value = "头像", position = 5)
+    private String icon;
+
+    @ApiModelProperty(value = "备注", position = 6)
+    private String remark;
 
 }

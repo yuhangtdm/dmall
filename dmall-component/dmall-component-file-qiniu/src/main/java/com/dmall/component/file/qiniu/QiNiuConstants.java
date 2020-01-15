@@ -13,4 +13,6 @@ public interface QiNiuConstants {
     String PRODUCT_ATTRIBUTE_VALUE = "productAttributeValue";
 
     String SKU = "sku";
+
+    String ADMIN_ICON = "adminIcon";
 }

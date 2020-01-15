@@ -4,6 +4,7 @@ import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
 import com.dmall.bms.service.impl.role.enums.RoleErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
+import com.dmall.bms.service.impl.support.RoleSupport;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
@@ -20,13 +21,23 @@ public class SaveRoleHandler extends AbstractCommonHandler<SaveRoleRequestDTO, R
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private RoleSupport roleSupport;
+
     @Override
     public BaseResult<Long> validate(SaveRoleRequestDTO requestDTO) {
+        // 角色名称必须唯一
+        RoleDO roleDO = roleSupport.getByName(requestDTO.getName());
+        if (roleDO != null) {
+            return ResultUtil.fail(RoleErrorEnum.NAME_EXIST);
+        }
         return ResultUtil.success();
     }
 
     @Override
     public BaseResult<Long> processor(SaveRoleRequestDTO requestDTO) {
+        RoleDO roleDO = dtoConvertDo(requestDTO, RoleDO.class);
+        roleMapper.insert(roleDO);
         return ResultUtil.success();
     }
 

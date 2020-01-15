@@ -1,9 +1,11 @@
 package com.dmall.bms.service.impl.role.handler;
 
 import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
+import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.service.impl.role.enums.RoleErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
+import com.dmall.bms.service.impl.support.RoleSupport;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
@@ -20,13 +22,26 @@ public class UpdateRoleHandler extends AbstractCommonHandler<UpdateRoleRequestDT
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private RoleSupport roleSupport;
+
     @Override
     public BaseResult<Long> validate(UpdateRoleRequestDTO requestDTO) {
+        RoleDO roleDO = roleMapper.selectById(requestDTO.getId());
+        if (roleDO == null) {
+            return ResultUtil.fail(RoleErrorEnum.ROLE_NOT_EXIST);
+        }
+        RoleDO byName = roleSupport.getByName(requestDTO.getName());
+        if (byName != null && !byName.getId().equals(requestDTO.getId())) {
+            return ResultUtil.fail(RoleErrorEnum.NAME_EXIST);
+        }
         return ResultUtil.success();
     }
 
     @Override
     public BaseResult<Long> processor(UpdateRoleRequestDTO requestDTO) {
+        RoleDO roleDO = dtoConvertDo(requestDTO, RoleDO.class);
+        roleMapper.updateById(roleDO);
         return ResultUtil.success();
     }
 

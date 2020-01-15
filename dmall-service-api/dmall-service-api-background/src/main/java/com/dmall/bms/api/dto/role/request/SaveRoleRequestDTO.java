@@ -1,10 +1,12 @@
 package com.dmall.bms.api.dto.role.request;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import lombok.EqualsAndHashCode;
-import com.dmall.bms.api.dto.role.common.CommonRoleRequestDTO;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * @description: 新增后台角色请求实体
@@ -12,8 +14,16 @@ import com.dmall.bms.api.dto.role.common.CommonRoleRequestDTO;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SaveRoleRequestDTO", description = "新增后台角色请求实体")
-public class SaveRoleRequestDTO extends CommonRoleRequestDTO {
+public class SaveRoleRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = -5038973249516465822L;
+
+    @ApiModelProperty(value = "角色名称", position = 1)
+    @NotBlank(message = "角色名称不能为空")
+    private String name;
+
+    @ApiModelProperty(value = "备注", position = 2)
+    private String remark;
 
 }

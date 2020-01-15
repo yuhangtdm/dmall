@@ -21,11 +21,17 @@ public class DeleteUserHandler extends AbstractCommonHandler<Long, UserDO, Long>
 
     @Override
     public BaseResult<Long> validate(Long id) {
+        // id存在
+        UserDO userDO = userMapper.selectById(id);
+        if (userDO == null) {
+            return ResultUtil.fail(UserErrorEnum.USER_NOT_EXIST);
+        }
         return ResultUtil.success();
     }
 
     @Override
     public BaseResult<Long> processor(Long id) {
+        userMapper.deleteById(id);
         return ResultUtil.success();
     }
 

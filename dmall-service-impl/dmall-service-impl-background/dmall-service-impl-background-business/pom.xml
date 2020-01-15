@@ -28,6 +28,11 @@
 
         <dependency>
             <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-rbac-shiro</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
             <artifactId>dmall-service-impl-background-generator</artifactId>
         </dependency>
 
@@ -39,6 +44,11 @@
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-component-cache-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-file-qiniu</artifactId>
         </dependency>
 
         <dependency>

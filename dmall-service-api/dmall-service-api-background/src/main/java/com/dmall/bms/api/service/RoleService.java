@@ -5,6 +5,7 @@ import com.dmall.bms.api.dto.role.request.PageRoleRequestDTO;
 import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
 import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
 import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
+import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
@@ -47,6 +48,6 @@ public interface RoleService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台角色分页")
-    BaseResult<LayUiPage<CommonRoleResponseDTO>>page(@RequestBody PageRoleRequestDTO requestDTO);
+    BaseResult<LayUiPage<PageRoleResponseDTO>>page(@RequestBody PageRoleRequestDTO requestDTO);
 
 }
