@@ -39,7 +39,7 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
     public BaseResult<Long> processor(SaveUserRequestDTO requestDTO) {
         UserDO userDO = dtoConvertDo(requestDTO, UserDO.class);
         userMapper.insert(userDO);
-        return ResultUtil.success();
+        return ResultUtil.success(userDO.getId());
     }
 
     @Override

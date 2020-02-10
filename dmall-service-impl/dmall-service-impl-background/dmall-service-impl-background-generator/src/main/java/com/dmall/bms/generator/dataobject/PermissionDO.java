@@ -33,7 +33,7 @@ public class PermissionDO implements Serializable {
     /**
      * 父级id
      */
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 权限码
@@ -55,6 +55,9 @@ public class PermissionDO implements Serializable {
      */
     private String uri;
 
+    /**
+     * 请求方式
+     */
     private String method;
 
     /**

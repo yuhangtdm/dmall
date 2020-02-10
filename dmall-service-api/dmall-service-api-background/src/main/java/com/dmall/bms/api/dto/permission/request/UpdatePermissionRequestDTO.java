@@ -8,13 +8,13 @@ import lombok.EqualsAndHashCode;
 import com.dmall.bms.api.dto.permission.common.CommonPermissionRequestDTO;
 
 /**
- * @description: 修改资源请求实体
+ * @description: 修改权限请求实体
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "UpdatePermissionRequestDTO", description = "修改资源请求实体")
+@ApiModel(value = "UpdatePermissionRequestDTO", description = "修改权限请求实体")
 public class UpdatePermissionRequestDTO extends CommonPermissionRequestDTO {
 
     @ApiModelProperty(value = "主键", required = true, position = 0)

@@ -35,7 +35,7 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
     public BaseResult<Long> processor(UpdateUserRequestDTO requestDTO) {
         UserDO userDO = dtoConvertDo(requestDTO, UserDO.class);
         userMapper.updateById(userDO);
-        return ResultUtil.success();
+        return ResultUtil.success(userDO.getId());
     }
 
 }

@@ -31,7 +31,7 @@ public class DeleteRoleHandler extends AbstractCommonHandler<Long, RoleDO, Long>
     @Override
     public BaseResult<Long> processor(Long id) {
         roleMapper.deleteById(id);
-        return ResultUtil.success();
+        return ResultUtil.success(id);
     }
 
 }

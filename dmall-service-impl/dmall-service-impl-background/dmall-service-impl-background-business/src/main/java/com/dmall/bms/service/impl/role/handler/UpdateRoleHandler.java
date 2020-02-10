@@ -42,7 +42,7 @@ public class UpdateRoleHandler extends AbstractCommonHandler<UpdateRoleRequestDT
     public BaseResult<Long> processor(UpdateRoleRequestDTO requestDTO) {
         RoleDO roleDO = dtoConvertDo(requestDTO, RoleDO.class);
         roleMapper.updateById(roleDO);
-        return ResultUtil.success();
+        return ResultUtil.success(roleDO.getId());
     }
 
 }

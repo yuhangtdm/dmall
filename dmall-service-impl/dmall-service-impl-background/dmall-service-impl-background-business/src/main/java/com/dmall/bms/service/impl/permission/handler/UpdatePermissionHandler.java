@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @description: 修改资源处理器
+ * @description: 修改权限处理器
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Component

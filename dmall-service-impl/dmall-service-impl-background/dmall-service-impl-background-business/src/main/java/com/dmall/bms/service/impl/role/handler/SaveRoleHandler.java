@@ -38,7 +38,7 @@ public class SaveRoleHandler extends AbstractCommonHandler<SaveRoleRequestDTO, R
     public BaseResult<Long> processor(SaveRoleRequestDTO requestDTO) {
         RoleDO roleDO = dtoConvertDo(requestDTO, RoleDO.class);
         roleMapper.insert(roleDO);
-        return ResultUtil.success();
+        return ResultUtil.success(roleDO.getId());
     }
 
 }

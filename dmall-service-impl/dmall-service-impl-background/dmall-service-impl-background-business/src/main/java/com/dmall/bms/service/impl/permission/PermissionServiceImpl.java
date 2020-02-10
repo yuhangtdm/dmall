@@ -1,10 +1,11 @@
 package com.dmall.bms.service.impl.permission;
 
-import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
-import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
+import com.dmall.bms.api.dto.permission.common.CommonPermissionResponseDTO;
 import com.dmall.bms.api.dto.permission.request.ListPermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.PagePermissionRequestDTO;
-import com.dmall.bms.api.dto.permission.common.CommonPermissionResponseDTO;
+import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
+import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
+import com.dmall.bms.api.dto.permission.response.PagePermissionResponseDTO;
 import com.dmall.bms.api.service.PermissionService;
 import com.dmall.bms.service.impl.permission.handler.*;
 import com.dmall.common.dto.BaseResult;
@@ -12,10 +13,11 @@ import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 /**
- * @description: 资源服务实现
+ * @description: 权限服务实现
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @RestController
@@ -66,7 +68,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public BaseResult<LayUiPage<CommonPermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO) {
+    public BaseResult<LayUiPage<PagePermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO) {
         return pagePermissionHandler.handler(requestDTO);
     }
 

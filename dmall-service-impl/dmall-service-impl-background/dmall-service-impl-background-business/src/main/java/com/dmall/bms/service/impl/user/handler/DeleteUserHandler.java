@@ -32,7 +32,7 @@ public class DeleteUserHandler extends AbstractCommonHandler<Long, UserDO, Long>
     @Override
     public BaseResult<Long> processor(Long id) {
         userMapper.deleteById(id);
-        return ResultUtil.success();
+        return ResultUtil.success(id);
     }
 
 }
