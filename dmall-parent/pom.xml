@@ -32,7 +32,6 @@
 
         <module>../dmall-framework/dmall-framework-eureka-server</module>
         <module>../dmall-framework/dmall-framework-zuul</module>
-        <module>../dmall-framework/dmall-framework-dashboard</module>
         <module>../dmall-framework/dmall-framework-config-server</module>
         <module>../dmall-framework/dmall-framework-springboot-admin</module>
 
@@ -77,6 +76,8 @@
         <jsoup.version>1.12.1</jsoup.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
         <shiro-spring.version>1.4.0</shiro-spring.version>
+        <zipkin.version>2.10.1</zipkin.version>
+        <zipkin.elasticsearch.version>2.8.4</zipkin.elasticsearch.version>
     </properties>
 
     <dependencies>
@@ -228,13 +229,34 @@
                 <version>${velocity-engine-core.version}</version>
             </dependency>
 
+            <!--shiro-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro-spring.version}</version>
             </dependency>
 
-
+            <!--zipkin-->
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin</artifactId>
+                <version>${zipkin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-server</artifactId>
+                <version>${zipkin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-autoconfigure-ui</artifactId>
+                <version>${zipkin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-autoconfigure-storage-elasticsearch-http</artifactId>
+                <version>${zipkin.elasticsearch.version}</version>
+            </dependency>
 
             <!--======================本项目模块======================-->
             <!--common-->

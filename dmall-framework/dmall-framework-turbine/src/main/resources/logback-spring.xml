@@ -6,7 +6,7 @@
 
     <property name="LOG_FILE_PATH" value="${LOG_PATH}/${LOG_FILE}"/>
     <!--应用名称-->
-    <property name="APP_NAME" value="dmall-framework-dashboard"/>
+    <property name="APP_NAME" value="dmall-framework-turbine"/>
     <!--日志文件保存路径-->
     <contextName>${APP_NAME}</contextName>
 
