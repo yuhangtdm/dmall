@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.allInJava</groupId>
+    <artifactId>dmall</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <!--dmall-common-->
+        <module>dmall-common/dmall-common-util</module>
+        <module>dmall-common/dmall-common-service-api</module>
+        <module>dmall-common/dmall-common-service-impl</module>
+
+        <!--dmall-component-->
+        <module>dmall-component/dmall-component-web</module>
+        <module>dmall-component/dmall-component-cache-redis</module>
+        <module>dmall-component/dmall-component-dao-mybatisplus</module>
+        <module>dmall-component/dmall-component-elasticsearch</module>
+        <module>dmall-component/dmall-component-file-qiniu</module>
+        <module>dmall-component/dmall-component-rbac-shiro</module>
+
+        <!--dmall-framework-->
+        <module>dmall-framework/dmall-framework-eureka-server</module>
+        <module>dmall-framework/dmall-framework-zuul</module>
+        <module>dmall-framework/dmall-framework-config-server</module>
+        <module>dmall-framework/dmall-framework-springboot-admin</module>
+        <module>dmall-framework/dmall-framework-turbine</module>
+        <module>dmall-framework/dmall-framework-zipkin</module>
+
+        <module>dmall-parent</module>
+
+        <!--dmall-service-api-->
+        <module>dmall-service-api/dmall-service-api-product</module>
+        <module>dmall-service-api/dmall-service-api-member</module>
+        <module>dmall-service-api/dmall-service-api-background</module>
+        <module>dmall-service-api/dmall-service-api-sso</module>
+        <!-- <module>../dmall-service-api/dmall-service-api-order</module>
+         <module>../dmall-service-api/dmall-service-api-content</module>
+         <module>../dmall-service-api/dmall-service-api-sale</module>
+         <module>../dmall-service-api/dmall-service-api-pay</module>
+         <module>../dmall-service-api/dmall-service-api-search</module>-->
+
+        <!--dmall-service-impl-->
+        <module>dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator</module>
+        <module>dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business</module>
+        <module>dmall-service-impl/dmall-service-impl-sso</module>
+        <module>dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-business</module>
+        <module>dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-generator</module>
+
+        <!--dmall-web-->
+        <module>dmall-web/dmall-web-admin</module>
+    </modules>
+
+
+</project>

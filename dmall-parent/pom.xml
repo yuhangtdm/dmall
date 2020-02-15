@@ -16,45 +16,6 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <modules>
-
-        <module>../dmall-common/dmall-common-util</module>
-        <module>../dmall-common/dmall-common-service-api</module>
-        <module>../dmall-common/dmall-common-service-impl</module>
-
-        <module>../dmall-component/dmall-component-web</module>
-        <module>../dmall-component/dmall-component-cache-redis</module>
-        <module>../dmall-component/dmall-component-dao-mybatisplus</module>
-        <module>../dmall-component/dmall-component-elasticsearch</module>
-        <module>../dmall-component/dmall-component-file-qiniu</module>
-        <module>../dmall-component/dmall-component-rbac-shiro</module>
-
-
-        <module>../dmall-framework/dmall-framework-eureka-server</module>
-        <module>../dmall-framework/dmall-framework-zuul</module>
-        <module>../dmall-framework/dmall-framework-config-server</module>
-        <module>../dmall-framework/dmall-framework-springboot-admin</module>
-
-        <module>../dmall-service-api/dmall-service-api-product</module>
-        <module>../dmall-service-api/dmall-service-api-member</module>
-        <module>../dmall-service-api/dmall-service-api-background</module>
-        <module>../dmall-service-api/dmall-service-api-sso</module>
-        <!-- <module>../dmall-service-api/dmall-service-api-order</module>
-         <module>../dmall-service-api/dmall-service-api-content</module>
-         <module>../dmall-service-api/dmall-service-api-sale</module>
-         <module>../dmall-service-api/dmall-service-api-pay</module>
-         <module>../dmall-service-api/dmall-service-api-search</module>-->
-
-        <module>../dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator</module>
-        <module>../dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business</module>
-        <module>../dmall-service-impl/dmall-service-impl-sso</module>
-
-        <module>../dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-business</module>
-        <module>../dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-generator</module>
-
-        <module>../dmall-web/dmall-web-admin</module>
-    </modules>
-
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
@@ -348,5 +309,47 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--配置私服的仓库地址和插件地址-->
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Repository</name>
+            <url>http://192.168.38.154:8081/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus</id>
+            <name>Nexus Plugin Repository</name>
+            <url>http://192.168.38.154:8081/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- 配置上传jar包的私服地址 注意：id 和 settings文件里的server的id一致  -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://192.168.38.154:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://192.168.38.154:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
