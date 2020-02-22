@@ -50,6 +50,8 @@
         <module>dmall-service-impl/dmall-service-impl-sso</module>
         <module>dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-business</module>
         <module>dmall-service-impl/dmall-service-impl-background/dmall-service-impl-background-generator</module>
+        <module>dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-business</module>
+        <module>dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-generator</module>
 
         <!--dmall-web-->
         <module>dmall-web/dmall-web-admin</module>

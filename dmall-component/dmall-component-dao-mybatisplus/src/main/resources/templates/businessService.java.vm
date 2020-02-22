@@ -43,10 +43,10 @@ public interface ${businessService} {
 
     @PostMapping("/list")
     @ApiOperation(value = "${listOperation}")
-    BaseResult<List<${commonResponseDto}>>list(@RequestBody ${listRequestDto} requestDTO);
+    BaseResult<List<${commonResponseDto}>> list(@RequestBody ${listRequestDto} requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "${pageOperation}")
-    BaseResult<LayUiPage<${commonResponseDto}>>page(@RequestBody ${pageRequestDto} requestDTO);
+    BaseResult<LayUiPage<${commonResponseDto}>> page(@RequestBody ${pageRequestDto} requestDTO);
 
 }
