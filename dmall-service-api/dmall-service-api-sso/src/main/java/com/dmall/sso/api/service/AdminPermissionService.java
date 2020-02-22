@@ -29,7 +29,6 @@ public interface AdminPermissionService {
     @ApiOperation(value = "获取角色列表")
     BaseResult<List<RoleResponseDTO>> listRoles(@NotBlank(message = "用户名称不能为空") @RequestParam String userName);
 
-
     /**
      * 获取权限列表
      */

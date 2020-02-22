@@ -4,8 +4,6 @@ import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.user.UserDTO;
 import com.dmall.common.util.BeanUtil;
 import com.dmall.sso.service.impl.admin.dataobject.UserDO;
-import com.dmall.sso.service.impl.admin.mapper.UserPermissionMapper;
-import com.dmall.sso.service.impl.admin.mapper.UserRoleMapper;
 import com.dmall.sso.service.impl.admin.support.UserSupport;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

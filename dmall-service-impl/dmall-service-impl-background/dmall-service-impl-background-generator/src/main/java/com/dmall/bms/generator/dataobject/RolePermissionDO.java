@@ -36,7 +36,7 @@ public class RolePermissionDO implements Serializable {
     private Long roleId;
 
     /**
-     * 资源id
+     * 权限id
      */
     private Long permissionId;
 

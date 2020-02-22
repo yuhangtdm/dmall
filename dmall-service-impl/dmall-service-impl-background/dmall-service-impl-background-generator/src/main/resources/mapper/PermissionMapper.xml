@@ -5,13 +5,11 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.bms.generator.dataobject.PermissionDO">
         <id column="id" property="id" />
-        <result column="parent_id" property="parentId" />
+        <result column="service_id" property="serviceId" />
         <result column="code" property="code" />
         <result column="name" property="name" />
-        <result column="type" property="type" />
         <result column="uri" property="uri" />
         <result column="method" property="method" />
-        <result column="icon" property="icon" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />
@@ -21,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, parent_id, code, name, type, uri, method, icon, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, service_id, code, name, uri, method, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

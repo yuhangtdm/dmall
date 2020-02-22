@@ -1,6 +1,6 @@
 package com.dmall.component.rbac.shiro.configuration;
 
-import com.dmall.component.rbac.shiro.feign.FeignRequestInterceptor;
+import com.dmall.component.rbac.shiro.interceptor.FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

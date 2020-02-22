@@ -101,7 +101,6 @@ public class AdminUserZuulFilter extends ZuulFilter {
             if (AjaxUtil.isAjax(request)) {
                 requestContext.setResponseBody(JSON.toJSONString(ResultUtil.fail(AdminUserErrorEnum.TOKEN_BLANK)));
                 requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
-                return null;
             } else {
                 // 重定向到登录地址
                 try {
@@ -109,8 +108,8 @@ public class AdminUserZuulFilter extends ZuulFilter {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                return null;
             }
+            return null;
         }
         // 调用sso服务验证token
         BaseResult<UserDTO> checkResult = loginServiceFeign.checkToken(token);

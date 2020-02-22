@@ -3,6 +3,8 @@ package com.dmall.bms.service.impl.permission.handler;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.bms.api.dto.permission.enums.PermissionTypeEnum;
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
+import com.dmall.bms.generator.dataobject.ServiceDO;
+import com.dmall.bms.generator.mapper.ServiceMapper;
 import com.dmall.bms.service.impl.permission.enums.PermissionErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
@@ -26,32 +28,25 @@ public class SavePermissionHandler extends AbstractCommonHandler<SavePermissionR
     @Autowired
     private PermissionSupport permissionSupport;
 
+    @Autowired
+    private ServiceMapper serviceMapper;
+
     @Override
     public BaseResult<Long> validate(SavePermissionRequestDTO requestDTO) {
+        // 服务必须存在
+        ServiceDO serviceDO = serviceMapper.selectById(requestDTO.getServiceId());
+        if (serviceDO == null){
+            return ResultUtil.fail(PermissionErrorEnum.SERVICE_NOT_EXIST);
+        }
         // 权限码唯一
         PermissionDO permissionDO = permissionSupport.getByCode(requestDTO.getCode());
         if (permissionDO != null){
             return ResultUtil.fail(PermissionErrorEnum.CODE_EXIST);
         }
         // 请求方式+uri唯一
-        if (PermissionTypeEnum.URI.getCode().equals(requestDTO.getType())){
-            if (StrUtil.isBlank(requestDTO.getUri()) || StrUtil.isBlank(requestDTO.getMethod())){
-                return ResultUtil.fail(PermissionErrorEnum.URI_METHOD_ERROR);
-            }
-            PermissionDO byUriAndMethod = permissionSupport.getByUriAndMethod(requestDTO.getUri(), requestDTO.getMethod());
-            if (byUriAndMethod != null){
-                return ResultUtil.fail(PermissionErrorEnum.URI_METHOD_EXIST);
-            }
-        }
-        // 目录id不为空时 必须存在 且必须是目录
-        if (requestDTO.getParentId() != null){
-            PermissionDO parentDO = permissionMapper.selectById(requestDTO.getParentId());
-            if (parentDO == null){
-                return ResultUtil.fail(PermissionErrorEnum.CATALOG_NOT_EXIST);
-            }
-            if (!PermissionTypeEnum.CATALOG.getCode().equals(parentDO.getType())){
-                return ResultUtil.fail(PermissionErrorEnum.CATALOG_ERROR);
-            }
+        PermissionDO byUriAndMethod = permissionSupport.getByUriAndMethod(requestDTO.getUri(), requestDTO.getMethod());
+        if (byUriAndMethod != null){
+            return ResultUtil.fail(PermissionErrorEnum.URI_METHOD_EXIST);
         }
         return ResultUtil.success();
     }

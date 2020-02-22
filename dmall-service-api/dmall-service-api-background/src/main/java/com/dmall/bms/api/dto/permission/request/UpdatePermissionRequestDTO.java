@@ -1,11 +1,16 @@
 package com.dmall.bms.api.dto.permission.request;
 
+import com.dmall.bms.api.dto.permission.common.CommonPermissionRequestDTO;
+import com.dmall.bms.api.dto.permission.enums.HttpMethodEnum;
+import com.dmall.common.dto.validate.ValueInEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.bms.api.dto.permission.common.CommonPermissionRequestDTO;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @description: 修改权限请求实体
@@ -17,7 +22,24 @@ import com.dmall.bms.api.dto.permission.common.CommonPermissionRequestDTO;
 @ApiModel(value = "UpdatePermissionRequestDTO", description = "修改权限请求实体")
 public class UpdatePermissionRequestDTO extends CommonPermissionRequestDTO {
 
-    @ApiModelProperty(value = "主键", required = true, position = 0)
+    @ApiModelProperty(value = "主键", required = true, position = 1)
+    @NotNull(message = "id不能为空")
     private Long id;
+
+    @ApiModelProperty(value = "权限码", position = 2)
+    private String code;
+
+    @ApiModelProperty(value = "权限名称", position = 3)
+    private String name;
+
+    @ApiModelProperty(value = "权限地址", position = 4)
+    private String uri;
+
+    @ApiModelProperty(value = "请求方式", position = 5)
+    @ValueInEnum(HttpMethodEnum.class)
+    private String method;
+
+    @ApiModelProperty(value = "图标", position = 6)
+    private String icon;
 
 }

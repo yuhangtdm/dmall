@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.sso.service.impl.admin.mapper.UserPermissionsMapper">
+
+    <select id="listByUserName" resultType="com.dmall.sso.api.dto.PermissionResponseDTO">
+       SELECT DISTINCT
+			p.id,
+			p. CODE,
+			p. NAME,
+			p.uri,
+			p.method
+		FROM
+			bms_permission p
+		INNER JOIN bms_role_permission rp ON p.id = rp.permission_id
+		INNER JOIN bms_role r ON r.id = rp.role_id
+		INNER JOIN bms_user_role ur ON ur.role_id = r.id
+		INNER JOIN bms_user u ON u.id = ur.user_id
+		WHERE
+			u.user_name = #{userName}
+		AND p.is_deleted = 'N'
+		AND rp.is_deleted = 'N'
+		AND r.is_deleted = 'N'
+		AND ur.is_deleted = 'N'
+		AND u.is_deleted = 'N'
+		UNION
+			SELECT DISTINCT
+				p.id,
+				p. CODE,
+				p. NAME,
+				p.uri,
+				p.method
+			FROM
+				bms_permission p
+			WHERE
+				p.id IN (
+					SELECT
+						b.permission_id
+					FROM
+						bms_user_permission b
+					INNER JOIN bms_user u ON b.user_id = u.id
+					WHERE
+						u.user_name = #{userName}
+					AND b.is_deleted = 'N'
+					AND U.is_deleted = 'N'
+					AND b.type = '+'
+				)
+    </select>
+
+	<select id="subPermissionsByUserName" resultType="long">
+		SELECT
+			distinct b.permission_id
+		FROM
+			bms_user_permission b
+		INNER JOIN bms_user u ON b.user_id = u.id
+		WHERE
+			u.user_name = #{userName}
+		AND b.is_deleted = 'N'
+		AND U.is_deleted = 'N'
+		AND b.type = '-'
+	</select>
+</mapper>

@@ -10,6 +10,7 @@ import com.dmall.common.model.user.UserDTO;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.ShiroProperties;
+import com.dmall.component.rbac.shiro.util.CommonFilterUtil;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 
 import javax.servlet.ServletRequest;
@@ -35,7 +36,7 @@ public class AdminUserFilter extends PathMatchingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilter.filter(request, shiroProperties);
+        boolean filter = CommonFilterUtil.filter(request, shiroProperties);
         if (filter) {
             return filter;
         }

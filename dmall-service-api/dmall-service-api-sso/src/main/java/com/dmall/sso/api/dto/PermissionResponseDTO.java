@@ -28,4 +28,5 @@ public class PermissionResponseDTO {
 
     @ApiModelProperty(value = "请求方式", position = 5)
     private String method;
+
 }

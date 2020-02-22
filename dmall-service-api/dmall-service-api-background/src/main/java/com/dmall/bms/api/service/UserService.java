@@ -1,11 +1,9 @@
 package com.dmall.bms.api.service;
 
-import com.dmall.bms.api.dto.user.request.PageUserRequestDTO;
+import com.dmall.bms.api.dto.user.request.*;
 import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
-import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
-import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage ;
+import com.dmall.common.dto.LayUiPage;
 import com.dmall.common.dto.UploadResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,9 +44,17 @@ public interface UserService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户分页")
-    BaseResult<LayUiPage<CommonUserResponseDTO>>page(@RequestBody PageUserRequestDTO requestDTO);
+    BaseResult<LayUiPage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
 
     @ApiOperation(value = "上传用户头像")
     @PostMapping("/uploadIcon")
     BaseResult<UploadResult> uploadIcon(@NotNull(message = "头像不能为空") MultipartFile file);
+
+    @ApiOperation(value = "设置角色")
+    @PostMapping("/setRoles")
+    BaseResult<Long> setRoles(@Valid @RequestBody SetRolesRequestDTO requestDTO);
+
+    @ApiOperation(value = "设置权限")
+    @PostMapping("/setPermissions")
+    BaseResult<Long> setPermissions(@Valid @RequestBody SetPermissionsExtRequestDTO requestDTO);
 }

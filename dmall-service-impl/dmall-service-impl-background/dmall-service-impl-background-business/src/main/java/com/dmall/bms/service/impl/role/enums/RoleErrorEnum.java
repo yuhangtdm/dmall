@@ -16,6 +16,9 @@ public enum RoleErrorEnum implements ErrorCodeEnum {
 
     ROLE_NOT_EXIST("2000","该后台角色不存在"),
 
+    PERMISSION_NOT_EXIST("3000","权限不存在"),
+
+
     ;
 
    /**

@@ -25,7 +25,7 @@ public class GeneratorCodeUtil {
         /**
          * 表名不传则生成所有表的
          */
-        generateByTables(Constants.GENERATOR_MODULE_NAME);
+        generateByTables(Constants.GENERATOR_MODULE_NAME,"bms_service","bms_permission","bms_menu","bms_role_menu","bms_user_menu");
     }
 
     /**

@@ -26,7 +26,6 @@ public class UploadIconHandler extends AbstractCommonHandler<MultipartFile, User
     @Autowired
     private QiNiuFileManager qiNiuFileManager;
 
-
     @Override
     public BaseResult<UploadResult> processor(MultipartFile file) {
         try {

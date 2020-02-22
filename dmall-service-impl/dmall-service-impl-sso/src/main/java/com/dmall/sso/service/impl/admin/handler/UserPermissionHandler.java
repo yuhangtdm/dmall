@@ -5,7 +5,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.sso.api.dto.PermissionResponseDTO;
 import com.dmall.sso.service.impl.admin.dataobject.PermissionDO;
-import com.dmall.sso.service.impl.admin.mapper.UserPermissionMapper;
+import com.dmall.sso.service.impl.admin.mapper.UserPermissionsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +20,19 @@ import java.util.stream.Collectors;
 public class UserPermissionHandler extends AbstractCommonHandler<String, PermissionDO, PermissionResponseDTO> {
 
     @Autowired
-    private UserPermissionMapper userPermissionMapper;
+    private UserPermissionsMapper userPermissionsMapper;
 
     @Override
     public BaseResult processor(String userName) {
-        List<PermissionDO> permissionDOS = userPermissionMapper.listByUserName(userName);
-        List<PermissionResponseDTO> result = permissionDOS.stream().map(doo -> doConvertDto(doo, PermissionResponseDTO.class))
+        // 用户的权限以及额外的加权限
+        List<PermissionResponseDTO> permissionDOS = userPermissionsMapper.listByUserName(userName);
+
+        // 用户的减权限
+        List<Long> ids = userPermissionsMapper.subPermissionsByUserName(userName);
+
+        // 返回的数据
+        List<PermissionResponseDTO> result = permissionDOS.stream()
+                .filter(permissionResponse -> !ids.contains(permissionResponse.getId()))
                 .collect(Collectors.toList());
         return ResultUtil.success(result);
     }

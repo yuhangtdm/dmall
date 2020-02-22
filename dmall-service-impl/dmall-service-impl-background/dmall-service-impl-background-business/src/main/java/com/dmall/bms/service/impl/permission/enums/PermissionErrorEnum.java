@@ -13,10 +13,8 @@ import lombok.Getter;
 public enum PermissionErrorEnum implements ErrorCodeEnum {
 
     CODE_EXIST("1000","权限码已存在"),
-    URI_METHOD_ERROR("1002","接口地址和请求方式不能为空"),
-    URI_METHOD_EXIST("1003","该接口地址和请求方式已存在"),
-    CATALOG_NOT_EXIST("1004","该目录不存在"),
-    CATALOG_ERROR("1005","所选上级不是目录"),
+    URI_METHOD_EXIST("1001","该接口地址和请求方式已存在"),
+    SERVICE_NOT_EXIST("1002","服务不存在"),
 
     PERMISSION_NOT_EXIST("2000","该权限不存在"),
 

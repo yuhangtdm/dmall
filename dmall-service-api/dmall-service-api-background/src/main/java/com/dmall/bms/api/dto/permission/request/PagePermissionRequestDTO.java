@@ -20,24 +20,19 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "PagePermissionRequestDTO", description = "权限分页请求实体")
 public class PagePermissionRequestDTO extends PageRequestDTO {
 
+    @ApiModelProperty(value = "父级id", position = 1)
+    private Long serviceId;
 
-    @ApiModelProperty(value = "父级id", position = 2)
-    private Long parentId;
-
-    @ApiModelProperty(value = "权限码", position = 3)
+    @ApiModelProperty(value = "权限码", position = 2)
     private String code;
 
-    @ApiModelProperty(value = "权限名称", position = 4)
+    @ApiModelProperty(value = "权限名称", position = 3)
     private String name;
 
-    @ApiModelProperty(value = "权限类型:1-接口地址;2-目录;3-菜单", position = 5)
-    @ValueInEnum(PermissionTypeEnum.class)
-    private Integer type;
-
-    @ApiModelProperty(value = "权限地址", position = 6)
+    @ApiModelProperty(value = "权限地址", position = 4)
     private String uri;
 
-    @ApiModelProperty(value = "请求方式", position = 6)
+    @ApiModelProperty(value = "请求方式", position = 5)
     @ValueInEnum(HttpMethodEnum.class)
     private String method;
 

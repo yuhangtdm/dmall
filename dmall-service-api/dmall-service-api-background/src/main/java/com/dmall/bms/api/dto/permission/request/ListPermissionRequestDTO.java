@@ -22,7 +22,7 @@ public class ListPermissionRequestDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "父级id", position = 2)
-    private Long parentId;
+    private Long serviceId;
 
     @ApiModelProperty(value = "权限码", position = 3)
     private String code;
@@ -30,14 +30,10 @@ public class ListPermissionRequestDTO implements Serializable {
     @ApiModelProperty(value = "权限名称", position = 4)
     private String name;
 
-    @ApiModelProperty(value = "权限类型:1-接口地址;2-目录;3-菜单", position = 5)
-    @ValueInEnum(PermissionTypeEnum.class)
-    private Integer type;
-
     @ApiModelProperty(value = "权限地址", position = 6)
     private String uri;
 
-    @ApiModelProperty(value = "请求方式", position = 6)
+    @ApiModelProperty(value = "请求方式", position = 7)
     @ValueInEnum(HttpMethodEnum.class)
     private String method;
 

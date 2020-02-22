@@ -10,7 +10,7 @@ import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.ShiroProperties;
 import com.dmall.component.rbac.shiro.feign.AdminPermissionFeign;
-import com.dmall.component.rbac.shiro.util.SpringUtil;
+import com.dmall.component.rbac.shiro.util.CommonFilterUtil;
 import com.dmall.sso.api.dto.PermissionResponseDTO;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 
@@ -36,19 +36,17 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         this.adminPermissionFeign = adminPermissionFeign;
     }
 
-
-
     @Override
     protected boolean onPreHandle(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue)
             throws Exception {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilter.filter(request, shiroProperties);
+        boolean filter = CommonFilterUtil.filter(request, shiroProperties);
         if (filter) {
             return true;
         }
-        String requestMapping = CommonFilter.getRequestMapping(request);
+        String requestMapping = CommonFilterUtil.getRequestMapping(request);
         // 非RequestMapping的url
         if (requestMapping == null){
             return true;
@@ -57,9 +55,6 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         UserDTO userDTO = AdminUserContextHolder.get();
         BaseResult<List<PermissionResponseDTO>> listBaseResult = adminPermissionFeign.listPermissions(userDTO.getUserName());
         List<PermissionResponseDTO> permissionList = listBaseResult.getData();
-        permissionList = permissionList.stream().filter(permissionResponse -> StrUtil.isNotBlank(permissionResponse.getUri()))
-                .collect(Collectors.toList());
-
         String method = request.getMethod();
         for (PermissionResponseDTO permission : permissionList) {
             if (method.equalsIgnoreCase(permission.getMethod()) && requestMapping.equals(permission.getUri())) {

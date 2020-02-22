@@ -17,6 +17,10 @@ public enum UserErrorEnum implements ErrorCodeEnum {
     USER_NOT_EXIST("2000","该用户不存在"),
 
     UPLOAD_PIC_ERROR("3000","上传头像失败"),
+
+    ROLE_ID_NOT_EXIST("4000","角色id不存在"),
+
+    PERMISSION_ID_NOT_EXIST("4000","权限id不存在"),
     ;
 
    /**

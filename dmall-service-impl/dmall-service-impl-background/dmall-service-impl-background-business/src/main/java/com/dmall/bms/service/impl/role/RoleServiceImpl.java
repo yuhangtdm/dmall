@@ -1,9 +1,6 @@
 package com.dmall.bms.service.impl.role;
 
-import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
-import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
-import com.dmall.bms.api.dto.role.request.ListRoleRequestDTO;
-import com.dmall.bms.api.dto.role.request.PageRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.*;
 import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
 import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.bms.api.service.RoleService;
@@ -11,6 +8,7 @@ import com.dmall.bms.service.impl.role.handler.*;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -40,6 +38,8 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private PageRoleHandler pageRoleHandler;
 
+    @Autowired
+    private SetPermissionsHandler setPermissionsHandler;
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveRoleRequestDTO requestDTO) {
@@ -69,6 +69,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public BaseResult<LayUiPage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO) {
         return pageRoleHandler.handler(requestDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> setPermissions(SetPermissionsRequestDTO requestDTO) {
+        return setPermissionsHandler.handler(requestDTO);
     }
 
 }

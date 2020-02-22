@@ -35,9 +35,12 @@ public class PermissionSupport {
                 .eq(PermissionDO::getMethod, method));
     }
 
-    public static LambdaQueryWrapper buildWrapper(Long parentId, String code, String name, String uri, String method ){
+    /**
+     * 构建公共的wrapper
+     */
+    public static LambdaQueryWrapper buildWrapper(Long serviceId, String code, String name, String uri, String method) {
         LambdaQueryWrapper<PermissionDO> wrapper = Wrappers.<PermissionDO>lambdaQuery()
-                .eq(parentId != null, PermissionDO::getParentId,parentId)
+                .eq(serviceId != null, PermissionDO::getServiceId, serviceId)
                 .like(StrUtil.isNotBlank(code), PermissionDO::getCode, code)
                 .like(StrUtil.isNotBlank(name), PermissionDO::getName, name)
                 .eq(StrUtil.isNotBlank(uri), PermissionDO::getUri, uri)

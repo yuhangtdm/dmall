@@ -1,13 +1,10 @@
 package com.dmall.bms.api.service;
 
-import com.dmall.bms.api.dto.role.request.ListRoleRequestDTO;
-import com.dmall.bms.api.dto.role.request.PageRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.*;
 import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
-import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
-import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
 import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage ;
+import com.dmall.common.dto.LayUiPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -44,10 +41,14 @@ public interface RoleService {
 
     @PostMapping("/list")
     @ApiOperation(value = "后台角色列表")
-    BaseResult<List<CommonRoleResponseDTO>>list(@RequestBody ListRoleRequestDTO requestDTO);
+    BaseResult<List<CommonRoleResponseDTO>> list(@RequestBody ListRoleRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "后台角色分页")
-    BaseResult<LayUiPage<PageRoleResponseDTO>>page(@RequestBody PageRoleRequestDTO requestDTO);
+    BaseResult<LayUiPage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
+
+    @PostMapping("/setPermissions")
+    @ApiOperation(value = "设置权限")
+    BaseResult<Long> setPermissions(@RequestBody SetPermissionsRequestDTO requestDTO);
 
 }

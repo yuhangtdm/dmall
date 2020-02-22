@@ -20,6 +20,7 @@ public class PermissionDO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
+
     /**
      * id
      */
@@ -27,39 +28,29 @@ public class PermissionDO implements Serializable {
     private Long id;
 
     /**
-     * 父级id
+     * 服务id
      */
-    private Long parentId;
+    private Long serviceId;
 
     /**
-     * 资源码
+     * 权限码
      */
     private String code;
 
     /**
-     * 资源名称
+     * 权限名称
      */
     private String name;
 
     /**
-     * 图标
-     */
-    private String icon;
-
-    /**
-     * 资源类型 1-目录;2-菜单;3-接口地址
-     */
-    private Integer type;
-
-    /**
-     * 资源地址
+     * 权限地址
      */
     private String uri;
 
     /**
-     * 资源请求方式 1-GET;2-POST;3-PUT;4-DELETE
+     * 权限请求方式 1-GET;2-POST;3-PUT;4-DELETE
      */
-    private String method;
+    private Integer method;
 
     /**
      * 创建人
