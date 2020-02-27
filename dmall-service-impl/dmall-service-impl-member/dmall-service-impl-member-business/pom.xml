@@ -23,6 +23,21 @@
 
         <dependency>
             <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-member</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-notify-email</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-impl-member-generator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
             <artifactId>dmall-component-dao-mybatisplus</artifactId>
         </dependency>
 
@@ -34,6 +49,11 @@
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-component-file-qiniu</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-rbac-shiro</artifactId>
         </dependency>
 
         <dependency>

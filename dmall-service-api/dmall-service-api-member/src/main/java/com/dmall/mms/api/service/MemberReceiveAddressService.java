@@ -1,12 +1,12 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
-import com.dmall.mms.api.dto.memberreceiveaddress.common.CommonMemberReceiveAddressResponseDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.ListMemberReceiveAddressRequestDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.PageMemberReceiveAddressRequestDTO;
+import com.dmall.mms.api.dto.memberreceiveaddress.common.CommonMemberReceiveAddressResponseDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.SaveMemberReceiveAddressRequestDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.UpdateMemberReceiveAddressRequestDTO;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,13 +17,13 @@ import java.util.List;
 
 /**
  * @description: 会员收货地址服务
- * @author: created by hang.yu on 2019-12-01 22:56:08
+ * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Api(tags = "会员收货地址服务")
 @RequestMapping("/memberReceiveAddress")
 public interface MemberReceiveAddressService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增会员收货地址")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberReceiveAddressRequestDTO requestDTO);
 
@@ -32,7 +32,7 @@ public interface MemberReceiveAddressService {
     @ApiImplicitParam(name = "id", value = "会员收货地址id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改会员收货地址")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberReceiveAddressRequestDTO requestDTO);
 

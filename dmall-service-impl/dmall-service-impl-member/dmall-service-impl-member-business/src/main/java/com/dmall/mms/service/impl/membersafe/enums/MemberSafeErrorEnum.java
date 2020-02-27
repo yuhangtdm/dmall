@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @description: 账户安全错误枚举
- * @author: created by hang.yu on 2020-02-22 23:31:54
+ * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Getter
 @AllArgsConstructor

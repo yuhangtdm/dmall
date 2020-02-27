@@ -12,9 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SourceEnum implements KeyValueEnum<String> {
     ADMIN("admin", "后台"),
-    PC("pc", "PC官网"),
-    APP("app", "APP"),
-    WECHAT("wechat", "微信小程序"),
+    PORTAL("portal", "PC官网"),
     ;
     private String code;
 

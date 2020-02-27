@@ -7,22 +7,20 @@ import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.SourceEnum;
-import com.dmall.common.model.user.UserDTO;
+import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
 import com.dmall.framework.zuul.AjaxUtil;
-import com.dmall.framework.zuul.configuration.ZuulSwaggerProperties;
-import com.dmall.framework.zuul.feign.LoginServiceFeign;
+import com.dmall.framework.zuul.configuration.WhiteListProperties;
+import com.dmall.framework.zuul.feign.AdminLoginServiceFeign;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
 /**
@@ -33,10 +31,10 @@ import java.nio.charset.Charset;
 public class AdminUserZuulFilter extends ZuulFilter {
 
     @Autowired
-    private LoginServiceFeign loginServiceFeign;
+    private AdminLoginServiceFeign adminLoginServiceFeign;
 
     @Autowired
-    private ZuulSwaggerProperties zuulSwaggerProperties;
+    private WhiteListProperties whiteListProperties;
 
     private static final String SWAGGER = "/v2/api-docs";
 
@@ -76,9 +74,10 @@ public class AdminUserZuulFilter extends ZuulFilter {
             return null;
         }
         // 判断是否在白名单中
-        if (zuulSwaggerProperties.getWhiteList().contains(uri)) {
+        if (whiteListProperties.getAdmin().contains(uri)) {
             return null;
         }
+
         // 校验source
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {
@@ -94,6 +93,8 @@ public class AdminUserZuulFilter extends ZuulFilter {
         if (!SourceEnum.ADMIN.getCode().equals(header)) {
             return null;
         }
+
+
         // 校验token
         String token = request.getHeader(Constants.TOKEN);
         if (StrUtil.isBlank(token)) {
@@ -104,7 +105,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
             } else {
                 // 重定向到登录地址
                 try {
-                    requestContext.getResponse().sendRedirect(zuulSwaggerProperties.getLoginUrl());
+                    requestContext.getResponse().sendRedirect(whiteListProperties.getAdminLoginUrl());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -112,7 +113,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
             return null;
         }
         // 调用sso服务验证token
-        BaseResult<UserDTO> checkResult = loginServiceFeign.checkToken(token);
+        BaseResult<AdminUserDTO> checkResult = adminLoginServiceFeign.checkToken(token);
         // 验证未通过
         if (!checkResult.getResult()) {
             requestContext.setSendZuulResponse(false);
@@ -124,15 +125,15 @@ public class AdminUserZuulFilter extends ZuulFilter {
             } else {
                 // 重定向到登录地址
                 try {
-                    requestContext.getResponse().sendRedirect(zuulSwaggerProperties.getLoginUrl());
+                    requestContext.getResponse().sendRedirect(whiteListProperties.getAdminLoginUrl());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 return null;
             }
         }
-        UserDTO userDTO = checkResult.getData();
-        requestContext.addZuulRequestHeader(Constants.ADMIN_USER, URLUtil.encode(JSON.toJSONString(userDTO)));
+        AdminUserDTO adminUserDTO = checkResult.getData();
+        requestContext.addZuulRequestHeader(Constants.ADMIN_USER, URLUtil.encode(JSON.toJSONString(adminUserDTO)));
         requestContext.addZuulRequestHeader(Constants.SOURCE, header);
         return null;
     }

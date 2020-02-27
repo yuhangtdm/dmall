@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 删除会员收货地址处理器
- * @author: created by hang.yu on 2020-02-22 23:31:54
+ * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
 public class DeleteMemberReceiveAddressHandler extends AbstractCommonHandler<Long, MemberReceiveAddressDO, Long> {

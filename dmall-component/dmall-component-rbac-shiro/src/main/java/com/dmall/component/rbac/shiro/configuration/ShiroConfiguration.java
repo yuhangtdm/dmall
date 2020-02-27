@@ -1,11 +1,14 @@
 package com.dmall.component.rbac.shiro.configuration;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.model.BasicConfiguration;
-import com.dmall.component.rbac.shiro.ShiroProperties;
+import com.dmall.component.rbac.shiro.AdminLoginProperties;
+import com.dmall.component.rbac.shiro.PortalLoginProperties;
 import com.dmall.component.rbac.shiro.feign.AdminPermissionFeign;
 import com.dmall.component.rbac.shiro.filter.AdminPermissionFilter;
 import com.dmall.component.rbac.shiro.filter.AdminUserFilter;
+import com.dmall.component.rbac.shiro.filter.PortalMemberFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -30,7 +33,7 @@ import java.util.Map;
 @Slf4j
 @Configuration
 @EnableFeignClients(basePackages = {"com.dmall.component.rbac.shiro.feign"})
-@EnableConfigurationProperties(ShiroProperties.class)
+@EnableConfigurationProperties({AdminLoginProperties.class, PortalLoginProperties.class})
 @ComponentScan(basePackages = {"com.dmall.component.rbac.shiro.util"})
 public class ShiroConfiguration implements BasicConfiguration {
 
@@ -38,12 +41,17 @@ public class ShiroConfiguration implements BasicConfiguration {
 
     private static final String ADMIN_USER = "adminUser";
 
-    private static final String FILTER_PATH = ADMIN_USER + "," + PERMISSION;
+    private static final String PORTAL_MEMBER = "portalMember";
+
+    private static final String FILTER_PATH = StrUtil.format("{},{},{}",ADMIN_USER, PERMISSION, PORTAL_MEMBER);
 
     private static final String PATH = "/**";
 
     @Autowired
-    private ShiroProperties shiroProperties;
+    private AdminLoginProperties adminLoginProperties;
+
+    @Autowired
+    private PortalLoginProperties portalLoginProperties;
 
     @Autowired
     private AdminPermissionFeign adminPermissionFeign;
@@ -62,6 +70,7 @@ public class ShiroConfiguration implements BasicConfiguration {
         Map<String, Filter> customisedFilter = new HashMap<>();
         customisedFilter.put(ADMIN_USER, adminUserFilter());
         customisedFilter.put(PERMISSION, adminPermissionFilter());
+        customisedFilter.put(PORTAL_MEMBER, portalMemberFilter());
         filterChainDefinitionMap.put(PATH, FILTER_PATH);
         shiroFilterFactoryBean.setFilters(customisedFilter);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -69,16 +78,18 @@ public class ShiroConfiguration implements BasicConfiguration {
     }
 
     private AdminPermissionFilter adminPermissionFilter() {
-        return new AdminPermissionFilter(shiroProperties, adminPermissionFeign);
+        return new AdminPermissionFilter(adminLoginProperties, adminPermissionFeign);
     }
 
     private AdminUserFilter adminUserFilter() {
-        return new AdminUserFilter(shiroProperties);
+        return new AdminUserFilter(adminLoginProperties);
     }
+
+    private PortalMemberFilter portalMemberFilter(){ return new PortalMemberFilter(portalLoginProperties); }
 
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "ShiroProperties", JSON.toJSONString(shiroProperties, true));
+        log.info("init -> [{}],properties:\n{}", "ShiroProperties", JSON.toJSONString(adminLoginProperties, true));
     }
 }

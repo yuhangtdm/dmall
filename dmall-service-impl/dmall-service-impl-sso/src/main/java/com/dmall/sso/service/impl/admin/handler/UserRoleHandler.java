@@ -3,7 +3,7 @@ package com.dmall.sso.service.impl.admin.handler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.sso.api.dto.RoleResponseDTO;
+import com.dmall.sso.api.dto.admin.RoleResponseDTO;
 import com.dmall.sso.service.impl.admin.dataobject.RoleDO;
 import com.dmall.sso.service.impl.admin.mapper.UserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;

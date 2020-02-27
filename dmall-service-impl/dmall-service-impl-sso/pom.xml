@@ -20,10 +20,10 @@
             <artifactId>dmall-common-service-impl</artifactId>
         </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-component-dao-mybatisplus</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.allInJava</groupId>
@@ -41,12 +41,36 @@
         </dependency>
 
         <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-rbac-shiro</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

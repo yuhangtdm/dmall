@@ -1,18 +1,15 @@
 package com.dmall.mms.service.impl.member;
 
-import com.dmall.mms.api.dto.member.request.SaveMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.UpdateMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.ListMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.PageMemberRequestDTO;
-import com.dmall.mms.api.dto.member.common.CommonMemberResponseDTO;
+
+import com.dmall.common.dto.BaseResult;
+import com.dmall.mms.api.dto.member.request.ForgetPasswordRequestDTO;
+import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
+import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
 import com.dmall.mms.api.service.MemberService;
 import com.dmall.mms.service.impl.member.handler.*;
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 /**
  * @description: 会员服务实现
@@ -22,52 +19,47 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
-    private SaveMemberHandler saveMemberHandler;
+    private RegisterSendCodeHandler registerSendCodeHandler;
 
     @Autowired
-    private DeleteMemberHandler deleteMemberHandler;
+    private CheckCodeHandler checkCodeHandler;
 
     @Autowired
-    private UpdateMemberHandler updateMemberHandler;
+    private RegisterMemberHandler registerMemberHandler;
 
     @Autowired
-    private GetMemberHandler getMemberHandler;
+    private UpdatePasswordHandler updatePasswordHandler;
 
     @Autowired
-    private ListMemberHandler listMemberHandler;
-
-    @Autowired
-    private PageMemberHandler pageMemberHandler;
-
+    private ForgetPasswordSendCodeHandler forgetPasswordSendCodeHandler;
 
     @Override
-    public BaseResult<Long> save(@RequestBody SaveMemberRequestDTO requestDTO) {
-        return saveMemberHandler.handler(requestDTO);
+    public BaseResult<Void> registerCode(String email) {
+        return registerSendCodeHandler.handler(email);
     }
 
     @Override
-    public BaseResult<Long> delete(Long id) {
-        return deleteMemberHandler.handler(id);
+    public BaseResult<String> checkCode(String email, String code) {
+        return checkCodeHandler.checkCode(email, code);
     }
 
     @Override
-    public BaseResult<Long> update(@RequestBody UpdateMemberRequestDTO requestDTO) {
-        return updateMemberHandler.handler(requestDTO);
+    public BaseResult<Long> register(@RequestBody RegisterMemberRequestDTO requestDTO) {
+        return registerMemberHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<CommonMemberResponseDTO> get(Long id) {
-        return getMemberHandler.handler(id);
+    public BaseResult<Long> updatePassword(@RequestBody UpdatePasswordRequestDTO requestDTO) {
+        return updatePasswordHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<List<CommonMemberResponseDTO>> list(@RequestBody ListMemberRequestDTO requestDTO) {
-        return listMemberHandler.handler(requestDTO);
+    public BaseResult<Long> updatePasswordCode(@RequestBody String email) {
+        return forgetPasswordSendCodeHandler.handler(email);
     }
 
     @Override
-    public BaseResult<LayUiPage<CommonMemberResponseDTO>> page(@RequestBody PageMemberRequestDTO requestDTO) {
-        return pageMemberHandler.handler(requestDTO);
+    public BaseResult<Long> forgetPassword(@RequestBody ForgetPasswordRequestDTO requestDTO) {
+        return null;
     }
-
 }

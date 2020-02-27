@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 查询会员意见表 处理器
- * @author: created by hang.yu on 2020-02-22 23:31:52
+ * @author: created by hang.yu on 2020-02-23 19:41:02
  */
 @Component
 public class GetAdviceHandler extends AbstractCommonHandler<Long, AdviceDO, CommonAdviceResponseDTO> {

@@ -1,12 +1,12 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
-import com.dmall.mms.api.dto.memberhelp.common.CommonMemberHelpResponseDTO;
 import com.dmall.mms.api.dto.memberhelp.request.ListMemberHelpRequestDTO;
 import com.dmall.mms.api.dto.memberhelp.request.PageMemberHelpRequestDTO;
+import com.dmall.mms.api.dto.memberhelp.common.CommonMemberHelpResponseDTO;
 import com.dmall.mms.api.dto.memberhelp.request.SaveMemberHelpRequestDTO;
 import com.dmall.mms.api.dto.memberhelp.request.UpdateMemberHelpRequestDTO;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,13 +17,13 @@ import java.util.List;
 
 /**
  * @description: 会员-帮助关系表 帮助对会员有用服务
- * @author: created by hang.yu on 2019-12-01 22:56:08
+ * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Api(tags = "会员-帮助关系表 帮助对会员有用服务")
 @RequestMapping("/memberHelp")
 public interface MemberHelpService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增会员-帮助关系表 帮助对会员有用")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberHelpRequestDTO requestDTO);
 
@@ -32,7 +32,7 @@ public interface MemberHelpService {
     @ApiImplicitParam(name = "id", value = "会员-帮助关系表 帮助对会员有用id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改会员-帮助关系表 帮助对会员有用")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberHelpRequestDTO requestDTO);
 

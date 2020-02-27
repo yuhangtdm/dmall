@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 评论点赞分页处理器
- * @author: created by hang.yu on 2020-02-22 23:31:52
+ * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
 public class PageCommentPraiseHandler extends AbstractCommonHandler<PageCommentPraiseRequestDTO, CommentPraiseDO, CommonCommentPraiseResponseDTO> {

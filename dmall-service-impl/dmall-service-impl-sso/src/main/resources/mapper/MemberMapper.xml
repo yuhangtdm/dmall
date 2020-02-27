@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.sso.service.impl.portal.mapper.MemberMapper">
+
+    <select id="login" resultType="com.dmall.sso.service.impl.portal.dataobject.MemberDO">
+        select
+          id, member_name, password, real_name, nick_name, gender, birthday, phone, email,icon, is_deleted
+        from mms_member
+        where mms_member.member_name = #{memberName}
+        or mms_member.phone =  #{memberName}
+        or mms_member.email =  #{memberName}
+
+    </select>
+</mapper>

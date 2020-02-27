@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @description: 会员收货地址列表处理器
- * @author: created by hang.yu on 2020-02-22 23:31:54
+ * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
 public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<ListMemberReceiveAddressRequestDTO, MemberReceiveAddressDO, CommonMemberReceiveAddressResponseDTO> {

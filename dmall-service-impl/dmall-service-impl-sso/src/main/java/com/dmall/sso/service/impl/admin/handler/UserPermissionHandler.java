@@ -3,7 +3,7 @@ package com.dmall.sso.service.impl.admin.handler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.sso.api.dto.PermissionResponseDTO;
+import com.dmall.sso.api.dto.admin.PermissionResponseDTO;
 import com.dmall.sso.service.impl.admin.dataobject.PermissionDO;
 import com.dmall.sso.service.impl.admin.mapper.UserPermissionsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserPermissionHandler extends AbstractCommonHandler<String, Permiss
     private UserPermissionsMapper userPermissionsMapper;
 
     @Override
-    public BaseResult processor(String userName) {
+    public BaseResult<List<PermissionResponseDTO>> processor(String userName) {
         // 用户的权限以及额外的加权限
         List<PermissionResponseDTO> permissionDOS = userPermissionsMapper.listByUserName(userName);
 

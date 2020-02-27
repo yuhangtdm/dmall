@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @description:
+ * @description: UserSupport
  * @author: created by hang.yu on 2020/1/11 16:44
  */
 @Component

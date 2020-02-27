@@ -15,7 +15,7 @@ public interface Constants {
 
     String GENERATOR_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-generator";
 
-    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-background";
+    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-member";
 
     String BUSINESS_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-business";
 

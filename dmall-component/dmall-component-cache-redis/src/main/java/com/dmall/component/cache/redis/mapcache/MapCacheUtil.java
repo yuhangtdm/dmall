@@ -1,7 +1,7 @@
 package com.dmall.component.cache.redis.mapcache;
 
 import cn.hutool.core.util.StrUtil;
-import com.dmall.component.cache.redis.properties.DMallRedisProperties;
+import com.dmall.component.cache.redis.DMallRedisProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;

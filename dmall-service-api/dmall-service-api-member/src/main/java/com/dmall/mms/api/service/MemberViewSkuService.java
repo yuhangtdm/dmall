@@ -1,12 +1,12 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
-import com.dmall.mms.api.dto.memberviewsku.common.CommonMemberViewSkuResponseDTO;
 import com.dmall.mms.api.dto.memberviewsku.request.ListMemberViewSkuRequestDTO;
 import com.dmall.mms.api.dto.memberviewsku.request.PageMemberViewSkuRequestDTO;
+import com.dmall.mms.api.dto.memberviewsku.common.CommonMemberViewSkuResponseDTO;
 import com.dmall.mms.api.dto.memberviewsku.request.SaveMemberViewSkuRequestDTO;
 import com.dmall.mms.api.dto.memberviewsku.request.UpdateMemberViewSkuRequestDTO;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,13 +17,13 @@ import java.util.List;
 
 /**
  * @description: 会员浏览历史记录服务
- * @author: created by hang.yu on 2019-12-01 22:56:08
+ * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Api(tags = "会员浏览历史记录服务")
 @RequestMapping("/memberViewSku")
 public interface MemberViewSkuService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增会员浏览历史记录")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberViewSkuRequestDTO requestDTO);
 
@@ -32,7 +32,7 @@ public interface MemberViewSkuService {
     @ApiImplicitParam(name = "id", value = "会员浏览历史记录id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改会员浏览历史记录")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberViewSkuRequestDTO requestDTO);
 

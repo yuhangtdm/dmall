@@ -1,5 +1,6 @@
 package com.dmall.sso.service.impl;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -16,8 +17,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableHystrix
 @EnableApolloConfig
-@SpringBootApplication
-@MapperScan(basePackages = {"com.dmall.sso.service.impl.admin.mapper"})
+@MapperScan(basePackages = {"com.dmall.sso.service.impl.admin.mapper","com.dmall.sso.service.impl.portal.mapper"})
+@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 public class SSOApplication {
 
     public static void main(String[] args) {

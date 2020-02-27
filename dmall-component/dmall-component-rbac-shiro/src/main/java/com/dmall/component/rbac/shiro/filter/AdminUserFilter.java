@@ -5,11 +5,11 @@ import cn.hutool.core.util.URLUtil;
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.model.user.AdminUserContextHolder;
-import com.dmall.common.model.user.UserDTO;
+import com.dmall.common.model.admin.AdminUserContextHolder;
+import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.component.rbac.shiro.ShiroProperties;
+import com.dmall.component.rbac.shiro.AdminLoginProperties;
 import com.dmall.component.rbac.shiro.util.CommonFilterUtil;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 
@@ -19,15 +19,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @description: AdminUserFilter
+ * @description: 后台认证过滤器
  * @author: created by hang.yu on 2020/1/6 23:54
  */
 public class AdminUserFilter extends PathMatchingFilter {
 
-    private ShiroProperties shiroProperties;
+    private AdminLoginProperties adminLoginProperties;
 
-    public AdminUserFilter(ShiroProperties shiroProperties) {
-        this.shiroProperties = shiroProperties;
+    public AdminUserFilter(AdminLoginProperties adminLoginProperties) {
+        this.adminLoginProperties = adminLoginProperties;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class AdminUserFilter extends PathMatchingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilterUtil.filter(request, shiroProperties);
+        boolean filter = CommonFilterUtil.adminFilter(request, adminLoginProperties);
         if (filter) {
             return filter;
         }
@@ -46,9 +46,9 @@ public class AdminUserFilter extends PathMatchingFilter {
             ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN));
             return false;
         }
-        UserDTO userDTO = JSON.parseObject(URLUtil.decode(userDto), UserDTO.class);
-        userDTO.setSource(request.getHeader(Constants.SOURCE));
-        AdminUserContextHolder.set(userDTO);
+        AdminUserDTO adminUserDTO = JSON.parseObject(URLUtil.decode(userDto), AdminUserDTO.class);
+        adminUserDTO.setSource(request.getHeader(Constants.SOURCE));
+        AdminUserContextHolder.set(adminUserDTO);
         return true;
     }
 

@@ -1,7 +1,6 @@
 package com.dmall.sso.service.impl.admin.mapper;
 
-import com.dmall.sso.api.dto.PermissionResponseDTO;
-import com.dmall.sso.service.impl.admin.dataobject.PermissionDO;
+import com.dmall.sso.api.dto.admin.PermissionResponseDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

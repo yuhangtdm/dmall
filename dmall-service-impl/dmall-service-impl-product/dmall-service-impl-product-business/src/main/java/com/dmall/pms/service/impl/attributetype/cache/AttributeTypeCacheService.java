@@ -2,7 +2,7 @@ package com.dmall.pms.service.impl.attributetype.cache;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.CommonCacheService;
-import com.dmall.component.cache.redis.constants.CacheNameConstants;
+import com.dmall.component.cache.redis.CacheNameConstants;
 import com.dmall.component.cache.redis.mapcache.*;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;

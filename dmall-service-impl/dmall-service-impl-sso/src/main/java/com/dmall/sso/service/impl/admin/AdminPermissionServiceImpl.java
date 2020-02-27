@@ -1,8 +1,8 @@
 package com.dmall.sso.service.impl.admin;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.sso.api.dto.PermissionResponseDTO;
-import com.dmall.sso.api.dto.RoleResponseDTO;
+import com.dmall.sso.api.dto.admin.PermissionResponseDTO;
+import com.dmall.sso.api.dto.admin.RoleResponseDTO;
 import com.dmall.sso.api.service.AdminPermissionService;
 import com.dmall.sso.service.impl.admin.handler.UserPermissionHandler;
 import com.dmall.sso.service.impl.admin.handler.UserRoleHandler;

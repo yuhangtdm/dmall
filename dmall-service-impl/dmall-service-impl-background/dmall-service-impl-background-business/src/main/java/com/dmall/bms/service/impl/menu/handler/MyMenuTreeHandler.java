@@ -4,8 +4,8 @@ import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.service.impl.mapper.UserMenusMapper;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.model.user.AdminUserContextHolder;
-import com.dmall.common.model.user.UserDTO;
+import com.dmall.common.model.admin.AdminUserContextHolder;
+import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.google.common.collect.Lists;
@@ -29,8 +29,8 @@ public class MyMenuTreeHandler extends AbstractCommonHandler<Void, MenuDO, MenuT
     @Override
     public BaseResult<List<MenuTreeResponseDTO>> processor(Void aVoid) {
         // 获取当前登录的用户
-        UserDTO userDTO = AdminUserContextHolder.get();
-        List<MenuTreeResponseDTO> allMenus = userMenuMapper.listByUserId(userDTO.getId());
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        List<MenuTreeResponseDTO> allMenus = userMenuMapper.listByUserId(adminUserDTO.getId());
 
         Map<Long, MenuTreeResponseDTO> map = Maps.newHashMap();
         List<MenuTreeResponseDTO> resultMenus = Lists.newArrayList();

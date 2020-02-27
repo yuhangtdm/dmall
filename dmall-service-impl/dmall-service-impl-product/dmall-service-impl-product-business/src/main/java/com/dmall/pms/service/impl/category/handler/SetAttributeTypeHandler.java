@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.component.cache.redis.constants.CacheNameConstants;
+import com.dmall.component.cache.redis.CacheNameConstants;
 import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.category.request.setattributetype.AttributeTypeIdsDTO;

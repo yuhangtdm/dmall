@@ -1,15 +1,15 @@
 package com.dmall.mms.api.dto.memberhelp.request;
 
-import com.dmall.mms.api.dto.memberhelp.common.CommonMemberHelpRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
+import com.dmall.mms.api.dto.memberhelp.common.CommonMemberHelpRequestDTO;
 
 /**
  * @description: 修改会员-帮助关系表 帮助对会员有用请求实体
- * @author: created by hang.yu on 2019-12-02 23:04:18
+ * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Data
 @Accessors(chain = true)

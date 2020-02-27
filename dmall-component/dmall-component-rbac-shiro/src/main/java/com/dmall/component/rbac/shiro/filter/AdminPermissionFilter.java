@@ -1,17 +1,17 @@
 package com.dmall.component.rbac.shiro.filter;
 
-import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.model.user.AdminUserContextHolder;
-import com.dmall.common.model.user.UserDTO;
+import com.dmall.common.model.admin.AdminUserContextHolder;
+import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.AjaxUtil;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.component.rbac.shiro.ShiroProperties;
+import com.dmall.component.rbac.shiro.AdminLoginProperties;
 import com.dmall.component.rbac.shiro.feign.AdminPermissionFeign;
 import com.dmall.component.rbac.shiro.util.CommonFilterUtil;
-import com.dmall.sso.api.dto.PermissionResponseDTO;
+import com.dmall.component.rbac.shiro.util.PathUtil;
+import com.dmall.sso.api.dto.admin.PermissionResponseDTO;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 
 import javax.servlet.ServletRequest;
@@ -19,20 +19,19 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * @description: 权限过滤器
+ * @description: 后台权限过滤器
  * @author: created by hang.yu on 2020/1/12 10:59
  */
 public class AdminPermissionFilter extends PathMatchingFilter {
 
-    private ShiroProperties shiroProperties;
+    private AdminLoginProperties adminLoginProperties;
 
     private AdminPermissionFeign adminPermissionFeign;
 
-    public AdminPermissionFilter(ShiroProperties shiroProperties, AdminPermissionFeign adminPermissionFeign) {
-        this.shiroProperties = shiroProperties;
+    public AdminPermissionFilter(AdminLoginProperties adminLoginProperties, AdminPermissionFeign adminPermissionFeign) {
+        this.adminLoginProperties = adminLoginProperties;
         this.adminPermissionFeign = adminPermissionFeign;
     }
 
@@ -42,18 +41,18 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilterUtil.filter(request, shiroProperties);
+        boolean filter = CommonFilterUtil.adminFilter(request, adminLoginProperties);
         if (filter) {
             return true;
         }
-        String requestMapping = CommonFilterUtil.getRequestMapping(request);
+        String requestMapping = PathUtil.getRequestMapping(request);
         // 非RequestMapping的url
         if (requestMapping == null){
             return true;
         }
         // 调用sso获取权限数据
-        UserDTO userDTO = AdminUserContextHolder.get();
-        BaseResult<List<PermissionResponseDTO>> listBaseResult = adminPermissionFeign.listPermissions(userDTO.getUserName());
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        BaseResult<List<PermissionResponseDTO>> listBaseResult = adminPermissionFeign.listPermissions(adminUserDTO.getUserName());
         List<PermissionResponseDTO> permissionList = listBaseResult.getData();
         String method = request.getMethod();
         for (PermissionResponseDTO permission : permissionList) {
@@ -65,7 +64,7 @@ public class AdminPermissionFilter extends PathMatchingFilter {
             ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_ALLOW));
         } else {
             // 重定向到未授权地址
-            response.sendRedirect(shiroProperties.getUnauthorizedUrl());
+            response.sendRedirect(adminLoginProperties.getUnauthorizedUrl());
         }
         return false;
     }

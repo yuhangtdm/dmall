@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @description: 会员统计信息服务实现
- * @author: created by hang.yu on 2020-02-22 23:31:54
+ * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @RestController
 public class MemberStatisticsInfoServiceImpl implements MemberStatisticsInfoService {

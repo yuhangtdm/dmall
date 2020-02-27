@@ -1,8 +1,8 @@
 package com.dmall.sso.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.sso.api.dto.PermissionResponseDTO;
-import com.dmall.sso.api.dto.RoleResponseDTO;
+import com.dmall.sso.api.dto.admin.PermissionResponseDTO;
+import com.dmall.sso.api.dto.admin.RoleResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;

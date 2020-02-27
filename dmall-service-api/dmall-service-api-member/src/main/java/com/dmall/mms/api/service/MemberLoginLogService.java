@@ -1,12 +1,12 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
-import com.dmall.mms.api.dto.memberloginlog.common.CommonMemberLoginLogResponseDTO;
 import com.dmall.mms.api.dto.memberloginlog.request.ListMemberLoginLogRequestDTO;
 import com.dmall.mms.api.dto.memberloginlog.request.PageMemberLoginLogRequestDTO;
+import com.dmall.mms.api.dto.memberloginlog.common.CommonMemberLoginLogResponseDTO;
 import com.dmall.mms.api.dto.memberloginlog.request.SaveMemberLoginLogRequestDTO;
 import com.dmall.mms.api.dto.memberloginlog.request.UpdateMemberLoginLogRequestDTO;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,13 +17,13 @@ import java.util.List;
 
 /**
  * @description: 会员登录记录服务
- * @author: created by hang.yu on 2019-12-01 22:56:08
+ * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Api(tags = "会员登录记录服务")
 @RequestMapping("/memberLoginLog")
 public interface MemberLoginLogService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增会员登录记录")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberLoginLogRequestDTO requestDTO);
 
@@ -32,7 +32,7 @@ public interface MemberLoginLogService {
     @ApiImplicitParam(name = "id", value = "会员登录记录id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改会员登录记录")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberLoginLogRequestDTO requestDTO);
 

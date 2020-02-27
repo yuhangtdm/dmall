@@ -1,14 +1,14 @@
 package com.dmall.mms.api.dto.bankcard.request;
 
-import com.dmall.mms.api.dto.bankcard.common.CommonBankCardRequestDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
+import com.dmall.mms.api.dto.bankcard.common.CommonBankCardRequestDTO;
 
 /**
  * @description: 新增会员银行卡请求实体
- * @author: created by hang.yu on 2019-12-02 23:04:17
+ * @author: created by hang.yu on 2020-02-23 19:42:02
  */
 @Data
 @Accessors(chain = true)

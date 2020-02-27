@@ -1,9 +1,9 @@
 package com.dmall.sso.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.model.user.UserDTO;
-import com.dmall.sso.api.dto.AdminLoginRequestDTO;
-import com.dmall.sso.api.dto.AdminLoginResponseDTO;
+import com.dmall.common.model.admin.AdminUserDTO;
+import com.dmall.sso.api.dto.admin.AdminLoginRequestDTO;
+import com.dmall.sso.api.dto.admin.AdminLoginResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -21,25 +21,16 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping("/admin")
 public interface AdminLoginService {
 
-    /**
-     * 登录
-     */
     @PostMapping("/login")
     @ApiOperation(value = "登录")
     BaseResult<AdminLoginResponseDTO> login(@Valid @RequestBody AdminLoginRequestDTO requestDTO);
 
-    /**
-     * 登出
-     */
     @PostMapping("/logout")
     @ApiOperation(value = "登出")
     BaseResult<Void> logout(@NotBlank(message = "token不能为空") @RequestParam String token);
 
-    /**
-     * 校验token
-     */
     @GetMapping("/checkToken")
     @ApiOperation(value = "校验token")
-    BaseResult<UserDTO> checkToken(@NotBlank(message = "token不能为空") @RequestParam String token);
+    BaseResult<AdminUserDTO> checkToken(@NotBlank(message = "token不能为空") @RequestParam String token);
 
 }

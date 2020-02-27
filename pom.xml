@@ -22,6 +22,7 @@
         <module>dmall-component/dmall-component-elasticsearch</module>
         <module>dmall-component/dmall-component-file-qiniu</module>
         <module>dmall-component/dmall-component-rbac-shiro</module>
+        <module>dmall-component/dmall-component-notify-email</module>
 
         <!--dmall-framework-->
         <module>dmall-framework/dmall-framework-eureka-server</module>

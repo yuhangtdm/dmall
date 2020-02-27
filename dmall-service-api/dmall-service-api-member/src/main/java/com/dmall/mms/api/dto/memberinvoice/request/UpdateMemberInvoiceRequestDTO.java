@@ -1,15 +1,15 @@
 package com.dmall.mms.api.dto.memberinvoice.request;
 
-import com.dmall.mms.api.dto.memberinvoice.common.CommonMemberInvoiceRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
+import com.dmall.mms.api.dto.memberinvoice.common.CommonMemberInvoiceRequestDTO;
 
 /**
  * @description: 修改会员发票请求实体
- * @author: created by hang.yu on 2019-12-02 23:04:18
+ * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Data
 @Accessors(chain = true)

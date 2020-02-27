@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 public class CacheKeyGenerator {
 
     /**
-     * 生成key的方法
+     * 方法缓存生成key的方法
      */
     public static String generate(Object o, Method method, Object... args) {
         StringBuilder key = new StringBuilder();
@@ -47,4 +47,5 @@ public class CacheKeyGenerator {
         }
         return key.toString();
     }
+
 }

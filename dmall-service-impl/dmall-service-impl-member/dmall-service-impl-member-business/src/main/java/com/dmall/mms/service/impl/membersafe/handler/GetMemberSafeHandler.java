@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 查询账户安全处理器
- * @author: created by hang.yu on 2020-02-22 23:31:54
+ * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
 public class GetMemberSafeHandler extends AbstractCommonHandler<Long, MemberSafeDO, CommonMemberSafeResponseDTO> {

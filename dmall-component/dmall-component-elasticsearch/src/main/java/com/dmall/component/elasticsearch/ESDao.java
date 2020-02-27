@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.dmall.component.elasticsearch.entity.*;
 import com.dmall.component.elasticsearch.exception.ESErrorEnum;
 import com.dmall.component.elasticsearch.exception.ESException;
-import com.dmall.component.elasticsearch.properties.DMallElasticSearchProperties;
 import com.google.common.collect.Lists;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.*;

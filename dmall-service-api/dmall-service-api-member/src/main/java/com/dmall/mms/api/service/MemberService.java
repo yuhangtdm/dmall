@@ -1,19 +1,12 @@
 package com.dmall.mms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
-import com.dmall.mms.api.dto.member.common.CommonMemberResponseDTO;
-import com.dmall.mms.api.dto.member.request.ListMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.PageMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.SaveMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.UpdateMemberRequestDTO;
+import com.dmall.mms.api.dto.member.request.ForgetPasswordRequestDTO;
+import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
+import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @description: 会员服务
@@ -23,30 +16,28 @@ import java.util.List;
 @RequestMapping("/member")
 public interface MemberService {
 
-    @PostMapping("/")
-    @ApiOperation(value = "新增会员")
-    BaseResult<Long> save(@Valid @RequestBody SaveMemberRequestDTO requestDTO);
+    @GetMapping("/registerCode/{email}")
+    @ApiOperation(value = "会员注册发送验证码")
+    BaseResult<Void> registerCode(@PathVariable("email") String email);
 
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除会员")
-    @ApiImplicitParam(name = "id", value = "会员id", required = true, dataType = "int", paramType = "path")
-    BaseResult<Long> delete(@PathVariable("id") Long id);
+    @GetMapping("/checkCode/{email}/{code}")
+    @ApiOperation(value = "会员注册校验验证码")
+    BaseResult<String> checkCode(@PathVariable("email") String email, @PathVariable("code") String code);
 
-    @PutMapping("/")
-    @ApiOperation(value = "修改会员")
-    BaseResult<Long> update(@Valid @RequestBody UpdateMemberRequestDTO requestDTO);
+    @PostMapping("/register")
+    @ApiOperation(value = "会员注册")
+    BaseResult<Long> register(@RequestBody RegisterMemberRequestDTO requestDTO);
 
-    @GetMapping("/{id}")
-    @ApiOperation(value = "根据id查询会员")
-    @ApiImplicitParam(name = "id", value = "会员id", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonMemberResponseDTO> get(@PathVariable("id") Long id);
+    @PostMapping("/updatePassword")
+    @ApiOperation(value = "修改密码")
+    BaseResult<Long> updatePassword(@RequestBody UpdatePasswordRequestDTO requestDTO);
 
-    @PostMapping("/list")
-    @ApiOperation(value = "会员列表")
-    BaseResult<List<CommonMemberResponseDTO>> list(@RequestBody ListMemberRequestDTO requestDTO);
+    @GetMapping("/updatePasswordCode/{email}")
+    @ApiOperation(value = "忘记密码发送验证码")
+    BaseResult<Long> updatePasswordCode(@PathVariable("email") String email);
 
-    @PostMapping("/page")
-    @ApiOperation(value = "会员分页")
-    BaseResult<LayUiPage<CommonMemberResponseDTO>> page(@RequestBody PageMemberRequestDTO requestDTO);
+    @PostMapping("/forgetPassword")
+    @ApiOperation(value = "忘记密码")
+    BaseResult<Long> forgetPassword(@RequestBody ForgetPasswordRequestDTO requestDTO);
 
 }

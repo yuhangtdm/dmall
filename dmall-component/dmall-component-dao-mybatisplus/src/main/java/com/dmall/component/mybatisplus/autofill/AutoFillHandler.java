@@ -2,9 +2,9 @@ package com.dmall.component.mybatisplus.autofill;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.dmall.common.constants.Constants;
-import com.dmall.common.model.user.AdminUserContextHolder;
-import com.dmall.common.model.user.UserDTO;
-import com.dmall.component.mybatisplus.properties.DMallMybatisPlusProperties;
+import com.dmall.common.model.admin.AdminUserContextHolder;
+import com.dmall.common.model.admin.AdminUserDTO;
+import com.dmall.component.mybatisplus.DMallMybatisPlusProperties;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;
@@ -37,10 +37,10 @@ public class AutoFillHandler implements MetaObjectHandler {
             setFieldValByName(dMallMybatisPlusProperties.getIsDeletedColumn(), Constants.N, metaObject);
         }
 
-        UserDTO userDTO = AdminUserContextHolder.get();
-        if (userDTO != null) {
-            setFieldValByName(dMallMybatisPlusProperties.getCreator(), userDTO.getId(), metaObject);
-            setFieldValByName(dMallMybatisPlusProperties.getModifier(), userDTO.getId(), metaObject);
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        if (adminUserDTO != null) {
+            setFieldValByName(dMallMybatisPlusProperties.getCreator(), adminUserDTO.getId(), metaObject);
+            setFieldValByName(dMallMybatisPlusProperties.getModifier(), adminUserDTO.getId(), metaObject);
         }
 
     }
@@ -48,9 +48,9 @@ public class AutoFillHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         setFieldValByName(dMallMybatisPlusProperties.getUpdateTimeColumn(), new Date(), metaObject);
-        UserDTO userDTO = AdminUserContextHolder.get();
-        if (userDTO != null) {
-            setFieldValByName(dMallMybatisPlusProperties.getModifier(), userDTO.getId(), metaObject);
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        if (adminUserDTO != null) {
+            setFieldValByName(dMallMybatisPlusProperties.getModifier(), adminUserDTO.getId(), metaObject);
         }
     }
 }

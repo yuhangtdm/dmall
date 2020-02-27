@@ -1,7 +1,5 @@
 package com.dmall.bms.service.impl.mapper;
 
-import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
-
 import java.util.List;
 
 /**
@@ -10,5 +8,5 @@ import java.util.List;
  */
 public interface UserPermissionsMapper {
 
-    List<MenuTreeResponseDTO > listByUserId(Long userId);
+    List<Long> listByUserId(Long userId);
 }

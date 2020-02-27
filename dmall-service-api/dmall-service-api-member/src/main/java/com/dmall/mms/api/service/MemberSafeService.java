@@ -1,12 +1,12 @@
 package com.dmall.mms.api.service;
 
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
-import com.dmall.mms.api.dto.membersafe.common.CommonMemberSafeResponseDTO;
 import com.dmall.mms.api.dto.membersafe.request.ListMemberSafeRequestDTO;
 import com.dmall.mms.api.dto.membersafe.request.PageMemberSafeRequestDTO;
+import com.dmall.mms.api.dto.membersafe.common.CommonMemberSafeResponseDTO;
 import com.dmall.mms.api.dto.membersafe.request.SaveMemberSafeRequestDTO;
 import com.dmall.mms.api.dto.membersafe.request.UpdateMemberSafeRequestDTO;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,13 +17,13 @@ import java.util.List;
 
 /**
  * @description: 账户安全服务
- * @author: created by hang.yu on 2019-12-01 22:56:08
+ * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Api(tags = "账户安全服务")
 @RequestMapping("/memberSafe")
 public interface MemberSafeService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增账户安全")
     BaseResult<Long> save(@Valid @RequestBody SaveMemberSafeRequestDTO requestDTO);
 
@@ -32,7 +32,7 @@ public interface MemberSafeService {
     @ApiImplicitParam(name = "id", value = "账户安全id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改账户安全")
     BaseResult<Long> update(@Valid @RequestBody UpdateMemberSafeRequestDTO requestDTO);
 

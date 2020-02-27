@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 @Component
 @Primary
-@EnableConfigurationProperties({ZuulSwaggerProperties.class})
+@EnableConfigurationProperties({ZuulSwaggerProperties.class, WhiteListProperties.class})
 public class DocumentationConfiguration implements SwaggerResourcesProvider {
 
     private final RouteLocator routeLocator;

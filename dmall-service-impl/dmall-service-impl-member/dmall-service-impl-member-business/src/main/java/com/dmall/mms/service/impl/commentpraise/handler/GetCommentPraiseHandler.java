@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 查询评论点赞处理器
- * @author: created by hang.yu on 2020-02-22 23:31:52
+ * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
 public class GetCommentPraiseHandler extends AbstractCommonHandler<Long, CommentPraiseDO, CommonCommentPraiseResponseDTO> {
