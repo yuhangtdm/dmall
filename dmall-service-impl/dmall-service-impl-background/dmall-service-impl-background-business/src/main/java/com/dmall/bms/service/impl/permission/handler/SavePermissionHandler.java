@@ -1,11 +1,9 @@
 package com.dmall.bms.service.impl.permission.handler;
 
-import cn.hutool.core.util.StrUtil;
-import com.dmall.bms.api.dto.permission.enums.PermissionTypeEnum;
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
 import com.dmall.bms.generator.dataobject.ServiceDO;
 import com.dmall.bms.generator.mapper.ServiceMapper;
-import com.dmall.bms.service.impl.permission.enums.PermissionErrorEnum;
+import com.dmall.bms.api.enums.PermissionErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
 import com.dmall.bms.service.impl.support.PermissionSupport;

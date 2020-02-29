@@ -11,7 +11,7 @@ import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

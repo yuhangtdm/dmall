@@ -16,7 +16,7 @@ import com.dmall.pms.generator.mapper.CategoryProductMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.impl.product.common.ProductValidate;
-import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
+import com.dmall.pms.api.enums.ProductErrorEnum;
 import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;

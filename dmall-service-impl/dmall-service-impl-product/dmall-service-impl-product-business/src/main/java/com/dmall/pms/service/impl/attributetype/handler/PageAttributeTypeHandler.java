@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.response.PageAttributeTypeResponseDTO;
@@ -33,7 +33,7 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     private CategorySupport categorySupport;
 
     @Override
-    public BaseResult<LayUiPage<PageAttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageAttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
                 .queryWrapper(requestDTO.getCategoryId(), requestDTO.getShowName());
         IPage<AttributeTypeDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
@@ -41,7 +41,7 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
         List<PageAttributeTypeResponseDTO> record = page.getRecords().stream()
                 .map(doo -> doConvertDto(doo, PageAttributeTypeResponseDTO.class))
                 .collect(Collectors.toList());
-        return ResultUtil.success(new LayUiPage(page.getTotal(), record));
+        return ResultUtil.success(new ResponsePage(page.getTotal(), record));
     }
 
     @Override

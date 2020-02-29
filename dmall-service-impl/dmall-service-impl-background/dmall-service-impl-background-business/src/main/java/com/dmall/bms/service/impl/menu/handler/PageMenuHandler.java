@@ -10,7 +10,7 @@ import com.dmall.bms.api.dto.menu.request.PageMenuRequestDTO;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.generator.mapper.MenuMapper;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class PageMenuHandler extends AbstractCommonHandler<PageMenuRequestDTO, M
     private MenuMapper menuMapper;
 
     @Override
-    public BaseResult<LayUiPage<PageMenuResponseDTO>> processor(PageMenuRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageMenuResponseDTO>> processor(PageMenuRequestDTO requestDTO) {
         IPage<MenuDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         LambdaQueryWrapper<MenuDO> wrapper = Wrappers.<MenuDO>lambdaQuery()
                 .eq(requestDTO.getParentId() != null, MenuDO::getParentId, requestDTO.getParentId())
@@ -41,7 +41,7 @@ public class PageMenuHandler extends AbstractCommonHandler<PageMenuRequestDTO, M
 
         List<PageMenuResponseDTO> collect = page.getRecords().stream().map(menuDO -> doConvertDto(menuDO, PageMenuResponseDTO.class))
                 .collect(Collectors.toList());
-        return ResultUtil.success(new LayUiPage<>(page.getTotal(), collect));
+        return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 
 }

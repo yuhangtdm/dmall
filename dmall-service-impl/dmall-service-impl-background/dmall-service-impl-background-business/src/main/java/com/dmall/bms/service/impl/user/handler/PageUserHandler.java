@@ -8,7 +8,7 @@ import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
 import com.dmall.bms.api.dto.user.request.PageUserRequestDTO;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
@@ -30,7 +30,7 @@ public class PageUserHandler extends AbstractCommonHandler<PageUserRequestDTO, U
     private UserMapper userMapper;
 
     @Override
-    public BaseResult<LayUiPage<CommonUserResponseDTO>> processor(PageUserRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<CommonUserResponseDTO>> processor(PageUserRequestDTO requestDTO) {
         IPage<UserDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         LambdaQueryWrapper<UserDO> like = Wrappers.<UserDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getUserName()), UserDO::getUserName, requestDTO.getUserName())
@@ -41,7 +41,7 @@ public class PageUserHandler extends AbstractCommonHandler<PageUserRequestDTO, U
         List<CommonUserResponseDTO> collect = page.getRecords().stream()
                 .map(userDO -> doConvertDto(userDO, CommonUserResponseDTO.class))
                 .collect(Collectors.toList());
-        return ResultUtil.success(new LayUiPage<>(page.getTotal(), collect));
+        return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 
 }

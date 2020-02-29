@@ -6,7 +6,7 @@ import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.bms.api.service.RoleService;
 import com.dmall.bms.service.impl.role.handler.*;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,7 +67,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public BaseResult<LayUiPage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO) {
         return pageRoleHandler.handler(requestDTO);
     }
 

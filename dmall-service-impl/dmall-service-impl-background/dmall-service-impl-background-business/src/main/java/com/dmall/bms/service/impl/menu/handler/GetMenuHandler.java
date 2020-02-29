@@ -3,7 +3,7 @@ package com.dmall.bms.service.impl.menu.handler;
 import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.generator.mapper.MenuMapper;
-import com.dmall.bms.service.impl.menu.enums.MenuErrorEnum;
+import com.dmall.bms.api.enums.MenuErrorEnum;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;

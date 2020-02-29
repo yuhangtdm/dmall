@@ -9,7 +9,7 @@ import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
 import com.dmall.bms.service.impl.support.PermissionSupport;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class PagePermissionHandler extends AbstractCommonHandler<PagePermissionR
     private PermissionMapper permissionMapper;
 
     @Override
-    public BaseResult<LayUiPage<PagePermissionResponseDTO>> processor(PagePermissionRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PagePermissionResponseDTO>> processor(PagePermissionRequestDTO requestDTO) {
         LambdaQueryWrapper wrapper = PermissionSupport.buildWrapper(requestDTO.getServiceId(), requestDTO.getCode(),
                 requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
 
@@ -38,7 +38,7 @@ public class PagePermissionHandler extends AbstractCommonHandler<PagePermissionR
         List<PagePermissionResponseDTO> collect = page.getRecords().stream()
                 .map(userDO -> doConvertDto(userDO, PagePermissionResponseDTO.class))
                 .collect(Collectors.toList());
-        return ResultUtil.success(new LayUiPage<>(page.getTotal(), collect));
+        return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 
 }

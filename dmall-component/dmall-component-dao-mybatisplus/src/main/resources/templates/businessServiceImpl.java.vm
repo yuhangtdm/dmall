@@ -7,12 +7,9 @@ import ${requestDtoPackage}.${pageRequestDto};
 import ${commonDtoPackage}.${commonResponseDto};
 import ${servicePackage}.${businessService};
 import ${handlerPackage}.*;
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 /**
  * @description: $!{serviceImplComment}

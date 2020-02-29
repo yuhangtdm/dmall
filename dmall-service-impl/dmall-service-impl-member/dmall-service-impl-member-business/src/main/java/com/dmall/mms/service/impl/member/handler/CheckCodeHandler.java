@@ -2,9 +2,8 @@ package com.dmall.mms.service.impl.member.handler;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.mms.service.impl.member.enums.MemberErrorEnum;
+import com.dmall.mms.api.enums.MemberErrorEnum;
 import com.dmall.mms.service.impl.support.CacheKeySupport;
-import com.dmall.mms.service.impl.support.MemberSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 /**
- * @description: CheckCodeHandler
+ * @description: 校验注册验证码
  * @author: created by hang.yu on 2020/2/23 21:47
  */
 @Component

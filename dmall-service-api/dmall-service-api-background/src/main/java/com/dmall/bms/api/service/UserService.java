@@ -3,7 +3,7 @@ package com.dmall.bms.api.service;
 import com.dmall.bms.api.dto.user.request.*;
 import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,7 +44,7 @@ public interface UserService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户分页")
-    BaseResult<LayUiPage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
+    BaseResult<ResponsePage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
 
     @ApiOperation(value = "上传用户头像")
     @PostMapping("/uploadIcon")

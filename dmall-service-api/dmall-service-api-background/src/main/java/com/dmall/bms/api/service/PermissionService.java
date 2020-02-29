@@ -7,7 +7,7 @@ import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.response.PagePermissionResponseDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -48,6 +48,6 @@ public interface PermissionService {
 
     @PostMapping("/page")
     @ApiOperation(value = "权限分页")
-    BaseResult<LayUiPage<PagePermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO);
+    BaseResult<ResponsePage<PagePermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO);
 
 }

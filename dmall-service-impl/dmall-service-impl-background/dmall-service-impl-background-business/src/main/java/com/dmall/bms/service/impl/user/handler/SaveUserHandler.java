@@ -2,7 +2,7 @@ package com.dmall.bms.service.impl.user.handler;
 
 import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
 import com.dmall.bms.service.impl.support.UserSupport;
-import com.dmall.bms.service.impl.user.enums.UserErrorEnum;
+import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.component.rbac.shiro.util.PasswordUtil;

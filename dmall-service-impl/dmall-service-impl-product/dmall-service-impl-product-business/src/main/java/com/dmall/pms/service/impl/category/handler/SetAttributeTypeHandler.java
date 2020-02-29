@@ -17,7 +17,7 @@ import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.generator.service.IAttributeTypeService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.dmall.pms.service.impl.support.AttributeTypeSupport;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;

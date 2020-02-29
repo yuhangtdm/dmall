@@ -10,7 +10,7 @@ import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.bms.generator.mapper.UserPermissionMapper;
 import com.dmall.bms.service.impl.mapper.UserPermissionsMapper;
 import com.dmall.bms.service.impl.user.enums.OperationEnum;
-import com.dmall.bms.service.impl.user.enums.UserErrorEnum;
+import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;

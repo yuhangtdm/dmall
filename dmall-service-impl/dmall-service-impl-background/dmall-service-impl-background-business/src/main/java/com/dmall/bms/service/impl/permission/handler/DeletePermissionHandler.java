@@ -1,6 +1,6 @@
 package com.dmall.bms.service.impl.permission.handler;
 
-import com.dmall.bms.service.impl.permission.enums.PermissionErrorEnum;
+import com.dmall.bms.api.enums.PermissionErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
 import com.dmall.component.web.handler.AbstractCommonHandler;

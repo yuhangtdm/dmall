@@ -1,7 +1,7 @@
 package com.dmall.mms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.mms.api.dto.member.request.ForgetPasswordRequestDTO;
+import com.dmall.mms.api.dto.member.request.ResetPasswordRequestDTO;
 import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
 import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
 import io.swagger.annotations.Api;
@@ -30,14 +30,14 @@ public interface MemberService {
 
     @PostMapping("/updatePassword")
     @ApiOperation(value = "修改密码")
-    BaseResult<Long> updatePassword(@RequestBody UpdatePasswordRequestDTO requestDTO);
+    BaseResult<String> updatePassword(@RequestBody UpdatePasswordRequestDTO requestDTO);
 
     @GetMapping("/updatePasswordCode/{email}")
     @ApiOperation(value = "忘记密码发送验证码")
     BaseResult<Long> updatePasswordCode(@PathVariable("email") String email);
 
-    @PostMapping("/forgetPassword")
-    @ApiOperation(value = "忘记密码")
-    BaseResult<Long> forgetPassword(@RequestBody ForgetPasswordRequestDTO requestDTO);
+    @PostMapping("/resetPassword")
+    @ApiOperation(value = "重新设置密码")
+    BaseResult<Long> resetPassword(@RequestBody ResetPasswordRequestDTO requestDTO);
 
 }

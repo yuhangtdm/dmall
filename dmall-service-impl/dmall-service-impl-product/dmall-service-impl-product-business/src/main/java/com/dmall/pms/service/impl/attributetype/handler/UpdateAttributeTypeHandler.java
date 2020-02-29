@@ -9,7 +9,7 @@ import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
-import com.dmall.pms.service.impl.attributetype.enums.AttributeTypeErrorEnum;
+import com.dmall.pms.api.enums.AttributeTypeErrorEnum;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

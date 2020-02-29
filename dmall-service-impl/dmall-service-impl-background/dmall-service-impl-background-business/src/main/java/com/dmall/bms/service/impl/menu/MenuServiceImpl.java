@@ -9,7 +9,7 @@ import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.bms.api.service.MenuService;
 import com.dmall.bms.service.impl.menu.handler.*;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +63,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public BaseResult<LayUiPage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO) {
         return pageMenuHandler.handler(requestDTO);
     }
 

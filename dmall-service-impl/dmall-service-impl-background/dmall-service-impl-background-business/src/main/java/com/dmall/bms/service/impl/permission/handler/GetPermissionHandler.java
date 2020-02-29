@@ -1,12 +1,8 @@
 package com.dmall.bms.service.impl.permission.handler;
 
 import com.dmall.bms.api.dto.permission.common.CommonPermissionResponseDTO;
-import com.dmall.bms.api.dto.permission.enums.PermissionTypeEnum;
-import com.dmall.bms.service.impl.permission.enums.PermissionErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.util.EnumUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;

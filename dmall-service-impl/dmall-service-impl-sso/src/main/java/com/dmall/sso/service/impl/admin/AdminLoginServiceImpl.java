@@ -9,6 +9,7 @@ import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.sso.api.dto.admin.AdminLoginRequestDTO;
 import com.dmall.sso.api.dto.admin.AdminLoginResponseDTO;
+import com.dmall.sso.api.enums.AdminLoginErrorEnum;
 import com.dmall.sso.api.service.AdminLoginService;
 import com.dmall.sso.service.impl.SsoProperties;
 import com.google.common.collect.Lists;
@@ -68,8 +69,6 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Override
     public BaseResult<Void> logout(String token) {
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
         redisTemplate.delete(Lists.newArrayList(token));
         return ResultUtil.success();
     }
@@ -84,5 +83,8 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         }
         return ResultUtil.success(adminUserDTO);
     }
+
+
+
 
 }

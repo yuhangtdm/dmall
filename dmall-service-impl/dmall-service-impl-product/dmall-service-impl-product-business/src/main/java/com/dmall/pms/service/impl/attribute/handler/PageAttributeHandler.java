@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
@@ -17,10 +17,10 @@ import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
 import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.response.PageAttributeResponseDTO;
 import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.api.enums.AttributeErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
-import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
 import com.dmall.pms.service.impl.attribute.mapper.AttributePageMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
     private CategoryCacheService categoryCacheService;
 
     @Override
-    public BaseResult<LayUiPage<PageAttributeResponseDTO>> validate(PageAttributeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageAttributeResponseDTO>> validate(PageAttributeRequestDTO requestDTO) {
         // 分类必须存在 且必须是一级分类
         if (requestDTO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
@@ -61,7 +61,7 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
     }
 
     @Override
-    public BaseResult<LayUiPage<PageAttributeResponseDTO>> processor(PageAttributeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageAttributeResponseDTO>> processor(PageAttributeRequestDTO requestDTO) {
         if (requestDTO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             // 一级分类
@@ -77,7 +77,7 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
                 List<PageAttributeResponseDTO> collect = page.getRecords().stream()
                         .map(category -> doConvertDto(category, PageAttributeResponseDTO.class))
                         .collect(Collectors.toList());
-                return ResultUtil.success(new LayUiPage<>(page.getTotal(), collect));
+                return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
             }
         }
         // 三级分类需要连表查询
@@ -86,7 +86,7 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
                 .map(category -> doConvertDto(category, PageAttributeResponseDTO.class))
                 .collect(Collectors.toList());
         page.setRecords(collect);
-        return ResultUtil.success(new LayUiPage<>(page.getTotal(), page.getRecords()));
+        return ResultUtil.success(new ResponsePage<>(page.getTotal(), page.getRecords()));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.dmall.bms.service.impl.user.handler;
 
 import com.dmall.bms.generator.dataobject.UserDO;
-import com.dmall.bms.service.impl.user.enums.UserErrorEnum;
+import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.UploadResult;
 import com.dmall.common.util.ResultUtil;

@@ -8,9 +8,9 @@ import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
 import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
 import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
 import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
+import com.dmall.pms.api.enums.AttributeErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
-import com.dmall.pms.service.impl.attribute.enums.AttributeErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

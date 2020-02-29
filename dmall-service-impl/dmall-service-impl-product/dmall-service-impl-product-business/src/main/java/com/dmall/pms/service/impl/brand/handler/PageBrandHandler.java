@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.response.PageBrandResponseDTO;
@@ -30,7 +30,7 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
     private BrandMapper brandMapper;
 
     @Override
-    public BaseResult<LayUiPage<PageBrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageBrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
@@ -42,7 +42,7 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
                 .map(doo -> doConvertDto(doo, PageBrandResponseDTO.class))
                 .collect(Collectors.toList());
 
-        return ResultUtil.success(new LayUiPage(brandDOIPage.getTotal(), record));
+        return ResultUtil.success(new ResponsePage(brandDOIPage.getTotal(), record));
     }
 
 }

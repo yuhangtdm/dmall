@@ -2,7 +2,7 @@ package com.dmall.pms.service.impl.product.handler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
@@ -39,11 +39,11 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
     }
 
     @Override
-    public BaseResult<LayUiPage<PageProductResponseDTO>> processor(PageProductRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageProductResponseDTO>> processor(PageProductRequestDTO requestDTO) {
         Page<PageProductResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<PageProductResponseDTO> responseDTOS = productPageMapper.productPage(page, requestDTO).stream()
                 .map(productDO -> doConvertDto(productDO, PageProductResponseDTO.class)).collect(Collectors.toList());
-        return ResultUtil.success(new LayUiPage(page.getTotal(), responseDTOS));
+        return ResultUtil.success(new ResponsePage(page.getTotal(), responseDTOS));
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage ;
+import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -44,7 +44,7 @@ public interface MenuService {
 
     @PostMapping("/page")
     @ApiOperation(value = "菜单分页")
-    BaseResult<LayUiPage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO);
+    BaseResult<ResponsePage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO);
 
     @GetMapping("/tree")
     @ApiOperation(value = "菜单树")

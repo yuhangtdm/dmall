@@ -10,7 +10,7 @@ import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.generator.service.ICategoryAttributeService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.dmall.pms.service.impl.support.AttributeTypeSupport;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import com.google.common.collect.Lists;

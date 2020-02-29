@@ -1,35 +1,57 @@
 package com.dmall.mms.service.impl.memberreceiveaddress.handler;
 
-import com.dmall.mms.api.dto.memberreceiveaddress.common.CommonMemberReceiveAddressResponseDTO;
-import com.dmall.mms.api.dto.memberreceiveaddress.request.ListMemberReceiveAddressRequestDTO;
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.mms.api.dto.memberreceiveaddress.response.ListReceiveAddressResponseDTO;
 import com.dmall.mms.generator.dataobject.MemberReceiveAddressDO;
 import com.dmall.mms.generator.mapper.MemberReceiveAddressMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.ResultUtil;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description: 会员收货地址列表处理器
  * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
-public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<ListMemberReceiveAddressRequestDTO, MemberReceiveAddressDO, CommonMemberReceiveAddressResponseDTO> {
+public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void, MemberReceiveAddressDO, ListReceiveAddressResponseDTO> {
 
     @Autowired
     private MemberReceiveAddressMapper memberReceiveAddressMapper;
 
     @Override
-    public BaseResult<List<CommonMemberReceiveAddressResponseDTO>> validate(ListMemberReceiveAddressRequestDTO requestDTO) {
-        return ResultUtil.success();
-    }
+    public BaseResult<List<ListReceiveAddressResponseDTO>> processor(Void aVoid) {
+        // 查询地址列表
+        List<MemberReceiveAddressDO> list = memberReceiveAddressMapper.selectList(Wrappers.<MemberReceiveAddressDO>lambdaQuery()
+                .orderByDesc(MemberReceiveAddressDO::getModifier));
 
-    @Override
-    public BaseResult<List<CommonMemberReceiveAddressResponseDTO>> processor(ListMemberReceiveAddressRequestDTO requestDTO) {
-        return ResultUtil.success();
+        if (CollUtil.isEmpty(list)){
+            return ResultUtil.success(Lists.newArrayList());
+        }
+        // 得到默认地址的索引
+        int index = -1;
+        for (int i = 0; i < list.size(); i++) {
+            MemberReceiveAddressDO addressDO = list.get(i);
+            if (YNEnum.Y.getCode().equals(addressDO.getDefaultStatus())) {
+                index = i;
+            }
+        }
+        if (index != -1 && index != 0){
+            Collections.swap(list, 0, index);
+        }
+
+        List<ListReceiveAddressResponseDTO> collect = list.stream()
+                .map(addressDO -> doConvertDto(addressDO, ListReceiveAddressResponseDTO.class))
+                .collect(Collectors.toList());
+        return ResultUtil.success(collect);
     }
 
 }

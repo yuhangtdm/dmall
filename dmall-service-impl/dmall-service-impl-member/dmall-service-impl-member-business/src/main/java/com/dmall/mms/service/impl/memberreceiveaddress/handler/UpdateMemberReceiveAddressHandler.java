@@ -1,7 +1,9 @@
 package com.dmall.mms.service.impl.memberreceiveaddress.handler;
 
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.UpdateMemberReceiveAddressRequestDTO;
-import com.dmall.mms.service.impl.memberreceiveaddress.enums.MemberReceiveAddressErrorEnum;
+import com.dmall.mms.api.enums.MemberReceiveAddressErrorEnum;
 import com.dmall.mms.generator.dataobject.MemberReceiveAddressDO;
 import com.dmall.mms.generator.mapper.MemberReceiveAddressMapper;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -21,12 +23,19 @@ public class UpdateMemberReceiveAddressHandler extends AbstractCommonHandler<Upd
     private MemberReceiveAddressMapper memberReceiveAddressMapper;
 
     @Override
-    public BaseResult<Long> validate(UpdateMemberReceiveAddressRequestDTO requestDTO) {
-        return ResultUtil.success();
-    }
-
-    @Override
     public BaseResult<Long> processor(UpdateMemberReceiveAddressRequestDTO requestDTO) {
+        // 获取当前登录用户
+        PortalMemberDTO loginMember = PortalMemberContextHolder.get();
+        MemberReceiveAddressDO memberReceiveAddressDO = memberReceiveAddressMapper.selectById(requestDTO.getId());
+        if (memberReceiveAddressDO == null){
+            return ResultUtil.fail(MemberReceiveAddressErrorEnum.MEMBER_RECEIVE_ADDRESS_NOT_EXIST);
+        }
+        // 判断只有当前会员才能修改
+        if (!loginMember.getId().equals(memberReceiveAddressDO.getCreator())){
+            return ResultUtil.fail(MemberReceiveAddressErrorEnum.MEMBER_RECEIVE_ADDRESS_UPDATE_ERROR);
+        }
+        MemberReceiveAddressDO addressDO = dtoConvertDo(requestDTO, MemberReceiveAddressDO.class);
+        memberReceiveAddressMapper.updateById(addressDO);
         return ResultUtil.success();
     }
 

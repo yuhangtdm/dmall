@@ -10,7 +10,9 @@ import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
 import com.dmall.mms.feign.PortalLoginServiceFeign;
 import com.dmall.mms.generator.dataobject.MemberDO;
 import com.dmall.mms.generator.mapper.MemberMapper;
-import com.dmall.mms.service.impl.member.enums.MemberErrorEnum;
+import com.dmall.mms.api.enums.MemberErrorEnum;
+import com.dmall.sso.api.dto.portal.PortalLoginRequestDTO;
+import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/2/27 23:16
  */
 @Component
-public class UpdatePasswordHandler extends AbstractCommonHandler<UpdatePasswordRequestDTO, MemberDO, Long> {
+public class UpdatePasswordHandler extends AbstractCommonHandler<UpdatePasswordRequestDTO, MemberDO, String> {
 
     @Autowired
     private MemberMapper memberMapper;
@@ -28,15 +30,16 @@ public class UpdatePasswordHandler extends AbstractCommonHandler<UpdatePasswordR
     private PortalLoginServiceFeign portalLoginServiceFeign;
 
     @Override
-    public BaseResult<Long> processor(UpdatePasswordRequestDTO requestDTO) {
+    public BaseResult<String> processor(UpdatePasswordRequestDTO requestDTO) {
         // 获取当前登录用户
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
 
-        if (!requestDTO.getEmail().equals(loginMember.getEmail())){
+        // 判断是否是本人修改
+        if (!requestDTO.getEmail().equals(loginMember.getEmail())) {
             return ResultUtil.fail(MemberErrorEnum.EMAIL_ERROR);
         }
         // 判断原密码是否正确
-        if (!requestDTO.getOldPassword().equals(loginMember.getPassword())){
+        if (!requestDTO.getOldPassword().equals(loginMember.getPassword())) {
             return ResultUtil.fail(MemberErrorEnum.PASSWORD_ERROR);
         }
 
@@ -48,8 +51,12 @@ public class UpdatePasswordHandler extends AbstractCommonHandler<UpdatePasswordR
 
         // 调用sso退出登录
         portalLoginServiceFeign.logout(loginMember.getToken());
-        // 调用sso重新登录 todo
+        // 调用sso重新登录
+        PortalLoginRequestDTO loginRequestDTO = new PortalLoginRequestDTO();
+        loginRequestDTO.setMemberName(loginMember.getMemberName());
+        loginRequestDTO.setPassword(requestDTO.getNewPassword());
+        BaseResult<PortalLoginResponseDTO> login = portalLoginServiceFeign.login(loginRequestDTO);
 
-        return ResultUtil.success(loginMember.getId());
+        return ResultUtil.success(login.getData().getToken());
     }
 }

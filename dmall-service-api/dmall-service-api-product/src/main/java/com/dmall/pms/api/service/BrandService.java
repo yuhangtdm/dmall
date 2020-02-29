@@ -1,7 +1,7 @@
 package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
@@ -53,7 +53,7 @@ public interface BrandService {
 
     @ApiOperation(value = "品牌分页")
     @PostMapping("/page")
-    BaseResult<LayUiPage<PageBrandResponseDTO>> page(@Valid @RequestBody PageBrandRequestDTO pageRequestDTO);
+    BaseResult<ResponsePage<PageBrandResponseDTO>> page(@Valid @RequestBody PageBrandRequestDTO pageRequestDTO);
 
     @ApiOperation(value = "上传品牌logo")
     @PostMapping("/uploadLogo")

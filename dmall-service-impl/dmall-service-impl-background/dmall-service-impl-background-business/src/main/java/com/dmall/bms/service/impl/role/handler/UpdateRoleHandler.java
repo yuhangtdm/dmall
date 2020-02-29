@@ -1,8 +1,7 @@
 package com.dmall.bms.service.impl.role.handler;
 
 import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
-import com.dmall.bms.generator.dataobject.UserDO;
-import com.dmall.bms.service.impl.role.enums.RoleErrorEnum;
+import com.dmall.bms.api.enums.RoleErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.service.impl.support.RoleSupport;

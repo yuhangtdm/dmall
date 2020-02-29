@@ -11,7 +11,7 @@ import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.service.IBrandService;
 import com.dmall.pms.generator.service.ICategoryBrandService;
-import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -5,7 +5,7 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.service.impl.support.CategorySkuSupport;
 import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuExtSupport;

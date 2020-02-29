@@ -10,7 +10,7 @@ import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class PageRoleHandler extends AbstractCommonHandler<PageRoleRequestDTO, R
     private RoleMapper roleMapper;
 
     @Override
-    public BaseResult<LayUiPage<PageRoleResponseDTO>> processor(PageRoleRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageRoleResponseDTO>> processor(PageRoleRequestDTO requestDTO) {
         IPage<RoleDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         LambdaQueryWrapper<RoleDO> wrapper = Wrappers.<RoleDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), RoleDO::getName, requestDTO.getName());
@@ -41,7 +41,7 @@ public class PageRoleHandler extends AbstractCommonHandler<PageRoleRequestDTO, R
                 .map(roleDO -> doConvertDto(roleDO, PageRoleResponseDTO.class))
                 .collect(Collectors.toList());
 
-        return ResultUtil.success(new LayUiPage<>(page.getTotal(), collect));
+        return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 
 }

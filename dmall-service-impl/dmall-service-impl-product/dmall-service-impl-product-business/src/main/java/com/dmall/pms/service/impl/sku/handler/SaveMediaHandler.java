@@ -7,7 +7,7 @@ import com.dmall.pms.api.dto.sku.request.save.SaveSkuMediaRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.service.impl.support.SkuMediaSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

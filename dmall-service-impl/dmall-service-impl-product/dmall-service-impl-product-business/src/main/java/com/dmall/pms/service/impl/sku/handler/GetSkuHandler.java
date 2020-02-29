@@ -13,7 +13,7 @@ import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuExtSupport;
 import com.dmall.pms.service.impl.support.SkuMediaSupport;

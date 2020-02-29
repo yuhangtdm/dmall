@@ -1,7 +1,7 @@
 package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.pms.api.dto.attributetype.common.CommonAttributeTypeResponseDTO;
 import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
@@ -48,6 +48,6 @@ public interface AttributeTypeService {
 
     @PostMapping("/page")
     @ApiOperation(value = "属性分类分页")
-    BaseResult<LayUiPage<PageAttributeTypeResponseDTO>> page(@Valid @RequestBody PageAttributeTypeRequestDTO requestDTO);
+    BaseResult<ResponsePage<PageAttributeTypeResponseDTO>> page(@Valid @RequestBody PageAttributeTypeRequestDTO requestDTO);
 
 }

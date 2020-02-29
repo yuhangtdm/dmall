@@ -5,7 +5,7 @@ import com.dmall.common.util.EnumUtil;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
@@ -29,11 +29,11 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
     private SkuPageMapper skuPageMapper;
 
     @Override
-    public BaseResult<LayUiPage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
         Page<PageSkuResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<PageSkuResponseDTO> skuList = skuPageMapper.skuPage(page, requestDTO).stream()
                 .map(skuPageVO -> doConvertDto(skuPageVO, PageSkuResponseDTO.class)).collect(Collectors.toList());
-        return ResultUtil.success(new LayUiPage<>(page.getTotal(), skuList));
+        return ResultUtil.success(new ResponsePage<>(page.getTotal(), skuList));
     }
 
     @Override

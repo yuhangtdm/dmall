@@ -10,7 +10,7 @@ import com.dmall.pms.generator.dataobject.CategoryProductDO;
 import com.dmall.pms.generator.dataobject.CategorySkuDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.category.enums.CategoryErrorEnum;
+import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.dmall.pms.service.impl.support.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

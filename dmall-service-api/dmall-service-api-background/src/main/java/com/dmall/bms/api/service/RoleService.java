@@ -4,7 +4,7 @@ import com.dmall.bms.api.dto.role.request.*;
 import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
 import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -45,7 +45,7 @@ public interface RoleService {
 
     @PostMapping("/page")
     @ApiOperation(value = "后台角色分页")
-    BaseResult<LayUiPage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
+    BaseResult<ResponsePage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
 
     @PostMapping("/setPermissions")
     @ApiOperation(value = "设置权限")

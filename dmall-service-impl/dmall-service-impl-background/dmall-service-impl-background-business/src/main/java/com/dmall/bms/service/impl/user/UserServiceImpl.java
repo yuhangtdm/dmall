@@ -5,7 +5,7 @@ import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
 import com.dmall.bms.api.service.UserService;
 import com.dmall.bms.service.impl.user.handler.*;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * @description: 后台用户服务实现
@@ -70,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResult<LayUiPage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO) {
         return pageUserHandler.handler(requestDTO);
     }
 

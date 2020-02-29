@@ -11,7 +11,7 @@ import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
-import com.dmall.pms.service.impl.sku.enums.SkuErrorEnum;
+import com.dmall.pms.api.enums.SkuErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

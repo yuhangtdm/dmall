@@ -7,7 +7,7 @@ import com.dmall.component.file.qiniu.QiNiuConstants;
 import com.dmall.component.file.qiniu.QiNiuFileManager;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.generator.dataobject.BrandDO;
-import com.dmall.pms.service.impl.product.enums.ProductErrorEnum;
+import com.dmall.pms.api.enums.ProductErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -8,7 +8,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.notify.email.MailServiceImpl;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.mms.generator.dataobject.MemberDO;
-import com.dmall.mms.service.impl.member.enums.MemberErrorEnum;
+import com.dmall.mms.api.enums.MemberErrorEnum;
 import com.dmall.mms.service.impl.support.CacheKeySupport;
 import com.dmall.mms.service.impl.support.MemberSupport;
 import com.google.common.collect.Maps;
@@ -20,7 +20,7 @@ import java.time.Duration;
 import java.util.Map;
 
 /**
- * @description: RegisterSendCodeHandler
+ * @description: 注册会员-发送验证码处理器
  * @author: created by hang.yu on 2020/2/23 16:46
  */
 @Component

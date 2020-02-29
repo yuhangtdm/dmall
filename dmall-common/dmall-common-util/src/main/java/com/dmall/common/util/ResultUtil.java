@@ -112,4 +112,12 @@ public class ResultUtil {
         baseResult.setData(t);
         return baseResult;
     }
+
+    public static BaseResult fail(String code, String msg) {
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.FALSE);
+        baseResult.setCode(code);
+        baseResult.setMsg(msg);
+        return baseResult;
+    }
 }

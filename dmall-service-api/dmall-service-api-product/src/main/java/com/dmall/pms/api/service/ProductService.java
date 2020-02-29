@@ -1,7 +1,7 @@
 package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
@@ -47,7 +47,7 @@ public interface ProductService {
 
     @PostMapping("/page")
     @ApiOperation(value = "商品分页")
-    BaseResult<LayUiPage<PageProductResponseDTO>> page(@Valid @RequestBody PageProductRequestDTO requestDTO);
+    BaseResult<ResponsePage<PageProductResponseDTO>> page(@Valid @RequestBody PageProductRequestDTO requestDTO);
 
     @ApiOperation(value = "上传商品主图")
     @PostMapping("/uploadProductPic")

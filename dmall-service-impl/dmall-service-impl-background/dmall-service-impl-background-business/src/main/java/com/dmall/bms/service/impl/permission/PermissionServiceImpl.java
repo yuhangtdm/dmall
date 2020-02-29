@@ -9,7 +9,7 @@ import com.dmall.bms.api.dto.permission.response.PagePermissionResponseDTO;
 import com.dmall.bms.api.service.PermissionService;
 import com.dmall.bms.service.impl.permission.handler.*;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage;
+import com.dmall.common.dto.ResponsePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,7 +68,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public BaseResult<LayUiPage<PagePermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PagePermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO) {
         return pagePermissionHandler.handler(requestDTO);
     }
 

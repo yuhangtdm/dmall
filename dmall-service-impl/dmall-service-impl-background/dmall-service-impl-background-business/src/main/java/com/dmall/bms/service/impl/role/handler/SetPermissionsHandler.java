@@ -8,8 +8,7 @@ import com.dmall.bms.generator.dataobject.RolePermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.generator.mapper.RolePermissionMapper;
-import com.dmall.bms.generator.mapper.UserMapper;
-import com.dmall.bms.service.impl.role.enums.RoleErrorEnum;
+import com.dmall.bms.api.enums.RoleErrorEnum;
 import com.dmall.bms.service.impl.support.RolePermissionSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
@@ -17,8 +16,6 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

@@ -3,19 +3,18 @@ package com.dmall.mms.service.impl.member.handler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.util.PasswordUtil;
-import com.dmall.component.rbac.shiro.util.PathUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
 import com.dmall.mms.generator.dataobject.MemberDO;
 import com.dmall.mms.generator.mapper.MemberMapper;
-import com.dmall.mms.service.impl.member.enums.MemberErrorEnum;
+import com.dmall.mms.api.enums.MemberErrorEnum;
 import com.dmall.mms.service.impl.member.enums.SourceTypeEnum;
 import com.dmall.mms.service.impl.support.MemberSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @description: RegisterMemberHandler
+ * @description: 注册会员
  * @author: created by hang.yu on 2020/2/23 22:00
  */
 @Component

@@ -12,7 +12,7 @@ import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.generator.mapper.CategoryBrandMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
-import com.dmall.pms.service.impl.brand.enums.BrandErrorEnum;
+import com.dmall.pms.api.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

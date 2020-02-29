@@ -1,5 +1,4 @@
 package com.dmall.bms.service.impl.user.handler;
-import java.util.Date;
 
 import com.dmall.bms.api.dto.user.request.SetRolesRequestDTO;
 import com.dmall.bms.generator.dataobject.RoleDO;
@@ -9,7 +8,7 @@ import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.bms.generator.mapper.UserRoleMapper;
 import com.dmall.bms.service.impl.support.UserRoleSupport;
-import com.dmall.bms.service.impl.user.enums.UserErrorEnum;
+import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;

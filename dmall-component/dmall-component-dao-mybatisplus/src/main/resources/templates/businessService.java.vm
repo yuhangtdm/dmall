@@ -5,15 +5,12 @@ import ${requestDtoPackage}.${pageRequestDto};
 import ${commonDtoPackage}.${commonResponseDto};
 import ${requestDtoPackage}.${saveRequestDto};
 import ${requestDtoPackage}.${updateRequestDto};
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.LayUiPage ;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @description: $!{serviceComment}
