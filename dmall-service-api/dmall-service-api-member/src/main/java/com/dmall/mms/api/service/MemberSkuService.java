@@ -1,17 +1,13 @@
 package com.dmall.mms.api.service;
 
+import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.mms.api.dto.membercollectionsku.request.SaveMemberCollectionSkuRequestDTO;
-import com.dmall.common.dto.BaseResult;
 import com.dmall.mms.api.dto.membersku.response.PageMemberCollectionSkuResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @description: 会员和sku服务
