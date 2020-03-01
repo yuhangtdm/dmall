@@ -67,6 +67,11 @@
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-util</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-member</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

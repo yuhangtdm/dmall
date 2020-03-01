@@ -10,11 +10,13 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 /**
  * @description: LogoutHandler
  * @author: created by hang.yu on 2020/2/26 12:36
  */
+@Component
 public class LogoutHandler extends AbstractCommonHandler<String, MemberDO, Void> {
 
     @Autowired

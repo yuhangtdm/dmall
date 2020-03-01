@@ -71,11 +71,6 @@ public class MemberDO implements Serializable {
     private String email;
 
     /**
-     * 微信号
-     */
-    private String wechatNo;
-
-    /**
      * 婚姻状况 1-未婚;2-已婚;3-保密
      */
     private Integer maritalStatus;
@@ -109,6 +104,21 @@ public class MemberDO implements Serializable {
      * 用户来源 1-注册;2-qq;3-微信
      */
     private Integer sourceType;
+
+    /**
+     * 微博id
+     */
+    private Long weiBoNo;
+
+    /**
+     * 微信号
+     */
+    private String weChatNo;
+
+    /**
+     * qq
+     */
+    private String qq;
 
     /**
      * 积分

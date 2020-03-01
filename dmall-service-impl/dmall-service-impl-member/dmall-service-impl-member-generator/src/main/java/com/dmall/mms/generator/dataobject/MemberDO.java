@@ -101,11 +101,6 @@ public class MemberDO implements Serializable {
     private String icon;
 
     /**
-     * 用户来源 1-注册;2-qq;3-微信
-     */
-    private Integer sourceType;
-
-    /**
      * 积分
      */
     private Integer integration;
@@ -119,6 +114,26 @@ public class MemberDO implements Serializable {
      * 历史积分
      */
     private Integer historyIntegration;
+
+    /**
+     * 用户来源 1-注册;2-qq;3-微信;4-微博
+     */
+    private Integer sourceType;
+
+    /**
+     * 微博id
+     */
+    private Long weiBoNo;
+
+    /**
+     * 微信号
+     */
+    private String weChatNo;
+
+    /**
+     * qq
+     */
+    private String qq;
 
     /**
      * 创建人

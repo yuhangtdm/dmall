@@ -5,7 +5,7 @@ import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/weibo")
 public interface WeiBoLoginService {
 
-    @PostMapping("/auth")
+    @GetMapping("/auth")
     @ApiOperation(value = "微博回调地址")
     BaseResult<PortalLoginResponseDTO> login(String code);
 

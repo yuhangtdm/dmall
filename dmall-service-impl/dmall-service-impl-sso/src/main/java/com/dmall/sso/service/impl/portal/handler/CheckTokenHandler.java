@@ -9,11 +9,13 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.sso.service.impl.portal.dataobject.MemberDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 /**
  * @description: CheckTokenHandler
  * @author: created by hang.yu on 2020/2/26 12:39
  */
+@Component
 public class CheckTokenHandler extends AbstractCommonHandler<String, MemberDO, PortalMemberDTO> {
 
     @Autowired

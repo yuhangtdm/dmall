@@ -12,9 +12,9 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.sso.api.dto.portal.LoginTypeEnum;
 import com.dmall.sso.api.dto.portal.PortalLoginRequestDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
+import com.dmall.sso.api.enums.PortalLoginErrorEnum;
 import com.dmall.sso.service.impl.SsoProperties;
 import com.dmall.sso.service.impl.portal.PasswordUtil;
-import com.dmall.sso.api.enums.PortalLoginErrorEnum;
 import com.dmall.sso.service.impl.portal.dataobject.MemberDO;
 import com.dmall.sso.service.impl.portal.dataobject.MemberLoginLogDO;
 import com.dmall.sso.service.impl.portal.mapper.MemberLoginLogMapper;
@@ -46,37 +46,26 @@ public class LoginHandler extends AbstractCommonHandler<PortalLoginRequestDTO, M
 
     @Override
     public BaseResult<PortalLoginResponseDTO> processor(PortalLoginRequestDTO requestDTO) {
+        // 根据用户名查询用户
         MemberDO memberDO = memberMapper.login(requestDTO.getMemberName());
         if (memberDO == null) {
             return ResultUtil.fail(PortalLoginErrorEnum.MEMBER_NAME_INCORRECT);
         }
         // 比较密码
-        if (!PasswordUtil.checkPassword(memberDO.getEmail(),requestDTO.getPassword(), memberDO.getPassword())){
+        if (!PasswordUtil.checkPassword(memberDO.getEmail(), requestDTO.getPassword(), memberDO.getPassword())) {
             return ResultUtil.fail(PortalLoginErrorEnum.PASSWORD_INCORRECT);
         }
         if (YNEnum.Y.getCode().equals(memberDO.getIsDeleted())) {
             return ResultUtil.fail(PortalLoginErrorEnum.USER_INVALID);
         }
-
         // 生成token 并缓存
         String token = IdUtil.simpleUUID();
-        PortalMemberDTO portalMemberDTO = new PortalMemberDTO();
-        portalMemberDTO.setId(memberDO.getId());
-        portalMemberDTO.setMemberName(memberDO.getMemberName());
-        portalMemberDTO.setNickName(memberDO.getNickName());
-        portalMemberDTO.setPhone(memberDO.getPhone());
-        portalMemberDTO.setEmail(memberDO.getEmail());
-        portalMemberDTO.setWechatNo(memberDO.getWechatNo());
-        portalMemberDTO.setRealName(memberDO.getRealName());
-        portalMemberDTO.setSource(Constants.PORTAL_MEMBER);
-        portalMemberDTO.setPassword(memberDO.getPassword());
-        portalMemberDTO.setToken(token);
-
+        PortalMemberDTO portalMemberDTO = getPortalMemberDTO(memberDO, token);
         // 设置缓存
         redisTemplate.opsForValue().set(StrUtil.format("portal_{}", token), portalMemberDTO, ssoProperties.getPortalTtlDay(), TimeUnit.DAYS);
         // 插入登录日志
         insertLoginLog(memberDO, token);
-
+        // 返回
         PortalLoginResponseDTO portalLoginResponseDTO = new PortalLoginResponseDTO();
         portalLoginResponseDTO.setToken(token);
         portalLoginResponseDTO.setUrl(ssoProperties.getPortalSuccessUrl());
@@ -85,12 +74,27 @@ public class LoginHandler extends AbstractCommonHandler<PortalLoginRequestDTO, M
     }
 
 
-    private void insertLoginLog(MemberDO memberDO, String token){
+    private void insertLoginLog(MemberDO memberDO, String token) {
         MemberLoginLogDO memberLoginLogDO = new MemberLoginLogDO();
         memberLoginLogDO.setMemberId(memberDO.getId());
         memberLoginLogDO.setToken(token);
         memberLoginLogDO.setIp(RequestUtil.getIpAddress(RequestUtil.getRequest()));
         memberLoginLogDO.setType(LoginTypeEnum.PC.getCode());
         memberLoginLogMapper.insert(memberLoginLogDO);
+    }
+
+    private PortalMemberDTO getPortalMemberDTO(MemberDO memberDO, String token) {
+        PortalMemberDTO portalMemberDTO = new PortalMemberDTO();
+        portalMemberDTO.setId(memberDO.getId());
+        portalMemberDTO.setMemberName(memberDO.getMemberName());
+        portalMemberDTO.setNickName(memberDO.getNickName());
+        portalMemberDTO.setPhone(memberDO.getPhone());
+        portalMemberDTO.setEmail(memberDO.getEmail());
+        portalMemberDTO.setWeChatNo(memberDO.getWeChatNo());
+        portalMemberDTO.setRealName(memberDO.getRealName());
+        portalMemberDTO.setSource(Constants.PORTAL_MEMBER);
+        portalMemberDTO.setPassword(memberDO.getPassword());
+        portalMemberDTO.setToken(token);
+        return portalMemberDTO;
     }
 }

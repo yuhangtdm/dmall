@@ -2,8 +2,8 @@ package com.dmall.mms.service.impl.member;
 
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.mms.api.dto.member.request.ResetPasswordRequestDTO;
 import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
+import com.dmall.mms.api.dto.member.request.ResetPasswordRequestDTO;
 import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
 import com.dmall.mms.api.service.MemberService;
 import com.dmall.mms.service.impl.member.handler.*;
@@ -65,4 +65,5 @@ public class MemberServiceImpl implements MemberService {
     public BaseResult<Long> resetPassword(@RequestBody ResetPasswordRequestDTO requestDTO) {
         return resetPasswordHandler.handler(requestDTO);
     }
+
 }

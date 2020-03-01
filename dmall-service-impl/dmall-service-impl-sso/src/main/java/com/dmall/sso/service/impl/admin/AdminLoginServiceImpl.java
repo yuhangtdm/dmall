@@ -84,7 +84,4 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         return ResultUtil.success(adminUserDTO);
     }
 
-
-
-
 }

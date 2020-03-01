@@ -5,6 +5,7 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginRequestDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
+import com.dmall.sso.api.dto.portal.WeiBolLoginRequestDTO;
 import com.dmall.sso.api.service.PortalLoginService;
 import com.dmall.sso.service.impl.portal.handler.CheckTokenHandler;
 import com.dmall.sso.service.impl.portal.handler.LoginHandler;
@@ -45,4 +46,5 @@ public class PortalLoginServiceImpl implements PortalLoginService {
     public BaseResult<PortalMemberDTO> checkToken(String token) {
         return checkTokenHandler.handler(token);
     }
+
 }

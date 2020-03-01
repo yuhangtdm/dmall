@@ -37,4 +37,11 @@ public class MemberSupport {
         return memberMapper.selectOne(Wrappers.<MemberDO>lambdaQuery().eq(MemberDO::getMemberName, memberName));
     }
 
+    /**
+     * 根据微博id查询会员
+     */
+    public MemberDO getByWeiBoNo(Long weiBoId){
+        return memberMapper.selectOne(Wrappers.<MemberDO>lambdaQuery().eq(MemberDO::getWeiBoNo, weiBoId));
+    }
+
 }

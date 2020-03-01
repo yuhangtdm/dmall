@@ -261,9 +261,6 @@ public class HttpClientUtil {
                 if (response != null) {
                     response.close();
                 }
-                if (httpClient != null) {
-                    httpClient.close();
-                }
             } catch (IOException e1) {
                 // ignore
             }
