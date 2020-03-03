@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.thymeleaf.TemplateEngine;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @description: SendEmailConfiguration
  * @author: created by hang.yu on 2019/11/6 22:58
@@ -33,6 +35,7 @@ public class SendEmailConfiguration implements BasicConfiguration {
 
 
     @Override
+    @PostConstruct
     public void check() {
         log.info("init send email successful,from:{}", from);
     }

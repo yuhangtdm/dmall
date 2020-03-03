@@ -4,7 +4,7 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.mms.api.dto.member.request.WeiBoLoginRequestDTO;
 import com.dmall.mms.api.service.ThirdPartyPlatformService;
-import com.dmall.mms.service.impl.member.handler.WeiBoLoginHandler;
+import com.dmall.mms.service.impl.member.handler.WeiBoRegisterHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,10 +18,10 @@ import javax.validation.Valid;
 public class ThirdPartyPlatformServiceImpl implements ThirdPartyPlatformService {
 
     @Autowired
-    private WeiBoLoginHandler weiBoLoginHandler;
+    private WeiBoRegisterHandler weiBoRegisterHandler;
 
     @Override
     public BaseResult<PortalMemberDTO> weiBoLogin(@Valid WeiBoLoginRequestDTO requestDTO) {
-        return weiBoLoginHandler.handler(requestDTO);
+        return weiBoRegisterHandler.handler(requestDTO);
     }
 }

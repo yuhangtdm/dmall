@@ -47,13 +47,13 @@ public class WeiBoLoginServiceImpl implements WeiBoLoginService {
      */
     private static final String WEIBO_USER_URL = "https://api.weibo.com/2/users/show.json?access_token={}&uid={}";
 
-    @Value("{dmall.weibo.appid}")
+    @Value("${dmall.weibo.appid}")
     private String appId;
 
-    @Value("{dmall.weibo.appsecret}")
+    @Value("${dmall.weibo.appsecret}")
     private String appSecret;
 
-    @Value("{dmall.weibo.redirect_uri}")
+    @Value("${dmall.weibo.redirect_uri}")
     private String redirectUri;
 
 

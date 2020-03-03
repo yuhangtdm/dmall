@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/3/1 21:34
  */
 @Component
-public class WeiBoLoginHandler extends AbstractCommonHandler<WeiBoLoginRequestDTO, MemberDO, PortalMemberDTO> {
+public class WeiBoRegisterHandler extends AbstractCommonHandler<WeiBoLoginRequestDTO, MemberDO, PortalMemberDTO> {
 
     @Autowired
     private MemberSupport memberSupport;
@@ -43,6 +43,9 @@ public class WeiBoLoginHandler extends AbstractCommonHandler<WeiBoLoginRequestDT
             memberDO.setSourceType(SourceTypeEnum.WEIBO.getCode());
             memberDO.setWeiBoNo(requestDTO.getWeiBoNo());
             memberMapper.insert(memberDO);
+            memberDO.setCreator(memberDO.getId());
+            memberDO.setModifier(memberDO.getId());
+            memberMapper.updateById(memberDO);
             return ResultUtil.success(BeanUtil.copyProperties(memberDO, PortalMemberDTO.class));
         }
         return ResultUtil.success(BeanUtil.copyProperties(byWeiBoId, PortalMemberDTO.class));

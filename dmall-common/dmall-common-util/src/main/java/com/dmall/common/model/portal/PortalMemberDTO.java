@@ -42,7 +42,7 @@ public class PortalMemberDTO implements Serializable {
     private String qq;
 
     @ApiModelProperty(value = "微博号", position = 10)
-    private String weiBoNo;
+    private Long weiBoNo;
 
     @ApiModelProperty(value = "头像", position = 11)
     private String icon;

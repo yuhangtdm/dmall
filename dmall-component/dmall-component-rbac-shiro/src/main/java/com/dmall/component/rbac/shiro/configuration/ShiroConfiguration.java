@@ -90,6 +90,7 @@ public class ShiroConfiguration implements BasicConfiguration {
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "ShiroProperties", JSON.toJSONString(adminLoginProperties, true));
+        log.info("init -> [{}],content:\n{}", "adminLoginProperties", JSON.toJSONString(adminLoginProperties, true));
+        log.info("init -> [{}],content:\n{}", "portalLoginProperties", JSON.toJSONString(portalLoginProperties, true));
     }
 }
