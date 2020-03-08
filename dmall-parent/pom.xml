@@ -295,6 +295,11 @@
                 <artifactId>dmall-service-api-sso</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-api-search</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--impl-generator -->
             <dependency>

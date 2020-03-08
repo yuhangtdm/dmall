@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @description: LayUiPage
+ * @description: ResponsePage
  * @author: created by hang.yu on 2019/11/23 10:21
  */
 @Data

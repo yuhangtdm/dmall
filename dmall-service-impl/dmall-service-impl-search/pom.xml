@@ -9,10 +9,10 @@
         <artifactId>dmall-parent</artifactId>
         <groupId>com.allInJava</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../../dmall-parent/pom.xml</relativePath>
+        <relativePath>../../dmall-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>dmall-service-impl-product-business</artifactId>
+    <artifactId>dmall-service-impl-search</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.allInJava</groupId>
-            <artifactId>dmall-service-api-product</artifactId>
+            <artifactId>dmall-service-api-search</artifactId>
         </dependency>
 
         <dependency>
@@ -34,7 +34,7 @@
 
         <dependency>
             <groupId>com.allInJava</groupId>
-            <artifactId>dmall-component-file-qiniu</artifactId>
+            <artifactId>dmall-component-elasticsearch</artifactId>
         </dependency>
 
         <dependency>
@@ -57,6 +57,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -62,7 +63,12 @@ public class ProductAttributeValueSupport {
                 attributeValueDO.setIsParam("N");
                 attributeValueDO.setAttributeValue(specificationsValue.getAttributeValue());
                 attributeValueDO.setPic(specificationsValue.getPic());
-                list.add(attributeValueDO);
+                if (!list.contains(attributeValueDO)) {
+                    list.add(attributeValueDO);
+                } else {
+                    ProductAttributeValueDO productAttributeValueDO = find(list, specification.getAttributeId(), productId, specificationsValue.getAttributeValue());
+                    productAttributeValueDO.setIsSpecifications("Y");
+                }
                 JSONObject object = new JSONObject();
                 object.put("value", specificationsValue.getAttributeValue());
                 if (StrUtil.isNotBlank(specificationsValue.getPic())) {
@@ -85,7 +91,12 @@ public class ProductAttributeValueSupport {
                 attributeValueDO.setIsSpecifications("N");
                 attributeValueDO.setIsParam("N");
                 attributeValueDO.setAttributeValue(salePointValue);
-                list.add(attributeValueDO);
+                if (!list.contains(attributeValueDO)) {
+                    list.add(attributeValueDO);
+                } else {
+                    ProductAttributeValueDO productAttributeValueDO = find(list, salePoint.getAttributeId(), productId, salePointValue);
+                    productAttributeValueDO.setIsSellingPoint("Y");
+                }
             }
         }
 
@@ -102,7 +113,12 @@ public class ProductAttributeValueSupport {
                     attributeValueDO.setIsSpecifications("N");
                     attributeValueDO.setIsParam("Y");
                     attributeValueDO.setAttributeValue(paramValue);
-                    list.add(attributeValueDO);
+                    if (!list.contains(attributeValueDO)) {
+                        list.add(attributeValueDO);
+                    } else {
+                        ProductAttributeValueDO productAttributeValueDO = find(list, paramAttribute.getAttributeId(), productId, paramValue);
+                        productAttributeValueDO.setIsParam("Y");
+                    }
                 }
             }
         }
@@ -231,5 +247,14 @@ public class ProductAttributeValueSupport {
                 .eq(ProductAttributeValueDO::getProductId, productId)
                 .eq(ProductAttributeValueDO::getAttributeId, attributeId)
                 .eq(ProductAttributeValueDO::getAttributeValue, attributeValue));
+    }
+
+    private ProductAttributeValueDO find(List<ProductAttributeValueDO> list, Long attributeId, Long productId, String attributeValue) {
+        Optional<ProductAttributeValueDO> any = list.stream().filter(productAttributeValueDO -> {
+            return productAttributeValueDO.getAttributeId().equals(attributeId)
+                    && productAttributeValueDO.getProductId().equals(productId)
+                    && productAttributeValueDO.getAttributeValue().equals(attributeValue);
+        }).findAny();
+        return any.orElse(null);
     }
 }

@@ -1,4 +1,4 @@
-package com.dmall.pms;
+package com.dmall.search;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.mybatis.spring.annotation.MapperScan;
@@ -9,19 +9,19 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * @description: 商品服务启动类
- * @author: created by hang.yu on 2019/10/14 22:14
+ * @description: 搜索服务启动类
+ * @author: created by hang.yu on 2020/3/5 21:56
  */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableHystrix
 @EnableApolloConfig
-@MapperScan(basePackages = {"com.dmall.pms.generator.mapper", "com.dmall.pms.service.impl"})
-public class ProductApplication {
+@MapperScan(basePackages = {"com.dmall.pms.generator.mapper"})
+public class SearchApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProductApplication.class, args);
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
+        SpringApplication.run(SearchApplication.class, args);
     }
-
 }

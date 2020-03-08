@@ -1,6 +1,9 @@
 package com.dmall.component.elasticsearch;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.fastjson.JSON;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.component.elasticsearch.entity.*;
 import com.dmall.component.elasticsearch.exception.ESErrorEnum;
 import com.dmall.component.elasticsearch.exception.ESException;
@@ -19,6 +22,7 @@ import org.springframework.util.ReflectionUtils;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description: es公共操作类
@@ -61,6 +65,7 @@ public class ESDao {
             if (!execute.isSucceeded()) {
                 throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
             }
+            log.info("ESDao.save successful，{} ", id);
         } catch (Exception e) {
             log.error("ESDao.save error,indexName:{},type:{},id:{},do:{}", indexName, typeName, id, JSON.toJSONString(t), e);
             throw new ESException();
@@ -102,13 +107,13 @@ public class ESDao {
     /**
      * 通过search对象搜索
      */
-    public <T> List<T> search(ESSearch<T> esSearch) {
+    public <T> ResponsePage<T> search(ESSearch<T> esSearch) {
         if (esSearch == null) {
             throw new ESException(ESErrorEnum.NO_SEARCH);
         }
         basicCheck(esSearch.getIndexName(), esSearch.getTypeName());
         return search(esSearch.getIndexName(), esSearch.getTypeName(), esSearch.getSearchFields(), esSearch.getFilterFields(),
-                esSearch.getHightLightField(), esSearch.getEsPage(), esSearch.getSortField(), esSearch.getClazz());
+                esSearch.getRangeField(), esSearch.getHighLightField(), esSearch.getEsPage(), esSearch.getSortField(), esSearch.getClazz());
 
     }
 
@@ -118,30 +123,42 @@ public class ESDao {
      * @param searchFields   查询的字段
      * @param filterFields   过滤的字段
      * @param highLightField 高亮的字段
+     * @param rangeField     范围过滤
      * @param esPage         分页对象
      * @param sortField      排序字段
      * @param clazz          查询的返回对象
      */
-    private <T> List<T> search(String indexName, String typeName, List<SearchField> searchFields, List<FilterField> filterFields,
-                               String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
+    private <T> ResponsePage<T> search(String indexName, String typeName, List<SearchField> searchFields, List<FilterField> filterFields,
+                                       RangeField rangeField, String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        // 布尔过滤器
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+        // 过滤
+        if (!CollectionUtils.isEmpty(filterFields)) {
+            filterFields.forEach(filterField -> {
+                QueryBuilder termQueryBuilder = new TermsQueryBuilder(filterField.getFieldName(), filterField.getFieldValues());
+                // 多个过滤条件是且的关系 用 must
+                boolQueryBuilder.filter(termQueryBuilder);
+            });
+        }
 
         // 关键词搜索
         if (!CollectionUtils.isEmpty(searchFields)) {
             searchFields.forEach(searchField -> {
                 MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder(searchField.getFieldName(), searchField.getFieldValue());
-                boolQueryBuilder.must(matchQueryBuilder);
+                // 多个搜索用或的关系 should
+                boolQueryBuilder.should(matchQueryBuilder);
             });
         }
 
-        // 过滤
-        if (!CollectionUtils.isEmpty(filterFields)) {
-            filterFields.forEach(filterField -> {
-                QueryBuilder termQueryBuilder = new TermsQueryBuilder(filterField.getFieldName(), filterField.getFieldValue());
-                boolQueryBuilder.filter(termQueryBuilder);
-            });
+        // 范围
+        if (rangeField != null) {
+            RangeQueryBuilder rangeQueryBuilder = new RangeQueryBuilder(rangeField.getFieldName());
+            rangeQueryBuilder.gte(rangeField.getStartValue());
+            rangeQueryBuilder.lte(rangeField.getEndValue());
+            boolQueryBuilder.must(rangeQueryBuilder);
         }
 
         searchSourceBuilder.query(boolQueryBuilder);
@@ -166,15 +183,16 @@ public class ESDao {
             searchSourceBuilder.sort(sortField.getFieldName(), sortField.getSortOrder());
         }
 
+
         String dslStr = searchSourceBuilder.toString();
-        log.info("dsl:{}", dslStr);
+        log.info("dsl:\n{}", dslStr);
         Search search = new Search.Builder(dslStr).addIndex(indexName).addType(typeName).build();
 
         SearchResult execute = null;
         try {
             execute = jestClient.execute(search);
         } catch (IOException e) {
-            ESSearch<T> esSearch = new ESSearch<>(indexName, typeName, searchFields, filterFields, highLightField, esPage, sortField, clazz);
+            ESSearch<T> esSearch = new ESSearch<>(indexName, typeName, searchFields, filterFields, rangeField, highLightField, esPage, sortField, clazz);
             log.error("ESDao.search search,indexName:{},type:{},param:{}", indexName, typeName, JSON.toJSONString(esSearch), e);
             throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
         }
@@ -183,9 +201,16 @@ public class ESDao {
         List<T> result = Lists.newArrayList();
         for (SearchResult.Hit<T, Void> hit : hits) {
             T source = hit.source;
+            Map<String, List<String>> highlight = hit.highlight;
+            if (MapUtil.isNotEmpty(highlight)) {
+                highlight.forEach((k, v) -> {
+                    ReflectUtil.setFieldValue(source, k, v.get(0));
+                });
+            }
             result.add(source);
         }
-        return result;
+
+        return new ResponsePage<T>(execute.getTotal(), result);
     }
 
     /**

@@ -22,7 +22,8 @@ public class ESSearch<T> {
     private String typeName;
     private List<SearchField> searchFields;
     private List<FilterField> filterFields;
-    private String hightLightField;
+    private RangeField rangeField;
+    private String highLightField;
     private ESPage esPage;
     private SortField sortField;
     private Class<T> clazz;

@@ -3,17 +3,20 @@ package com.dmall.pms.generator.dataobject;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @description: 属性值表
  * @author: created by hang.yu on 2019-12-19 20:57:18
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 @Accessors(chain = true)
 @TableName("pms_product_attribute_value")
 public class ProductAttributeValueDO implements Serializable {
@@ -97,5 +100,18 @@ public class ProductAttributeValueDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductAttributeValueDO that = (ProductAttributeValueDO) o;
+        return Objects.equals(productId, that.productId) &&
+                Objects.equals(attributeId, that.attributeId) &&
+                Objects.equals(attributeValue, that.attributeValue) ;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -5,21 +5,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @description: ES过滤实体
- * @author: created by hang.yu on 2019/11/6 23:25
+ * @description:
+ * @author: created by hang.yu on 2020/3/8 14:29
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilterField {
-
+public class RangeField {
     /**
      * 属性名称
      */
     private String fieldName;
 
     /**
-     * 属性值
+     * 起始值
      */
-    private Object[] fieldValues;
+    private Object startValue;
+
+    /**
+     * 结束值
+     */
+    private Object endValue;
 }

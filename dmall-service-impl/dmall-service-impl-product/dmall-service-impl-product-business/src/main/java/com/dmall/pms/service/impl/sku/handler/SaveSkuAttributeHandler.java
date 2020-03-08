@@ -1,11 +1,10 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
-import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuExtSupport;
 import com.dmall.pms.service.impl.support.SkuSupport;
@@ -20,9 +19,6 @@ import java.util.List;
  */
 @Component
 public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttributeRequestDTO, SkuAttributeValueDO, Long> {
-
-    @Autowired
-    private ProductMapper productMapper;
 
     @Autowired
     private SkuSupport skuSupport;
