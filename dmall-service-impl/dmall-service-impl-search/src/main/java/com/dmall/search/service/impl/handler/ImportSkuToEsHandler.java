@@ -9,7 +9,7 @@ import com.dmall.pms.generator.mapper.*;
 import com.dmall.search.api.dto.AttributeDTO;
 import com.dmall.search.api.dto.AttributeValueDTO;
 import com.dmall.search.api.dto.BrandDTO;
-import com.dmall.search.service.impl.EsConstants;
+import com.dmall.search.service.impl.es.EsConstants;
 import com.dmall.search.service.impl.es.SkuEsDTO;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.dmall.search.service.impl;
+package com.dmall.search.service.impl.es;
 
 /**
  * @description: 常量类

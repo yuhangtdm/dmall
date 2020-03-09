@@ -9,7 +9,7 @@ import com.dmall.component.elasticsearch.ESDao;
 import com.dmall.component.elasticsearch.entity.*;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.search.api.dto.*;
-import com.dmall.search.service.impl.EsConstants;
+import com.dmall.search.service.impl.es.EsConstants;
 import com.dmall.search.service.impl.es.SkuEsDTO;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;

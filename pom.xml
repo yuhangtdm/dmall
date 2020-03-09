@@ -23,6 +23,8 @@
         <module>dmall-component/dmall-component-file-qiniu</module>
         <module>dmall-component/dmall-component-rbac-shiro</module>
         <module>dmall-component/dmall-component-notify-email</module>
+        <module>dmall-component/dmall-component-activemq</module>
+
 
         <!--dmall-framework-->
         <module>dmall-framework/dmall-framework-eureka-server</module>

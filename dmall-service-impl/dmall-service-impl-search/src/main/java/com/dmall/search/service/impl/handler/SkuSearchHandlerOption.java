@@ -16,14 +16,13 @@ import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.generator.mapper.CategoryAttributeMapper;
 import com.dmall.pms.generator.mapper.ProductAttributeValueMapper;
 import com.dmall.search.api.dto.*;
-import com.dmall.search.service.impl.EsConstants;
+import com.dmall.search.service.impl.es.EsConstants;
 import com.dmall.search.service.impl.es.SkuEsDTO;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;

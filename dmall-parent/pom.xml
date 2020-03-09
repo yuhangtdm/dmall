@@ -39,6 +39,7 @@
         <shiro-spring.version>1.4.0</shiro-spring.version>
         <zipkin.version>2.10.1</zipkin.version>
         <zipkin.elasticsearch.version>2.8.4</zipkin.elasticsearch.version>
+        <activemq-pool.version>5.15.9</activemq-pool.version>
     </properties>
 
     <dependencies>
@@ -219,6 +220,12 @@
                 <version>${zipkin.elasticsearch.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-pool</artifactId>
+                <version>${activemq-pool.version}</version>
+            </dependency>
+
             <!--======================本项目模块======================-->
             <!--common-->
             <dependency>
@@ -271,6 +278,11 @@
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-component-notify-email</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-component-activemq</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
