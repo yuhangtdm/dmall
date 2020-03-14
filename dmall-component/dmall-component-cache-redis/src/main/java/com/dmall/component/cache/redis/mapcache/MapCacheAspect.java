@@ -28,7 +28,7 @@ public class MapCacheAspect {
 
     private MapCacheUtil mapCacheUtil;
 
-    private RedisTemplate dmallRedisTemplate;
+    private RedisTemplate<String, Object> dmallRedisTemplate;
 
     @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapListCache)")
     public void mapListCache() {

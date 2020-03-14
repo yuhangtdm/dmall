@@ -1,5 +1,6 @@
 package ${servicePackage};
 
+import com.dmall.common.dto.BaseResult;
 import ${requestDtoPackage}.${listRequestDto};
 import ${requestDtoPackage}.${pageRequestDto};
 import ${commonDtoPackage}.${commonResponseDto};

@@ -11,6 +11,7 @@ import com.dmall.pms.api.dto.sku.request.save.SaveSkuMediaRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
+import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
 import com.dmall.pms.api.service.SkuService;
 import com.dmall.pms.service.impl.sku.handler.*;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @description: sku服务实现
@@ -55,6 +57,9 @@ public class SkuServiceImpl implements SkuService {
 
     @Autowired
     private DeleteSkuHandler deleteSkuHandler;
+
+    @Autowired
+    private GetBasicSkuHandler getBasicSkuHandler;
 
     @Override
     public BaseResult<Long> saveOrUpdate(@RequestBody SaveSkuRequestDTO requestDTO) {
@@ -109,6 +114,11 @@ public class SkuServiceImpl implements SkuService {
     @Override
     public BaseResult<ResponsePage<PageSkuResponseDTO>> page(@RequestBody PageSkuRequestDTO requestDTO) {
         return pageSkuHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<BasicSkuResponseDTO>> getBasic(List<Long> ids) {
+        return getBasicSkuHandler.handler(ids);
     }
 
 }

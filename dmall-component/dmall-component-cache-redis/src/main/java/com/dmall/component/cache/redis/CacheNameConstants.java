@@ -6,12 +6,29 @@ package com.dmall.component.cache.redis;
  */
 public interface CacheNameConstants {
 
+    /**
+     * 品牌
+     */
     String BRAND = "brand";
 
+    /**
+     * 分类
+     */
     String CATEGORY = "category";
 
+    /**
+     * 属性分类
+     */
     String ATTRIBUTE_TYPE = "attributeType";
 
+    /**
+     * 属性
+     */
     String ATTRIBUTE = "attribute";
+
+    /**
+     * 购物车
+     */
+    String CART = "cart";
 
 }

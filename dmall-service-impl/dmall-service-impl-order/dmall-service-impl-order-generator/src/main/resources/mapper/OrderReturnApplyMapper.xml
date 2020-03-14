@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.oms.generator.mapper.OrderReturnApplyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmall.oms.generator.dataobject.OrderReturnApplyDO">
+        <result column="id" property="id" />
+        <result column="member_id" property="memberId" />
+        <result column="order_id" property="orderId" />
+        <result column="order_item_id" property="orderItemId" />
+        <result column="product_id" property="productId" />
+        <result column="sku_id" property="skuId" />
+        <result column="reason_id" property="reasonId" />
+        <result column="apply_no" property="applyNo" />
+        <result column="order_no" property="orderNo" />
+        <result column="order_item_no" property="orderItemNo" />
+        <result column="product_no" property="productNo" />
+        <result column="sku_no" property="skuNo" />
+        <result column="type" property="type" />
+        <result column="sku_name" property="skuName" />
+        <result column="sku_pic" property="skuPic" />
+        <result column="quantity" property="quantity" />
+        <result column="price" property="price" />
+        <result column="sku_amount" property="skuAmount" />
+        <result column="amount" property="amount" />
+        <result column="status" property="status" />
+        <result column="description" property="description" />
+        <result column="apply_credentials" property="applyCredentials" />
+        <result column="integration" property="integration" />
+        <result column="handle_note" property="handleNote" />
+        <result column="handle_man" property="handleMan" />
+        <result column="handle_time" property="handleTime" />
+        <result column="refund_type" property="refundType" />
+        <result column="pick_up_address" property="pickUpAddress" />
+        <result column="contact_name" property="contactName" />
+        <result column="contact_tel" property="contactTel" />
+        <result column="untitled3" property="untitled3" />
+        <result column="creator" property="creator" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="modifier" property="modifier" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, member_id, order_id, order_item_id, product_id, sku_id, reason_id, apply_no, order_no, order_item_no, product_no, sku_no, type, sku_name, sku_pic, quantity, price, sku_amount, amount, status, description, apply_credentials, integration, handle_note, handle_man, handle_time, refund_type, pick_up_address, contact_name, contact_tel, untitled3, creator, gmt_created, modifier, gmt_modified, is_deleted
+    </sql>
+
+</mapper>

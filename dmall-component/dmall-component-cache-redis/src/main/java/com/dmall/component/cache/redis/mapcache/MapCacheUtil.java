@@ -10,13 +10,13 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description:
+ * @description: MapCacheUtil
  * @author: created by hang.yu on 2019/12/8 17:47
  */
 @AllArgsConstructor
 public class MapCacheUtil {
 
-    private RedisTemplate dmallRedisTemplate;
+    private RedisTemplate<String,Object> dmallRedisTemplate;
 
     private DMallRedisProperties dMallRedisProperties;
 
@@ -43,12 +43,15 @@ public class MapCacheUtil {
      */
     public void put(String key, String hashKey, Object result, long timeout, TimeUnit timeUnit) {
         dmallRedisTemplate.opsForHash().put(key, hashKey, result);
+        // 0 表示永久存储
         if (timeout == 0L) {
             return;
         }
         if (timeout > 0L) {
+            // 大于0 则使用传递的
             dmallRedisTemplate.expire(key, timeout, timeUnit);
         } else {
+            // 小于0 则使用默认的
             dmallRedisTemplate.expire(key, dMallRedisProperties.getTtl(), dMallRedisProperties.getTtlUnitEnum());
         }
     }

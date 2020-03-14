@@ -10,6 +10,7 @@ import com.dmall.pms.api.dto.sku.request.save.SaveSkuMediaRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
+import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @description: sku服务
@@ -74,4 +76,8 @@ public interface SkuService {
     @ApiOperation(value = "sku分页")
     BaseResult<ResponsePage<PageSkuResponseDTO>> page(@Valid @RequestBody PageSkuRequestDTO requestDTO);
 
+    @GetMapping("getBasic")
+    @ApiOperation(value = "根据id查询sku基本信息")
+    @ApiImplicitParam(name = "ids", value = "skuId", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<BasicSkuResponseDTO>> getBasic(List<Long> ids);
 }

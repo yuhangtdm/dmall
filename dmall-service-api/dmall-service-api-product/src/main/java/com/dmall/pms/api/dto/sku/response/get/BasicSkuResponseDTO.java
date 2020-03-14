@@ -72,4 +72,7 @@ public class BasicSkuResponseDTO {
 
     @ApiModelProperty(value = "审核状态", position = 18)
     private SkuAuditStatusEnum auditStatus;
+
+    @ApiModelProperty(value = "sku规格", position = 19)
+    private String skuSpecificationsJson;
 }

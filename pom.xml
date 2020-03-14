@@ -42,11 +42,7 @@
         <module>dmall-service-api/dmall-service-api-background</module>
         <module>dmall-service-api/dmall-service-api-sso</module>
         <module>dmall-service-api/dmall-service-api-search</module>
-        <!-- <module>../dmall-service-api/dmall-service-api-order</module>
-         <module>../dmall-service-api/dmall-service-api-content</module>
-         <module>../dmall-service-api/dmall-service-api-sale</module>
-         <module>../dmall-service-api/dmall-service-api-pay</module>
-         <module>../dmall-service-api/dmall-service-api-search</module>-->
+        <module>dmall-service-api/dmall-service-api-order</module>
 
         <!--dmall-service-impl-->
         <module>dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator</module>
@@ -57,6 +53,8 @@
         <module>dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-business</module>
         <module>dmall-service-impl/dmall-service-impl-member/dmall-service-impl-member-generator</module>
         <module>dmall-service-impl/dmall-service-impl-search</module>
+        <module>dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-business</module>
+        <module>dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-generator</module>
 
         <!--dmall-web-->
         <module>dmall-web/dmall-web-admin</module>
