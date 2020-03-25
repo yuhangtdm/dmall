@@ -40,6 +40,8 @@
         <zipkin.version>2.10.1</zipkin.version>
         <zipkin.elasticsearch.version>2.8.4</zipkin.elasticsearch.version>
         <activemq-pool.version>5.15.9</activemq-pool.version>
+        <rocketmq-spring.version>2.1.0</rocketmq-spring.version>
+        <xxl-job-core.version>2.1.2</xxl-job-core.version>
     </properties>
 
     <dependencies>
@@ -225,6 +227,17 @@
                 <artifactId>activemq-pool</artifactId>
                 <version>${activemq-pool.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job-core.version}</version>
+            </dependency>
+
 
             <!--======================本项目模块======================-->
             <!--common-->
@@ -317,6 +330,11 @@
                 <artifactId>dmall-service-api-order</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-api-cart</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--impl-generator -->
             <dependency>
@@ -339,6 +357,13 @@
                 <artifactId>dmall-service-impl-order-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-impl-cart-generator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            
         </dependencies>
     </dependencyManagement>
 

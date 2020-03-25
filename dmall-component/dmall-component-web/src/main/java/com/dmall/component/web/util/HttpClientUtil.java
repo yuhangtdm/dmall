@@ -3,7 +3,6 @@ package com.dmall.component.web.util;
 import com.google.common.collect.Lists;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -17,7 +16,6 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
@@ -42,44 +40,6 @@ public class HttpClientUtil {
         this.httpClient = httpClient;
     }
 
-    public static void main(String[] args) {
-        sendBrowser();
-    }
-
-    /**
-     * 模拟浏览器发送请求
-     */
-    public static String sendBrowser() {
-        //创建httpclient对象
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        RequestConfig config = RequestConfig.custom().build();
-        HttpGet httpget = new HttpGet("D:\\jd.html");
-        //使用配置
-        httpget.setConfig(config);
-        //设置请求头
-        httpget.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-        httpget.setHeader("Accept-Encoding", "gzip, deflate");
-        httpget.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
-        httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36");
-        String responseContent = null;
-        try {
-            CloseableHttpResponse response = httpClient.execute(httpget);
-            HttpEntity entity = response.getEntity();
-            responseContent = EntityUtils.toString(entity, "utf-8");
-            System.out.println(responseContent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                httpClient.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        return responseContent;
-    }
 
     /**
      * 执行post请求

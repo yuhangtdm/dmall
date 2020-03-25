@@ -53,14 +53,22 @@ public class ImportSkuToEsHandler {
     @Autowired
     private AttributeMapper attributeMapper;
 
-    public void importAllSku() {
-        List<SkuDO> skuDOS = skuMapper.selectList(Wrappers.emptyWrapper());
-        for (int i = 0; i < skuDOS.size(); i++) {
-            SkuDO skuDO = skuDOS.get(i);
+    /**
+     * 操作es的sku数据
+     */
+    public void operateEsSku(Long skuId) {
+        SkuDO skuDO = skuMapper.selectById(skuId);
+        if (skuDO == null){
+            // 删除
+            esDao.delete(EsConstants.INDEX_NAME, EsConstants.TYPE_NAME, skuId);
+        }else {
+            // 查询商品
             ProductDO productDO = productMapper.selectById(skuDO.getProductId());
+            // 查询分类
             List<Long> categoryIds = categoryProductMapper.selectList(Wrappers.<CategoryProductDO>lambdaQuery().eq(CategoryProductDO::getProductId, productDO.getId()))
                     .stream().map(CategoryProductDO::getCategoryId).collect(Collectors.toList());
 
+            // 构建es对象
             SkuEsDTO skuEsDTO = new SkuEsDTO();
             skuEsDTO.setSkuId(skuDO.getId());
             skuEsDTO.setSkuName(skuDO.getName());
@@ -70,7 +78,9 @@ public class ImportSkuToEsHandler {
             skuEsDTO.setSkuDescription(skuDO.getDescription());
             skuEsDTO.setSkuMainPic(skuDO.getPic());
             skuEsDTO.setSkuStock(skuDO.getStock());
+            // todo 调用sku评论数量接口
             skuEsDTO.setSkuCommentCount(999L);
+            // todo 调用sku销量接口
             skuEsDTO.setSkuSaleCount(1999L);
             skuEsDTO.setSkuOnPublishTime(DateUtil.format(skuDO.getOnPublishTime(), DatePattern.NORM_DATE_PATTERN));
             skuEsDTO.setProductId(skuDO.getProductId());
@@ -78,6 +88,7 @@ public class ImportSkuToEsHandler {
             skuEsDTO.setProductName(productDO.getName());
             skuEsDTO.setCategoryIds(categoryIds);
 
+            // 品牌数据
             BrandDO brandDO = brandMapper.selectById(skuDO.getBrandId());
             BrandDTO brandDTO = new BrandDTO();
             brandDTO.setBrandId(brandDO.getId());
@@ -86,15 +97,14 @@ public class ImportSkuToEsHandler {
             brandDTO.setBrandLogo(brandDO.getLogo());
             skuEsDTO.setBrandDTO(brandDTO);
 
-            List<AttributeDTO> attributeList = Lists.newArrayList();
 
+            List<AttributeDTO> attributeList = Lists.newArrayList();
             List<Long> attributeValues = skuAttributeValueMapper.selectList(Wrappers.<SkuAttributeValueDO>lambdaQuery()
                     .eq(SkuAttributeValueDO::getSkuId, skuDO.getId())).stream()
                     .distinct()
                     .map(SkuAttributeValueDO::getProductAttributeValueId)
                     .collect(Collectors.toList());
             List<ProductAttributeValueDO> productAttributeValues = productAttributeValueMapper.selectBatchIds(attributeValues);
-
 
             // 按照属性分组
             Map<Long, List<ProductAttributeValueDO>> attributeMap =
@@ -130,9 +140,11 @@ public class ImportSkuToEsHandler {
                     }
                 }
             }
+            // 属性值id 用于过滤
             skuEsDTO.setAttributeValueIds(attributeValues);
+            // 属性值信息 用于展示
             skuEsDTO.setAttributes(attributeList);
-            esDao.saveOrUpdate(skuEsDTO, "dmall_sku", EsConstants.TYPE_NAME, skuEsDTO.getSkuId());
+            esDao.saveOrUpdate(skuEsDTO, EsConstants.INDEX_NAME, EsConstants.TYPE_NAME, skuEsDTO.getSkuId());
         }
 
     }
