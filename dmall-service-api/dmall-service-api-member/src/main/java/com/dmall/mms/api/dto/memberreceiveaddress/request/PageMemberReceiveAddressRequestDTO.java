@@ -1,13 +1,11 @@
 package com.dmall.mms.api.dto.memberreceiveaddress.request;
 
+import com.dmall.common.dto.PageRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
-import com.dmall.common.dto.PageRequestDTO;
-import java.util.*;
-import java.math.*;
+import lombok.experimental.Accessors;
 
 /**
  * @description: 会员收货地址分页请求实体

@@ -31,11 +31,6 @@ public class AdviceDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
-     */
-    private Long memberId;
-
-    /**
      * 意见内容
      */
     private String content;

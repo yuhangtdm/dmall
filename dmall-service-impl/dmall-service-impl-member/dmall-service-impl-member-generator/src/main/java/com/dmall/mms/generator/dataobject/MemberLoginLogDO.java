@@ -31,11 +31,6 @@ public class MemberLoginLogDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
-     */
-    private Long memberId;
-
-    /**
      * token
      */
     private String token;

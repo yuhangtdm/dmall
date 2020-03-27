@@ -31,11 +31,6 @@ public class MemberReceiveAddressDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
-     */
-    private Long memberId;
-
-    /**
      * 姓名
      */
     private String name;

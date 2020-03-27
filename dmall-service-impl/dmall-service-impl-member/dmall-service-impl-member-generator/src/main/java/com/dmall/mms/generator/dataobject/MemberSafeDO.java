@@ -31,11 +31,6 @@ public class MemberSafeDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
-     */
-    private Long memberId;
-
-    /**
      * 是否绑定手机号 Y-可用;N-不可用
      */
     private String bindMobile;

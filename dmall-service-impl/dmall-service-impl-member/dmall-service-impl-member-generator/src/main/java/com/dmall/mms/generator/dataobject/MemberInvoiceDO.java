@@ -1,16 +1,12 @@
 package com.dmall.mms.generator.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @description: 会员发票表
@@ -22,7 +18,7 @@ import lombok.experimental.Accessors;
 @TableName("mms_member_invoice")
 public class MemberInvoiceDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id
@@ -31,29 +27,39 @@ public class MemberInvoiceDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
+     * 发票抬头 1-个人;2-单位
      */
-    private Long memberId;
+    private String invoiceHeader;
 
     /**
-     * 发票抬头
+     * 个人名称
      */
-    private String billHeader;
+    private String personalName;
 
     /**
-     * 收票人姓名
+     * 收票人手机号
      */
-    private String billReceiverName;
-
-    /**
-     * 收票人电话
-     */
-    private String billReceiverPhone;
+    private String receiverPhone;
 
     /**
      * 收票人邮箱
      */
-    private String billReceiverEmail;
+    private String receiverEmail;
+
+    /**
+     * 单位名称
+     */
+    private String companyName;
+
+    /**
+     * 纳税人识别号
+     */
+    private String customerTaxNumber;
+
+    /**
+     * 发票内容 1-商品类别;2-商品明细
+     */
+    private Integer invoiceContent;
 
     /**
      * 创建人

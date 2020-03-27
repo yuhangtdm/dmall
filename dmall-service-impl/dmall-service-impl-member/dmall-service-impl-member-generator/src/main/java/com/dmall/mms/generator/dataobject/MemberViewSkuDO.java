@@ -32,11 +32,6 @@ public class MemberViewSkuDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
-     */
-    private Long memberId;
-
-    /**
      * skuid
      */
     private Long skuId;

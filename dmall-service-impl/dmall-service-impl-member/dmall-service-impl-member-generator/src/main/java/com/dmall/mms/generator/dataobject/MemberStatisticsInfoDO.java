@@ -31,11 +31,6 @@ public class MemberStatisticsInfoDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
-     */
-    private Long memberId;
-
-    /**
      * 累计消费金额
      */
     private Integer consumeAmount;
