@@ -1,17 +1,13 @@
 package com.dmall.oms.generator.dataobject;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @description: 订单项表
@@ -37,14 +33,9 @@ public class OrderItemDO implements Serializable {
     private Long orderId;
 
     /**
-     * 商家店铺id
+     * skuId
      */
-    private String merchantsId;
-
-    /**
-     * 物流公司id
-     */
-    private Long logisticsId;
+    private Long skuId;
 
     /**
      * 商品id
@@ -52,44 +43,14 @@ public class OrderItemDO implements Serializable {
     private Long productId;
 
     /**
-     * skuid
+     * 商家店铺id
      */
-    private Long skuId;
+    private String merchantsId;
 
     /**
-     * 会员id
+     * 物流单号 多个用逗号隔开
      */
-    private String memberId;
-
-    /**
-     * 商品分类id
-     */
-    private Long productCategoryId;
-
-    /**
-     * 品牌id
-     */
-    private Long brandId;
-
-    /**
-     * 订单编号
-     */
-    private String orderNo;
-
-    /**
-     * 订单项编号
-     */
-    private String orderItemNo;
-
-    /**
-     * 商品编号
-     */
-    private String productNo;
-
-    /**
-     * sku编号
-     */
-    private String skuNo;
+    private String logisticsNo;
 
     /**
      * sku名称
@@ -107,14 +68,14 @@ public class OrderItemDO implements Serializable {
     private BigDecimal skuPrice;
 
     /**
-     * sku数量
+     * sku成交数量
      */
-    private Integer skuQuantity;
+    private Integer skuNumber;
 
     /**
      * sku总价
      */
-    private BigDecimal totalAmount;
+    private BigDecimal skuAmount;
 
     /**
      * sku规格
@@ -122,29 +83,9 @@ public class OrderItemDO implements Serializable {
     private String skuSpecifications;
 
     /**
-     * 运费分摊金额
-     */
-    private BigDecimal freightAmount;
-
-    /**
-     * 促销优惠分摊金额
-     */
-    private BigDecimal promotionAmount;
-
-    /**
-     * 积分抵扣分担金额
-     */
-    private BigDecimal integrationAmount;
-
-    /**
      * 优惠券抵扣分摊金额
      */
     private BigDecimal couponAmount;
-
-    /**
-     * 分摊抵扣积分
-     */
-    private Integer integration;
 
     /**
      * 订单项实际总价
@@ -181,6 +122,5 @@ public class OrderItemDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

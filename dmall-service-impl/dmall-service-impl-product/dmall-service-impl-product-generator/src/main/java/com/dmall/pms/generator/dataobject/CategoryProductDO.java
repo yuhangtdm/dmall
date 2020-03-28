@@ -72,5 +72,4 @@ public class CategoryProductDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

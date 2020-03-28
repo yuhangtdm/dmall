@@ -31,7 +31,6 @@ public class CategoryBrandDO implements Serializable {
      */
     private Long categoryId;
 
-
     /**
      * 品牌id
      */
@@ -77,6 +76,5 @@ public class CategoryBrandDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

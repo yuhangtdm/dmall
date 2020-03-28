@@ -1,16 +1,12 @@
 package com.dmall.oms.generator.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @description: 订单状态记录表
@@ -19,8 +15,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("oms_order_operate_log")
-public class OrderOperateLogDO implements Serializable {
+@TableName("oms_order_status")
+public class OrderStatusDO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -33,17 +29,12 @@ public class OrderOperateLogDO implements Serializable {
     /**
      * 订单id
      */
-    private String orderId;
+    private Long orderId;
 
     /**
      * 订单状态 1-待支付;2-待发货;3-待收货;5-已完成,6-已取消
      */
     private Integer orderStatus;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
     /**
      * 创建人

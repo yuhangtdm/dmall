@@ -77,5 +77,4 @@ public class CategoryAttributeDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

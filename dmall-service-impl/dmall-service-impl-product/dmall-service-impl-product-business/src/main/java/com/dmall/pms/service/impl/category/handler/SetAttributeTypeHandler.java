@@ -88,7 +88,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
                         .set(AttributeTypeDO::getCategoryId, null)
                         .set(AttributeTypeDO::getCascadeCategoryId, null);
                 attributeTypeMapper.update(null, updateWrapper);
-                mapCacheUtil.put(mapCacheUtil.getkey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
+                mapCacheUtil.put(mapCacheUtil.getKey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
                         String.valueOf(attributeTypeId), iAttributeTypeService.getById(attributeTypeId));
             });
         }
@@ -102,7 +102,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
             attributeTypeDO.setCascadeCategoryId(categoryDO.getPath());
             attributeTypeDO.setName(StrUtil.format("{}_{}", categoryDO.getName(), attributeTypeDO.getShowName()));
             iAttributeTypeService.updateById(attributeTypeDO);
-            mapCacheUtil.put(mapCacheUtil.getkey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
+            mapCacheUtil.put(mapCacheUtil.getKey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
                     String.valueOf(attributeTypeDO.getId()), iAttributeTypeService.getById(attributeTypeDO.getId()));
         });
 

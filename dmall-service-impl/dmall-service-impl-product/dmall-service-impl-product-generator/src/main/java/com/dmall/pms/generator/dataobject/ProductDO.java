@@ -38,16 +38,6 @@ public class ProductDO implements Serializable {
     private Long brandId;
 
     /**
-     * 运费模板id
-     */
-    private Long freightTemplateId;
-
-    /**
-     * 商品编号
-     */
-    private String productNo;
-
-    /**
      * 商品名称
      */
     private String name;
@@ -122,6 +112,5 @@ public class ProductDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

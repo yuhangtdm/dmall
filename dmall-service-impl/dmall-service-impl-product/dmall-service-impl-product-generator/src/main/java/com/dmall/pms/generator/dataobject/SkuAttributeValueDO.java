@@ -32,7 +32,7 @@ public class SkuAttributeValueDO implements Serializable {
     private Long productId;
 
     /**
-     * skuid
+     * skuId
      */
     private Long skuId;
 

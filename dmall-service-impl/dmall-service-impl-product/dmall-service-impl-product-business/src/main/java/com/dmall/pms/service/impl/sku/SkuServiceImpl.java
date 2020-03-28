@@ -3,6 +3,7 @@ package com.dmall.pms.service.impl.sku;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
+import com.dmall.pms.api.dto.sku.request.LockStockRequestDTO;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.UploadRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
@@ -119,6 +120,11 @@ public class SkuServiceImpl implements SkuService {
     @Override
     public BaseResult<List<BasicSkuResponseDTO>> getBasic(List<Long> ids) {
         return getBasicSkuHandler.handler(ids);
+    }
+
+    @Override
+    public BaseResult<Void> lockStock(List<LockStockRequestDTO> requestDTO) {
+        return null;
     }
 
 }

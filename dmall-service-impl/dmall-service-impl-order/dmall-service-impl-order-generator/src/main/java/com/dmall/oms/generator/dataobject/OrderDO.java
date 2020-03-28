@@ -1,17 +1,13 @@
 package com.dmall.oms.generator.dataobject;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @description: 订单表
@@ -32,24 +28,14 @@ public class OrderDO implements Serializable {
     private Long id;
 
     /**
-     * 会员id
-     */
-    private Long memberId;
-
-    /**
-     * 物流公司id
-     */
-    private Long logisticsId;
-
-    /**
-     * 订单编号
-     */
-    private String orderNo;
-
-    /**
      * 订单状态 1-待支付;2-待发货;3-待收货;5-已完成,6-已取消
      */
     private Integer status;
+
+    /**
+     * 订单支付状态 1-待支付;2-支付中;3-支付成功;4-支付失败
+     */
+    private Integer payStatus;
 
     /**
      * 订单来源 1-PC;2-APP;3-小程序
@@ -62,9 +48,19 @@ public class OrderDO implements Serializable {
     private Integer payType;
 
     /**
+     * 取消方式 1-手动取消;2-自动取消
+     */
+    private Integer cancelType;
+
+    /**
      * 会员手机号
      */
     private String memberPhone;
+
+    /**
+     * sku总数量
+     */
+    private Integer skuCount;
 
     /**
      * 商品总数量
@@ -72,19 +68,14 @@ public class OrderDO implements Serializable {
     private Integer productCount;
 
     /**
-     * 订单总金额 下单商品的金额,不含运费
+     * 商品总金额
      */
-    private BigDecimal totalAmount;
+    private BigDecimal totalSkuAmount;
 
     /**
-     * vip订单金额
+     * 订单总金额
      */
-    private BigDecimal vipTotalAmount;
-
-    /**
-     * vip节省金额
-     */
-    private BigDecimal vipSaveAmount;
+    private BigDecimal orderAmount;
 
     /**
      * 实际支付金额 订单总金额+运费金额-促销优惠金额-积分抵扣金额-优惠券抵扣金额
@@ -92,29 +83,19 @@ public class OrderDO implements Serializable {
     private BigDecimal payAmount;
 
     /**
+     * 订单实际金额(含退款)
+     */
+    private BigDecimal dealAmount;
+
+    /**
      * 运费金额
      */
     private BigDecimal freightAmount;
 
     /**
-     * 促销优惠金额 促销价、满减、阶梯价等 1期暂时不做
-     */
-    private BigDecimal promotionAmount;
-
-    /**
-     * 积分抵扣金额 1期暂时不做
-     */
-    private BigDecimal integrationAmount;
-
-    /**
      * 优惠券抵扣金额
      */
     private BigDecimal couponAmount;
-
-    /**
-     * 抵扣积分 1期暂时不做
-     */
-    private BigDecimal integration;
 
     /**
      * 订单备注
@@ -130,11 +111,6 @@ public class OrderDO implements Serializable {
      * 收货人电话
      */
     private String receiverPhone;
-
-    /**
-     * 收货人邮编
-     */
-    private String receiverPostCode;
 
     /**
      * 收货人省份/直辖市
@@ -157,7 +133,7 @@ public class OrderDO implements Serializable {
     private String receiverDetailAddress;
 
     /**
-     * 物流单号
+     * 物流单号 多个用逗号隔开
      */
     private String logisticsNo;
 
@@ -192,34 +168,44 @@ public class OrderDO implements Serializable {
     private String deliveryDetailAddress;
 
     /**
-     * 发票类型 0-不开发票；1-电子发票；2-纸质发票
+     * 发票类型 0-不开发票；1-电子发票；2-纸质发票 默认电子发票
      */
-    private Integer billType;
+    private Integer invoiceType;
 
     /**
-     * 发票抬头
+     * 发票抬头 1-个人;2-单位
      */
-    private String billHeader;
+    private Integer invoiceHeader;
 
     /**
-     * 发票内容
+     * 个人名称
      */
-    private String billContent;
+    private String personalName;
 
     /**
-     * 收票人姓名
+     * 发票内容 1-商品类别;2-商品明细
      */
-    private String billReceiverName;
+    private Integer invoiceContent;
+
+    /**
+     * 单位名称
+     */
+    private String companyName;
+
+    /**
+     * 纳税人识别号
+     */
+    private String customerTaxNumber;
 
     /**
      * 收票人电话
      */
-    private String billReceiverPhone;
+    private String invoiceReceiverPhone;
 
     /**
      * 收票人邮箱
      */
-    private String billReceiverEmail;
+    private String invoiceReceiverEmail;
 
     /**
      * 支付时间
@@ -245,6 +231,11 @@ public class OrderDO implements Serializable {
      * 删除订单时间
      */
     private Date deleteTime;
+
+    /**
+     * 开票时间
+     */
+    private Date invoiceTime;
 
     /**
      * 创建人
@@ -276,6 +267,5 @@ public class OrderDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

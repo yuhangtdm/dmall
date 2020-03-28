@@ -43,11 +43,6 @@ public class SkuDO implements Serializable {
     private Long brandId;
 
     /**
-     * sku编码
-     */
-    private String skuNo;
-
-    /**
      * sku名称
      */
     private String name;
@@ -61,11 +56,6 @@ public class SkuDO implements Serializable {
      * sku描述
      */
     private String description;
-
-    /**
-     * 商品详情
-     */
-    private String remark;
 
     /**
      * sku主图
@@ -177,6 +167,5 @@ public class SkuDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

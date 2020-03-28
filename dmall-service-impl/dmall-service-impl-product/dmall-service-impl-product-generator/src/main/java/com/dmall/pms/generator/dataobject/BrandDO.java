@@ -82,5 +82,4 @@ public class BrandDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

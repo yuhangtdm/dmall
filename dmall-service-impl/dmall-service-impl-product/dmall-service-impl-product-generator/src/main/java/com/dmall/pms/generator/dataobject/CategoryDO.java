@@ -112,5 +112,4 @@ public class CategoryDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

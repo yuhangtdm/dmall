@@ -36,4 +36,10 @@ public class ToTradeResponseDTO implements Serializable {
     @ApiModelProperty(value = "运费", position = 6)
     private BigDecimal freightMoney;
 
+    @ApiModelProperty(value = "总价", position = 6)
+    private BigDecimal totalMoney;
+
+    @ApiModelProperty(value = "防止重复下单的key", position = 6)
+    private String orderKey;
+
 }

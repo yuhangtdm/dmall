@@ -3,21 +3,21 @@ package com.dmall.pms.service.impl.support;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.enums.YNEnum;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.NoUtil;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.SkuSpecificationsRequestDTO;
 import com.dmall.pms.api.dto.product.response.get.SkuListResponseDTO;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
+import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.CategorySkuMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.generator.mapper.SkuAttributeValueMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -73,9 +73,9 @@ public class SkuSupport {
         for (int i = 0; i < skuList.size(); i++) {
             AddSkuRequestDTO addSkuRequestDTO = skuList.get(i);
             SkuDO skuDO = new SkuDO();
+            skuDO.setId(IdGeneratorUtil.snowflakeId());
             skuDO.setProductId(productId);
             skuDO.setBrandId(brandId);
-            skuDO.setSkuNo(NoUtil.generateSkuNo());
             skuDO.setPrice(addSkuRequestDTO.getPrice());
             skuDO.setStock(addSkuRequestDTO.getStock());
             skuDO.setAuditStatus(SkuAuditStatusEnum.NOT_AUDIT.getCode());
@@ -116,7 +116,6 @@ public class SkuSupport {
                 .map(skuDO -> {
                     SkuListResponseDTO skuListResponseDTO = new SkuListResponseDTO();
                     skuListResponseDTO.setSkuId(skuDO.getId());
-                    skuListResponseDTO.setSkuNo(skuDO.getSkuNo());
                     skuListResponseDTO.setPrice(skuDO.getPrice());
                     skuListResponseDTO.setStock(skuDO.getStock());
                     SkuExtDO skuExtDO = skuExtSupport.getBySkuId(skuDO.getId());

@@ -1,18 +1,18 @@
 package com.dmall.pms.service.impl.sku.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.enums.YNEnum;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.NoUtil;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
+import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +58,7 @@ public class SaveOrUpdateSkuHandler extends AbstractCommonHandler<SaveSkuRequest
     public BaseResult<Long> processor(SaveSkuRequestDTO requestDTO) {
         SkuDO skuDO = dtoConvertDo(requestDTO, SkuDO.class);
         if (requestDTO.getId() == null) {
-            skuDO.setSkuNo(NoUtil.generateSkuNo());
+            skuDO.setId(IdGeneratorUtil.snowflakeId());
             skuDO.setAuditStatus(SkuAuditStatusEnum.NOT_AUDIT.getCode());
             skuDO.setPublishStatus(YNEnum.N.getCode());
             skuMapper.insert(skuDO);

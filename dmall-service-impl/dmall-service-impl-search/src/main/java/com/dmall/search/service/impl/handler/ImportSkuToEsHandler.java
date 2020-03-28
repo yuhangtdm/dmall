@@ -72,7 +72,6 @@ public class ImportSkuToEsHandler {
             SkuEsDTO skuEsDTO = new SkuEsDTO();
             skuEsDTO.setSkuId(skuDO.getId());
             skuEsDTO.setSkuName(skuDO.getName());
-            skuEsDTO.setSkuNo(skuDO.getSkuNo());
             skuEsDTO.setSkuPrice(skuDO.getPrice());
             skuEsDTO.setSkuSubName(skuDO.getSubName());
             skuEsDTO.setSkuDescription(skuDO.getDescription());
@@ -84,7 +83,6 @@ public class ImportSkuToEsHandler {
             skuEsDTO.setSkuSaleCount(1999L);
             skuEsDTO.setSkuOnPublishTime(DateUtil.format(skuDO.getOnPublishTime(), DatePattern.NORM_DATE_PATTERN));
             skuEsDTO.setProductId(skuDO.getProductId());
-            skuEsDTO.setProductNo(productDO.getProductNo());
             skuEsDTO.setProductName(productDO.getName());
             skuEsDTO.setCategoryIds(categoryIds);
 

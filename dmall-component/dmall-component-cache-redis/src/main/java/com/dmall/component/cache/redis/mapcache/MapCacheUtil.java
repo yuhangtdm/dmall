@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MapCacheUtil {
 
-    private RedisTemplate<String,Object> dmallRedisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
 
     private DMallRedisProperties dMallRedisProperties;
 
@@ -42,17 +42,17 @@ public class MapCacheUtil {
      * 设置缓存并设置过期时间
      */
     public void put(String key, String hashKey, Object result, long timeout, TimeUnit timeUnit) {
-        dmallRedisTemplate.opsForHash().put(key, hashKey, result);
+        redisTemplate.opsForHash().put(key, hashKey, result);
         // 0 表示永久存储
         if (timeout == 0L) {
             return;
         }
         if (timeout > 0L) {
             // 大于0 则使用传递的
-            dmallRedisTemplate.expire(key, timeout, timeUnit);
+            redisTemplate.expire(key, timeout, timeUnit);
         } else {
             // 小于0 则使用默认的
-            dmallRedisTemplate.expire(key, dMallRedisProperties.getTtl(), dMallRedisProperties.getTtlUnitEnum());
+            redisTemplate.expire(key, dMallRedisProperties.getTtl(), dMallRedisProperties.getTtlUnitEnum());
         }
     }
 
@@ -60,21 +60,31 @@ public class MapCacheUtil {
      * 删除缓存
      */
     public void delete(String key, String... hashKey) {
-        dmallRedisTemplate.opsForHash().delete(key, hashKey);
+        redisTemplate.opsForHash().delete(key, hashKey);
     }
 
     /**
      * 获取key
      */
-    public String getkey(String cacheName, Class<?> cacheService) {
-        return getkey(cacheName, cacheService.getName());
+    public String getKey(String cacheName, Class<?> cacheService) {
+        return getKey(cacheName, cacheService.getName());
     }
 
-    public String getkey(String cacheName, String className) {
+  /*  public String getkey(String cacheName, String className) {
         return new StringBuilder(dMallRedisProperties.getCacheKeyPrefix())
                 .append(StrUtil.UNDERLINE)
                 .append(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "local")
                 .append(StrUtil.UNDERLINE)
+                .append(cacheName)
+                .append(StrUtil.COLON)
+                .append(className)
+                .toString();
+    }*/
+
+
+    // example: dmall-service-impl-product:local:mapCache:product_com.xxx
+    public String getKey(String cacheName, String className) {
+        return new StringBuilder("mapCache:")
                 .append(cacheName)
                 .append(StrUtil.COLON)
                 .append(className)

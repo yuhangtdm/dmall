@@ -75,4 +75,10 @@ public class BasicSkuResponseDTO {
 
     @ApiModelProperty(value = "sku规格", position = 19)
     private String skuSpecificationsJson;
+
+    @ApiModelProperty(value = "锁定库存", position = 20)
+    private Integer lockStock;
+
+    @ApiModelProperty(value = "重量", position = 20)
+    private String weight;
 }

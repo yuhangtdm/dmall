@@ -64,7 +64,7 @@ public class MapCacheAspect {
             MapCacheable mapCacheable = validate(joinPoint);
             MapListCache mapListCache = methodSignature.getMethod().getAnnotation(MapListCache.class);
             String key = StrUtil.isNotBlank(mapListCache.key()) ? mapListCache.key()
-                    : mapCacheUtil.getkey(mapCacheable.cacheNames(), className);
+                    : mapCacheUtil.getKey(mapCacheable.cacheNames(), className);
             List values = dmallRedisTemplate.opsForHash().values(key);
             if (CollUtil.isNotEmpty(values)) {
                 log.info("cache hit,key:{}", key);
@@ -101,7 +101,7 @@ public class MapCacheAspect {
             MapGetCache mapGetCache = methodSignature.getMethod().getAnnotation(MapGetCache.class);
             String className = joinPoint.getTarget().getClass().getName();
             String key = StrUtil.isNotBlank(mapGetCache.key()) ? mapGetCache.key()
-                    : mapCacheUtil.getkey(mapCacheable.cacheNames(), className);
+                    : mapCacheUtil.getKey(mapCacheable.cacheNames(), className);
             Object cacheResult = dmallRedisTemplate.opsForHash().get(key, String.valueOf(args[0]));
             if (cacheResult != null) {
                 log.info("cache hit,key:{},hashKey:{}", key, args[0]);
@@ -131,7 +131,7 @@ public class MapCacheAspect {
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             MapCacheable mapCacheable = validate(joinPoint);
             MapPostCache mapPostCache = methodSignature.getMethod().getAnnotation(MapPostCache.class);
-            String key = StrUtil.isBlank(mapPostCache.key()) ? mapCacheUtil.getkey(mapCacheable.cacheNames(),
+            String key = StrUtil.isBlank(mapPostCache.key()) ? mapCacheUtil.getKey(mapCacheable.cacheNames(),
                     joinPoint.getTarget().getClass().getName()) : mapPostCache.key();
             Object result = joinPoint.proceed(args);
             Object fieldValue = ReflectUtil.getFieldValue(args[0], Constants.ID);
@@ -155,7 +155,7 @@ public class MapCacheAspect {
             MapPutCache mapPutCache = methodSignature.getMethod().getAnnotation(MapPutCache.class);
             MapCacheable mapCacheable = validate(joinPoint);
             String className = joinPoint.getTarget().getClass().getName();
-            String key = StrUtil.isBlank(mapPutCache.key()) ? mapCacheUtil.getkey(mapCacheable.cacheNames(), className)
+            String key = StrUtil.isBlank(mapPutCache.key()) ? mapCacheUtil.getKey(mapCacheable.cacheNames(), className)
                     : mapPutCache.key();
             Object result = joinPoint.proceed(args);
             Object fieldValue = ReflectUtil.getFieldValue(args[0], Constants.ID);
@@ -179,7 +179,7 @@ public class MapCacheAspect {
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             MapDeleteCache mapDeleteCache = methodSignature.getMethod().getAnnotation(MapDeleteCache.class);
             String key = StrUtil.isBlank(mapDeleteCache.key())
-                    ? mapCacheUtil.getkey(mapCacheable.cacheNames(), joinPoint.getTarget().getClass().getName())
+                    ? mapCacheUtil.getKey(mapCacheable.cacheNames(), joinPoint.getTarget().getClass().getName())
                     : mapDeleteCache.key();
             Object result = joinPoint.proceed(args);
             dmallRedisTemplate.opsForHash().delete(key, String.valueOf(args[0]));

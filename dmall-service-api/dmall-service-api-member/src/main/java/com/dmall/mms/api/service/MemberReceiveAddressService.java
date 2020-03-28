@@ -48,4 +48,5 @@ public interface MemberReceiveAddressService {
     @ApiImplicitParam(name = "id", value = "会员收货地址id", required = true, dataType = "int", paramType = "path")
     BaseResult<GetReceiveAddressResponseDTO> get(@PathVariable("id") Long id);
 
+
 }

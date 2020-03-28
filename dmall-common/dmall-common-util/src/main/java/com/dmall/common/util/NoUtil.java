@@ -8,24 +8,22 @@ import cn.hutool.core.util.RandomUtil;
  * @description: 编号生成工具类
  * @author: created by hang.yu on 2019/12/14 10:00
  */
+@Deprecated
 public class NoUtil {
 
-    private static final String PRODUCT_NO_PREFIX = "P";
-
-    private static final String SKU_NO_PREFIX = "K";
 
     /**
-     * 生成商品编号 P+时间戳+四位随机数
+     * 生成商品编号时间戳+四位随机数
      */
-    public static String generateProductNo() {
-        return PRODUCT_NO_PREFIX + getTime() + RandomUtil.randomNumbers(4);
+    public static String generateProductId() {
+        return getTime() + RandomUtil.randomNumbers(4);
     }
 
     /**
-     * 生成sku编号 S+时间戳+四位随机数
+     * 生成sku编号 时间戳+四位随机数
      */
-    public static String generateSkuNo() {
-        return SKU_NO_PREFIX + getTime() + RandomUtil.randomNumbers(4);
+    public static Long generateSkuId() {
+        return Long.valueOf(getTime() + RandomUtil.randomNumbers(4));
     }
 
     private static String getTime() {

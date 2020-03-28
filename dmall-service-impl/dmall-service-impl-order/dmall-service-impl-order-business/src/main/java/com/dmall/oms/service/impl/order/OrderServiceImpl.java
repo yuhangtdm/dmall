@@ -1,6 +1,7 @@
 package com.dmall.oms.service.impl.order;
 
 import com.dmall.common.dto.BaseResult;
+import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import com.dmall.oms.api.service.OrderService;
@@ -21,5 +22,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
         return toTradeHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<String> createOrder(@RequestBody CreateOrderRequestDTO requestDTO) {
+        return null;
     }
 }

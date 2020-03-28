@@ -77,5 +77,4 @@ public class CategorySkuDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

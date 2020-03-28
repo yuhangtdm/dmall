@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmall.oms.generator.mapper.OrderOperateLogMapper">
+<mapper namespace="com.dmall.oms.generator.mapper.OrderStatusMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dmall.oms.generator.dataobject.OrderOperateLogDO">
+    <resultMap id="BaseResultMap" type="com.dmall.oms.generator.dataobject.OrderStatusDO">
         <id column="id" property="id" />
         <result column="order_id" property="orderId" />
         <result column="order_status" property="orderStatus" />

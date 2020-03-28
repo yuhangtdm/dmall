@@ -38,4 +38,9 @@ public interface MemberInvoiceService {
     @ApiImplicitParam(name = "id", value = "会员发票id", required = true, dataType = "int", paramType = "path")
     BaseResult<GetMemberInvoiceResponseDTO> get(@PathVariable("id") Long id);
 
+    @GetMapping("/{memberId}")
+    @ApiOperation(value = "根据会员id查询会员发票")
+    @ApiImplicitParam(name = "memberId", value = "会员收货地址id", required = true, dataType = "int", paramType = "path")
+    BaseResult<GetMemberInvoiceResponseDTO> getByMemberId(@PathVariable("memberId") Long memberId);
+
 }

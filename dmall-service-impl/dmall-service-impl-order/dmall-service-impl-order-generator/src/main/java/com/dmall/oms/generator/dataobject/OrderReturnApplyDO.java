@@ -1,17 +1,16 @@
 package com.dmall.oms.generator.dataobject;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @description: 退换货申请表
@@ -29,11 +28,6 @@ public class OrderReturnApplyDO implements Serializable {
      * id
      */
     private Long id;
-
-    /**
-     * 会员id
-     */
-    private Long memberId;
 
     /**
      * 订单id
@@ -60,30 +54,6 @@ public class OrderReturnApplyDO implements Serializable {
      */
     private Long reasonId;
 
-    /**
-     * 服务单号 申请生成
-     */
-    private String applyNo;
-
-    /**
-     * 订单编号
-     */
-    private String orderNo;
-
-    /**
-     * 订单项编号
-     */
-    private String orderItemNo;
-
-    /**
-     * 商品编号
-     */
-    private String productNo;
-
-    /**
-     * sku编号
-     */
-    private String skuNo;
 
     /**
      * 类型 1-仅退款;2-退货;3-换货
@@ -103,7 +73,7 @@ public class OrderReturnApplyDO implements Serializable {
     /**
      * 申请数量
      */
-    private Integer quantity;
+    private Integer number;
 
     /**
      * sku单价
@@ -134,11 +104,6 @@ public class OrderReturnApplyDO implements Serializable {
      * 申请凭证 上传凭证照片,多张以逗号隔开
      */
     private String applyCredentials;
-
-    /**
-     * 购买商品所用的积分
-     */
-    private Integer integration;
 
     /**
      * 处理备注
@@ -178,7 +143,7 @@ public class OrderReturnApplyDO implements Serializable {
     /**
      * 物流单号
      */
-    private String untitled3;
+    private String logisticsNo;
 
     /**
      * 创建人
