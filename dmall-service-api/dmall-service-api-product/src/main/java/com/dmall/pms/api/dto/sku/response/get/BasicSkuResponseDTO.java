@@ -46,7 +46,13 @@ public class BasicSkuResponseDTO {
     @ApiModelProperty(value = "市场价格", position = 9)
     private BigDecimal marketPrice;
 
-    @ApiModelProperty(value = "库存", position = 10)
+    @ApiModelProperty(value = "当前可售库存", position = 10)
+    private Integer salableStock;
+
+    @ApiModelProperty(value = "锁定库存", position = 10)
+    private Integer lockStock;
+
+    @ApiModelProperty(value = "实际库存", position = 10)
     private Integer stock;
 
     @ApiModelProperty(value = "预警库存", position = 11)
@@ -75,9 +81,6 @@ public class BasicSkuResponseDTO {
 
     @ApiModelProperty(value = "sku规格", position = 19)
     private String skuSpecificationsJson;
-
-    @ApiModelProperty(value = "锁定库存", position = 20)
-    private Integer lockStock;
 
     @ApiModelProperty(value = "重量", position = 20)
     private String weight;

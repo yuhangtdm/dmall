@@ -52,7 +52,13 @@ public class PageSkuResponseDTO {
     @ApiModelProperty(value = "市场价格", position = 11)
     private BigDecimal marketPrice;
 
-    @ApiModelProperty(value = "库存", position = 12)
+    @ApiModelProperty(value = "当前可售库存", position = 12)
+    private Integer salableStock;
+
+    @ApiModelProperty(value = "锁定库存", position = 12)
+    private Integer lockStock;
+
+    @ApiModelProperty(value = "实际库存", position = 12)
     private Integer stock;
 
     @ApiModelProperty(value = "预警库存", position = 13)

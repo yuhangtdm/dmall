@@ -3,6 +3,7 @@ package com.dmall.pms.api.service;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
+import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
 import com.dmall.pms.api.dto.sku.request.LockStockRequestDTO;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
@@ -79,10 +80,14 @@ public interface SkuService {
 
     @GetMapping("getBasic")
     @ApiOperation(value = "根据id查询sku基本信息")
-    @ApiImplicitParam(name = "ids", value = "skuId", required = true, dataType = "int", paramType = "path")
+    @ApiImplicitParam(name = "ids", value = "ids", required = true, dataType = "int", paramType = "path")
     BaseResult<List<BasicSkuResponseDTO>> getBasic(List<Long> ids);
+
+    @PostMapping("createOrderCheck")
+    @ApiOperation(value = "提交订单校验")
+    BaseResult<List<BasicSkuResponseDTO>> createOrderCheck(@RequestBody @Valid CheckCreateOrderRequestDTO requestDTO);
 
     @GetMapping("lockStock")
     @ApiOperation(value = "锁定库存")
-    BaseResult<Void> lockStock(@RequestBody List<LockStockRequestDTO> requestDTO);
+    BaseResult<Void> lockStock(@RequestBody @Valid LockStockRequestDTO requestDTO);
 }

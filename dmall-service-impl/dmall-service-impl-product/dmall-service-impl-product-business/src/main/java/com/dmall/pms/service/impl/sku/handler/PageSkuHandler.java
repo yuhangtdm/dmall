@@ -1,5 +1,6 @@
 package com.dmall.pms.service.impl.sku.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.enums.YNEnum;
@@ -12,7 +13,9 @@ import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageMapper;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageVO;
+import com.dmall.pms.service.impl.support.SkuStockSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,6 +30,10 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
 
     @Autowired
     private SkuPageMapper skuPageMapper;
+
+    @Autowired
+    private SkuStockSupport skuStockSupport;
+
 
     @Override
     public BaseResult<ResponsePage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
@@ -43,5 +50,7 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
         result.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getPreviewStatus()));
         result.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, doo.getAuditStatus()));
         result.setPublishStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getPublishStatus()));
+        result.setSalableStock(skuStockSupport.getSaleableStock(doo.getId()));
+        result.setLowStock(result.getStock() - result.getSalableStock());
     }
 }

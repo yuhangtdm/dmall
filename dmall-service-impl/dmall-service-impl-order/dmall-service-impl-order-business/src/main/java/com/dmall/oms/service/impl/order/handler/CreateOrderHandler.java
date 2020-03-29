@@ -2,9 +2,11 @@ package com.dmall.oms.service.impl.order.handler;
 
 import cn.hutool.core.util.NumberUtil;
 import com.dmall.cart.api.dto.delete.DeleteCartRequestDTO;
+import com.dmall.cart.api.dto.list.CartListResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.enums.RocketMQDelayLevelEnum;
+import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.IdGeneratorUtil;
@@ -14,7 +16,6 @@ import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderAddressRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderInvoiceRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderSkuRequestDTO;
-import com.dmall.oms.api.enums.CreateOrderErrorEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.feign.CartFeign;
 import com.dmall.oms.feign.SkuFeign;
@@ -24,7 +25,10 @@ import com.dmall.oms.generator.dataobject.OrderStatusDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.OrderStatusMapper;
-import com.dmall.oms.service.impl.order.FreightMoneyUtil;
+import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
+import com.dmall.pms.api.dto.sku.request.CheckOrderSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.LockSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.LockStockRequestDTO;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +37,6 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -70,62 +73,64 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     private static final String CANCEL_ORDER_TOPIC = "cancelOrder";
 
     @Override
-    public BaseResult<String> processor(CreateOrderRequestDTO requestDTO) {
+    public BaseResult<Long> processor(CreateOrderRequestDTO requestDTO) {
         List<Long> skuIds = requestDTO.getOrderSku().stream().map(OrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, OrderSkuRequestDTO> skuMap = requestDTO.getOrderSku().stream()
                 .collect(Collectors.toMap(OrderSkuRequestDTO::getSkuId, orderSkuRequestDTO -> orderSkuRequestDTO));
 
-        // step1. 调用sku接口获取sku信息
-        BaseResult<List<BasicSkuResponseDTO>> skuResponse = skuFeign.getBasic(skuIds);
+        // step1. 调用sku校验接口
+        BaseResult<List<BasicSkuResponseDTO>> skuResponse = skuFeign.createOrderCheck(buildCheckOrderRequest(requestDTO));
         if (!skuResponse.getResult()) {
-            return ResultUtil.fail(BasicStatusEnum.FAIL);
+            return ResultUtil.fail(skuResponse.getCode(), skuResponse.getMsg());
         }
 
-        List<BasicSkuResponseDTO> skuData = skuResponse.getData();
-
-        //  step2. 验证价格
-        BigDecimal skuTotalPrice = BigDecimal.ZERO;
-        for (BasicSkuResponseDTO sku : skuData) {
-            if (!NumberUtil.equals(skuMap.get(sku.getId()).getSkuPrice(), sku.getPrice())) {
-                return ResultUtil.fail(CreateOrderErrorEnum.SKU_PRICE_CHANGE);
-            }
-            skuTotalPrice = skuTotalPrice.add(sku.getPrice());
-        }
-        if (!NumberUtil.equals(skuTotalPrice, requestDTO.getTotalSkuMoney())) {
-            return ResultUtil.fail(CreateOrderErrorEnum.SKU_TOTAL_MONEY_CHANGE);
-        }
-        BigDecimal freightMoney = FreightMoneyUtil.getFreightMoney(skuTotalPrice);
-        if (!NumberUtil.equals(freightMoney, requestDTO.getFreightMoney())) {
-            return ResultUtil.fail(CreateOrderErrorEnum.FREIGHT_CHANGE);
-        }
-        if (!NumberUtil.equals(NumberUtil.add(skuTotalPrice, freightMoney), requestDTO.getOrderMoney())) {
-            return ResultUtil.fail(CreateOrderErrorEnum.ORDER_MONEY_CHANGE);
-        }
-
-        // step3. 验证库存
-        for (BasicSkuResponseDTO sku : skuData) {
-            int availableStock = sku.getStock() - sku.getLockStock();
-            if (skuMap.get(sku.getId()).getCount() > availableStock) {
-                return ResultUtil.fail(CreateOrderErrorEnum.INSUFFICIENT_INVENTORY);
-            }
-        }
-
-        // 获取登录的会员信息
+        // step2. 获取登录的会员信息
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
 
-        // step4. 写入订单表
+        // step3. 写入订单表
+        OrderDO orderDO = insertOrderDO(requestDTO, loginMember);
+
+        // step4. 写入订单详情表
+        insertOrderItem(skuMap, skuResponse, orderDO);
+
+        // step5. 写入订单状态记录表
+        insertOrderStatus(orderDO);
+
+        // step6. 调用删除商品购物车的接口
+        BaseResult<CartListResponseDTO> deleteCart = cartFeign.delete(new DeleteCartRequestDTO().setSkuIds(skuIds));
+        if (!deleteCart.getResult()) {
+            throw new BusinessException(BasicStatusEnum.FAIL);
+        }
+
+        // step7.调用锁定库存接口
+        BaseResult<Void> lockStock = skuFeign.lockStock(buildLockStockRequest(requestDTO));
+        if (!lockStock.getResult()) {
+            throw new BusinessException(BasicStatusEnum.FAIL);
+        }
+
+        // step8. 发送延迟消息到mq 一小时后取消未支付的订单
+        //todo  发送消息待优化
+        sendDelayMq(orderDO);
+
+        return ResultUtil.success(orderDO.getId());
+    }
+
+    /**
+     * 插入主订单表
+     */
+    private OrderDO insertOrderDO(CreateOrderRequestDTO requestDTO, PortalMemberDTO loginMember) {
         OrderDO orderDO = new OrderDO();
         orderDO.setId(IdGeneratorUtil.snowflakeId());
         orderDO.setStatus(OrderStatusEnum.WAIT_PAY.getCode());
         orderDO.setSource(requestDTO.getSource());
         orderDO.setMemberPhone(loginMember.getPhone());
-        int totalNumber = requestDTO.getOrderSku().stream().mapToInt(OrderSkuRequestDTO::getCount).sum();
+        int totalNumber = requestDTO.getOrderSku().stream().mapToInt(OrderSkuRequestDTO::getNumber).sum();
         orderDO.setSkuCount(totalNumber);
-        orderDO.setTotalSkuAmount(skuTotalPrice);
+        orderDO.setTotalSkuAmount(requestDTO.getTotalSkuMoney());
         orderDO.setOrderAmount(requestDTO.getOrderMoney());
         // 一期不做优惠相关 实际支付金额 = 订单总金额
         orderDO.setPayAmount(requestDTO.getOrderMoney());
-        orderDO.setFreightAmount(freightMoney);
+        orderDO.setFreightAmount(requestDTO.getFreightMoney());
         orderDO.setRemark(requestDTO.getRemark());
         OrderAddressRequestDTO address = requestDTO.getOrderAddressRequestDTO();
         orderDO.setReceiverName(address.getName());
@@ -144,9 +149,14 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         orderDO.setInvoiceReceiverPhone(invoice.getReceiverPhone());
         orderDO.setInvoiceReceiverEmail(invoice.getReceiverEmail());
         orderMapper.insert(orderDO);
+        return orderDO;
+    }
 
-        // step5. 写入订单详情表
-        for (BasicSkuResponseDTO sku : skuData) {
+    /**
+     * 插入订单项表
+     */
+    private void insertOrderItem(Map<Long, OrderSkuRequestDTO> skuMap, BaseResult<List<BasicSkuResponseDTO>> skuResponse, OrderDO orderDO) {
+        for (BasicSkuResponseDTO sku : skuResponse.getData()) {
             OrderItemDO orderItemDO = new OrderItemDO();
             orderItemDO.setOrderId(orderDO.getId());
             orderItemDO.setMerchantsId("");
@@ -155,25 +165,28 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
             orderItemDO.setSkuName(sku.getName());
             orderItemDO.setSkuPic(sku.getPic());
             orderItemDO.setSkuPrice(sku.getPrice());
-            orderItemDO.setSkuNumber(skuMap.get(sku.getId()).getCount());
+            orderItemDO.setSkuNumber(skuMap.get(sku.getId()).getNumber());
             orderItemDO.setSkuAmount(NumberUtil.mul(sku.getPrice(), orderItemDO.getSkuNumber()));
             orderItemDO.setSkuSpecifications(sku.getSkuSpecificationsJson());
             orderItemDO.setRealAmount(orderItemDO.getSkuAmount());
             orderItemMapper.insert(orderItemDO);
         }
+    }
 
-        // step6. 写入订单状态记录表
+    /**
+     * 插入订单状态表
+     */
+    private void insertOrderStatus(OrderDO orderDO) {
         OrderStatusDO orderStatusDO = new OrderStatusDO();
         orderStatusDO.setOrderId(orderDO.getId());
         orderStatusDO.setOrderStatus(OrderStatusEnum.WAIT_PAY.getCode());
         orderStatusMapper.insert(orderStatusDO);
+    }
 
-        // step7. 调用删除商品购物车的接口
-        DeleteCartRequestDTO deleteCartRequestDTO = new DeleteCartRequestDTO();
-        deleteCartRequestDTO.setSkuIds(skuIds);
-        cartFeign.delete(deleteCartRequestDTO);
-
-        // step8. 发送延迟消息到mq 一小时后取消未支付的订单
+    /**
+     * 发送延迟消息到mq 一小时后取消未支付的订单
+     */
+    private void sendDelayMq(OrderDO orderDO) {
         rocketMQTemplate.sendAndReceive(CANCEL_ORDER_TOPIC, orderDO.getId(),
                 new RocketMQLocalRequestCallback() {
                     @Override
@@ -185,12 +198,44 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
                     @Override
                     public void onException(Throwable e) {
                         log.error("send mq error", e);
-                        throw e;
+                        throw new BusinessException(BasicStatusEnum.FAIL);
                     }
                 }, 1000, RocketMQDelayLevelEnum.SEVENTEEN.getCode());
+    }
 
-        // 调用锁定库存接口
+    /**
+     * 构建校验订单请求实体
+     */
+    private CheckCreateOrderRequestDTO buildCheckOrderRequest(CreateOrderRequestDTO requestDTO) {
+        CheckCreateOrderRequestDTO checkCreateOrderRequestDTO = new CheckCreateOrderRequestDTO();
+        List<CheckOrderSkuRequestDTO> checkOrderList = requestDTO.getOrderSku().stream()
+                .map(orderSkuRequestDTO -> {
+                    CheckOrderSkuRequestDTO checkOrderSkuRequestDTO = new CheckOrderSkuRequestDTO();
+                    checkOrderSkuRequestDTO.setSkuId(orderSkuRequestDTO.getSkuId());
+                    checkOrderSkuRequestDTO.setCount(orderSkuRequestDTO.getNumber());
+                    checkOrderSkuRequestDTO.setSkuPrice(orderSkuRequestDTO.getSkuPrice());
+                    return checkOrderSkuRequestDTO;
+                }).collect(Collectors.toList());
+        checkCreateOrderRequestDTO.setOrderSku(checkOrderList);
+        checkCreateOrderRequestDTO.setTotalSkuMoney(requestDTO.getTotalSkuMoney());
+        checkCreateOrderRequestDTO.setFreightMoney(requestDTO.getFreightMoney());
+        checkCreateOrderRequestDTO.setOrderMoney(requestDTO.getOrderMoney());
+        return checkCreateOrderRequestDTO;
+    }
 
-        return null;
+    /**
+     * 生成锁定库存请求参数
+     */
+    private LockStockRequestDTO buildLockStockRequest(CreateOrderRequestDTO requestDTO) {
+        LockStockRequestDTO lockStockRequestDTO = new LockStockRequestDTO();
+        List<LockSkuRequestDTO> lockSkuList = requestDTO.getOrderSku().stream().map(orderSkuRequestDTO -> {
+            LockSkuRequestDTO lockSkuRequestDTO = new LockSkuRequestDTO();
+            lockSkuRequestDTO.setSkuId(orderSkuRequestDTO.getSkuId());
+            lockSkuRequestDTO.setNumber(orderSkuRequestDTO.getNumber());
+            return lockSkuRequestDTO;
+        }).collect(Collectors.toList());
+        lockStockRequestDTO.setSku(lockSkuList);
+
+        return lockStockRequestDTO;
     }
 }

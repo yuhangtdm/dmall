@@ -88,11 +88,6 @@ public class SkuDO implements Serializable {
     private Integer lowStock;
 
     /**
-     * 锁定库存
-     */
-    private Integer lockStock;
-
-    /**
      * 排序
      */
     private Integer sort;

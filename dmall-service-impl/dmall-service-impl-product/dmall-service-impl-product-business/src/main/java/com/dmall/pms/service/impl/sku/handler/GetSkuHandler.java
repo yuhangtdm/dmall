@@ -1,22 +1,21 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.dmall.common.util.EnumUtil;
-import com.dmall.common.enums.YNEnum;
-import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.common.util.BeanUtil;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.util.BeanUtil;
+import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
-import com.dmall.pms.generator.dataobject.ProductDO;
-import com.dmall.pms.generator.dataobject.SkuDO;
-import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.api.enums.SkuErrorEnum;
+import com.dmall.pms.generator.dataobject.SkuDO;
+import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuExtSupport;
 import com.dmall.pms.service.impl.support.SkuMediaSupport;
+import com.dmall.pms.service.impl.support.SkuStockSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +25,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResponseDTO> {
-
-    @Autowired
-    private ProductMapper productMapper;
 
     @Autowired
     private SkuMapper skuMapper;
@@ -41,6 +37,9 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
 
     @Autowired
     private SkuExtSupport skuExtSupport;
+
+    @Autowired
+    private SkuStockSupport skuStockSupport;
 
     @Override
     public BaseResult<GetSkuResponseDTO> processor(Long id) {
@@ -63,12 +62,13 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
 
     private BasicSkuResponseDTO getBasicSkuResponseDTO(SkuDO skuDO) {
         BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
-        ProductDO productDO = productMapper.selectById(skuDO.getProductId());
         basicSku.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
         basicSku.setNewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getNewStatus()));
         basicSku.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getRecommendStatus()));
         basicSku.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPreviewStatus()));
         basicSku.setPublishStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPublishStatus()));
+        basicSku.setSalableStock(skuStockSupport.getSaleableStock(skuDO.getId()));
+        basicSku.setLowStock(basicSku.getStock() - basicSku.getSalableStock());
         return basicSku;
     }
 

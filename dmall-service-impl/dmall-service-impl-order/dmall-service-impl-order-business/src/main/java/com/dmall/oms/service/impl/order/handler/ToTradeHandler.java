@@ -8,6 +8,7 @@ import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
+import com.dmall.common.util.FreightMoneyUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.common.util.threadpool.ThreadPoolUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -22,7 +23,6 @@ import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import com.dmall.oms.feign.MemberAddressFeign;
 import com.dmall.oms.feign.MemberInvoiceFeign;
 import com.dmall.oms.feign.SkuFeign;
-import com.dmall.oms.service.impl.order.FreightMoneyUtil;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -55,7 +55,6 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
 
 
     @Override
@@ -97,11 +96,7 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
                     skuResponseDTO.setNumber(skuCountMap.get(basicSku.getId()));
                     skuResponseDTO.setSkuPrice(basicSku.getPrice());
                     skuResponseDTO.setSkuTotalPrice(NumberUtil.mul(basicSku.getPrice(), skuResponseDTO.getNumber()));
-                    if ((basicSku.getStock() - basicSku.getLockStock()) > 0) {
-                        skuResponseDTO.setHasStock(true);
-                    } else {
-                        skuResponseDTO.setHasStock(false);
-                    }
+                    skuResponseDTO.setHasStock(basicSku.getSalableStock() > 0);
                     skuResponseDTO.setWeight(basicSku.getWeight());
                     return skuResponseDTO;
                 }).collect(Collectors.toList());
@@ -166,19 +161,19 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
             tradeResponseDTO.setSkuList(skuFuture.get());
             tradeResponseDTO.setAddressList(addressFuture.get());
             tradeResponseDTO.setInvoiceResponseDTO(invoiceFuture.get());
-            int totalNumber = tradeSku.stream().mapToInt(TradeSkuRequestDTO::getCount).sum();
-            tradeResponseDTO.setSkuTotalNumber(totalNumber);
+            // sku总数量
+            int totalSkuNumber = tradeSku.stream().mapToInt(TradeSkuRequestDTO::getCount).sum();
+            tradeResponseDTO.setSkuTotalNumber(totalSkuNumber);
+            // sku总价格
             BigDecimal totalSkuMoney = tradeResponseDTO.getSkuList().stream().map(SkuResponseDTO::getSkuTotalPrice)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             tradeResponseDTO.setSkuTotalMoney(totalSkuMoney);
             tradeResponseDTO.setFreightMoney(FreightMoneyUtil.getFreightMoney(totalSkuMoney));
             tradeResponseDTO.setTotalMoney(NumberUtil.add(tradeResponseDTO.getSkuTotalMoney(),
                     tradeResponseDTO.getFreightMoney()));
-
         } catch (Exception e) {
             return ResultUtil.fail(BasicStatusEnum.FAIL);
         }
-
         String token = IdUtil.simpleUUID();
         redisTemplate.opsForValue().set(StrUtil.format("memberId_{}", memberId), token);
         tradeResponseDTO.setOrderKey(token);
