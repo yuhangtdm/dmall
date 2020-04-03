@@ -25,6 +25,6 @@ public interface OrderService {
     BaseResult<ToTradeResponseDTO> toTrade(@RequestBody @Valid ToTradeRequestDTO requestDTO);
 
     @PostMapping("/createOrder")
-    @ApiOperation(value = "跳转结算页")
+    @ApiOperation(value = "创建订单")
     BaseResult<String> createOrder(@RequestBody @Valid CreateOrderRequestDTO requestDTO);
 }

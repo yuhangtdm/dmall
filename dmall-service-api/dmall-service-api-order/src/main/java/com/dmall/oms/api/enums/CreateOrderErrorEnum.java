@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description:
+ * @description: 创建订单枚举
  * @author: created by hang.yu on 2020/3/28 16:06
  */
 @Getter
@@ -21,6 +21,8 @@ public enum CreateOrderErrorEnum implements ErrorCodeEnum {
     ORDER_MONEY_CHANGE("1004","总价不允许修改,请重新下单"),
 
     INSUFFICIENT_INVENTORY("1005","很抱歉,库存不足"),
+
+    SUBMIT_REPEAT("1006","您的订单已提交"),
 
 
     ;

@@ -23,6 +23,7 @@ import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import com.dmall.oms.feign.MemberAddressFeign;
 import com.dmall.oms.feign.MemberInvoiceFeign;
 import com.dmall.oms.feign.SkuFeign;
+import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -59,19 +60,14 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
 
     @Override
     public BaseResult<ToTradeResponseDTO> processor(ToTradeRequestDTO requestDTO) {
-
         // 获取登录的会员信息
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
-
         // 异步调用sku信息
         Future<List<SkuResponseDTO>> skuFuture = pool.submit(() -> getSkuList(requestDTO));
-
         // 异步会员地址接口
         Future<List<AddressResponseDTO>> addressFuture = pool.submit(this::getMemberAddressFeign);
-
         // 异步会员发票接口
         Future<InvoiceResponseDTO> invoiceFuture = pool.submit(() -> getMemberInvoice(loginMember.getId()));
-
         return getTradeResponse(skuFuture, addressFuture, invoiceFuture, requestDTO.getTradeSku(), loginMember.getId());
     }
 
@@ -175,7 +171,7 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
             return ResultUtil.fail(BasicStatusEnum.FAIL);
         }
         String token = IdUtil.simpleUUID();
-        redisTemplate.opsForValue().set(StrUtil.format("memberId_{}", memberId), token);
+        redisTemplate.opsForValue().set(StrUtil.format(OrderConstants.ORDER_KEY, memberId), token);
         tradeResponseDTO.setOrderKey(token);
         return ResultUtil.success(tradeResponseDTO);
     }

@@ -42,6 +42,7 @@
         <activemq-pool.version>5.15.9</activemq-pool.version>
         <rocketmq-spring.version>2.1.0</rocketmq-spring.version>
         <xxl-job-core.version>2.1.2</xxl-job-core.version>
+        <alipay-sdk-java.version>4.9.79.ALL</alipay-sdk-java.version>
     </properties>
 
     <dependencies>
@@ -237,6 +238,11 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job-core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay-sdk-java.version}</version>
+            </dependency>
 
 
             <!--======================本项目模块======================-->
@@ -333,6 +339,11 @@
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-service-api-cart</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-api-pay</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

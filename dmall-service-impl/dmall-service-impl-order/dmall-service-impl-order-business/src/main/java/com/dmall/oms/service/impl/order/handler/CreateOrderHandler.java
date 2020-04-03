@@ -1,6 +1,7 @@
 package com.dmall.oms.service.impl.order.handler;
 
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dmall.cart.api.dto.delete.DeleteCartRequestDTO;
 import com.dmall.cart.api.dto.list.CartListResponseDTO;
 import com.dmall.common.dto.BaseResult;
@@ -11,11 +12,13 @@ import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.cache.redis.lock.DistributedLockService;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderAddressRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderInvoiceRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderSkuRequestDTO;
+import com.dmall.oms.api.enums.CreateOrderErrorEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.feign.CartFeign;
 import com.dmall.oms.feign.SkuFeign;
@@ -25,6 +28,7 @@ import com.dmall.oms.generator.dataobject.OrderStatusDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.OrderStatusMapper;
+import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
 import com.dmall.pms.api.dto.sku.request.CheckOrderSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.LockSkuRequestDTO;
@@ -35,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQLocalRequestCallback;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -67,51 +72,68 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private DistributedLockService distributedLockService;
+
     /**
      * 取消订单的topic
      */
     private static final String CANCEL_ORDER_TOPIC = "cancelOrder";
 
     @Override
+    public BaseResult validate(CreateOrderRequestDTO requestDTO) {
+
+        return ResultUtil.success();
+    }
+
+    @Override
     public BaseResult<Long> processor(CreateOrderRequestDTO requestDTO) {
+        // step1. 获取登录的会员信息
+        PortalMemberDTO loginMember = PortalMemberContextHolder.get();
+        String checkKey = StrUtil.format(OrderConstants.CHECK_ORDER_KEY, loginMember.getId());
+        // 校验3秒钟之内不能重复提交订单
+        if (!distributedLockService.getLock(checkKey, requestDTO.getOrderKey(), 3)){
+            return ResultUtil.fail(CreateOrderErrorEnum.SUBMIT_REPEAT);
+        }
+        // 校验订单提交成功之后不能重复下单
+        String key = StrUtil.format(OrderConstants.ORDER_KEY, loginMember.getId());
+        if (redisTemplate.opsForValue().get(key) == null){
+            return ResultUtil.fail(CreateOrderErrorEnum.SUBMIT_REPEAT);
+        }
         List<Long> skuIds = requestDTO.getOrderSku().stream().map(OrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, OrderSkuRequestDTO> skuMap = requestDTO.getOrderSku().stream()
                 .collect(Collectors.toMap(OrderSkuRequestDTO::getSkuId, orderSkuRequestDTO -> orderSkuRequestDTO));
-
-        // step1. 调用sku校验接口
+        // step2. 调用sku校验接口
         BaseResult<List<BasicSkuResponseDTO>> skuResponse = skuFeign.createOrderCheck(buildCheckOrderRequest(requestDTO));
         if (!skuResponse.getResult()) {
             return ResultUtil.fail(skuResponse.getCode(), skuResponse.getMsg());
         }
 
-        // step2. 获取登录的会员信息
-        PortalMemberDTO loginMember = PortalMemberContextHolder.get();
-
         // step3. 写入订单表
         OrderDO orderDO = insertOrderDO(requestDTO, loginMember);
-
         // step4. 写入订单详情表
         insertOrderItem(skuMap, skuResponse, orderDO);
-
         // step5. 写入订单状态记录表
         insertOrderStatus(orderDO);
-
         // step6. 调用删除商品购物车的接口
         BaseResult<CartListResponseDTO> deleteCart = cartFeign.delete(new DeleteCartRequestDTO().setSkuIds(skuIds));
         if (!deleteCart.getResult()) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
-
         // step7.调用锁定库存接口
         BaseResult<Void> lockStock = skuFeign.lockStock(buildLockStockRequest(requestDTO));
         if (!lockStock.getResult()) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
-
         // step8. 发送延迟消息到mq 一小时后取消未支付的订单
         //todo  发送消息待优化
         sendDelayMq(orderDO);
 
+        distributedLockService.releaseLock(checkKey, requestDTO.getOrderKey());
+        redisTemplate.delete(key);
         return ResultUtil.success(orderDO.getId());
     }
 
