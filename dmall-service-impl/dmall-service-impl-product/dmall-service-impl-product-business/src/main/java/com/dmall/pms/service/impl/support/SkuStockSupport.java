@@ -1,7 +1,7 @@
 package com.dmall.pms.service.impl.support;
 
 import cn.hutool.core.util.StrUtil;
-import com.dmall.pms.api.dto.sku.request.LockSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.SkuStockRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -30,10 +30,20 @@ public class SkuStockSupport {
     /**
      * 锁定库存: 利用redis的单线程保证线程安全
      */
-    public void lockStock(List<LockSkuRequestDTO> sku) {
-        for (LockSkuRequestDTO skuRequest : sku) {
+    public void lockStock(List<SkuStockRequestDTO> sku) {
+        for (SkuStockRequestDTO skuRequest : sku) {
             redisTemplate.opsForValue()
                     .decrement(StrUtil.format(SKU_STOCK_KEY, skuRequest.getSkuId()), skuRequest.getNumber());
+        }
+    }
+
+    /**
+     * 释放库存
+     */
+    public void unLockStock(List<SkuStockRequestDTO> sku) {
+        for (SkuStockRequestDTO skuRequest : sku) {
+            redisTemplate.opsForValue()
+                    .increment(StrUtil.format(SKU_STOCK_KEY, skuRequest.getSkuId()), skuRequest.getNumber());
         }
     }
 }

@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @description: 锁定库存处理器
+ * @description: 释放库存处理器
  * @author: created by hang.yu on 2020/3/28 23:01
  */
 @Component
-public class LockStockHandler extends AbstractCommonHandler<StockRequestDTO, SkuDO, Void> {
+public class UnLockStockHandler extends AbstractCommonHandler<StockRequestDTO, SkuDO, Void> {
 
     @Autowired
     private SkuStockSupport skuStockSupport;
 
     @Override
     public BaseResult processor(StockRequestDTO requestDTO) {
-        skuStockSupport.lockStock(requestDTO.getSku());
+        skuStockSupport.unLockStock(requestDTO.getSku());
         return ResultUtil.success();
     }
 }

@@ -25,7 +25,7 @@ public class GeneratorCodeUtil {
         /**
          * 表名不传则生成所有表的
          */
-        generateByTables(Constants.GENERATOR_MODULE_NAME,"oms_payment_info","oms_refund_record");
+        generateByTables(Constants.GENERATOR_MODULE_NAME,"oms_sub_order");
     }
 
     /**

@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum CreateOrderErrorEnum implements ErrorCodeEnum {
+public enum OrderErrorEnum implements ErrorCodeEnum {
 
     SKU_PRICE_CHANGE("1001","价格发生改变,请重新下单"),
 
@@ -23,6 +23,12 @@ public enum CreateOrderErrorEnum implements ErrorCodeEnum {
     INSUFFICIENT_INVENTORY("1005","很抱歉,库存不足"),
 
     SUBMIT_REPEAT("1006","您的订单已提交"),
+
+    ORDER_NOT_EXISTS("1007","您的订单不存在"),
+
+    CANCEL_STATUS_ERROR("1008","只可取消待支付的订单"),
+
+    DELETE_STATUS_ERROR("1008","只可删除已取消或已完成的订单"),
 
 
     ;

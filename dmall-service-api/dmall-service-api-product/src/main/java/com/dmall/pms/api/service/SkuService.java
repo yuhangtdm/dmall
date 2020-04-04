@@ -4,7 +4,7 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
-import com.dmall.pms.api.dto.sku.request.LockStockRequestDTO;
+import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
@@ -89,5 +89,13 @@ public interface SkuService {
 
     @GetMapping("lockStock")
     @ApiOperation(value = "锁定库存")
-    BaseResult<Void> lockStock(@RequestBody @Valid LockStockRequestDTO requestDTO);
+    BaseResult<Void> lockStock(@RequestBody @Valid StockRequestDTO requestDTO);
+
+    @GetMapping("outStock")
+    @ApiOperation(value = "出库")
+    BaseResult<Void> outStock(@RequestBody @Valid StockRequestDTO requestDTO);
+
+    @GetMapping("unLockStock")
+    @ApiOperation(value = "释放库存")
+    BaseResult<Void> unLockStock(@RequestBody @Valid StockRequestDTO requestDTO);
 }

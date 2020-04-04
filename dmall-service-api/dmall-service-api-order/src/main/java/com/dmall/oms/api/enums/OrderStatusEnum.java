@@ -15,27 +15,32 @@ public enum OrderStatusEnum implements KeyValueEnum<Integer> {
     /**
      * 待支付
      */
-    WAIT_PAY(1,"待支付"),
+    WAIT_PAY(1, "待支付"),
 
     /**
      * 待发货
      */
-    WAIT_SHIP(2,"待发货"),
+    WAIT_SHIP(2, "待发货"),
 
     /**
      * 待收货
      */
-    WAIT_RECEIVE(3,"待收货"),
+    WAIT_RECEIVE(3, "待收货"),
+
+    /**
+     * 待评价
+     */
+    WAIT_COMMENT(4, "待评价"),
 
     /**
      * 已完成
      */
-    COMPLETED(4,"已完成"),
+    COMPLETED(5, "已完成"),
 
     /**
      * 已取消
      */
-    CANCELED(5,"已取消"),
+    CANCELED(6, "已取消"),
 
     ;
     private Integer code;

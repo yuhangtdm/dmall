@@ -27,8 +27,8 @@ public class AliPayTypeStrategy extends AbstractPayTypeService {
     @Override
     public PayResponseDTO pay(PayRequestDTO requestDTO) {
         AlipayTradePagePayRequest aliPayRequest = new AlipayTradePagePayRequest();
-        aliPayRequest.setReturnUrl(AliPayConfig.return_payment_url);
-        aliPayRequest.setNotifyUrl(AliPayConfig.notify_payment_url);
+        aliPayRequest.setReturnUrl(AliPayConfig.returnOrderUrl);
+        aliPayRequest.setNotifyUrl(AliPayConfig.notifyPaymentPrl);
 
         JSONObject bizContent = new JSONObject();
         bizContent.put("out_trade_no", requestDTO.getOrderId());

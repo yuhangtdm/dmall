@@ -8,68 +8,94 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AliPayConfig {
+
+    /**
+     * format
+     */
+    public final static String format = "json";
+
+    /**
+     * charset
+     */
+    public final static String charset = "utf-8";
+
+    /**
+     * sign_type
+     */
+    public final static String signType = "RSA2";
+
     /**
      * 支付宝的路径
      */
-    @Value("${ali_pay_url}")
-    private String aliPayUrl;
+    public static String aliPayUrl;
 
     /**
      * 私钥
      */
-    @Value("${app_private_key}")
-    private String appPrivateKey;
+    public static String appPrivateKey;
 
-    @Value("${app_id}")
-    private String app_id;
-
-    public final static String format = "json";
-
-    public final static String charset = "utf-8";
-
-    public final static String sign_type = "RSA2";
+    /**
+     * appId
+     */
+    public static String appId;
 
     /**
      * 同步地址
      */
-    public static String return_payment_url;
+    public static String returnPaymentUrl;
+
     /**
      * 异步通知地址
      */
-    public static String notify_payment_url;
+    public static String notifyPaymentPrl;
 
     /**
      * 同步回调地址
      */
-    public static String return_order_url;
+    public static String returnOrderUrl;
 
     /**
      * 支付宝的公钥
      */
-    public static String aliPay_public_key;
+    public static String aliPayPublicKey;
 
-    @Value("${ali_pay_public_key}")
-    public void setAlipay_public_key(String alipay_public_key) {
-        AliPayConfig.aliPay_public_key = alipay_public_key;
+    @Value("${ali_pay_url}")
+    public void setAliPayUrl(String aliPayUrl) {
+        AliPayConfig.aliPayUrl = aliPayUrl;
+    }
+
+    @Value("${app_private_key}")
+    public void setAppPrivateKey(String appPrivateKey) {
+        AliPayConfig.appPrivateKey = appPrivateKey;
+    }
+
+    @Value("${app_id}")
+    public void setAppId(String appId) {
+        AliPayConfig.appId = appId;
     }
 
     @Value("${return_payment_url}")
-    public void setReturn_url(String return_payment_url) {
-        AliPayConfig.return_payment_url = return_payment_url;
+    public void setReturnPaymentUrl(String returnPaymentUrl) {
+        AliPayConfig.returnPaymentUrl = returnPaymentUrl;
     }
 
     @Value("${notify_payment_url}")
-    public void setNotify_url(String notify_payment_url) {
-        AliPayConfig.notify_payment_url = notify_payment_url;
+    public void setNotifyPaymentPrl(String notifyPaymentPrl) {
+        AliPayConfig.notifyPaymentPrl = notifyPaymentPrl;
     }
 
     @Value("${return_order_url}")
-    public void setReturn_order_url(String return_order_url) {
-        AliPayConfig.return_order_url = return_order_url;
+    public void setReturnOrderUrl(String returnOrderUrl) {
+        AliPayConfig.returnOrderUrl = returnOrderUrl;
+    }
+
+    @Value("${ali_pay_public_key}")
+    public void setAliPayPublicKey(String aliPayPublicKey) {
+        AliPayConfig.aliPayPublicKey = aliPayPublicKey;
     }
 
     @Bean
     public AlipayClient alipayClient() {
-        return new DefaultAlipayClient(aliPayUrl, app_id, appPrivateKey, format, charset, aliPay_public_key, sign_type);
+        return new DefaultAlipayClient(aliPayUrl, appId, appPrivateKey, format, charset, aliPayPublicKey, signType);
     }
 }

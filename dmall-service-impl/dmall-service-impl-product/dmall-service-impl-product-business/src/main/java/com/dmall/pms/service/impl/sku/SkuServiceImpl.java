@@ -4,8 +4,8 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
-import com.dmall.pms.api.dto.sku.request.LockStockRequestDTO;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
+import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
 import com.dmall.pms.api.dto.sku.request.UploadRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -64,8 +65,16 @@ public class SkuServiceImpl implements SkuService {
     private GetBasicSkuHandler getBasicSkuHandler;
 
     @Autowired
+    private CreateOrderCheckHandler createOrderCheckHandler;
+
+    @Autowired
     private LockStockHandler lockStockHandler;
 
+    @Autowired
+    private OutStockHandler outStockHandler;
+
+    @Autowired
+    private UnLockStockHandler unLockStockHandler;
 
     @Override
     public BaseResult<Long> saveOrUpdate(@RequestBody SaveSkuRequestDTO requestDTO) {
@@ -129,12 +138,23 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     public BaseResult<List<BasicSkuResponseDTO>> createOrderCheck(@RequestBody CheckCreateOrderRequestDTO requestDTO) {
-        return null;
+        return createOrderCheckHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<Void> lockStock(@RequestBody LockStockRequestDTO requestDTO) {
+    public BaseResult<Void> lockStock(@RequestBody StockRequestDTO requestDTO) {
         return lockStockHandler.handler(requestDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Void> outStock(@RequestBody StockRequestDTO requestDTO) {
+        return outStockHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Void> unLockStock(@Valid StockRequestDTO requestDTO) {
+        return unLockStockHandler.handler(requestDTO);
     }
 
 }

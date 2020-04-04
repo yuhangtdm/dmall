@@ -17,9 +17,15 @@ public enum PayErrorEnum implements ErrorCodeEnum {
      */
     PAYMENT_ORDER_EXISTS("1000", "该订单已创建支付单"),
 
+    /**
+     * 支付宝异常,请稍后再试
+     */
     CREATE_ALI_ERROR("1001", "支付宝异常,请稍后再试"),
 
-    ;
+    /**
+     * 订单不存在
+     */
+    OUT_TRADE_NO_NOT_EXISTS("1003", "订单不存在");;
     /**
      * 错误码
      */

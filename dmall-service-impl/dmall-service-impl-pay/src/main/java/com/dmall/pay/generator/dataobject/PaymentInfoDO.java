@@ -68,6 +68,21 @@ public class PaymentInfoDO implements Serializable {
     private Date callBackTime;
 
     /**
+     * 买家支付宝号
+     */
+    private String buyerId;
+
+    /**
+     * 买家支付宝账号
+     */
+    private String buyerLogonId;
+
+    /**
+     * 卖家支付宝账号
+     */
+    private String sellerEmail;
+
+    /**
      * 创建人
      */
     @TableField(fill = FieldFill.INSERT)

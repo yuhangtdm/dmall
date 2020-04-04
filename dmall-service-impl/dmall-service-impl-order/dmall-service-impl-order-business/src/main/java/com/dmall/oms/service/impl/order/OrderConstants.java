@@ -15,4 +15,9 @@ public interface OrderConstants {
      * 校验订单不能短时间重复提交
      */
     String CHECK_ORDER_KEY = "check_memberId_{}";
+
+    /**
+     * 订单的消费者组
+     */
+    String CONSUMER_GROUP = "orderConsumer";
 }

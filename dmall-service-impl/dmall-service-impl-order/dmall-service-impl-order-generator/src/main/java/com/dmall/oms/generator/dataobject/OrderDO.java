@@ -103,6 +103,11 @@ public class OrderDO implements Serializable {
     private String remark;
 
     /**
+     * 订单是否拆分: 1-未拆分;2-无需拆分;3-已拆分;
+     */
+    private Integer isSplit;
+
+    /**
      * 收货人姓名
      */
     private String receiverName;
@@ -236,6 +241,16 @@ public class OrderDO implements Serializable {
      * 开票时间
      */
     private Date invoiceTime;
+
+    /**
+     * 拆单人员
+     */
+    private Long splitPerson;
+
+    /**
+     * 发货人员
+     */
+    private Long deliveryPerson;
 
     /**
      * 创建人

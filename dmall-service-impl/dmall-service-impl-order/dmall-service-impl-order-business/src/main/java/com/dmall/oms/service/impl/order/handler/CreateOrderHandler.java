@@ -4,6 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.cart.api.dto.delete.DeleteCartRequestDTO;
 import com.dmall.cart.api.dto.list.CartListResponseDTO;
+import com.dmall.common.constants.MqConstants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.enums.RocketMQDelayLevelEnum;
@@ -18,8 +19,9 @@ import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderAddressRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderInvoiceRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderSkuRequestDTO;
-import com.dmall.oms.api.enums.CreateOrderErrorEnum;
+import com.dmall.oms.api.enums.OrderErrorEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
+import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.feign.CartFeign;
 import com.dmall.oms.feign.SkuFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
@@ -31,8 +33,8 @@ import com.dmall.oms.generator.mapper.OrderStatusMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
 import com.dmall.pms.api.dto.sku.request.CheckOrderSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.request.LockSkuRequestDTO;
-import com.dmall.pms.api.dto.sku.request.LockStockRequestDTO;
+import com.dmall.pms.api.dto.sku.request.SkuStockRequestDTO;
+import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -78,16 +80,6 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     @Autowired
     private DistributedLockService distributedLockService;
 
-    /**
-     * 取消订单的topic
-     */
-    private static final String CANCEL_ORDER_TOPIC = "cancelOrder";
-
-    @Override
-    public BaseResult validate(CreateOrderRequestDTO requestDTO) {
-
-        return ResultUtil.success();
-    }
 
     @Override
     public BaseResult<Long> processor(CreateOrderRequestDTO requestDTO) {
@@ -96,12 +88,12 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         String checkKey = StrUtil.format(OrderConstants.CHECK_ORDER_KEY, loginMember.getId());
         // 校验3秒钟之内不能重复提交订单
         if (!distributedLockService.getLock(checkKey, requestDTO.getOrderKey(), 3)){
-            return ResultUtil.fail(CreateOrderErrorEnum.SUBMIT_REPEAT);
+            return ResultUtil.fail(OrderErrorEnum.SUBMIT_REPEAT);
         }
         // 校验订单提交成功之后不能重复下单
         String key = StrUtil.format(OrderConstants.ORDER_KEY, loginMember.getId());
         if (redisTemplate.opsForValue().get(key) == null){
-            return ResultUtil.fail(CreateOrderErrorEnum.SUBMIT_REPEAT);
+            return ResultUtil.fail(OrderErrorEnum.SUBMIT_REPEAT);
         }
         List<Long> skuIds = requestDTO.getOrderSku().stream().map(OrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, OrderSkuRequestDTO> skuMap = requestDTO.getOrderSku().stream()
@@ -111,7 +103,6 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         if (!skuResponse.getResult()) {
             return ResultUtil.fail(skuResponse.getCode(), skuResponse.getMsg());
         }
-
         // step3. 写入订单表
         OrderDO orderDO = insertOrderDO(requestDTO, loginMember);
         // step4. 写入订单详情表
@@ -129,8 +120,9 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
         // step8. 发送延迟消息到mq 一小时后取消未支付的订单
-        //todo  发送消息待优化
         sendDelayMq(orderDO);
+
+        // step9. 写入es
 
         distributedLockService.releaseLock(checkKey, requestDTO.getOrderKey());
         redisTemplate.delete(key);
@@ -170,6 +162,8 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         orderDO.setCustomerTaxNumber(invoice.getCustomerTaxNumber());
         orderDO.setInvoiceReceiverPhone(invoice.getReceiverPhone());
         orderDO.setInvoiceReceiverEmail(invoice.getReceiverEmail());
+        // 默认未拆分
+        orderDO.setIsSplit(SplitEnum.NOT.getCode());
         orderMapper.insert(orderDO);
         return orderDO;
     }
@@ -209,7 +203,7 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
      * 发送延迟消息到mq 一小时后取消未支付的订单
      */
     private void sendDelayMq(OrderDO orderDO) {
-        rocketMQTemplate.sendAndReceive(CANCEL_ORDER_TOPIC, orderDO.getId(),
+        rocketMQTemplate.sendAndReceive(MqConstants.DELAY_CANCEL_ORDER_TOPIC, orderDO.getId(),
                 new RocketMQLocalRequestCallback() {
                     @Override
                     public void onSuccess(Object message) {
@@ -248,16 +242,16 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     /**
      * 生成锁定库存请求参数
      */
-    private LockStockRequestDTO buildLockStockRequest(CreateOrderRequestDTO requestDTO) {
-        LockStockRequestDTO lockStockRequestDTO = new LockStockRequestDTO();
-        List<LockSkuRequestDTO> lockSkuList = requestDTO.getOrderSku().stream().map(orderSkuRequestDTO -> {
-            LockSkuRequestDTO lockSkuRequestDTO = new LockSkuRequestDTO();
-            lockSkuRequestDTO.setSkuId(orderSkuRequestDTO.getSkuId());
-            lockSkuRequestDTO.setNumber(orderSkuRequestDTO.getNumber());
-            return lockSkuRequestDTO;
+    private StockRequestDTO buildLockStockRequest(CreateOrderRequestDTO requestDTO) {
+        StockRequestDTO stockRequestDTO = new StockRequestDTO();
+        List<SkuStockRequestDTO> lockSkuList = requestDTO.getOrderSku().stream().map(orderSkuRequestDTO -> {
+            SkuStockRequestDTO skuStockRequestDTO = new SkuStockRequestDTO();
+            skuStockRequestDTO.setSkuId(orderSkuRequestDTO.getSkuId());
+            skuStockRequestDTO.setNumber(orderSkuRequestDTO.getNumber());
+            return skuStockRequestDTO;
         }).collect(Collectors.toList());
-        lockStockRequestDTO.setSku(lockSkuList);
+        stockRequestDTO.setSku(lockSkuList);
 
-        return lockStockRequestDTO;
+        return stockRequestDTO;
     }
 }
