@@ -1,6 +1,6 @@
 package com.dmall.bms.api.dto.permission.enums;
 
-import com.dmall.common.enums.base.KeyEnum;
+import com.dmall.common.enums.base.CodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum HttpMethodEnum implements KeyEnum<String> {
+public enum HttpMethodEnum implements CodeEnum<String> {
 
     GET("GET"),
     POST("POST"),

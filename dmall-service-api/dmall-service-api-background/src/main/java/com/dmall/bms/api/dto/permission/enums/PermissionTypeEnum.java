@@ -1,6 +1,6 @@
 package com.dmall.bms.api.dto.permission.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum PermissionTypeEnum implements KeyValueEnum<Integer> {
+public enum PermissionTypeEnum implements CodeDescEnum<Integer> {
     URI(1, "接口地址"),
     CATALOG(2, "目录"),
     MENU(3, "菜单");

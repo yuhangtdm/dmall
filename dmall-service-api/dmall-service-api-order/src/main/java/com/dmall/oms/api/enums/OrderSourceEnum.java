@@ -1,6 +1,6 @@
 package com.dmall.oms.api.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum OrderSourceEnum implements KeyValueEnum<Integer> {
+public enum OrderSourceEnum implements CodeDescEnum<Integer> {
 
     /**
      * PC

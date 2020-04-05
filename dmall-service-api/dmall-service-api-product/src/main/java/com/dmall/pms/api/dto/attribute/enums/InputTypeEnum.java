@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.attribute.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum InputTypeEnum implements KeyValueEnum<Integer> {
+public enum InputTypeEnum implements CodeDescEnum<Integer> {
 
     HANDLE(1, "手工录入"),
     LIST(2, "从列表获取");

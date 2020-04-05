@@ -67,7 +67,10 @@ public interface OrderService {
     @ApiOperation(value = "发货")
     BaseResult<Long> deliver(@RequestBody @Valid DeliverRequestDTO requestDTO);
 
-    // 订单详情
+    // 买家端订单详情
+    @GetMapping("/detail/{subOrderId}")
+    @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    BaseResult buyerDetail(@PathVariable("subOrderId") Long subOrderId);
 
     // 买家端订单列表
 

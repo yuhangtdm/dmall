@@ -1,7 +1,6 @@
 package com.dmall.common.dto.validate;
 
-import com.dmall.common.dto.validate.EnumValidator;
-import com.dmall.common.enums.base.KeyEnum;
+import com.dmall.common.enums.base.CodeEnum;
 
 import javax.validation.Constraint;
 import java.lang.annotation.*;
@@ -17,7 +16,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = EnumValidator.class)
 public @interface ValueInEnum {
 
-    Class<? extends KeyEnum> value();
+    Class<? extends CodeEnum> value();
 
     String message() default "入参值不在枚举中";
 

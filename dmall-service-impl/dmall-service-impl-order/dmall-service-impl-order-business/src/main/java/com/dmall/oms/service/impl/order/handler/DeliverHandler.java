@@ -1,5 +1,6 @@
 package com.dmall.oms.service.impl.order.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.dmall.bms.api.dto.deliverwarehouse.CommonDeliverWarehouseResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.admin.AdminUserContextHolder;
@@ -9,12 +10,15 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.enums.DeliverStatusEnum;
 import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OrderOperateEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.feign.DeliverWarehouseFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
+import com.dmall.oms.service.impl.support.OrderLogSupport;
+import com.dmall.oms.service.impl.support.OrderStatusSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,20 +46,32 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OrderStatusSupport orderStatusSupport;
+
+    @Autowired
+    private OrderLogSupport orderLogSupport;
+
+    private static final String LOG_CONTENT = "子订单:{}已发货";
+
+    private static final String ORDER_LOG_CONTENT = "订单已全部发货";
+
     @Override
     public BaseResult<Long> processor(DeliverRequestDTO requestDTO) {
         SubOrderDO subOrderDO = subOrderMapper.selectById(requestDTO.getSubOrderId());
-        if (subOrderDO == null){
+        if (subOrderDO == null) {
             return ResultUtil.fail(OrderErrorEnum.SUB_ORDER_NOT_EXISTS);
         }
         subOrderDO.setDeliverStatus(DeliverStatusEnum.Y.getCode());
         subOrderDO.setLogisticsNo(requestDTO.getLogisticsNo());
+        subOrderDO.setLogisticsCompany(requestDTO.getLogisticsCompany());
+        subOrderDO.setExpressFee(requestDTO.getExpressFee());
         AdminUserDTO adminUser = AdminUserContextHolder.get();
-        if (adminUser.getWarehouseId() == null){
+        if (adminUser.getWarehouseId() == null) {
             return ResultUtil.fail(OrderErrorEnum.DELIVER_PERSON_WAREHOUSE_EMPTY);
         }
         BaseResult<CommonDeliverWarehouseResponseDTO> warehouseBaseResult = deliverWarehouseFeign.get(adminUser.getWarehouseId());
-        if (!warehouseBaseResult.getResult()){
+        if (!warehouseBaseResult.getResult()) {
             return ResultUtil.fail(warehouseBaseResult.getCode(), warehouseBaseResult.getMsg());
         }
         CommonDeliverWarehouseResponseDTO data = warehouseBaseResult.getData();
@@ -69,10 +85,14 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(subOrderDO.getOrderId());
         Optional<SubOrderDO> any = subOrderList.stream()
                 .filter(subOrder -> DeliverStatusEnum.N.getCode().equals(subOrder.getDeliverStatus())).findAny();
-        if (!any.isPresent()){
+        orderLogSupport.insert(subOrderDO.getOrderId(), OrderOperateEnum.DELIVER, true, subOrderDO.getId(),
+                StrUtil.format(LOG_CONTENT, subOrderDO.getId()));
+        if (!any.isPresent()) {
             OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
             orderDO.setStatus(OrderStatusEnum.WAIT_RECEIVE.getCode());
             orderMapper.updateById(orderDO);
+            orderStatusSupport.insert(orderDO.getId(), OrderStatusEnum.WAIT_RECEIVE.getCode());
+            orderLogSupport.insert(subOrderDO.getOrderId(), OrderOperateEnum.DELIVER, true, ORDER_LOG_CONTENT);
         }
         return ResultUtil.success(subOrderDO.getId());
     }

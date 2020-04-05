@@ -4,9 +4,11 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OrderOperateEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
+import com.dmall.oms.service.impl.support.OrderLogSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,18 +22,22 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OrderLogSupport orderLogSupport;
+
     @Override
     public BaseResult<Long> processor(Long orderId) {
         OrderDO orderDO = orderMapper.selectById(orderId);
-        if (orderDO == null){
+        if (orderDO == null) {
             return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
         }
         if (!OrderStatusEnum.CANCELED.getCode().equals(orderDO.getStatus()) ||
-                !OrderStatusEnum.COMPLETED.getCode().equals(orderDO.getStatus())){
+                !OrderStatusEnum.COMPLETED.getCode().equals(orderDO.getStatus())) {
             return ResultUtil.fail(OrderErrorEnum.DELETE_STATUS_ERROR);
         }
         // todo 订单在退款中  不可删除
         orderMapper.deleteById(orderId);
+        orderLogSupport.insert(orderId, OrderOperateEnum.DELETE, false);
         return ResultUtil.success(orderId);
     }
 }

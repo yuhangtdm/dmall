@@ -1,6 +1,6 @@
 package com.dmall.common.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum RocketMQDelayLevelEnum implements KeyValueEnum<Integer> {
+public enum RocketMQDelayLevelEnum implements CodeDescEnum<Integer> {
 
     ONE(1, "1s"),
     TWO(2, "5s"),

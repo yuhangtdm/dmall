@@ -1,6 +1,6 @@
 package com.dmall.sso.api.dto.portal;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum LoginTypeEnum implements KeyValueEnum<String> {
+public enum LoginTypeEnum implements CodeDescEnum<String> {
 
     PC("1","pc网站"),
     // 2-android;3-ios;4-小程序

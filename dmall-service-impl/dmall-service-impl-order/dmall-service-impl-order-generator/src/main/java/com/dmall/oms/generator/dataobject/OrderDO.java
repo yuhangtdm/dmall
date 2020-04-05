@@ -153,6 +153,16 @@ public class OrderDO implements Serializable {
     private String logisticsNo;
 
     /**
+     * 是否已开票
+     */
+    private String openInvoice;
+
+    /**
+     * 发票号码
+     */
+    private String invoiceNumber;
+
+    /**
      * 发票类型 0-不开发票；1-电子发票；2-纸质发票 默认电子发票
      */
     private Integer invoiceType;

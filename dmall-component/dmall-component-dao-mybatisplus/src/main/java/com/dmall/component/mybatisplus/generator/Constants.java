@@ -22,7 +22,7 @@ public interface Constants {
     /**
      * db url
      */
-    String DB_URL = "jdbc:mysql://localhost:3306/dmall_bms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
+    String DB_URL = "jdbc:mysql://localhost:3306/dmall_oms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
     /**
      * username
      */

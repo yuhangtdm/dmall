@@ -1,6 +1,6 @@
 package com.dmall.common.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum IsDeletedEnum implements KeyValueEnum {
+public enum IsDeletedEnum implements CodeDescEnum {
 
     Y("Y", "不可用"),
     N("N", "可用");

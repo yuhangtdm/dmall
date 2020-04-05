@@ -21,6 +21,7 @@ import com.dmall.oms.api.dto.createorder.OrderAddressRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderInvoiceRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderSkuRequestDTO;
 import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OrderOperateEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.feign.CartFeign;
@@ -32,6 +33,8 @@ import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.OrderStatusMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
+import com.dmall.oms.service.impl.support.OrderLogSupport;
+import com.dmall.oms.service.impl.support.OrderStatusSupport;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
 import com.dmall.pms.api.dto.sku.request.CheckOrderSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.SkuStockRequestDTO;
@@ -67,9 +70,6 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     private OrderItemMapper orderItemMapper;
 
     @Autowired
-    private OrderStatusMapper orderStatusMapper;
-
-    @Autowired
     private CartFeign cartFeign;
 
     @Autowired
@@ -81,6 +81,11 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     @Autowired
     private DistributedLockService distributedLockService;
 
+    @Autowired
+    private OrderStatusSupport orderStatusSupport;
+
+    @Autowired
+    private OrderLogSupport orderLogSupport;
 
     @Override
     public BaseResult<Long> processor(CreateOrderRequestDTO requestDTO) {
@@ -88,12 +93,12 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
         String checkKey = StrUtil.format(OrderConstants.CHECK_ORDER_KEY, loginMember.getId());
         // 校验3秒钟之内不能重复提交订单
-        if (!distributedLockService.getLock(checkKey, requestDTO.getOrderKey(), 3)){
+        if (!distributedLockService.getLock(checkKey, requestDTO.getOrderKey(), 3)) {
             return ResultUtil.fail(OrderErrorEnum.SUBMIT_REPEAT);
         }
         // 校验订单提交成功之后不能重复下单
         String key = StrUtil.format(OrderConstants.ORDER_KEY, loginMember.getId());
-        if (redisTemplate.opsForValue().get(key) == null){
+        if (redisTemplate.opsForValue().get(key) == null) {
             return ResultUtil.fail(OrderErrorEnum.SUBMIT_REPEAT);
         }
         List<Long> skuIds = requestDTO.getOrderSku().stream().map(OrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
@@ -109,22 +114,25 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         // step4. 写入订单详情表
         insertOrderItem(skuMap, skuResponse, orderDO);
         // step5. 写入订单状态记录表
-        insertOrderStatus(orderDO);
-        // step6. 调用删除商品购物车的接口
+        orderStatusSupport.insert(orderDO.getId(), OrderStatusEnum.WAIT_PAY.getCode());
+        // step6. 写入订单日志表
+        orderLogSupport.insert(orderDO.getId(), OrderOperateEnum.CREATE, false);
+        // step7. 调用删除商品购物车的接口
         BaseResult<CartListResponseDTO> deleteCart = cartFeign.delete(new DeleteCartRequestDTO().setSkuIds(skuIds));
         if (!deleteCart.getResult()) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
-        // step7.调用锁定库存接口
+        // step8.调用锁定库存接口
         BaseResult<Void> lockStock = skuFeign.lockStock(buildLockStockRequest(requestDTO));
         if (!lockStock.getResult()) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
-        // step8. 发送延迟消息到mq 一小时后取消未支付的订单
+        // step9. 发送延迟消息到mq 一小时后取消未支付的订单
         sendDelayMq(orderDO);
 
-        // step9. 写入es
+        // step10. 写入es
 
+        // step11. 释放锁
         distributedLockService.releaseLock(checkKey, requestDTO.getOrderKey());
         redisTemplate.delete(key);
         return ResultUtil.success(orderDO.getId());
@@ -192,16 +200,6 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
             orderItemDO.setRealAmount(orderItemDO.getSkuAmount());
             orderItemMapper.insert(orderItemDO);
         }
-    }
-
-    /**
-     * 插入订单状态表
-     */
-    private void insertOrderStatus(OrderDO orderDO) {
-        OrderStatusDO orderStatusDO = new OrderStatusDO();
-        orderStatusDO.setOrderId(orderDO.getId());
-        orderStatusDO.setOrderStatus(OrderStatusEnum.WAIT_PAY.getCode());
-        orderStatusMapper.insert(orderStatusDO);
     }
 
     /**

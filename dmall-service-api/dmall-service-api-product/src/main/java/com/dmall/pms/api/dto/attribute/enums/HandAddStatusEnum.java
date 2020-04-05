@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.attribute.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum HandAddStatusEnum implements KeyValueEnum<String> {
+public enum HandAddStatusEnum implements CodeDescEnum<String> {
 
     Y("Y", "支持"),
     N("N", "不支持"),

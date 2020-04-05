@@ -1,6 +1,6 @@
 package com.dmall.mms.api.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum InvoiceTypeEnum implements KeyValueEnum<Integer> {
+public enum InvoiceTypeEnum implements CodeDescEnum<Integer> {
 
     NO_NEED(0, "无需发票"),
 

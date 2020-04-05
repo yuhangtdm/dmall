@@ -4,8 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @description: 发货请求实体
@@ -22,5 +24,13 @@ public class DeliverRequestDTO implements Serializable {
     @ApiModelProperty(value = "物流单号", position = 2)
     @NotNull(message = "物流单号不能为空")
     private String logisticsNo;
+
+    @ApiModelProperty(value = "快递公司", position = 3)
+    @NotBlank(message = "快递公司不能为空")
+    private String logisticsCompany;
+
+    @ApiModelProperty(value = "快递费", position = 4)
+    @NotNull(message = "快递费不能为空")
+    private BigDecimal expressFee;
 
 }

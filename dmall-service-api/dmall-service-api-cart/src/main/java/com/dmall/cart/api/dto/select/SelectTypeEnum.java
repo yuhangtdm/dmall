@@ -1,6 +1,6 @@
 package com.dmall.cart.api.dto.select;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum SelectTypeEnum implements KeyValueEnum<Integer> {
+public enum SelectTypeEnum implements CodeDescEnum<Integer> {
 
     CHECK(1,"勾选"),
     CANCEL(2,"取消勾选")

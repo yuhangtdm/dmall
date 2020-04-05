@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.product.enums;
 
-import com.dmall.common.enums.base.KeyEnum;
+import com.dmall.common.enums.base.CodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum UnitEnum implements KeyEnum<String> {
+public enum UnitEnum implements CodeEnum<String> {
     KG("kg"),
     G("g"),
     ;

@@ -1,6 +1,6 @@
 package com.dmall.pay.service.impl;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum AliTradeStatusEnum implements KeyValueEnum<String> {
+public enum AliTradeStatusEnum implements CodeDescEnum<String> {
 
     /**
      * 交易完成

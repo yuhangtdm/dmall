@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.attribute.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum TypeEnum implements KeyValueEnum<Integer> {
+public enum TypeEnum implements CodeDescEnum<Integer> {
 
     NORMAL(1, "普通属性"),
     PUBLIC(2, "公共属性");

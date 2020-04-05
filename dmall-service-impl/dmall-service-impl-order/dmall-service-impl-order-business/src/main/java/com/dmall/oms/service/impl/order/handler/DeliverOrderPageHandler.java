@@ -56,7 +56,7 @@ public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderP
                 .map(deliverOrderPageDTO -> doConvertDto(deliverOrderPageDTO, DeliverOrderPageResponseDTO.class))
                 .collect(Collectors.toList());
 
-        return ResultUtil.success(new ResponsePage<DeliverOrderPageResponseDTO>(page.getTotal(), collect));
+        return ResultUtil.success(new ResponsePage(page.getTotal(), collect));
     }
 
     @Override

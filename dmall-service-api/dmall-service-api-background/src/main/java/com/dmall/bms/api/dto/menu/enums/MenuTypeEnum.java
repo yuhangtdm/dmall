@@ -1,6 +1,6 @@
 package com.dmall.bms.api.dto.menu.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum MenuTypeEnum implements KeyValueEnum<Integer> {
+public enum MenuTypeEnum implements CodeDescEnum<Integer> {
 
     CATALOG(1, "目录"),
     MENU(2, "菜单");

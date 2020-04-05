@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -40,6 +41,17 @@ public class SubOrderDO implements Serializable {
      * 发货状态 Y-已发货;N-未发货
      */
     private String deliverStatus;
+
+    // todo 快递信息可考虑分表
+    /**
+     * 物流公司
+     */
+    private String logisticsCompany;
+
+    /**
+     * 快递费
+     */
+    private BigDecimal expressFee;
 
     /**
      * 物流单号

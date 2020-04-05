@@ -1,6 +1,6 @@
 package com.dmall.component.cache.redis;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum TTLUnitEnum implements KeyValueEnum<Integer> {
+public enum TTLUnitEnum implements CodeDescEnum<Integer> {
 
     SECOND(1, "秒"),
     MINUTE(2, "分钟"),

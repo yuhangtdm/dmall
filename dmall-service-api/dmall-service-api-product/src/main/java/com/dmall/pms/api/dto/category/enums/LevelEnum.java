@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.category.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum LevelEnum implements KeyValueEnum<Integer> {
+public enum LevelEnum implements CodeDescEnum<Integer> {
     ONE(1, "1级"),
     TWO(2, "2级"),
     THREE(3, "3级"),

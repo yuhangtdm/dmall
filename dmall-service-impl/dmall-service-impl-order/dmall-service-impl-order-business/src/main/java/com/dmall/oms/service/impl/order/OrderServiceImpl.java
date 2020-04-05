@@ -68,11 +68,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> cancelOrder(Long orderId) {
         return cancelOrderHandler.handler(orderId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> deleteOrder(Long orderId) {
         return deleteOrderHandler.handler(orderId);
     }
@@ -83,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> demolitionOrder(@RequestBody DemolitionOrderRequestDTO requestDTO) {
         return demolitionOrderHandler.handler(requestDTO);
     }

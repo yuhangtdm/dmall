@@ -1,8 +1,8 @@
 package com.dmall.common.util;
 
-import com.dmall.common.enums.base.KeyEnum;
-import com.dmall.common.enums.base.KeyValueDataEnum;
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeEnum;
+import com.dmall.common.enums.base.CodeDescDataEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ public class EnumUtil {
     /**
      * 获取枚举对象
      */
-    public static <E extends KeyValueEnum, CODE> E getKeyValueEnum(Class<E> enumClazz, CODE code) {
+    public static <E extends CodeDescEnum, CODE> E getKeyValueEnum(Class<E> enumClazz, CODE code) {
         if (enumClazz.isEnum()) {
-            for (KeyValueEnum enumConstant : enumClazz.getEnumConstants()) {
+            for (CodeDescEnum enumConstant : enumClazz.getEnumConstants()) {
                 if (Objects.equals(enumConstant.getCode(), code)) {
                     return (E) enumConstant;
                 }
@@ -28,10 +28,10 @@ public class EnumUtil {
         return null;
     }
 
-    public static List<Object> getAllCode(Class<? extends KeyEnum> enumClazz) {
+    public static List<Object> getAllCode(Class<? extends CodeEnum> enumClazz) {
         List<Object> codeList = new ArrayList<>();
         if (enumClazz.isEnum()) {
-            for (KeyEnum enumConstant : enumClazz.getEnumConstants()) {
+            for (CodeEnum enumConstant : enumClazz.getEnumConstants()) {
                 codeList.add(enumConstant.getCode());
             }
         }
@@ -41,21 +41,21 @@ public class EnumUtil {
     /**
      * 获取枚举描述
      */
-    public static <CODE> String getDesc(Class<? extends KeyValueEnum> enumClazz, CODE code) {
-        KeyValueEnum<CODE> keyValueEnum = getKeyValueEnum(enumClazz, code);
-        return keyValueEnum == null ? null : keyValueEnum.getDesc();
+    public static <CODE> String getDesc(Class<? extends CodeDescEnum> enumClazz, CODE code) {
+        CodeDescEnum<CODE> codeDescEnum = getKeyValueEnum(enumClazz, code);
+        return codeDescEnum == null ? null : codeDescEnum.getDesc();
     }
 
     /**
      * 获取枚举数据
      */
-    public static <CODE, T> T getData(Class<? extends KeyValueEnum> enumClazz, CODE code) {
-        KeyValueEnum<CODE> keyValueEnum = getKeyValueEnum(enumClazz, code);
-        if (keyValueEnum == null) {
+    public static <CODE, T> T getData(Class<? extends CodeDescEnum> enumClazz, CODE code) {
+        CodeDescEnum<CODE> codeDescEnum = getKeyValueEnum(enumClazz, code);
+        if (codeDescEnum == null) {
             return null;
         }
-        if (keyValueEnum instanceof KeyValueDataEnum) {
-            KeyValueDataEnum<T, CODE> keyValueDataEnum = (KeyValueDataEnum) keyValueEnum;
+        if (codeDescEnum instanceof CodeDescDataEnum) {
+            CodeDescDataEnum<T, CODE> keyValueDataEnum = (CodeDescDataEnum) codeDescEnum;
             return keyValueDataEnum.getData();
         }
         return null;

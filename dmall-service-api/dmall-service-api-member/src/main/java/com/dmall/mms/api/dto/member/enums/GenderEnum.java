@@ -1,6 +1,6 @@
 package com.dmall.mms.api.dto.member.enums;
 
-import com.dmall.common.enums.base.KeyValueDataEnum;
+import com.dmall.common.enums.base.CodeDescDataEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum GenderEnum implements KeyValueDataEnum<Integer, String> {
+public enum GenderEnum implements CodeDescDataEnum<Integer, String> {
     // m：男、f：女、n：未知
     MALE("m","男", 1),
     FEMALE("f","女", 2),

@@ -1,6 +1,6 @@
 package com.dmall.pay.api.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum PayTypeEnum implements KeyValueEnum<Integer> {
+public enum PayTypeEnum implements CodeDescEnum<Integer> {
     /**
      * 支付宝
      */

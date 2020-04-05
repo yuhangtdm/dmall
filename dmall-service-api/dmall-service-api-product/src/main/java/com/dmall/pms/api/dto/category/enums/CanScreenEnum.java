@@ -1,6 +1,6 @@
 package com.dmall.pms.api.dto.category.enums;
 
-import com.dmall.common.enums.base.KeyValueEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum CanScreenEnum implements KeyValueEnum<Integer> {
+public enum CanScreenEnum implements CodeDescEnum<Integer> {
 
     NOT(1, "不可筛选"),
     SINGLE(2, "单选"),
