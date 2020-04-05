@@ -48,11 +48,6 @@ public class OrderItemDO implements Serializable {
     private String merchantsId;
 
     /**
-     * 物流单号 多个用逗号隔开
-     */
-    private String logisticsNo;
-
-    /**
      * sku名称
      */
     private String skuName;

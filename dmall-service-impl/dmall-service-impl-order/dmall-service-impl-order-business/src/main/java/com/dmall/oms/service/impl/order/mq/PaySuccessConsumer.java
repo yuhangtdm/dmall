@@ -51,7 +51,7 @@ public class PaySuccessConsumer implements RocketMQListener<Long> {
         // 修改订单的状态、支付状态、支付时间
         orderDO.setStatus(OrderStatusEnum.WAIT_SHIP.getCode());
         orderDO.setPaymentTime(new Date());
-        orderDO.setPayStatus(PayStatusEnum.PAYED.getCode());
+        orderDO.setPaymentStatus(PayStatusEnum.PAYED.getCode());
         orderMapper.updateById(orderDO);
 
         // 出库

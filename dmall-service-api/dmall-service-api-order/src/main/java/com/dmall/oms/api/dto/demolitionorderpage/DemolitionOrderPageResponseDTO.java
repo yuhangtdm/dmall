@@ -1,4 +1,4 @@
-package com.dmall.oms.api.dto.listBackground;
+package com.dmall.oms.api.dto.demolitionorderpage;
 
 import com.dmall.common.enums.SourceEnum;
 import com.dmall.oms.api.enums.CancelTypeEnum;
@@ -13,12 +13,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @description: 后台订单分页响应实体
+ * @description: 拆单分页响应实体
  * @author: created by hang.yu on 2020/4/4 15:43
  */
 @Data
-@ApiModel(value = "PageOrderResponseDTO", description = "后台订单分页响应实体")
-public class PageOrderResponseDTO implements Serializable {
+@ApiModel(value = "PageOrderResponseDTO", description = "拆单分页响应实体")
+public class DemolitionOrderPageResponseDTO implements Serializable {
 
     /**
      * 订单号
@@ -115,12 +115,6 @@ public class PageOrderResponseDTO implements Serializable {
      */
     @ApiModelProperty(value = "支付时间", position = 16)
     private Date paymentTime;
-
-    /**
-     * 发货时间
-     */
-    @ApiModelProperty(value = "发货时间", position = 17)
-    private Date deliveryTime;
 
     /**
      * 确认收货时间

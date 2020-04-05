@@ -3,8 +3,12 @@ package com.dmall.oms.service.impl.order;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
-import com.dmall.oms.api.dto.listBackground.PageOrderRequestDTO;
-import com.dmall.oms.api.dto.listBackground.PageOrderResponseDTO;
+import com.dmall.oms.api.dto.deliver.DeliverOrderPageRequestDTO;
+import com.dmall.oms.api.dto.deliver.DeliverOrderPageResponseDTO;
+import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
+import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
+import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
+import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import com.dmall.oms.api.service.OrderService;
@@ -13,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @description: 订单服务
@@ -36,6 +42,15 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private DemolitionOrderPageHandler demolitionOrderPageHandler;
 
+    @Autowired
+    private OrderItemListHandler orderItemListHandler;
+
+    @Autowired
+    private DemolitionOrderHandler demolitionOrderHandler;
+
+    @Autowired
+    private DeliverOrderPageHandler deliverOrderPageHandler;
+
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
         return toTradeHandler.handler(requestDTO);
@@ -58,9 +73,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BaseResult<ResponsePage<PageOrderResponseDTO>> demolitionOrderPage(@RequestBody PageOrderRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>> demolitionOrderPage(@RequestBody DemolitionOrderPageRequestDTO requestDTO) {
         return demolitionOrderPageHandler.handler(requestDTO);
     }
 
+    @Override
+    public BaseResult<Long> demolitionOrder(@RequestBody DemolitionOrderRequestDTO requestDTO) {
+        return demolitionOrderHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<OrderItemListResponseDTO>> items(Long orderId) {
+        return orderItemListHandler.handler(orderId);
+    }
+
+    @Override
+    public BaseResult<ResponsePage<DeliverOrderPageResponseDTO>> deliverOrderPage(@RequestBody DeliverOrderPageRequestDTO requestDTO) {
+        return deliverOrderPageHandler.handler(requestDTO);
+    }
 
 }

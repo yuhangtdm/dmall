@@ -1,16 +1,12 @@
 package com.dmall.oms.generator.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @description: 子订单表 
@@ -33,7 +29,7 @@ public class SubOrderDO implements Serializable {
     /**
      * 父订单id
      */
-    private Long parentId;
+    private Long orderId;
 
     /**
      * 订单明细id
@@ -41,14 +37,9 @@ public class SubOrderDO implements Serializable {
     private Long orderItemId;
 
     /**
-     * 拆单原因
+     * 发货状态 Y-已发货;N-未发货
      */
-    private String dismantleReason;
-
-    /**
-     * 状态
-     */
-    private Integer status;
+    private String deliverStatus;
 
     /**
      * 物流单号
@@ -59,6 +50,46 @@ public class SubOrderDO implements Serializable {
      * 仓库id
      */
     private Long warehouseId;
+
+    /**
+     * 发货人id
+     */
+    private Long deliverId;
+
+    /**
+     * 发货人姓名
+     */
+    private String deliverName;
+
+    /**
+     * 发货人电话
+     */
+    private String deliverPhone;
+
+    /**
+     * 发货省份/直辖市
+     */
+    private String deliverProvince;
+
+    /**
+     * 发货城市
+     */
+    private String deliverCity;
+
+    /**
+     * 发货人区/县
+     */
+    private String deliverRegion;
+
+    /**
+     * 发货详细地址
+     */
+    private String deliverDetailAddress;
+
+    /**
+     * 发货时间
+     */
+    private Date deliverTime;
 
     /**
      * 创建人

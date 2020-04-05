@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.oms.service.impl.order.mapper.DeliverOrderPageMapper">
+
+    <select id="deliverOrderPage" resultType="com.dmall.oms.service.impl.order.mapper.DeliverOrderPageDTO">
+        SELECT
+        oso.order_id, oso.id subOrderId,oso.warehouse_id,oo.creator memberId,
+        oso.deliver_status,oso.deliver_time, oso.logistics_no, oo.gmt_created orderCreateTime,
+        oo.receiver_name, oo.receiver_phone,oo.receiver_province, oo.receiver_city, oo.receiver_region,
+        oo.receiver_detail_address,oso.deliver_id,oso.deliver_name
+        from oms_sub_order oso
+        INNER JOIN oms_order oo on oso.order_id = oo.id
+        where oo.is_deleted='N' AND oso.is_deleted='N'
+        AND oo.split!=1 AND oo.`status`=2
+        <if test="request.deliverId != null">
+            AND oso.deliver_id = #{request.deliverId}
+        </if>
+
+    </select>
+
+</mapper>

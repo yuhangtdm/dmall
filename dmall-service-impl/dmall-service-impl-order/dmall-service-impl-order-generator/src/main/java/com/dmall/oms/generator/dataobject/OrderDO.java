@@ -35,7 +35,7 @@ public class OrderDO implements Serializable {
     /**
      * 订单支付状态 1-待支付;2-支付中;3-支付成功;4-支付失败
      */
-    private Integer payStatus;
+    private Integer paymentStatus;
 
     /**
      * 订单来源 1-PC;2-APP;3-小程序
@@ -45,17 +45,12 @@ public class OrderDO implements Serializable {
     /**
      * 支付方式 1-支付宝;2-微信;3-银联
      */
-    private Integer payType;
+    private Integer paymentType;
 
     /**
      * 取消方式 1-手动取消;2-自动取消
      */
     private Integer cancelType;
-
-    /**
-     * 会员手机号
-     */
-    private String memberPhone;
 
     /**
      * sku总数量
@@ -73,6 +68,11 @@ public class OrderDO implements Serializable {
     private BigDecimal totalSkuAmount;
 
     /**
+     * 运费金额
+     */
+    private BigDecimal freightAmount;
+
+    /**
      * 订单总金额
      */
     private BigDecimal orderAmount;
@@ -88,11 +88,6 @@ public class OrderDO implements Serializable {
     private BigDecimal dealAmount;
 
     /**
-     * 运费金额
-     */
-    private BigDecimal freightAmount;
-
-    /**
      * 优惠券抵扣金额
      */
     private BigDecimal couponAmount;
@@ -103,9 +98,24 @@ public class OrderDO implements Serializable {
     private String remark;
 
     /**
-     * 订单是否拆分: 1-未拆分;2-无需拆分;3-已拆分;
+     * 订单拆分情况: 1-未拆分;2-无需拆分;3-已拆分;
      */
-    private Integer isSplit;
+    private Integer split;
+
+    /**
+     * 拆单原因
+     */
+    private String splitReason;
+
+    /**
+     * 拆单人员
+     */
+    private Long splitPerson;
+
+    /**
+     * 收货地址id
+     */
+    private Long receiverId;
 
     /**
      * 收货人姓名
@@ -141,36 +151,6 @@ public class OrderDO implements Serializable {
      * 物流单号 多个用逗号隔开
      */
     private String logisticsNo;
-
-    /**
-     * 发货人姓名
-     */
-    private String deliveryName;
-
-    /**
-     * 发货人电话
-     */
-    private String deliveryPhone;
-
-    /**
-     * 发货省份/直辖市
-     */
-    private String deliveryProvince;
-
-    /**
-     * 发货城市
-     */
-    private String deliveryCity;
-
-    /**
-     * 发货人区/县
-     */
-    private String deliveryRegion;
-
-    /**
-     * 发货详细地址
-     */
-    private String deliveryDetailAddress;
 
     /**
      * 发票类型 0-不开发票；1-电子发票；2-纸质发票 默认电子发票
@@ -218,11 +198,6 @@ public class OrderDO implements Serializable {
     private Date paymentTime;
 
     /**
-     * 发货时间
-     */
-    private Date deliveryTime;
-
-    /**
      * 确认收货时间
      */
     private Date receiveTime;
@@ -241,16 +216,6 @@ public class OrderDO implements Serializable {
      * 开票时间
      */
     private Date invoiceTime;
-
-    /**
-     * 拆单人员
-     */
-    private Long splitPerson;
-
-    /**
-     * 发货人员
-     */
-    private Long deliveryPerson;
 
     /**
      * 创建人

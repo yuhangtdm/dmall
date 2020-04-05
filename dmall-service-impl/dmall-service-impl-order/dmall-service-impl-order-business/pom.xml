@@ -38,6 +38,10 @@
         </dependency>
         <dependency>
             <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-sso</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
             <artifactId>dmall-service-impl-order-generator</artifactId>
         </dependency>
         <dependency>

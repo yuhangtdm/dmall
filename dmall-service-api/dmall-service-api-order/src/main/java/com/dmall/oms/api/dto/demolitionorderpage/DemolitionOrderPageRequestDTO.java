@@ -1,4 +1,4 @@
-package com.dmall.oms.api.dto.listBackground;
+package com.dmall.oms.api.dto.demolitionorderpage;
 
 import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.validate.ValueInEnum;
@@ -9,6 +9,7 @@ import com.dmall.oms.api.enums.SplitEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -17,8 +18,9 @@ import java.util.Date;
  * @author: created by hang.yu on 2020/4/4 16:16
  */
 @Data
-@ApiModel(value = "PageOrderRequestDTO", description = "后台订单分页请求实体")
-public class PageOrderRequestDTO extends PageRequestDTO {
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "PageOrderRequestDTO", description = "拆单分页请求实体")
+public class DemolitionOrderPageRequestDTO extends PageRequestDTO {
 
     @ApiModelProperty(value = "订单号", position = 1)
     private Long orderId;

@@ -5,17 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: 订单状态枚举
+ * @description: 子订单状态枚举
  * @author: created by hang.yu on 2020/3/28 16:48
  */
 @Getter
 @AllArgsConstructor
-public enum OrderStatusEnum implements KeyValueEnum<Integer> {
-
-    /**
-     * 待支付
-     */
-    WAIT_PAY(1, "待支付"),
+public enum SubOrderStatusEnum implements KeyValueEnum<Integer> {
 
     /**
      * 待发货
@@ -31,11 +26,6 @@ public enum OrderStatusEnum implements KeyValueEnum<Integer> {
      * 已完成
      */
     COMPLETED(4, "已完成"),
-
-    /**
-     * 已取消
-     */
-    CANCELED(5, "已取消"),
 
     ;
     private Integer code;

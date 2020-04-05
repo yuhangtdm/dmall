@@ -15,6 +15,7 @@ import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.cache.redis.lock.DistributedLockService;
 import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.mms.api.enums.InvoiceTypeEnum;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderAddressRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderInvoiceRequestDTO;
@@ -137,23 +138,27 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         orderDO.setId(IdGeneratorUtil.snowflakeId());
         orderDO.setStatus(OrderStatusEnum.WAIT_PAY.getCode());
         orderDO.setSource(requestDTO.getSource());
-        orderDO.setMemberPhone(loginMember.getPhone());
         int totalNumber = requestDTO.getOrderSku().stream().mapToInt(OrderSkuRequestDTO::getNumber).sum();
         orderDO.setSkuCount(totalNumber);
+        // 价格相关
         orderDO.setTotalSkuAmount(requestDTO.getTotalSkuMoney());
         orderDO.setOrderAmount(requestDTO.getOrderMoney());
-        // 一期不做优惠相关 实际支付金额 = 订单总金额
         orderDO.setPayAmount(requestDTO.getOrderMoney());
         orderDO.setFreightAmount(requestDTO.getFreightMoney());
         orderDO.setRemark(requestDTO.getRemark());
+
+        // 收货地址相关
         OrderAddressRequestDTO address = requestDTO.getOrderAddressRequestDTO();
+        orderDO.setReceiverId(address.getId());
         orderDO.setReceiverName(address.getName());
         orderDO.setReceiverPhone(address.getPhone());
         orderDO.setReceiverProvince(address.getProvince());
         orderDO.setReceiverCity(address.getCity());
         orderDO.setReceiverRegion(address.getRegion());
         orderDO.setReceiverDetailAddress(address.getDetailAddress());
-        orderDO.setInvoiceType(1);
+
+        // 发票相关
+        orderDO.setInvoiceType(InvoiceTypeEnum.Electronics.getCode());
         OrderInvoiceRequestDTO invoice = requestDTO.getOrderInvoiceRequestDTO();
         orderDO.setInvoiceHeader(invoice.getInvoiceHeader());
         orderDO.setInvoiceContent(invoice.getInvoiceContent());
@@ -163,7 +168,7 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         orderDO.setInvoiceReceiverPhone(invoice.getReceiverPhone());
         orderDO.setInvoiceReceiverEmail(invoice.getReceiverEmail());
         // 默认未拆分
-        orderDO.setIsSplit(SplitEnum.NOT.getCode());
+        orderDO.setSplit(SplitEnum.NOT.getCode());
         orderMapper.insert(orderDO);
         return orderDO;
     }

@@ -12,8 +12,8 @@ import com.dmall.common.enums.SourceEnum;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.oms.api.dto.listBackground.PageOrderRequestDTO;
-import com.dmall.oms.api.dto.listBackground.PageOrderResponseDTO;
+import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
+import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.enums.CancelTypeEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.api.enums.SplitEnum;
@@ -30,13 +30,13 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/4 23:19
  */
 @Component
-public class DemolitionOrderPageHandler extends AbstractCommonHandler<PageOrderRequestDTO, OrderDO, PageOrderResponseDTO> {
+public class DemolitionOrderPageHandler extends AbstractCommonHandler<DemolitionOrderPageRequestDTO, OrderDO, DemolitionOrderPageResponseDTO> {
 
     @Autowired
     private OrderMapper orderMapper;
 
     @Override
-    public BaseResult<ResponsePage<PageOrderResponseDTO>> processor(PageOrderRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>> processor(DemolitionOrderPageRequestDTO requestDTO) {
         DateTime startDayTime = DateUtil.beginOfDay(requestDTO.getCreateTime());
         DateTime endDayTime = DateUtil.endOfDay(requestDTO.getCreateTime());
 
@@ -44,15 +44,15 @@ public class DemolitionOrderPageHandler extends AbstractCommonHandler<PageOrderR
                 .like(requestDTO.getOrderId() != null, OrderDO::getId, requestDTO.getOrderId())
                 .eq(requestDTO.getSource() != null, OrderDO::getSource, requestDTO.getSource())
                 .eq(requestDTO.getMemberId() != null, OrderDO::getCreator, requestDTO.getMemberId())
-                .eq(requestDTO.getIsSplit() != null, OrderDO::getIsSplit, requestDTO.getIsSplit())
+                .eq(requestDTO.getIsSplit() != null, OrderDO::getSplit, requestDTO.getIsSplit())
                 .eq(requestDTO.getCancelType() != null, OrderDO::getCancelType, requestDTO.getCancelType())
                 .eq(requestDTO.getOrderStatus() != null, OrderDO::getStatus, requestDTO.getOrderStatus())
                 .between(OrderDO::getGmtCreated, startDayTime, endDayTime);
 
         IPage<OrderDO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         page = orderMapper.selectPage(page, queryWrapper);
-        List<PageOrderResponseDTO> list = page.getRecords().stream().map(orderDO -> {
-            PageOrderResponseDTO responseDTO = new PageOrderResponseDTO();
+        List<DemolitionOrderPageResponseDTO> list = page.getRecords().stream().map(orderDO -> {
+            DemolitionOrderPageResponseDTO responseDTO = new DemolitionOrderPageResponseDTO();
             responseDTO.setOrderId(orderDO.getId());
             responseDTO.setOrderStatus(EnumUtil.getKeyValueEnum(OrderStatusEnum.class, orderDO.getStatus()));
             responseDTO.setSource(EnumUtil.getKeyValueEnum(SourceEnum.class, orderDO.getSource()));
@@ -64,12 +64,11 @@ public class DemolitionOrderPageHandler extends AbstractCommonHandler<PageOrderR
             responseDTO.setDealAmount(orderDO.getDealAmount());
             responseDTO.setTotalSkuAmount(orderDO.getTotalSkuAmount());
             responseDTO.setFreightAmount(orderDO.getFreightAmount());
-            responseDTO.setIsSplit(EnumUtil.getKeyValueEnum(SplitEnum.class, orderDO.getIsSplit()));
+            responseDTO.setIsSplit(EnumUtil.getKeyValueEnum(SplitEnum.class, orderDO.getSplit()));
             responseDTO.setReceiverName(orderDO.getReceiverName());
             responseDTO.setReceiverPhone(orderDO.getReceiverPhone());
             responseDTO.setLogisticsNo(orderDO.getLogisticsNo());
             responseDTO.setPaymentTime(orderDO.getPaymentTime());
-            responseDTO.setDeliveryTime(orderDO.getDeliveryTime());
             responseDTO.setReceiveTime(orderDO.getReceiveTime());
             responseDTO.setCancelTime(orderDO.getReceiveTime());
             responseDTO.setDeleteTime(orderDO.getDeleteTime());
@@ -78,6 +77,6 @@ public class DemolitionOrderPageHandler extends AbstractCommonHandler<PageOrderR
             responseDTO.setCreateTime(orderDO.getGmtCreated());
             return responseDTO;
         }).collect(Collectors.toList());
-        return ResultUtil.success(new ResponsePage<PageOrderResponseDTO>(page.getTotal(), list));
+        return ResultUtil.success(new ResponsePage<DemolitionOrderPageResponseDTO>(page.getTotal(), list));
     }
 }
