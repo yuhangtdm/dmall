@@ -1,4 +1,4 @@
-package com.dmall.oms.api.dto.deliver;
+package com.dmall.oms.api.dto.deliverpage;
 
 import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.validate.ValueInEnum;

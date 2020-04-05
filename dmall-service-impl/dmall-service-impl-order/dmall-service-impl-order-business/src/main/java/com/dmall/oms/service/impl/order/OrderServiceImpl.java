@@ -3,8 +3,9 @@ package com.dmall.oms.service.impl.order;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
-import com.dmall.oms.api.dto.deliver.DeliverOrderPageRequestDTO;
-import com.dmall.oms.api.dto.deliver.DeliverOrderPageResponseDTO;
+import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
+import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
+import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageResponseDTO;
 import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -50,6 +52,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private DeliverOrderPageHandler deliverOrderPageHandler;
+
+    @Autowired
+    private DeliverHandler deliverHandler;
 
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
@@ -90,6 +95,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public BaseResult<ResponsePage<DeliverOrderPageResponseDTO>> deliverOrderPage(@RequestBody DeliverOrderPageRequestDTO requestDTO) {
         return deliverOrderPageHandler.handler(requestDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> deliver(@RequestBody DeliverRequestDTO requestDTO) {
+        return deliverHandler.handler(requestDTO);
     }
 
 }

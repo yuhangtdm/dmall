@@ -94,7 +94,6 @@ public class AdminUserZuulFilter extends ZuulFilter {
             return null;
         }
 
-
         // 校验token
         String token = request.getHeader(Constants.TOKEN);
         if (StrUtil.isBlank(token)) {

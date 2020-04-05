@@ -53,4 +53,7 @@ public class SaveUserRequestDTO implements Serializable {
     @ApiModelProperty(value = "备注", position = 8)
     private String remark;
 
+    @ApiModelProperty(value = "仓库id", position = 9)
+    private Long warehouseId;
+
 }

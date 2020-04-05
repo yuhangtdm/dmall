@@ -3,12 +3,14 @@ package com.dmall.common.model.exception;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.enums.error.ErrorCodeEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @description: 自定义业务异常
  * @author: created by hang.yu on 2019/11/7 22:25
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class BusinessException extends RuntimeException {
 
     private String code;

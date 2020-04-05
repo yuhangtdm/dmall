@@ -1,6 +1,7 @@
 package com.dmall.bms.service.impl.user.handler;
 
 import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
+import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
 import com.dmall.bms.service.impl.support.UserSupport;
 import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.bms.generator.dataobject.UserDO;
@@ -25,12 +26,18 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
     @Autowired
     private UserSupport userSupport;
 
+    @Autowired
+    private DeliverWarehouseSupport deliverWarehouseSupport;
+
     @Override
     public BaseResult<Long> validate(SaveUserRequestDTO requestDTO) {
         // 用户名唯一
         UserDO userDO = userSupport.getByUserName(requestDTO.getUserName());
         if (userDO != null) {
             return ResultUtil.fail(UserErrorEnum.USER_NAME_EXIST);
+        }
+        if (requestDTO.getWarehouseId() != null){
+            deliverWarehouseSupport.validateWarehouse(requestDTO.getWarehouseId());
         }
         return ResultUtil.success();
     }

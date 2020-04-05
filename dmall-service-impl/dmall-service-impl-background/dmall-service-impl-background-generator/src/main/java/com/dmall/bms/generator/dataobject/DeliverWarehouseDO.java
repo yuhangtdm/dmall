@@ -19,8 +19,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("bms_delivery_warehouse")
-public class DeliveryWarehouseDO implements Serializable {
+@TableName("bms_deliver_warehouse")
+public class DeliverWarehouseDO implements Serializable {
 
     private static final long serialVersionUID=1L;
 

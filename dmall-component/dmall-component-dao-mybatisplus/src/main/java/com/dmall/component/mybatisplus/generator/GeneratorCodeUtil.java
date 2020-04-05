@@ -22,10 +22,7 @@ import java.util.List;
 public class GeneratorCodeUtil {
 
     public static void main(String[] args) {
-        /**
-         * 表名不传则生成所有表的
-         */
-        generateByTables(Constants.GENERATOR_MODULE_NAME,"oms_sub_order");
+        generateByTables(Constants.GENERATOR_MODULE_NAME,"bms_deliver_warehouse");
     }
 
     /**

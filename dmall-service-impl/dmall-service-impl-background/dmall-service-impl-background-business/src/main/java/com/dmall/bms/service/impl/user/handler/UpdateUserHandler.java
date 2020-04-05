@@ -4,6 +4,7 @@ import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
 import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
+import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
@@ -20,6 +21,9 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private DeliverWarehouseSupport deliverWarehouseSupport;
+
     @Override
     public BaseResult<Long> validate(UpdateUserRequestDTO requestDTO) {
         // id存在
@@ -27,6 +31,10 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
         if (userDO == null) {
             return ResultUtil.fail(UserErrorEnum.USER_NOT_EXIST);
         }
+        if (requestDTO.getWarehouseId() != null){
+            deliverWarehouseSupport.validateWarehouse(requestDTO.getWarehouseId());
+        }
+
         return ResultUtil.success();
     }
 

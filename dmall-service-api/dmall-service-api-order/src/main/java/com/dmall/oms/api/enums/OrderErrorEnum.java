@@ -38,6 +38,11 @@ public enum OrderErrorEnum implements ErrorCodeEnum {
 
     WARE_HOUSE_ID_NOT_EMPTY("4003", "仓库id不能为空"),
 
+
+    SUB_ORDER_NOT_EXISTS("5000", "子订单不存在"),
+
+    DELIVER_PERSON_WAREHOUSE_EMPTY("5001","发货员的仓库不能为空")
+
     ;
 
     /**

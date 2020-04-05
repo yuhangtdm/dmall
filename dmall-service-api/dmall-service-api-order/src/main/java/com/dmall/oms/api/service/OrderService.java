@@ -3,8 +3,9 @@ package com.dmall.oms.api.service;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
-import com.dmall.oms.api.dto.deliver.DeliverOrderPageRequestDTO;
-import com.dmall.oms.api.dto.deliver.DeliverOrderPageResponseDTO;
+import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
+import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
+import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageResponseDTO;
 import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
@@ -58,7 +59,21 @@ public interface OrderService {
     @ApiImplicitParam(name = "orderId", value = "订单号", required = true, dataType = "int", paramType = "path")
     BaseResult<List<OrderItemListResponseDTO>> items(@PathVariable("orderId") Long orderId);
 
-    @GetMapping("/deliverOrderPage")
+    @PostMapping("/deliverOrderPage")
     @ApiOperation(value = "待发货分页")
     BaseResult<ResponsePage<DeliverOrderPageResponseDTO>> deliverOrderPage(@RequestBody @Valid DeliverOrderPageRequestDTO requestDTO);
+
+    @PostMapping("/deliver")
+    @ApiOperation(value = "发货")
+    BaseResult<Long> deliver(@RequestBody @Valid DeliverRequestDTO requestDTO);
+
+    // 订单详情
+
+    // 买家端订单列表
+
+    // 收货
+
+    // 评价
+
+    // 退款...
 }

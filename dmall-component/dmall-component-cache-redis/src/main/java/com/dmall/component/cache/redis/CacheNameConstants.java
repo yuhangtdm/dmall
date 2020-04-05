@@ -31,4 +31,9 @@ public interface CacheNameConstants {
      */
     String CART = "cart";
 
+    /**
+     * 仓库
+     */
+    String DELIVER_WAREHOUSE = "deliverWarehouse";
+
 }

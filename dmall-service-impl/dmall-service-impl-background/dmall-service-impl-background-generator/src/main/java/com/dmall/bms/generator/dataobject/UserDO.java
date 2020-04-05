@@ -36,6 +36,11 @@ public class UserDO implements Serializable {
     private Long merchantsId;
 
     /**
+     * 仓库id
+     */
+    private Long warehouseId;
+
+    /**
      * 用户名
      */
     private String userName;

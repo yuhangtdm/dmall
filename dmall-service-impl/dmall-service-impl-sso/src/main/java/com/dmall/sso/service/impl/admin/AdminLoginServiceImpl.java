@@ -39,8 +39,6 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     /**
      * 登录
-     *
-     * @return token
      */
     public BaseResult<AdminLoginResponseDTO> login(@RequestBody AdminLoginRequestDTO requestDTO) {
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(requestDTO.getUserName(), requestDTO.getPassword());

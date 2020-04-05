@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.util.*;
 import java.math.*;
@@ -17,7 +18,7 @@ import java.math.*;
 @ApiModel(value = "CommonUserResponseDTO", description = "后台用户公共响应实体")
 public class CommonUserResponseDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
     private Long id;
@@ -64,4 +65,6 @@ public class CommonUserResponseDTO implements Serializable {
     @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 15)
     private String isDeleted;
 
+    @ApiModelProperty(value = "仓库id", position = 16)
+    private Long warehouseId;
 }

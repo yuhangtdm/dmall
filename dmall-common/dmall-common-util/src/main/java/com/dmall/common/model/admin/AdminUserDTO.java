@@ -48,4 +48,9 @@ public class AdminUserDTO implements Serializable {
      */
     private String source;
 
+    /**
+     * 仓库id
+     */
+    private Long warehouseId;
+
 }
