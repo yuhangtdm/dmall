@@ -75,12 +75,12 @@ public class PaymentInfoDO implements Serializable {
     /**
      * 买家支付宝账号
      */
-    private String buyerLogonId;
+    private String buyerAliPayNo;
 
     /**
      * 卖家支付宝账号
      */
-    private String sellerEmail;
+    private String sellerAliPayNo;
 
     /**
      * 创建人

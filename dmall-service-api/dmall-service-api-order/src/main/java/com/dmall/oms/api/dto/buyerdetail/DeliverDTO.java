@@ -19,7 +19,4 @@ public class DeliverDTO {
 
     @ApiModelProperty(value = "快递公司", position = 2)
     private String logisticsCompany;
-
-    @ApiModelProperty(value = "运费", position = 3)
-    private BigDecimal freightMoney;
 }

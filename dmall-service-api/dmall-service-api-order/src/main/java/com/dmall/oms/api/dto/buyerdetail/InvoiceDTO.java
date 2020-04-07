@@ -13,7 +13,7 @@ import lombok.Data;
 public class InvoiceDTO {
 
     @ApiModelProperty(value = "发票抬头", position = 1)
-    private Integer invoiceHeader;
+    private String invoiceHeader;
 
     @ApiModelProperty(value = "纳税人识别号", position = 2)
     private String customerTaxNumber;
@@ -23,4 +23,7 @@ public class InvoiceDTO {
 
     @ApiModelProperty(value = "发票号码", position = 4)
     private String invoiceNumber;
+
+    @ApiModelProperty(value = "发票抬头类型", position = 5)
+    private Integer invoiceHeaderType;
 }

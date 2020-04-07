@@ -17,7 +17,7 @@ public class EnumUtil {
     /**
      * 获取枚举对象
      */
-    public static <E extends CodeDescEnum, CODE> E getKeyValueEnum(Class<E> enumClazz, CODE code) {
+    public static <E extends CodeDescEnum, CODE> E getCodeDescEnum(Class<E> enumClazz, CODE code) {
         if (enumClazz.isEnum()) {
             for (CodeDescEnum enumConstant : enumClazz.getEnumConstants()) {
                 if (Objects.equals(enumConstant.getCode(), code)) {
@@ -42,7 +42,7 @@ public class EnumUtil {
      * 获取枚举描述
      */
     public static <CODE> String getDesc(Class<? extends CodeDescEnum> enumClazz, CODE code) {
-        CodeDescEnum<CODE> codeDescEnum = getKeyValueEnum(enumClazz, code);
+        CodeDescEnum<CODE> codeDescEnum = getCodeDescEnum(enumClazz, code);
         return codeDescEnum == null ? null : codeDescEnum.getDesc();
     }
 
@@ -50,7 +50,7 @@ public class EnumUtil {
      * 获取枚举数据
      */
     public static <CODE, T> T getData(Class<? extends CodeDescEnum> enumClazz, CODE code) {
-        CodeDescEnum<CODE> codeDescEnum = getKeyValueEnum(enumClazz, code);
+        CodeDescEnum<CODE> codeDescEnum = getCodeDescEnum(enumClazz, code);
         if (codeDescEnum == null) {
             return null;
         }

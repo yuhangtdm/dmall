@@ -38,6 +38,16 @@ public class OrderDO implements Serializable {
     private Integer paymentStatus;
 
     /**
+     * 发货状态: 0-未发货;1-部分发货;2-全部发货
+     */
+    private Integer deliverStatus;
+
+    /**
+     * 评价状态 0-未评价;1-部分评价;2-全部评价
+     */
+    private Integer commentStatus;
+
+    /**
      * 订单来源 1-PC;2-APP;3-小程序
      */
     private Integer source;
@@ -80,7 +90,7 @@ public class OrderDO implements Serializable {
     /**
      * 实际支付金额 订单总金额+运费金额-促销优惠金额-积分抵扣金额-优惠券抵扣金额
      */
-    private BigDecimal payAmount;
+    private BigDecimal paymentAmount;
 
     /**
      * 订单实际金额(含退款)

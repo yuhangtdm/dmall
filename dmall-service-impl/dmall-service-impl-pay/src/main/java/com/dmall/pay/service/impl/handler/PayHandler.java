@@ -25,7 +25,7 @@ public class PayHandler extends AbstractCommonHandler<PayRequestDTO, PaymentInfo
 
     @Override
     public BaseResult<PayResponseDTO> processor(PayRequestDTO requestDTO) {
-        PayTypeEnum payTypeEnum = EnumUtil.getKeyValueEnum(PayTypeEnum.class, requestDTO.getPayType());
+        PayTypeEnum payTypeEnum = EnumUtil.getCodeDescEnum(PayTypeEnum.class, requestDTO.getPayType());
         PayTypeService instance = payTypeFactory.createInstance(payTypeEnum);
         return ResultUtil.success(instance.createPayment(requestDTO));
     }

@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum PayStatusEnum implements CodeDescEnum<Integer> {
+public enum PaymentStatusEnum implements CodeDescEnum<Integer> {
 
     /**
      * 待支付

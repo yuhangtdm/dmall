@@ -1,5 +1,6 @@
 package com.dmall.oms.api.dto.buyerdetail;
 
+import com.dmall.oms.api.enums.PaymentTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,17 +17,20 @@ import java.util.Date;
 public class PaymentDTO {
 
     @ApiModelProperty(value = "支付方式", position = 1)
-    private String paymentType;
+    private PaymentTypeEnum paymentType;
 
     @ApiModelProperty(value = "付款时间", position = 2)
     private Date paymentDate;
 
     @ApiModelProperty(value = "商品总金额", position = 3)
-    private BigDecimal totalAmount;
+    private BigDecimal totalSkuAmount;
 
     @ApiModelProperty(value = "支付总金额", position = 4)
     private BigDecimal paymentAmount;
 
     @ApiModelProperty(value = "优惠券金额", position = 5)
     private BigDecimal couponAmount;
+
+    @ApiModelProperty(value = "运费金额", position = 6)
+    private BigDecimal freightAmount;
 }

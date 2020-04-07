@@ -20,18 +20,13 @@ import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderAddressRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderInvoiceRequestDTO;
 import com.dmall.oms.api.dto.createorder.OrderSkuRequestDTO;
-import com.dmall.oms.api.enums.OrderErrorEnum;
-import com.dmall.oms.api.enums.OrderOperateEnum;
-import com.dmall.oms.api.enums.OrderStatusEnum;
-import com.dmall.oms.api.enums.SplitEnum;
+import com.dmall.oms.api.enums.*;
 import com.dmall.oms.feign.CartFeign;
 import com.dmall.oms.feign.SkuFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
-import com.dmall.oms.generator.dataobject.OrderStatusDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
-import com.dmall.oms.generator.mapper.OrderStatusMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
 import com.dmall.oms.service.impl.support.OrderStatusSupport;
@@ -145,13 +140,16 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         OrderDO orderDO = new OrderDO();
         orderDO.setId(IdGeneratorUtil.snowflakeId());
         orderDO.setStatus(OrderStatusEnum.WAIT_PAY.getCode());
+        orderDO.setPaymentStatus(PaymentStatusEnum.NO_PAY.getCode());
+        orderDO.setDeliverStatus(OrderDeliverStatusEnum.NO.getCode());
+        orderDO.setCommentStatus(OrderCommentStatusEnum.NO.getCode());
         orderDO.setSource(requestDTO.getSource());
         int totalNumber = requestDTO.getOrderSku().stream().mapToInt(OrderSkuRequestDTO::getNumber).sum();
         orderDO.setSkuCount(totalNumber);
         // 价格相关
         orderDO.setTotalSkuAmount(requestDTO.getTotalSkuMoney());
         orderDO.setOrderAmount(requestDTO.getOrderMoney());
-        orderDO.setPayAmount(requestDTO.getOrderMoney());
+        orderDO.setPaymentAmount(requestDTO.getOrderMoney());
         orderDO.setFreightAmount(requestDTO.getFreightMoney());
         orderDO.setRemark(requestDTO.getRemark());
 

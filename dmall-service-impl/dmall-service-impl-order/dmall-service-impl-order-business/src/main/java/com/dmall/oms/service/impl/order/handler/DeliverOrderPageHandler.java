@@ -61,6 +61,6 @@ public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderP
 
     @Override
     protected void customerConvertDto(DeliverOrderPageResponseDTO result, DeliverOrderPageDTO doo) {
-        result.setDeliverStatus(EnumUtil.getKeyValueEnum(DeliverStatusEnum.class, doo.getDeliverStatus()));
+        result.setDeliverStatus(EnumUtil.getCodeDescEnum(DeliverStatusEnum.class, doo.getDeliverStatus()));
     }
 }

@@ -53,11 +53,11 @@ public class GetBasicSkuHandler extends AbstractCommonHandler<List<Long>, SkuDO,
     private BasicSkuResponseDTO getBasicSkuResponseDTO(SkuDO skuDO) {
         BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
         ProductDO productDO = productMapper.selectById(skuDO.getProductId());
-        basicSku.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
-        basicSku.setNewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getNewStatus()));
-        basicSku.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getRecommendStatus()));
-        basicSku.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPreviewStatus()));
-        basicSku.setPublishStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPublishStatus()));
+        basicSku.setAuditStatus(EnumUtil.getCodeDescEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
+        basicSku.setNewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getNewStatus()));
+        basicSku.setRecommendStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getRecommendStatus()));
+        basicSku.setPreviewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getPreviewStatus()));
+        basicSku.setPublishStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getPublishStatus()));
         basicSku.setSkuSpecificationsJson(skuExtSupport.getBySkuId(basicSku.getId()).getSkuSpecificationsJson());
         basicSku.setWeight(productDO.getWeight() + productDO.getUnit());
         return basicSku;

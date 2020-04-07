@@ -8,10 +8,7 @@ import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
-import com.dmall.oms.api.enums.DeliverStatusEnum;
-import com.dmall.oms.api.enums.OrderErrorEnum;
-import com.dmall.oms.api.enums.OrderOperateEnum;
-import com.dmall.oms.api.enums.OrderStatusEnum;
+import com.dmall.oms.api.enums.*;
 import com.dmall.oms.feign.DeliverWarehouseFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
@@ -87,13 +84,15 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
                 .filter(subOrder -> DeliverStatusEnum.N.getCode().equals(subOrder.getDeliverStatus())).findAny();
         orderLogSupport.insert(subOrderDO.getOrderId(), OrderOperateEnum.DELIVER, true, subOrderDO.getId(),
                 StrUtil.format(LOG_CONTENT, subOrderDO.getId()));
+        OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
+        orderDO.setDeliverStatus(OrderDeliverStatusEnum.PART.getCode());
         if (!any.isPresent()) {
-            OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
             orderDO.setStatus(OrderStatusEnum.WAIT_RECEIVE.getCode());
-            orderMapper.updateById(orderDO);
+            orderDO.setDeliverStatus(OrderDeliverStatusEnum.ALL.getCode());
             orderStatusSupport.insert(orderDO.getId(), OrderStatusEnum.WAIT_RECEIVE.getCode());
             orderLogSupport.insert(subOrderDO.getOrderId(), OrderOperateEnum.DELIVER, true, ORDER_LOG_CONTENT);
         }
+        orderMapper.updateById(orderDO);
         return ResultUtil.success(subOrderDO.getId());
     }
 }

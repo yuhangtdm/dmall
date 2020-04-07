@@ -62,11 +62,11 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
 
     private BasicSkuResponseDTO getBasicSkuResponseDTO(SkuDO skuDO) {
         BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
-        basicSku.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
-        basicSku.setNewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getNewStatus()));
-        basicSku.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getRecommendStatus()));
-        basicSku.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPreviewStatus()));
-        basicSku.setPublishStatus(EnumUtil.getKeyValueEnum(YNEnum.class, skuDO.getPublishStatus()));
+        basicSku.setAuditStatus(EnumUtil.getCodeDescEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
+        basicSku.setNewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getNewStatus()));
+        basicSku.setRecommendStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getRecommendStatus()));
+        basicSku.setPreviewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getPreviewStatus()));
+        basicSku.setPublishStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getPublishStatus()));
         basicSku.setSalableStock(skuStockSupport.getSaleableStock(skuDO.getId()));
         basicSku.setLowStock(basicSku.getStock() - basicSku.getSalableStock());
         return basicSku;

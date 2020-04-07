@@ -57,8 +57,8 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
 
     @Override
     protected void customerConvertDto(CommonCategoryResponseDTO result, CategoryDO doo) {
-        result.setHotStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getHotStatus()));
-        result.setLevel(EnumUtil.getKeyValueEnum(LevelEnum.class, doo.getLevel()));
-        result.setNavStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getNavStatus()));
+        result.setHotStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getHotStatus()));
+        result.setLevel(EnumUtil.getCodeDescEnum(LevelEnum.class, doo.getLevel()));
+        result.setNavStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getNavStatus()));
     }
 }

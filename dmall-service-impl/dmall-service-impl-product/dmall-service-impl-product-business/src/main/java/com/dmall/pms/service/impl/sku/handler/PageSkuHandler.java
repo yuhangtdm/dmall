@@ -1,6 +1,5 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.enums.YNEnum;
@@ -15,7 +14,6 @@ import com.dmall.pms.service.impl.sku.mapper.SkuPageMapper;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageVO;
 import com.dmall.pms.service.impl.support.SkuStockSupport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -45,11 +43,11 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
 
     @Override
     protected void customerConvertDto(PageSkuResponseDTO result, SkuPageVO doo) {
-        result.setRecommendStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getRecommendStatus()));
-        result.setNewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getNewStatus()));
-        result.setPreviewStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getPreviewStatus()));
-        result.setAuditStatus(EnumUtil.getKeyValueEnum(SkuAuditStatusEnum.class, doo.getAuditStatus()));
-        result.setPublishStatus(EnumUtil.getKeyValueEnum(YNEnum.class, doo.getPublishStatus()));
+        result.setRecommendStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getRecommendStatus()));
+        result.setNewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getNewStatus()));
+        result.setPreviewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getPreviewStatus()));
+        result.setAuditStatus(EnumUtil.getCodeDescEnum(SkuAuditStatusEnum.class, doo.getAuditStatus()));
+        result.setPublishStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getPublishStatus()));
         result.setSalableStock(skuStockSupport.getSaleableStock(doo.getId()));
         result.setLowStock(result.getStock() - result.getSalableStock());
     }

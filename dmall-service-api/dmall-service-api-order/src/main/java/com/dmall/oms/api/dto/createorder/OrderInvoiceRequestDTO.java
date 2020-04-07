@@ -1,5 +1,8 @@
 package com.dmall.oms.api.dto.createorder;
 
+import com.dmall.common.dto.validate.ValueInEnum;
+import com.dmall.oms.api.enums.InvoiceContentEnum;
+import com.dmall.oms.api.enums.InvoiceHeaderTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,6 +24,7 @@ public class OrderInvoiceRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "发票抬头 1-个人;2-单位", position = 2)
     @NotNull(message = "发票抬头不能为空")
+    @ValueInEnum(InvoiceHeaderTypeEnum.class)
     private Integer invoiceHeader;
 
     @ApiModelProperty(value = "个人名称", position = 3)
@@ -40,6 +44,7 @@ public class OrderInvoiceRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "发票内容 1-商品类别;2-商品明细", position = 8)
     @NotNull(message = "发票内容不能为空")
+    @ValueInEnum(InvoiceContentEnum.class)
     private Integer invoiceContent;
 
 }

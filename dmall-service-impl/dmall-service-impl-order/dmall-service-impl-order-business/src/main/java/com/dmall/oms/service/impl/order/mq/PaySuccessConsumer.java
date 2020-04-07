@@ -4,7 +4,7 @@ import com.dmall.common.constants.MqConstants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.oms.api.enums.OrderStatusEnum;
-import com.dmall.oms.api.enums.PayStatusEnum;
+import com.dmall.oms.api.enums.PaymentStatusEnum;
 import com.dmall.oms.feign.SkuFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
@@ -51,7 +51,7 @@ public class PaySuccessConsumer implements RocketMQListener<Long> {
         // 修改订单的状态、支付状态、支付时间
         orderDO.setStatus(OrderStatusEnum.WAIT_SHIP.getCode());
         orderDO.setPaymentTime(new Date());
-        orderDO.setPaymentStatus(PayStatusEnum.PAYED.getCode());
+        orderDO.setPaymentStatus(PaymentStatusEnum.PAYED.getCode());
         orderMapper.updateById(orderDO);
 
         // 出库

@@ -54,17 +54,17 @@ public class DemolitionOrderPageHandler extends AbstractCommonHandler<Demolition
         List<DemolitionOrderPageResponseDTO> list = page.getRecords().stream().map(orderDO -> {
             DemolitionOrderPageResponseDTO responseDTO = new DemolitionOrderPageResponseDTO();
             responseDTO.setOrderId(orderDO.getId());
-            responseDTO.setOrderStatus(EnumUtil.getKeyValueEnum(OrderStatusEnum.class, orderDO.getStatus()));
-            responseDTO.setSource(EnumUtil.getKeyValueEnum(SourceEnum.class, orderDO.getSource()));
+            responseDTO.setOrderStatus(EnumUtil.getCodeDescEnum(OrderStatusEnum.class, orderDO.getStatus()));
+            responseDTO.setSource(EnumUtil.getCodeDescEnum(SourceEnum.class, orderDO.getSource()));
             responseDTO.setMemberId(orderDO.getCreator());
             responseDTO.setProductCount(orderDO.getProductCount());
             responseDTO.setSkuCount(orderDO.getSkuCount());
             responseDTO.setOrderAmount(orderDO.getOrderAmount());
-            responseDTO.setPayAmount(orderDO.getPayAmount());
+            responseDTO.setPayAmount(orderDO.getPaymentAmount());
             responseDTO.setDealAmount(orderDO.getDealAmount());
             responseDTO.setTotalSkuAmount(orderDO.getTotalSkuAmount());
             responseDTO.setFreightAmount(orderDO.getFreightAmount());
-            responseDTO.setIsSplit(EnumUtil.getKeyValueEnum(SplitEnum.class, orderDO.getSplit()));
+            responseDTO.setIsSplit(EnumUtil.getCodeDescEnum(SplitEnum.class, orderDO.getSplit()));
             responseDTO.setReceiverName(orderDO.getReceiverName());
             responseDTO.setReceiverPhone(orderDO.getReceiverPhone());
             responseDTO.setLogisticsNo(orderDO.getLogisticsNo());
@@ -73,7 +73,7 @@ public class DemolitionOrderPageHandler extends AbstractCommonHandler<Demolition
             responseDTO.setCancelTime(orderDO.getReceiveTime());
             responseDTO.setDeleteTime(orderDO.getDeleteTime());
             responseDTO.setInvoiceTime(orderDO.getInvoiceTime());
-            responseDTO.setCancelType(EnumUtil.getKeyValueEnum(CancelTypeEnum.class, orderDO.getCancelType()));
+            responseDTO.setCancelType(EnumUtil.getCodeDescEnum(CancelTypeEnum.class, orderDO.getCancelType()));
             responseDTO.setCreateTime(orderDO.getGmtCreated());
             return responseDTO;
         }).collect(Collectors.toList());

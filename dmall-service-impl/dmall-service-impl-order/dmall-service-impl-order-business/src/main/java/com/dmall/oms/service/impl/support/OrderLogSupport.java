@@ -1,8 +1,10 @@
 package com.dmall.oms.service.impl.support;
 
 import java.util.Date;
+import java.util.List;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
@@ -22,6 +24,11 @@ public class OrderLogSupport {
 
     @Autowired
     private OrderLogMapper orderLogMapper;
+
+    public List<OrderLogDO> listByOrderId(Long orderId) {
+        return orderLogMapper.selectList(Wrappers.<OrderLogDO>lambdaQuery()
+                .eq(OrderLogDO::getOrderId, orderId));
+    }
 
     public void insert(Long orderId, OrderOperateEnum operateEnum, boolean admin) {
         insert(orderId, operateEnum, admin, null, null);

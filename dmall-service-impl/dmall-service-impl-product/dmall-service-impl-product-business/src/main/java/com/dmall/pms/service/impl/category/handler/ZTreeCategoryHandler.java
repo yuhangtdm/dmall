@@ -64,7 +64,7 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
         result.setOpen(Boolean.FALSE);
         result.setIsParent(LevelEnum.ONE.getCode().equals(doo.getLevel())
                 || LevelEnum.TWO.getCode().equals(doo.getLevel()));
-        result.setLevel(EnumUtil.getKeyValueEnum(LevelEnum.class, doo.getLevel()));
+        result.setLevel(EnumUtil.getCodeDescEnum(LevelEnum.class, doo.getLevel()));
     }
 
     private List<ZTreeCategoryResponseDTO> tree(Map<Long, ZTreeCategoryResponseDTO> zTreeMap, Long parentId) {

@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @description: 买家端订单详情响应实体
  * @author: created by hang.yu on 2020/4/5 22:15
@@ -30,8 +32,9 @@ public class BuyerOrderDetailResponseDTO {
     @ApiModelProperty(value = "发票信息", position = 6)
     private InvoiceDTO invoiceDTO;
 
-    // 订单状态集合
+    @ApiModelProperty(value = "订单状态列表", position = 6)
+    private List<OrderStatusDTO> orderStatusList;
 
-
-
+    @ApiModelProperty(value = "商品列表", position = 7)
+    private List<SkuDTO> skuList;
 }

@@ -2,6 +2,7 @@ package com.dmall.oms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
@@ -10,6 +11,7 @@ import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
+import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import io.swagger.annotations.Api;
@@ -70,7 +72,12 @@ public interface OrderService {
     // 买家端订单详情
     @GetMapping("/detail/{subOrderId}")
     @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
-    BaseResult buyerDetail(@PathVariable("subOrderId") Long subOrderId);
+    BaseResult<BuyerOrderDetailResponseDTO> buyerDetail(@PathVariable("subOrderId") Long subOrderId);
+
+
+    @GetMapping("/seller/detail/{orderId}")
+    @ApiImplicitParam(name = "orderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    BaseResult<SellerOrderDetailResponseDTO> sellerDetail(@PathVariable("orderId") Long orderId);
 
     // 买家端订单列表
 

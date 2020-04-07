@@ -2,6 +2,7 @@ package com.dmall.oms.service.impl.order;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
@@ -10,6 +11,7 @@ import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
+import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import com.dmall.oms.api.service.OrderService;
@@ -55,6 +57,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private DeliverHandler deliverHandler;
+
+    @Autowired
+    private BuyerOrderDetailHandler buyerOrderDetailHandler;
+
+    @Autowired
+    private SellerOrderDetailHandler sellerOrderDetailHandler;
 
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
@@ -104,6 +112,16 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> deliver(@RequestBody DeliverRequestDTO requestDTO) {
         return deliverHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<BuyerOrderDetailResponseDTO> buyerDetail(Long subOrderId) {
+        return buyerOrderDetailHandler.handler(subOrderId);
+    }
+
+    @Override
+    public BaseResult<SellerOrderDetailResponseDTO> sellerDetail(Long orderId) {
+        return sellerOrderDetailHandler.handler(orderId);
     }
 
 }

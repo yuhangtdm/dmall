@@ -91,8 +91,8 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
 
     @Override
     protected void customerConvertDto(PageAttributeResponseDTO result, AttributeDO doo) {
-        result.setInputType(EnumUtil.getKeyValueEnum(InputTypeEnum.class, doo.getInputType()));
-        result.setType(EnumUtil.getKeyValueEnum(TypeEnum.class, doo.getType()));
-        result.setHandAddStatus(EnumUtil.getKeyValueEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));
+        result.setInputType(EnumUtil.getCodeDescEnum(InputTypeEnum.class, doo.getInputType()));
+        result.setType(EnumUtil.getCodeDescEnum(TypeEnum.class, doo.getType()));
+        result.setHandAddStatus(EnumUtil.getCodeDescEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));
     }
 }
