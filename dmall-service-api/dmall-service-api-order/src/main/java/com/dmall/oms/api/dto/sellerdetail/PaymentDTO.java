@@ -1,7 +1,7 @@
 package com.dmall.oms.api.dto.sellerdetail;
 
-import com.dmall.oms.api.enums.PaymentStatusEnum;
-import com.dmall.oms.api.enums.PaymentTypeEnum;
+import com.dmall.pay.api.enums.PaymentStatusEnum;
+import com.dmall.pay.api.enums.PaymentTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +16,6 @@ import java.util.Date;
 @Data
 @ApiModel(value = "PaymentDTO", description = "订单支付信息")
 public class PaymentDTO {
-
 
     @ApiModelProperty(value = "paymentId", position = 1)
     private Long paymentId;

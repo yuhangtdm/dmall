@@ -42,7 +42,6 @@ public class SubOrderDO implements Serializable {
      */
     private String deliverStatus;
 
-    // todo 快递信息可考虑分表
     /**
      * 物流公司
      */

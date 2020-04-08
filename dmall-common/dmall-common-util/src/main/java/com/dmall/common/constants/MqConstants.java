@@ -20,4 +20,9 @@ public interface MqConstants {
      * 同步sku到es的topic
      */
     String SYNC_ES_SKU = "sync_es_sku_topic";
+
+    /**
+     * 同步sku到es的topic
+     */
+    String SYNC_ES_ORDER = "sync_es_order_topic";
 }

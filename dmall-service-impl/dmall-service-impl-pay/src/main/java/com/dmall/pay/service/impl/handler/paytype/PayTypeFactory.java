@@ -1,6 +1,6 @@
 package com.dmall.pay.service.impl.handler.paytype;
 
-import com.dmall.pay.api.enums.PayTypeEnum;
+import com.dmall.pay.api.enums.PaymentTypeEnum;
 import com.dmall.pay.service.impl.handler.paytype.strategy.AliPayTypeStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,8 +18,8 @@ public class PayTypeFactory {
     /**
      * 获取支付策略
      */
-    public PayTypeService createInstance(PayTypeEnum payTypeEnum) {
-        switch (payTypeEnum) {
+    public PayTypeService createInstance(PaymentTypeEnum paymentTypeEnum) {
+        switch (paymentTypeEnum) {
             case ALI_PAY:
                 return aliPayTypeStrategy;
             case WX_PAY:

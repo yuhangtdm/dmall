@@ -1,5 +1,12 @@
 package com.dmall.oms.service.impl.order.handler;
 
+import java.math.BigDecimal;
+
+import com.dmall.oms.service.impl.order.es.SkuDTO;
+import com.google.common.collect.Lists;
+
+import java.util.Date;
+
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.cart.api.dto.delete.DeleteCartRequestDTO;
@@ -14,6 +21,7 @@ import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.cache.redis.lock.DistributedLockService;
+import com.dmall.component.elasticsearch.ESDao;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.mms.api.enums.InvoiceTypeEnum;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
@@ -28,8 +36,11 @@ import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
+import com.dmall.oms.service.impl.order.es.EsConstants;
+import com.dmall.oms.service.impl.order.es.OrderEsDTO;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
 import com.dmall.oms.service.impl.support.OrderStatusSupport;
+import com.dmall.pay.api.enums.PaymentStatusEnum;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
 import com.dmall.pms.api.dto.sku.request.CheckOrderSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.SkuStockRequestDTO;
@@ -82,6 +93,9 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     @Autowired
     private OrderLogSupport orderLogSupport;
 
+    @Autowired
+    private ESDao esDao;
+
     @Override
     public BaseResult<Long> processor(CreateOrderRequestDTO requestDTO) {
         // step1. 获取登录的会员信息
@@ -105,7 +119,7 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
             return ResultUtil.fail(skuResponse.getCode(), skuResponse.getMsg());
         }
         // step3. 写入订单表
-        OrderDO orderDO = insertOrderDO(requestDTO, loginMember);
+        OrderDO orderDO = insertOrderDO(requestDTO);
         // step4. 写入订单详情表
         insertOrderItem(skuMap, skuResponse, orderDO);
         // step5. 写入订单状态记录表
@@ -124,9 +138,10 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         }
         // step9. 发送延迟消息到mq 一小时后取消未支付的订单
         sendDelayMq(orderDO);
-
         // step10. 写入es
-
+        // todo 修改为发送mq
+        esDao.saveOrUpdate(buildSkuEsDTO(orderDO, skuResponse, loginMember), EsConstants.INDEX_NAME,
+                EsConstants.TYPE_NAME, orderDO.getId());
         // step11. 释放锁
         distributedLockService.releaseLock(checkKey, requestDTO.getOrderKey());
         redisTemplate.delete(key);
@@ -134,13 +149,39 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     }
 
     /**
+     * 构建订单的es实体
+     */
+    private OrderEsDTO buildSkuEsDTO(OrderDO orderDO, BaseResult<List<BasicSkuResponseDTO>> skuResponse,
+                                     PortalMemberDTO loginMember) {
+        OrderEsDTO orderEsDTO = new OrderEsDTO();
+        orderEsDTO.setOrderId(orderDO.getId());
+        orderEsDTO.setCreator(loginMember.getId());
+        orderEsDTO.setOrderStatus(orderDO.getStatus());
+        orderEsDTO.setPaymentStatus(orderDO.getPaymentStatus());
+        orderEsDTO.setPaymentAmount(orderDO.getPaymentAmount());
+        orderEsDTO.setSource(orderDO.getSource());
+        orderEsDTO.setPaymentType(orderDO.getPaymentType());
+        orderEsDTO.setSplit(orderDO.getSplit());
+        orderEsDTO.setOrderTime(orderDO.getGmtCreated());
+        List<SkuDTO> skuList = skuResponse.getData().stream().map(sku -> {
+            SkuDTO skuDTO = new SkuDTO();
+            skuDTO.setSkuId(sku.getId());
+            skuDTO.setSkuName(sku.getName());
+            skuDTO.setSkuMainPic(sku.getPic());
+            return skuDTO;
+        }).collect(Collectors.toList());
+        orderEsDTO.setSkuList(skuList);
+        return orderEsDTO;
+    }
+
+    /**
      * 插入主订单表
      */
-    private OrderDO insertOrderDO(CreateOrderRequestDTO requestDTO, PortalMemberDTO loginMember) {
+    private OrderDO insertOrderDO(CreateOrderRequestDTO requestDTO) {
         OrderDO orderDO = new OrderDO();
         orderDO.setId(IdGeneratorUtil.snowflakeId());
         orderDO.setStatus(OrderStatusEnum.WAIT_PAY.getCode());
-        orderDO.setPaymentStatus(PaymentStatusEnum.NO_PAY.getCode());
+        orderDO.setPaymentStatus(PaymentStatusEnum.WAIT_PAY.getCode());
         orderDO.setDeliverStatus(OrderDeliverStatusEnum.NO.getCode());
         orderDO.setCommentStatus(OrderCommentStatusEnum.NO.getCode());
         orderDO.setSource(requestDTO.getSource());

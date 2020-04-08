@@ -3,6 +3,8 @@ package com.dmall.oms.api.dto.sellerdetail;
 import com.dmall.common.enums.SourceEnum;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.oms.api.enums.*;
+import com.dmall.pay.api.enums.PaymentStatusEnum;
+import com.dmall.pay.api.enums.PaymentTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

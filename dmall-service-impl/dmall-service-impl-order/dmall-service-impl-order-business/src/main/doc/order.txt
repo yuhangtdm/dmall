@@ -1,0 +1,72 @@
+PUT /dmall_order
+{
+	"settings": {
+		"number_of_shards": 1,
+		"number_of_replicas": 1
+	},
+	"mappings": {
+		"doc": {
+			"properties": {
+				"orderId": {
+					"type": "long"
+				},
+				"creator":{
+				    "type": "long"
+				}
+				"orderStatus": {
+					"type": "long"
+				},
+				"paymentStatus": {
+					"type": "long"
+				},
+				"paymentAmount": {
+					"type": "double"
+				},
+				"source": {
+					"type": "long"
+				},
+				"paymentType": {
+					"type": "long"
+				},
+				"split": {
+					"type": "long"
+				},
+				"orderTime": {
+					"type": "date"
+				},
+				"skuList":{
+				    "type": "object",
+                    "properties": {
+                        "skuId": {
+                            "type": "long"
+                        },
+                        "skuName": {
+                            "type": "text",
+                            "analyzer": "ik_max_word"
+                        },
+                        "skuMainPic": {
+                            "type": "keyword"
+                        }
+				}
+				"subOrderList": {
+					"type": "object",
+					"properties": {
+						"subOrderId": {
+							"type": "long"
+						},
+						"skuId": {
+							"type": "long"
+						},
+						"skuName": {
+							"type": "text",
+							"analyzer": "ik_max_word"
+						},
+						"skuMainPic": {
+							"type": "keyword"
+						}
+					}
+				}
+			}
+		}
+	}
+}

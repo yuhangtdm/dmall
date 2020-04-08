@@ -1,5 +1,8 @@
 package com.dmall.oms.service.impl.order.es;
 
+import lombok.Data;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +10,7 @@ import java.util.List;
  * @description: 订单es对象
  * @author: created by hang.yu on 2020/4/4 15:14
  */
+@Data
 public class OrderEsDTO {
 
     /**
@@ -15,10 +19,52 @@ public class OrderEsDTO {
     private Long orderId;
 
     /**
+     * 订单创建人
+     */
+    private Long creator;
+
+    /**
+     * 订单状态
+     */
+    private Integer orderStatus;
+
+    /**
+     * 支付状态
+     */
+    private Integer paymentStatus;
+
+    /**
+     * 支付金额
+     */
+    private BigDecimal paymentAmount;
+
+    /**
+     * 订单来源
+     */
+    private Integer source;
+
+    /**
+     * 支付状态
+     */
+    private Integer paymentType;
+
+    /**
+     * 拆单情况
+     */
+    private Integer split;
+
+    /**
      * 下单时间
      */
     private Date orderTime;
 
+    /**
+     * 订单的sku列表
+     */
+    private List<SkuDTO> skuList;
 
+    /**
+     * 子订单列表
+     */
     private List<SubOrderDTO> subOrderList;
 }

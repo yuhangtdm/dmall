@@ -1,6 +1,6 @@
 package com.dmall.oms.api.dto.buyerdetail;
 
-import com.dmall.oms.api.enums.PaymentTypeEnum;
+import com.dmall.pay.api.enums.PaymentTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

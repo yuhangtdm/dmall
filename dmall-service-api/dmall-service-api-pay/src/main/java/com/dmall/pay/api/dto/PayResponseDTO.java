@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -12,7 +13,9 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "PayResponseDTO", description = "支付请求出参")
-public class PayResponseDTO {
+public class PayResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = -8691742891101392103L;
 
     @ApiModelProperty(value = "支付返回数据", position = 1)
     private String aliPayResult;
