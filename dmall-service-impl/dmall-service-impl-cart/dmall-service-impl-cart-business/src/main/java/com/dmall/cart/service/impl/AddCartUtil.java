@@ -65,10 +65,9 @@ public class AddCartUtil {
                     .findFirst();
             if (first.isPresent()) {
                 CartItemDO cartItemDO = first.get();
-                cartItemDO.setQuantity(cartItemDO.getQuantity() + number);
-                cartItemDO.setQuantity(operateEnum == OperateEnum.ADD ? (cartItemDO.getQuantity() + number) : number);
+                cartItemDO.setNumber(operateEnum == OperateEnum.ADD ? (cartItemDO.getNumber() + number) : number);
                 cartItemDO.setSkuPrice(skuData.getPrice());
-                cartItemDO.setSkuAmount(NumberUtil.mul(skuData.getPrice(), number));
+                cartItemDO.setSkuTotalPrice(NumberUtil.mul(skuData.getPrice(), number));
                 return cartItemDO;
             } else {
                 return getInsertCartDb(number, skuData, login);
@@ -94,9 +93,9 @@ public class AddCartUtil {
         cartItemDO.setSkuId(skuData.getId());
         cartItemDO.setProductId(skuData.getProductId());
         cartItemDO.setMemberId(login.getId());
-        cartItemDO.setQuantity(number);
-        cartItemDO.setSkuPrice(skuData.getPrice());
-        cartItemDO.setSkuAmount(NumberUtil.mul(skuData.getPrice(), cartItemDO.getQuantity()));
+        cartItemDO.setNumber(number);
+        cartItemDO.setSkuTotalPrice(skuData.getPrice());
+        cartItemDO.setSkuTotalPrice(NumberUtil.mul(skuData.getPrice(), cartItemDO.getNumber()));
         cartItemDO.setHasStock(skuData.getStock() > 0 ? YNEnum.Y.getCode() : YNEnum.N.getCode());
         cartItemDO.setChecked(YNEnum.N.getCode());
         return cartItemDO;

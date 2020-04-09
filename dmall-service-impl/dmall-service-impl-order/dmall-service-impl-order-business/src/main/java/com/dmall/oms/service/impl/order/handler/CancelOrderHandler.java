@@ -11,6 +11,7 @@ import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
 import com.dmall.oms.service.impl.support.OrderStatusSupport;
+import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +33,9 @@ public class CancelOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
     @Autowired
     private OrderLogSupport orderLogSupport;
 
+    @Autowired
+    private SyncEsOrderSupport syncEsOrderSupport;
+
     @Override
     public BaseResult<Long> processor(Long orderId) {
         OrderDO orderDO = orderMapper.selectById(orderId);
@@ -47,6 +51,7 @@ public class CancelOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
         orderMapper.updateById(orderDO);
         orderStatusSupport.insert(orderId, OrderStatusEnum.CANCELED.getCode());
         orderLogSupport.insert(orderId, OrderOperateEnum.CANCEL, false);
+        syncEsOrderSupport.sendOrderEsMq(orderId);
         return ResultUtil.success(orderId);
     }
 }

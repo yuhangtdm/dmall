@@ -3,7 +3,7 @@ package com.dmall.pms.service.impl.sku.handler;
 import cn.hutool.core.util.NumberUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.util.FreightMoneyUtil;
+import com.dmall.common.util.FreightPriceUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
@@ -52,15 +52,15 @@ public class CreateOrderCheckHandler extends AbstractCommonHandler<CheckCreateOr
             }
             skuTotalPrice = skuTotalPrice.add(sku.getPrice());
         }
-        if (!NumberUtil.equals(skuTotalPrice, requestDTO.getTotalSkuMoney())) {
-            return ResultUtil.fail(CheckCreateOrderErrorEnum.SKU_TOTAL_MONEY_CHANGE);
+        if (!NumberUtil.equals(skuTotalPrice, requestDTO.getTotalSkuPrice())) {
+            return ResultUtil.fail(CheckCreateOrderErrorEnum.SKU_TOTAL_PRICE_CHANGE);
         }
-        BigDecimal freightMoney = FreightMoneyUtil.getFreightMoney(skuTotalPrice);
-        if (!NumberUtil.equals(freightMoney, requestDTO.getFreightMoney())) {
+        BigDecimal freightPrice = FreightPriceUtil.getFreightPrice(skuTotalPrice);
+        if (!NumberUtil.equals(freightPrice, requestDTO.getFreightPrice())) {
             return ResultUtil.fail(CheckCreateOrderErrorEnum.FREIGHT_CHANGE);
         }
-        if (!NumberUtil.equals(NumberUtil.add(skuTotalPrice, freightMoney), requestDTO.getOrderMoney())) {
-            return ResultUtil.fail(CheckCreateOrderErrorEnum.ORDER_MONEY_CHANGE);
+        if (!NumberUtil.equals(NumberUtil.add(skuTotalPrice, freightPrice), requestDTO.getOrderPrice())) {
+            return ResultUtil.fail(CheckCreateOrderErrorEnum.ORDER_PRICE_CHANGE);
         }
 
         // step3. 验证库存

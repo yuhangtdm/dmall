@@ -75,7 +75,6 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         return ResultUtil.success(responseDTO);
     }
 
-
     /**
      * 构建支付列表
      */
@@ -114,6 +113,7 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         orderBasic.setStatus(EnumUtil.getCodeDescEnum(OrderStatusEnum.class, orderDO.getStatus()));
         orderBasic.setPaymentStatus(EnumUtil.getCodeDescEnum(PaymentStatusEnum.class, orderDO.getPaymentStatus()));
         orderBasic.setDeliverStatus(EnumUtil.getCodeDescEnum(OrderDeliverStatusEnum.class, orderDO.getDeliverStatus()));
+        orderBasic.setReceiveStatus(EnumUtil.getCodeDescEnum(OrderReceiveStatusEnum.class, orderDO.getReceiveStatus()));
         orderBasic.setCommentStatus(EnumUtil.getCodeDescEnum(OrderCommentStatusEnum.class, orderDO.getCommentStatus()));
         orderBasic.setDeleteStatus(EnumUtil.getCodeDescEnum(YNEnum.class, orderDO.getIsDeleted()));
         orderBasic.setSource(EnumUtil.getCodeDescEnum(SourceEnum.class, orderDO.getSource()));
@@ -121,12 +121,12 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         orderBasic.setCancelType(EnumUtil.getCodeDescEnum(CancelTypeEnum.class, orderDO.getCancelType()));
         orderBasic.setSkuCount(orderDO.getSkuCount());
         orderBasic.setProductCount(orderDO.getProductCount());
-        orderBasic.setTotalSkuAmount(orderDO.getTotalSkuAmount());
-        orderBasic.setFreightAmount(orderDO.getFreightAmount());
-        orderBasic.setOrderAmount(orderDO.getOrderAmount());
-        orderBasic.setPaymentAmount(orderDO.getPaymentAmount());
-        orderBasic.setDealAmount(orderDO.getDealAmount());
-        orderBasic.setCouponAmount(orderDO.getCouponAmount());
+        orderBasic.setTotalSkuPrice(orderDO.getTotalSkuPrice());
+        orderBasic.setFreightPrice(orderDO.getFreightPrice());
+        orderBasic.setOrderPrice(orderDO.getOrderPrice());
+        orderBasic.setPaymentPrice(orderDO.getPaymentPrice());
+        orderBasic.setDealPrice(orderDO.getDealPrice());
+        orderBasic.setCouponPrice(orderDO.getCouponPrice());
         orderBasic.setRemark(orderDO.getRemark());
         orderBasic.setPaymentTime(orderDO.getPaymentTime());
         orderBasic.setReceiveTime(orderDO.getReceiveTime());
@@ -192,7 +192,7 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
             SubOrderDTO subOrder = new SubOrderDTO();
             subOrder.setSubOrderId(subOrderDO.getId());
             subOrder.setOrderItem(buildOrderItem(subOrderDO.getOrderItemId()));
-            subOrder.setDeliverStatus(EnumUtil.getCodeDescEnum(OrderDeliverStatusEnum.class, subOrder.getDeliverStatus()));
+            subOrder.setSubOrderStatusEnum(EnumUtil.getCodeDescEnum(SubOrderStatusEnum.class, subOrderDO.getStatus()));
             subOrder.setWarehouseId(subOrderDO.getWarehouseId());
             subOrder.setLogistics(buildLogistics(subOrderDO));
             subOrder.setDeliver(buildDeliver(subOrderDO));
@@ -241,12 +241,12 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         orderItem.setProductId(orderItemDO.getProductId());
         orderItem.setSkuName(orderItemDO.getSkuName());
         orderItem.setSkuPic(orderItemDO.getSkuPic());
-        orderItem.setSkuPrice(orderItemDO.getSkuPrice());
+        orderItem.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
         orderItem.setSkuNumber(orderItemDO.getSkuNumber());
-        orderItem.setSkuAmount(orderItemDO.getSkuAmount());
+        orderItem.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
         orderItem.setSkuSpecifications(orderItemDO.getSkuSpecifications());
-        orderItem.setCouponAmount(orderItemDO.getCouponAmount());
-        orderItem.setRealAmount(orderItemDO.getRealAmount());
+        orderItem.setCouponPrice(orderItemDO.getCouponPrice());
+        orderItem.setRealPrice(orderItemDO.getRealPrice());
         return orderItem;
     }
 

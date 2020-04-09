@@ -3,6 +3,7 @@ package com.dmall.oms.api.service;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
+import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
@@ -12,6 +13,7 @@ import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
 import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
+import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import io.swagger.annotations.Api;
@@ -69,21 +71,26 @@ public interface OrderService {
     @ApiOperation(value = "发货")
     BaseResult<Long> deliver(@RequestBody @Valid DeliverRequestDTO requestDTO);
 
-    // 买家端订单详情
     @GetMapping("/detail/{subOrderId}")
     @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "买家端订单详情")
     BaseResult<BuyerOrderDetailResponseDTO> buyerDetail(@PathVariable("subOrderId") Long subOrderId);
-
 
     @GetMapping("/seller/detail/{orderId}")
     @ApiImplicitParam(name = "orderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "卖家端订单详情")
     BaseResult<SellerOrderDetailResponseDTO> sellerDetail(@PathVariable("orderId") Long orderId);
 
-    // 买家端订单列表
+    @PostMapping("/order/page")
+    @ApiOperation(value = "买家端订单列表")
+    BaseResult<ResponsePage<BuyerOrderPageResponseDTO>> sellerOrderPage(@RequestBody @Valid BuyerOrderPageRequestDTO requestDTO);
+
 
     // 收货
 
+    // 待评价列表
+
     // 评价
 
-    // 退款...
+    // 售后...
 }

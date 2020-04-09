@@ -19,9 +19,9 @@
         <result column="type" property="type" />
         <result column="sku_name" property="skuName" />
         <result column="sku_pic" property="skuPic" />
-        <result column="quantity" property="quantity" />
+        <result column="number" property="number" />
         <result column="price" property="price" />
-        <result column="sku_amount" property="skuAmount" />
+        <result column="sku_amount" property="skuPrice" />
         <result column="amount" property="amount" />
         <result column="status" property="status" />
         <result column="description" property="description" />
@@ -44,7 +44,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, member_id, order_id, order_item_id, product_id, sku_id, reason_id, apply_no, order_no, order_item_no, product_no, sku_no, type, sku_name, sku_pic, quantity, price, sku_amount, amount, status, description, apply_credentials, integration, handle_note, handle_man, handle_time, refund_type, pick_up_address, contact_name, contact_tel, untitled3, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, member_id, order_id, order_item_id, product_id, sku_id, reason_id, apply_no, order_no, order_item_no, product_no, sku_no, type, sku_name, sku_pic, number, price, sku_amount, amount, status, description, apply_credentials, integration, handle_note, handle_man, handle_time, refund_type, pick_up_address, contact_name, contact_tel, untitled3, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

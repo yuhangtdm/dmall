@@ -1,6 +1,6 @@
 package com.dmall.oms.api.dto.sellerdetail;
 
-import com.dmall.oms.api.enums.OrderDeliverStatusEnum;
+import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,8 +19,8 @@ public class SubOrderDTO {
     @ApiModelProperty(value = "订单明细信息,无需拆分时为null", position = 2)
     private OrderItemDTO orderItem;
 
-    @ApiModelProperty(value = "发货状态", position = 3)
-    private OrderDeliverStatusEnum deliverStatus;
+    @ApiModelProperty(value = "子订单状态", position = 3)
+    private SubOrderStatusEnum subOrderStatusEnum;
 
     @ApiModelProperty(value = "仓库id", position = 4)
     private Long warehouseId;

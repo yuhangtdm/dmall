@@ -1,6 +1,6 @@
 package com.dmall.oms.api.dto.deliverpage;
 
-import com.dmall.oms.api.enums.DeliverStatusEnum;
+import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,8 +21,8 @@ public class DeliverOrderPageResponseDTO {
     @ApiModelProperty(value = "子订单号", position = 2)
     private Long subOrderId;
 
-    @ApiModelProperty(value = "发货状态", position = 3)
-    private DeliverStatusEnum deliverStatus;
+    @ApiModelProperty(value = "子订单状态", position = 3)
+    private SubOrderStatusEnum subOrderStatus;
 
     @ApiModelProperty(value = "仓库id", position = 4)
     private Long warehouseId;

@@ -17,6 +17,7 @@ import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
 import com.dmall.oms.service.impl.support.OrderStatusSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
+import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +50,9 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
     @Autowired
     private OrderLogSupport orderLogSupport;
 
+    @Autowired
+    private SyncEsOrderSupport syncEsOrderSupport;
+
     private static final String LOG_CONTENT = "子订单:{}已发货";
 
     private static final String ORDER_LOG_CONTENT = "订单已全部发货";
@@ -59,7 +63,7 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
         if (subOrderDO == null) {
             return ResultUtil.fail(OrderErrorEnum.SUB_ORDER_NOT_EXISTS);
         }
-        subOrderDO.setDeliverStatus(DeliverStatusEnum.Y.getCode());
+        subOrderDO.setStatus(SubOrderStatusEnum.WAIT_RECEIVE.getCode());
         subOrderDO.setLogisticsNo(requestDTO.getLogisticsNo());
         subOrderDO.setLogisticsCompany(requestDTO.getLogisticsCompany());
         subOrderDO.setExpressFee(requestDTO.getExpressFee());
@@ -67,6 +71,7 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
         if (adminUser.getWarehouseId() == null) {
             return ResultUtil.fail(OrderErrorEnum.DELIVER_PERSON_WAREHOUSE_EMPTY);
         }
+        // 获取仓库信息
         BaseResult<CommonDeliverWarehouseResponseDTO> warehouseBaseResult = deliverWarehouseFeign.get(adminUser.getWarehouseId());
         if (!warehouseBaseResult.getResult()) {
             return ResultUtil.fail(warehouseBaseResult.getCode(), warehouseBaseResult.getMsg());
@@ -77,11 +82,13 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
         subOrderDO.setDeliverRegion(data.getRegion());
         subOrderDO.setDeliverDetailAddress(data.getDetailAddress());
         subOrderDO.setDeliverTime(new Date());
+        /// 修改子订单
         subOrderMapper.updateById(subOrderDO);
 
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(subOrderDO.getOrderId());
         Optional<SubOrderDO> any = subOrderList.stream()
-                .filter(subOrder -> DeliverStatusEnum.N.getCode().equals(subOrder.getDeliverStatus())).findAny();
+                .filter(subOrder -> SubOrderStatusEnum.WAIT_SHIP.getCode().equals(subOrder.getStatus())).findAny();
+        // 插入订单日志记录
         orderLogSupport.insert(subOrderDO.getOrderId(), OrderOperateEnum.DELIVER, true, subOrderDO.getId(),
                 StrUtil.format(LOG_CONTENT, subOrderDO.getId()));
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
@@ -92,7 +99,10 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
             orderStatusSupport.insert(orderDO.getId(), OrderStatusEnum.WAIT_RECEIVE.getCode());
             orderLogSupport.insert(subOrderDO.getOrderId(), OrderOperateEnum.DELIVER, true, ORDER_LOG_CONTENT);
         }
+        // 修改订单
         orderMapper.updateById(orderDO);
+        // 同步到es
+        syncEsOrderSupport.sendOrderEsMq(orderDO.getId());
         return ResultUtil.success(subOrderDO.getId());
     }
 }

@@ -29,14 +29,9 @@ public class OrderEsDTO {
     private Integer orderStatus;
 
     /**
-     * 支付状态
-     */
-    private Integer paymentStatus;
-
-    /**
      * 支付金额
      */
-    private BigDecimal paymentAmount;
+    private BigDecimal paymentPrice;
 
     /**
      * 订单来源

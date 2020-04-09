@@ -23,14 +23,14 @@ public class PaymentDTO {
     private Date paymentDate;
 
     @ApiModelProperty(value = "商品总金额", position = 3)
-    private BigDecimal totalSkuAmount;
+    private BigDecimal totalSkuPrice;
 
     @ApiModelProperty(value = "支付总金额", position = 4)
-    private BigDecimal paymentAmount;
+    private BigDecimal paymentPrice;
 
     @ApiModelProperty(value = "优惠券金额", position = 5)
-    private BigDecimal couponAmount;
+    private BigDecimal couponPrice;
 
     @ApiModelProperty(value = "运费金额", position = 6)
-    private BigDecimal freightAmount;
+    private BigDecimal freightPrice;
 }

@@ -43,6 +43,11 @@ public class OrderDO implements Serializable {
     private Integer deliverStatus;
 
     /**
+     * 发货状态: 0-待收货;1-部分收货;2-全部收货
+     */
+    private Integer receiveStatus;
+
+    /**
      * 评价状态 0-未评价;1-部分评价;2-全部评价
      */
     private Integer commentStatus;
@@ -75,32 +80,32 @@ public class OrderDO implements Serializable {
     /**
      * 商品总金额
      */
-    private BigDecimal totalSkuAmount;
+    private BigDecimal totalSkuPrice;
 
     /**
      * 运费金额
      */
-    private BigDecimal freightAmount;
+    private BigDecimal freightPrice;
 
     /**
      * 订单总金额
      */
-    private BigDecimal orderAmount;
+    private BigDecimal orderPrice;
 
     /**
      * 实际支付金额 订单总金额+运费金额-促销优惠金额-积分抵扣金额-优惠券抵扣金额
      */
-    private BigDecimal paymentAmount;
+    private BigDecimal paymentPrice;
 
     /**
      * 订单实际金额(含退款)
      */
-    private BigDecimal dealAmount;
+    private BigDecimal dealPrice;
 
     /**
      * 优惠券抵扣金额
      */
-    private BigDecimal couponAmount;
+    private BigDecimal couponPrice;
 
     /**
      * 订单备注

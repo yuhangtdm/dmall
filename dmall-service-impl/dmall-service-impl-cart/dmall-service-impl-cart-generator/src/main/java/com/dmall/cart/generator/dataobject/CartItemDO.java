@@ -45,7 +45,7 @@ public class CartItemDO implements Serializable {
     /**
      * 数量
      */
-    private Integer quantity;
+    private Integer number;
 
     /**
      * sku单价
@@ -55,7 +55,7 @@ public class CartItemDO implements Serializable {
     /**
      * sku总价
      */
-    private BigDecimal skuAmount;
+    private BigDecimal skuTotalPrice;
 
     /**
      * 是否有货 Y-有;N-无

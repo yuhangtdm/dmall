@@ -3,6 +3,8 @@ package com.dmall.oms.service.impl.order;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
+import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
+import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
@@ -21,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -63,6 +64,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private SellerOrderDetailHandler sellerOrderDetailHandler;
+
+    @Autowired
+    private BuyerOrderPageHandler buyerOrderPageHandler;
 
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
@@ -122,6 +126,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public BaseResult<SellerOrderDetailResponseDTO> sellerDetail(Long orderId) {
         return sellerOrderDetailHandler.handler(orderId);
+    }
+
+    @Override
+    public BaseResult<ResponsePage<BuyerOrderPageResponseDTO>> sellerOrderPage(@RequestBody BuyerOrderPageRequestDTO requestDTO) {
+        return buyerOrderPageHandler.handler(requestDTO);
     }
 
 }

@@ -13,14 +13,14 @@
         <result column="pay_type" property="payType" />
         <result column="member_phone" property="memberPhone" />
         <result column="product_count" property="productCount" />
-        <result column="total_amount" property="totalAmount" />
-        <result column="vip_total_amount" property="vipTotalAmount" />
-        <result column="vip_save_amount" property="vipSaveAmount" />
-        <result column="pay_amount" property="payAmount" />
-        <result column="freight_amount" property="freightAmount" />
-        <result column="promotion_amount" property="promotionAmount" />
-        <result column="integration_amount" property="integrationAmount" />
-        <result column="coupon_amount" property="couponAmount" />
+        <result column="total_amount" property="totalPrice" />
+        <result column="vip_total_amount" property="vipTotalPrice" />
+        <result column="vip_save_amount" property="vipSavePrice" />
+        <result column="pay_amount" property="payPrice" />
+        <result column="freight_amount" property="freightPrice" />
+        <result column="promotion_amount" property="promotionPrice" />
+        <result column="integration_amount" property="integrationPrice" />
+        <result column="coupon_amount" property="couponPrice" />
         <result column="integration" property="integration" />
         <result column="remark" property="remark" />
         <result column="receiver_name" property="receiverName" />

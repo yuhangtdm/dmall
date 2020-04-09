@@ -83,7 +83,7 @@ public class OrderReturnApplyDO implements Serializable {
     /**
      * 订单项实际总价
      */
-    private BigDecimal skuAmount;
+    private BigDecimal skuPrice;
 
     /**
      * 申请金额 订单项实际总价/申请数量

@@ -210,7 +210,7 @@ public class ESDao {
             result.add(source);
         }
 
-        return new ResponsePage<T>(execute.getTotal(), result);
+        return new ResponsePage(execute.getTotal(), result);
     }
 
     /**

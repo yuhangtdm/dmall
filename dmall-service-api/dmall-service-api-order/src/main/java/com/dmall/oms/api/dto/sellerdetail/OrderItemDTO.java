@@ -36,14 +36,14 @@ public class OrderItemDTO {
     private Integer skuNumber;
 
     @ApiModelProperty(value = "sku总价", position = 8)
-    private BigDecimal skuAmount;
+    private BigDecimal skuTotalPrice;
 
     @ApiModelProperty(value = "sku规格", position = 9)
     private String skuSpecifications;
 
     @ApiModelProperty(value = "优惠券抵扣分摊金额", position = 10)
-    private BigDecimal couponAmount;
+    private BigDecimal couponPrice;
 
     @ApiModelProperty(value = "订单项实际总价", position = 11)
-    private BigDecimal realAmount;
+    private BigDecimal realPrice;
 }

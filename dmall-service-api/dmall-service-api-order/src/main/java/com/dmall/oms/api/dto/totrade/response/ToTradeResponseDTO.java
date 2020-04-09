@@ -31,13 +31,13 @@ public class ToTradeResponseDTO implements Serializable {
     private Integer skuTotalNumber;
 
     @ApiModelProperty(value = "商品总价格", position = 5)
-    private BigDecimal skuTotalMoney;
+    private BigDecimal skuTotalPrice;
 
     @ApiModelProperty(value = "运费", position = 6)
-    private BigDecimal freightMoney;
+    private BigDecimal freightPrice;
 
     @ApiModelProperty(value = "总价", position = 6)
-    private BigDecimal totalMoney;
+    private BigDecimal totalPrice;
 
     @ApiModelProperty(value = "防止重复下单的key", position = 6)
     private String orderKey;

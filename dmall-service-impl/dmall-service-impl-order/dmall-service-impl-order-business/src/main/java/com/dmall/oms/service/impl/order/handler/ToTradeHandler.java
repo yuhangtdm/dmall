@@ -8,7 +8,7 @@ import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
-import com.dmall.common.util.FreightMoneyUtil;
+import com.dmall.common.util.FreightPriceUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.common.util.threadpool.ThreadPoolUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -161,12 +161,12 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
             int totalSkuNumber = tradeSku.stream().mapToInt(TradeSkuRequestDTO::getCount).sum();
             tradeResponseDTO.setSkuTotalNumber(totalSkuNumber);
             // sku总价格
-            BigDecimal totalSkuMoney = tradeResponseDTO.getSkuList().stream().map(SkuResponseDTO::getSkuTotalPrice)
+            BigDecimal totalSkuPrice = tradeResponseDTO.getSkuList().stream().map(SkuResponseDTO::getSkuTotalPrice)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
-            tradeResponseDTO.setSkuTotalMoney(totalSkuMoney);
-            tradeResponseDTO.setFreightMoney(FreightMoneyUtil.getFreightMoney(totalSkuMoney));
-            tradeResponseDTO.setTotalMoney(NumberUtil.add(tradeResponseDTO.getSkuTotalMoney(),
-                    tradeResponseDTO.getFreightMoney()));
+            tradeResponseDTO.setSkuTotalPrice(totalSkuPrice);
+            tradeResponseDTO.setFreightPrice(FreightPriceUtil.getFreightPrice(totalSkuPrice));
+            tradeResponseDTO.setTotalPrice(NumberUtil.add(tradeResponseDTO.getSkuTotalPrice(),
+                    tradeResponseDTO.getFreightPrice()));
         } catch (Exception e) {
             return ResultUtil.fail(BasicStatusEnum.FAIL);
         }

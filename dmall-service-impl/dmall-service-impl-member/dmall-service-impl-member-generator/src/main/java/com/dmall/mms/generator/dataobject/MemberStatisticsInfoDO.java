@@ -33,7 +33,7 @@ public class MemberStatisticsInfoDO implements Serializable {
     /**
      * 累计消费金额
      */
-    private Integer consumeAmount;
+    private Integer consumePrice;
 
     /**
      * 订单数量

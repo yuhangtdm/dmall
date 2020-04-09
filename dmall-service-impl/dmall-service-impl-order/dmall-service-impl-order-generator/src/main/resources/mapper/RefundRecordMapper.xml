@@ -8,7 +8,7 @@
         <result column="order_id" property="orderId" />
         <result column="order_item_id" property="orderItemId" />
         <result column="sku_id" property="skuId" />
-        <result column="quantity" property="quantity" />
+        <result column="number" property="number" />
         <result column="amout" property="amout" />
         <result column="trade_no" property="tradeNo" />
         <result column="subject" property="subject" />
@@ -21,7 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, order_id, order_item_id, sku_id, quantity, amout, trade_no, subject, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, order_id, order_item_id, sku_id, number, amout, trade_no, subject, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

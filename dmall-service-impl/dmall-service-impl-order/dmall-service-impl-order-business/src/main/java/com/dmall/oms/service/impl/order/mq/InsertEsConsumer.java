@@ -1,8 +1,6 @@
 package com.dmall.oms.service.impl.order.mq;
 
 import com.dmall.common.constants.MqConstants;
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.component.elasticsearch.ESDao;
 import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
@@ -16,7 +14,6 @@ import com.dmall.oms.service.impl.order.es.SkuDTO;
 import com.dmall.oms.service.impl.order.es.SubOrderDTO;
 import com.dmall.oms.service.impl.support.OrderItemSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
-import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -69,8 +66,7 @@ public class InsertEsConsumer implements RocketMQListener<Long> {
         orderEsDTO.setOrderId(orderDO.getId());
         orderEsDTO.setCreator(orderDO.getCreator());
         orderEsDTO.setOrderStatus(orderDO.getStatus());
-        orderEsDTO.setPaymentStatus(orderDO.getPaymentStatus());
-        orderEsDTO.setPaymentAmount(orderDO.getPaymentAmount());
+        orderEsDTO.setPaymentPrice(orderDO.getPaymentPrice());
         orderEsDTO.setSource(orderDO.getSource());
         orderEsDTO.setPaymentType(orderDO.getPaymentType());
         orderEsDTO.setSplit(orderDO.getSplit());
@@ -83,6 +79,8 @@ public class InsertEsConsumer implements RocketMQListener<Long> {
                 subOrderDTO.setSkuId(orderItemDO.getSkuId());
                 subOrderDTO.setSkuName(orderItemDO.getSkuName());
                 subOrderDTO.setSkuMainPic(orderItemDO.getSkuPic());
+                subOrderDTO.setSkuNumber(orderItemDO.getSkuNumber());
+                subOrderDTO.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
                 return subOrderDTO;
             }).collect(Collectors.toList());
             orderEsDTO.setSubOrderList(subOrderList);
@@ -93,6 +91,8 @@ public class InsertEsConsumer implements RocketMQListener<Long> {
                 skuDTO.setSkuId(v.getId());
                 skuDTO.setSkuName(v.getSkuName());
                 skuDTO.setSkuMainPic(v.getSkuPic());
+                skuDTO.setSkuNumber(v.getSkuNumber());
+                skuDTO.setSkuTotalPrice(v.getSkuTotalPrice());
                 skuList.add(skuDTO);
             });
             orderEsDTO.setSkuList(skuList);

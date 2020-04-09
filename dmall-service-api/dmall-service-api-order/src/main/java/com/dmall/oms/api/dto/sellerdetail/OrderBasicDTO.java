@@ -32,6 +32,9 @@ public class OrderBasicDTO {
     @ApiModelProperty(value = "发货状态", position = 4)
     private OrderDeliverStatusEnum deliverStatus;
 
+    @ApiModelProperty(value = "收货状态", position = 4)
+    private OrderReceiveStatusEnum receiveStatus;
+
     @ApiModelProperty(value = "评价状态", position = 4)
     private OrderCommentStatusEnum commentStatus;
 
@@ -54,22 +57,22 @@ public class OrderBasicDTO {
     private Integer productCount;
 
     @ApiModelProperty(value = "商品总金额", position = 10)
-    private BigDecimal totalSkuAmount;
+    private BigDecimal totalSkuPrice;
 
     @ApiModelProperty(value = "运费金额", position = 11)
-    private BigDecimal freightAmount;
+    private BigDecimal freightPrice;
 
     @ApiModelProperty(value = "订单总金额", position = 12)
-    private BigDecimal orderAmount;
+    private BigDecimal orderPrice;
 
     @ApiModelProperty(value = "实际支付金额", position = 13)
-    private BigDecimal paymentAmount;
+    private BigDecimal paymentPrice;
 
     @ApiModelProperty(value = "订单实际金额(含退款)", position = 14)
-    private BigDecimal dealAmount;
+    private BigDecimal dealPrice;
 
     @ApiModelProperty(value = "优惠券抵扣金额", position = 15)
-    private BigDecimal couponAmount;
+    private BigDecimal couponPrice;
 
     @ApiModelProperty(value = "订单备注", position = 16)
     private String remark;

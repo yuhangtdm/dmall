@@ -137,15 +137,15 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
                 BasicSkuResponseDTO data = any.get();
                 cartSkuResponseDTO.setSkuName(data.getName());
                 cartSkuResponseDTO.setSkuSpecificationsJson(data.getSkuSpecificationsJson());
-                cartSkuResponseDTO.setNumber(cartItemDO.getQuantity());
-                if (NumberUtil.isLess(data.getPrice(), cartItemDO.getSkuPrice())) {
+                cartSkuResponseDTO.setNumber(cartItemDO.getNumber());
+                if (NumberUtil.isLess(data.getPrice(), cartItemDO.getSkuTotalPrice())) {
                     cartSkuResponseDTO.setHasReductionPrice(true);
-                    cartSkuResponseDTO.setReductionPrice(NumberUtil.sub(cartItemDO.getSkuPrice(), data.getPrice()));
+                    cartSkuResponseDTO.setReductionPrice(NumberUtil.sub(cartItemDO.getSkuTotalPrice(), data.getPrice()));
                 } else {
                     cartSkuResponseDTO.setHasReductionPrice(false);
                 }
                 cartSkuResponseDTO.setSkuPrice(data.getPrice());
-                cartSkuResponseDTO.setSkuTotalPrice(NumberUtil.mul(data.getPrice(), cartItemDO.getQuantity()));
+                cartSkuResponseDTO.setSkuTotalPrice(NumberUtil.mul(data.getPrice(), cartItemDO.getNumber()));
                 cartSkuResponseDTO.setHasStock(data.getStock() > 0);
                 cartSkuResponseDTO.setStatus(data.getPublishStatus() == YNEnum.Y);
                 skuList.add(cartSkuResponseDTO);

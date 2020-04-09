@@ -10,16 +10,13 @@ PUT /dmall_order
 				"orderId": {
 					"type": "long"
 				},
-				"creator":{
-				    "type": "long"
-				}
+				"creator": {
+					"type": "long"
+				},
 				"orderStatus": {
 					"type": "long"
 				},
-				"paymentStatus": {
-					"type": "long"
-				},
-				"paymentAmount": {
+				"paymentPrice": {
 					"type": "double"
 				},
 				"source": {
@@ -34,26 +31,9 @@ PUT /dmall_order
 				"orderTime": {
 					"type": "date"
 				},
-				"skuList":{
-				    "type": "object",
-                    "properties": {
-                        "skuId": {
-                            "type": "long"
-                        },
-                        "skuName": {
-                            "type": "text",
-                            "analyzer": "ik_max_word"
-                        },
-                        "skuMainPic": {
-                            "type": "keyword"
-                        }
-				}
-				"subOrderList": {
+				"skuList": {
 					"type": "object",
 					"properties": {
-						"subOrderId": {
-							"type": "long"
-						},
 						"skuId": {
 							"type": "long"
 						},
@@ -63,6 +43,36 @@ PUT /dmall_order
 						},
 						"skuMainPic": {
 							"type": "keyword"
+						},
+						"skuNumber": {
+							"type": "long"
+						},
+						"skuTotalPrice": {
+							"type": "double"
+						}
+					},
+					"subOrderList": {
+						"type": "object",
+						"properties": {
+							"subOrderId": {
+								"type": "long"
+							},
+							"skuId": {
+								"type": "long"
+							},
+							"skuName": {
+								"type": "text",
+								"analyzer": "ik_max_word"
+							},
+							"skuMainPic": {
+								"type": "keyword"
+							},
+							"skuNumber": {
+								"type": "long"
+							},
+							"skuTotalPrice": {
+								"type": "double"
+							}
 						}
 					}
 				}

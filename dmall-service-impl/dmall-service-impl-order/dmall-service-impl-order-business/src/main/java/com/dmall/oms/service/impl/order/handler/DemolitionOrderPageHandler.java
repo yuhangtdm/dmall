@@ -59,11 +59,11 @@ public class DemolitionOrderPageHandler extends AbstractCommonHandler<Demolition
             responseDTO.setMemberId(orderDO.getCreator());
             responseDTO.setProductCount(orderDO.getProductCount());
             responseDTO.setSkuCount(orderDO.getSkuCount());
-            responseDTO.setOrderAmount(orderDO.getOrderAmount());
-            responseDTO.setPayAmount(orderDO.getPaymentAmount());
-            responseDTO.setDealAmount(orderDO.getDealAmount());
-            responseDTO.setTotalSkuAmount(orderDO.getTotalSkuAmount());
-            responseDTO.setFreightAmount(orderDO.getFreightAmount());
+            responseDTO.setOrderPrice(orderDO.getOrderPrice());
+            responseDTO.setPayPrice(orderDO.getPaymentPrice());
+            responseDTO.setDealPrice(orderDO.getDealPrice());
+            responseDTO.setTotalSkuPrice(orderDO.getTotalSkuPrice());
+            responseDTO.setFreightPrice(orderDO.getFreightPrice());
             responseDTO.setIsSplit(EnumUtil.getCodeDescEnum(SplitEnum.class, orderDO.getSplit()));
             responseDTO.setReceiverName(orderDO.getReceiverName());
             responseDTO.setReceiverPhone(orderDO.getReceiverPhone());

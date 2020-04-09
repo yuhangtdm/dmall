@@ -38,15 +38,15 @@ public class CreateOrderRequestDTO {
 
     @ApiModelProperty(value = "sku总价", position = 4)
     @NotNull(message = "sku总价不能为空")
-    private BigDecimal totalSkuMoney;
+    private BigDecimal totalSkuPrice;
 
     @ApiModelProperty(value = "运费", position = 5)
     @NotNull(message = "运费不能为空")
-    private BigDecimal freightMoney;
+    private BigDecimal freightPrice;
 
     @ApiModelProperty(value = "订单总价", position = 6)
     @NotNull(message = "订单总价不能为空")
-    private BigDecimal orderMoney;
+    private BigDecimal orderPrice;
 
     @ApiModelProperty(value = "订单来源", position = 7)
     @NotNull(message = "订单来源不能为空")

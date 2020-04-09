@@ -14,11 +14,11 @@ public enum OrderErrorEnum implements ErrorCodeEnum {
 
     SKU_PRICE_CHANGE("1001", "价格发生改变,请重新下单"),
 
-    SKU_TOTAL_MONEY_CHANGE("1002", "商品总价不允许修改,请重新下单"),
+    SKU_TOTAL_PRICE_CHANGE("1002", "商品总价不允许修改,请重新下单"),
 
     FREIGHT_CHANGE("1003", "运费不允许修改,请重新下单"),
 
-    ORDER_MONEY_CHANGE("1004", "总价不允许修改,请重新下单"),
+    ORDER_PRICE_CHANGE("1004", "总价不允许修改,请重新下单"),
 
     INSUFFICIENT_INVENTORY("1005", "很抱歉,库存不足"),
 

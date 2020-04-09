@@ -70,7 +70,7 @@ public class OrderItemDO implements Serializable {
     /**
      * sku总价
      */
-    private BigDecimal skuAmount;
+    private BigDecimal skuTotalPrice;
 
     /**
      * sku规格
@@ -80,12 +80,12 @@ public class OrderItemDO implements Serializable {
     /**
      * 优惠券抵扣分摊金额
      */
-    private BigDecimal couponAmount;
+    private BigDecimal couponPrice;
 
     /**
      * 订单项实际总价
      */
-    private BigDecimal realAmount;
+    private BigDecimal realPrice;
 
     /**
      * 创建人

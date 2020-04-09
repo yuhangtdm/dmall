@@ -87,7 +87,7 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
         SkuDTO skuDTO = new SkuDTO();
         skuDTO.setSkuId(orderItemDO.getSkuId());
         skuDTO.setSkuName(orderItemDO.getSkuName());
-        skuDTO.setSkuPrice(orderItemDO.getSkuPrice());
+        skuDTO.setSkuPrice(orderItemDO.getSkuTotalPrice());
         skuDTO.setSkuNumber(orderItemDO.getSkuNumber());
         return skuDTO;
     }
@@ -113,10 +113,10 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setPaymentType(EnumUtil.getCodeDescEnum(PaymentTypeEnum.class, orderDO.getPaymentType()));
         paymentDTO.setPaymentDate(orderDO.getPaymentTime());
-        paymentDTO.setTotalSkuAmount(orderDO.getTotalSkuAmount());
-        paymentDTO.setPaymentAmount(orderDO.getPaymentAmount());
-        paymentDTO.setCouponAmount(orderDO.getCouponAmount());
-        paymentDTO.setFreightAmount(orderDO.getFreightAmount());
+        paymentDTO.setTotalSkuPrice(orderDO.getTotalSkuPrice());
+        paymentDTO.setPaymentPrice(orderDO.getPaymentPrice());
+        paymentDTO.setCouponPrice(orderDO.getCouponPrice());
+        paymentDTO.setFreightPrice(orderDO.getFreightPrice());
         return paymentDTO;
     }
 

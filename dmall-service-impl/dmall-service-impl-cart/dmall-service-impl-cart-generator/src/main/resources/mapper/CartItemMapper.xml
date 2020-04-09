@@ -8,9 +8,9 @@
         <result column="sku_id" property="skuId" />
         <result column="product_id" property="productId" />
         <result column="member_id" property="memberId" />
-        <result column="quantity" property="quantity" />
+        <result column="number" property="number" />
         <result column="sku_price" property="skuPrice" />
-        <result column="sku_amount" property="skuAmount" />
+        <result column="sku_amount" property="skuPrice" />
         <result column="hasStock" property="hasStock" />
         <result column="checked" property="checked" />
         <result column="creator" property="creator" />
@@ -22,7 +22,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, sku_id, product_id, member_id, quantity, sku_price, sku_amount, hasStock, checked, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, sku_id, product_id, member_id, number, sku_price, sku_amount, hasStock, checked, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.dmall.mms.generator.dataobject.MemberStatisticsInfoDO">
         <id column="id" property="id" />
         <result column="member_id" property="memberId" />
-        <result column="consume_amount" property="consumeAmount" />
+        <result column="consume_amount" property="consumePrice" />
         <result column="order_count" property="orderCount" />
         <result column="coupon_count" property="couponCount" />
         <result column="comment_count" property="commentCount" />

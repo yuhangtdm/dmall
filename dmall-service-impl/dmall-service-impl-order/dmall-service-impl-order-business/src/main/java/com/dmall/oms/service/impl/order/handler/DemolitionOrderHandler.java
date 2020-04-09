@@ -10,15 +10,16 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.demolitionorder.DemolitionDetailRequestDTO;
 import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
-import com.dmall.oms.api.enums.DeliverStatusEnum;
 import com.dmall.oms.api.enums.OrderErrorEnum;
 import com.dmall.oms.api.enums.OrderOperateEnum;
 import com.dmall.oms.api.enums.SplitEnum;
+import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
+import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,9 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
 
     @Autowired
     private OrderLogSupport orderLogSupport;
+
+    @Autowired
+    private SyncEsOrderSupport syncEsOrderSupport;
 
     private static final String LOG_CONTENT = "拆单成功,类型:无需拆单";
 
@@ -83,7 +87,7 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
             }
             subOrderDO.setOrderId(orderDO.getId());
             subOrderDO.setOrderItemId(detail.getOrderItemId());
-            subOrderDO.setDeliverStatus(DeliverStatusEnum.N.getCode());
+            subOrderDO.setStatus(SubOrderStatusEnum.WAIT_SHIP.getCode());
             subOrderDO.setWarehouseId(detail.getWarehouseId());
             subOrderDO.setDeliverId(detail.getDeliveryId());
             subOrderMapper.insert(subOrderDO);
@@ -95,6 +99,7 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
             orderLogSupport.insert(orderDO.getId(), OrderOperateEnum.SPLIT, true,
                     StrUtil.format(LOG_CONTENT_SPLIT, stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","))));
         }
+        syncEsOrderSupport.sendOrderEsMq(orderDO.getId());
 
         return ResultUtil.success(requestDTO.getOrderId());
     }

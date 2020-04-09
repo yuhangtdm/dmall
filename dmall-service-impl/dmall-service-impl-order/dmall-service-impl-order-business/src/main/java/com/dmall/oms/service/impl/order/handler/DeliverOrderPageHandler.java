@@ -11,7 +11,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageResponseDTO;
-import com.dmall.oms.api.enums.DeliverStatusEnum;
+import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import com.dmall.oms.feign.RoleFeign;
 import com.dmall.oms.service.impl.order.mapper.DeliverOrderPageDTO;
 import com.dmall.oms.service.impl.order.mapper.DeliverOrderPageMapper;
@@ -61,6 +61,6 @@ public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderP
 
     @Override
     protected void customerConvertDto(DeliverOrderPageResponseDTO result, DeliverOrderPageDTO doo) {
-        result.setDeliverStatus(EnumUtil.getCodeDescEnum(DeliverStatusEnum.class, doo.getDeliverStatus()));
+        result.setSubOrderStatus(EnumUtil.getCodeDescEnum(SubOrderStatusEnum.class, doo.getDeliverStatus()));
     }
 }

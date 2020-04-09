@@ -9398,7 +9398,7 @@
             remRadian: io,
             isRadianAroundZero: no,
             parseDate: ro,
-            quantity: ao,
+            number: ao,
             nice: so,
             quantile: lo,
             reformIntervals: ho,

@@ -60,31 +60,31 @@ public class DemolitionOrderPageResponseDTO implements Serializable {
      * 订单总金额
      */
     @ApiModelProperty(value = "订单总金额", position = 7)
-    private BigDecimal orderAmount;
+    private BigDecimal orderPrice;
 
     /**
      * 实际支付金额 订单总金额+运费金额-促销优惠金额-积分抵扣金额-优惠券抵扣金额
      */
     @ApiModelProperty(value = "实际支付金额", position = 8)
-    private BigDecimal payAmount;
+    private BigDecimal payPrice;
 
     /**
      * 订单实际金额(含退款)
      */
     @ApiModelProperty(value = "订单实际金额(含退款)", position = 9)
-    private BigDecimal dealAmount;
+    private BigDecimal dealPrice;
 
     /**
      * sku总金额
      */
     @ApiModelProperty(value = "sku总金额", position = 10)
-    private BigDecimal totalSkuAmount;
+    private BigDecimal totalSkuPrice;
 
     /**
      * 运费金额
      */
     @ApiModelProperty(value = "运费金额", position = 11)
-    private BigDecimal freightAmount;
+    private BigDecimal freightPrice;
 
     /**
      * 订单是否拆分: 1-未拆分;2-无需拆分;3-已拆分;

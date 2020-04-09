@@ -9,6 +9,7 @@ import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
+import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,9 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
     @Autowired
     private OrderLogSupport orderLogSupport;
 
+    @Autowired
+    private SyncEsOrderSupport syncEsOrderSupport;
+
     @Override
     public BaseResult<Long> processor(Long orderId) {
         OrderDO orderDO = orderMapper.selectById(orderId);
@@ -38,6 +42,7 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
         // todo 订单在退款中  不可删除
         orderMapper.deleteById(orderId);
         orderLogSupport.insert(orderId, OrderOperateEnum.DELETE, false);
+        syncEsOrderSupport.sendOrderEsMq(orderId);
         return ResultUtil.success(orderId);
     }
 }

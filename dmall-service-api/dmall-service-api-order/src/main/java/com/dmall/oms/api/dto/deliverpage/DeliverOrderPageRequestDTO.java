@@ -3,7 +3,7 @@ package com.dmall.oms.api.dto.deliverpage;
 import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.common.enums.SourceEnum;
-import com.dmall.oms.api.enums.DeliverStatusEnum;
+import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,9 +33,9 @@ public class DeliverOrderPageRequestDTO extends PageRequestDTO {
     @ApiModelProperty(value = "会员id", position = 4)
     private Long memberId;
 
-    @ApiModelProperty(value = "发货状态", position = 5)
-    @ValueInEnum(DeliverStatusEnum.class)
-    private Integer deliverStatus;
+    @ApiModelProperty(value = "子订单状态", position = 5)
+    @ValueInEnum(SubOrderStatusEnum.class)
+    private Integer subOrderStatus;
 
     @ApiModelProperty(value = "订单创建时间,默认传当天", position = 6)
     private Date createTime = new Date();

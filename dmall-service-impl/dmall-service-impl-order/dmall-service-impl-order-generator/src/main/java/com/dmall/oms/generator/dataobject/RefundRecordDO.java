@@ -49,7 +49,7 @@ public class RefundRecordDO implements Serializable {
     /**
      * 数量
      */
-    private Integer quantity;
+    private Integer number;
 
     /**
      * 金额

@@ -20,15 +20,15 @@
         <result column="sku_name" property="skuName" />
         <result column="sku_pic" property="skuPic" />
         <result column="sku_price" property="skuPrice" />
-        <result column="sku_quantity" property="skuQuantity" />
-        <result column="total_amount" property="totalAmount" />
+        <result column="sku_number" property="skuQuantity" />
+        <result column="total_amount" property="totalPrice" />
         <result column="sku_specifications" property="skuSpecifications" />
-        <result column="freight_amount" property="freightAmount" />
-        <result column="promotion_amount" property="promotionAmount" />
-        <result column="integration_amount" property="integrationAmount" />
-        <result column="coupon_amount" property="couponAmount" />
+        <result column="freight_amount" property="freightPrice" />
+        <result column="promotion_amount" property="promotionPrice" />
+        <result column="integration_amount" property="integrationPrice" />
+        <result column="coupon_amount" property="couponPrice" />
         <result column="integration" property="integration" />
-        <result column="real_amount" property="realAmount" />
+        <result column="real_amount" property="realPrice" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />
@@ -38,7 +38,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, order_id, merchants_id, logistics_id, product_id, sku_id, member_id, product_category_id, brand_id, order_no, order_item_no, product_no, sku_no, sku_name, sku_pic, sku_price, sku_quantity, total_amount, sku_specifications, freight_amount, promotion_amount, integration_amount, coupon_amount, integration, real_amount, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, order_id, merchants_id, logistics_id, product_id, sku_id, member_id, product_category_id, brand_id, order_no, order_item_no, product_no, sku_no, sku_name, sku_pic, sku_price, sku_number, total_amount, sku_specifications, freight_amount, promotion_amount, integration_amount, coupon_amount, integration, real_amount, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>
