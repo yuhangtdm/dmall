@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.oms.service.impl.order.mapper.CommentMapper">
+
+    <resultMap id="commentPageDbDTO" type="com.dmall.oms.service.impl.order.mapper.dto.commentpage.CommentPageDbDTO">
+        <result property="subOrderId" column="sub_order_id"/>
+        <result property="subOrderStatus" column="sub_order_status"/>
+        <result property="commentStatus" column="comment_status"/>
+        <result property="orderTime" column="order_time"/>
+        <result property="receiverName" column="receiver_name"/>
+        <collection property="skuList" ofType="com.dmall.oms.service.impl.order.mapper.dto.CommentSkuDbDTO">
+            <result property="skuId" column="sku_id"/>
+            <result property="skuName" column="sku_name"/>
+            <result property="skuMainPic" column="sku_main_pic"/>
+            <result property="skuNumber" column="sku_number"/>
+            <result property="skuTotalPrice" column="sku_total_price"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="toCommentDbDTO" type="com.dmall.oms.service.impl.order.mapper.dto.tocomment.ToCommentDbDTO">
+        <result property="subOrderId" column="sub_order_id"/>
+        <result property="orderTime" column="order_time"/>
+        <collection property="skuList" ofType="com.dmall.oms.service.impl.order.mapper.dto.CommentSkuDbDTO">
+            <result property="skuId" column="sku_id"/>
+            <result property="skuName" column="sku_name"/>
+            <result property="skuMainPic" column="sku_main_pic"/>
+            <result property="skuNumber" column="sku_number"/>
+            <result property="skuTotalPrice" column="sku_total_price"/>
+        </collection>
+    </resultMap>
+
+    <select id="commentPage" resultMap="commentPageDbDTO">
+       SELECT
+            result.sub_order_id,
+            result.order_id,
+            result.sub_order_status,
+            result.comment_status,
+            result.order_time,
+            result.receiver_name,
+            result.sku_id,
+            result.sku_name,
+            result.sku_number,
+            result.sku_total_price
+        FROM
+            (
+                SELECT
+                    oso.id AS sub_order_id,
+                    oso.order_id AS order_id,
+                    oso. STATUS AS sub_order_status,
+                    oso.comment_status AS comment_status,
+                    oo.gmt_created AS order_time,
+                    oo.receiver_name AS receiver_name,
+                    ooi.sku_id AS sku_id,
+                    ooi.sku_name AS sku_name,
+                    ooi.sku_number AS sku_number,
+                    ooi.sku_total_price AS sku_total_price
+                FROM
+                    oms_sub_order oso
+                INNER JOIN oms_order oo ON oso.order_id = oo.id
+                LEFT JOIN oms_order_item ooi ON oo.id = ooi.order_id
+                WHERE
+                    oso.is_deleted = 'N'
+                AND oo.is_deleted = 'N'
+                AND ooi.is_deleted = 'N'
+                AND oso. STATUS = 4
+                AND oo.split = 2
+                AND oo.creator = #{request.creator}
+                AND oso.comment_status = #{request.commentStatus}
+                UNION
+                    SELECT
+                        oso.id AS sub_order_id,
+                        oso.order_id AS order_id,
+                        oso. STATUS AS sub_order_status,
+                        oso.comment_status AS comment_status,
+                        oo.gmt_created AS order_time,
+                        oo.receiver_name AS receiver_name,
+                        ooi.sku_id AS sku_id,
+                        ooi.sku_name AS sku_name,
+                        ooi.sku_number AS sku_number,
+                        ooi.sku_total_price AS sku_total_price
+                    FROM
+                        oms_sub_order oso
+                    INNER JOIN oms_order oo ON oso.order_id = oo.id
+                    INNER JOIN oms_order_item ooi ON oso.order_item_id = ooi.id
+                    WHERE
+                        oso.is_deleted = 'N'
+                    AND oo.is_deleted = 'N'
+                    AND ooi.is_deleted = 'N'
+                    AND oso.STATUS = 4
+                    AND oo.split = 3
+                    AND oo.creator = #{request.creator}
+                    AND oso.comment_status = #{request.commentStatus}
+            ) AS result
+        ORDER BY result.order_time DESC
+    </select>
+
+    <select id="toComment" resultMap="toCommentDbDTO">
+        SELECT
+            result.sub_order_id,
+            result.order_time,
+            result.sku_id,
+            result.sku_name,
+            result.sku_number,
+            result.sku_total_price
+        FROM
+            (
+                SELECT
+                    oso.id AS sub_order_id,
+                    oo.gmt_created AS order_time,
+                    ooi.sku_id AS sku_id,
+                    ooi.sku_name AS sku_name,
+                    ooi.sku_number AS sku_number,
+                    ooi.sku_total_price AS sku_total_price
+                FROM
+                    oms_sub_order oso
+                INNER JOIN oms_order oo ON oso.order_id = oo.id
+                LEFT JOIN oms_order_item ooi ON oo.id = ooi.order_id
+                WHERE
+                    oso.is_deleted = 'N'
+                AND oo.is_deleted = 'N'
+                AND ooi.is_deleted = 'N'
+                AND oso. STATUS = 4
+                AND oo.split = 2
+                AND oo.creator = #{creator}
+                AND oso.sub_order_id = #{subOrderId}
+                UNION
+                    SELECT
+                        oso.id AS sub_order_id,
+                        oo.gmt_created AS order_time,
+                        ooi.sku_id AS sku_id,
+                        ooi.sku_name AS sku_name,
+                        ooi.sku_number AS sku_number,
+                        ooi.sku_total_price AS sku_total_price
+                    FROM
+                        oms_sub_order oso
+                    INNER JOIN oms_order oo ON oso.order_id = oo.id
+                    INNER JOIN oms_order_item ooi ON oso.order_item_id = ooi.id
+                    WHERE
+                        oso.is_deleted = 'N'
+                    AND oo.is_deleted = 'N'
+                    AND ooi.is_deleted = 'N'
+                    AND oso.STATUS = 4
+                    AND oo.split = 3
+                    AND oo.creator = #{creator}
+                    AND oso.sub_order_id = #{subOrderId}
+            ) AS result
+    </select>
+
+</mapper>

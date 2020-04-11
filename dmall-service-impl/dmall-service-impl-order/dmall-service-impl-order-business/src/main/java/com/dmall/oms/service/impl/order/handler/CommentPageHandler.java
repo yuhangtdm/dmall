@@ -1,0 +1,63 @@
+package com.dmall.oms.service.impl.order.handler;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.ResponsePage;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
+import com.dmall.common.util.EnumUtil;
+import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.oms.api.dto.commentpage.CommentPageRequestDTO;
+import com.dmall.oms.api.dto.commentpage.response.CommentPageResponseDTO;
+import com.dmall.oms.api.dto.commentpage.response.CommentSkuDTO;
+import com.dmall.oms.generator.dataobject.SubOrderDO;
+import com.dmall.oms.service.impl.order.mapper.CommentMapper;
+import com.dmall.oms.service.impl.order.mapper.dto.commentpage.CommentPageDbDTO;
+import com.dmall.oms.service.impl.order.mapper.dto.commentpage.CommentPageRequestDbDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @description: 评价分页处理器
+ * @author: created by hang.yu on 2020/4/11 21:20
+ */
+@Component
+public class CommentPageHandler extends AbstractCommonHandler<CommentPageRequestDTO, SubOrderDO, CommentPageResponseDTO> {
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Override
+    public BaseResult<ResponsePage<CommentPageResponseDTO>> processor(CommentPageRequestDTO requestDTO) {
+        CommentPageRequestDbDTO commentPageRequestDbDTO = new CommentPageRequestDbDTO();
+        commentPageRequestDbDTO.setCommentStatus(requestDTO.getCommentStatus());
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        commentPageRequestDbDTO.setCreator(portalMemberDTO.getId());
+        Page page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
+        List<CommentPageDbDTO> result = commentMapper.commentPage(page, commentPageRequestDbDTO);
+        List<CommentPageResponseDTO> collect = result.stream().map(commentPageDbDTO -> {
+            CommentPageResponseDTO responseDTO = new CommentPageResponseDTO();
+            responseDTO.setSubOrderId(commentPageDbDTO.getSubOrderId());
+            responseDTO.setCommentStatus(EnumUtil.getCodeDescEnum(YNEnum.class, commentPageDbDTO.getCommentStatus()));
+            responseDTO.setOrderTime(commentPageDbDTO.getOrderTime());
+            responseDTO.setReceiverName(commentPageDbDTO.getReceiverName());
+            List<CommentSkuDTO> skuList = commentPageDbDTO.getSkuList().stream().map(commentSkuDbDTO -> {
+                CommentSkuDTO commentSkuDTO = new CommentSkuDTO();
+                commentSkuDTO.setSkuId(commentSkuDbDTO.getSkuId());
+                commentSkuDTO.setSkuName(commentSkuDbDTO.getSkuName());
+                commentSkuDTO.setSkuMainPic(commentSkuDbDTO.getSkuMainPic());
+                commentSkuDTO.setSkuNumber(commentSkuDbDTO.getSkuNumber());
+                commentSkuDTO.setSkuTotalPrice(commentSkuDbDTO.getSkuTotalPrice());
+                return commentSkuDTO;
+            }).collect(Collectors.toList());
+            responseDTO.setSkuList(skuList);
+            return responseDTO;
+        }).collect(Collectors.toList());
+        return ResultUtil.success(new ResponsePage(page.getTotal(), collect));
+    }
+}

@@ -15,18 +15,12 @@ public enum SubOrderStatusEnum implements CodeDescEnum<Integer> {
     /**
      * 待发货
      */
-    WAIT_SHIP(1, "待发货"),
+    WAIT_SHIP(2, "待发货"),
 
     /**
      * 待收货
      */
-    WAIT_RECEIVE(2, "待收货"),
-
-
-    /**
-     * 待评价
-     */
-    WAIT_COMMENT(3, "待评价"),
+    WAIT_RECEIVE(3, "待收货"),
 
     /**
      * 已完成

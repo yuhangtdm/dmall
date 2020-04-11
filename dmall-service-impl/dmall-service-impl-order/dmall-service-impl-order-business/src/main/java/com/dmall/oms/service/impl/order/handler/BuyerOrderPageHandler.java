@@ -13,6 +13,7 @@ import com.dmall.component.elasticsearch.entity.*;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
+import com.dmall.oms.api.dto.buyerorderpage.response.BuyerReceiverDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerSkuDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerSubOrderDTO;
 import com.dmall.oms.api.enums.OrderStatusEnum;
@@ -20,6 +21,7 @@ import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.service.impl.order.es.EsConstants;
 import com.dmall.oms.service.impl.order.es.OrderEsDTO;
+import com.dmall.oms.service.impl.order.es.ReceiverDTO;
 import com.google.common.collect.Lists;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +99,12 @@ public class BuyerOrderPageHandler extends AbstractCommonHandler<BuyerOrderPageR
             responseDTO.setOrderStatus(EnumUtil.getCodeDescEnum(OrderStatusEnum.class, orderEsDTO.getOrderStatus()));
             responseDTO.setOrderTime(orderEsDTO.getOrderTime());
             responseDTO.setSplit(EnumUtil.getCodeDescEnum(SplitEnum.class, orderEsDTO.getSplit()));
+            BuyerReceiverDTO receiver = new BuyerReceiverDTO();
+            ReceiverDTO receiverDTO = orderEsDTO.getReceiver();
+            receiver.setReceiverName(receiverDTO.getReceiverName());
+            receiver.setReceiverPhone(receiverDTO.getReceiverPhone());
+            receiver.setReceiverAddress(receiverDTO.getReceiverAddress());
+            responseDTO.setReceiver(receiver);
             if (CollUtil.isNotEmpty(orderEsDTO.getSubOrderList())) {
                 List<BuyerSubOrderDTO> collect = orderEsDTO.getSubOrderList().stream().map(subOrderDTO -> {
                     BuyerSubOrderDTO buyerSubOrderDTO = new BuyerSubOrderDTO();

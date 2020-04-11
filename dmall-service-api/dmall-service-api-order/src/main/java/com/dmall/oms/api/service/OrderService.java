@@ -4,6 +4,8 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
+import com.dmall.oms.api.dto.commentpage.CommentPageRequestDTO;
+import com.dmall.oms.api.dto.commentpage.response.CommentPageResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
@@ -14,6 +16,7 @@ import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
 import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
+import com.dmall.oms.api.dto.tocomment.ToCommentResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import io.swagger.annotations.Api;
@@ -77,7 +80,7 @@ public interface OrderService {
     BaseResult<BuyerOrderDetailResponseDTO> buyerDetail(@PathVariable("subOrderId") Long subOrderId);
 
     @GetMapping("/seller/detail/{orderId}")
-    @ApiImplicitParam(name = "orderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @ApiImplicitParam(name = "orderId", value = "订单号", required = true, dataType = "int", paramType = "path")
     @ApiOperation(value = "卖家端订单详情")
     BaseResult<SellerOrderDetailResponseDTO> sellerDetail(@PathVariable("orderId") Long orderId);
 
@@ -85,12 +88,23 @@ public interface OrderService {
     @ApiOperation(value = "买家端订单列表")
     BaseResult<ResponsePage<BuyerOrderPageResponseDTO>> sellerOrderPage(@RequestBody @Valid BuyerOrderPageRequestDTO requestDTO);
 
+    @GetMapping("/receive/{subOrderId}")
+    @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "确认收货")
+    BaseResult<Long> receive(@PathVariable("subOrderId") Long subOrderId);
 
-    // 收货
+    @PostMapping("/commentPage")
+    @ApiOperation(value = "评价分页")
+    BaseResult<ResponsePage<CommentPageResponseDTO>> commentPage(@RequestBody @Valid CommentPageRequestDTO requestDTO);
 
-    // 待评价列表
+    @GetMapping("/toComment/{subOrderId}")
+    @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "评价页面")
+    BaseResult<ToCommentResponseDTO> toComment(@PathVariable("subOrderId") Long subOrderId);
 
     // 评价
+
+    // 评价详情
 
     // 售后...
 }

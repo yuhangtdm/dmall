@@ -62,4 +62,9 @@ public class OrderEsDTO {
      * 子订单列表
      */
     private List<SubOrderDTO> subOrderList;
+
+    /**
+     * 收货人信息
+     */
+    private ReceiverDTO receiver;
 }

@@ -43,6 +43,11 @@ public class SubOrderDO implements Serializable {
     private Integer status;
 
     /**
+     * 评价状态 N-未评价;Y-已评价
+     */
+    private Integer commentStatus;
+
+    /**
      * 物流公司
      */
     private String logisticsCompany;

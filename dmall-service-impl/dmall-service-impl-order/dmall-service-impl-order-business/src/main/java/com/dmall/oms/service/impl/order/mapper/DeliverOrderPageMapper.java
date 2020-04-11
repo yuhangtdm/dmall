@@ -2,6 +2,7 @@ package com.dmall.oms.service.impl.order.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
+import com.dmall.oms.service.impl.order.mapper.dto.DeliverOrderPageDbDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,5 +13,5 @@ import java.util.List;
  */
 public interface DeliverOrderPageMapper {
 
-    List<DeliverOrderPageDTO> deliverOrderPage(Page page, @Param("request") DeliverOrderPageRequestDTO requestDTO);
+    List<DeliverOrderPageDbDTO> deliverOrderPage(Page page, @Param("request") DeliverOrderPageRequestDTO requestDTO);
 }

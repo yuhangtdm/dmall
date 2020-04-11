@@ -41,7 +41,11 @@ public enum OrderErrorEnum implements ErrorCodeEnum {
 
     SUB_ORDER_NOT_EXISTS("5000", "子订单不存在"),
 
-    DELIVER_PERSON_WAREHOUSE_EMPTY("5001","发货员的仓库不能为空")
+    DELIVER_PERSON_WAREHOUSE_EMPTY("5001","发货员的仓库不能为空"),
+
+    RECEIVER_STATUS("6000","您当前不可确认收货"),
+
+    NOT_COMMENT("7000","您当前进评价页"),
 
     ;
 

@@ -5,6 +5,8 @@ import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
+import com.dmall.oms.api.dto.commentpage.CommentPageRequestDTO;
+import com.dmall.oms.api.dto.commentpage.response.CommentPageResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
@@ -14,6 +16,7 @@ import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
 import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
+import com.dmall.oms.api.dto.tocomment.ToCommentResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
 import com.dmall.oms.api.service.OrderService;
@@ -23,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -67,6 +71,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private BuyerOrderPageHandler buyerOrderPageHandler;
+
+    @Autowired
+    private ReceiveHandler receiveHandler;
+
+    @Autowired
+    private CommentPageHandler commentPageHandler;
+
+    @Autowired
+    private ToCommentHandler toCommentHandler;
 
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
@@ -131,6 +144,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public BaseResult<ResponsePage<BuyerOrderPageResponseDTO>> sellerOrderPage(@RequestBody BuyerOrderPageRequestDTO requestDTO) {
         return buyerOrderPageHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Long> receive(Long subOrderId) {
+        return receiveHandler.handler(subOrderId);
+    }
+
+    @Override
+    public BaseResult<ResponsePage<CommentPageResponseDTO>> commentPage(@Valid CommentPageRequestDTO requestDTO) {
+        return commentPageHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<ToCommentResponseDTO> toComment(Long subOrderId) {
+        return toCommentHandler.handler(subOrderId);
     }
 
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dmall.oms.service.impl.order.mapper.DeliverOrderPageMapper">
 
-    <select id="deliverOrderPage" resultType="com.dmall.oms.service.impl.order.mapper.DeliverOrderPageDTO">
+    <select id="deliverOrderPage" resultType="com.dmall.oms.service.impl.order.mapper.dto.DeliverOrderPageDbDTO">
         SELECT
         oso.order_id, oso.id subOrderId,oso.warehouse_id,oo.creator memberId,
         oso.deliver_status,oso.deliver_time, oso.logistics_no, oo.gmt_created orderCreateTime,

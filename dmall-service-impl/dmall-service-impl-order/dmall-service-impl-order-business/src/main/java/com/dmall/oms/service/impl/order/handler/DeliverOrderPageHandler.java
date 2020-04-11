@@ -13,7 +13,7 @@ import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageResponseDTO;
 import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import com.dmall.oms.feign.RoleFeign;
-import com.dmall.oms.service.impl.order.mapper.DeliverOrderPageDTO;
+import com.dmall.oms.service.impl.order.mapper.dto.DeliverOrderPageDbDTO;
 import com.dmall.oms.service.impl.order.mapper.DeliverOrderPageMapper;
 import com.dmall.sso.api.dto.admin.RoleResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/5 11:29
  */
 @Component
-public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderPageRequestDTO, DeliverOrderPageDTO, DeliverOrderPageResponseDTO> {
+public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderPageRequestDTO, DeliverOrderPageDbDTO, DeliverOrderPageResponseDTO> {
 
     @Autowired
     private RoleFeign roleFeign;
@@ -50,17 +50,17 @@ public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderP
                 requestDTO.setDeliverId(adminUser.getId());
             }
         }
-        Page<DeliverOrderPageDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
-        List<DeliverOrderPageDTO> deliverOrderPageDTOS = deliverOrderPageMapper.deliverOrderPage(page, requestDTO);
-        List<DeliverOrderPageResponseDTO> collect = deliverOrderPageDTOS.stream()
-                .map(deliverOrderPageDTO -> doConvertDto(deliverOrderPageDTO, DeliverOrderPageResponseDTO.class))
+        Page<DeliverOrderPageDbDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
+        List<DeliverOrderPageDbDTO> deliverOrderPageDbDTOS = deliverOrderPageMapper.deliverOrderPage(page, requestDTO);
+        List<DeliverOrderPageResponseDTO> collect = deliverOrderPageDbDTOS.stream()
+                .map(deliverOrderPageDbDTO -> doConvertDto(deliverOrderPageDbDTO, DeliverOrderPageResponseDTO.class))
                 .collect(Collectors.toList());
 
         return ResultUtil.success(new ResponsePage(page.getTotal(), collect));
     }
 
     @Override
-    protected void customerConvertDto(DeliverOrderPageResponseDTO result, DeliverOrderPageDTO doo) {
+    protected void customerConvertDto(DeliverOrderPageResponseDTO result, DeliverOrderPageDbDTO doo) {
         result.setSubOrderStatus(EnumUtil.getCodeDescEnum(SubOrderStatusEnum.class, doo.getDeliverStatus()));
     }
 }

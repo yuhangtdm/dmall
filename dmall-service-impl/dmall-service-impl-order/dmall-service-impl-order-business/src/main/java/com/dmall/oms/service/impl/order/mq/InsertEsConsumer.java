@@ -8,10 +8,7 @@ import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
-import com.dmall.oms.service.impl.order.es.EsConstants;
-import com.dmall.oms.service.impl.order.es.OrderEsDTO;
-import com.dmall.oms.service.impl.order.es.SkuDTO;
-import com.dmall.oms.service.impl.order.es.SubOrderDTO;
+import com.dmall.oms.service.impl.order.es.*;
 import com.dmall.oms.service.impl.support.OrderItemSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
 import com.google.common.collect.Lists;
@@ -71,6 +68,12 @@ public class InsertEsConsumer implements RocketMQListener<Long> {
         orderEsDTO.setPaymentType(orderDO.getPaymentType());
         orderEsDTO.setSplit(orderDO.getSplit());
         orderEsDTO.setOrderTime(orderDO.getGmtCreated());
+        ReceiverDTO receiver = new ReceiverDTO();
+        receiver.setReceiverName(orderDO.getReceiverName());
+        receiver.setReceiverPhone(orderDO.getReceiverPhone());
+        receiver.setReceiverAddress(orderDO.getReceiverPhone() + orderDO.getReceiverCity()
+                + orderDO.getReceiverRegion() + orderDO.getReceiverDetailAddress());
+        orderEsDTO.setReceiver(receiver);
         if (SplitEnum.IS.getCode().equals(orderDO.getSplit())) {
             List<SubOrderDTO> subOrderList = subOrderDOList.stream().map(subOrderDO -> {
                 SubOrderDTO subOrderDTO = new SubOrderDTO();

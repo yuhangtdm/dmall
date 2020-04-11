@@ -1,4 +1,4 @@
-package com.dmall.oms.service.impl.order.mapper;
+package com.dmall.oms.service.impl.order.mapper.dto;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.Date;
  * @author: created by hang.yu on 2020/4/5 11:32
  */
 @Data
-public class DeliverOrderPageDTO implements Serializable {
+public class DeliverOrderPageDbDTO implements Serializable {
 
     private static final long serialVersionUID = -5678489345414084186L;
 
