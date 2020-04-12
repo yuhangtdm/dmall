@@ -33,6 +33,11 @@ public class OrderItemDO implements Serializable {
     private Long orderId;
 
     /**
+     * 子订单id
+     */
+    private Long subOrderId;
+
+    /**
      * skuId
      */
     private Long skuId;

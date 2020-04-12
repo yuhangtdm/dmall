@@ -24,6 +24,6 @@ public class SplitOrderDTO {
     @ApiModelProperty(value = "拆单人员", position = 3)
     private Long splitPerson;
 
-    @ApiModelProperty(value = "拆单人员", position = 4)
+    @ApiModelProperty(value = "子订单列表", position = 4)
     private List<SubOrderDTO> subOrderList;
 }

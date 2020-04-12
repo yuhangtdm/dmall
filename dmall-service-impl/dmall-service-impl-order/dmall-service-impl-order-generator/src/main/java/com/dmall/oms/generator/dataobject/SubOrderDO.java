@@ -33,11 +33,6 @@ public class SubOrderDO implements Serializable {
     private Long orderId;
 
     /**
-     * 订单明细id
-     */
-    private Long orderItemId;
-
-    /**
      * 子订单状态 2-待发货;3-待收货;4-已完成
      */
     private Integer status;

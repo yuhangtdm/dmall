@@ -26,7 +26,7 @@ public class DemolitionOrderRequestDTO implements Serializable {
     @ApiModelProperty(value = "拆单方式", position = 2)
     @NotNull(message = "拆单方式不能为空")
     @ValueInEnum(SplitEnum.class)
-    private Integer isSplit;
+    private Integer split;
 
     @ApiModelProperty(value = "拆单原因", position = 3)
     private String splitReason;

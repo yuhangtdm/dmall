@@ -32,10 +32,7 @@ public class BuyerOrderPageResponseDTO {
     @ApiModelProperty(value = "子订单列表", position = 5)
     private List<BuyerSubOrderDTO> subOrderList;
 
-    @ApiModelProperty(value = "订单的sku列表", position = 6)
-    private List<BuyerSkuDTO> skuList;
-
-    @ApiModelProperty(value = "收货人信息", position = 7)
+    @ApiModelProperty(value = "收货人信息", position = 6)
     private BuyerReceiverDTO receiver;
 
 }

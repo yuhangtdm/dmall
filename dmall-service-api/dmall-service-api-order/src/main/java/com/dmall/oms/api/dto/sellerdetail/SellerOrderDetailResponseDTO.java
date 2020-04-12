@@ -26,9 +26,6 @@ public class SellerOrderDetailResponseDTO {
     @ApiModelProperty(value = "拆单信息", position = 4)
     private SplitOrderDTO splitOrder;
 
-    @ApiModelProperty(value = "订单项列表", position = 5)
-    private List<OrderItemDTO> items;
-
     @ApiModelProperty(value = "订单状态列表", position = 6)
     private List<SellerOrderStatusDTO> orderStatusList;
 

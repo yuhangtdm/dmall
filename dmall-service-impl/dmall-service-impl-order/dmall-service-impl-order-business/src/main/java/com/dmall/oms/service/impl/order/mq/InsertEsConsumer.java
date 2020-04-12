@@ -11,7 +11,6 @@ import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.oms.service.impl.order.es.*;
 import com.dmall.oms.service.impl.support.OrderItemSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -47,18 +45,17 @@ public class InsertEsConsumer implements RocketMQListener<Long> {
     public void onMessage(Long orderId) {
         log.info("receive insert order es message,orderId:{}", orderId);
         OrderDO orderDO = orderMapper.selectById(orderId);
+        if (orderDO == null) {
+            return;
+        }
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(orderId);
-        List<OrderItemDO> orderItemList = orderItemSupport.listByOrderId(orderId);
-        Map<Long, OrderItemDO> orderItemMap = orderItemList.stream().collect(Collectors.toMap(OrderItemDO::getId, orderItemDO -> orderItemDO));
-        esDao.saveOrUpdate(buildSkuEsDTO(orderDO, subOrderList, orderItemMap), EsConstants.INDEX_NAME,
-                EsConstants.TYPE_NAME, orderDO.getId());
+        esDao.saveOrUpdate(buildSkuEsDTO(orderDO, subOrderList), EsConstants.INDEX_NAME, EsConstants.TYPE_NAME, orderDO.getId());
     }
 
     /**
      * 构建订单的es实体
      */
-    private OrderEsDTO buildSkuEsDTO(OrderDO orderDO, List<SubOrderDO> subOrderDOList,
-                                     Map<Long, OrderItemDO> orderItemMap) {
+    private OrderEsDTO buildSkuEsDTO(OrderDO orderDO, List<SubOrderDO> subOrderDOList) {
         OrderEsDTO orderEsDTO = new OrderEsDTO();
         orderEsDTO.setOrderId(orderDO.getId());
         orderEsDTO.setCreator(orderDO.getCreator());
@@ -74,32 +71,41 @@ public class InsertEsConsumer implements RocketMQListener<Long> {
         receiver.setReceiverAddress(orderDO.getReceiverPhone() + orderDO.getReceiverCity()
                 + orderDO.getReceiverRegion() + orderDO.getReceiverDetailAddress());
         orderEsDTO.setReceiver(receiver);
-        if (SplitEnum.IS.getCode().equals(orderDO.getSplit())) {
+
+        if (SplitEnum.NOT_NEED.getCode().equals(orderDO.getSplit())) {
+            // 无需拆单
             List<SubOrderDTO> subOrderList = subOrderDOList.stream().map(subOrderDO -> {
                 SubOrderDTO subOrderDTO = new SubOrderDTO();
                 subOrderDTO.setSubOrderId(subOrderDO.getId());
-                OrderItemDO orderItemDO = orderItemMap.get(subOrderDO.getOrderItemId());
-                subOrderDTO.setSkuId(orderItemDO.getSkuId());
-                subOrderDTO.setSkuName(orderItemDO.getSkuName());
-                subOrderDTO.setSkuMainPic(orderItemDO.getSkuPic());
-                subOrderDTO.setSkuNumber(orderItemDO.getSkuNumber());
-                subOrderDTO.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
+                List<OrderItemDO> orderItemList = orderItemSupport.listByOrderId(subOrderDO.getOrderId());
+                List<SkuDTO> skuList = buildSkuList(orderItemList);
+                subOrderDTO.setSkuList(skuList);
                 return subOrderDTO;
             }).collect(Collectors.toList());
             orderEsDTO.setSubOrderList(subOrderList);
         } else {
-            List<SkuDTO> skuList = Lists.newArrayList();
-            orderItemMap.forEach((k, v) -> {
-                SkuDTO skuDTO = new SkuDTO();
-                skuDTO.setSkuId(v.getId());
-                skuDTO.setSkuName(v.getSkuName());
-                skuDTO.setSkuMainPic(v.getSkuPic());
-                skuDTO.setSkuNumber(v.getSkuNumber());
-                skuDTO.setSkuTotalPrice(v.getSkuTotalPrice());
-                skuList.add(skuDTO);
-            });
-            orderEsDTO.setSkuList(skuList);
+            List<SubOrderDTO> subOrderList = subOrderDOList.stream().map(subOrderDO -> {
+                SubOrderDTO subOrderDTO = new SubOrderDTO();
+                subOrderDTO.setSubOrderId(subOrderDO.getId());
+                List<OrderItemDO> orderItemList = orderItemSupport.listBySubOrderId(subOrderDO.getId());
+                List<SkuDTO> skuList = buildSkuList(orderItemList);
+                subOrderDTO.setSkuList(skuList);
+                return subOrderDTO;
+            }).collect(Collectors.toList());
+            orderEsDTO.setSubOrderList(subOrderList);
         }
         return orderEsDTO;
+    }
+
+    private List<SkuDTO> buildSkuList(List<OrderItemDO> orderItemList) {
+        return orderItemList.stream().map(orderItemDO -> {
+            SkuDTO skuDTO = new SkuDTO();
+            skuDTO.setSkuId(orderItemDO.getSkuId());
+            skuDTO.setSkuName(orderItemDO.getSkuName());
+            skuDTO.setSkuMainPic(orderItemDO.getSkuPic());
+            skuDTO.setSkuNumber(orderItemDO.getSkuNumber());
+            skuDTO.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
+            return skuDTO;
+        }).collect(Collectors.toList());
     }
 }

@@ -2,7 +2,7 @@ package com.dmall.oms.service.impl.order.es;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @description: 子订单
@@ -17,27 +17,7 @@ public class SubOrderDTO {
     private Long subOrderId;
 
     /**
-     * skuId
+     * 订单的sku列表
      */
-    private Long skuId;
-
-    /**
-     * sku名称
-     */
-    private String skuName;
-
-    /**
-     * sku主图
-     */
-    private String skuMainPic;
-
-    /**
-     * sku数量
-     */
-    private Integer skuNumber;
-
-    /**
-     * sku支付总价
-     */
-    private BigDecimal skuTotalPrice;
+    private List<SkuDTO> skuList;
 }

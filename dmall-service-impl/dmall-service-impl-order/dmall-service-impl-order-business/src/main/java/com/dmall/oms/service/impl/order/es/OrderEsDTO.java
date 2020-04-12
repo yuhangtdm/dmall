@@ -53,10 +53,7 @@ public class OrderEsDTO {
      */
     private Date orderTime;
 
-    /**
-     * 订单的sku列表
-     */
-    private List<SkuDTO> skuList;
+
 
     /**
      * 子订单列表

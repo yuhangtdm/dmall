@@ -22,7 +22,6 @@ import com.dmall.oms.service.impl.support.SubOrderSupport;
 import com.dmall.pay.api.dto.PaymentResponseDTO;
 import com.dmall.pay.api.enums.PaymentStatusEnum;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -68,7 +67,6 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         responseDTO.setReceiver(buildReceiver(orderDO));
         responseDTO.setInvoice(buildInvoice(orderDO));
         responseDTO.setSplitOrder(buildSplitOrder(orderDO));
-        responseDTO.setItems(buildItems(orderId, orderDO.getSplit()));
         responseDTO.setOrderStatusList(buildOrderStatusList(orderId));
         responseDTO.setOrderLogList(buildOrderLogList(orderId));
         responseDTO.setPaymentList(buildPaymentList(orderId));
@@ -174,12 +172,10 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
      */
     private SplitOrderDTO buildSplitOrder(OrderDO orderDO) {
         SplitOrderDTO splitOrder = new SplitOrderDTO();
-        if (SplitEnum.IS.getCode().equals(orderDO.getSplit())) {
-            splitOrder.setSplit(EnumUtil.getCodeDescEnum(SplitEnum.class, orderDO.getSplit()));
-            splitOrder.setSplitReason(orderDO.getSplitReason());
-            splitOrder.setSplitPerson(orderDO.getSplitPerson());
-            splitOrder.setSubOrderList(buildSubOrderList(orderDO.getId()));
-        }
+        splitOrder.setSplit(EnumUtil.getCodeDescEnum(SplitEnum.class, orderDO.getSplit()));
+        splitOrder.setSplitReason(orderDO.getSplitReason());
+        splitOrder.setSplitPerson(orderDO.getSplitPerson());
+        splitOrder.setSubOrderList(buildSubOrderList(orderDO.getId()));
         return splitOrder;
     }
 
@@ -191,7 +187,7 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         return subOrderDOS.stream().map(subOrderDO -> {
             SubOrderDTO subOrder = new SubOrderDTO();
             subOrder.setSubOrderId(subOrderDO.getId());
-            subOrder.setOrderItem(buildOrderItem(subOrderDO.getOrderItemId()));
+            subOrder.setOrderItems(buildOrderItem(subOrderDO.getId()));
             subOrder.setSubOrderStatusEnum(EnumUtil.getCodeDescEnum(SubOrderStatusEnum.class, subOrderDO.getStatus()));
             subOrder.setWarehouseId(subOrderDO.getWarehouseId());
             subOrder.setLogistics(buildLogistics(subOrderDO));
@@ -230,37 +226,25 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
     /**
      * 构建订单项信息
      */
-    private OrderItemDTO buildOrderItem(Long orderItemId) {
-        OrderItemDTO orderItem = new OrderItemDTO();
-        if (orderItemId == null) {
+    private List<OrderItemDTO> buildOrderItem(Long subOrderId) {
+        List<OrderItemDO> orderItemList = orderItemSupport.listBySubOrderId(subOrderId);
+        return orderItemList.stream().map(orderItemDO -> {
+            OrderItemDTO orderItem = new OrderItemDTO();
+            orderItem.setOrderItemId(orderItemDO.getId());
+            orderItem.setSkuId(orderItemDO.getSkuId());
+            orderItem.setProductId(orderItemDO.getProductId());
+            orderItem.setSkuName(orderItemDO.getSkuName());
+            orderItem.setSkuPic(orderItemDO.getSkuPic());
+            orderItem.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
+            orderItem.setSkuNumber(orderItemDO.getSkuNumber());
+            orderItem.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
+            orderItem.setSkuSpecifications(orderItemDO.getSkuSpecifications());
+            orderItem.setCouponPrice(orderItemDO.getCouponPrice());
+            orderItem.setRealPrice(orderItemDO.getRealPrice());
             return orderItem;
-        }
-        OrderItemDO orderItemDO = orderItemMapper.selectById(orderItemId);
-        orderItem.setOrderItemId(orderItemId);
-        orderItem.setSkuId(orderItemDO.getSkuId());
-        orderItem.setProductId(orderItemDO.getProductId());
-        orderItem.setSkuName(orderItemDO.getSkuName());
-        orderItem.setSkuPic(orderItemDO.getSkuPic());
-        orderItem.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
-        orderItem.setSkuNumber(orderItemDO.getSkuNumber());
-        orderItem.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
-        orderItem.setSkuSpecifications(orderItemDO.getSkuSpecifications());
-        orderItem.setCouponPrice(orderItemDO.getCouponPrice());
-        orderItem.setRealPrice(orderItemDO.getRealPrice());
-        return orderItem;
+        }).collect(Collectors.toList());
     }
 
-    /**
-     * 构建订单详情
-     * 非已拆分的时候执行
-     */
-    private List<OrderItemDTO> buildItems(Long orderId, Integer split) {
-        if (!SplitEnum.IS.getCode().equals(split)) {
-            return Lists.newArrayList();
-        }
-        List<OrderItemDO> orderItemList = orderItemSupport.listByOrderId(orderId);
-        return orderItemList.stream().map(orderItemDO -> buildOrderItem(orderItemDO.getOrderId())).collect(Collectors.toList());
-    }
 
     /**
      * 构建支付记录

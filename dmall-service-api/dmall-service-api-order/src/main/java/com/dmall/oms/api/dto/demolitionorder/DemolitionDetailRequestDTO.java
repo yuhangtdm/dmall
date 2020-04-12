@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * @description: 拆单细节请求实体
@@ -14,8 +16,10 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value = "DemolitionOrderRequestDTO", description = "拆单细节请求实体")
 public class DemolitionDetailRequestDTO {
 
-    @ApiModelProperty(value = "订单项id", position = 1)
-    private Long orderItemId;
+    @ApiModelProperty(value = "订单项集合", position = 1)
+    @NotNull(message = "订单项集合不能为空")
+    @Size(min = 1, message = "订单项集合不能为空")
+    private List<Long> orderItemIds;
 
     @ApiModelProperty(value = "仓库id", position = 2)
     @NotNull(message = "仓库id不能为空")

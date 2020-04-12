@@ -77,6 +77,6 @@ public class DemolitionOrderPageHandler extends AbstractCommonHandler<Demolition
             responseDTO.setCreateTime(orderDO.getGmtCreated());
             return responseDTO;
         }).collect(Collectors.toList());
-        return ResultUtil.success(new ResponsePage<DemolitionOrderPageResponseDTO>(page.getTotal(), list));
+        return ResultUtil.success(new ResponsePage(page.getTotal(), list));
     }
 }

@@ -1,32 +1,31 @@
 package com.dmall.oms.service.impl.order.handler;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.util.StrUtil;
+import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.EnumUtil;
+import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.mms.api.enums.InvoiceContentEnum;
 import com.dmall.mms.api.enums.InvoiceHeaderEnum;
 import com.dmall.oms.api.dto.buyerdetail.*;
+import com.dmall.oms.api.enums.OrderErrorEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
+import com.dmall.oms.api.enums.SplitEnum;
+import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.OrderStatusDO;
+import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
+import com.dmall.oms.generator.mapper.OrderMapper;
+import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.support.OrderItemSupport;
 import com.dmall.oms.service.impl.support.OrderStatusSupport;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
-import com.google.common.collect.Lists;
-
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.ResultUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.oms.api.enums.OrderErrorEnum;
-import com.dmall.oms.generator.dataobject.OrderDO;
-import com.dmall.oms.generator.dataobject.SubOrderDO;
-import com.dmall.oms.generator.mapper.OrderMapper;
-import com.dmall.oms.generator.mapper.SubOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description: 买家端商品详情处理器
@@ -68,19 +67,19 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
         responseDTO.setPayment(buildPayment(orderDO));
         responseDTO.setInvoiceDTO(buildInvoice(orderDO));
         responseDTO.setOrderStatusList(buildOrderStatusList(orderDO.getId()));
-        responseDTO.setSkuList(buildSkuList(orderDO, subOrderDO));
+        responseDTO.setSkuList(buildSkuList(orderDO, subOrderId));
         return ResultUtil.success(responseDTO);
     }
 
-    private List<SkuDTO> buildSkuList(OrderDO orderDO, SubOrderDO subOrderDO) {
-        if (subOrderDO.getId().equals(orderDO.getId())) {
+    private List<SkuDTO> buildSkuList(OrderDO orderDO, Long subOrderId) {
+        if (SplitEnum.NOT_NEED.getCode().equals(orderDO.getSplit())) {
             // 无需拆单
             return orderItemSupport.listByOrderId(orderDO.getId()).stream().map(this::getSkuDTO).collect(Collectors.toList());
         } else {
-            OrderItemDO orderItemDO = orderItemMapper.selectById(subOrderDO.getOrderItemId());
-            SkuDTO skuDTO = getSkuDTO(orderItemDO);
-            return Lists.newArrayList(skuDTO);
+            // 已拆成多单
+            return orderItemSupport.listBySubOrderId(subOrderId).stream().map(this::getSkuDTO).collect(Collectors.toList());
         }
+
     }
 
     private SkuDTO getSkuDTO(OrderItemDO orderItemDO) {

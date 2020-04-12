@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @description: 子订单详情实体
  * @author: created by hang.yu on 2020/4/6 11:33
@@ -16,8 +18,8 @@ public class SubOrderDTO {
     @ApiModelProperty(value = "子订单id", position = 1)
     private Long subOrderId;
 
-    @ApiModelProperty(value = "订单明细信息,无需拆分时为null", position = 2)
-    private OrderItemDTO orderItem;
+    @ApiModelProperty(value = "订单明细信息", position = 2)
+    private List<OrderItemDTO> orderItems;
 
     @ApiModelProperty(value = "子订单状态", position = 3)
     private SubOrderStatusEnum subOrderStatusEnum;
