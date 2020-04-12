@@ -119,8 +119,9 @@
                     oso.is_deleted = 'N'
                 AND oo.is_deleted = 'N'
                 AND ooi.is_deleted = 'N'
-                AND oso. STATUS = 4
+                AND oso.STATUS = 4
                 AND oo.split = 2
+                AND oso.comment_status ='N'
                 AND oo.creator = #{creator}
                 AND oso.sub_order_id = #{subOrderId}
                 UNION
@@ -141,8 +142,10 @@
                     AND ooi.is_deleted = 'N'
                     AND oso.STATUS = 4
                     AND oo.split = 3
+                    AND oso.comment_status ='N'
                     AND oo.creator = #{creator}
                     AND oso.sub_order_id = #{subOrderId}
+
             ) AS result
     </select>
 

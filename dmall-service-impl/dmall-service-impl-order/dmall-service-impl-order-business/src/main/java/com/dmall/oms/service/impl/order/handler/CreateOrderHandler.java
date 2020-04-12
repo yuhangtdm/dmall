@@ -1,5 +1,6 @@
 package com.dmall.oms.service.impl.order.handler;
 
+import com.dmall.common.enums.YNEnum;
 import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 
 import cn.hutool.core.util.NumberUtil;
@@ -203,6 +204,7 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
             orderItemDO.setSkuTotalPrice(NumberUtil.mul(sku.getPrice(), orderItemDO.getSkuNumber()));
             orderItemDO.setSkuSpecifications(sku.getSkuSpecificationsJson());
             orderItemDO.setRealPrice(orderItemDO.getSkuTotalPrice());
+            orderItemDO.setCommentStatus(YNEnum.N.getCode());
             orderItemMapper.insert(orderItemDO);
         }
     }

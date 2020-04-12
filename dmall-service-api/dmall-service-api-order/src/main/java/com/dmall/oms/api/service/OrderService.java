@@ -4,6 +4,8 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
+import com.dmall.oms.api.dto.comment.CommentRequestDTO;
+import com.dmall.oms.api.dto.commentdetail.CommentDetailResponseDTO;
 import com.dmall.oms.api.dto.commentpage.CommentPageRequestDTO;
 import com.dmall.oms.api.dto.commentpage.response.CommentPageResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
@@ -102,9 +104,15 @@ public interface OrderService {
     @ApiOperation(value = "评价页面")
     BaseResult<ToCommentResponseDTO> toComment(@PathVariable("subOrderId") Long subOrderId);
 
-    // 评价
+    @PostMapping("/comment")
+    @ApiOperation(value = "评价")
+    BaseResult comment(@RequestBody @Valid CommentRequestDTO requestDTO);
 
-    // 评价详情
+    @GetMapping("/commentDetail/{subOrderId}")
+    @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "评价详情")
+    BaseResult<List<CommentDetailResponseDTO>> commentDetail(@PathVariable("subOrderId") Long subOrderId);
+
 
     // 售后...
 }

@@ -5,6 +5,8 @@ import com.dmall.common.dto.ResponsePage;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
+import com.dmall.oms.api.dto.comment.CommentRequestDTO;
+import com.dmall.oms.api.dto.commentdetail.CommentDetailResponseDTO;
 import com.dmall.oms.api.dto.commentpage.CommentPageRequestDTO;
 import com.dmall.oms.api.dto.commentpage.response.CommentPageResponseDTO;
 import com.dmall.oms.api.dto.createorder.CreateOrderRequestDTO;
@@ -80,6 +82,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ToCommentHandler toCommentHandler;
+
+    @Autowired
+    private CommentHandler commentHandler;
+
+    @Autowired
+    private CommentDetailHandler commentDetailHandler;
 
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
@@ -159,6 +167,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public BaseResult<ToCommentResponseDTO> toComment(Long subOrderId) {
         return toCommentHandler.handler(subOrderId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult comment(@RequestBody CommentRequestDTO requestDTO) {
+        return commentHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<CommentDetailResponseDTO>> commentDetail(Long subOrderId) {
+        return commentDetailHandler.handler(subOrderId);
     }
 
 }

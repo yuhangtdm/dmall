@@ -13,16 +13,16 @@ public interface Constants {
     String DEFAULT_API_MODULE_NAME = "D:/dmall-service-api/dmall-service-api-product";
 
 
-    String GENERATOR_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-generator";
+    String GENERATOR_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator";
 
-    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-order";
+    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-product";
 
-    String BUSINESS_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-business";
+    String BUSINESS_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business";
 
     /**
      * db url
      */
-    String DB_URL = "jdbc:mysql://localhost:3306/dmall_oms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
+    String DB_URL = "jdbc:mysql://localhost:3306/dmall_pms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
     /**
      * username
      */
@@ -49,7 +49,7 @@ public interface Constants {
     /**
      * 包的模块名
      */
-    String PACKAGE_MODULE_NAME = "oms";
+    String PACKAGE_MODULE_NAME = "pms";
 
     /**
      * 包的固定名称

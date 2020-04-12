@@ -21,4 +21,11 @@ public class OrderItemSupport {
     public List<OrderItemDO> listByOrderId(Long orderId){
         return orderItemMapper.selectList(Wrappers.<OrderItemDO>lambdaQuery().eq(OrderItemDO::getOrderId, orderId));
     }
+
+    public OrderItemDO findByOrderIdAndSkuId(Long orderId, Long skuId){
+        return orderItemMapper.selectOne(Wrappers.<OrderItemDO>lambdaQuery()
+                .eq(OrderItemDO::getOrderId, orderId)
+                .eq(OrderItemDO::getSkuId, skuId)
+        );
+    }
 }

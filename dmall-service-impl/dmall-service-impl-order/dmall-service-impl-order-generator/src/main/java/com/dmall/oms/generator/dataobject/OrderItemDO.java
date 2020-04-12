@@ -88,6 +88,10 @@ public class OrderItemDO implements Serializable {
     private BigDecimal realPrice;
 
     /**
+     * 评价状态 Y-已评价;N-未评价
+     */
+    private String commentStatus;
+    /**
      * 创建人
      */
     @TableField(fill = FieldFill.INSERT)

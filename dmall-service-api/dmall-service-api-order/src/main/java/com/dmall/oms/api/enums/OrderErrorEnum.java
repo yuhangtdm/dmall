@@ -47,6 +47,10 @@ public enum OrderErrorEnum implements ErrorCodeEnum {
 
     NOT_COMMENT("7000","您当前进评价页"),
 
+    COMMENT_ERROR("7001","很抱歉，您当前没有评价资格，请联系商城客服反馈"),
+
+    COMMENT_DETAIL_ERROR("7001","很抱歉，您当前不可查看评价"),
+
     ;
 
     /**
