@@ -1,11 +1,10 @@
 package com.dmall.oms.service.impl.order.handler;
 
 import com.dmall.common.util.ResultUtil;
-import com.dmall.oms.api.dto.commentpage.response.CommentSkuDTO;
+import com.dmall.oms.api.dto.comment.CommentSkuDTO;
+import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import com.dmall.oms.api.enums.OrderErrorEnum;
-import com.google.common.collect.Lists;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,14 +39,14 @@ public class ToCommentHandler extends AbstractCommonHandler<Long, SubOrderDO, To
         ToCommentResponseDTO responseDTO = new ToCommentResponseDTO();
         responseDTO.setSubOrderId(toCommentDbDTO.getSubOrderId());
         responseDTO.setOrderTime(toCommentDbDTO.getOrderTime());
-        List<CommentSkuDTO> skuList = toCommentDbDTO.getSkuList().stream().map(commentSkuDbDTO -> {
-            CommentSkuDTO commentSkuDTO = new CommentSkuDTO();
-            commentSkuDTO.setSkuId(commentSkuDbDTO.getSkuId());
-            commentSkuDTO.setSkuName(commentSkuDbDTO.getSkuName());
-            commentSkuDTO.setSkuMainPic(commentSkuDbDTO.getSkuMainPic());
-            commentSkuDTO.setSkuNumber(commentSkuDbDTO.getSkuNumber());
-            commentSkuDTO.setSkuTotalPrice(commentSkuDbDTO.getSkuTotalPrice());
-            return commentSkuDTO;
+        List<BuyerOrderItemDTO> skuList = toCommentDbDTO.getSkuList().stream().map(commentSkuDbDTO -> {
+            BuyerOrderItemDTO orderItem = new BuyerOrderItemDTO();
+            orderItem.setSkuId(commentSkuDbDTO.getSkuId());
+            orderItem.setSkuName(commentSkuDbDTO.getSkuName());
+            orderItem.setSkuMainPic(commentSkuDbDTO.getSkuMainPic());
+            orderItem.setSkuNumber(commentSkuDbDTO.getSkuNumber());
+            orderItem.setSkuTotalPrice(commentSkuDbDTO.getSkuTotalPrice());
+            return orderItem;
         }).collect(Collectors.toList());
         responseDTO.setSkuList(skuList);
         return ResultUtil.success(responseDTO);

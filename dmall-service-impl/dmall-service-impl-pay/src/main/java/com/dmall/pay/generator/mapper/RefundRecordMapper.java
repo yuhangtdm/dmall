@@ -1,7 +1,7 @@
-package com.dmall.oms.generator.mapper;
+package com.dmall.pay.generator.mapper;
 
-import com.dmall.oms.generator.dataobject.RefundRecordDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dmall.pay.generator.dataobject.RefundRecordDO;
 
 /**
  * @description: 退款记录表

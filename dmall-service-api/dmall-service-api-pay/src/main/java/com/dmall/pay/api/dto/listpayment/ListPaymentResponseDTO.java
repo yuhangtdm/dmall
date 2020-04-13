@@ -1,4 +1,4 @@
-package com.dmall.pay.api.dto;
+package com.dmall.pay.api.dto.listpayment;
 
 import com.dmall.pay.api.enums.PaymentStatusEnum;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
@@ -15,8 +15,8 @@ import java.util.Date;
  * @author: created by hang.yu on 2020/4/8 21:16
  */
 @Data
-@ApiModel(value = "PaymentResponseDTO", description = "支付响应实体")
-public class PaymentResponseDTO implements Serializable {
+@ApiModel(value = "CreatePaymentResponseDTO", description = "支付响应实体")
+public class ListPaymentResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -3000921270471038294L;
 

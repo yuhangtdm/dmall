@@ -1,6 +1,6 @@
 package com.dmall.oms.feign;
 
-import com.dmall.pay.api.service.PayService;
+import com.dmall.pay.api.service.PaymentService;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
@@ -8,5 +8,5 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/4/8 21:30
  */
 @FeignClient(value = "dmall-service-impl-pay")
-public interface PayFeign extends PayService {
+public interface PaymentFeign extends PaymentService {
 }

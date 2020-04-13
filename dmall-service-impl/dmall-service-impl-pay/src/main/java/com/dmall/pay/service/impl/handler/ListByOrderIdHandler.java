@@ -3,16 +3,13 @@ package com.dmall.pay.service.impl.handler;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.dmall.pay.api.enums.PaymentStatusEnum;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pay.api.dto.PaymentResponseDTO;
+import com.dmall.pay.api.dto.listpayment.ListPaymentResponseDTO;
 import com.dmall.pay.generator.dataobject.PaymentInfoDO;
 import com.dmall.pay.generator.mapper.PaymentInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +23,16 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/8 21:23
  */
 @Component
-public class ListByOrderIdHandler extends AbstractCommonHandler<Long, PaymentInfoDO, PaymentResponseDTO> {
+public class ListByOrderIdHandler extends AbstractCommonHandler<Long, PaymentInfoDO, ListPaymentResponseDTO> {
 
     @Autowired
     private PaymentInfoMapper paymentInfoMapper;
 
     @Override
     public BaseResult processor(Long orderId) {
-        List<PaymentResponseDTO> collect = paymentInfoMapper.selectList(Wrappers.<PaymentInfoDO>lambdaQuery()
+        List<ListPaymentResponseDTO> collect = paymentInfoMapper.selectList(Wrappers.<PaymentInfoDO>lambdaQuery()
                 .eq(PaymentInfoDO::getOrderId, orderId)).stream().map(paymentInfoDO -> {
-            PaymentResponseDTO paymentResponse = new PaymentResponseDTO();
+            ListPaymentResponseDTO paymentResponse = new ListPaymentResponseDTO();
             paymentResponse.setPaymentId(paymentInfoDO.getId());
             paymentResponse.setOrderId(paymentInfoDO.getOrderId());
             paymentResponse.setPaymentType(EnumUtil.getCodeDescEnum(PaymentTypeEnum.class, paymentInfoDO.getPaymentType()));
@@ -47,8 +44,6 @@ public class ListByOrderIdHandler extends AbstractCommonHandler<Long, PaymentInf
             paymentResponse.setCallBackTime(paymentInfoDO.getCallBackTime());
             paymentResponse.setBuyerAliPayNo(paymentInfoDO.getBuyerAliPayNo());
             paymentResponse.setSellerAliPayNo(paymentInfoDO.getSellerAliPayNo());
-
-
             return paymentResponse;
         }).collect(Collectors.toList());
         return ResultUtil.success(collect);

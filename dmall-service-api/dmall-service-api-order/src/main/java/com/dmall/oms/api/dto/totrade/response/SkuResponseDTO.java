@@ -27,7 +27,7 @@ public class SkuResponseDTO implements Serializable {
     private String skuSpecificationsJson;
 
     @ApiModelProperty(value = "添加的数量", position = 4)
-    private Integer number;
+    private Integer skuNumber;
 
     @ApiModelProperty(value = "sku单价", position = 5)
     private BigDecimal skuPrice;

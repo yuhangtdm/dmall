@@ -9,7 +9,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.sellerdetail.*;
 import com.dmall.oms.api.enums.*;
-import com.dmall.oms.feign.PayFeign;
+import com.dmall.oms.feign.PaymentFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
@@ -19,7 +19,7 @@ import com.dmall.oms.service.impl.support.OrderItemSupport;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
 import com.dmall.oms.service.impl.support.OrderStatusSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
-import com.dmall.pay.api.dto.PaymentResponseDTO;
+import com.dmall.pay.api.dto.listpayment.ListPaymentResponseDTO;
 import com.dmall.pay.api.enums.PaymentStatusEnum;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
     private OrderLogSupport orderLogSupport;
 
     @Autowired
-    private PayFeign payFeign;
+    private PaymentFeign payFeign;
 
     @Override
     public BaseResult<SellerOrderDetailResponseDTO> processor(Long orderId) {
@@ -245,29 +245,28 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         }).collect(Collectors.toList());
     }
 
-
     /**
      * 构建支付记录
      */
     private List<PaymentDTO> buildPaymentList(Long orderId) {
-        BaseResult<List<PaymentResponseDTO>> paymentResponse = payFeign.listByOrderId(orderId);
+        BaseResult<List<ListPaymentResponseDTO>> paymentResponse = payFeign.listPayment(orderId);
         if (!paymentResponse.getResult()) {
             throw new BusinessException(paymentResponse.getCode(), paymentResponse.getMsg());
         }
-        List<PaymentResponseDTO> data = paymentResponse.getData();
-        return data.stream().map(paymentResponseDTO -> {
+        List<ListPaymentResponseDTO> data = paymentResponse.getData();
+        return data.stream().map(listPaymentResponseDTO -> {
             PaymentDTO paymentDTO = new PaymentDTO();
-            paymentDTO.setPaymentId(paymentResponseDTO.getPaymentId());
-            paymentDTO.setOrderId(paymentResponseDTO.getOrderId());
-            paymentDTO.setPaymentType(paymentResponseDTO.getPaymentType());
-            paymentDTO.setTradeNo(paymentResponseDTO.getTradeNo());
-            paymentDTO.setAmount(paymentResponseDTO.getAmount());
-            paymentDTO.setSubject(paymentResponseDTO.getSubject());
-            paymentDTO.setPaymentStatus(paymentResponseDTO.getPaymentStatus());
-            paymentDTO.setCallbackContent(paymentResponseDTO.getCallbackContent());
-            paymentDTO.setCallBackTime(paymentResponseDTO.getCallBackTime());
-            paymentDTO.setBuyerAliPayNo(paymentResponseDTO.getBuyerAliPayNo());
-            paymentDTO.setSellerAliPayNo(paymentResponseDTO.getSellerAliPayNo());
+            paymentDTO.setPaymentId(listPaymentResponseDTO.getPaymentId());
+            paymentDTO.setOrderId(listPaymentResponseDTO.getOrderId());
+            paymentDTO.setPaymentType(listPaymentResponseDTO.getPaymentType());
+            paymentDTO.setTradeNo(listPaymentResponseDTO.getTradeNo());
+            paymentDTO.setAmount(listPaymentResponseDTO.getAmount());
+            paymentDTO.setSubject(listPaymentResponseDTO.getSubject());
+            paymentDTO.setPaymentStatus(listPaymentResponseDTO.getPaymentStatus());
+            paymentDTO.setCallbackContent(listPaymentResponseDTO.getCallbackContent());
+            paymentDTO.setCallBackTime(listPaymentResponseDTO.getCallBackTime());
+            paymentDTO.setBuyerAliPayNo(listPaymentResponseDTO.getBuyerAliPayNo());
+            paymentDTO.setSellerAliPayNo(listPaymentResponseDTO.getSellerAliPayNo());
             return paymentDTO;
         }).collect(Collectors.toList());
     }

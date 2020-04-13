@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum PayErrorEnum implements ErrorCodeEnum {
+public enum PaymentErrorEnum implements ErrorCodeEnum {
 
     /**
      * 该订单已创建支付单
@@ -25,7 +25,22 @@ public enum PayErrorEnum implements ErrorCodeEnum {
     /**
      * 订单不存在
      */
-    OUT_TRADE_NO_NOT_EXISTS("1003", "订单不存在");;
+    OUT_TRADE_NO_NOT_EXISTS("1003", "订单不存在"),
+
+    /**
+     * 支付方式不存在
+     */
+    PAYMENT_TYPE__NOT_EXISTS("1004", "支付方式不存在"),
+
+    /**
+     * 退款失败
+     */
+    REFUND_ERROR("2000", "退款失败"),
+
+
+    ;
+
+
     /**
      * 错误码
      */

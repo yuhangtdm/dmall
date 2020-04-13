@@ -1,4 +1,4 @@
-package com.dmall.pay.api.dto;
+package com.dmall.pay.api.dto.createpayment;
 
 import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
@@ -16,8 +16,8 @@ import java.math.BigDecimal;
  * @author: created by hang.yu on 2020/4/2 23:23
  */
 @Data
-@ApiModel(value = "PayRequestDTO", description = "支付请求入参")
-public class PayRequestDTO implements Serializable {
+@ApiModel(value = "CreatePaymentRequestDTO", description = "支付请求入参")
+public class CreatePaymentRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 8089554331548887891L;
 
@@ -36,6 +36,6 @@ public class PayRequestDTO implements Serializable {
     @ApiModelProperty(value = "支付方式", position = 4)
     @NotNull(message = "支付方式不能为空")
     @ValueInEnum(PaymentTypeEnum.class)
-    private Integer payType;
+    private Integer paymentType;
 
 }

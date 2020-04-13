@@ -1,4 +1,4 @@
-package com.dmall.oms.generator.dataobject;
+package com.dmall.pay.generator.dataobject;
 
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;

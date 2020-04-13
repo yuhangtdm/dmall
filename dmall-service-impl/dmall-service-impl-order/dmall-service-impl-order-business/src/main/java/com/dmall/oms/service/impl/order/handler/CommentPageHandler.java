@@ -11,7 +11,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.commentpage.CommentPageRequestDTO;
 import com.dmall.oms.api.dto.commentpage.response.CommentPageResponseDTO;
-import com.dmall.oms.api.dto.commentpage.response.CommentSkuDTO;
+import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.service.impl.order.mapper.CommentMapper;
 import com.dmall.oms.service.impl.order.mapper.dto.commentpage.CommentPageDbDTO;
@@ -46,14 +46,14 @@ public class CommentPageHandler extends AbstractCommonHandler<CommentPageRequest
             responseDTO.setCommentStatus(EnumUtil.getCodeDescEnum(YNEnum.class, commentPageDbDTO.getCommentStatus()));
             responseDTO.setOrderTime(commentPageDbDTO.getOrderTime());
             responseDTO.setReceiverName(commentPageDbDTO.getReceiverName());
-            List<CommentSkuDTO> skuList = commentPageDbDTO.getSkuList().stream().map(commentSkuDbDTO -> {
-                CommentSkuDTO commentSkuDTO = new CommentSkuDTO();
-                commentSkuDTO.setSkuId(commentSkuDbDTO.getSkuId());
-                commentSkuDTO.setSkuName(commentSkuDbDTO.getSkuName());
-                commentSkuDTO.setSkuMainPic(commentSkuDbDTO.getSkuMainPic());
-                commentSkuDTO.setSkuNumber(commentSkuDbDTO.getSkuNumber());
-                commentSkuDTO.setSkuTotalPrice(commentSkuDbDTO.getSkuTotalPrice());
-                return commentSkuDTO;
+            List<BuyerOrderItemDTO> skuList = commentPageDbDTO.getSkuList().stream().map(commentSkuDbDTO -> {
+                BuyerOrderItemDTO buyerOrderItemDTO = new BuyerOrderItemDTO();
+                buyerOrderItemDTO.setSkuId(commentSkuDbDTO.getSkuId());
+                buyerOrderItemDTO.setSkuName(commentSkuDbDTO.getSkuName());
+                buyerOrderItemDTO.setSkuMainPic(commentSkuDbDTO.getSkuMainPic());
+                buyerOrderItemDTO.setSkuNumber(commentSkuDbDTO.getSkuNumber());
+                buyerOrderItemDTO.setSkuTotalPrice(commentSkuDbDTO.getSkuTotalPrice());
+                return buyerOrderItemDTO;
             }).collect(Collectors.toList());
             responseDTO.setSkuList(skuList);
             return responseDTO;

@@ -18,16 +18,16 @@ public class OrderItemSupport {
     @Autowired
     private OrderItemMapper orderItemMapper;
 
-    public List<OrderItemDO> listByOrderId(Long orderId){
-        return orderItemMapper.selectList(Wrappers.<OrderItemDO>lambdaQuery().eq(OrderItemDO::getOrderId, orderId));
+    public List<OrderItemDO> listByOrderId(Long orderId) {
+        return orderItemMapper.selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getOrderId, orderId));
     }
 
-    public List<OrderItemDO> listBySubOrderId(Long subOrderId){
-        return orderItemMapper.selectList(Wrappers.<OrderItemDO>lambdaQuery().eq(OrderItemDO::getSubOrderId, subOrderId));
+    public List<OrderItemDO> listBySubOrderId(Long subOrderId) {
+        return orderItemMapper.selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getSubOrderId, subOrderId));
     }
 
-    public OrderItemDO findByOrderIdAndSkuId(Long orderId, Long skuId){
-        return orderItemMapper.selectOne(Wrappers.<OrderItemDO>lambdaQuery()
+    public OrderItemDO findByOrderIdAndSkuId(Long orderId, Long skuId) {
+        return orderItemMapper.selectOne(Wrappers.lambdaQuery(new OrderItemDO())
                 .eq(OrderItemDO::getOrderId, orderId)
                 .eq(OrderItemDO::getSkuId, skuId)
         );

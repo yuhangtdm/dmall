@@ -1,6 +1,7 @@
 package com.dmall.oms.api.dto.commentpage.response;
 
 import com.dmall.common.enums.YNEnum;
+import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,8 +27,8 @@ public class CommentPageResponseDTO {
     @ApiModelProperty(value = "下单时间", position = 3)
     private Date orderTime;
 
-    @ApiModelProperty(value = "订单的sku列表", position = 4)
-    private List<CommentSkuDTO> skuList;
+    @ApiModelProperty(value = "订单项列表", position = 4)
+    private List<BuyerOrderItemDTO> skuList;
 
     @ApiModelProperty(value = "收货人名称", position = 5)
     private String receiverName;

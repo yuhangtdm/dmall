@@ -1,7 +1,7 @@
 package com.dmall.oms.api.dto.tocomment;
 
-import com.dmall.oms.api.dto.commentpage.response.CommentSkuDTO;
-import com.dmall.oms.api.enums.SubOrderStatusEnum;
+import com.dmall.oms.api.dto.comment.CommentSkuDTO;
+import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class ToCommentResponseDTO {
     @ApiModelProperty(value = "下单时间", position = 2)
     private Date orderTime;
 
-    @ApiModelProperty(value = "订单的sku列表", position = 3)
-    private List<CommentSkuDTO> skuList;
+    @ApiModelProperty(value = "订单项列表", position = 3)
+    private List<BuyerOrderItemDTO> skuList;
 
 }

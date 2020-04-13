@@ -89,6 +89,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private CommentDetailHandler commentDetailHandler;
 
+    @Autowired
+    private ApplyRefundHandler applyRefundHandler;
+
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
         return toTradeHandler.handler(requestDTO);
@@ -178,6 +181,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public BaseResult<List<CommentDetailResponseDTO>> commentDetail(Long subOrderId) {
         return commentDetailHandler.handler(subOrderId);
+    }
+
+    @Override
+    public BaseResult applyRefund(Long orderItemId) {
+        return applyRefundHandler.handler(orderItemId);
     }
 
 }

@@ -89,9 +89,9 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
                     skuResponseDTO.setSkuId(basicSku.getId());
                     skuResponseDTO.setSkuName(basicSku.getName());
                     skuResponseDTO.setSkuSpecificationsJson(basicSku.getSkuSpecificationsJson());
-                    skuResponseDTO.setNumber(skuCountMap.get(basicSku.getId()));
+                    skuResponseDTO.setSkuNumber(skuCountMap.get(basicSku.getId()));
                     skuResponseDTO.setSkuPrice(basicSku.getPrice());
-                    skuResponseDTO.setSkuTotalPrice(NumberUtil.mul(basicSku.getPrice(), skuResponseDTO.getNumber()));
+                    skuResponseDTO.setSkuTotalPrice(NumberUtil.mul(basicSku.getPrice(), skuResponseDTO.getSkuNumber()));
                     skuResponseDTO.setHasStock(basicSku.getSalableStock() > 0);
                     skuResponseDTO.setWeight(basicSku.getWeight());
                     return skuResponseDTO;

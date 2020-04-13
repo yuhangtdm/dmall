@@ -113,6 +113,19 @@ public interface OrderService {
     @ApiOperation(value = "评价详情")
     BaseResult<List<CommentDetailResponseDTO>> commentDetail(@PathVariable("subOrderId") Long subOrderId);
 
+    // 发货后 15天 自动确认收货
 
-    // 售后...
+    // 确认收货后 15天 自动好评
+
+    // 申请退款
+    @GetMapping("/applyRefund/{orderItemId}")
+    @ApiImplicitParam(name = "orderItemId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "申请退款")
+    BaseResult<Long> applyRefund(@PathVariable("orderItemId") Long orderItemId);
+
+    // 退货退款
+
+    // 审核
+
+    // 卖家确认收货
 }

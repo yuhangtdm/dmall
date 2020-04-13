@@ -6,23 +6,23 @@ package com.dmall.component.mybatisplus.generator;
  */
 public interface Constants {
 
-    String DEFAULT_MODULE_NAME = "D:/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator";
+    String DEFAULT_MODULE_NAME = "D:/dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-generator";
 
-    String DEFAULT_BUSINESS_MODULE_NAME = "D:/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business";
+    String DEFAULT_BUSINESS_MODULE_NAME = "D:/dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-business";
 
-    String DEFAULT_API_MODULE_NAME = "D:/dmall-service-api/dmall-service-api-product";
+    String DEFAULT_API_MODULE_NAME = "D:/dmall-service-api/dmall-service-api-order";
 
 
-    String GENERATOR_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-generator";
+    String GENERATOR_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-generator";
 
-    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-product";
+    String API_MODULE_NAME = "/dmall-service-api/dmall-service-api-order";
 
-    String BUSINESS_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-product/dmall-service-impl-product-business";
+    String BUSINESS_MODULE_NAME = "/dmall-service-impl/dmall-service-impl-order/dmall-service-impl-order-business";
 
     /**
      * db url
      */
-    String DB_URL = "jdbc:mysql://localhost:3306/dmall_pms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
+    String DB_URL = "jdbc:mysql://localhost:3306/dmall_oms?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
     /**
      * username
      */
@@ -49,7 +49,7 @@ public interface Constants {
     /**
      * 包的模块名
      */
-    String PACKAGE_MODULE_NAME = "pms";
+    String PACKAGE_MODULE_NAME = "oms";
 
     /**
      * 包的固定名称

@@ -83,6 +83,11 @@ public class PaymentInfoDO implements Serializable {
     private String sellerAliPayNo;
 
     /**
+     * 状态 Y-有效;N-无效
+     */
+    private String status;
+
+    /**
      * 创建人
      */
     @TableField(fill = FieldFill.INSERT)

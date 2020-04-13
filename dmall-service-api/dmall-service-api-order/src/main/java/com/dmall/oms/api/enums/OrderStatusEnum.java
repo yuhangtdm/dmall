@@ -37,6 +37,11 @@ public enum OrderStatusEnum implements CodeDescEnum<Integer> {
      */
     CANCELED(5, "已取消"),
 
+    /**
+     * 交易关闭
+     */
+    CLOSED(6, "交易关闭"),
+
     ;
     private Integer code;
 

@@ -91,6 +91,7 @@ public class AliCallBackHandler extends AbstractCommonHandler<Void, PaymentInfoD
                 }
                 // 5、获取交易状态为成功时修改表记录
                 String trade_status = request.getParameter("trade_status");
+                // 支付宝只有在支付成功后才会触发回调
                 if (AliTradeStatusEnum.TRADE_SUCCESS.getCode().equals(trade_status)) {
                     String trade_no = request.getParameter("trade_no");
                     String call_back_content = request.getQueryString();

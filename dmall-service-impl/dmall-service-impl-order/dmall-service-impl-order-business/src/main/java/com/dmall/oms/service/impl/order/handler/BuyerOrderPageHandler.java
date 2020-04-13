@@ -1,6 +1,5 @@
 package com.dmall.oms.service.impl.order.handler;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
@@ -14,15 +13,14 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerReceiverDTO;
-import com.dmall.oms.api.dto.buyerorderpage.response.BuyerSkuDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerSubOrderDTO;
+import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.service.impl.order.es.EsConstants;
 import com.dmall.oms.service.impl.order.es.OrderEsDTO;
 import com.dmall.oms.service.impl.order.es.ReceiverDTO;
-import com.dmall.oms.service.impl.order.es.SkuDTO;
 import com.google.common.collect.Lists;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,14 +108,14 @@ public class BuyerOrderPageHandler extends AbstractCommonHandler<BuyerOrderPageR
             List<BuyerSubOrderDTO> collect = orderEsDTO.getSubOrderList().stream().map(subOrderDTO -> {
                 BuyerSubOrderDTO buyerSubOrderDTO = new BuyerSubOrderDTO();
                 buyerSubOrderDTO.setSubOrderId(subOrderDTO.getSubOrderId());
-                List<BuyerSkuDTO> buyerSkuList = subOrderDTO.getSkuList().stream().map(skuDTO -> {
-                    BuyerSkuDTO sku = new BuyerSkuDTO();
-                    sku.setSkuId(skuDTO.getSkuId());
-                    sku.setSkuName(skuDTO.getSkuName());
-                    sku.setSkuMainPic(skuDTO.getSkuMainPic());
-                    sku.setSkuNumber(skuDTO.getSkuNumber());
-                    sku.setSkuTotalPrice(skuDTO.getSkuTotalPrice());
-                    return sku;
+                List<BuyerOrderItemDTO> buyerSkuList = subOrderDTO.getSkuList().stream().map(skuDTO -> {
+                    BuyerOrderItemDTO orderItem = new BuyerOrderItemDTO();
+                    orderItem.setSkuId(skuDTO.getSkuId());
+                    orderItem.setSkuName(skuDTO.getSkuName());
+                    orderItem.setSkuMainPic(skuDTO.getSkuMainPic());
+                    orderItem.setSkuNumber(skuDTO.getSkuNumber());
+                    orderItem.setSkuTotalPrice(skuDTO.getSkuTotalPrice());
+                    return orderItem;
                 }).collect(Collectors.toList());
                 buyerSubOrderDTO.setSkuList(buyerSkuList);
                 return buyerSubOrderDTO;

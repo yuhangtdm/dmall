@@ -1,5 +1,6 @@
 package com.dmall.oms.api.dto.buyerorderpage.response;
 
+import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,6 +18,6 @@ public class BuyerSubOrderDTO {
     @ApiModelProperty(value = "子订单id", position = 1)
     private Long subOrderId;
 
-    @ApiModelProperty(value = "订单的sku列表", position = 2)
-    private List<BuyerSkuDTO> skuList;
+    @ApiModelProperty(value = "订单项列表", position = 2)
+    private List<BuyerOrderItemDTO> skuList;
 }

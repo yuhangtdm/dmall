@@ -8,6 +8,7 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.mms.api.enums.InvoiceContentEnum;
 import com.dmall.mms.api.enums.InvoiceHeaderEnum;
 import com.dmall.oms.api.dto.buyerdetail.*;
+import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import com.dmall.oms.api.enums.OrderErrorEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.api.enums.SplitEnum;
@@ -18,6 +19,7 @@ import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
+import com.dmall.oms.service.impl.order.es.SkuDTO;
 import com.dmall.oms.service.impl.support.OrderItemSupport;
 import com.dmall.oms.service.impl.support.OrderStatusSupport;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
@@ -71,24 +73,24 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
         return ResultUtil.success(responseDTO);
     }
 
-    private List<SkuDTO> buildSkuList(OrderDO orderDO, Long subOrderId) {
+    private List<BuyerOrderItemDTO> buildSkuList(OrderDO orderDO, Long subOrderId) {
         if (SplitEnum.NOT_NEED.getCode().equals(orderDO.getSplit())) {
             // 无需拆单
-            return orderItemSupport.listByOrderId(orderDO.getId()).stream().map(this::getSkuDTO).collect(Collectors.toList());
+            return orderItemSupport.listByOrderId(orderDO.getId()).stream().map(this::getOrderItemDTO).collect(Collectors.toList());
         } else {
             // 已拆成多单
-            return orderItemSupport.listBySubOrderId(subOrderId).stream().map(this::getSkuDTO).collect(Collectors.toList());
+            return orderItemSupport.listBySubOrderId(subOrderId).stream().map(this::getOrderItemDTO).collect(Collectors.toList());
         }
 
     }
 
-    private SkuDTO getSkuDTO(OrderItemDO orderItemDO) {
-        SkuDTO skuDTO = new SkuDTO();
-        skuDTO.setSkuId(orderItemDO.getSkuId());
-        skuDTO.setSkuName(orderItemDO.getSkuName());
-        skuDTO.setSkuPrice(orderItemDO.getSkuTotalPrice());
-        skuDTO.setSkuNumber(orderItemDO.getSkuNumber());
-        return skuDTO;
+    private BuyerOrderItemDTO getOrderItemDTO(OrderItemDO orderItemDO) {
+        BuyerOrderItemDTO orderItem = new BuyerOrderItemDTO();
+        orderItem.setSkuId(orderItemDO.getSkuId());
+        orderItem.setSkuName(orderItemDO.getSkuName());
+        orderItem.setSkuPrice(orderItemDO.getSkuTotalPrice());
+        orderItem.setSkuNumber(orderItemDO.getSkuNumber());
+        return orderItem;
     }
 
     private ReceiverDTO buildReceiver(OrderDO orderDO) {
