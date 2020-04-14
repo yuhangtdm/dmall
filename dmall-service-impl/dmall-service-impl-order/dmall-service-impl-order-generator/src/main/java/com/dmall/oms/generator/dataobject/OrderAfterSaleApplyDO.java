@@ -2,12 +2,16 @@ package com.dmall.oms.generator.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,7 +26,7 @@ import lombok.experimental.Accessors;
 @TableName("oms_order_after_sale_apply")
 public class OrderAfterSaleApplyDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id
@@ -45,6 +49,11 @@ public class OrderAfterSaleApplyDO implements Serializable {
     private Long orderItemId;
 
     /**
+     * skuId
+     */
+    private Long skuId;
+
+    /**
      * 类型 1-退款;2-退货退款;3-换货
      */
     private Integer type;
@@ -55,9 +64,9 @@ public class OrderAfterSaleApplyDO implements Serializable {
     private Integer status;
 
     /**
-     * 申请原因id
+     * 申请原因
      */
-    private Long reasonId;
+    private String reason;
 
     /**
      * 申请描述
@@ -80,10 +89,39 @@ public class OrderAfterSaleApplyDO implements Serializable {
     private String handleNote;
 
     /**
+     * 申请时间
+     */
+    private Date applyTime;
+
+    /**
      * 处理时间
      */
     private Date handleTime;
 
+    /**
+     * 退款时间
+     */
+    private Date refundTime;
+
+    /**
+     * 填写快递单号时间
+     */
+    private Date fillLogisticsNoTime;
+
+    /**
+     * 卖家收货时间
+     */
+    private Date receiveTime;
+
+    /**
+     * 拒绝时间
+     */
+    private Date refuseTime;
+
+    /**
+     * 关闭时间
+     */
+    private Date closeTime;
     /**
      * 退款方式 1-原返
      */
@@ -99,6 +137,9 @@ public class OrderAfterSaleApplyDO implements Serializable {
      */
     private String buyerPhone;
 
+    /**
+     * 买家发货人详细地址
+     */
     private String buyerDetailAddress;
 
     /**

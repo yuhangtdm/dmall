@@ -6,6 +6,7 @@ import com.dmall.pay.api.dto.createpayment.CreatePaymentResponseDTO;
 import com.dmall.pay.api.dto.listpayment.ListPaymentResponseDTO;
 import com.dmall.pay.api.service.PaymentService;
 import com.dmall.pay.service.impl.handler.AliCallBackHandler;
+import com.dmall.pay.service.impl.handler.ApplyRefundHandler;
 import com.dmall.pay.service.impl.handler.ListByOrderIdHandler;
 import com.dmall.pay.service.impl.handler.CreatePaymentHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private ListByOrderIdHandler listByOrderIdHandler;
 
+    @Autowired
+    private ApplyRefundHandler applyRefundHandler;
+
     @Override
     public BaseResult<ListPaymentResponseDTO> createPayment(@Valid CreatePaymentRequestDTO requestDTO) {
         return createPaymentHandler.handler(requestDTO);
@@ -48,6 +52,6 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public BaseResult applyRefund(ApplyRefundRequestDTO requestDTO) {
-        return null;
+        return applyRefundHandler.handler(requestDTO);
     }
 }

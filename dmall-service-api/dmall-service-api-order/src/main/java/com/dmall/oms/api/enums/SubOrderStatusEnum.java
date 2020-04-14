@@ -27,6 +27,11 @@ public enum SubOrderStatusEnum implements CodeDescEnum<Integer> {
      */
     COMPLETED(4, "已完成"),
 
+    /**
+     * 交易关闭
+     */
+    CLOSED(6,"交易关闭")
+
     ;
     private Integer code;
 

@@ -2,6 +2,10 @@ package com.dmall.oms.service.impl.order;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.oms.api.dto.aftersalepage.AfterSalePageRequestDTO;
+import com.dmall.oms.api.dto.aftersalepage.AfterSalePageResponseDTO;
+import com.dmall.oms.api.dto.applyrefund.OrderApplyRefundRequestDTO;
+import com.dmall.oms.api.dto.applyreturn.OrderApplyReturnRequestDTO;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
@@ -91,6 +95,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ApplyRefundHandler applyRefundHandler;
+
+    @Autowired
+    private ApplyReturnHandler applyReturnHandler;
+
+    @Autowired
+    private AfterSalePageHandler afterSalePageHandler;
 
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
@@ -184,8 +194,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BaseResult applyRefund(Long orderItemId) {
-        return applyRefundHandler.handler(orderItemId);
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult applyRefund(@RequestBody OrderApplyRefundRequestDTO requestDTO) {
+        return applyRefundHandler.handler(requestDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> applyReturn(@RequestBody OrderApplyReturnRequestDTO requestDTO) {
+        return applyReturnHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<ResponsePage<AfterSalePageResponseDTO>> afterSalePage(@Valid AfterSalePageRequestDTO requestDTO) {
+        return afterSalePageHandler.handler(requestDTO);
     }
 
 }

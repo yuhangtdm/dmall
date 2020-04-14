@@ -2,7 +2,12 @@ package com.dmall.oms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.oms.api.dto.aftersalepage.AfterSalePageRequestDTO;
+import com.dmall.oms.api.dto.aftersalepage.AfterSalePageResponseDTO;
+import com.dmall.oms.api.dto.applyrefund.OrderApplyRefundRequestDTO;
+import com.dmall.oms.api.dto.applyreturn.OrderApplyReturnRequestDTO;
 import com.dmall.oms.api.dto.buyerdetail.BuyerOrderDetailResponseDTO;
+import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.buyerorderpage.response.BuyerOrderPageResponseDTO;
 import com.dmall.oms.api.dto.comment.CommentRequestDTO;
 import com.dmall.oms.api.dto.commentdetail.CommentDetailResponseDTO;
@@ -17,7 +22,6 @@ import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
 import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
-import com.dmall.oms.api.dto.buyerorderpage.BuyerOrderPageRequestDTO;
 import com.dmall.oms.api.dto.tocomment.ToCommentResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
@@ -117,15 +121,33 @@ public interface OrderService {
 
     // 确认收货后 15天 自动好评
 
-    // 申请退款
-    @GetMapping("/applyRefund/{orderItemId}")
-    @ApiImplicitParam(name = "orderItemId", value = "子订单号", required = true, dataType = "int", paramType = "path")
+    @PostMapping("/applyRefund")
     @ApiOperation(value = "申请退款")
-    BaseResult<Long> applyRefund(@PathVariable("orderItemId") Long orderItemId);
+    BaseResult<Long> applyRefund(@RequestBody @Valid OrderApplyRefundRequestDTO requestDTO);
 
-    // 退货退款
+    @PostMapping("/applyReturn")
+    @ApiOperation(value = "退货退款")
+    BaseResult<Long> applyReturn(@RequestBody @Valid OrderApplyReturnRequestDTO requestDTO);
+
+    @PostMapping("/afterSalePage")
+    @ApiOperation(value = "售后分页")
+    BaseResult<ResponsePage<AfterSalePageResponseDTO>> afterSalePage(@RequestBody @Valid AfterSalePageRequestDTO requestDTO);
+
+    // 售后单详情
+    @GetMapping("/afterSaleDetail/{afterSaleId}")
+    @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "评价详情")
+    BaseResult afterSaleDetail(@PathVariable("afterSaleId") Long afterSaleId);
+
 
     // 审核
+    // BaseResult approval();
+
+    // 上传物流单号
 
     // 卖家确认收货
+
+    // 关闭售后单
+
+    // 删除售后单
 }

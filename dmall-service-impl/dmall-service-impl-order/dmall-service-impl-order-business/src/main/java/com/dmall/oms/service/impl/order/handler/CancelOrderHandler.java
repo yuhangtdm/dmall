@@ -52,6 +52,7 @@ public class CancelOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
         orderStatusSupport.insert(orderId, OrderStatusEnum.CANCELED.getCode());
         orderLogSupport.insert(orderId, OrderOperateEnum.CANCEL, false);
         syncEsOrderSupport.sendOrderEsMq(orderId);
+        // 调用支付宝的关闭交易接口
         return ResultUtil.success(orderId);
     }
 }

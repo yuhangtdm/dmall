@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @description:
+ * @description:  申请退款处理器
  * @author: created by hang.yu on 2020/4/13 22:58
  */
 @Component
@@ -30,7 +30,7 @@ public class ApplyRefundHandler extends AbstractCommonHandler<ApplyRefundRequest
             return ResultUtil.fail(PaymentErrorEnum.PAYMENT_ORDER_EXISTS);
         }
         PaymentTypeService instance = paymentTypeFactory.createInstance(paymentTypeEnum);
-        instance.refund(requestDTO);
+        instance.applyRefund(requestDTO);
         return ResultUtil.success();
     }
 }

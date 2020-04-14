@@ -3,6 +3,7 @@ package com.dmall.pms.api.dto.sku.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
  * @author: created by hang.yu on 2020/3/28 23:01
  */
 @Data
+@Accessors(chain = true)
 @ApiModel(value = "SkuStockRequestDTO", description = "库存SKU请求实体")
 public class SkuStockRequestDTO {
 
