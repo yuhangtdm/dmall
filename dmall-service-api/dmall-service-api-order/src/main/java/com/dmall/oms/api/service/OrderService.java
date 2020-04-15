@@ -2,6 +2,8 @@ package com.dmall.oms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.oms.api.dto.aftersaleapproval.AfterSaleApprovalRequestDTO;
+import com.dmall.oms.api.dto.aftersaledetail.AfterSaleDetailResponseDTO;
 import com.dmall.oms.api.dto.aftersalepage.AfterSalePageRequestDTO;
 import com.dmall.oms.api.dto.aftersalepage.AfterSalePageResponseDTO;
 import com.dmall.oms.api.dto.applyrefund.OrderApplyRefundRequestDTO;
@@ -25,6 +27,7 @@ import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.tocomment.ToCommentResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
+import com.dmall.oms.api.dto.writelogisticsno.WriteLogisticsNoRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -117,10 +120,6 @@ public interface OrderService {
     @ApiOperation(value = "评价详情")
     BaseResult<List<CommentDetailResponseDTO>> commentDetail(@PathVariable("subOrderId") Long subOrderId);
 
-    // 发货后 15天 自动确认收货
-
-    // 确认收货后 15天 自动好评
-
     @PostMapping("/applyRefund")
     @ApiOperation(value = "申请退款")
     BaseResult<Long> applyRefund(@RequestBody @Valid OrderApplyRefundRequestDTO requestDTO);
@@ -133,21 +132,44 @@ public interface OrderService {
     @ApiOperation(value = "售后分页")
     BaseResult<ResponsePage<AfterSalePageResponseDTO>> afterSalePage(@RequestBody @Valid AfterSalePageRequestDTO requestDTO);
 
-    // 售后单详情
     @GetMapping("/afterSaleDetail/{afterSaleId}")
     @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
-    @ApiOperation(value = "评价详情")
-    BaseResult afterSaleDetail(@PathVariable("afterSaleId") Long afterSaleId);
+    @ApiOperation(value = "售后单详情")
+    BaseResult<AfterSaleDetailResponseDTO> afterSaleDetail(@PathVariable("afterSaleId") Long afterSaleId);
 
-
-    // 审核
-    // BaseResult approval();
+    @PostMapping("/afterSaleApproval")
+    @ApiOperation(value = "售后审核")
+    BaseResult<Long> afterSaleApproval(@RequestBody @Valid AfterSaleApprovalRequestDTO requestDTO);
 
     // 上传物流单号
+    @PostMapping("/writeLogisticsNo")
+    @ApiOperation(value = "填写物流单号")
+    BaseResult<Long> writeLogisticsNo(@RequestBody @Valid WriteLogisticsNoRequestDTO requestDTO);
 
-    // 卖家确认收货
+    @GetMapping("/sellerReceive/{afterSaleId}")
+    @ApiOperation(value = "卖家确认收货")
+    @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> sellerReceive(@PathVariable("afterSaleId") Long afterSaleId);
 
-    // 关闭售后单
+    @GetMapping("/afterSaleClosed/{afterSaleId}")
+    @ApiOperation(value = "关闭售后单")
+    @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
+    BaseResult afterSaleClosed(@PathVariable("afterSaleId") Long afterSaleId);
 
-    // 删除售后单
+    @GetMapping("/afterSaleDelete/{afterSaleId}")
+    @ApiOperation(value = "删除售后单")
+    @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
+    BaseResult afterSaleDelete(@PathVariable("afterSaleId") Long afterSaleId);
+
+    //TODO 发货后 15天 自动确认收货
+
+    // TODO 确认收货后 15天 自动好评
+
+    // TODO 上传图片
+
+    // TODO 操作的横向越权问题
+
+    // TODO 售后日志记录
+
+    // TODO 卖家端订单详情、卖家端订单列表、买家端订单详情 应包含售后信息
 }

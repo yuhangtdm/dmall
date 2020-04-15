@@ -57,7 +57,7 @@ public class AfterSalePageHandler extends AbstractCommonHandler<AfterSalePageReq
             afterSalePageResponseDTO.setStatus(EnumUtil.getCodeDescEnum(AfterSaleStatusEnum.class, orderAfterSaleApplyDO.getStatus()));
             afterSalePageResponseDTO.setHandleMan(orderAfterSaleApplyDO.getHandleMan());
             afterSalePageResponseDTO.setApplyTime(orderAfterSaleApplyDO.getApplyTime());
-            afterSalePageResponseDTO.setHandleTime(orderAfterSaleApplyDO.getHandleTime());
+            afterSalePageResponseDTO.setHandleTime(orderAfterSaleApplyDO.getApprovalTime());
             afterSalePageResponseDTO.setRefundTime(orderAfterSaleApplyDO.getRefundTime());
             afterSalePageResponseDTO.setFillLogisticsNoTime(orderAfterSaleApplyDO.getFillLogisticsNoTime());
             afterSalePageResponseDTO.setReceiveTime(orderAfterSaleApplyDO.getReceiveTime());

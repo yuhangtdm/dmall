@@ -2,6 +2,8 @@ package com.dmall.oms.service.impl.order;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.oms.api.dto.aftersaleapproval.AfterSaleApprovalRequestDTO;
+import com.dmall.oms.api.dto.aftersaledetail.AfterSaleDetailResponseDTO;
 import com.dmall.oms.api.dto.aftersalepage.AfterSalePageRequestDTO;
 import com.dmall.oms.api.dto.aftersalepage.AfterSalePageResponseDTO;
 import com.dmall.oms.api.dto.applyrefund.OrderApplyRefundRequestDTO;
@@ -25,6 +27,7 @@ import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.tocomment.ToCommentResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.ToTradeResponseDTO;
+import com.dmall.oms.api.dto.writelogisticsno.WriteLogisticsNoRequestDTO;
 import com.dmall.oms.api.service.OrderService;
 import com.dmall.oms.service.impl.order.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +104,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private AfterSalePageHandler afterSalePageHandler;
+
+    @Autowired
+    private AfterSaleDetailHandler afterSaleDetailHandler;
+
+    @Autowired
+    private AfterSaleApprovalHandler afterSaleApprovalHandler;
+
+    @Autowired
+    private WriteLogisticsNoHandler writeLogisticsNoHandler;
+
+    @Autowired
+    private SellerReceiveHandler sellerReceiveHandler;
+
+    @Autowired
+    private AfterSaleClosedHandler afterSaleClosedHandler;
+
+    @Autowired
+    private AfterSaleDeleteHandler afterSaleDeleteHandler;
 
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
@@ -194,20 +215,49 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public BaseResult applyRefund(@RequestBody OrderApplyRefundRequestDTO requestDTO) {
         return applyRefundHandler.handler(requestDTO);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> applyReturn(@RequestBody OrderApplyReturnRequestDTO requestDTO) {
         return applyReturnHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<ResponsePage<AfterSalePageResponseDTO>> afterSalePage(@Valid AfterSalePageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<AfterSalePageResponseDTO>> afterSalePage(@RequestBody AfterSalePageRequestDTO requestDTO) {
         return afterSalePageHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<AfterSaleDetailResponseDTO> afterSaleDetail(Long afterSaleId) {
+        return afterSaleDetailHandler.handler(afterSaleId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> afterSaleApproval(@RequestBody AfterSaleApprovalRequestDTO requestDTO) {
+        return afterSaleApprovalHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Long> writeLogisticsNo(@RequestBody WriteLogisticsNoRequestDTO requestDTO) {
+        return writeLogisticsNoHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Long> sellerReceive(Long afterSaleId) {
+        return sellerReceiveHandler.handler(afterSaleId);
+    }
+
+    @Override
+    public BaseResult<Long> afterSaleClosed(Long afterSaleId) {
+        return afterSaleClosedHandler.handler(afterSaleId);
+    }
+
+    @Override
+    public BaseResult afterSaleDelete(Long afterSaleId) {
+        return afterSaleDeleteHandler.handler(afterSaleId);
     }
 
 }

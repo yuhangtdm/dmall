@@ -94,9 +94,9 @@ public class OrderAfterSaleApplyDO implements Serializable {
     private Date applyTime;
 
     /**
-     * 处理时间
+     * 审核时间
      */
-    private Date handleTime;
+    private Date approvalTime;
 
     /**
      * 退款时间
@@ -106,7 +106,7 @@ public class OrderAfterSaleApplyDO implements Serializable {
     /**
      * 填写快递单号时间
      */
-    private Date fillLogisticsNoTime;
+    private Date writeLogisticsNoTime;
 
     /**
      * 卖家收货时间
@@ -114,14 +114,14 @@ public class OrderAfterSaleApplyDO implements Serializable {
     private Date receiveTime;
 
     /**
-     * 拒绝时间
-     */
-    private Date refuseTime;
-
-    /**
      * 关闭时间
      */
     private Date closeTime;
+
+    /**
+     * 删除时间
+     */
+    private Date deleteTime;
     /**
      * 退款方式 1-原返
      */

@@ -15,6 +15,7 @@ import java.util.Date;
 @Data
 @ApiModel(value = "AfterSaleDTO", description = "售后单信息实体")
 public class AfterSaleDTO {
+
     @ApiModelProperty(value = "售后单号", position = 1)
     private Long afterSaleId;
 
@@ -59,4 +60,34 @@ public class AfterSaleDTO {
 
     @ApiModelProperty(value = "skuId", position = 15)
     private Long skuId;
+
+    @ApiModelProperty(value = "申请原因", position = 16)
+    private String reason;
+
+    @ApiModelProperty(value = "申请描述", position = 17)
+    private String description;
+
+    @ApiModelProperty(value = " 申请凭证 上传凭证照片,多张以逗号隔开", position = 18)
+    private String applyCredentials;
+
+    @ApiModelProperty(value = " 处理备注", position = 18)
+    private String handleNote;
+
+    @ApiModelProperty(value = "买家发货人姓名", position = 18)
+    private String buyerName;
+
+    @ApiModelProperty(value = "买家发货人电话", position = 18)
+    private String buyerPhone;
+
+    @ApiModelProperty(value = " 买家发货人详细地址", position = 18)
+    private String buyerDetailAddress;
+
+    @ApiModelProperty(value = "卖家收货人名称", position = 18)
+    private String sellerName;
+
+    @ApiModelProperty(value = " 卖家收货人电话", position = 18)
+    private String sellerPhone;
+
+    @ApiModelProperty(value = "卖家收货人详细地址", position = 18)
+    private String sellerDetailAddress;
 }

@@ -1,0 +1,43 @@
+package com.dmall.oms.service.impl.order.handler;
+
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.oms.api.enums.AfterSaleStatusEnum;
+import com.dmall.oms.api.enums.AfterSaleTypeEnum;
+import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
+import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+/**
+ * @description: 删除售后单处理器
+ * @author: created by hang.yu on 2020/4/15 23:31
+ */
+@Component
+public class AfterSaleDeleteHandler extends AbstractCommonHandler<Long, OrderAfterSaleApplyDO, Long> {
+
+    @Autowired
+    private OrderAfterSaleApplyMapper orderAfterSaleApplyMapper;
+
+    @Override
+    public BaseResult processor(Long afterSaleId) {
+        // 未审核前可以关闭
+        OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
+        if (orderAfterSaleApplyDO == null) {
+            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_NOT_EXISTS);
+        }
+        // 非 已完成 和 已关闭状态不可删除
+        if (!AfterSaleStatusEnum.COMPLETED.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
+                !AfterSaleStatusEnum.CLOSED.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
+            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_DELETE);
+        }
+        orderAfterSaleApplyDO.setStatus(AfterSaleStatusEnum.DELETED.getCode());
+        orderAfterSaleApplyDO.setDeleteTime(new Date());
+        orderAfterSaleApplyMapper.updateById(orderAfterSaleApplyDO);
+        return ResultUtil.success(afterSaleId);
+    }
+}

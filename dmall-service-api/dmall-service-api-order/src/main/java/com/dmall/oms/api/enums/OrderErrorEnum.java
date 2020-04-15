@@ -53,6 +53,14 @@ public enum OrderErrorEnum implements ErrorCodeEnum {
 
     APPLY_REFUND_ERROR("8000","很抱歉，您当前不可申请退款"),
 
+    AFTER_SALE_NOT_EXISTS("9000","该售后单不存在"),
+
+    AFTER_SALE_APPROVAL("9001","该售后单当前状态不可操作"),
+
+    AFTER_SALE_CLOSED("9002","该售后单不可关闭"),
+
+    AFTER_SALE_DELETE("9002","该售后单不可删除"),
+
     ;
 
     /**

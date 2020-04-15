@@ -18,29 +18,39 @@ public enum AfterSaleStatusEnum implements CodeDescEnum<Integer> {
     APPLY(1, "已申请"),
 
     /**
+     * 待寄回
+     */
+    WAIT_SEND_BACK(2,"待寄回"),
+
+    /**
      * 退/换货中
      */
-    RE_PROGRESS(2, "退/换货中"),
+    RE_PROGRESS(3, "退/换货中"),
 
     /**
      * 退款中
      */
-    REFUND_PROGRESS(3, "退款中"),
+    REFUND_PROGRESS(4, "退款中"),
 
     /**
      * 退款完成
      */
-    COMPLETED(4, "退款完成"),
+    COMPLETED(5, "退款完成"),
 
     /**
      * 已拒绝
      */
-    REFUSE(5, "已拒绝"),
+    REFUSE(6, "已拒绝"),
 
     /**
      * 已关闭
      */
-    CLOSED(6, "已关闭"),
+    CLOSED(7, "已关闭"),
+
+    /**
+     * 已关闭
+     */
+    DELETED(8, "已删除"),
     ;
 
     /**
