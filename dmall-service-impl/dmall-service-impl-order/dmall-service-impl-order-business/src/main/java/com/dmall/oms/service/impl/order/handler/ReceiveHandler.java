@@ -1,6 +1,8 @@
 package com.dmall.oms.service.impl.order.handler;
 
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.enums.OrderErrorEnum;
@@ -52,6 +54,10 @@ public class ReceiveHandler extends AbstractCommonHandler<Long, OrderDO, Long> {
         // 判断是否为待收货
         if (!SubOrderStatusEnum.WAIT_SHIP.getCode().equals(subOrderDO.getStatus())) {
             return ResultUtil.fail(OrderErrorEnum.RECEIVER_STATUS);
+        }
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
+            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
         }
 
         // 修改状态为已收货

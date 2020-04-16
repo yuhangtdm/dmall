@@ -59,9 +59,8 @@ public class AfterSalePageHandler extends AbstractCommonHandler<AfterSalePageReq
             afterSalePageResponseDTO.setApplyTime(orderAfterSaleApplyDO.getApplyTime());
             afterSalePageResponseDTO.setHandleTime(orderAfterSaleApplyDO.getApprovalTime());
             afterSalePageResponseDTO.setRefundTime(orderAfterSaleApplyDO.getRefundTime());
-            afterSalePageResponseDTO.setFillLogisticsNoTime(orderAfterSaleApplyDO.getFillLogisticsNoTime());
+            afterSalePageResponseDTO.setFillLogisticsNoTime(orderAfterSaleApplyDO.getWriteLogisticsNoTime());
             afterSalePageResponseDTO.setReceiveTime(orderAfterSaleApplyDO.getReceiveTime());
-            afterSalePageResponseDTO.setRefuseTime(orderAfterSaleApplyDO.getRefuseTime());
             afterSalePageResponseDTO.setCloseTime(orderAfterSaleApplyDO.getCloseTime());
             afterSalePageResponseDTO.setLogisticsNo(orderAfterSaleApplyDO.getLogisticsNo());
             afterSalePageResponseDTO.setSkuId(orderAfterSaleApplyDO.getSkuId());

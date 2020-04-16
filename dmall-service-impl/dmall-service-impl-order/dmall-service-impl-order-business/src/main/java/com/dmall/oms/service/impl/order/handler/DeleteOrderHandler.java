@@ -1,6 +1,9 @@
 package com.dmall.oms.service.impl.order.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.enums.OrderErrorEnum;
@@ -8,6 +11,7 @@ import com.dmall.oms.api.enums.OrderOperateEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
+import com.dmall.oms.service.impl.support.OrderAfterSaleApplySupport;
 import com.dmall.oms.service.impl.support.OrderLogSupport;
 import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,9 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
     @Autowired
     private SyncEsOrderSupport syncEsOrderSupport;
 
+    @Autowired
+    private OrderAfterSaleApplySupport orderAfterSaleApplySupport;
+
     @Override
     public BaseResult<Long> processor(Long orderId) {
         OrderDO orderDO = orderMapper.selectById(orderId);
@@ -39,7 +46,15 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
                 !OrderStatusEnum.COMPLETED.getCode().equals(orderDO.getStatus())) {
             return ResultUtil.fail(OrderErrorEnum.DELETE_STATUS_ERROR);
         }
-        // todo 订单在退款中  不可删除
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
+            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+        }
+
+        if (CollUtil.isNotEmpty(orderAfterSaleApplySupport.listByOrderId(orderId))){
+            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_ING);
+        }
+
         orderMapper.deleteById(orderId);
         orderLogSupport.insert(orderId, OrderOperateEnum.DELETE, false);
         syncEsOrderSupport.sendOrderEsMq(orderId);

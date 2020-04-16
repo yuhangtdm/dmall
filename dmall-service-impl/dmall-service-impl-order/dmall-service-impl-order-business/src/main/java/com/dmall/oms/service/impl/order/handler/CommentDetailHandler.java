@@ -1,6 +1,8 @@
 package com.dmall.oms.service.impl.order.handler;
 
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.commentdetail.CommentDetailResponseDTO;
@@ -50,6 +52,10 @@ public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
         if (orderDO == null) {
             return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+        }
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
+            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
         }
         if (OrderCommentStatusEnum.NO.getCode().equals(subOrderDO.getCommentStatus())) {
             return ResultUtil.fail(OrderErrorEnum.COMMENT_DETAIL_ERROR);

@@ -21,6 +21,10 @@ public class ApplyRefundRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 7045504627410259269L;
 
+    @ApiModelProperty(value = "服务单号", position = 1)
+    @NotNull(message = "服务单号不能为空")
+    private Long afterSaleId;
+
     @ApiModelProperty(value = "订单号", position = 1)
     @NotNull(message = "订单号不能为空")
     private Long orderId;
@@ -44,5 +48,17 @@ public class ApplyRefundRequestDTO implements Serializable {
     @ApiModelProperty(value = "退款原因", position = 6)
     @NotBlank(message = "退款原因不能为空")
     private String refundReason;
+
+    @ApiModelProperty(value = "skuId", position = 7)
+    @NotNull(message = "skuId不能为空")
+    private Long skuId;
+
+    @ApiModelProperty(value = "sku名称", position = 8)
+    @NotBlank(message = "sku名称不能为空")
+    private String skuName;
+
+    @ApiModelProperty(value = "sku数量", position = 9)
+    @NotNull(message = "sku数量不能为空")
+    private Integer skuNumber;
 
 }

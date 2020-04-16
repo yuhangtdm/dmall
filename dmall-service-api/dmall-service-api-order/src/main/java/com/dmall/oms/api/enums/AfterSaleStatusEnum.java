@@ -48,7 +48,7 @@ public enum AfterSaleStatusEnum implements CodeDescEnum<Integer> {
     CLOSED(7, "已关闭"),
 
     /**
-     * 已关闭
+     * 已删除
      */
     DELETED(8, "已删除"),
     ;

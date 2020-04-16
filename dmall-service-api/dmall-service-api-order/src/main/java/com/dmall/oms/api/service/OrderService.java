@@ -23,6 +23,7 @@ import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
+import com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageRequestDTO;
 import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.tocomment.ToCommentResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
@@ -161,15 +162,14 @@ public interface OrderService {
     @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
     BaseResult afterSaleDelete(@PathVariable("afterSaleId") Long afterSaleId);
 
+    @PostMapping("/afterSalePage")
+    @ApiOperation(value = "我的售后单分页")
+    BaseResult myAfterSalePage(@RequestBody @Valid MyAfterSalePageRequestDTO requestDTO);
     //TODO 发货后 15天 自动确认收货
 
     // TODO 确认收货后 15天 自动好评
 
     // TODO 上传图片
-
-    // TODO 操作的横向越权问题
-
-    // TODO 售后日志记录
 
     // TODO 卖家端订单详情、卖家端订单列表、买家端订单详情 应包含售后信息
 }

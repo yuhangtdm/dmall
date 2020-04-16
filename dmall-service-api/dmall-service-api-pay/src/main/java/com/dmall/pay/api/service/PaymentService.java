@@ -1,10 +1,13 @@
 package com.dmall.pay.api.service;
 
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.pay.api.dto.applyrefund.ApplyRefundRequestDTO;
 import com.dmall.pay.api.dto.createpayment.CreatePaymentRequestDTO;
 import com.dmall.pay.api.dto.createpayment.CreatePaymentResponseDTO;
 import com.dmall.pay.api.dto.listpayment.ListPaymentResponseDTO;
+import com.dmall.pay.api.dto.refundpage.RefundPageRequestDTO;
+import com.dmall.pay.api.dto.refundpage.RefundPageResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -37,4 +40,8 @@ public interface PaymentService {
     @GetMapping("/applyRefund")
     @ApiOperation(value = "申请退款")
     BaseResult applyRefund(@RequestBody @Valid ApplyRefundRequestDTO requestDTO);
+
+    @GetMapping("/refundPage")
+    @ApiOperation(value = "退款明细分页")
+    BaseResult<ResponsePage<RefundPageResponseDTO>> refundPage(@RequestBody @Valid RefundPageRequestDTO requestDTO);
 }

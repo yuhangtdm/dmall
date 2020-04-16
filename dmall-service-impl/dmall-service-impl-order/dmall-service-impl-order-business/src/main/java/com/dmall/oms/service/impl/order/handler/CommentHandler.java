@@ -3,6 +3,8 @@ package com.dmall.oms.service.impl.order.handler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.exception.BusinessException;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.comment.CommentRequestDTO;
@@ -57,6 +59,10 @@ public class CommentHandler extends AbstractCommonHandler<CommentRequestDTO, Sub
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getOrderId());
         if (orderDO == null) {
             return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+        }
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
+            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
         }
         // 已全部评价则不可评价
         if (OrderCommentStatusEnum.ALL.getCode().equals(orderDO.getCommentStatus())) {

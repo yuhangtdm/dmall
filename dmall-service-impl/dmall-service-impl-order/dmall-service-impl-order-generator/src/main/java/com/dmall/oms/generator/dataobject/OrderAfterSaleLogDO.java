@@ -1,34 +1,28 @@
-package com.dmall.pay.generator.dataobject;
-
-import java.math.BigDecimal;
+package com.dmall.oms.generator.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-
 import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
-
 import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: 退款记录表
- * @author: created by hang.yu on 2020-04-13 23:28:05
+ * @description: 售后日志表 
+ * @author: created by hang.yu on 2020-04-16 21:57:59
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("oms_refund_record")
-public class RefundRecordDO implements Serializable {
+@TableName("oms_order_after_sale_log")
+public class OrderAfterSaleLogDO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * id
@@ -37,64 +31,24 @@ public class RefundRecordDO implements Serializable {
     private Long id;
 
     /**
-     * 服务单号
+     * 售后单号
      */
-    private Long afterSaleId;
+    private Long afterSaleApplyId;
 
     /**
-     * 支付id
+     * 日志类型 1-会员;2-后台
      */
-    private Long paymentId;
+    private Integer logType;
 
     /**
-     * 订单号
+     * 日志标题
      */
-    private Long orderId;
+    private String logTitle;
 
     /**
-     * 子订单号
+     * 日志内容
      */
-    private Long orderItemId;
-
-    /**
-     * 子订单号
-     */
-    private Long subOrderId;
-
-    /**
-     * skuId
-     */
-    private Long skuId;
-
-    /**
-     * sku名称
-     */
-    private String skuName;
-
-    /**
-     * sku数量
-     */
-    private Integer skuNumber;
-
-    /**
-     * 退款金额
-     */
-    private BigDecimal amount;
-
-    /**
-     * 退款交易编号
-     */
-    private String tradeNo;
-
-    /**
-     * 交易内容
-     */
-    private String subject;
-
-    /**
-     * 退款状态 1-退款中;2-退款成功;3-退款失败
-     */
-    private Integer status;
+    private String logContent;
 
     /**
      * 创建人
@@ -121,7 +75,7 @@ public class RefundRecordDO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 状态 Y,可用;N:不可用
+     * 状态 N-可用;Y-不可用
      */
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

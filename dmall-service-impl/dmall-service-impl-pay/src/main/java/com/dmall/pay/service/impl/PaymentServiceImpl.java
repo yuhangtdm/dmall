@@ -1,14 +1,15 @@
 package com.dmall.pay.service.impl;
+
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.ResponsePage;
 import com.dmall.pay.api.dto.applyrefund.ApplyRefundRequestDTO;
 import com.dmall.pay.api.dto.createpayment.CreatePaymentRequestDTO;
 import com.dmall.pay.api.dto.createpayment.CreatePaymentResponseDTO;
 import com.dmall.pay.api.dto.listpayment.ListPaymentResponseDTO;
+import com.dmall.pay.api.dto.refundpage.RefundPageRequestDTO;
+import com.dmall.pay.api.dto.refundpage.RefundPageResponseDTO;
 import com.dmall.pay.api.service.PaymentService;
-import com.dmall.pay.service.impl.handler.AliCallBackHandler;
-import com.dmall.pay.service.impl.handler.ApplyRefundHandler;
-import com.dmall.pay.service.impl.handler.ListByOrderIdHandler;
-import com.dmall.pay.service.impl.handler.CreatePaymentHandler;
+import com.dmall.pay.service.impl.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private ApplyRefundHandler applyRefundHandler;
 
+    @Autowired
+    private RefundPageHandler refundPageHandler;
+
     @Override
     public BaseResult<ListPaymentResponseDTO> createPayment(@Valid CreatePaymentRequestDTO requestDTO) {
         return createPaymentHandler.handler(requestDTO);
@@ -53,5 +57,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public BaseResult applyRefund(ApplyRefundRequestDTO requestDTO) {
         return applyRefundHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<ResponsePage<RefundPageResponseDTO>> refundPage(@RequestBody RefundPageRequestDTO requestDTO) {
+        return refundPageHandler.handler(requestDTO);
     }
 }

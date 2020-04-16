@@ -26,9 +26,13 @@ public enum OrderErrorEnum implements ErrorCodeEnum {
 
     ORDER_NOT_EXISTS("2000", "您的订单不存在"),
 
+    NO_AUTHORITY("2001", "您无权操作他人的订单"),
+
     CANCEL_STATUS_ERROR("3000", "只可取消待支付的订单"),
 
     DELETE_STATUS_ERROR("3001", "只可删除已取消或已完成的订单"),
+
+    AFTER_SALE_ING("3002", "售后中的单子不可删除"),
 
     SPLITED("4000", "订单已拆分"),
 

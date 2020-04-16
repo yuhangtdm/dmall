@@ -1,13 +1,11 @@
 package com.dmall.oms.service.impl.order.handler;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.oms.api.enums.AfterSaleStatusEnum;
-import com.dmall.oms.api.enums.OrderErrorEnum;
-import com.dmall.oms.api.enums.OrderStatusEnum;
-import com.dmall.oms.api.enums.SubOrderStatusEnum;
+import com.dmall.oms.api.enums.*;
 import com.dmall.oms.feign.PaymentFeign;
 import com.dmall.oms.feign.SkuFeign;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
@@ -19,6 +17,7 @@ import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.support.AfterSaleSupport;
+import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
 import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,10 @@ import java.util.List;
  */
 @Component
 public class SellerReceiveHandler extends AbstractCommonHandler<Long, OrderAfterSaleApplyDO, Long> {
+
+    private static final String RECEIVE_LOG_CONTENT = "您的服务单{}的商品已收到";
+
+    private static final String REFUND_LOG_CONTENT = "您的服务单{}财务已退款,请您注意查收";
 
     @Autowired
     private OrderAfterSaleApplyMapper orderAfterSaleApplyMapper;
@@ -58,6 +61,9 @@ public class SellerReceiveHandler extends AbstractCommonHandler<Long, OrderAfter
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OrderAfterSaleLogSupport orderAfterSaleLogSupport;
+
     @Override
     public BaseResult processor(Long afterSaleId) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
@@ -77,6 +83,9 @@ public class SellerReceiveHandler extends AbstractCommonHandler<Long, OrderAfter
         if (orderDO == null) {
             return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
         }
+        // 新增售后日志记录
+        orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.SYSTEM,
+                AfterSaleLogTitleEnum.PRODUCT_RECEIVED, StrUtil.format(RECEIVE_LOG_CONTENT, orderAfterSaleApplyDO.getId()));
         // 调用支付服务的退款接口
         BaseResult baseResult = paymentFeign.applyRefund(AfterSaleSupport.buildApplyRefundRequest(orderItemDO,
                 orderDO.getPaymentType(), orderAfterSaleApplyDO.getReason()));
@@ -102,6 +111,9 @@ public class SellerReceiveHandler extends AbstractCommonHandler<Long, OrderAfter
         orderAfterSaleApplyDO.setRefundTime(new Date());
         orderAfterSaleApplyDO.setStatus(AfterSaleStatusEnum.COMPLETED.getCode());
         orderAfterSaleApplyMapper.updateById(orderAfterSaleApplyDO);
+        // 新增售后日志记录
+        orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.SYSTEM,
+                AfterSaleLogTitleEnum.REFUND_SUCCESS, StrUtil.format(REFUND_LOG_CONTENT, orderAfterSaleApplyDO.getId()));
         return ResultUtil.success(afterSaleId);
     }
 }

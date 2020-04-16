@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.oms.service.impl.order.mapper.MyAfterSalePageMapper">
+
+    <select id="myAfterSalePage" resultType="com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageResponseDTO">
+        SELECT
+            ooa.id AS afterSaleId ooa.order_id AS orderId,
+            ooi.sku_id AS skuId,
+            ooi.sku_name AS skuName,
+            ooa.gmt_created AS applyTime,
+            ooa.`status` AS STATUS
+        FROM
+            oms_order_after_sale_apply ooa
+        INNER JOIN oms_order_item ooi ON ooa.order_item_id = ooi.id
+        where ooa.is_deleted = 'N' and ooi.is_deleted = 'N' and ooa.status!=8
+        and ooa.creator = #{request.creator}
+        <if test="request.afterSaleId != null">
+            and ooa.id = #{request.afterSaleId}
+        </if>
+        <if test="request.orderId != null">
+            and ooa.order_id = #{request.orderId}
+        </if>
+        <if test="request.status != null">
+            and ooa.status = #{request.status}
+        </if>
+    </select>
+
+</mapper>

@@ -57,11 +57,15 @@ public abstract class AbstractPaymentTypeService implements PaymentTypeService {
     public void applyRefund(ApplyRefundRequestDTO requestDTO) {
         RefundRecordDO refundRecordDO = new RefundRecordDO();
         PaymentInfoDO paymentInfoDO = paymentInfoSupport.getByOrderId(requestDTO.getOrderId());
+        refundRecordDO.setAfterSaleId(requestDTO.getAfterSaleId());
         refundRecordDO.setPaymentId(paymentInfoDO.getId());
         refundRecordDO.setOrderId(requestDTO.getOrderId());
         refundRecordDO.setOrderItemId(requestDTO.getOrderItemId());
         refundRecordDO.setSubOrderId(requestDTO.getSubOrderId());
         refundRecordDO.setAmount(requestDTO.getAmount());
+        refundRecordDO.setSkuId(requestDTO.getSkuId());
+        refundRecordDO.setSkuNumber(requestDTO.getSkuNumber());
+        refundRecordDO.setSkuName(requestDTO.getSkuName());
         refundRecordDO.setStatus(RefundStatusEnum.REFUND_ING.getCode());
         refundRecordMapper.insert(refundRecordDO);
         BaseResult<String> refund = refund(requestDTO, paymentInfoDO.getTradeNo(), refundRecordDO.getId());

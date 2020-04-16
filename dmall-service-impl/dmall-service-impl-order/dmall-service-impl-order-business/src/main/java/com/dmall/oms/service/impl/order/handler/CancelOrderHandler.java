@@ -1,6 +1,8 @@
 package com.dmall.oms.service.impl.order.handler;
 
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.enums.CancelTypeEnum;
@@ -44,6 +46,10 @@ public class CancelOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
         }
         if (!OrderStatusEnum.WAIT_PAY.getCode().equals(orderDO.getStatus())) {
             return ResultUtil.fail(OrderErrorEnum.CANCEL_STATUS_ERROR);
+        }
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
+            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
         }
         orderDO.setStatus(OrderStatusEnum.CANCELED.getCode());
         orderDO.setCancelTime(new Date());

@@ -19,6 +19,7 @@ import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.support.AfterSaleSupport;
+import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
 import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,9 @@ public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApp
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private OrderAfterSaleLogSupport orderAfterSaleLogSupport;
 
     @Override
     public BaseResult<Long> processor(AfterSaleApprovalRequestDTO requestDTO) {
@@ -127,6 +131,10 @@ public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApp
         orderAfterSaleApplyDO.setApprovalTime(new Date());
         orderAfterSaleApplyDO.setHandleNote(requestDTO.getHandleNote());
         orderAfterSaleApplyMapper.updateById(orderAfterSaleApplyDO);
+
+        // 新增售后日志记录
+        orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.SYSTEM,
+                AfterSaleLogTitleEnum.APPROVAL, requestDTO.getHandleNote());
         return ResultUtil.success(requestDTO.getAfterSaleId());
     }
 

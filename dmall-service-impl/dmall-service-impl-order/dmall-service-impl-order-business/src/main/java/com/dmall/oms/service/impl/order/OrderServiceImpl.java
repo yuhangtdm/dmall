@@ -23,6 +23,7 @@ import com.dmall.oms.api.dto.demolitionorder.DemolitionOrderRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageRequestDTO;
 import com.dmall.oms.api.dto.demolitionorderpage.DemolitionOrderPageResponseDTO;
 import com.dmall.oms.api.dto.items.OrderItemListResponseDTO;
+import com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageRequestDTO;
 import com.dmall.oms.api.dto.sellerdetail.SellerOrderDetailResponseDTO;
 import com.dmall.oms.api.dto.tocomment.ToCommentResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
@@ -123,6 +124,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private AfterSaleDeleteHandler afterSaleDeleteHandler;
 
+    @Autowired
+    private MyAfterSalePageHandler myAfterSalePageHandler;
+
     @Override
     public BaseResult<ToTradeResponseDTO> toTrade(@RequestBody ToTradeRequestDTO requestDTO) {
         return toTradeHandler.handler(requestDTO);
@@ -215,11 +219,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult applyRefund(@RequestBody OrderApplyRefundRequestDTO requestDTO) {
         return applyRefundHandler.handler(requestDTO);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> applyReturn(@RequestBody OrderApplyReturnRequestDTO requestDTO) {
         return applyReturnHandler.handler(requestDTO);
     }
@@ -241,23 +247,32 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> writeLogisticsNo(@RequestBody WriteLogisticsNoRequestDTO requestDTO) {
         return writeLogisticsNoHandler.handler(requestDTO);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> sellerReceive(Long afterSaleId) {
         return sellerReceiveHandler.handler(afterSaleId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> afterSaleClosed(Long afterSaleId) {
         return afterSaleClosedHandler.handler(afterSaleId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseResult afterSaleDelete(Long afterSaleId) {
         return afterSaleDeleteHandler.handler(afterSaleId);
+    }
+
+    @Override
+    public BaseResult myAfterSalePage(@RequestBody MyAfterSalePageRequestDTO requestDTO) {
+        return myAfterSalePageHandler.handler(requestDTO);
     }
 
 }
