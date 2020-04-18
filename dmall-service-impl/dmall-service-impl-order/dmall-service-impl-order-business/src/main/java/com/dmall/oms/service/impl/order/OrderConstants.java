@@ -20,4 +20,24 @@ public interface OrderConstants {
      * 订单的消费者组
      */
     String CONSUMER_GROUP = "orderConsumer";
+
+    /**
+     * xxl-job默认的执行器
+     */
+    Integer DEFAULT_JOB_GROUP = 1;
+
+    /**
+     * 自动确认收货的任务名
+     */
+    String AUTO_RECEIVE_HANDLER = "autoReceive";
+
+    /**
+     * 自动好评的任务名
+     */
+    String AUTO_GOOD_COMMENT_HANDLER = "autoGoodComment";
+
+    /**
+     * 时间
+     */
+    Integer DELAY_DAY = 15;
 }

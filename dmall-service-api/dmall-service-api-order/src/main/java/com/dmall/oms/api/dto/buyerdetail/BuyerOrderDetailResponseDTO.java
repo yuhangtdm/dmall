@@ -1,5 +1,6 @@
 package com.dmall.oms.api.dto.buyerdetail;
 
+import com.dmall.oms.api.dto.aftersaledetail.AfterSaleDTO;
 import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -38,4 +39,6 @@ public class BuyerOrderDetailResponseDTO {
 
     @ApiModelProperty(value = "订单项列表", position = 8)
     private List<BuyerOrderItemDTO> skuList;
+
+
 }

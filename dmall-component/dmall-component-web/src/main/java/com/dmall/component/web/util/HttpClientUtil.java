@@ -16,6 +16,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
@@ -40,6 +41,43 @@ public class HttpClientUtil {
         this.httpClient = httpClient;
     }
 
+    public static String send(String httpUrl, Map<String, String> maps) {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost httpPost = new HttpPost(httpUrl);
+        CloseableHttpResponse response = null;
+        HttpEntity entity = null;
+        String responseContent = null;
+        try {
+            // 默认的方式创建client
+            List<NameValuePair> nameValuePairs = Lists.newArrayList();
+            for (String key : maps.keySet()) {
+                nameValuePairs.add(new BasicNameValuePair(key, maps.get(key)));
+            }
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, DEFAULT_CHARSET));
+
+            response = httpClient.execute(httpPost);
+            entity = response.getEntity();
+            InputStream inputStream = entity.getContent();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+            responseContent = sb.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (response != null) {
+                    response.close();
+                }
+            } catch (IOException e1) {
+                // ignore
+            }
+        }
+        return responseContent;
+    }
 
     /**
      * 执行post请求

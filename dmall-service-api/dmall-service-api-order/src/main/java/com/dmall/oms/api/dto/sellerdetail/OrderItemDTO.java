@@ -1,10 +1,12 @@
 package com.dmall.oms.api.dto.sellerdetail;
 
+import com.dmall.oms.api.dto.aftersaledetail.AfterSaleDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @description: 订单项响应实体
@@ -46,4 +48,7 @@ public class OrderItemDTO {
 
     @ApiModelProperty(value = "订单项实际总价", position = 11)
     private BigDecimal realPrice;
+
+    @ApiModelProperty(value = "售后列表", position = 12)
+    private List<AfterSaleDTO> afterSaleList;
 }

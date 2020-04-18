@@ -30,10 +30,10 @@ public enum AfterSaleTypeEnum implements CodeDescEnum<Integer> {
     /**
      * code
      */
-    private Integer code;
+    private final Integer code;
 
     /**
      * desc
      */
-    private String desc;
+    private final String desc;
 }

@@ -15,4 +15,8 @@ public interface QiNiuConstants {
     String SKU = "sku";
 
     String ADMIN_ICON = "adminIcon";
+
+    String COMMENT = "comment";
+
+    String AFTER_SALE_CREDENTIALS = "credentials";
 }

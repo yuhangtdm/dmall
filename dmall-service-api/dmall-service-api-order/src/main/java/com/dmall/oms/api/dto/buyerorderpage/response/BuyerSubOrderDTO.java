@@ -18,6 +18,9 @@ public class BuyerSubOrderDTO {
     @ApiModelProperty(value = "子订单id", position = 1)
     private Long subOrderId;
 
+    @ApiModelProperty(value = "子订单状态", position = 2)
+    private Integer status;
+
     @ApiModelProperty(value = "订单项列表", position = 2)
     private List<BuyerOrderItemDTO> skuList;
 }

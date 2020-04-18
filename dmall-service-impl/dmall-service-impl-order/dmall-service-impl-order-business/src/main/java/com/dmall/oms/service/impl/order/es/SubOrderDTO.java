@@ -17,6 +17,11 @@ public class SubOrderDTO {
     private Long subOrderId;
 
     /**
+     * 子订单状态
+     */
+    private Integer status;
+
+    /**
      * 订单的sku列表
      */
     private List<SkuDTO> skuList;

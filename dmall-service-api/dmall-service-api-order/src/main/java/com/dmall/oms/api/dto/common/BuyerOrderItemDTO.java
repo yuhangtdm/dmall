@@ -1,10 +1,12 @@
 package com.dmall.oms.api.dto.common;
 
+import com.dmall.oms.api.dto.aftersaledetail.AfterSaleDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @description: OrderItemDTO
@@ -34,4 +36,10 @@ public class BuyerOrderItemDTO {
 
     @ApiModelProperty(value = "sku总价", position = 7)
     private BigDecimal skuTotalPrice;
+
+    @ApiModelProperty(value = "是否可以售后", position = 8)
+    private Boolean canAfterSale;
+
+    @ApiModelProperty(value = "售后列表", position = 9)
+    private List<AfterSaleDTO> afterSaleList;
 }

@@ -1,7 +1,5 @@
 package com.dmall.oms.api.dto.comment;
 
-import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.oms.api.enums.StarEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description: 售后单信息实体
@@ -90,4 +91,7 @@ public class AfterSaleDTO {
 
     @ApiModelProperty(value = "卖家收货人详细地址", position = 18)
     private String sellerDetailAddress;
+
+    @ApiModelProperty(value = "售后日志列表", position = 19)
+    private List<AfterSaleLogDTO> afterSaleLogs;
 }

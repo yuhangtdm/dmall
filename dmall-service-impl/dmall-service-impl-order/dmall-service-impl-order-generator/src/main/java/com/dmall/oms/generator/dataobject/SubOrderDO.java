@@ -103,6 +103,11 @@ public class SubOrderDO implements Serializable {
     private Date deliverTime;
 
     /**
+     * 确认收货方式 1-会员手动确认收货;2-系统自动确认收货
+     */
+    private Integer deliverType;
+
+    /**
      * 创建人
      */
     @TableField(fill = FieldFill.INSERT)

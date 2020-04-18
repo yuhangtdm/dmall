@@ -65,6 +65,8 @@ public enum OrderErrorEnum implements ErrorCodeEnum {
 
     AFTER_SALE_DELETE("9002","该售后单不可删除"),
 
+    CREATE_JOB_ERROR("9003","创建自动收货的job失败"),
+
     ;
 
     /**

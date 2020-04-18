@@ -21,7 +21,7 @@ public class CommentPageResponseDTO {
     @ApiModelProperty(value = "子订单号", position = 1)
     private Long subOrderId;
 
-    @ApiModelProperty(value = "子订单状态", position = 2)
+    @ApiModelProperty(value = "评价状态", position = 2)
     private YNEnum commentStatus;
 
     @ApiModelProperty(value = "下单时间", position = 3)

@@ -22,7 +22,7 @@ import java.util.List;
 public class GeneratorCodeUtil {
 
     public static void main(String[] args) {
-        generateByTables(Constants.GENERATOR_MODULE_NAME,"oms_order_after_sale_log");
+        generateByTables(Constants.GENERATOR_MODULE_NAME,"oms_sub_order_job");
     }
 
     /**
