@@ -9,7 +9,7 @@ public class AdminUserContextHolder {
     private AdminUserContextHolder() {
     }
 
-    private static final InheritableThreadLocal<AdminUserDTO> LOCAL = new InheritableThreadLocal<AdminUserDTO>();
+    private static final InheritableThreadLocal<AdminUserDTO> LOCAL = new InheritableThreadLocal();
 
 
     public static void set(AdminUserDTO user) {

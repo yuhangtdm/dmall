@@ -1,5 +1,7 @@
 package com.dmall.common.model.exception;
 
+import com.dmall.common.enums.error.ErrorCodeEnum;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -7,11 +9,18 @@ import lombok.Getter;
  * @author: created by hang.yu on 2019/11/7 20:56
  */
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class ComponentException extends RuntimeException {
 
     private String code;
 
     private String msg;
+
+    public ComponentException(ErrorCodeEnum errorCodeEnum) {
+        super(errorCodeEnum.getMsg());
+        this.code = errorCodeEnum.getCode();
+        this.msg = errorCodeEnum.getMsg();
+    }
 
     public ComponentException(String code, String msg) {
         super(msg);

@@ -33,7 +33,7 @@ public class UploadIconHandler extends AbstractCommonHandler<MultipartFile, User
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
             log.error("upload admin icon failed", e);
-            return ResultUtil.success(UserErrorEnum.UPLOAD_PIC_ERROR);
+            return ResultUtil.fail(UserErrorEnum.UPLOAD_PIC_ERROR);
         }
     }
 

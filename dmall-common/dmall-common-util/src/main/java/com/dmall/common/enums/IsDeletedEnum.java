@@ -12,10 +12,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum IsDeletedEnum implements CodeDescEnum {
 
+    /**
+     * Y
+     */
     Y("Y", "不可用"),
-    N("N", "可用");
-    private String code;
 
-    private String desc;
+    /**
+     * N
+     */
+    N("N", "可用");
+
+    private final String code;
+
+    private final String desc;
 
 }

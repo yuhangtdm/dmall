@@ -21,20 +21,19 @@ public class DMallRedisProperties {
     private Boolean enabled = Boolean.FALSE;
 
     /**
-     * 缓存前缀
+     * 服务缓存前缀
      */
     private String cacheKeyPrefix;
-
-
-    /**
-     * 过期单位,默认是天
-     */
-    private TimeUnit ttlUnitEnum = TimeUnit.DAYS;
 
     /**
      * 默认过期时间 默认是1天
      */
     private Long ttl = 1L;
+
+    /**
+     * 过期单位,默认是天
+     */
+    private TimeUnit ttlUnitEnum = TimeUnit.DAYS;
 
     /**
      * 自定义缓存集合

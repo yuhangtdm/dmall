@@ -12,10 +12,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum YNEnum implements CodeDescEnum<String> {
 
+    /**
+     * 是
+     */
     Y("Y", "是"),
-    N("N", "否");
-    private String code;
 
-    private String desc;
+    /**
+     * 否
+     */
+    N("N", "否");
+
+    private final String code;
+
+    private final String desc;
 
 }

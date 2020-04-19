@@ -8,16 +8,26 @@ import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @description: DMallAutoGenerator
+ * @description: 自定义生成器
  * @author: created by hang.yu on 2019/12/1 14:34
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class DMallAutoGenerator extends AutoGenerator {
+
+    /**
+     * 是否生成自定义的文件
+     */
+    private GeneratorDTO generator;
 
     @Override
     protected List<TableInfo> getAllTableInfoList(ConfigBuilder config) {
@@ -36,41 +46,45 @@ public class DMallAutoGenerator extends AutoGenerator {
         };
 
         injectionConfig.setFileCreate(new DMallFileCreate() {
+
+            /**
+             * 自定义文件的配置
+             */
             @Override
             public boolean isCreate(ConfigBuilder configBuilder, DMallFileType fileType, String filePath) {
+                // 如果不创建则返回false
+                if (!generator.isGenerateCustomer()) {
+                    return false;
+                }
                 // 判断自定义文件夹是否需要创建,这里调用默认的方法
                 checkDir(filePath);
-                //对于已存在的文件，只需重复生成 entity
+                //对于已存在的文件，只需覆盖 XML
                 File file = new File(filePath);
                 boolean exist = file.exists();
                 if (exist) {
-                    if (DMallFileType.XML == fileType) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return DMallFileType.XML == fileType;
                 }
                 //不存在的文件都需要创建
                 return true;
             }
 
+            /**
+             * mybatisPlus本身的配置
+             */
             @Override
             public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
+                // 自定义的文件不生成
+                if (FileType.OTHER == fileType) {
+                    return false;
+                }
                 // 判断自定义文件夹是否需要创建,这里调用默认的方法
                 checkDir(filePath);
                 //对于已存在的文件，只需重复生成 entity
                 File file = new File(filePath);
                 boolean exist = file.exists();
-                // 自定义的文件不生成
-                if (FileType.OTHER == fileType) {
-                    return false;
-                }
                 if (exist) {
-                    if (FileType.ENTITY == fileType) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    // 实体文件需要腹泻
+                    return FileType.ENTITY == fileType;
                 }
                 //不存在的文件都需要创建
                 return true;
@@ -80,180 +94,159 @@ public class DMallAutoGenerator extends AutoGenerator {
         List<FileOutConfig> list = new ArrayList<>();
 
         // xml
-        FileOutConfig xmlOutConfig = new FileOutConfig(Constants.TEMPLATES_MAPPER_XML) {
+        FileOutConfig xmlOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_MAPPER_XML) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                StringBuilder append = new StringBuilder()
-                        .append(System.getProperty("user.dir"))
-                        .append(Constants.GENERATOR_MODULE_NAME)
-                        .append(Constants.SRC_MAIN_RESOURCES)
-                        .append("/mapper/")
-                        .append(entityName)
-                        .append("Mapper.xml");
-                return append.toString();
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return System.getProperty(MybatisPlusConstants.USER_DIR)
+                        + StrUtil.format(MybatisPlusConstants.GENERATOR_MODULE_NAME, getGenerator().getModule(), getGenerator().getModule())
+                        + MybatisPlusConstants.SRC_MAIN_RESOURCES
+                        + StrUtil.format(MybatisPlusConstants.MAPPER_NAME_TEMPLATE, entityName);
             }
         };
         list.add(xmlOutConfig);
 
-        // commonRequest dto
-        FileOutConfig commonRequestOutConfig = new FileOutConfig(Constants.TEMPLATES_COMMON_REQUEST_DTO) {
+        // save request dto
+        FileOutConfig saveOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_SAVE_REQUEST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.COMMON, "Common", "RequestDTO");
-            }
-        };
-        list.add(commonRequestOutConfig);
-
-        // commonResponse dto
-        FileOutConfig commonResponseOutConfig = new FileOutConfig(Constants.TEMPLATES_COMMON_RESPONSE_DTO) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.COMMON, "Common", "ResponseDTO");
-            }
-        };
-        list.add(commonResponseOutConfig);
-
-        // list dto
-        FileOutConfig listOutConfig = new FileOutConfig(Constants.TEMPLATES_LIST_REQEUST_DTO) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "List", "RequestDTO");
-            }
-        };
-        list.add(listOutConfig);
-
-        // page dto
-        FileOutConfig pageOutConfig = new FileOutConfig(Constants.TEMPLATES_PAGE_REQEUST_DTO) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "Page", "RequestDTO");
-            }
-        };
-        list.add(pageOutConfig);
-
-        // save dto
-        FileOutConfig saveOutConfig = new FileOutConfig(Constants.TEMPLATES_SAVE_REQEUST_DTO) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "Save", "RequestDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.SAVE.getCode(), FileEnum.REQUEST_DTO.getCode());
             }
         };
         list.add(saveOutConfig);
 
-        // update dto
-        FileOutConfig updateOutConfig = new FileOutConfig(Constants.TEMPLATES_UPDATE_REQUEST_DTO) {
+        // update request dto
+        FileOutConfig updateOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_UPDATE_REQUEST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getDtoPath(entityName, Constants.REQUEST, "Update", "RequestDTO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.UPDATE.getCode(), FileEnum.REQUEST_DTO.getCode());
             }
         };
         list.add(updateOutConfig);
 
-        // service
-        FileOutConfig serviceOutConfig = new FileOutConfig(Constants.TEMPLATES_BUSINESS_SERVICE) {
+        // list request dto
+        FileOutConfig listOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_LIST_REQUEST_DTO) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.LIST.getCode(), FileEnum.REQUEST_DTO.getCode());
+            }
+        };
+        list.add(listOutConfig);
+
+        // page request dto
+        FileOutConfig pageOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_PAGE_REQUEST_DTO) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.PAGE.getCode(), FileEnum.REQUEST_DTO.getCode());
+            }
+        };
+        list.add(pageOutConfig);
+
+        // response dto
+        FileOutConfig responseOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_RESPONSE_DTO) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.RESPONSE, StrUtil.EMPTY, FileEnum.RESPONSE_DTO.getCode());
+            }
+        };
+        list.add(responseOutConfig);
+
+        // service api
+        FileOutConfig serviceOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_BUSINESS_SERVICE_API) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
                 return getServicePath(entityName);
             }
         };
         list.add(serviceOutConfig);
 
         // serviceImpl
-        FileOutConfig serviceImplOutConfig = new FileOutConfig(Constants.TEMPLATES_BUSINESS_SERVICE_IMPL) {
+        FileOutConfig serviceImplOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_BUSINESS_SERVICE_IMPL) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
                 return getServiceImplPath(entityName);
             }
         };
         list.add(serviceImplOutConfig);
 
         // save Handler
-        FileOutConfig saveHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_SAVEHANDLER) {
+        FileOutConfig saveHandlerOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_SAVE_HANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Save");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getHandlerPath(entityName, HandlerEnum.SAVE.getCode());
             }
         };
         list.add(saveHandlerOutConfig);
 
         // delete Handler
-        FileOutConfig deleteHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_DELETEHANDLER) {
+        FileOutConfig deleteHandlerOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_DELETE_HANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Delete");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getHandlerPath(entityName, HandlerEnum.DELETE.getCode());
             }
         };
         list.add(deleteHandlerOutConfig);
 
         // update Handler
-        FileOutConfig updateHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_UPDATEHANDLER) {
+        FileOutConfig updateHandlerOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_UPDATE_HANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Update");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getHandlerPath(entityName, HandlerEnum.UPDATE.getCode());
             }
         };
         list.add(updateHandlerOutConfig);
 
         // get Handler
-        FileOutConfig getHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_GETHANDLER) {
+        FileOutConfig getHandlerOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_GET_HANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Get");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getHandlerPath(entityName, HandlerEnum.GET.getCode());
             }
         };
         list.add(getHandlerOutConfig);
 
         // list Handler
-        FileOutConfig listHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_LISTHANDLER) {
+        FileOutConfig listHandlerOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_LIST_HANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "List");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getHandlerPath(entityName, HandlerEnum.LIST.getCode());
             }
         };
         list.add(listHandlerOutConfig);
 
         // page Handler
-        FileOutConfig pageHandlerOutConfig = new FileOutConfig(Constants.TEMPLATES_PAGEHANDLER) {
+        FileOutConfig pageHandlerOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_PAGE_HANDLER) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getHandlerPath(entityName, "Page");
+                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+                return getHandlerPath(entityName, HandlerEnum.PAGE.getCode());
             }
         };
         list.add(pageHandlerOutConfig);
-
-        // enums
-        FileOutConfig enumsOutConfig = new FileOutConfig(Constants.TEMPLATES_ERRORENUM) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-                return getEnumsPath(entityName);
-            }
-        };
-        list.add(enumsOutConfig);
 
 
         injectionConfig.setFileOutConfigList(list);
         return injectionConfig;
     }
 
+    /**
+     * dto的路径
+     */
     private String getDtoPath(String entityName, String operation, String prefix, String suffix) {
         StringBuilder append = api()
-                .append(Constants.DTO)
+                .append(MybatisPlusConstants.DTO)
                 .append(File.separator)
                 .append(entityName.toLowerCase())
                 .append(File.separator)
@@ -266,72 +259,75 @@ public class DMallAutoGenerator extends AutoGenerator {
         return append.toString();
     }
 
+    /**
+     * service的路径
+     */
     private String getServicePath(String entityName) {
         StringBuilder append = api()
-                .append(Constants.SERVICE)
+                .append(MybatisPlusConstants.SERVICE)
                 .append(File.separator)
                 .append(entityName)
-                .append("Service")
+                .append(FileEnum.SERVICE_API.getCode())
                 .append(StringPool.DOT_JAVA);
         return append.toString();
     }
 
+    /**
+     * serviceImpl的路径
+     */
     private String getServiceImplPath(String entityName) {
         StringBuilder append = impl(entityName)
                 .append(entityName)
-                .append("ServiceImpl")
+                .append(FileEnum.SERVICE_IMPL.getCode())
                 .append(StringPool.DOT_JAVA);
         return append.toString();
     }
 
+    /**
+     * handler的路径
+     */
     private String getHandlerPath(String entityName, String operator) {
-        StringBuilder append = impl(entityName)
-                .append(Constants.HANDLER)
+        return impl(entityName)
+                .append(MybatisPlusConstants.HANDLER)
                 .append(File.separator)
                 .append(operator)
                 .append(entityName)
-                .append("Handler")
-                .append(StringPool.DOT_JAVA);
-        return append.toString();
+                .append(FileEnum.HANDLER.getCode())
+                .append(StringPool.DOT_JAVA).toString();
     }
 
-    private String getEnumsPath(String entityName) {
-        StringBuilder append = impl(entityName)
-                .append(Constants.ENUMS)
-                .append(File.separator)
-                .append(entityName)
-                .append("ErrorEnum")
-                .append(StringPool.DOT_JAVA);
-        return append.toString();
-    }
-
+    /**
+     * api的路径
+     */
     private StringBuilder api() {
-        StringBuilder append = new StringBuilder()
-                .append(System.getProperty("user.dir"))
-                .append(Constants.API_MODULE_NAME)
-                .append(Constants.SRC_MAIN_JAVA)
-                .append(Constants.COM_DMALL)
-                .append(Constants.PACKAGE_MODULE_NAME)
+        return new StringBuilder()
+                .append(System.getProperty(MybatisPlusConstants.USER_DIR))
+                .append(StrUtil.format(MybatisPlusConstants.API_MODULE_NAME, generator.getModule()))
+                .append(MybatisPlusConstants.SRC_MAIN_JAVA)
+                .append(MybatisPlusConstants.COM_DMALL)
+                .append(generator.getModule())
                 .append(File.separator)
-                .append(Constants.API)
+                .append(MybatisPlusConstants.API)
                 .append(File.separator);
-        return append;
     }
 
+    /**
+     * impl的路径
+     */
     private StringBuilder impl(String entityName) {
-        StringBuilder append = new StringBuilder()
-                .append(System.getProperty("user.dir"))
-                .append(Constants.BUSINESS_MODULE_NAME)
-                .append(Constants.SRC_MAIN_JAVA)
-                .append(Constants.COM_DMALL)
-                .append(Constants.PACKAGE_MODULE_NAME)
+        return new StringBuilder()
+                .append(System.getProperty(MybatisPlusConstants.USER_DIR))
+                .append(StrUtil.format(MybatisPlusConstants.BUSINESS_MODULE_NAME, generator.getModule(), generator.getModule()))
+                .append(MybatisPlusConstants.SRC_MAIN_JAVA)
+                .append(MybatisPlusConstants.COM_DMALL)
+                .append(generator.getModule())
                 .append(File.separator)
-                .append(Constants.SERVICE)
+                .append(MybatisPlusConstants.SERVICE)
                 .append(File.separator)
-                .append(Constants.IMPL)
+                .append(MybatisPlusConstants.IMPL)
                 .append(File.separator)
                 .append(entityName.toLowerCase())
                 .append(File.separator);
-        return append;
     }
+
 }

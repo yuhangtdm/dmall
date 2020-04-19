@@ -27,6 +27,7 @@ public class SubOrderJobDO implements Serializable {
     /**
      * id
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**

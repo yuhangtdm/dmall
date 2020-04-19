@@ -1,5 +1,7 @@
 package com.dmall.component.cache.redis.mapcache;
 
+import cn.hutool.core.util.StrUtil;
+
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
@@ -13,9 +15,9 @@ import java.util.concurrent.TimeUnit;
 @Documented
 public @interface MapPutCache {
     /**
-     * 缓存key 优先级最高
+     * 缓存key
      */
-    String key() default "";
+    String key() default StrUtil.EMPTY;
 
     /**
      * 超时时间

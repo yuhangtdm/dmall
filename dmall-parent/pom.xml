@@ -3,6 +3,10 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>dmall-demo</module>
+        <module>../dmall-demo/dmall-demo-business</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -107,6 +111,11 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
 
@@ -246,7 +255,7 @@
 
 
             <!--======================本项目模块======================-->
-            <!--common-->
+            <!--dmall-common-->
             <dependency>
                 <groupId>com.allInJava</groupId>
                 <artifactId>dmall-common-util</artifactId>
@@ -346,6 +355,11 @@
                 <artifactId>dmall-service-api-pay</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-api-demo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--impl-generator -->
             <dependency>
@@ -373,8 +387,11 @@
                 <artifactId>dmall-service-impl-cart-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-            
+            <dependency>
+                <groupId>com.allInJava</groupId>
+                <artifactId>dmall-service-impl-demo-generator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

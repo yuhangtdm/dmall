@@ -13,6 +13,23 @@ import java.util.Objects;
  */
 public class ObjectUtil extends StringUtils {
 
+    private ObjectUtil() {
+    }
+
+    /**
+     * 根据条件获取正确的值
+     */
+    public static <T> T or(boolean right, T t1, T t2) {
+        return right ? t1 : t2;
+    }
+
+    /**
+     * 如果对象不为空 则返回对象,否则返回默认值
+     */
+    public static Object defaultIfNull(Object object, Object defaultValue) {
+        return isEmpty(object) ? defaultValue : object;
+    }
+
     /**
      * 按照规则判断对象是否为空
      * 支持 字符串、集合、map、数组
@@ -98,7 +115,7 @@ public class ObjectUtil extends StringUtils {
     /**
      * 判断是否是复杂的引用类型
      */
-    public static boolean isComplexObject(Object object) {
+    public static boolean complexObject(Object object) {
         if (object == null) {
             return false;
         }

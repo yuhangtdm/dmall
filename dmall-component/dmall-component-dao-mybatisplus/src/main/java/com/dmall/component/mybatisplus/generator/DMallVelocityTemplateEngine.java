@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -18,18 +20,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description: 用于构建模板文件中的变量
+ * @description: 自定义文件生成模板
  * @author: created by hang.yu on 2019/12/1 14:16
  */
+@Data
 @Slf4j
+@EqualsAndHashCode(callSuper = true)
 public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
+
+    private GeneratorDTO generator;
 
     @Override
     public Map<String, Object> getObjectMap(TableInfo tableInfo) {
         Map<String, Object> objectMap = super.getObjectMap(tableInfo);
-        String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), "DO");
-        String comment = StrUtil.removeSuffix(tableInfo.getComment(), "表");
-
+        String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
+        String comment = StrUtil.removeSuffix(tableInfo.getComment(), MybatisPlusConstants.TABLE_REMARK);
         // 设置包名
         setPackageName(objectMap, entityName);
         // 设置类名
@@ -38,7 +43,7 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
         setComment(objectMap, comment);
         // 设置操作
         setOperation(objectMap, comment);
-
+        // 当前时间
         objectMap.put("datetime", DateUtil.now());
         objectMap.put("requestMapping", "/" + StrUtil.lowerFirst(entityName));
         return objectMap;
@@ -62,104 +67,55 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
                     if (CollectionUtils.isNotEmpty(focList)) {
                         for (FileOutConfig foc : focList) {
                             switch (foc.getTemplatePath()) {
-                                case Constants.TEMPLATES_BUSINESS_SERVICE: {
+                                case MybatisPlusConstants.TEMPLATES_BUSINESS_SERVICE_API: {
                                     if (isCreate(DMallFileType.SERVICE_API, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
                                     }
                                     break;
                                 }
-                                case Constants.TEMPLATES_BUSINESS_SERVICE_IMPL: {
+                                case MybatisPlusConstants.TEMPLATES_BUSINESS_SERVICE_IMPL: {
                                     if (isCreate(DMallFileType.SERVICE_IMPL, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
                                     }
                                     break;
                                 }
-                                case Constants.TEMPLATES_MAPPER_XML: {
+                                case MybatisPlusConstants.TEMPLATES_MAPPER_XML: {
                                     if (isCreate(DMallFileType.XML, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
                                     }
                                     break;
                                 }
-                                case Constants.TEMPLATES_COMMON_REQUEST_DTO: {
-                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                // request dto
+                                case MybatisPlusConstants.TEMPLATES_LIST_REQUEST_DTO:
+                                case MybatisPlusConstants.TEMPLATES_PAGE_REQUEST_DTO:
+                                case MybatisPlusConstants.TEMPLATES_SAVE_REQUEST_DTO:
+                                case MybatisPlusConstants.TEMPLATES_UPDATE_REQUEST_DTO: {
+                                    if (isCreate(DMallFileType.REQUEST_DTO, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
                                     }
                                     break;
                                 }
-                                case Constants.TEMPLATES_COMMON_RESPONSE_DTO: {
-                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
+                                // response dto
+                                case MybatisPlusConstants.TEMPLATES_RESPONSE_DTO: {
+                                    if (isCreate(DMallFileType.RESPONSE_DTO, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
                                     }
                                     break;
                                 }
-                                case Constants.TEMPLATES_LIST_REQEUST_DTO: {
-                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_PAGE_REQEUST_DTO: {
-                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_SAVE_REQEUST_DTO: {
-                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_UPDATE_REQUEST_DTO: {
-                                    if (isCreate(DMallFileType.BUSINESS_DTO, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_SAVEHANDLER: {
+
+                                // handler
+                                case MybatisPlusConstants.TEMPLATES_SAVE_HANDLER:
+                                case MybatisPlusConstants.TEMPLATES_DELETE_HANDLER:
+                                case MybatisPlusConstants.TEMPLATES_UPDATE_HANDLER:
+                                case MybatisPlusConstants.TEMPLATES_GET_HANDLER:
+                                case MybatisPlusConstants.TEMPLATES_LIST_HANDLER:
+                                case MybatisPlusConstants.TEMPLATES_PAGE_HANDLER: {
                                     if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_DELETEHANDLER: {
-                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_UPDATEHANDLER: {
-                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_GETHANDLER: {
-                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_LISTHANDLER: {
-                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_PAGEHANDLER: {
-                                    if (isCreate(DMallFileType.HANDLER, foc.outputFile(tableInfo))) {
-                                        writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                                    }
-                                    break;
-                                }
-                                case Constants.TEMPLATES_ERRORENUM: {
-                                    if (isCreate(DMallFileType.ERROR_ENUM, foc.outputFile(tableInfo))) {
                                         writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
                                     }
                                     break;
                                 }
                             }
-
                         }
                     }
                 }
@@ -171,6 +127,9 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
         return super.batchOutput();
     }
 
+    /***
+     * 判断文件是否创建
+     */
     protected boolean isCreate(DMallFileType fileType, String filePath) {
         ConfigBuilder cb = getConfigBuilder();
         // 自定义判断
@@ -194,39 +153,27 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
      * 设置包名
      */
     private void setPackageName(Map<String, Object> objectMap, String entityName) {
-        StringBuilder dtoPackage = new StringBuilder(Constants.PACKAGE_PARENT_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.PACKAGE_MODULE_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.PACKAGE_GENERATOR_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.DTO);
-        objectMap.put("dtoPackage", dtoPackage.toString());
-        // common dto Package
-        objectMap.put("commonDtoPackage", getDtoPackage(entityName, Constants.COMMON));
         // request dto package
-        objectMap.put("requestDtoPackage", getDtoPackage(entityName, Constants.REQUEST));
+        objectMap.put("requestDtoPackage", getDtoPackage(entityName, MybatisPlusConstants.REQUEST));
         // response dto package
-        objectMap.put("responseDtoPackage", getDtoPackage(entityName, Constants.RESPONSE));
-
+        objectMap.put("responseDtoPackage", getDtoPackage(entityName, MybatisPlusConstants.RESPONSE));
+        // service  package
         objectMap.put("servicePackage", getServicePackage());
+        // serviceImpl  package
         objectMap.put("serviceImplPackage", getServiceImplPackage(entityName));
+        // handler  package
         objectMap.put("handlerPackage", getHandlerPackage(entityName));
-        objectMap.put("errorEnumPackage", getEnumsPackage(entityName));
-
     }
 
     /**
      * 设置类名
      */
     private void setClassName(Map<String, Object> objectMap, String entityName, String comment, String mapperName) {
-        objectMap.put("dto", StrUtil.format("{}DTO", entityName));
-        objectMap.put("commonRequestDto", StrUtil.format("Common{}RequestDTO", entityName));
-        objectMap.put("commonResponseDto", StrUtil.format("Common{}ResponseDTO", entityName));
         objectMap.put("listRequestDto", StrUtil.format("List{}RequestDTO", entityName));
         objectMap.put("pageRequestDto", StrUtil.format("Page{}RequestDTO", entityName));
         objectMap.put("saveRequestDto", StrUtil.format("Save{}RequestDTO", entityName));
         objectMap.put("updateRequestDto", StrUtil.format("Update{}RequestDTO", entityName));
+        objectMap.put("responseDto", StrUtil.format("{}ResponseDTO", entityName));
         objectMap.put("businessService", StrUtil.format("{}Service", entityName));
         objectMap.put("businessServiceImpl", StrUtil.format("{}ServiceImpl", entityName));
         objectMap.put("saveHandler", StrUtil.format("Save{}Handler", entityName));
@@ -235,14 +182,12 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
         objectMap.put("getHandler", StrUtil.format("Get{}Handler", entityName));
         objectMap.put("listHandler", StrUtil.format("List{}Handler", entityName));
         objectMap.put("pageHandler", StrUtil.format("Page{}Handler", entityName));
-        objectMap.put("errorEnum", StrUtil.format("{}ErrorEnum", entityName));
         objectMap.put("saveHandlerName", StrUtil.format("save{}Handler", entityName));
         objectMap.put("deleteHandlerName", StrUtil.format("delete{}Handler", entityName));
         objectMap.put("updateHandlerName", StrUtil.format("update{}Handler", entityName));
         objectMap.put("getHandlerName", StrUtil.format("get{}Handler", entityName));
         objectMap.put("listHandlerName", StrUtil.format("list{}Handler", entityName));
         objectMap.put("pageHandlerName", StrUtil.format("page{}Handler", entityName));
-        objectMap.put("enumName", entityName.toUpperCase());
         objectMap.put("object", StrUtil.lowerFirst(entityName));
         objectMap.put("mapperName", StrUtil.lowerFirst(mapperName));
         objectMap.put("comment", comment);
@@ -252,15 +197,14 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
      * 设置注释
      */
     private void setComment(Map<String, Object> objectMap, String comment) {
-        objectMap.put("commonRequestComment", StrUtil.format("{}公共请求实体", comment));
-        objectMap.put("commonResponseComment", StrUtil.format("{}公共响应实体", comment));
+        objectMap.put("getRequestComment", StrUtil.format("{}查询请求实体", comment));
         objectMap.put("listRequestComment", StrUtil.format("{}列表请求实体", comment));
         objectMap.put("pageRequestComment", StrUtil.format("{}分页请求实体", comment));
         objectMap.put("saveRequestComment", StrUtil.format("新增{}请求实体", comment));
         objectMap.put("updateRequestComment", StrUtil.format("修改{}请求实体", comment));
+        objectMap.put("responseComment", StrUtil.format("{}响应实体", comment));
         objectMap.put("serviceComment", StrUtil.format("{}服务", comment));
         objectMap.put("serviceImplComment", StrUtil.format("{}服务实现", comment));
-        objectMap.put("errorEnumComment", StrUtil.format("{}错误枚举", comment));
         objectMap.put("saveHandlerComment", StrUtil.format("新增{}处理器", comment));
         objectMap.put("updateHandlerComment", StrUtil.format("修改{}处理器", comment));
         objectMap.put("deleteHandlerComment", StrUtil.format("删除{}处理器", comment));
@@ -283,56 +227,58 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
     }
 
 
-    private String getDtoPackage(String func, String mod) {
-        StringBuilder sb = new StringBuilder(Constants.PACKAGE_PARENT_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.PACKAGE_MODULE_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.API)
-                .append(StringPool.DOT)
-                .append(Constants.DTO)
-                .append(StringPool.DOT)
-                .append(func.toLowerCase())
-                .append(StringPool.DOT)
-                .append(mod);
-        return sb.toString();
+    /**
+     * 获取自定义dto的包
+     */
+    private String getDtoPackage(String entityName, String mod) {
+        return MybatisPlusConstants.PACKAGE_PARENT_NAME +
+                StringPool.DOT +
+                generator.getModule() +
+                StringPool.DOT +
+                MybatisPlusConstants.API +
+                StringPool.DOT +
+                MybatisPlusConstants.DTO +
+                StringPool.DOT +
+                entityName.toLowerCase() +
+                StringPool.DOT +
+                mod;
     }
 
+    /**
+     * 获取服务接口包名
+     */
     private String getServicePackage() {
-        StringBuilder sb = new StringBuilder(Constants.PACKAGE_PARENT_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.PACKAGE_MODULE_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.API)
-                .append(StringPool.DOT)
-                .append(Constants.SERVICE);
-        return sb.toString();
+        return MybatisPlusConstants.PACKAGE_PARENT_NAME +
+                StringPool.DOT +
+                generator.getModule() +
+                StringPool.DOT +
+                MybatisPlusConstants.API +
+                StringPool.DOT +
+                MybatisPlusConstants.SERVICE;
     }
 
+    /**
+     * 获取服务实现类包名
+     */
     private String getServiceImplPackage(String entityName) {
-        StringBuilder sb = new StringBuilder(Constants.PACKAGE_PARENT_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.PACKAGE_MODULE_NAME)
-                .append(StringPool.DOT)
-                .append(Constants.SERVICE)
-                .append(StringPool.DOT)
-                .append(Constants.IMPL)
-                .append(StringPool.DOT)
-                .append(entityName.toLowerCase());
-        return sb.toString();
+        return MybatisPlusConstants.PACKAGE_PARENT_NAME +
+                StringPool.DOT +
+                generator.getModule() +
+                StringPool.DOT +
+                MybatisPlusConstants.SERVICE +
+                StringPool.DOT +
+                MybatisPlusConstants.IMPL +
+                StringPool.DOT +
+                entityName.toLowerCase();
     }
 
+    /**
+     * 获取服务实现类包名
+     */
     private String getHandlerPackage(String entityName) {
-        StringBuilder sb = new StringBuilder(getServiceImplPackage(entityName))
-                .append(StringPool.DOT)
-                .append(Constants.HANDLER);
-        return sb.toString();
+        return getServiceImplPackage(entityName) +
+                StringPool.DOT +
+                MybatisPlusConstants.HANDLER;
     }
 
-    private String getEnumsPackage(String entityName) {
-        StringBuilder sb = new StringBuilder(getServiceImplPackage(entityName))
-                .append(StringPool.DOT)
-                .append(Constants.ENUMS);
-        return sb.toString();
-    }
 }

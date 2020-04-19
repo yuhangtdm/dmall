@@ -1,0 +1,71 @@
+package ${serviceImplPackage};
+
+import com.dmall.common.dto.*;
+import ${requestDtoPackage}.${saveRequestDto};
+import ${requestDtoPackage}.${updateRequestDto};
+import ${requestDtoPackage}.${listRequestDto};
+import ${requestDtoPackage}.${pageRequestDto};
+import ${responseDtoPackage}.${responseDto};
+import ${servicePackage}.${businessService};
+import ${handlerPackage}.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @description: $!{serviceImplComment}
+ * @author: created by ${author} on ${datetime}
+ */
+@RestController
+public class ${businessServiceImpl} implements ${businessService} {
+
+    @Autowired
+    private ${saveHandler} ${saveHandlerName};
+
+    @Autowired
+    private ${deleteHandler} ${deleteHandlerName};
+
+    @Autowired
+    private ${updateHandler} ${updateHandlerName};
+
+    @Autowired
+    private ${getHandler} ${getHandlerName};
+
+    @Autowired
+    private ${listHandler} ${listHandlerName};
+
+    @Autowired
+    private ${pageHandler} ${pageHandlerName};
+
+
+    @Override
+    public BaseResult<Long> save(@RequestBody ${saveRequestDto} requestDTO) {
+        return ${saveHandlerName}.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Long> delete(Long id) {
+        return ${deleteHandlerName}.handler(id);
+    }
+
+    @Override
+    public BaseResult<Long> update(@RequestBody ${updateRequestDto} requestDTO) {
+        return ${updateHandlerName}.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<${responseDto}> get(Long id) {
+        return ${getHandlerName}.handler(id);
+    }
+
+    @Override
+    public BaseResult<List<${responseDto}>> list(@RequestBody ${listRequestDto} requestDTO) {
+        return ${listHandlerName}.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<ResponsePage<${responseDto}>> page(@RequestBody ${pageRequestDto} requestDTO) {
+        return ${pageHandlerName}.handler(requestDTO);
+    }
+
+}

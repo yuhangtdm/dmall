@@ -3,7 +3,7 @@ package com.dmall.common.model;
 import java.util.List;
 
 /**
- * @description: 公共缓存类
+ * @description: 公共缓存服务
  * @author: created by hang.yu on 2019/12/29 19:19
  */
 public interface CommonCacheService<T> {

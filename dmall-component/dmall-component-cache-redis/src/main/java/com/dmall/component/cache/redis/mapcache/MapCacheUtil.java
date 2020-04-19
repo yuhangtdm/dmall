@@ -3,9 +3,9 @@ package com.dmall.component.cache.redis.mapcache;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.component.cache.redis.DMallRedisProperties;
 import lombok.AllArgsConstructor;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -16,42 +16,33 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class MapCacheUtil {
 
-    private RedisTemplate<String,Object> redisTemplate;
+    private static final String MAP_CACHE_PREFIX = "mapCache_";
 
-    private DMallRedisProperties dMallRedisProperties;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    private Environment environment;
-
-    /**
-     * 批量设置缓存
-     */
-    public void batchPut(String key, Map<String, Object> cache) {
-        cache.forEach((k, v) -> {
-            put(key, k, v);
-        });
-    }
+    private final DMallRedisProperties dMallRedisProperties;
 
     /**
      * 设置单个缓存
      */
     public void put(String key, String hashKey, Object result) {
-        put(key, hashKey, result, 0L, null);
+        put(key, hashKey, result, null, null);
     }
 
     /**
      * 设置缓存并设置过期时间
      */
-    public void put(String key, String hashKey, Object result, long timeout, TimeUnit timeUnit) {
+    public void put(String key, String hashKey, Object result, Long timeout, TimeUnit timeUnit) {
         redisTemplate.opsForHash().put(key, hashKey, result);
-        // 0 表示永久存储
-        if (timeout == 0L) {
+        // Long.MAX_VALUE 表示不设置过期时间
+        if (timeout == Long.MAX_VALUE) {
             return;
         }
+        // 大于0 则设置过期时间
         if (timeout > 0L) {
-            // 大于0 则使用传递的
             redisTemplate.expire(key, timeout, timeUnit);
         } else {
-            // 小于0 则使用默认的
+            // 否则使用服务默认配置的过期时间
             redisTemplate.expire(key, dMallRedisProperties.getTtl(), dMallRedisProperties.getTtlUnitEnum());
         }
     }
@@ -64,30 +55,39 @@ public class MapCacheUtil {
     }
 
     /**
+     * 根据key获取缓存
+     */
+    public List<Object> values(String key) {
+        return redisTemplate.opsForHash().values(key);
+    }
+
+    /**
+     * 根据key和 hashKey获取缓存
+     */
+    public Object get(String key, String hashKey) {
+        return redisTemplate.opsForHash().get(key, hashKey);
+    }
+
+    /**
+     * 批量设置缓存
+     */
+    public void batchPut(String key, Map<String, Object> caches) {
+        caches.forEach((k, v) -> {
+            put(key, k, v);
+        });
+    }
+
+    /**
      * 获取key
      */
     public String getKey(String cacheName, Class<?> cacheService) {
         return getKey(cacheName, cacheService.getName());
     }
 
-  /*  public String getkey(String cacheName, String className) {
-        return new StringBuilder(dMallRedisProperties.getCacheKeyPrefix())
-                .append(StrUtil.UNDERLINE)
-                .append(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "local")
-                .append(StrUtil.UNDERLINE)
-                .append(cacheName)
-                .append(StrUtil.COLON)
-                .append(className)
-                .toString();
-    }*/
-
-
-    // example: dmall-service-impl-product:local:mapCache:product_com.xxx
+    /**
+     * 获取key 保证唯一
+     */
     public String getKey(String cacheName, String className) {
-        return new StringBuilder("mapCache:")
-                .append(cacheName)
-                .append(StrUtil.COLON)
-                .append(className)
-                .toString();
+        return MAP_CACHE_PREFIX + cacheName + StrUtil.C_UNDERLINE + className;
     }
 }

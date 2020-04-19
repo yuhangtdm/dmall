@@ -33,7 +33,7 @@ public class UploadLogoHandler extends AbstractCommonHandler<MultipartFile, Bran
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
             log.error("upload logo failed", e);
-            return ResultUtil.success(BrandErrorEnum.UPLOAD_LOGO_ERROR);
+            return ResultUtil.fail(BrandErrorEnum.UPLOAD_LOGO_ERROR);
         }
     }
 

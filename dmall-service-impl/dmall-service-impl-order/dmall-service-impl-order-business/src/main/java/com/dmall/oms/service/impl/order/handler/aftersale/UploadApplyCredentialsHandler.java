@@ -33,7 +33,7 @@ public class UploadApplyCredentialsHandler extends AbstractCommonHandler<Multipa
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
             log.error("upload credentials failed", e);
-            return ResultUtil.success(BrandErrorEnum.UPLOAD_LOGO_ERROR);
+            return ResultUtil.fail(BrandErrorEnum.UPLOAD_LOGO_ERROR);
         }
     }
 }

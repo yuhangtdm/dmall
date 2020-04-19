@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @description: ResponsePage
+ * @description: 分页返回数据
  * @author: created by hang.yu on 2019/11/23 10:21
  */
 @Data

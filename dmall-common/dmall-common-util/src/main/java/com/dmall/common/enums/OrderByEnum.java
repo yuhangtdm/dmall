@@ -11,10 +11,18 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum OrderByEnum implements CodeDescEnum<String> {
+
+    /**
+     * 升序
+     */
     ASC("ASC", "升序"),
+
+    /**
+     * 降序
+     */
     DESC("DESC", "降序"),
     ;
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 }

@@ -1,5 +1,6 @@
 package com.dmall.component.cache.redis.lock;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 
@@ -13,11 +14,12 @@ import java.util.Collections;
 
 public class DistributedLockService {
 
-    DefaultRedisScript<Boolean> redisScript;
-    private StringRedisTemplate stringRedisTemplate;
+    private final DefaultRedisScript<Boolean> redisScript;
 
-    public DistributedLockService(StringRedisTemplate stringRedisTemplate, DefaultRedisScript<Boolean> redisScript) {
-        this.stringRedisTemplate = stringRedisTemplate;
+    private final RedisTemplate redisTemplate;
+
+    public DistributedLockService(RedisTemplate redisTemplate, DefaultRedisScript<Boolean> redisScript) {
+        this.redisTemplate = redisTemplate;
         this.redisScript = redisScript;
     }
 
@@ -28,8 +30,8 @@ public class DistributedLockService {
      * @param value   锁的值
      * @param timeout 锁的过期时间
      */
-    public boolean getLock(String key, String value, long timeout) {
-        return stringRedisTemplate.opsForValue().setIfAbsent(key, value, Duration.ofSeconds(timeout));
+    public Boolean getLock(String key, String value, long timeout) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value, Duration.ofSeconds(timeout));
     }
 
     /**
@@ -38,9 +40,8 @@ public class DistributedLockService {
      * @param key       锁的key
      * @param requestId 锁的值
      */
-    public boolean releaseLock(String key, String requestId) {
-        return stringRedisTemplate.execute(redisScript, Collections.singletonList(key), requestId);
-
+    public Boolean releaseLock(String key, String requestId) {
+        return (Boolean) redisTemplate.execute(redisScript, Collections.singletonList(key), requestId);
     }
 
 }

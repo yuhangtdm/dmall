@@ -9,7 +9,7 @@ public class PortalMemberContextHolder {
     private PortalMemberContextHolder() {
     }
 
-    private static final InheritableThreadLocal<PortalMemberDTO> LOCAL = new InheritableThreadLocal<PortalMemberDTO>();
+    private static final InheritableThreadLocal<PortalMemberDTO> LOCAL = new InheritableThreadLocal();
 
 
     public static void set(PortalMemberDTO user) {

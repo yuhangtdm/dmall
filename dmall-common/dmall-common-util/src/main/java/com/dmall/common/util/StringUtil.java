@@ -11,13 +11,23 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtil {
 
+    private StringUtil() {
+    }
+
+    /**
+     * ISO-8859-1
+     */
     private static final String ISO = "ISO-8859-1";
+
+    /**
+     * utf-8
+     */
     private static final String UTF = "utf-8";
 
     /**
      * ISO转utf-8解决乱码问题
      */
-    public static String getIsoToUtf_8(String str) {
+    public static String getIsoToUtf8(String str) {
         String newStr = StrUtil.EMPTY;
         ;
         if (StringUtils.isBlank(str)) {

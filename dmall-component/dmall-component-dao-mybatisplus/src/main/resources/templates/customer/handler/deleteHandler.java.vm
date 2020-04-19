@@ -1,0 +1,31 @@
+package ${handlerPackage};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * @description: $!{deleteHandlerComment}
+ * @author: created by ${author} on ${datetime}
+ */
+@Component
+public class ${deleteHandler} extends AbstractCommonHandler<Long, ${entity}, Long> {
+
+    @Autowired
+    private ${table.mapperName} ${mapperName};
+
+    @Override
+    public BaseResult<Long> validate(Long id) {
+        return ResultUtil.success();
+    }
+
+    @Override
+    public BaseResult<Long> processor(Long id) {
+        return ResultUtil.success();
+    }
+
+}

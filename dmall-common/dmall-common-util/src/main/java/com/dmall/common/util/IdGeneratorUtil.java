@@ -7,6 +7,7 @@ import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 
+// todo
 public class IdGeneratorUtil {
  
     private static long workerId = 0;

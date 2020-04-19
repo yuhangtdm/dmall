@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.dmall.common.model.BasicConfiguration;
+import com.dmall.common.util.JSONUtil;
 import com.dmall.component.mybatisplus.autofill.AutoFillHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,17 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableConfigurationProperties({DMallMybatisPlusProperties.class})
 @EnableTransactionManagement
-@ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "dmall.mybatis.plus", value = "enabled", havingValue = "true")
 public class DMallMybatisPlusConfiguration implements BasicConfiguration {
 
     @Autowired
     private DMallMybatisPlusProperties dmallMybatisPlusProperties;
+
+    @Override
+    @PostConstruct
+    public void check() {
+        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSONUtil.toJSONStringPretty(dmallMybatisPlusProperties));
+    }
 
     /**
      * 分页插件
@@ -41,7 +48,7 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
      * 性能分析拦截器，不建议生产使用
      */
     @Bean
-    @ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "performance", havingValue = "true")
+    @ConditionalOnProperty(prefix = "dmall.mybatis.plus", value = "performance", havingValue = "true")
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         performanceInterceptor.setMaxTime(dmallMybatisPlusProperties.getMaxTime());
@@ -57,10 +64,5 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
         return new AutoFillHandler(dmallMybatisPlusProperties);
     }
 
-    @Override
-    @PostConstruct
-    public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSON.toJSONString(dmallMybatisPlusProperties, true));
-    }
 
 }

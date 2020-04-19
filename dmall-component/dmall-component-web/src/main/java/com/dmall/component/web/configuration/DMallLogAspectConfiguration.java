@@ -2,8 +2,8 @@ package com.dmall.component.web.configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.dmall.common.model.BasicConfiguration;
-import com.dmall.common.model.exception.WebErrorEnum;
-import com.dmall.common.model.exception.WebException;
+import com.dmall.component.web.WebErrorEnum;
+import com.dmall.component.web.WebException;
 import com.dmall.component.web.log.LogAdvice;
 import com.dmall.component.web.properties.DMallLogProperties;
 import lombok.extern.slf4j.Slf4j;

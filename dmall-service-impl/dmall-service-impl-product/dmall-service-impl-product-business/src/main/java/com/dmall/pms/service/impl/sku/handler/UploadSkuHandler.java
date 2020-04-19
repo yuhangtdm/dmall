@@ -44,7 +44,7 @@ public class UploadSkuHandler extends AbstractCommonHandler<UploadRequestDTO, Sk
             return ResultUtil.success(upload);
         } catch (IOException e) {
             log.error("upload sku pics failed", e);
-            return ResultUtil.success(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
+            return ResultUtil.fail(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
         }
     }
 }

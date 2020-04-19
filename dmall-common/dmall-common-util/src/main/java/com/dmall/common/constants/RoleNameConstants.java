@@ -6,10 +6,18 @@ package com.dmall.common.constants;
  */
 public interface RoleNameConstants {
 
+    /**
+     * 超级管理员
+     */
     String SUPER_ADMIN = "超级管理员";
 
+    /**
+     * 管理员
+     */
     String ADMIN = "管理员";
 
+    /**
+     * 发货员
+     */
     String DELIVER = "发货员";
-
 }

@@ -8,21 +8,21 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: created by hang.yu on 2019/11/2 16:50
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.mybatisplus")
+@ConfigurationProperties(prefix = "dmall.mybatis.plus")
 public class DMallMybatisPlusProperties {
 
     /**
-     * 是否生效
+     * 是否生效,默认不生效
      */
-    private Boolean enabled = Boolean.TRUE;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * 性能分析拦截器 是否使用
      */
-    private Boolean performance = Boolean.TRUE;
+    private Boolean performance = Boolean.FALSE;
 
     /**
-     * 性能分析的最大执行时间 1000ms
+     * 性能分析的最大执行时间 10000ms
      */
     private Long maxTime = 10000L;
 
@@ -31,29 +31,5 @@ public class DMallMybatisPlusProperties {
      */
     private Boolean format = Boolean.TRUE;
 
-    /**
-     * 新增时间的列名
-     */
-    private String createTimeColumn = "gmtCreated";
-
-    /**
-     * 更新时间的列名
-     */
-    private String updateTimeColumn = "gmtModified";
-
-    /**
-     * 逻辑删除的列名
-     */
-    private String isDeletedColumn = "isDeleted";
-
-    /**
-     * 新增用户的列名
-     */
-    private String creator = "creator";
-
-    /**
-     * 修改用户的列名
-     */
-    private String modifier = "modifier";
 
 }

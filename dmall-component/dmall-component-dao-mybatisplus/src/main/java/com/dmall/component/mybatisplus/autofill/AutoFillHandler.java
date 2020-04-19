@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.component.mybatisplus.DMallMybatisPlusProperties;
+import com.dmall.component.mybatisplus.generator.MybatisPlusConstants;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;
@@ -15,7 +18,7 @@ import java.util.Date;
  */
 public class AutoFillHandler implements MetaObjectHandler {
 
-    private DMallMybatisPlusProperties dMallMybatisPlusProperties;
+    private final DMallMybatisPlusProperties dMallMybatisPlusProperties;
 
     public AutoFillHandler(DMallMybatisPlusProperties dMallMybatisPlusProperties) {
         this.dMallMybatisPlusProperties = dMallMybatisPlusProperties;
@@ -23,34 +26,48 @@ public class AutoFillHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        Object createTimeType = getFieldValByName(dMallMybatisPlusProperties.getCreateTimeColumn(), metaObject);
+        // 创建时间
+        Object createTimeType = getFieldValByName(MybatisPlusConstants.GMT_CREATED, metaObject);
         if (createTimeType == null) {
-            setFieldValByName(dMallMybatisPlusProperties.getCreateTimeColumn(), new Date(), metaObject);
+            setFieldValByName(MybatisPlusConstants.GMT_CREATED, new Date(), metaObject);
         }
-        Object UpdateTimeType = getFieldValByName(dMallMybatisPlusProperties.getUpdateTimeColumn(), metaObject);
+        // 更新时间
+        Object UpdateTimeType = getFieldValByName(MybatisPlusConstants.GMT_MODIFIED, metaObject);
         if (UpdateTimeType == null) {
-            setFieldValByName(dMallMybatisPlusProperties.getUpdateTimeColumn(), new Date(), metaObject);
+            setFieldValByName(MybatisPlusConstants.GMT_MODIFIED, new Date(), metaObject);
         }
-
-        Object IsDeletedType = getFieldValByName(dMallMybatisPlusProperties.getIsDeletedColumn(), metaObject);
+        // 状态 默认为有效
+        Object IsDeletedType = getFieldValByName(MybatisPlusConstants.IS_DELETED, metaObject);
         if (IsDeletedType == null) {
-            setFieldValByName(dMallMybatisPlusProperties.getIsDeletedColumn(), Constants.N, metaObject);
+            setFieldValByName(MybatisPlusConstants.IS_DELETED, Constants.N, metaObject);
         }
-
+        // 后台系统创建人和更新人
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
         if (adminUserDTO != null) {
-            setFieldValByName(dMallMybatisPlusProperties.getCreator(), adminUserDTO.getId(), metaObject);
-            setFieldValByName(dMallMybatisPlusProperties.getModifier(), adminUserDTO.getId(), metaObject);
+            setFieldValByName(MybatisPlusConstants.CREATOR, adminUserDTO.getId(), metaObject);
+            setFieldValByName(MybatisPlusConstants.MODIFIER, adminUserDTO.getId(), metaObject);
         }
-
+        // 前台商城创建人和更新人
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        if (adminUserDTO != null) {
+            setFieldValByName(MybatisPlusConstants.CREATOR, portalMemberDTO.getId(), metaObject);
+            setFieldValByName(MybatisPlusConstants.MODIFIER, portalMemberDTO.getId(), metaObject);
+        }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        setFieldValByName(dMallMybatisPlusProperties.getUpdateTimeColumn(), new Date(), metaObject);
+        // 设置更新时间
+        setFieldValByName(MybatisPlusConstants.GMT_MODIFIED, new Date(), metaObject);
+        // 后台系统设置修改人
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
         if (adminUserDTO != null) {
-            setFieldValByName(dMallMybatisPlusProperties.getModifier(), adminUserDTO.getId(), metaObject);
+            setFieldValByName(MybatisPlusConstants.MODIFIER, adminUserDTO.getId(), metaObject);
+        }
+        // 前台商城创建人和更新人
+        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+        if (adminUserDTO != null) {
+            setFieldValByName(MybatisPlusConstants.MODIFIER, portalMemberDTO.getId(), metaObject);
         }
     }
 }

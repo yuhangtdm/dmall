@@ -19,12 +19,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-util</artifactId>

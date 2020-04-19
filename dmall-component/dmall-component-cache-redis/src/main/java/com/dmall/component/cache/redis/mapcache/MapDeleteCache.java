@@ -1,9 +1,11 @@
 package com.dmall.component.cache.redis.mapcache;
 
+import cn.hutool.core.util.StrUtil;
+
 import java.lang.annotation.*;
 
 /**
- * @description:
+ * @description: MapDeleteCache
  * @author: created by hang.yu on 2019/11/26 23:33
  */
 @Target({ElementType.METHOD})
@@ -11,9 +13,10 @@ import java.lang.annotation.*;
 @Inherited
 @Documented
 public @interface MapDeleteCache {
+
     /**
-     * 缓存key 优先级最高
+     * 缓存key
      */
-    String key() default "";
+    String key() default StrUtil.EMPTY;
 
 }

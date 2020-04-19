@@ -1,6 +1,8 @@
 package com.dmall.component.cache.redis.mapcache;
 
 
+import cn.hutool.core.util.StrUtil;
+
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
@@ -17,8 +19,7 @@ public @interface MapListCache {
     /**
      * 缓存key 优先级最高
      */
-    String key() default "";
-
+    String key() default StrUtil.EMPTY;
 
     /**
      * 超时时间

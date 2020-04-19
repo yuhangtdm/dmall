@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * @description: 响应工具类输出json
@@ -17,16 +18,26 @@ import java.nio.charset.Charset;
  */
 public class ResponseUtil {
 
-    public static void writeJson(HttpServletResponse response, BaseResult baseResult){
+    private ResponseUtil() {
+
+    }
+
+    /**
+     * 输出json字符串
+     */
+    public static void writeJson(HttpServletResponse response, BaseResult baseResult) {
         try {
             response.setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
-            response.getWriter().write(JSON.toJSONString(baseResult));
+            response.getWriter().write(JSONUtil.toJSONString(baseResult));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void writeJson(HttpServletResponse response, String json){
+    /**
+     * 输出json字符串
+     */
+    public static void writeJson(HttpServletResponse response, String json) {
         try {
             response.setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             response.getWriter().write(json);
@@ -35,7 +46,13 @@ public class ResponseUtil {
         }
     }
 
-    public static HttpServletResponse getResponse(){
-        return  ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+    /**
+     * 获取HttpServletResponse对象
+     */
+    public static HttpServletResponse getResponse() {
+        if (RequestContextHolder.getRequestAttributes() == null) {
+            return null;
+        }
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
     }
 }

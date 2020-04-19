@@ -33,7 +33,7 @@ public class UploadProductPicHandler extends AbstractCommonHandler<MultipartFile
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
             log.error("upload product pic failed", e);
-            return ResultUtil.success(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
+            return ResultUtil.fail(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
         }
     }
 }

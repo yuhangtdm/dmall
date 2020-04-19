@@ -10,6 +10,10 @@ import java.math.BigDecimal;
  */
 public class FreightPriceUtil {
 
+    private FreightPriceUtil() {
+
+    }
+
     /**
      * 最小免运费金额
      */

@@ -3,9 +3,8 @@ package com.dmall.common.util;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.enums.error.ErrorCodeEnum;
-import com.dmall.common.model.exception.ComponentException;
 import com.dmall.common.model.exception.BusinessException;
-import org.springframework.util.Assert;
+import com.dmall.common.model.exception.ComponentException;
 
 import java.util.Collection;
 
@@ -15,6 +14,12 @@ import java.util.Collection;
  */
 public class ResultUtil {
 
+    private ResultUtil() {
+    }
+
+    /**
+     * success
+     */
     public static BaseResult success() {
         BaseResult baseResult = new BaseResult();
         baseResult.setResult(Boolean.TRUE);
@@ -23,8 +28,10 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * success
+     */
     public static <T> BaseResult<T> success(T t) {
-        Assert.notNull(t, "data不可为null");
         BaseResult<T> baseResult = new BaseResult();
         baseResult.setResult(Boolean.TRUE);
         baseResult.setCode(BasicStatusEnum.SUCCESS.getCode());
@@ -37,23 +44,9 @@ public class ResultUtil {
         return baseResult;
     }
 
-    public static BaseResult success(ErrorCodeEnum errorCodeEnum) {
-        BaseResult baseResult = new BaseResult();
-        baseResult.setResult(Boolean.TRUE);
-        baseResult.setCode(errorCodeEnum.getCode());
-        baseResult.setMsg(errorCodeEnum.getMsg());
-        return baseResult;
-    }
-
-    public static <T> BaseResult<T> success(ErrorCodeEnum errorCodeEnum, T t) {
-        BaseResult<T> baseResult = new BaseResult<T>();
-        baseResult.setResult(Boolean.TRUE);
-        baseResult.setCode(errorCodeEnum.getCode());
-        baseResult.setData(t);
-        baseResult.setMsg(errorCodeEnum.getMsg());
-        return baseResult;
-    }
-
+    /**
+     * fail
+     */
     public static BaseResult fail() {
         BaseResult baseResult = new BaseResult();
         baseResult.setResult(Boolean.FALSE);
@@ -62,6 +55,9 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * fail
+     */
     public static BaseResult fail(ErrorCodeEnum errorCodeEnum) {
         BaseResult baseResult = new BaseResult();
         baseResult.setResult(Boolean.FALSE);
@@ -70,8 +66,11 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * fail
+     */
     public static <T> BaseResult<T> fail(ErrorCodeEnum errorCodeEnum, T t) {
-        BaseResult<T> baseResult = new BaseResult<T>();
+        BaseResult<T> baseResult = new BaseResult();
         baseResult.setResult(Boolean.FALSE);
         baseResult.setMsg(errorCodeEnum.getMsg());
         baseResult.setCode(errorCodeEnum.getCode());
@@ -79,6 +78,9 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * fail
+     */
     public static BaseResult fail(BusinessException businessException) {
         BaseResult baseResult = new BaseResult();
         baseResult.setResult(Boolean.FALSE);
@@ -87,6 +89,9 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * fail
+     */
     public static <T> BaseResult<T> fail(BusinessException businessException, T t) {
         BaseResult<T> baseResult = new BaseResult<T>();
         baseResult.setResult(Boolean.FALSE);
@@ -96,6 +101,9 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * fail
+     */
     public static BaseResult fail(ComponentException componentException) {
         BaseResult baseResult = new BaseResult();
         baseResult.setCode(componentException.getCode());
@@ -104,6 +112,9 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * fail
+     */
     public static <T> BaseResult<T> fail(ComponentException componentException, T t) {
         BaseResult<T> baseResult = new BaseResult<T>();
         baseResult.setCode(componentException.getCode());
@@ -113,11 +124,26 @@ public class ResultUtil {
         return baseResult;
     }
 
+    /**
+     * fail
+     */
     public static BaseResult fail(String code, String msg) {
         BaseResult baseResult = new BaseResult();
         baseResult.setResult(Boolean.FALSE);
         baseResult.setCode(code);
         baseResult.setMsg(msg);
+        return baseResult;
+    }
+
+    /**
+     * fail
+     */
+    public static <T> BaseResult<T> fail(String code, String msg, T t) {
+        BaseResult baseResult = new BaseResult();
+        baseResult.setResult(Boolean.FALSE);
+        baseResult.setCode(code);
+        baseResult.setMsg(msg);
+        baseResult.setData(t);
         return baseResult;
     }
 }

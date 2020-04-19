@@ -6,7 +6,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -15,8 +14,9 @@ import java.util.Map;
  */
 public class RequestUtil {
 
-    private static final String ISO = "ISO-8859-1";
-    private static final String UTF = "utf-8";
+    private RequestUtil() {
+
+    }
 
     /**
      * 获取真实ip地址，避免获取代理ip
@@ -58,9 +58,9 @@ public class RequestUtil {
             String[] values = requestParams.get(name);
             String valueStr = StrUtil.EMPTY;
             for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
+                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + StrUtil.COMMA;
             }
-            params.put(name, StringUtil.getIsoToUtf_8(valueStr));
+            params.put(name, StringUtil.getIsoToUtf8(valueStr));
         }
         return params;
     }

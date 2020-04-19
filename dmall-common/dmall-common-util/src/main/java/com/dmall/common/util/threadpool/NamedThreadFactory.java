@@ -16,6 +16,9 @@ public class NamedThreadFactory implements ThreadFactory {
      */
     private final String namePrefix;
 
+    /**
+     * 线程组
+     */
     private final ThreadGroup group;
 
     private static final AtomicInteger poolNumber = new AtomicInteger(1);

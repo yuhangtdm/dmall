@@ -3,6 +3,7 @@ package com.dmall.component.cache.redis.entity;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.dmall.common.constants.Constants;
 import com.dmall.common.util.ObjectUtil;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -16,7 +17,7 @@ import java.lang.reflect.Method;
 public class CacheKeyGenerator {
 
     /**
-     * 方法缓存生成key的方法
+     * Cacheable注解方法缓存生成key的方法
      */
     public static String generate(Object o, Method method, Object... args) {
         StringBuilder key = new StringBuilder();
@@ -25,19 +26,19 @@ public class CacheKeyGenerator {
         // 类名.方法名
         key.append(o.getClass().getName()).append(StrUtil.DOT).append(method.getName()).append(StrUtil.COLON);
         if (args.length > 0) {
-            for (int i = 0; i < args.length; i++) {
-                if (ObjectUtil.isNotEmpty(args[i])) {
-                    // 判断是否为简单类型
-                    if (ClassUtil.isSimpleValueType(args[i].getClass())) {
-                        key.append(args[i]).append("|").append(args[i]);
+            for (Object arg : args) {
+                if (ObjectUtil.isNotEmpty(arg)) {
+                    // 如果为简单类型
+                    if (ClassUtil.isSimpleValueType(arg.getClass())) {
+                        key.append(arg).append(Constants.SPLIT).append(arg);
                     } else {
-                        // 非复杂类型时
-                        if (!ObjectUtil.isComplexObject(args[i])) {
-                            Field[] fields = ReflectUtil.getFields(args[i].getClass());
+                        // 非复杂的类型 如 Collection、Map、数组
+                        if (!ObjectUtil.complexObject(arg)) {
+                            Field[] fields = ReflectUtil.getFields(arg.getClass());
                             for (Field field : fields) {
-                                Object fieldValue = ReflectUtil.getFieldValue(args[i], field);
-                                if (ObjectUtil.isNotEmpty(fieldValue) && !ObjectUtil.isComplexObject(fieldValue)) {
-                                    key.append(field.getName()).append("|").append(fieldValue);
+                                Object fieldValue = ReflectUtil.getFieldValue(arg, field);
+                                if (ObjectUtil.isNotEmpty(fieldValue) && !ObjectUtil.complexObject(fieldValue)) {
+                                    key.append(field.getName()).append(Constants.SPLIT).append(fieldValue);
                                 }
                             }
                         }

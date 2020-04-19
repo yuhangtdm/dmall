@@ -27,7 +27,7 @@ public class BrandCacheService implements CommonCacheService<BrandDO> {
         return brandMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    @MapPostCache
+    @MapPutCache
     public int insert(BrandDO brandDO) {
         return brandMapper.insert(brandDO);
     }

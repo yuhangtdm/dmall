@@ -33,7 +33,7 @@ public class UploadProductAttributePicHandler extends AbstractCommonHandler<Mult
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
             log.error("upload productAttributeValue pic failed", e);
-            return ResultUtil.success(ProductErrorEnum.UPLOAD_PRODUCT_ATTRIBUTE_ERROR);
+            return ResultUtil.fail(ProductErrorEnum.UPLOAD_PRODUCT_ATTRIBUTE_ERROR);
         }
     }
 }

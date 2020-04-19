@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
  */
 public class BeanUtil extends BeanUtils {
 
+    private BeanUtil(){}
+
     /**
      * 重写copy属性的方法
      */

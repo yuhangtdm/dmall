@@ -49,6 +49,11 @@
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-common-util</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>3.1.2</version>
+        </dependency>
     </dependencies>
 
 </project>

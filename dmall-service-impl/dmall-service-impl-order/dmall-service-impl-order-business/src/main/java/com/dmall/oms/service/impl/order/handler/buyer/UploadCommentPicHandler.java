@@ -33,7 +33,7 @@ public class UploadCommentPicHandler extends AbstractCommonHandler<MultipartFile
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
             log.error("upload comment failed", e);
-            return ResultUtil.success(BrandErrorEnum.UPLOAD_LOGO_ERROR);
+            return ResultUtil.fail(BrandErrorEnum.UPLOAD_LOGO_ERROR);
         }
     }
 }

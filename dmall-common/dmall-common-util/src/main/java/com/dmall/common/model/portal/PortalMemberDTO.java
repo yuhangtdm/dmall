@@ -55,5 +55,4 @@ public class PortalMemberDTO implements Serializable {
 
     @ApiModelProperty(value = "token", position = 14)
     private String token;
-
 }
