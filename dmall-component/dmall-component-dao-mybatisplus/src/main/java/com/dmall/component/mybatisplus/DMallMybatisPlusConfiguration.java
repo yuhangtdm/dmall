@@ -61,7 +61,7 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
      */
     @Bean
     public AutoFillHandler autoFillHandler() {
-        return new AutoFillHandler(dmallMybatisPlusProperties);
+        return new AutoFillHandler();
     }
 
 

@@ -4,6 +4,7 @@ import ${responseDtoPackage}.${responseDto};
 import ${requestDtoPackage}.${pageRequestDto};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
+import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -83,6 +83,7 @@ public class MapCacheAspect {
             }
 
         } catch (Throwable e) {
+            log.error("MapListCache error",e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_LIST_CACHE_ERROR);
         }
     }
@@ -113,6 +114,7 @@ public class MapCacheAspect {
             }
 
         } catch (Throwable e) {
+            log.error("MapGetCache error",e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_GET_CACHE_ERROR);
         }
     }
@@ -137,6 +139,7 @@ public class MapCacheAspect {
             }
             return result;
         } catch (Throwable e) {
+            log.error("MapPostCache error",e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_POST_CACHE_ERROR);
         }
     }
@@ -162,6 +165,7 @@ public class MapCacheAspect {
             }
             return result;
         } catch (Throwable e) {
+            log.error("MapPutCache error",e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_PUT_CACHE_ERROR);
         }
     }
@@ -184,6 +188,7 @@ public class MapCacheAspect {
             log.info("delete cache success,key:{},hashKey:{}", key, args[0]);
             return result;
         } catch (Throwable e) {
+            log.error("MapDeleteCache error",e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_DELETE_CACHE_ERROR);
         }
     }

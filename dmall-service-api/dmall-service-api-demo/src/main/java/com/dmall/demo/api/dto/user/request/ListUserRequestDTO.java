@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @description: 后台用户列表请求实体
- * @author: created by hang.yu on 2020-04-19 21:22:50
+ * @author: created by hang.yu on 2020-04-19 21:30:17
  */
 @Data
 @ApiModel(value = "ListUserRequestDTO", description = "后台用户列表请求实体")
@@ -46,5 +46,7 @@ public class ListUserRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "备注", position = 11)
     private String remark;
+
+    private BigDecimal money;
 
 }

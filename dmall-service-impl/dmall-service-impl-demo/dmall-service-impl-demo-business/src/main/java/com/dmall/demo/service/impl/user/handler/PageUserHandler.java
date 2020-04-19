@@ -1,5 +1,7 @@
 package com.dmall.demo.service.impl.user.handler;
 
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.ResultUtil;
 import com.dmall.demo.api.dto.user.response.UserResponseDTO;
 import com.dmall.demo.api.dto.user.request.PageUserRequestDTO;
 import com.dmall.demo.generator.dataobject.UserDO;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 后台用户分页处理器
- * @author: created by hang.yu on 2020-04-19 21:22:50
+ * @author: created by hang.yu on 2020-04-19 21:30:17
  */
 @Component
 public class PageUserHandler extends AbstractCommonHandler<PageUserRequestDTO, UserDO, UserResponseDTO> {

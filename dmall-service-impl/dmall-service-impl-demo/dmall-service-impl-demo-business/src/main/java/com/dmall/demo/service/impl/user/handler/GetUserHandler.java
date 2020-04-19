@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 查询后台用户处理器
- * @author: created by hang.yu on 2020-04-19 21:22:50
+ * @author: created by hang.yu on 2020-04-19 21:30:17
  */
 @Component
 public class GetUserHandler extends AbstractCommonHandler<Long, UserDO, UserResponseDTO> {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @description: 后台用户表
- * @author: created by hang.yu on 2020-04-19 21:22:51
+ * @author: created by hang.yu on 2020-04-19 21:26:11
  */
 @Service
 public class IUserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements IUserService {

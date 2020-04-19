@@ -15,6 +15,7 @@
         <result column="real_name" property="realName" />
         <result column="icon" property="icon" />
         <result column="remark" property="remark" />
+        <result column="money" property="money" />
         <result column="creator" property="creator" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="modifier" property="modifier" />
@@ -24,7 +25,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, merchants_id, warehouse_id, user_name, nick_name, phone, email, password, real_name, icon, remark, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, merchants_id, warehouse_id, user_name, nick_name, phone, email, password, real_name, icon, remark, money, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

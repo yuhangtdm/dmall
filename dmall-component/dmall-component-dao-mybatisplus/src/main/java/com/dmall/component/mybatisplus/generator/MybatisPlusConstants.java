@@ -81,17 +81,17 @@ public interface MybatisPlusConstants {
     /**
      * GMT_CREATED
      */
-    String GMT_CREATED = "gmt_created";
+    String GMT_CREATED = "gmtCreated";
 
     /**
      * GMT_MODIFIED
      */
-    String GMT_MODIFIED = "gmt_modified";
+    String GMT_MODIFIED = "gmtModified";
 
     /**
      * IS_DELETED
      */
-    String IS_DELETED = "is_deleted";
+    String IS_DELETED = "isDeleted";
 
     /**
      * CREATOR

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
+import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -91,7 +92,7 @@ public class DMallAutoGenerator extends AutoGenerator {
             }
         });
 
-        List<FileOutConfig> list = new ArrayList<>();
+        List<FileOutConfig> list = Lists.newArrayList();
 
         // xml
         FileOutConfig xmlOutConfig = new FileOutConfig(MybatisPlusConstants.TEMPLATES_MAPPER_XML) {

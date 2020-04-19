@@ -9,7 +9,7 @@ import java.math.*;
 
 /**
  * @description: 后台用户响应实体
- * @author: created by hang.yu on 2020-04-19 21:22:50
+ * @author: created by hang.yu on 2020-04-19 21:30:17
  */
 @Data
 @ApiModel(value = "UserResponseDTO", description = "后台用户响应实体")
@@ -50,19 +50,21 @@ public class UserResponseDTO implements Serializable {
     @ApiModelProperty(value = "备注", position = 11)
     private String remark;
 
-    @ApiModelProperty(value = "创建人", position = 12)
+    private BigDecimal money;
+
+    @ApiModelProperty(value = "创建人", position = 13)
     private Long creator;
 
-    @ApiModelProperty(value = "创建时间", position = 13)
+    @ApiModelProperty(value = "创建时间", position = 14)
     private Date gmtCreated;
 
-    @ApiModelProperty(value = "更新人", position = 14)
+    @ApiModelProperty(value = "更新人", position = 15)
     private Long modifier;
 
-    @ApiModelProperty(value = "更新时间", position = 15)
+    @ApiModelProperty(value = "更新时间", position = 16)
     private Date gmtModified;
 
-    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 16)
+    @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 17)
     private String isDeleted;
 
 }

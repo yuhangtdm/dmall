@@ -6,7 +6,6 @@ import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
-import com.dmall.component.mybatisplus.DMallMybatisPlusProperties;
 import com.dmall.component.mybatisplus.generator.MybatisPlusConstants;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -17,12 +16,6 @@ import java.util.Date;
  * @author: created by hang.yu on 2019/11/21 21:52
  */
 public class AutoFillHandler implements MetaObjectHandler {
-
-    private final DMallMybatisPlusProperties dMallMybatisPlusProperties;
-
-    public AutoFillHandler(DMallMybatisPlusProperties dMallMybatisPlusProperties) {
-        this.dMallMybatisPlusProperties = dMallMybatisPlusProperties;
-    }
 
     @Override
     public void insertFill(MetaObject metaObject) {

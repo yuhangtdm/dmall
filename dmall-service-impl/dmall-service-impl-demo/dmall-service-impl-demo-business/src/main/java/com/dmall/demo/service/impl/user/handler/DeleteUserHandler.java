@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 删除后台用户处理器
- * @author: created by hang.yu on 2020-04-19 21:22:50
+ * @author: created by hang.yu on 2020-04-19 21:30:17
  */
 @Component
 public class DeleteUserHandler extends AbstractCommonHandler<Long, UserDO, Long> {

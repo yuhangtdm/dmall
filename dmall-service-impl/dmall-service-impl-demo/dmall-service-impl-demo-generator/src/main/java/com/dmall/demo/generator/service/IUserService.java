@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * @description: 后台用户表
- * @author: created by hang.yu on 2020-04-19 21:22:51
+ * @author: created by hang.yu on 2020-04-19 21:26:11
  */
 public interface IUserService extends IService<UserDO> {
 

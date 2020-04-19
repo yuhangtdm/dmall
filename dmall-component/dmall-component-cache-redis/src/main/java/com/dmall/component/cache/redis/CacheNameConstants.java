@@ -36,4 +36,9 @@ public interface CacheNameConstants {
      */
     String DELIVER_WAREHOUSE = "deliverWarehouse";
 
+    /**
+     * 测试使用
+     */
+    String USER = "user";
+
 }

@@ -9,7 +9,7 @@ import java.math.*;
 
 /**
  * @description: 修改后台用户请求实体
- * @author: created by hang.yu on 2020-04-19 21:22:50
+ * @author: created by hang.yu on 2020-04-19 21:30:17
  */
 @Data
 @ApiModel(value = "UpdateUserRequestDTO", description = "修改后台用户请求实体")
@@ -49,5 +49,7 @@ public class UpdateUserRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "备注", position = 11)
     private String remark;
+
+    private BigDecimal money;
 
 }

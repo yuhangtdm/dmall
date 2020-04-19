@@ -33,7 +33,7 @@ public class GeneratorCodeUtil {
     /**
      * 生成文件的主方法
      */
-    private static void moduleGenerator(GeneratorDTO generator) {
+    public static void moduleGenerator(GeneratorDTO generator) {
 
         // 全局配置
         GlobalConfig globalConfig = getGlobalConfig(generator.getModule());
@@ -154,4 +154,5 @@ public class GeneratorCodeUtil {
         return templateConfig;
 
     }
+
 }

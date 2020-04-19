@@ -1,5 +1,6 @@
 package com.dmall.demo.generator.dataobject;
 
+import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -14,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 后台用户表
- * @author: created by hang.yu on 2020-04-19 21:22:51
+ * @author: created by hang.yu on 2020-04-19 21:31:24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -79,6 +80,8 @@ public class UserDO implements Serializable {
      * 备注
      */
     private String remark;
+
+    private BigDecimal money;
 
     /**
      * 创建人

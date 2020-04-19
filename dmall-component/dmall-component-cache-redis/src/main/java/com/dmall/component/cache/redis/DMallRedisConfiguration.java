@@ -153,9 +153,20 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(keyPrefixSerializer());
-        redisTemplate.setHashKeySerializer(keyPrefixSerializer());
+        redisTemplate.setHashKeySerializer(RedisSerializer.string());
         redisTemplate.setValueSerializer(RedisSerializer.java());
         redisTemplate.setHashValueSerializer(RedisSerializer.java());
+        return redisTemplate;
+    }
+
+    @Bean
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory) {
+        StringRedisTemplate redisTemplate = new StringRedisTemplate();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setKeySerializer(keyPrefixSerializer());
+        redisTemplate.setHashKeySerializer(RedisSerializer.string());
+        redisTemplate.setValueSerializer(RedisSerializer.string());
+        redisTemplate.setHashValueSerializer(RedisSerializer.string());
         return redisTemplate;
     }
 

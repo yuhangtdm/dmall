@@ -10,7 +10,7 @@ import java.math.*;
 
 /**
  * @description: 后台用户分页请求实体
- * @author: created by hang.yu on 2020-04-19 21:22:50
+ * @author: created by hang.yu on 2020-04-19 21:30:17
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -46,5 +46,7 @@ public class PageUserRequestDTO  extends PageRequestDTO {
 
     @ApiModelProperty(value = "备注", position = 11)
     private String remark;
+
+    private BigDecimal money;
 
 }
