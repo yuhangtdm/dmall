@@ -1,4 +1,4 @@
-package com.dmall.component.notify.email;
+package com.dmall.common.enums.component;
 
 import com.dmall.common.enums.error.ErrorCodeEnum;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,19 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SendEmailErrorEnum implements ErrorCodeEnum {
 
-    BASIC_ERROR("1000", "发送邮件失败"),
+    /**
+     * 邮件服务器异常
+     */
+    BASIC_ERROR("50300", "邮件服务器异常"),
+
+    /**
+     * 发件人未配置
+     */
+    SEND_FROM_NULL("50301", "发件人未配置"),
 
     ;
 
-    private String code;
+    private final String code;
 
-    private String msg;
+    private final String msg;
 }

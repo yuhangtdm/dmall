@@ -1,4 +1,4 @@
-package com.dmall.component.cache.redis.exception;
+package com.dmall.common.enums.component;
 
 import com.dmall.common.enums.error.ErrorCodeEnum;
 import lombok.AllArgsConstructor;

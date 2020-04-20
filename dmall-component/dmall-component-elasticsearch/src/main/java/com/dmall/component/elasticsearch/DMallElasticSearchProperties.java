@@ -26,5 +26,4 @@ public class DMallElasticSearchProperties {
      */
     private String typeName;
 
-
 }

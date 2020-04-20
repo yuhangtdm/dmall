@@ -1,7 +1,6 @@
 package com.dmall.common.util;
 
 import cn.hutool.http.ContentType;
-import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -10,7 +9,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Objects;
 
 /**
  * @description: 响应工具类输出json
@@ -28,7 +26,7 @@ public class ResponseUtil {
     public static void writeJson(HttpServletResponse response, BaseResult baseResult) {
         try {
             response.setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
-            response.getWriter().write(JSONUtil.toJSONString(baseResult));
+            response.getWriter().write(JsonUtil.toJson(baseResult));
         } catch (IOException e) {
             e.printStackTrace();
         }

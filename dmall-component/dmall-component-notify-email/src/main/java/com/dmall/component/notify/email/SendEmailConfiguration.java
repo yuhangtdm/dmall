@@ -1,6 +1,9 @@
 package com.dmall.component.notify.email;
 
+import cn.hutool.core.util.StrUtil;
+import com.dmall.common.enums.component.SendEmailErrorEnum;
 import com.dmall.common.model.BasicConfiguration;
+import com.dmall.common.model.exception.ComponentException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,15 +31,18 @@ public class SendEmailConfiguration implements BasicConfiguration {
     @Value("${spring.mail.from}")
     private String from;
 
-    @Bean
-    public MailServiceImpl iMailService() {
-        return new MailServiceImpl(javaMailSender, templateEngine, from);
-    }
-
-
     @Override
     @PostConstruct
     public void check() {
         log.info("init send email successful,from:{}", from);
+        if (StrUtil.isBlank(from)){
+            throw new ComponentException(SendEmailErrorEnum.SEND_FROM_NULL);
+        }
     }
+
+    @Bean
+    public MailServiceImpl mailService() {
+        return new MailServiceImpl(javaMailSender, templateEngine, from);
+    }
+
 }

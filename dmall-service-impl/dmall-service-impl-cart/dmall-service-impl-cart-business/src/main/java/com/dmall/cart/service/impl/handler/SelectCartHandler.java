@@ -1,6 +1,6 @@
 package com.dmall.cart.service.impl.handler;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSON;
 import com.dmall.cart.api.dto.list.CartListResponseDTO;
 import com.dmall.cart.api.dto.select.SelectCartRequestDTO;
 import com.dmall.cart.api.dto.select.SelectTypeEnum;
@@ -14,9 +14,11 @@ import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.CookieUtil;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.RequestUtil;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,14 +59,14 @@ public class SelectCartHandler extends AbstractCommonHandler<SelectCartRequestDT
     private void notLoginUpdateCart(Integer type, List<Long> skuIds) {
         // 查询cookie中的购物车数据
         String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), Constants.COOKIE_NAME, true);
-        List<CartDTO> cartDTOS = JSON.parseArray(cartJson, CartDTO.class);
+        List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
 
         for (CartDTO cartDTO : cartDTOS) {
             if (skuIds.contains(cartDTO.getSkuId())) {
                 cartDTO.setChecked(type.equals(SelectTypeEnum.CHECK.getCode()));
             }
         }
-        CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JSON.toJSONString(cartDTOS), Constants.COOKIE_STORE_TIME, true);
+        CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JsonUtil.toJson(cartDTOS), Constants.COOKIE_STORE_TIME, true);
     }
 
     /**

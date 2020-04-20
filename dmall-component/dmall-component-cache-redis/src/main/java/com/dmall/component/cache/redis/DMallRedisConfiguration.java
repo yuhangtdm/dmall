@@ -2,12 +2,11 @@ package com.dmall.component.cache.redis;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
+import com.dmall.common.enums.component.CacheRedisErrorEnum;
 import com.dmall.common.model.BasicConfiguration;
 import com.dmall.common.model.exception.ComponentException;
-import com.dmall.common.util.JSONUtil;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.component.cache.redis.entity.CacheKeyGenerator;
-import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
 import com.dmall.component.cache.redis.lock.DistributedLockService;
 import com.dmall.component.cache.redis.mapcache.MapCacheAspect;
 import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
@@ -36,11 +35,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.scripting.support.ResourceScriptSource;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -69,7 +66,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallRedisProperties", JSONUtil.toJSONStringPretty(dMallRedisProperties));
+        log.info("init -> [{}],properties:\n{}", "DMallRedisProperties", JsonUtil.toJsonPretty(dMallRedisProperties));
         if (dMallRedisProperties.getEnabled() && StringUtils.isBlank(dMallRedisProperties.getCacheKeyPrefix())) {
             throw new ComponentException(CacheRedisErrorEnum.EMPTY_CACHE_PREFIX);
         }

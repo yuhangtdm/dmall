@@ -1,14 +1,17 @@
 package com.dmall.component.web.configuration;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.util.StrUtil;
 import com.dmall.common.enums.BasicStatusEnum;
+import com.dmall.common.enums.component.*;
+import com.dmall.common.enums.error.ErrorCodeEnum;
 import com.dmall.common.model.BasicConfiguration;
-import com.dmall.component.web.WebErrorEnum;
-import com.dmall.component.web.WebException;
+import com.dmall.common.model.exception.ComponentException;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.component.web.properties.DMallSwaggerProperties;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,6 +42,7 @@ import java.util.List;
 @Slf4j
 @Configuration
 @EnableSwagger2
+@ConditionalOnMissingBean(value = DMallSwaggerConfiguration.class)
 @EnableConfigurationProperties({DMallSwaggerProperties.class})
 @ConditionalOnProperty(prefix = "dmall.web.swagger", value = "enabled", havingValue = "true")
 public class DMallSwaggerConfiguration implements BasicConfiguration {
@@ -45,21 +50,40 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
     @Autowired
     private DMallSwaggerProperties dMallSwaggerProperties;
 
+    public static final List<ErrorCodeEnum> errorEnums = Lists.newArrayList();
+
+    static {
+        errorEnums.addAll(Arrays.asList(BasicStatusEnum.values()));
+        errorEnums.addAll(Arrays.asList(CacheRedisErrorEnum.values()));
+        errorEnums.addAll(Arrays.asList(ESErrorEnum.values()));
+        errorEnums.addAll(Arrays.asList(QiNiuErrorEnum.values()));
+        errorEnums.addAll(Arrays.asList(SendEmailErrorEnum.values()));
+        errorEnums.addAll(Arrays.asList(WebErrorEnum.values()));
+    }
+
+    @Override
+    @PostConstruct
+    public void check() {
+        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JsonUtil.toJsonPretty(dMallSwaggerProperties));
+        if (dMallSwaggerProperties.getEnabled() && StrUtil.isBlank(dMallSwaggerProperties.getBasePackage())) {
+            throw new ComponentException(WebErrorEnum.NO_BASE_PACKAGE);
+        }
+    }
+
     /**
      * 创建API应用
      */
     @Bean
     public Docket createRestApi() {
-        /**
-         * 配置响应状态码
-         */
-        List<ResponseMessage> responseMessageList = new ArrayList<>();
-        for (BasicStatusEnum value : BasicStatusEnum.values()) {
-            responseMessageList.add(new ResponseMessageBuilder().code(Integer.valueOf(value.getCode()))
-                    .message(value.getMsg()).build());
+        List<ResponseMessage> responseMessageList = Lists.newArrayList();
+        for (ErrorCodeEnum errorEnum : errorEnums) {
+            try {
+                responseMessageList.add(new ResponseMessageBuilder().code(Integer.parseInt(errorEnum.getCode()))
+                        .message(errorEnum.getMsg()).build());
+            } catch (Exception e) {
+                log.error("status not valid,{}", errorEnum);
+            }
         }
-        customerStatus(responseMessageList);
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .globalResponseMessage(RequestMethod.GET, responseMessageList)
                 .globalResponseMessage(RequestMethod.POST, responseMessageList)
@@ -71,10 +95,6 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
                 .paths(PathSelectors.any())
                 .build()
                 ;
-    }
-
-    protected void customerStatus(List<ResponseMessage> responseMessageList) {
-
     }
 
     /**
@@ -90,12 +110,4 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
                 .build();
     }
 
-    @Override
-    @PostConstruct
-    public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JSON.toJSONString(dMallSwaggerProperties, true));
-        if (dMallSwaggerProperties.getEnabled() && StringUtils.isBlank(dMallSwaggerProperties.getBasePackage())) {
-            throw new WebException(WebErrorEnum.NO_BASE_PACKAGE);
-        }
-    }
 }

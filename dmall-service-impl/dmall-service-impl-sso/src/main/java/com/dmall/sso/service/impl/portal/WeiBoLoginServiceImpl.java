@@ -1,9 +1,10 @@
 package com.dmall.sso.service.impl.portal;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberDTO;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.util.HttpClientUtil;
 import com.dmall.mms.api.dto.member.request.WeiBoLoginRequestDTO;
@@ -12,6 +13,7 @@ import com.dmall.sso.api.enums.ThirdPartyPlatformErrorEnum;
 import com.dmall.sso.api.service.WeiBoLoginService;
 import com.dmall.sso.service.impl.feign.ThirdPartyPlatformFeign;
 import com.dmall.sso.service.impl.portal.handler.WeiBoLoginHandler;
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,17 +63,19 @@ public class WeiBoLoginServiceImpl implements WeiBoLoginService {
     public BaseResult<PortalLoginResponseDTO> login(String code) {
         // 获取ACCESS_TOKEN
         String result = httpClientUtil.post(ACCESS_TOKEN_URL, getParamMap(code));
-        JSONObject accessTokenObject = JSONObject.parseObject(result);
-        if (accessTokenObject == null || StrUtil.isNotBlank(accessTokenObject.getString("error_code"))){
+        Map<String, String> accessTokenObject = JsonUtil.fromJson(result, new TypeReference<Map<String, String>>() {
+        });
+        if (accessTokenObject == null || StrUtil.isNotBlank(accessTokenObject.get("error_code"))) {
             log.error("获取ACCESS_TOKEN错误,{}", result);
             return ResultUtil.fail(ThirdPartyPlatformErrorEnum.WEI_BO_ERROR);
         }
-        String access_token = accessTokenObject.getString("access_token");
-        String uid = accessTokenObject.getString("uid");
+        String access_token = accessTokenObject.get("access_token");
+        String uid = accessTokenObject.get("uid");
         // 获取微博用户信息
         String userInfo = httpClientUtil.get(StrUtil.format(WEIBO_USER_URL, access_token, uid));
-        JSONObject userInfoObject = JSONObject.parseObject(userInfo);
-        if (userInfoObject == null || StrUtil.isNotBlank(userInfoObject.getString("error_code"))){
+        JSONObject userInfoObject = JsonUtil.fromJson(result, JSONObject.class);
+
+        if (userInfoObject == null || StrUtil.isNotBlank(userInfoObject.getStr("error_code"))) {
             log.error("获取微博用户信息错误,{}", userInfo);
             return ResultUtil.fail(ThirdPartyPlatformErrorEnum.WEI_BO_ERROR);
         }
@@ -84,10 +88,10 @@ public class WeiBoLoginServiceImpl implements WeiBoLoginService {
     private WeiBoLoginRequestDTO getWeiBoLoginRequestDTO(JSONObject userInfoObject) {
         WeiBoLoginRequestDTO weiBoLoginRequestDTO = new WeiBoLoginRequestDTO();
         weiBoLoginRequestDTO.setWeiBoNo(userInfoObject.getLong("id"));
-        weiBoLoginRequestDTO.setName(userInfoObject.getString("screen_name"));
-        weiBoLoginRequestDTO.setNickName(userInfoObject.getString("name"));
-        weiBoLoginRequestDTO.setIcon(userInfoObject.getString("avatar_large"));
-        weiBoLoginRequestDTO.setGender(userInfoObject.getString("gender"));
+        weiBoLoginRequestDTO.setName(userInfoObject.getStr("screen_name"));
+        weiBoLoginRequestDTO.setNickName(userInfoObject.getStr("name"));
+        weiBoLoginRequestDTO.setIcon(userInfoObject.getStr("avatar_large"));
+        weiBoLoginRequestDTO.setGender(userInfoObject.getStr("gender"));
         return weiBoLoginRequestDTO;
     }
 

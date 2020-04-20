@@ -2,10 +2,10 @@ package com.dmall.component.file.qiniu;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.dmall.common.dto.UploadResult;
-import com.dmall.component.file.qiniu.exception.QiNiuErrorEnum;
-import com.dmall.component.file.qiniu.exception.QiNiuException;
+import com.dmall.common.enums.component.QiNiuErrorEnum;
+import com.dmall.common.model.exception.ComponentException;
+import com.dmall.common.util.JsonUtil;
 import com.google.common.collect.Lists;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -16,6 +16,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,8 +31,10 @@ import java.util.List;
 public class QiNiuFileManager {
 
     private static final String THUMB_BASE = "imageView2/2/w/%s/h/%s";
-    private QiNiuProperties qiNiuProperties;
-    private Region defaultRegion = Region.huadong();
+
+    private final QiNiuProperties qiNiuProperties;
+
+    private final Region defaultRegion = Region.huadong();
 
 
     public QiNiuFileManager(QiNiuProperties qiNiuProperties) {
@@ -72,7 +75,9 @@ public class QiNiuFileManager {
      * 上传文件
      */
     public UploadResult upload(MultipartFile file, String catalog) throws IOException {
-        String fileType = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+        Assert.notNull(file, "file not null");
+        Assert.notNull(file.getOriginalFilename(), "fileName not null");
+        String fileType = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(StrUtil.C_DOT) + 1);
         DefaultPutRet upload = this.upload(file.getInputStream(), catalog, fileType);
         UploadResult uploadResult = new UploadResult();
         uploadResult.setKey(upload.key);
@@ -94,22 +99,25 @@ public class QiNiuFileManager {
     public DefaultPutRet upload(InputStream inputStream, String key) {
         Configuration cfg = new Configuration(defaultRegion);
         UploadManager uploadManager = new UploadManager(cfg);
-        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        // 默认不指定key的情况下，以文件内容的hash值作为文件名
         String upToken = getUpToken(key);
         try {
             Response response = uploadManager.put(inputStream, key, upToken, null, null);
+            if (!response.isOK()) {
+                log.error("upload file fail,{}", JsonUtil.toJson(response));
+                throw new ComponentException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
+            }
             //解析上传成功的结果
-            DefaultPutRet defaultPutRet = JSONObject.parseObject(response.bodyString(), DefaultPutRet.class);
+            DefaultPutRet defaultPutRet = JsonUtil.fromJson(response.bodyString(), DefaultPutRet.class);
+            if (defaultPutRet == null) {
+                log.error("upload file fail,{}", JsonUtil.toJson(response));
+                throw new ComponentException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
+            }
             log.info("upload file success,key:{},hash:{}", defaultPutRet.key, defaultPutRet.hash);
             return defaultPutRet;
         } catch (QiniuException ex) {
-            Response r = ex.response;
-            try {
-                log.error("upload file failed,{},{}", r.toString(), r.bodyString());
-            } catch (QiniuException ex2) {
-                // ignore
-            }
-            throw new QiNiuException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
+            log.error("upload file error", ex);
+            throw new ComponentException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
         }
     }
 
@@ -118,15 +126,14 @@ public class QiNiuFileManager {
      */
     public void delete(String key) {
         Configuration cfg = new Configuration(defaultRegion);
-
         Auth auth = Auth.create(qiNiuProperties.getAccessKey(), qiNiuProperties.getSecretKey());
         BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
             bucketManager.delete(qiNiuProperties.getBucket(), key);
             log.info("delete file success,key:{}", key);
         } catch (QiniuException ex) {
-            log.error("delete file failed，code:{},msg:{}", ex.code(), ex.response.toString());
-            throw new QiNiuException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
+            log.error("delete file error", ex);
+            throw new ComponentException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
         }
     }
 

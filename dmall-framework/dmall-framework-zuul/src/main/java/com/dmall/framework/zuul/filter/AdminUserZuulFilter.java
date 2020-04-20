@@ -3,11 +3,12 @@ package com.dmall.framework.zuul.filter;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.ContentType;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSON;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.SourceEnum;
 import com.dmall.common.model.admin.AdminUserDTO;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
 import com.dmall.framework.zuul.AjaxUtil;
@@ -85,7 +86,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
         }
         if (StrUtil.isBlank(header)) {
             requestContext.setSendZuulResponse(false);
-            requestContext.setResponseBody(JSON.toJSONString(ResultUtil.fail(AdminUserErrorEnum.SOURCE_BLANK)));
+            requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.SOURCE_BLANK)));
             requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
         }
@@ -99,7 +100,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
         if (StrUtil.isBlank(token)) {
             requestContext.setSendZuulResponse(false);
             if (AjaxUtil.isAjax(request)) {
-                requestContext.setResponseBody(JSON.toJSONString(ResultUtil.fail(AdminUserErrorEnum.TOKEN_BLANK)));
+                requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.TOKEN_BLANK)));
                 requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             } else {
                 // 重定向到登录地址
@@ -118,7 +119,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
             requestContext.setSendZuulResponse(false);
             // token验证失败 未登录
             if (AjaxUtil.isAjax(request)) {
-                requestContext.setResponseBody(JSON.toJSONString(checkResult));
+                requestContext.setResponseBody(JsonUtil.toJson(checkResult));
                 requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
                 return null;
             } else {
@@ -132,7 +133,7 @@ public class AdminUserZuulFilter extends ZuulFilter {
             }
         }
         AdminUserDTO adminUserDTO = checkResult.getData();
-        requestContext.addZuulRequestHeader(Constants.ADMIN_USER, URLUtil.encode(JSON.toJSONString(adminUserDTO)));
+        requestContext.addZuulRequestHeader(Constants.ADMIN_USER, URLUtil.encode(JsonUtil.toJson(adminUserDTO)));
         requestContext.addZuulRequestHeader(Constants.SOURCE, header);
         return null;
     }

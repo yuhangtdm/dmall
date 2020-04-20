@@ -1,9 +1,9 @@
 package com.dmall.component.web.configuration;
 
-import com.alibaba.fastjson.JSON;
+import com.dmall.common.enums.component.WebErrorEnum;
 import com.dmall.common.model.BasicConfiguration;
-import com.dmall.component.web.WebErrorEnum;
-import com.dmall.component.web.WebException;
+import com.dmall.common.model.exception.ComponentException;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.component.web.log.LogAdvice;
 import com.dmall.component.web.properties.DMallLogProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +34,15 @@ public class DMallLogAspectConfiguration implements BasicConfiguration {
     @Autowired
     private Environment environment;
 
+    @Override
+    @PostConstruct
+    public void check() {
+        log.info("init -> [{}],properties:\n{}", "DMallLogProperties", JsonUtil.toJsonPretty(dMallLogProperties));
+        if (dMallLogProperties.getEnabled() && StringUtils.isBlank(dMallLogProperties.getPointcut())) {
+            throw new ComponentException(WebErrorEnum.NO_POINTCUT);
+        }
+    }
+
     @Bean
     public AspectJExpressionPointcutAdvisor configurabledvisor() {
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
@@ -48,16 +57,6 @@ public class DMallLogAspectConfiguration implements BasicConfiguration {
     @Bean
     public LogAdvice logAdvice(Environment environment) {
         return new LogAdvice(environment);
-
-    }
-
-    @Override
-    @PostConstruct
-    public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallLogProperties", JSON.toJSONString(dMallLogProperties, true));
-        if (dMallLogProperties.getEnabled() && StringUtils.isBlank(dMallLogProperties.getPointcut())) {
-            throw new WebException(WebErrorEnum.NO_POINTCUT);
-        }
     }
 
 }

@@ -3,7 +3,7 @@ package com.dmall.cart.service.impl.handler;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSON;
 import com.dmall.cart.api.dto.list.CartListResponseDTO;
 import com.dmall.cart.api.dto.list.CartSkuResponseDTO;
 import com.dmall.cart.feign.SkuFeign;
@@ -16,10 +16,12 @@ import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.CookieUtil;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.RequestUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,7 +61,7 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
         if (StrUtil.isBlank(cookie)) {
             return ResultUtil.success();
         }
-        List<CartDTO> cartDTOS = JSON.parseArray(cookie, CartDTO.class);
+        List<CartDTO> cartDTOS = JsonUtil.fromJson(cookie, new TypeReference<List<CartDTO>>() {});
 
         List<Long> skuIds = cartDTOS.stream().map(CartDTO::getSkuId).collect(Collectors.toList());
         BaseResult<List<BasicSkuResponseDTO>> basic = skuFeign.getBasic(skuIds);

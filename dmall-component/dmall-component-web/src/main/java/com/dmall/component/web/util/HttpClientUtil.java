@@ -22,6 +22,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class HttpClientUtil {
 
     private static final String FILE_PART = "files";
 
-    private CloseableHttpClient httpClient;
+    private final CloseableHttpClient httpClient;
 
     public HttpClientUtil(CloseableHttpClient httpClient) {
         this.httpClient = httpClient;
@@ -168,7 +169,7 @@ public class HttpClientUtil {
     public String postFile(String httpUrl, Map<String, Object> data) {
         HttpPost httpPost = new HttpPost(httpUrl);
         MultipartEntityBuilder meBuilder = MultipartEntityBuilder.create();
-        meBuilder.setCharset(Charset.forName("utf-8"));
+        meBuilder.setCharset(StandardCharsets.UTF_8);
         meBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         if (data != null) {
             for (String key : data.keySet()) {
@@ -247,7 +248,7 @@ public class HttpClientUtil {
             InputStream inputStream = entity.getContent();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
             }

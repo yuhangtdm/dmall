@@ -1,15 +1,18 @@
 package com.dmall.component.web.log;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import cn.hutool.core.util.StrUtil;
+import com.dmall.common.constants.Constants;
+import com.dmall.common.model.admin.AdminUserContextHolder;
+import com.dmall.common.model.admin.AdminUserDTO;
+import com.dmall.common.model.portal.PortalMemberContextHolder;
+import com.dmall.common.model.portal.PortalMemberDTO;
+import com.dmall.common.util.JsonUtil;
+import com.dmall.common.util.RequestUtil;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.env.Environment;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,17 +22,20 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * @description: 日志切面
  * @author: created by hang.yu on 2019/11/10 18:46
  */
 @Slf4j
-@NoArgsConstructor
-@AllArgsConstructor
 public class LogAdvice implements MethodInterceptor {
 
-    private Environment environment;
+    private final Environment environment;
+
+    public LogAdvice(Environment environment) {
+        this.environment = environment;
+    }
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -37,27 +43,33 @@ public class LogAdvice implements MethodInterceptor {
         WebLog webLog = new WebLog();
         try {
             //获取当前请求对象
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
+            HttpServletRequest request = RequestUtil.getRequest();
             //记录请求信息
             Method method = invocation.getMethod();
             webLog.setRequestIp(request.getRemoteAddr());
-            // 用户id和昵称暂时设为空
-            webLog.setUserId(0L);
-            webLog.setUserName("");
+            AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+            if (adminUserDTO != null) {
+                webLog.setUserId(adminUserDTO.getId());
+                webLog.setUserName(adminUserDTO.getUserName());
+            }
+            PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
+            if (portalMemberDTO != null) {
+                webLog.setUserId(portalMemberDTO.getId());
+                webLog.setUserName(portalMemberDTO.getMemberName());
+            }
             webLog.setUrl(request.getRequestURL().toString());
             webLog.setUri(request.getRequestURI());
             webLog.setRequestMethod(request.getMethod());
             webLog.setStartTime(new Date());
             webLog.setClassName(method.getDeclaringClass().getName());
             webLog.setMethodName(method.getName());
-            webLog.setEnv(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : "dev");
+            webLog.setEnv(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : Constants.LOCAL);
             webLog.setAppName(environment.getProperty("spring.application.name"));
             webLog.setThreadName(Thread.currentThread().getName());
-            webLog.setTitle(webLog.getClassName() + "." + webLog.getMethodName());
+            webLog.setTitle(webLog.getClassName() + StrUtil.C_DOT + webLog.getMethodName());
             webLog.setParams(getParameter(method, invocation.getArguments()));
             Enumeration<String> headerNames = request.getHeaderNames();
-            JSONObject header = new JSONObject();
+            Map<String, String> header = Maps.newLinkedHashMap();
             while (headerNames.hasMoreElements()) {
                 String key = headerNames.nextElement();
                 header.put(key, request.getHeader(key));
@@ -72,7 +84,7 @@ public class LogAdvice implements MethodInterceptor {
         } finally {
             long end = System.currentTimeMillis();
             webLog.setSpendTime((end - start) + "ms");
-            log.info("\n{}", JSON.toJSONString(webLog, true));
+            log.info("\n{}", JsonUtil.toJson(webLog));
         }
     }
 
@@ -90,7 +102,7 @@ public class LogAdvice implements MethodInterceptor {
                 return args[0];
             }
         } else {
-            JSONObject params = new JSONObject();
+            Map<String, Object> params = Maps.newHashMap();
             for (int i = 0; i < parameters.length; i++) {
                 if (originalParam(parameters[i].getType())) {
                     continue;

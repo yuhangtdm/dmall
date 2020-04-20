@@ -1,10 +1,9 @@
 package com.dmall.component.mybatisplus;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.dmall.common.model.BasicConfiguration;
-import com.dmall.common.util.JSONUtil;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.component.mybatisplus.autofill.AutoFillHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JSONUtil.toJSONStringPretty(dmallMybatisPlusProperties));
+        log.info("init -> [{}],properties:\n{}", "DMallMybatisPlusProperties", JsonUtil.toJsonPretty(dmallMybatisPlusProperties));
     }
 
     /**

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 /**
- * @description:
+ * @description: HttpClientConfiguration
  * @author: created by hang.yu on 2019/12/17 15:08
  */
 @Slf4j
@@ -47,8 +47,7 @@ public class HttpClientConfiguration {
      */
     @Bean
     public HttpClientBuilder builder() {
-        return HttpClientBuilder.create().
-                setConnectionManager(cm());
+        return HttpClientBuilder.create().setConnectionManager(cm());
     }
 
     /**

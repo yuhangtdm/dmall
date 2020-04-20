@@ -21,8 +21,4 @@ public class PasswordUtil {
         return password.equals(getPassword(salt, sourcePassword));
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(getPassword("ls","123456"));
-    }
 }

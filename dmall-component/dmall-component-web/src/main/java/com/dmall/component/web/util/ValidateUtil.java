@@ -1,8 +1,8 @@
 package com.dmall.component.web.util;
 
+import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.common.dto.BaseResult;
 import com.google.common.collect.Maps;
 import org.springframework.util.CollectionUtils;
 
@@ -19,6 +19,9 @@ import java.util.Set;
  */
 public class ValidateUtil {
 
+    /**
+     * 使用自定义方法校验
+     */
     public static <T> BaseResult validate(T t) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();

@@ -2,10 +2,10 @@ package com.dmall.component.web.exceptionhandler;
 
 import cn.hutool.core.collection.CollUtil;
 import com.dmall.common.constants.WebConstants;
-import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.model.exception.ComponentException;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.exception.BusinessException;
+import com.dmall.common.model.exception.ComponentException;
 import com.dmall.common.util.ResultUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,8 @@ public class BasicExceptionHandler {
     @ExceptionHandler(ComponentException.class)
     public String componentHandle(ComponentException ex, HttpServletRequest request) {
         log.error("enter the ComponentException Handler,", ex);
-        return getCustomException(request, ResultUtil.fail(ex));
+        // 组件异常 统一返回服务器忙
+        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.FAIL));
     }
 
     /**
@@ -65,7 +66,9 @@ public class BasicExceptionHandler {
         return WebConstants.FORWARD_ERROR;
     }
 
-
+    /**
+     * 请求体不合法
+     */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public String httpMessageNotReadableExceptionHandle(HttpServletRequest request) {
         log.error("enter the HttpMessageNotReadableException Handler");
@@ -75,7 +78,9 @@ public class BasicExceptionHandler {
         return WebConstants.FORWARD_ERROR;
     }
 
-
+    /**
+     * 请求方式不正确
+     */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public String httpRequestMethodNotSupportedExceptionHandle(HttpServletRequest request) {
         log.error("enter the HttpRequestMethodNotSupportedException Handler");
@@ -115,6 +120,9 @@ public class BasicExceptionHandler {
         return paramHandle(null, data, request);
     }
 
+    /**
+     * 请求参数类型不合法异常
+     */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public String methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
         log.error("enter the MethodArgumentTypeMismatchException Handler,", ex);

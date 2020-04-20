@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSON;
 import com.dmall.cart.generator.dataobject.CartItemDO;
 import com.dmall.cart.service.impl.cache.Constants;
 import com.dmall.cart.service.impl.dto.CartDTO;
@@ -12,9 +12,11 @@ import com.dmall.cart.service.impl.enums.OperateEnum;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.CookieUtil;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.RequestUtil;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public class AddCartUtil {
         // 查询cookie中的购物车数据
         String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), Constants.COOKIE_NAME, true);
         if (StrUtil.isNotBlank(cartJson)) {
-            List<CartDTO> cartDTOS = JSON.parseArray(cartJson, CartDTO.class);
+            List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
             Optional<CartDTO> first = cartDTOS.stream()
                     .filter(cartDTO -> cartDTO.getSkuId().equals(skuData.getId()))
                     .findFirst();
@@ -44,7 +46,7 @@ public class AddCartUtil {
                 cartDTO.setGmtModified(new DateTime());
                 cartDTO.setNumber(operateEnum == OperateEnum.ADD ? (number + cartDTO.getNumber()) : number);
                 cartDTO.setTotalPrice(NumberUtil.mul(cartDTO.getNumber(), cartDTO.getPrice()));
-                CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JSON.toJSONString(cartDTOS), Constants.COOKIE_STORE_TIME, true);
+                CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JsonUtil.toJson(cartDTOS), Constants.COOKIE_STORE_TIME, true);
             } else {
                 addCookieCart(number, skuData, cartDTOS);
             }
@@ -85,7 +87,7 @@ public class AddCartUtil {
         cartDTO.setTotalPrice(NumberUtil.mul(cartDTO.getNumber(), cartDTO.getPrice()));
         cartDTO.setChecked(false);
         cartDTOS.add(cartDTO);
-        CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JSON.toJSONString(cartDTOS), Constants.COOKIE_STORE_TIME, true);
+        CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JsonUtil.toJson(cartDTOS), Constants.COOKIE_STORE_TIME, true);
     }
 
     private static CartItemDO getInsertCartDb(Integer number, BasicSkuResponseDTO skuData, PortalMemberDTO login) {

@@ -1,7 +1,7 @@
 package com.dmall.pms;
 
 import com.dmall.common.model.CommonCacheService;
-import com.dmall.component.web.util.SpringContextUtil;
+import com.dmall.common.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.util.ReflectionUtils;
@@ -22,7 +22,7 @@ public class CacheInitRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Map<String, CommonCacheService> beans = SpringContextUtil.getBeans(CommonCacheService.class);
+        Map<String, CommonCacheService> beans = SpringUtil.getBeans(CommonCacheService.class);
 
         beans.forEach((k, bean) -> {
             Method method = ReflectionUtils.findMethod(bean.getClass(), METHOD_NAME);

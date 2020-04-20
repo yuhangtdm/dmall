@@ -5,12 +5,12 @@ import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.AjaxUtil;
+import com.dmall.common.util.RequestMappingUtil;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.component.rbac.shiro.AdminLoginProperties;
+import com.dmall.component.rbac.shiro.AdminProperties;
 import com.dmall.component.rbac.shiro.feign.AdminPermissionFeign;
 import com.dmall.component.rbac.shiro.util.CommonFilterUtil;
-import com.dmall.component.rbac.shiro.util.PathUtil;
 import com.dmall.sso.api.dto.admin.PermissionResponseDTO;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 
@@ -26,12 +26,12 @@ import java.util.List;
  */
 public class AdminPermissionFilter extends PathMatchingFilter {
 
-    private AdminLoginProperties adminLoginProperties;
+    private final AdminProperties adminProperties;
 
-    private AdminPermissionFeign adminPermissionFeign;
+    private final AdminPermissionFeign adminPermissionFeign;
 
-    public AdminPermissionFilter(AdminLoginProperties adminLoginProperties, AdminPermissionFeign adminPermissionFeign) {
-        this.adminLoginProperties = adminLoginProperties;
+    public AdminPermissionFilter(AdminProperties adminProperties, AdminPermissionFeign adminPermissionFeign) {
+        this.adminProperties = adminProperties;
         this.adminPermissionFeign = adminPermissionFeign;
     }
 
@@ -41,11 +41,11 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilterUtil.adminFilter(request, adminLoginProperties);
+        boolean filter = CommonFilterUtil.adminFilter(request, adminProperties);
         if (filter) {
             return true;
         }
-        String requestMapping = PathUtil.getRequestMapping(request);
+        String requestMapping = RequestMappingUtil.getValue(request);
         // 非RequestMapping的url
         if (requestMapping == null){
             return true;
@@ -64,7 +64,7 @@ public class AdminPermissionFilter extends PathMatchingFilter {
             ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_ALLOW));
         } else {
             // 重定向到未授权地址
-            response.sendRedirect(adminLoginProperties.getUnauthorizedUrl());
+            response.sendRedirect(adminProperties.getUnauthorizedUrl());
         }
         return false;
     }

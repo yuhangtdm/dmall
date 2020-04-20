@@ -3,12 +3,11 @@ package com.dmall.framework.zuul.filter;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.ContentType;
-import com.alibaba.fastjson.JSON;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.SourceEnum;
-import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.model.portal.PortalMemberDTO;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
 import com.dmall.framework.zuul.AjaxUtil;
@@ -86,7 +85,7 @@ public class PortalMemberZuulFilter extends ZuulFilter {
         }
         if (StrUtil.isBlank(header)) {
             requestContext.setSendZuulResponse(false);
-            requestContext.setResponseBody(JSON.toJSONString(ResultUtil.fail(AdminUserErrorEnum.SOURCE_BLANK)));
+            requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.SOURCE_BLANK)));
             requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
         }
@@ -100,7 +99,7 @@ public class PortalMemberZuulFilter extends ZuulFilter {
         if (StrUtil.isBlank(token)) {
             requestContext.setSendZuulResponse(false);
             if (AjaxUtil.isAjax(request)) {
-                requestContext.setResponseBody(JSON.toJSONString(ResultUtil.fail(AdminUserErrorEnum.TOKEN_BLANK)));
+                requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.TOKEN_BLANK)));
                 requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             } else {
                 // 重定向到登录地址
@@ -119,7 +118,7 @@ public class PortalMemberZuulFilter extends ZuulFilter {
             requestContext.setSendZuulResponse(false);
             // token验证失败 未登录
             if (AjaxUtil.isAjax(request)) {
-                requestContext.setResponseBody(JSON.toJSONString(checkResult));
+                requestContext.setResponseBody(JsonUtil.toJson(checkResult));
                 requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
                 return null;
             } else {
@@ -133,7 +132,7 @@ public class PortalMemberZuulFilter extends ZuulFilter {
             }
         }
         PortalMemberDTO portalMemberDTO = checkResult.getData();
-        requestContext.addZuulRequestHeader(Constants.PORTAL_MEMBER, URLUtil.encode(JSON.toJSONString(portalMemberDTO)));
+        requestContext.addZuulRequestHeader(Constants.PORTAL_MEMBER, URLUtil.encode(JsonUtil.toJson(portalMemberDTO)));
         requestContext.addZuulRequestHeader(Constants.SOURCE, header);
         return null;
     }

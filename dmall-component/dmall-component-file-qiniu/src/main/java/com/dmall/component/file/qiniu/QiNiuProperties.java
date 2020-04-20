@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @description:
+ * @description: QiNiuProperties
  * @author: created by hang.yu on 2019/12/17 10:16
  */
 @Data

@@ -2,25 +2,25 @@ package com.dmall.component.elasticsearch;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ReflectUtil;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.util.StrUtil;
+import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.common.enums.component.ESErrorEnum;
+import com.dmall.common.model.exception.ComponentException;
+import com.dmall.common.util.FieldUtil;
+import com.dmall.common.util.JsonUtil;
 import com.dmall.component.elasticsearch.entity.*;
-import com.dmall.component.elasticsearch.exception.ESErrorEnum;
-import com.dmall.component.elasticsearch.exception.ESException;
 import com.google.common.collect.Lists;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ReflectionUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ import java.util.Map;
  * @author: created by hang.yu on 2019/11/6 22:56
  */
 @Slf4j
-public class ESDao {
+public class ESDao<T> {
 
     @Autowired
     private JestClient jestClient;
@@ -40,13 +40,17 @@ public class ESDao {
     /**
      * 新增或更新文档
      */
-    public <T> void saveOrUpdate(T t) {
-        Field idField = ReflectionUtils.findField(t.getClass(), "id", Long.class);
-        if (idField == null) {
-            throw new ESException(ESErrorEnum.NO_ID_FIELD);
-        }
-        Long id = (Long) ReflectionUtils.getField(idField, t);
+    public void saveOrUpdate(T t) {
+        Long id = getIdValue(t);
         saveOrUpdate(t, esProperties.getIndexName(), esProperties.getTypeName(), id);
+    }
+
+    /**
+     * 新增或更新文档
+     */
+    public void saveOrUpdate(T t, String indexName, String typeName) {
+        Long id = getIdValue(t);
+        saveOrUpdate(t, indexName, typeName, id);
     }
 
     /**
@@ -57,18 +61,22 @@ public class ESDao {
      * @param typeName  类型名称
      * @param id        id
      */
-    public <T> void saveOrUpdate(T t, String indexName, String typeName, Long id) {
-        basicCheck(indexName, typeName);
-        Index index = new Index.Builder(t).index(indexName).type(typeName).id(String.valueOf(id)).build();
+    public void saveOrUpdate(T t, String indexName, String typeName, Long id) {
+        if (t == null) {
+            throw new ComponentException(ESErrorEnum.STORE_OBJECT_NULL);
+        }
+        basicCheck(indexName, typeName, id);
         try {
+            Index index = new Index.Builder(t).index(indexName).type(typeName).id(String.valueOf(id)).build();
             DocumentResult execute = jestClient.execute(index);
             if (!execute.isSucceeded()) {
-                throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
+                log.error("ESDao saveOrUpdate fail,{}", JsonUtil.toJson(execute));
+                throw new ComponentException(ESErrorEnum.BASIC_ERROR);
             }
-            log.info("ESDao.save successful，{} ", id);
-        } catch (Exception e) {
-            log.error("ESDao.save error,indexName:{},type:{},id:{},do:{}", indexName, typeName, id, JSON.toJSONString(t), e);
-            throw new ESException();
+            log.info("ESDao saveOrUpdate successful，{} ", id);
+        } catch (IOException e) {
+            log.error("ESDao saveOrUpdate error,", e);
+            throw new ComponentException(ESErrorEnum.BASIC_ERROR);
         }
     }
 
@@ -89,35 +97,37 @@ public class ESDao {
      * @param id        id
      */
     public void delete(String indexName, String typeName, Long id) {
-        basicCheck(indexName, typeName);
-        checkId(id);
+        basicCheck(indexName, typeName, id);
         Delete index = new Delete.Builder(String.valueOf(id)).index(indexName).type(typeName).build();
         try {
+            log.info("delete from es, index:{},type:{},id:{}", indexName, typeName, id);
             DocumentResult execute = jestClient.execute(index);
             if (!execute.isSucceeded()) {
-                throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
+                log.error("ESDao delete fail,{}", JsonUtil.toJson(execute));
+                throw new ComponentException(ESErrorEnum.BASIC_ERROR);
             }
         } catch (IOException e) {
-            log.error("ESDao.delete error,indexName:{},type:{},id:{},", indexName, typeName, id, e);
-            throw new ESException();
+            log.error("ESDao delete error,", e);
+            throw new ComponentException(ESErrorEnum.BASIC_ERROR);
         }
     }
-
 
     /**
      * 通过search对象搜索
      */
-    public <T> ResponsePage<T> search(ESSearch<T> esSearch) {
+    public ResponsePage<T> search(ESSearch<T> esSearch) {
         if (esSearch == null) {
-            throw new ESException(ESErrorEnum.NO_SEARCH);
+            throw new ComponentException(ESErrorEnum.NO_SEARCH);
         }
-        basicCheck(esSearch.getIndexName(), esSearch.getTypeName());
+        checkEs(esSearch.getIndexName(), esSearch.getTypeName());
         return search(esSearch.getIndexName(), esSearch.getTypeName(), esSearch.getSearchFields(), esSearch.getFilterFields(),
                 esSearch.getRangeField(), esSearch.getHighLightField(), esSearch.getEsPage(), esSearch.getSortField(), esSearch.getClazz());
 
     }
 
     /**
+     * 搜索的核心方法
+     *
      * @param indexName      索引名称
      * @param typeName       类型名称
      * @param searchFields   查询的字段
@@ -128,8 +138,8 @@ public class ESDao {
      * @param sortField      排序字段
      * @param clazz          查询的返回对象
      */
-    private <T> ResponsePage<T> search(String indexName, String typeName, List<SearchField> searchFields, List<FilterField> filterFields,
-                                       RangeField rangeField, String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
+    private ResponsePage<T> search(String indexName, String typeName, List<SearchField> searchFields, List<FilterField> filterFields,
+                                   RangeField rangeField, String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         // 布尔过滤器
@@ -185,19 +195,22 @@ public class ESDao {
 
 
         String dslStr = searchSourceBuilder.toString();
-        log.info("dsl:\n{}", dslStr);
+        log.info("query dsl:\n{}", dslStr);
         Search search = new Search.Builder(dslStr).addIndex(indexName).addType(typeName).build();
 
         SearchResult execute = null;
         try {
             execute = jestClient.execute(search);
+            if (!execute.isSucceeded()) {
+                log.error("ESDao search fail,{}", JsonUtil.toJson(execute));
+                throw new ComponentException(ESErrorEnum.BASIC_ERROR);
+            }
         } catch (IOException e) {
-            ESSearch<T> esSearch = new ESSearch<>(indexName, typeName, searchFields, filterFields, rangeField, highLightField, esPage, sortField, clazz);
-            log.error("ESDao.search search,indexName:{},type:{},param:{}", indexName, typeName, JSON.toJSONString(esSearch), e);
-            throw new ESException(String.valueOf(execute.getResponseCode()), execute.getErrorMessage());
+            log.error("ESDao search error,", e);
+            throw new ComponentException(ESErrorEnum.BASIC_ERROR);
         }
-        List<SearchResult.Hit<T, Void>> hits = execute.getHits(clazz);
 
+        List<SearchResult.Hit<T, Void>> hits = execute.getHits(clazz);
         List<T> result = Lists.newArrayList();
         for (SearchResult.Hit<T, Void> hit : hits) {
             T source = hit.source;
@@ -209,28 +222,43 @@ public class ESDao {
             }
             result.add(source);
         }
-
         return new ResponsePage(execute.getTotal(), result);
     }
 
     /**
      * 基本校验
      */
-    private void basicCheck(String indexName, String typeName) {
-        if (StringUtils.isBlank(indexName)) {
-            throw new ESException(ESErrorEnum.NO_INDEX_NAME);
-        }
-        if (StringUtils.isBlank(typeName)) {
-            throw new ESException(ESErrorEnum.NO_TYPE_NAME);
+    private void basicCheck(String indexName, String typeName, Long id) {
+        checkEs(indexName, typeName);
+        if (id == null) {
+            throw new ComponentException(ESErrorEnum.NO_ID);
         }
     }
 
     /**
-     * 校验id
+     * 索引名和类型名不能为空
      */
-    private void checkId(Long id) {
-        if (id == null) {
-            throw new ESException(ESErrorEnum.NO_ID);
+    private void checkEs(String indexName, String typeName) {
+        if (StrUtil.isBlank(indexName)) {
+            throw new ComponentException(ESErrorEnum.NO_INDEX_NAME);
         }
+        if (StrUtil.isBlank(typeName)) {
+            throw new ComponentException(ESErrorEnum.NO_TYPE_NAME);
+        }
+    }
+
+    /**
+     * 获取对象的id值
+     */
+    private Long getIdValue(Object result) {
+        EsId esId = FieldUtil.findAnnotationField(result, EsId.class);
+        Long id = null;
+        if (esId != null) {
+            String value = esId.value();
+            id = (Long) ReflectUtil.getFieldValue(result, value);
+        } else {
+            id = (Long) ReflectUtil.getFieldValue(result, Constants.ID);
+        }
+        return id;
     }
 }

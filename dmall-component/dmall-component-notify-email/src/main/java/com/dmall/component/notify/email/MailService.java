@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 发邮件服务
+ * @description: 发送邮件服务
+ * @author: created by hang.yu on 2019/03/12 23:42
  */
 public interface MailService {
 

@@ -8,7 +8,7 @@ import com.dmall.common.constants.Constants;
 import com.dmall.common.model.exception.ComponentException;
 import com.dmall.common.util.FieldUtil;
 import com.dmall.common.util.ObjectUtil;
-import com.dmall.component.cache.redis.exception.CacheRedisErrorEnum;
+import com.dmall.common.enums.component.CacheRedisErrorEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

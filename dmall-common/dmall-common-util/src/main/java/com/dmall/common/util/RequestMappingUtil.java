@@ -1,4 +1,4 @@
-package com.dmall.component.rbac.shiro.util;
+package com.dmall.common.util;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
@@ -10,15 +10,15 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @description:
+ * @description: 获取@RequestMapping的映射
  * @author: created by hang.yu on 2020/2/26 16:49
  */
-public class PathUtil {
+public class RequestMappingUtil {
 
     /**
      * 获取RequestMapping的url
      */
-    public static String getRequestMapping(HttpServletRequest request) throws Exception {
+    public static String getValue(HttpServletRequest request) throws Exception {
         RequestMappingHandlerMapping mapping = SpringUtil.getBean(RequestMappingHandlerMapping.class);
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = mapping.getHandlerMethods();
         HandlerExecutionChain handler = mapping.getHandler(request);

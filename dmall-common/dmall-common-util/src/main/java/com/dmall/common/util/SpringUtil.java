@@ -1,4 +1,4 @@
-package com.dmall.component.rbac.shiro.util;
+package com.dmall.common.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -6,7 +6,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-
 
 /**
  * @description: spring容器工具类

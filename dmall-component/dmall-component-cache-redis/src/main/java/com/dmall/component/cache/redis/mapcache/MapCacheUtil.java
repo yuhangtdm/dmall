@@ -4,7 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import com.dmall.component.cache.redis.DMallRedisProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.Assert;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -26,13 +28,15 @@ public class MapCacheUtil {
      * 设置单个缓存
      */
     public void put(String key, String hashKey, Object result) {
-        put(key, hashKey, result, null, null);
+        put(key, hashKey, result, Long.MAX_VALUE, null);
     }
 
     /**
      * 设置缓存并设置过期时间
      */
-    public void put(String key, String hashKey, Object result, Long timeout, TimeUnit timeUnit) {
+    public void put(String key, String hashKey, Object result, long timeout, TimeUnit timeUnit) {
+        Assert.notNull(key, "key not null");
+        Assert.notNull(hashKey, "key not null");
         redisTemplate.opsForHash().put(key, hashKey, result);
         // Long.MAX_VALUE 表示不设置过期时间
         if (timeout == Long.MAX_VALUE) {
@@ -51,6 +55,8 @@ public class MapCacheUtil {
      * 删除缓存
      */
     public void delete(String key, String... hashKey) {
+        Assert.notNull(key, "key not null");
+        Assert.notNull(hashKey, "hashKey not null");
         redisTemplate.opsForHash().delete(key, hashKey);
     }
 
@@ -58,6 +64,7 @@ public class MapCacheUtil {
      * 根据key获取缓存
      */
     public List<Object> values(String key) {
+        Assert.notNull(key, "key not null");
         return redisTemplate.opsForHash().values(key);
     }
 
@@ -65,6 +72,8 @@ public class MapCacheUtil {
      * 根据key和 hashKey获取缓存
      */
     public Object get(String key, String hashKey) {
+        Assert.notNull(key, "key not null");
+        Assert.notNull(hashKey, "hashKey not null");
         return redisTemplate.opsForHash().get(key, hashKey);
     }
 
@@ -90,4 +99,5 @@ public class MapCacheUtil {
     public String getKey(String cacheName, String className) {
         return MAP_CACHE_PREFIX + cacheName + StrUtil.C_UNDERLINE + className;
     }
+
 }

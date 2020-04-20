@@ -1,5 +1,7 @@
 package com.dmall.component.notify.email;
 
+import com.dmall.common.enums.component.SendEmailErrorEnum;
+import com.dmall.common.model.exception.ComponentException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,14 +15,18 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @description: 发送邮件服务实现
+ * @author: created by hang.yu on 2019/03/12 23:42
+ */
 @Slf4j
 public class MailServiceImpl implements MailService {
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    private TemplateEngine templateEngine;
+    private final TemplateEngine templateEngine;
 
-    private String from;
+    private final String from;
 
     public MailServiceImpl(JavaMailSender mailSender, TemplateEngine templateEngine, String from) {
         this.mailSender = mailSender;
@@ -73,11 +79,11 @@ public class MailServiceImpl implements MailService {
             message.setSubject(subject);
             // 邮件内容，html格式
             messageHelper.setText(htmlContent, true);
-            //发送
+            // 发送
             mailSender.send(message);
         } catch (MessagingException e) {
-            log.error("send mail failed,", e);
-            throw new SendEmailException();
+            log.error("send mail error,", e);
+            throw new ComponentException(SendEmailErrorEnum.BASIC_ERROR);
         }
     }
 
@@ -109,8 +115,8 @@ public class MailServiceImpl implements MailService {
             // 发送邮件
             mailSender.send(message);
         } catch (MessagingException e) {
-            log.error("send mail failed,", e);
-            throw new SendEmailException();
+            log.error("send mail error,", e);
+            throw new ComponentException(SendEmailErrorEnum.BASIC_ERROR);
         }
     }
 
@@ -136,8 +142,8 @@ public class MailServiceImpl implements MailService {
             }
             mailSender.send(message);
         } catch (MessagingException e) {
-            log.error("send mail failed,", e);
-            throw new SendEmailException();
+            log.error("send mail error,", e);
+            throw new ComponentException(SendEmailErrorEnum.BASIC_ERROR);
         }
 
     }
@@ -165,8 +171,8 @@ public class MailServiceImpl implements MailService {
             // 发送邮件
             mailSender.send(message);
         } catch (MessagingException e) {
-            log.error("send mail failed,", e);
-            throw new SendEmailException();
+            log.error("send mail error,", e);
+            throw new ComponentException(SendEmailErrorEnum.BASIC_ERROR);
         }
     }
 }
