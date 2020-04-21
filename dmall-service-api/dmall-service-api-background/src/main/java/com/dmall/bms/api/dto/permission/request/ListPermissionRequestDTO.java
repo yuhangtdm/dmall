@@ -1,12 +1,10 @@
 package com.dmall.bms.api.dto.permission.request;
 
-import com.dmall.bms.api.dto.permission.enums.HttpMethodEnum;
-import com.dmall.bms.api.dto.permission.enums.PermissionTypeEnum;
+import com.dmall.bms.api.enums.HttpMethodEnum;
 import com.dmall.common.dto.validate.ValueInEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -15,7 +13,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "ListPermissionRequestDTO", description = "权限列表请求实体")
 public class ListPermissionRequestDTO implements Serializable {
 

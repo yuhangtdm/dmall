@@ -1,7 +1,7 @@
 package com.dmall.bms.service.impl.user;
 
 import com.dmall.bms.api.dto.user.request.*;
-import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
+import com.dmall.bms.api.dto.user.response.UserResponseDTO;
 import com.dmall.bms.api.service.UserService;
 import com.dmall.bms.service.impl.user.handler.*;
 import com.dmall.common.dto.BaseResult;
@@ -63,12 +63,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResult<CommonUserResponseDTO> get(Long id) {
+    public BaseResult<UserResponseDTO> get(Long id) {
         return getUserHandler.handler(id);
     }
 
     @Override
-    public BaseResult<ResponsePage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<UserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO) {
         return pageUserHandler.handler(requestDTO);
     }
 
@@ -79,13 +79,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> setRoles(@Valid SetRolesRequestDTO requestDTO) {
+    public BaseResult<Long> setRoles(@RequestBody SetRolesRequestDTO requestDTO) {
         return setRolesHandler.handler(requestDTO);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> setPermissions(@Valid SetPermissionsExtRequestDTO requestDTO) {
+    public BaseResult<Long> setPermissions(@RequestBody SetPermissionsExtRequestDTO requestDTO) {
         return setPermissionsHandler.handler(requestDTO);
     }
 

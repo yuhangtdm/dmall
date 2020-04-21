@@ -1,7 +1,7 @@
 package com.dmall.bms.api.service;
 
+import com.dmall.bms.api.dto.user.response.UserResponseDTO;
 import com.dmall.bms.api.dto.user.request.*;
-import com.dmall.bms.api.dto.user.common.CommonUserResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
@@ -40,11 +40,11 @@ public interface UserService {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询后台用户")
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonUserResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<UserResponseDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户分页")
-    BaseResult<ResponsePage<CommonUserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
+    BaseResult<ResponsePage<UserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
 
     @ApiOperation(value = "上传用户头像")
     @PostMapping("/uploadIcon")

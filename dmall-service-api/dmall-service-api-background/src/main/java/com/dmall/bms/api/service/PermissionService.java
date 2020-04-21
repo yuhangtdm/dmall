@@ -1,11 +1,10 @@
 package com.dmall.bms.api.service;
 
-import com.dmall.bms.api.dto.permission.common.CommonPermissionResponseDTO;
 import com.dmall.bms.api.dto.permission.request.ListPermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.PagePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
-import com.dmall.bms.api.dto.permission.response.PagePermissionResponseDTO;
+import com.dmall.bms.api.dto.permission.response.PermissionResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.Api;
@@ -40,14 +39,14 @@ public interface PermissionService {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询权限")
     @ApiImplicitParam(name = "id", value = "权限id", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonPermissionResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<PermissionResponseDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("/list")
     @ApiOperation(value = "权限列表")
-    BaseResult<List<CommonPermissionResponseDTO>> list(@RequestBody ListPermissionRequestDTO requestDTO);
+    BaseResult<List<PermissionResponseDTO>> list(@RequestBody ListPermissionRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "权限分页")
-    BaseResult<ResponsePage<PagePermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO);
+    BaseResult<ResponsePage<PermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO);
 
 }

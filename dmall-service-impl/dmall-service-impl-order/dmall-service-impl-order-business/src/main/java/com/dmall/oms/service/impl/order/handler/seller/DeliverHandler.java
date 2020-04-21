@@ -1,13 +1,10 @@
 package com.dmall.oms.service.impl.order.handler.seller;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dmall.bms.api.dto.deliverwarehouse.CommonDeliverWarehouseResponseDTO;
+import com.dmall.bms.api.dto.deliverwarehouse.DeliverWarehouseResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
-import com.dmall.common.model.exception.BusinessException;
-import com.dmall.common.model.xxljob.XxlJobInfo;
 import com.dmall.common.util.CronUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -21,13 +18,8 @@ import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.oms.service.impl.order.xxljob.XxlJobSupport;
 import com.dmall.oms.service.impl.support.*;
-import com.xxl.job.core.biz.model.ReturnT;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.List;
@@ -88,11 +80,11 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
             return ResultUtil.fail(OrderErrorEnum.DELIVER_PERSON_WAREHOUSE_EMPTY);
         }
         // 获取仓库信息
-        BaseResult<CommonDeliverWarehouseResponseDTO> warehouseBaseResult = deliverWarehouseFeign.get(adminUser.getWarehouseId());
+        BaseResult<DeliverWarehouseResponseDTO> warehouseBaseResult = deliverWarehouseFeign.get(adminUser.getWarehouseId());
         if (!warehouseBaseResult.getResult()) {
             return ResultUtil.fail(warehouseBaseResult.getCode(), warehouseBaseResult.getMsg());
         }
-        CommonDeliverWarehouseResponseDTO data = warehouseBaseResult.getData();
+        DeliverWarehouseResponseDTO data = warehouseBaseResult.getData();
         subOrderDO.setDeliverProvince(data.getProvince());
         subOrderDO.setDeliverCity(data.getCity());
         subOrderDO.setDeliverRegion(data.getRegion());

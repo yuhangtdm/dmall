@@ -3,18 +3,16 @@ package com.dmall.bms.service.impl.menu.handler;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.service.impl.mapper.UserMenusMapper;
+import com.dmall.bms.service.impl.support.MenuSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description: MyMenuTreeHandler
@@ -32,22 +30,7 @@ public class MyMenuTreeHandler extends AbstractCommonHandler<Void, MenuDO, MenuT
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
         List<MenuTreeResponseDTO> allMenus = userMenuMapper.listByUserId(adminUserDTO.getId());
 
-        Map<Long, MenuTreeResponseDTO> map = Maps.newHashMap();
-        List<MenuTreeResponseDTO> resultMenus = Lists.newArrayList();
-
-        for (MenuTreeResponseDTO menu : allMenus) {
-            if (menu.getParentId().equals(0L)) {
-                resultMenus.add(menu);
-            }
-            map.put(menu.getId(), menu);
-        }
-
-        for (MenuTreeResponseDTO menu : allMenus) {
-            if (map.get(menu.getParentId()) != null) {
-                map.get(menu.getParentId()).getChild().add(menu);
-            }
-        }
-
-        return ResultUtil.success(resultMenus);
+        return ResultUtil.success(MenuSupport.getMenuTrees(allMenus));
     }
+
 }

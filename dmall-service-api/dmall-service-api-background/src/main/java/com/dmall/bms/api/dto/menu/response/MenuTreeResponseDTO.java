@@ -14,7 +14,6 @@ import java.util.List;
  * @author: created by hang.yu on 2020/2/22 15:00
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "MenuTreeResponseDTO", description = "菜单树响应实体")
 public class MenuTreeResponseDTO implements Serializable {
 

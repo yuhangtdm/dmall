@@ -1,9 +1,9 @@
 package com.dmall.bms.service.impl.menu.handler;
 
 import cn.hutool.core.util.StrUtil;
-import com.dmall.bms.api.dto.menu.enums.MenuTypeEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
+import com.dmall.bms.api.enums.MenuTypeEnum;
 import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
-import com.dmall.bms.api.enums.MenuErrorEnum;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.generator.mapper.MenuMapper;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -25,24 +25,22 @@ public class SaveMenuHandler extends AbstractCommonHandler<SaveMenuRequestDTO, M
     @Override
     public BaseResult<Long> validate(SaveMenuRequestDTO requestDTO) {
 
-        // 上级id不为空时 必须存在 且是目录
+        // 上级id不为空时 必须存在 且必须是目录
         if (requestDTO.getParentId() != null){
             MenuDO menuDO = menuMapper.selectById(requestDTO.getParentId());
             if (menuDO == null){
-                return ResultUtil.fail(MenuErrorEnum.PARENT_NOT_EXIST);
+                return ResultUtil.fail(BackGroundErrorEnum.PARENT_NOT_EXIST);
             }
             if (!MenuTypeEnum.CATALOG.getCode().equals(menuDO.getType())){
-                return ResultUtil.fail(MenuErrorEnum.PARENT_NOT_CATALOG);
+                return ResultUtil.fail(BackGroundErrorEnum.PARENT_NOT_CATALOG);
             }
         }
+        // 菜单的路径不能为空
         if (MenuTypeEnum.MENU.getCode().equals(requestDTO.getType())){
             if (StrUtil.isBlank(requestDTO.getUrl())){
-                return ResultUtil.fail(MenuErrorEnum.URL_BLANK);
+                return ResultUtil.fail(BackGroundErrorEnum.URL_BLANK);
             }
-        }else {
-            if (requestDTO.getParentId() == null){
-                return ResultUtil.fail(MenuErrorEnum.PARENT_NOT_NULL);
-            }
+
         }
         return ResultUtil.success();
     }

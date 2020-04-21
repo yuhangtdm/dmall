@@ -1,15 +1,15 @@
 package com.dmall.bms.service.impl.user.handler;
 
 import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
-import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
-import com.dmall.bms.service.impl.support.UserSupport;
-import com.dmall.bms.api.enums.UserErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
-import com.dmall.component.rbac.shiro.util.PasswordUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
+import com.dmall.bms.service.impl.support.UserSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.rbac.shiro.util.PasswordUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,9 +34,9 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
         // 用户名唯一
         UserDO userDO = userSupport.getByUserName(requestDTO.getUserName());
         if (userDO != null) {
-            return ResultUtil.fail(UserErrorEnum.USER_NAME_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.USER_NAME_EXIST);
         }
-        if (requestDTO.getWarehouseId() != null){
+        if (requestDTO.getWarehouseId() != null) {
             deliverWarehouseSupport.validateWarehouse(requestDTO.getWarehouseId());
         }
         return ResultUtil.success();
@@ -52,6 +52,7 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
     @Override
     protected void customerConvertDo(UserDO result, SaveUserRequestDTO saveUserRequestDTO) {
         result.setPassword(PasswordUtil.getPassword(result.getUserName(), result.getPassword()));
+        // 一期默认只有一个店铺
         result.setMerchantsId(1L);
     }
 }

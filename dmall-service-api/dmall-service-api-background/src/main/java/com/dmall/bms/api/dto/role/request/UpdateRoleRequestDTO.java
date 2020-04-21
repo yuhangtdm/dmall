@@ -3,7 +3,6 @@ package com.dmall.bms.api.dto.role.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,7 +12,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "UpdateRoleRequestDTO", description = "修改后台角色请求实体")
 public class UpdateRoleRequestDTO implements Serializable {
 

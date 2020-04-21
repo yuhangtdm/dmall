@@ -10,7 +10,6 @@ import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
-import com.dmall.framework.zuul.AjaxUtil;
 import com.dmall.framework.zuul.configuration.WhiteListProperties;
 import com.dmall.framework.zuul.feign.PortalLoginServiceFeign;
 import com.netflix.zuul.ZuulFilter;

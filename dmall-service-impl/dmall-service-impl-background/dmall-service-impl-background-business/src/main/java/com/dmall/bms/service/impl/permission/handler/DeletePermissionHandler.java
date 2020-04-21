@@ -1,11 +1,11 @@
 package com.dmall.bms.service.impl.permission.handler;
 
-import com.dmall.bms.api.enums.PermissionErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +22,8 @@ public class DeletePermissionHandler extends AbstractCommonHandler<Long, Permiss
     @Override
     public BaseResult<Long> validate(Long id) {
         PermissionDO permissionDO = permissionMapper.selectById(id);
-        if (permissionDO == null){
-            return ResultUtil.fail(PermissionErrorEnum.PERMISSION_NOT_EXIST);
+        if (permissionDO == null) {
+            return ResultUtil.fail(BackGroundErrorEnum.PERMISSION_NOT_EXIST);
         }
         return ResultUtil.success();
     }

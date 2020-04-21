@@ -1,13 +1,13 @@
 package com.dmall.bms.service.impl.role.handler;
 
 import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
-import com.dmall.bms.api.enums.RoleErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.service.impl.support.RoleSupport;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class SaveRoleHandler extends AbstractCommonHandler<SaveRoleRequestDTO, R
         // 角色名称必须唯一
         RoleDO roleDO = roleSupport.getByName(requestDTO.getName());
         if (roleDO != null) {
-            return ResultUtil.fail(RoleErrorEnum.NAME_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.NAME_EXIST);
         }
         return ResultUtil.success();
     }

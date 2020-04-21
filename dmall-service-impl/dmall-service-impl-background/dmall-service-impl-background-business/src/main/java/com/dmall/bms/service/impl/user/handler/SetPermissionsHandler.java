@@ -2,6 +2,7 @@ package com.dmall.bms.service.impl.user.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import com.dmall.bms.api.dto.user.request.SetPermissionsExtRequestDTO;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.dataobject.UserPermissionDO;
@@ -10,7 +11,6 @@ import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.bms.generator.mapper.UserPermissionMapper;
 import com.dmall.bms.service.impl.mapper.UserPermissionsMapper;
 import com.dmall.bms.service.impl.user.enums.OperationEnum;
-import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -45,12 +45,12 @@ public class SetPermissionsHandler extends AbstractCommonHandler<SetPermissionsE
         // 用户必须存在
         UserDO userDO = userMapper.selectById(requestDTO.getUserId());
         if (userDO == null) {
-            return ResultUtil.fail(UserErrorEnum.USER_NOT_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
         }
         // 权限必须存在
         List<PermissionDO> permissionDOS = permissionMapper.selectBatchIds(requestDTO.getPermissionIds());
         if (permissionDOS.size() != requestDTO.getPermissionIds().size()) {
-            return ResultUtil.fail(UserErrorEnum.PERMISSION_ID_NOT_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.PERMISSION_ID_NOT_EXIST);
         }
         return ResultUtil.success();
     }
@@ -60,9 +60,11 @@ public class SetPermissionsHandler extends AbstractCommonHandler<SetPermissionsE
         // 查询用户的权限
         Set<Long> permissionIds = requestDTO.getPermissionIds();
         List<Long> oldPermissionIds = userPermissionsMapper.listByUserId(requestDTO.getUserId());
-        List<Long> deletePermissionIds = oldPermissionIds.stream().filter(permissionId -> !permissionIds.contains(permissionId))
+        List<Long> deletePermissionIds = oldPermissionIds.stream()
+                .filter(permissionId -> !permissionIds.contains(permissionId))
                 .collect(Collectors.toList());
-        List<Long> insertPermissionIds = permissionIds.stream().filter(permissionId -> !oldPermissionIds.contains(permissionId))
+        List<Long> insertPermissionIds = permissionIds.stream()
+                .filter(permissionId -> !oldPermissionIds.contains(permissionId))
                 .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(deletePermissionIds)) {
             for (Long permissionId : deletePermissionIds) {

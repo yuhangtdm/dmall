@@ -12,7 +12,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "ListRoleRequestDTO", description = "后台角色列表请求实体")
 public class ListRoleRequestDTO implements Serializable {
 

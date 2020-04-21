@@ -1,8 +1,7 @@
 package com.dmall.bms.api.service;
 
 import com.dmall.bms.api.dto.role.request.*;
-import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
-import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
+import com.dmall.bms.api.dto.role.response.RoleResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.Api;
@@ -37,15 +36,15 @@ public interface RoleService {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询后台角色")
     @ApiImplicitParam(name = "id", value = "后台角色id", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonRoleResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<RoleResponseDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("/list")
     @ApiOperation(value = "后台角色列表")
-    BaseResult<List<CommonRoleResponseDTO>> list(@RequestBody ListRoleRequestDTO requestDTO);
+    BaseResult<List<RoleResponseDTO>> list(@RequestBody ListRoleRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "后台角色分页")
-    BaseResult<ResponsePage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
+    BaseResult<ResponsePage<RoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
 
     @PostMapping("/setPermissions")
     @ApiOperation(value = "设置权限")

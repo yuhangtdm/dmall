@@ -1,12 +1,12 @@
 package com.dmall.bms.service.impl.menu.handler;
 
 import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.generator.mapper.MenuMapper;
-import com.dmall.bms.api.enums.MenuErrorEnum;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +23,8 @@ public class GetMenuHandler extends AbstractCommonHandler<Long, MenuDO, GetMenuR
     @Override
     public BaseResult<GetMenuResponseDTO> processor(Long id) {
         MenuDO menuDO = menuMapper.selectById(id);
-        if (menuDO == null){
-            return ResultUtil.fail(MenuErrorEnum.MENU_NOT_EXIST);
+        if (menuDO == null) {
+            return ResultUtil.fail(BackGroundErrorEnum.MENU_NOT_EXIST);
         }
         return ResultUtil.success(doConvertDto(menuDO, GetMenuResponseDTO.class));
     }

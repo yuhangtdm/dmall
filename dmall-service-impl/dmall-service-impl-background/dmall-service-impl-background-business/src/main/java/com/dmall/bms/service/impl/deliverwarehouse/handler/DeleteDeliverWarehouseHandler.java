@@ -1,6 +1,5 @@
 package com.dmall.bms.service.impl.deliverwarehouse.handler;
 
-import com.dmall.bms.api.enums.DeliverWarehouseErrorEnum;
 import com.dmall.bms.generator.dataobject.DeliverWarehouseDO;
 import com.dmall.bms.generator.mapper.DeliverWarehouseMapper;
 import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;

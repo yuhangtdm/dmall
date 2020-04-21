@@ -1,8 +1,7 @@
 package com.dmall.bms.service.impl.role;
 
 import com.dmall.bms.api.dto.role.request.*;
-import com.dmall.bms.api.dto.role.common.CommonRoleResponseDTO;
-import com.dmall.bms.api.dto.role.response.PageRoleResponseDTO;
+import com.dmall.bms.api.dto.role.response.RoleResponseDTO;
 import com.dmall.bms.api.service.RoleService;
 import com.dmall.bms.service.impl.role.handler.*;
 import com.dmall.common.dto.BaseResult;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 /**
@@ -57,17 +57,17 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public BaseResult<CommonRoleResponseDTO> get(Long id) {
+    public BaseResult<RoleResponseDTO> get(Long id) {
         return getRoleHandler.handler(id);
     }
 
     @Override
-    public BaseResult<List<CommonRoleResponseDTO>> list(@RequestBody ListRoleRequestDTO requestDTO) {
+    public BaseResult<List<RoleResponseDTO>> list(@RequestBody ListRoleRequestDTO requestDTO) {
         return listRoleHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<ResponsePage<PageRoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<RoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO) {
         return pageRoleHandler.handler(requestDTO);
     }
 

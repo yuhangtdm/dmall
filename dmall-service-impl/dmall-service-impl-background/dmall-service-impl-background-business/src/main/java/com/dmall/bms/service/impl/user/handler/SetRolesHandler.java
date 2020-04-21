@@ -1,6 +1,7 @@
 package com.dmall.bms.service.impl.user.handler;
 
 import com.dmall.bms.api.dto.user.request.SetRolesRequestDTO;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.dataobject.UserRoleDO;
@@ -8,7 +9,6 @@ import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.bms.generator.mapper.UserRoleMapper;
 import com.dmall.bms.service.impl.support.UserRoleSupport;
-import com.dmall.bms.api.enums.UserErrorEnum;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -40,15 +40,14 @@ public class SetRolesHandler extends AbstractCommonHandler<SetRolesRequestDTO, U
     public BaseResult<Long> validate(SetRolesRequestDTO requestDTO) {
         // 用户id必须存在
         UserDO userDO = userMapper.selectById(requestDTO.getUserId());
-        if (userDO == null){
-            return ResultUtil.fail(UserErrorEnum.USER_NOT_EXIST);
+        if (userDO == null) {
+            return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
         }
         // 角色id集合必须存在
         List<RoleDO> roleDOS = roleMapper.selectBatchIds(requestDTO.getRoleIds());
-        if (roleDOS.size() != requestDTO.getRoleIds().size()){
-            return ResultUtil.fail(UserErrorEnum.ROLE_ID_NOT_EXIST);
+        if (roleDOS.size() != requestDTO.getRoleIds().size()) {
+            return ResultUtil.fail(BackGroundErrorEnum.ROLE_ID_NOT_EXIST);
         }
-
         return ResultUtil.success();
     }
 

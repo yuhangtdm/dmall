@@ -1,13 +1,13 @@
 package com.dmall.bms.service.impl.role.handler;
 
 import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
-import com.dmall.bms.api.enums.RoleErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.service.impl.support.RoleSupport;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +28,11 @@ public class UpdateRoleHandler extends AbstractCommonHandler<UpdateRoleRequestDT
     public BaseResult<Long> validate(UpdateRoleRequestDTO requestDTO) {
         RoleDO roleDO = roleMapper.selectById(requestDTO.getId());
         if (roleDO == null) {
-            return ResultUtil.fail(RoleErrorEnum.ROLE_NOT_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.ROLE_NOT_EXIST);
         }
         RoleDO byName = roleSupport.getByName(requestDTO.getName());
         if (byName != null && !byName.getId().equals(requestDTO.getId())) {
-            return ResultUtil.fail(RoleErrorEnum.NAME_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.NAME_EXIST);
         }
         return ResultUtil.success();
     }

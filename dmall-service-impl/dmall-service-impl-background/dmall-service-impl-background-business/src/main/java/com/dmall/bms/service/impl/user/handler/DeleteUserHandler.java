@@ -1,11 +1,11 @@
 package com.dmall.bms.service.impl.user.handler;
 
-import com.dmall.bms.api.enums.UserErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ public class DeleteUserHandler extends AbstractCommonHandler<Long, UserDO, Long>
         // id存在
         UserDO userDO = userMapper.selectById(id);
         if (userDO == null) {
-            return ResultUtil.fail(UserErrorEnum.USER_NOT_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
         }
         return ResultUtil.success();
     }

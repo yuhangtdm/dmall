@@ -1,11 +1,10 @@
 package com.dmall.bms.service.impl.permission;
 
-import com.dmall.bms.api.dto.permission.common.CommonPermissionResponseDTO;
 import com.dmall.bms.api.dto.permission.request.ListPermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.PagePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
-import com.dmall.bms.api.dto.permission.response.PagePermissionResponseDTO;
+import com.dmall.bms.api.dto.permission.response.PermissionResponseDTO;
 import com.dmall.bms.api.service.PermissionService;
 import com.dmall.bms.service.impl.permission.handler.*;
 import com.dmall.common.dto.BaseResult;
@@ -58,17 +57,17 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public BaseResult<CommonPermissionResponseDTO> get(Long id) {
+    public BaseResult<PermissionResponseDTO> get(Long id) {
         return getPermissionHandler.handler(id);
     }
 
     @Override
-    public BaseResult<List<CommonPermissionResponseDTO>> list(@RequestBody ListPermissionRequestDTO requestDTO) {
+    public BaseResult<List<PermissionResponseDTO>> list(@RequestBody ListPermissionRequestDTO requestDTO) {
         return listPermissionHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<ResponsePage<PagePermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<PermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO) {
         return pagePermissionHandler.handler(requestDTO);
     }
 

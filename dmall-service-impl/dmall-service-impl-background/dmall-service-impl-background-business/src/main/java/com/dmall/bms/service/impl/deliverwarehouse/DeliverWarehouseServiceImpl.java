@@ -1,6 +1,6 @@
 package com.dmall.bms.service.impl.deliverwarehouse;
 
-import com.dmall.bms.api.dto.deliverwarehouse.CommonDeliverWarehouseResponseDTO;
+import com.dmall.bms.api.dto.deliverwarehouse.DeliverWarehouseResponseDTO;
 import com.dmall.bms.api.dto.deliverwarehouse.ListDeliverWarehouseRequestDTO;
 import com.dmall.bms.api.dto.deliverwarehouse.SaveDeliverWarehouseRequestDTO;
 import com.dmall.bms.api.dto.deliverwarehouse.UpdateDeliverWarehouseRequestDTO;
@@ -54,12 +54,12 @@ public class DeliverWarehouseServiceImpl implements DeliverWarehouseService {
     }
 
     @Override
-    public BaseResult<CommonDeliverWarehouseResponseDTO> get(Long id) {
+    public BaseResult<DeliverWarehouseResponseDTO> get(Long id) {
         return getBmsDeliverWarehouseHandler.handler(id);
     }
 
     @Override
-    public BaseResult<List<CommonDeliverWarehouseResponseDTO>> list(@RequestBody ListDeliverWarehouseRequestDTO requestDTO) {
+    public BaseResult<List<DeliverWarehouseResponseDTO>> list(@RequestBody ListDeliverWarehouseRequestDTO requestDTO) {
         return listDeliverWarehouseHandler.handler(requestDTO);
     }
 

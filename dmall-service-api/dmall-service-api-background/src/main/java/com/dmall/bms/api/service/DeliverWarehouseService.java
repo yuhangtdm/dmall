@@ -1,10 +1,10 @@
 package com.dmall.bms.api.service;
 
-import com.dmall.bms.api.dto.deliverwarehouse.CommonDeliverWarehouseResponseDTO;
+import com.dmall.bms.api.dto.deliverwarehouse.DeliverWarehouseResponseDTO;
 import com.dmall.bms.api.dto.deliverwarehouse.ListDeliverWarehouseRequestDTO;
-import com.dmall.common.dto.BaseResult;
 import com.dmall.bms.api.dto.deliverwarehouse.SaveDeliverWarehouseRequestDTO;
 import com.dmall.bms.api.dto.deliverwarehouse.UpdateDeliverWarehouseRequestDTO;
+import com.dmall.common.dto.BaseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -37,10 +37,10 @@ public interface DeliverWarehouseService {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询商家发货仓库")
     @ApiImplicitParam(name = "id", value = "商家发货仓库id", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonDeliverWarehouseResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<DeliverWarehouseResponseDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("/list")
     @ApiOperation(value = "商家发货仓库列表")
-    BaseResult<List<CommonDeliverWarehouseResponseDTO>> list(@RequestBody ListDeliverWarehouseRequestDTO requestDTO);
+    BaseResult<List<DeliverWarehouseResponseDTO>> list(@RequestBody ListDeliverWarehouseRequestDTO requestDTO);
 
 }

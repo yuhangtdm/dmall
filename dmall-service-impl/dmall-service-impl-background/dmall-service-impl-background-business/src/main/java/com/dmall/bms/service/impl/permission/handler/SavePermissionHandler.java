@@ -1,15 +1,15 @@
 package com.dmall.bms.service.impl.permission.handler;
 
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
-import com.dmall.bms.generator.dataobject.ServiceDO;
-import com.dmall.bms.generator.mapper.ServiceMapper;
-import com.dmall.bms.api.enums.PermissionErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
+import com.dmall.bms.generator.dataobject.ServiceDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
+import com.dmall.bms.generator.mapper.ServiceMapper;
 import com.dmall.bms.service.impl.support.PermissionSupport;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,18 +33,18 @@ public class SavePermissionHandler extends AbstractCommonHandler<SavePermissionR
     public BaseResult<Long> validate(SavePermissionRequestDTO requestDTO) {
         // 服务必须存在
         ServiceDO serviceDO = serviceMapper.selectById(requestDTO.getServiceId());
-        if (serviceDO == null){
-            return ResultUtil.fail(PermissionErrorEnum.SERVICE_NOT_EXIST);
+        if (serviceDO == null) {
+            return ResultUtil.fail(BackGroundErrorEnum.SERVICE_NOT_EXIST);
         }
         // 权限码唯一
         PermissionDO permissionDO = permissionSupport.getByCode(requestDTO.getCode());
-        if (permissionDO != null){
-            return ResultUtil.fail(PermissionErrorEnum.CODE_EXIST);
+        if (permissionDO != null) {
+            return ResultUtil.fail(BackGroundErrorEnum.CODE_EXIST);
         }
         // 请求方式+uri唯一
         PermissionDO byUriAndMethod = permissionSupport.getByUriAndMethod(requestDTO.getUri(), requestDTO.getMethod());
-        if (byUriAndMethod != null){
-            return ResultUtil.fail(PermissionErrorEnum.URI_METHOD_EXIST);
+        if (byUriAndMethod != null) {
+            return ResultUtil.fail(BackGroundErrorEnum.URI_METHOD_EXIST);
         }
         return ResultUtil.success();
     }

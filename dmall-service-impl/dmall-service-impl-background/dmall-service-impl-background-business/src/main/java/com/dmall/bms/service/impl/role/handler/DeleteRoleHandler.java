@@ -1,6 +1,6 @@
 package com.dmall.bms.service.impl.role.handler;
 
-import com.dmall.bms.api.enums.RoleErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -23,7 +23,7 @@ public class DeleteRoleHandler extends AbstractCommonHandler<Long, RoleDO, Long>
     public BaseResult<Long> validate(Long id) {
         RoleDO roleDO = roleMapper.selectById(id);
         if (roleDO == null){
-            return ResultUtil.fail(RoleErrorEnum.ROLE_NOT_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.ROLE_NOT_EXIST);
         }
         return ResultUtil.success();
     }

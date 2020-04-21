@@ -3,6 +3,7 @@ package com.dmall.bms.api.dto.deliverwarehouse;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,27 +16,27 @@ import java.io.Serializable;
 @ApiModel(value = "SaveDeliverWarehouseRequestDTO", description = "新增商家发货仓库请求实体")
 public class SaveDeliverWarehouseRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "商家店铺id", position = 1)
+    @ApiModelProperty(value = "商家店铺id", required = true, position = 1)
     @NotNull(message = "商家店铺id不能为空")
     private Long merchantsId;
 
-    @ApiModelProperty(value = "仓库名称", position = 2)
+    @ApiModelProperty(value = "仓库名称", required = true, position = 2)
     @NotBlank(message = "仓库名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "仓库所在省/直辖市", position = 3)
+    @ApiModelProperty(value = "仓库所在省/直辖市", required = true, position = 3)
     @NotBlank(message = "仓库所在省/直辖市不能为空")
     private String province;
 
-    @ApiModelProperty(value = "仓库所在市", position = 4)
+    @ApiModelProperty(value = "仓库所在市", required = true, position = 4)
     @NotBlank(message = "仓库所在市不能为空")
     private String city;
 
-    @ApiModelProperty(value = "仓库所在区", position = 5)
+    @ApiModelProperty(value = "仓库所在区", required = true, position = 5)
     @NotBlank(message = "仓库所在区不能为空")
     private String region;
 
-    @ApiModelProperty(value = "仓库详细地址", position = 6)
+    @ApiModelProperty(value = "仓库详细地址", required = true, position = 6)
     @NotBlank(message = "仓库详细地址不能为空")
     private String detailAddress;
 

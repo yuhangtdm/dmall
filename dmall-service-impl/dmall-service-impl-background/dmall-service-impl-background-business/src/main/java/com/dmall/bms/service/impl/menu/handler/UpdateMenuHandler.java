@@ -1,7 +1,7 @@
 package com.dmall.bms.service.impl.menu.handler;
 
 import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
-import com.dmall.bms.api.enums.MenuErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.generator.mapper.MenuMapper;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -24,7 +24,7 @@ public class UpdateMenuHandler extends AbstractCommonHandler<UpdateMenuRequestDT
     public BaseResult<Long> validate(UpdateMenuRequestDTO requestDTO) {
         MenuDO menuDO = menuMapper.selectById(requestDTO.getId());
         if (menuDO == null){
-            return ResultUtil.fail(MenuErrorEnum.MENU_NOT_EXIST);
+            return ResultUtil.fail(BackGroundErrorEnum.MENU_NOT_EXIST);
         }
         return ResultUtil.success();
     }

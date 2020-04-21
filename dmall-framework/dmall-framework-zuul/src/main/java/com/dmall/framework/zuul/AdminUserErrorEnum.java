@@ -12,18 +12,25 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AdminUserErrorEnum implements ErrorCodeEnum {
 
-    TOKEN_BLANK("zuul_001", "token不能为空"),
-    SOURCE_BLANK("zuul_002", "source不能为空"),
+    /**
+     * token不能为空
+     */
+    TOKEN_NOT_BLANK("60000", "token不能为空"),
+
+    /**
+     * source不能为空
+     */
+    SOURCE_NOT_BLANK("60001", "source不能为空"),
     ;
 
     /**
      * 错误码
      */
-    private String code;
+    private final String code;
 
     /**
      * 错误描述
      */
-    private String msg;
+    private final String msg;
 
 }

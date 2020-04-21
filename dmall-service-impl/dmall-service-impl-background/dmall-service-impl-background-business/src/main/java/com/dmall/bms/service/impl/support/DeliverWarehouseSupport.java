@@ -1,13 +1,11 @@
 package com.dmall.bms.service.impl.support;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.bms.api.enums.DeliverWarehouseErrorEnum;
+import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.DeliverWarehouseDO;
 import com.dmall.bms.generator.mapper.DeliverWarehouseMapper;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.exception.BusinessException;
-import com.dmall.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,34 +19,34 @@ public class DeliverWarehouseSupport {
     @Autowired
     private DeliverWarehouseMapper deliverWarehouseMapper;
 
-    public void validateWarehouse(Long id){
+    /**
+     * 校验仓库地址必须存在
+     */
+    public DeliverWarehouseDO validateWarehouse(Long id) {
         DeliverWarehouseDO deliverWarehouseDO = deliverWarehouseMapper.selectById(id);
         if (deliverWarehouseDO == null) {
-            throw new BusinessException(DeliverWarehouseErrorEnum.DELIVER_WAREHOUSE_NOT_EXIST);
+            throw new BusinessException(BackGroundErrorEnum.DELIVER_WAREHOUSE_NOT_EXIST);
         }
+        return deliverWarehouseDO;
     }
 
-    public void updateAddress(DeliverWarehouseDO deliverWarehouseDO, String deliverAddress,
-                              String receiveAddress) {
-        if (StrUtil.isBlank(deliverAddress)) {
-            deliverWarehouseDO.setDeliveryStatus(YNEnum.N.getCode());
-        }
-        if (StrUtil.isBlank(receiveAddress)) {
-            deliverWarehouseDO.setReceiveStatus(YNEnum.N.getCode());
-        }
+    /**
+     * 修改该店铺之前添加的默认地址
+     */
+    public void updateAddress(Long merchantsId, String deliverAddress, String receiveAddress) {
+        // 如果 默认发货地址,将该店铺之前添加的默认发货地址改为否
         if (YNEnum.Y.getCode().equals(deliverAddress)) {
-            DeliverWarehouseDO updateDO = new DeliverWarehouseDO();
-            updateDO.setDeliveryStatus(YNEnum.N.getCode());
-            deliverWarehouseMapper.update(updateDO, Wrappers.lambdaUpdate(new DeliverWarehouseDO()
-                    .setMerchantsId(deliverWarehouseDO.getMerchantsId())
-                    .setDeliveryStatus(YNEnum.Y.getCode())));
+            deliverWarehouseMapper.update(null, Wrappers.<DeliverWarehouseDO>lambdaUpdate()
+                    .set(DeliverWarehouseDO::getDeliveryStatus, YNEnum.N.getCode())
+                    .eq(DeliverWarehouseDO::getMerchantsId, merchantsId)
+                    .eq(DeliverWarehouseDO::getDeliveryStatus, YNEnum.Y.getCode()));
         }
-        if (YNEnum.N.getCode().equals(receiveAddress)) {
-            DeliverWarehouseDO updateDO = new DeliverWarehouseDO();
-            updateDO.setReceiveStatus(YNEnum.N.getCode());
-            deliverWarehouseMapper.update(updateDO, Wrappers.lambdaUpdate(new DeliverWarehouseDO()
-                    .setMerchantsId(deliverWarehouseDO.getMerchantsId())
-                    .setReceiveStatus(YNEnum.Y.getCode())));
+        // 如果 默认收货地址,将该店铺之前添加的默认收货地址改为否
+        if (YNEnum.Y.getCode().equals(receiveAddress)) {
+            deliverWarehouseMapper.update(null, Wrappers.<DeliverWarehouseDO>lambdaUpdate()
+                    .set(DeliverWarehouseDO::getReceiveStatus, YNEnum.N.getCode())
+                    .eq(DeliverWarehouseDO::getMerchantsId, merchantsId)
+                    .eq(DeliverWarehouseDO::getReceiveStatus, YNEnum.Y.getCode()));
         }
     }
 

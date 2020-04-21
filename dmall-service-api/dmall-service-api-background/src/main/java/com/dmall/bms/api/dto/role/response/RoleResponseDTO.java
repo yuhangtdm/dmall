@@ -1,32 +1,30 @@
-package com.dmall.bms.api.dto.service.common;
+package com.dmall.bms.api.dto.role.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
+
 import java.io.Serializable;
-import java.util.*;
-import java.math.*;
+import java.util.Date;
 
 /**
- * @description: 服务表 公共响应实体
- * @author: created by hang.yu on 2020-02-20 21:36:44
+ * @description: 后台角色公共响应实体
+ * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Data
-@Accessors(chain = true)
-@ApiModel(value = "CommonServiceResponseDTO", description = "服务表 公共响应实体")
-public class CommonServiceResponseDTO implements Serializable {
+@ApiModel(value = "RoleResponseDTO", description = "后台角色分页响应实体")
+public class RoleResponseDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
     private Long id;
 
-    @ApiModelProperty(value = "app_id", position = 2)
-    private String appId;
-
-    @ApiModelProperty(value = "名称", position = 3)
+    @ApiModelProperty(value = "角色名称", position = 2)
     private String name;
+
+    @ApiModelProperty(value = "备注", position = 3)
+    private String remark;
 
     @ApiModelProperty(value = "创建人", position = 4)
     private Long creator;
@@ -42,6 +40,5 @@ public class CommonServiceResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 8)
     private String isDeleted;
-
 
 }

@@ -3,19 +3,16 @@ package com.dmall.bms.api.dto.deliverwarehouse;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @description: 商家发货仓库公共响应实体
  * @author: created by hang.yu on 2020-04-05 16:03:43
  */
 @Data
-@Accessors(chain = true)
-@ApiModel(value = "CommonDeliverWarehouseResponseDTO", description = "商家发货仓库公共响应实体")
-public class CommonDeliverWarehouseResponseDTO implements Serializable {
+@ApiModel(value = "DeliverWarehouseResponseDTO", description = "商家发货仓库公共响应实体")
+public class DeliverWarehouseResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +48,5 @@ public class CommonDeliverWarehouseResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "默认收货地址 Y-是,N-否", position = 11)
     private String receiveAddress;
-
 
 }

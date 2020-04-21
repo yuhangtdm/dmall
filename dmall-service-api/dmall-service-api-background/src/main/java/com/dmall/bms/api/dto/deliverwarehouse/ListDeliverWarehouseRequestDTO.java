@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value = "ListDeliverWarehouseRequestDTO", description = "商家发货仓库列表请求实体")
 public class ListDeliverWarehouseRequestDTO {
 
-    @ApiModelProperty(value = "商家店铺id", position = 1)
+    @ApiModelProperty(value = "商家店铺id", required = true, position = 1)
     @NotNull(message = "商家店铺id不能为空")
     private Long merchantsId;
 

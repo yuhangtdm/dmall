@@ -1,4 +1,4 @@
-package com.dmall.bms.api.dto.permission.enums;
+package com.dmall.bms.api.enums;
 
 import com.dmall.common.enums.base.CodeEnum;
 import lombok.AllArgsConstructor;
@@ -12,19 +12,26 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum HttpMethodEnum implements CodeEnum<String> {
 
+    /**
+     * GET
+     */
     GET("GET"),
+
+    /**
+     * POST
+     */
     POST("POST"),
+
+    /**
+     * PUT
+     */
     PUT("PUT"),
-    DELETE("DELETE")
 
-    ;
+    /**
+     * DELETE
+     */
+    DELETE("DELETE");
 
-    private String code;
-
-
-    @Override
-    public String getCode() {
-        return code;
-    }
+    private final String code;
 
 }
