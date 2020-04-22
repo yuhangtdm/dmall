@@ -5,7 +5,7 @@ import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 
 /**
  * <p>
- * 属性分类表 Mapper 接口
+ * 属性类别表 Mapper 接口
  * </p>
  *
  * @author hang.yu

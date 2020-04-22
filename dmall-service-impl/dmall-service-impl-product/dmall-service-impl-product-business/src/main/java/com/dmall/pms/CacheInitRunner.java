@@ -14,7 +14,6 @@ import java.util.Map;
  * @author: created by hang.yu on 2019/12/29 19:17
  */
 @Slf4j
-// todo 上线时 才打开
 //@Component
 public class CacheInitRunner implements CommandLineRunner {
 

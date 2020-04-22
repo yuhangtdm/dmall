@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.product.response.attributevalue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/10 22:08
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "ProductExtResponseDTO", description = "商品响应扩展信息")
 public class ProductExtResponseDTO implements Serializable {
 

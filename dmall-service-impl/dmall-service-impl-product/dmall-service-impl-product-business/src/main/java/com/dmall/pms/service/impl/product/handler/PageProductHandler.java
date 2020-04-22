@@ -9,7 +9,7 @@ import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
-import com.dmall.pms.service.impl.product.common.ProductValidate;
+import com.dmall.pms.service.impl.validate.ProductValidate;
 import com.dmall.pms.service.impl.product.mapper.ProductPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

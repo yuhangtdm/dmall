@@ -35,7 +35,7 @@ public class CategoryBrandSupport {
     }
 
     /**
-     * 根据分类id删除
+     * 根据商品分类id删除
      */
     public void deleteByCategoryId(Long categoryId) {
         categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, categoryId));

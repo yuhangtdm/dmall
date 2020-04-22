@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.enums.AttributeErrorEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.ProductAttributeValueDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
@@ -36,12 +36,12 @@ public class DeleteAttributeHandler extends AbstractCommonHandler<Long, Attribut
         // 属性必须存在
         AttributeDO attributeDO = attributeCacheService.selectById(id);
         if (attributeDO == null) {
-            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NOT_EXIST);
         }
         // 属性下有商品 则不能删除
         List<ProductAttributeValueDO> productAttributeValueDOS = productAttributeValueSupport.listByAttributeId(id);
         if (CollUtil.isNotEmpty(productAttributeValueDOS)) {
-            return ResultUtil.fail(AttributeErrorEnum.CONTAINS_PRODUCT);
+            return ResultUtil.fail(PmsErrorEnum.CONTAINS_PRODUCT);
         }
         return ResultUtil.success();
     }

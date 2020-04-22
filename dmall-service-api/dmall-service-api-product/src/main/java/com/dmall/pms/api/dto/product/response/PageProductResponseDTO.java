@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.product.response;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,7 +13,6 @@ import java.util.Date;
  * @author: created by hang.yu on 2019-12-02 23:18:01
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "PageProductResponseDTO", description = "商品分页响应实体")
 public class PageProductResponseDTO implements Serializable {
 

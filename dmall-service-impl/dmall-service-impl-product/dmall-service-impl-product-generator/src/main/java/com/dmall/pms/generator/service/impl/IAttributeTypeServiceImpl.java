@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 属性分类表 服务实现类
+ * 属性类别表 服务实现类
  * </p>
  *
  * @author hang.yu

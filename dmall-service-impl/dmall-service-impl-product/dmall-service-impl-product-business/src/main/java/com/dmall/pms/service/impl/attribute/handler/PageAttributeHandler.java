@@ -11,13 +11,13 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
-import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.pms.api.enums.TypeEnum;
 import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.response.PageAttributeResponseDTO;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
-import com.dmall.pms.api.enums.AttributeErrorEnum;
+import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
+import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-16 15:14:49
  */
 @Component
-public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeRequestDTO, AttributeDO, PageAttributeResponseDTO> {
+public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeRequestDTO, AttributeDO, AttributeResponseDTO> {
 
     @Autowired
     private AttributePageMapper attributePageMapper;
@@ -46,22 +46,22 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
     private CategoryCacheService categoryCacheService;
 
     @Override
-    public BaseResult<ResponsePage<PageAttributeResponseDTO>> validate(PageAttributeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<AttributeResponseDTO>> validate(PageAttributeRequestDTO requestDTO) {
         // 分类必须存在 且必须是一级分类
         if (requestDTO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             if (categoryDO == null) {
-                return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_EXIST);
+                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
             }
-            if (LevelEnum.TWO.getCode().equals(categoryDO.getLevel())) {
-                return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_INVALID);
+            if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
+                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
             }
         }
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<ResponsePage<PageAttributeResponseDTO>> processor(PageAttributeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<AttributeResponseDTO>> processor(PageAttributeRequestDTO requestDTO) {
         if (requestDTO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             // 一级分类
@@ -74,23 +74,23 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
                         .eq(ObjectUtil.isNotEmpty(requestDTO.getHandAddStatus()), AttributeDO::getHandAddStatus, requestDTO.getHandAddStatus());
                 IPage<AttributeDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
                 page = attributeMapper.selectPage(page, wrapper);
-                List<PageAttributeResponseDTO> collect = page.getRecords().stream()
-                        .map(category -> doConvertDto(category, PageAttributeResponseDTO.class))
+                List<AttributeResponseDTO> collect = page.getRecords().stream()
+                        .map(category -> doConvertDto(category, AttributeResponseDTO.class))
                         .collect(Collectors.toList());
                 return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
             }
         }
         // 三级分类需要连表查询
-        Page<PageAttributeResponseDTO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
-        List<PageAttributeResponseDTO> collect = attributePageMapper.pageAttribute(page, requestDTO).stream()
-                .map(category -> doConvertDto(category, PageAttributeResponseDTO.class))
+        Page<AttributeResponseDTO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
+        List<AttributeResponseDTO> collect = attributePageMapper.pageAttribute(page, requestDTO).stream()
+                .map(category -> doConvertDto(category, AttributeResponseDTO.class))
                 .collect(Collectors.toList());
         page.setRecords(collect);
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), page.getRecords()));
     }
 
     @Override
-    protected void customerConvertDto(PageAttributeResponseDTO result, AttributeDO doo) {
+    protected void customerConvertDto(AttributeResponseDTO result, AttributeDO doo) {
         result.setInputType(EnumUtil.getCodeDescEnum(InputTypeEnum.class, doo.getInputType()));
         result.setType(EnumUtil.getCodeDescEnum(TypeEnum.class, doo.getType()));
         result.setHandAddStatus(EnumUtil.getCodeDescEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));

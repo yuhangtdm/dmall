@@ -1,22 +1,29 @@
-package com.dmall.pms.api.dto.sku.enums;
+package com.dmall.pms.api.enums;
 
 import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description:
+ * @description: 媒体类型枚举
  * @author: created by hang.yu on 2019/12/17 12:35
  */
 @Getter
 @AllArgsConstructor
 public enum MediaTypeEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 图片
+     */
     PIC(1, "图片"),
+
+    /**
+     * 视频
+     */
     VIDEO(2, "视频"),
     ;
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

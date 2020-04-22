@@ -1,13 +1,13 @@
 package com.dmall.pms.service.impl.category.handler;
 
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.api.enums.CategoryErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class UpdateCategoryHandler extends AbstractCommonHandler<UpdateCategoryR
         // 分类不存在
         CategoryDO categoryDO = categoryMapper.selectById(requestDTO.getId());
         if (categoryDO == null) {
-            return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
         }
         return ResultUtil.success();
     }

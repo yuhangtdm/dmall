@@ -26,7 +26,6 @@ public interface CommentService {
     @ApiOperation(value = "新增商品评价")
     BaseResult<Long> save(@Valid @RequestBody List<SaveCommentRequestDTO> requestDTO);
 
-
     @PostMapping("/list/{subOrderId}")
     @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")
     @ApiOperation(value = "商品评价列表")

@@ -5,7 +5,7 @@ import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 
 /**
  * <p>
- * 属性分类表 服务类
+ * 属性类别表 服务类
  * </p>
  *
  * @author hang.yu

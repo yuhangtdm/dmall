@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.util.Date;
 
@@ -14,7 +13,6 @@ import java.util.Date;
  * @author: created by hang.yu on 2019-12-02 23:18:01
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "PageProductRequestDTO", description = "商品分页请求实体")
 public class PageProductRequestDTO extends PageRequestDTO {

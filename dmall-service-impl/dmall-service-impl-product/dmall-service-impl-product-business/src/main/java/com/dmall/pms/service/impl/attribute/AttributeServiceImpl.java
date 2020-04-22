@@ -2,12 +2,11 @@ package com.dmall.pms.service.impl.attribute;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.response.PageAttributeResponseDTO;
+import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
 import com.dmall.pms.api.service.AttributeService;
 import com.dmall.pms.service.impl.attribute.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,17 +59,17 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public BaseResult<CommonAttributeResponseDTO> get(Long id) {
+    public BaseResult<AttributeResponseDTO> get(Long id) {
         return getAttributeHandler.handler(id);
     }
 
     @Override
-    public BaseResult<List<CommonAttributeResponseDTO>> list(@RequestBody ListAttributeRequestDTO requestDTO) {
+    public BaseResult<List<AttributeResponseDTO>> list(@RequestBody ListAttributeRequestDTO requestDTO) {
         return listAttributeHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<ResponsePage<PageAttributeResponseDTO>> page(PageAttributeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<AttributeResponseDTO>> page(PageAttributeRequestDTO requestDTO) {
         return pageAttributeHandler.handler(requestDTO);
     }
 

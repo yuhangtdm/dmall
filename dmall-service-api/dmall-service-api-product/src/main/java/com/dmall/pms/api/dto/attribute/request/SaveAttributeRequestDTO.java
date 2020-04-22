@@ -1,13 +1,12 @@
 package com.dmall.pms.api.dto.attribute.request;
 
 import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
-import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,12 +14,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @description: 新增属性请求实体
+ * @description: 新增商品属性请求实体
  * @author: created by hang.yu on 2019-12-02 23:17:59
  */
 @Data
-@Accessors(chain = true)
-@ApiModel(value = "SaveAttributeRequestDTO", description = "新增属性请求实体")
+@ApiModel(value = "SaveAttributeRequestDTO", description = "新增商品属性请求实体")
 public class SaveAttributeRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1744049394685408430L;

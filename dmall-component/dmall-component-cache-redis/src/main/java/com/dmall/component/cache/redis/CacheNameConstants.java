@@ -17,7 +17,7 @@ public interface CacheNameConstants {
     String CATEGORY = "category";
 
     /**
-     * 属性分类
+     * 属性类别
      */
     String ATTRIBUTE_TYPE = "attributeType";
 

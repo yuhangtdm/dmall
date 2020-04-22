@@ -3,18 +3,19 @@ package com.dmall.pms.api.dto.sku.request.save;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 新增sku扩展实体
  * @author: created by hang.yu on 2019/12/16 17:41
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SaveSkuExtRequestDTO", description = "新增sku扩展实体")
-public class SaveSkuExtRequestDTO {
+public class SaveSkuExtRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = -2420463980116701606L;
 
     @ApiModelProperty(value = "商品id", required = true, position = 1)
     @NotNull(message = "商品id不能为空")

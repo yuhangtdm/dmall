@@ -9,8 +9,8 @@ import com.dmall.common.enums.YNEnum;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
+import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Component
-public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryRequestDTO, CategoryDO, CommonCategoryResponseDTO> {
+public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryRequestDTO, CategoryDO, CategoryResponseDTO> {
 
     @Autowired
     private CategoryMapper categoryMapper;
@@ -36,7 +36,7 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
     private CategoryCacheService categoryCacheService;
 
     @Override
-    public BaseResult<List<CommonCategoryResponseDTO>> processor(ListCategoryRequestDTO requestDTO) {
+    public BaseResult<List<CategoryResponseDTO>> processor(ListCategoryRequestDTO requestDTO) {
         List<CategoryDO> categoryDOList;
         if (com.dmall.common.util.ObjectUtil.allEmpty(requestDTO.getName(), requestDTO.getParentId(), requestDTO.getLevel())) {
             categoryDOList = categoryCacheService.selectAll();
@@ -48,15 +48,15 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
                     .orderByAsc(CategoryDO::getSort);
             categoryDOList = categoryMapper.selectList(queryWrapper);
         }
-        List<CommonCategoryResponseDTO> list = categoryDOList.stream()
+        List<CategoryResponseDTO> list = categoryDOList.stream()
                 .filter(Objects::nonNull)
-                .map(doo -> doConvertDto(doo, CommonCategoryResponseDTO.class))
+                .map(doo -> doConvertDto(doo, CategoryResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(list);
     }
 
     @Override
-    protected void customerConvertDto(CommonCategoryResponseDTO result, CategoryDO doo) {
+    protected void customerConvertDto(CategoryResponseDTO result, CategoryDO doo) {
         result.setHotStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getHotStatus()));
         result.setLevel(EnumUtil.getCodeDescEnum(LevelEnum.class, doo.getLevel()));
         result.setNavStatus(EnumUtil.getCodeDescEnum(YNEnum.class, doo.getNavStatus()));

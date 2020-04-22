@@ -1,11 +1,10 @@
 package com.dmall.pms.api.dto.product.request.update;
 
-import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.ProductAttributeRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,7 +15,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2019-12-02 23:18:01
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "UpdateProductRequestDTO", description = "修改商品请求实体")
 public class UpdateProductRequestDTO implements Serializable {
 

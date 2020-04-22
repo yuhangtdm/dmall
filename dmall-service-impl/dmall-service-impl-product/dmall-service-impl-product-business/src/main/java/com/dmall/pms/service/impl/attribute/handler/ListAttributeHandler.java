@@ -3,18 +3,18 @@ package com.dmall.pms.service.impl.attribute.handler;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.util.EnumUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
-import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
-import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
-import com.dmall.pms.api.enums.AttributeErrorEnum;
+import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
+import com.dmall.pms.api.enums.LevelEnum;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.pms.api.enums.TypeEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeRequestDTO, AttributeDO, CommonAttributeResponseDTO> {
+public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeRequestDTO, AttributeDO, AttributeResponseDTO> {
 
     @Autowired
     private AttributeMapper attributeMapper;
@@ -49,17 +49,17 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
         if (requestDTO.getCategoryId() != null) {
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
             if (categoryDO == null) {
-                return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_EXIST);
+                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
             }
             if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
-                return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_INVALID);
+                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
             }
         }
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<List<CommonAttributeResponseDTO>> processor(ListAttributeRequestDTO requestDTO) {
+    public BaseResult<List<AttributeResponseDTO>> processor(ListAttributeRequestDTO requestDTO) {
         List<AttributeDO> attributeDOS;
         if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getShowName(), requestDTO.getType(),
                 requestDTO.getHandAddStatus(), requestDTO.getInputType())) {
@@ -78,15 +78,15 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getHandAddStatus()), AttributeDO::getHandAddStatus, requestDTO.getHandAddStatus());
             attributeDOS = attributeMapper.selectList(wrapper);
         }
-        List<CommonAttributeResponseDTO> collect = attributeDOS.stream()
+        List<AttributeResponseDTO> collect = attributeDOS.stream()
                 .filter(Objects::nonNull)
-                .map(attributeDO -> doConvertDto(attributeDO, CommonAttributeResponseDTO.class))
+                .map(attributeDO -> doConvertDto(attributeDO, AttributeResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }
 
     @Override
-    protected void customerConvertDto(CommonAttributeResponseDTO result, AttributeDO doo) {
+    protected void customerConvertDto(AttributeResponseDTO result, AttributeDO doo) {
         result.setInputType(EnumUtil.getCodeDescEnum(InputTypeEnum.class, doo.getInputType()));
         result.setHandAddStatus(EnumUtil.getCodeDescEnum(HandAddStatusEnum.class, doo.getHandAddStatus()));
         result.setType(EnumUtil.getCodeDescEnum(TypeEnum.class, doo.getType()));

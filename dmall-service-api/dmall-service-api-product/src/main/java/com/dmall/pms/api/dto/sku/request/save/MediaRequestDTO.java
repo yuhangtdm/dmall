@@ -1,7 +1,7 @@
 package com.dmall.pms.api.dto.sku.request.save;
 
 import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.pms.api.dto.sku.enums.MediaTypeEnum;
+import com.dmall.pms.api.enums.MediaTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
  * @author: created by hang.yu on 2019/12/17 14:28
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "MediaRequestDTO", description = "媒体请求实体")
 public class MediaRequestDTO {
 

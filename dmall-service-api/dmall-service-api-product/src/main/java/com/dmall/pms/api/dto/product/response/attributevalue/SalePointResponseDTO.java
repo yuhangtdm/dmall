@@ -13,7 +13,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/26 22:29
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SalePointResponseDTO", description = "卖点响应实体")
 public class SalePointResponseDTO implements Serializable {
 

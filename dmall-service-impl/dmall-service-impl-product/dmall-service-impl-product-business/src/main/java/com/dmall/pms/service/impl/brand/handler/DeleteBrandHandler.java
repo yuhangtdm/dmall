@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.dataobject.ProductDO;
@@ -12,7 +13,6 @@ import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.generator.mapper.CategoryBrandMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
-import com.dmall.pms.api.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,12 +42,12 @@ public class DeleteBrandHandler extends AbstractCommonHandler<Long, BrandDO, Lon
         // 品牌必须存在
         BrandDO brandDO = brandMapper.selectById(id);
         if (brandDO == null) {
-            return ResultUtil.fail(BrandErrorEnum.BRAND_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.BRAND_NOT_EXIST);
         }
         // 如果品牌下有商品 则不能删除
         List<ProductDO> productDOS = productMapper.selectList(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getBrandId, id));
         if (CollUtil.isNotEmpty(productDOS)) {
-            return ResultUtil.fail(BrandErrorEnum.CONTAINS_PRODUCT_ERROR);
+            return ResultUtil.fail(PmsErrorEnum.CONTAINS_PRODUCT_ERROR);
         }
         return ResultUtil.success();
     }

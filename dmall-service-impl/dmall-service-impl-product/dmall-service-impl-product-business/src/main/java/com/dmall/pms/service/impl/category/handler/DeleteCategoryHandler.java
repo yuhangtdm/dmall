@@ -4,13 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.api.enums.LevelEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.dataobject.CategoryProductDO;
 import com.dmall.pms.generator.dataobject.CategorySkuDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.dmall.pms.service.impl.support.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -53,24 +53,24 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
         // 分类不存在
         CategoryDO categoryDO = categoryMapper.selectById(id);
         if (categoryDO == null) {
-            return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
         }
         // 删除1、2级分类必须没有子分类
         if (!categoryDO.getLevel().equals(LevelEnum.THREE.getCode())) {
             List<CategoryDO> categoryDOList = categorySupport.listByParentId(id);
             if (CollUtil.isNotEmpty(categoryDOList)) {
-                return ResultUtil.fail(CategoryErrorEnum.CONTAINS_SUB_CATEGORY_ERROR);
+                return ResultUtil.fail(PmsErrorEnum.CONTAINS_SUB_CATEGORY_ERROR);
             }
         }
         // 如果分类下有商品,则不可删除
         List<CategoryProductDO> categoryProductList = categoryProductSupport.listByCategoryId(id);
         if (CollUtil.isNotEmpty(categoryProductList)) {
-            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_PRODUCT_ERROR);
+            return ResultUtil.fail(PmsErrorEnum.CONTAINS_PRODUCT_ERROR);
         }
         // 如果分类下有sku 则不可删除
         List<CategorySkuDO> productDOS = categorySkuSupport.listByCategoryId(id);
         if (CollUtil.isNotEmpty(productDOS)) {
-            return ResultUtil.fail(CategoryErrorEnum.CONTAINS_SKU_ERROR);
+            return ResultUtil.fail(PmsErrorEnum.CONTAINS_SKU_ERROR);
         }
         return ResultUtil.success();
     }

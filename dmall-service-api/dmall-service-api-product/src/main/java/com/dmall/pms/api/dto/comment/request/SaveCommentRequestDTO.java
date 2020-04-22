@@ -18,23 +18,23 @@ public class SaveCommentRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -7927056087634841761L;
 
-    @ApiModelProperty(value = "skuId", position = 1)
+    @ApiModelProperty(value = "skuId", required = true, position = 1)
     @NotNull(message = "skuId不能为空")
     private Long skuId;
 
-    @ApiModelProperty(value = "订单号", position = 2)
+    @ApiModelProperty(value = "订单号", required = true, position = 2)
     @NotNull(message = "订单号不能为空")
     private Long orderId;
 
-    @ApiModelProperty(value = "子订单号", position = 3)
+    @ApiModelProperty(value = "子订单号", required = true, position = 3)
     @NotNull(message = "子订单号不能为空")
     private Long subOrderId;
 
-    @ApiModelProperty(value = "评价内容", position = 4)
+    @ApiModelProperty(value = "评价内容", required = true, position = 4)
     @NotBlank(message = "评价内容不能为空")
     private String content;
 
-    @ApiModelProperty(value = "评分 1-5", position = 5)
+    @ApiModelProperty(value = "评分 1-5", required = true, position = 5)
     @NotNull(message = "评分不能为空")
     private Integer star;
 

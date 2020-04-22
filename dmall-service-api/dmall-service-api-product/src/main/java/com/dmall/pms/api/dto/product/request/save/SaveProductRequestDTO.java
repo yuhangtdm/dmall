@@ -1,12 +1,11 @@
 package com.dmall.pms.api.dto.product.request.save;
 
-import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -18,7 +17,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019-12-02 23:18:01
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SaveProductRequestDTO", description = "新增商品请求实体")
 public class SaveProductRequestDTO implements Serializable {
 

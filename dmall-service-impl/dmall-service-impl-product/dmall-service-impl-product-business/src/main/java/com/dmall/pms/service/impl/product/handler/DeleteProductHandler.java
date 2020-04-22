@@ -1,11 +1,11 @@
 package com.dmall.pms.service.impl.product.handler;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.api.enums.ProductErrorEnum;
 import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
         // 校验商品是否已删除
         ProductDO productDO = productMapper.selectById(id);
         if (productDO == null) {
-            return ResultUtil.fail(ProductErrorEnum.PRODUCT_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NOT_EXISTS);
         }
         return ResultUtil.success();
     }

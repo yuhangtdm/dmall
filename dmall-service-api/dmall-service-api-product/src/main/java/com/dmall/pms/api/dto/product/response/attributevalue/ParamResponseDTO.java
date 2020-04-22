@@ -14,14 +14,13 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/26 22:40
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "ParamResponseDTO", description = "参数响应实体")
 public class ParamResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -4423360556545433218L;
 
-    @ApiModelProperty(value = "属性分类id", position = 2)
-    @NotNull(message = "属性分类id不能为空")
+    @ApiModelProperty(value = "属性类别id", position = 2)
+    @NotNull(message = "属性类别id不能为空")
     private Long attributeTypeId;
 
     @ApiModelProperty(value = "属性值列表", position = 2)

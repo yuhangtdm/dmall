@@ -26,17 +26,19 @@ public class CategorySkuSupport {
         return categorySkuMapper.selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getSkuId, skuId));
     }
 
+    /**
+     * 根据skuId查询商品分类id列表
+     */
     public List<Long> getCategoryIds(Long skuId) {
         return listBySkuId(skuId).stream().map(CategorySkuDO::getCategoryId).collect(Collectors.toList());
     }
 
     /**
-     * 根据分类id查询列表
+     * 根据商品分类id查询列表
      */
     public List<CategorySkuDO> listByCategoryId(Long categoryId) {
         return categorySkuMapper.selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getCategoryId, categoryId));
     }
-
 
     /**
      * 根据skuId删除

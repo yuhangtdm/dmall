@@ -6,12 +6,12 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
-import com.dmall.pms.api.enums.AttributeErrorEnum;
+import com.dmall.pms.api.enums.LevelEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
-import com.dmall.pms.service.impl.attribute.validate.AttributeValidate;
+import com.dmall.pms.service.impl.validate.AttributeValidate;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,12 +34,11 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
         // 分类id必须存在
         CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
         if (categoryDO == null) {
-            return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
         }
-
         // 必须为1级分类
         if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
-            return ResultUtil.fail(AttributeErrorEnum.CATEGORY_NOT_INVALID);
+            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
         }
         return AttributeValidate.validate(requestDTO.getInputType(), requestDTO.getInputList(), requestDTO.getHandAddStatus());
     }

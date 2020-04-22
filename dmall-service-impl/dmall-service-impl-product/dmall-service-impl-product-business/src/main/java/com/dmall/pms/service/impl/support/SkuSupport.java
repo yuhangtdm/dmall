@@ -1,6 +1,7 @@
 package com.dmall.pms.service.impl.support;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
@@ -10,8 +11,8 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.SkuSpecificationsRequestDTO;
 import com.dmall.pms.api.dto.product.response.get.SkuListResponseDTO;
-import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
-import com.dmall.pms.api.enums.SkuErrorEnum;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.CategorySkuMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
@@ -62,8 +63,7 @@ public class SkuSupport {
      * 根据商品id查询列表
      */
     public List<SkuDO> selectByProductId(Long productId) {
-        return skuMapper.selectList(Wrappers.<SkuDO>lambdaQuery()
-                .eq(SkuDO::getProductId, productId));
+        return skuMapper.selectList(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productId));
     }
 
     /**
@@ -95,7 +95,8 @@ public class SkuSupport {
             // skuAttributeValueDO
             for (SkuSpecificationsRequestDTO skuSpecification : addSkuRequestDTO.getSkuSpecifications()) {
                 ProductAttributeValueDO productAttributeValueDO = productAttributeValueSupport
-                        .getByProductIdAndAttributeValue(productId, skuSpecification.getAttributeId(), skuSpecification.getAttributeValue());
+                        .getByProductIdAndAttributeValue(productId, skuSpecification.getAttributeId(),
+                                skuSpecification.getAttributeValue());
                 if (productAttributeValueDO != null) {
                     SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
                     skuAttributeValueDO.setProductId(productId);
@@ -104,7 +105,6 @@ public class SkuSupport {
                     skuAttributeValueMapper.insert(skuAttributeValueDO);
                 }
             }
-
         }
     }
 
@@ -122,7 +122,7 @@ public class SkuSupport {
                     if (skuExtDO != null) {
                         String skuSpecificationsJson = skuExtDO.getSkuSpecificationsJson();
                         JSONObject skuSpecifications = JSONObject.parseObject(skuSpecificationsJson);
-                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), ","));
+                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), StrUtil.COMMA));
                     }
                     return skuListResponseDTO;
                 }).collect(Collectors.toList());
@@ -135,11 +135,11 @@ public class SkuSupport {
         // 商品必须存在
         ProductDO productDO = productMapper.selectById(productId);
         if (productDO == null) {
-            return ResultUtil.fail(SkuErrorEnum.PRODUCT_NOT_EXISTS);
+            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NOT_EXISTS);
         }
         SkuDO skuDO = skuMapper.selectById(skuId);
         if (skuDO == null) {
-            return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
         }
         return ResultUtil.success();
     }
@@ -158,7 +158,6 @@ public class SkuSupport {
      * 根据productId删除sku
      */
     public void deleteByProductId(Long productId) {
-        skuMapper.delete(Wrappers.<SkuDO>lambdaQuery()
-                .eq(SkuDO::getProductId, productId));
+        skuMapper.delete(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productId));
     }
 }

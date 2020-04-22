@@ -1,13 +1,12 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuExtRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuExtDO;
-import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
+import com.dmall.pms.service.impl.support.SkuExtSupport;
 import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,13 +19,13 @@ import org.springframework.stereotype.Component;
 public class SaveSkuExtHandler extends AbstractCommonHandler<SaveSkuExtRequestDTO, SkuExtDO, Long> {
 
     @Autowired
-    private ProductMapper productMapper;
-
-    @Autowired
     private SkuSupport skuSupport;
 
     @Autowired
     private SkuExtMapper skuExtMapper;
+
+    @Autowired
+    private SkuExtSupport skuExtSupport;
 
     @Override
     public BaseResult validate(SaveSkuExtRequestDTO requestDTO) {
@@ -35,7 +34,7 @@ public class SaveSkuExtHandler extends AbstractCommonHandler<SaveSkuExtRequestDT
 
     @Override
     public BaseResult processor(SaveSkuExtRequestDTO requestDTO) {
-        SkuExtDO skuExtDO = skuExtMapper.selectOne(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getSkuId, requestDTO.getSkuId()));
+        SkuExtDO skuExtDO = skuExtSupport.getBySkuId(requestDTO.getSkuId());
         if (skuExtDO == null) {
             skuExtDO = dtoConvertDo(requestDTO, SkuExtDO.class);
             skuExtMapper.insert(skuExtDO);

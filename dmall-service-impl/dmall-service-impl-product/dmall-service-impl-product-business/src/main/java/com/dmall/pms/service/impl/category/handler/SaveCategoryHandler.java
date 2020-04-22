@@ -1,15 +1,15 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.util.StrUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.api.enums.CategoryErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,16 +32,16 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
             CategoryDO parentCategoryDO = categoryMapper.selectById(requestDTO.getParentId());
             // 上级id是否存在
             if (parentCategoryDO == null) {
-                return ResultUtil.fail(CategoryErrorEnum.PARENT_CATEGORY_NOT_EXIST);
+                return ResultUtil.fail(PmsErrorEnum.PARENT_CATEGORY_NOT_EXIST);
             }
-            // 自己的分类级别要小于上级的
+            // 分类级别要小于上级
             if (requestDTO.getLevel() <= parentCategoryDO.getLevel()) {
-                return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
+                return ResultUtil.fail(PmsErrorEnum.PARENT_LEVEL_ERROR);
             }
         }
         // 当ParentId=0时 level必须为1
         if (requestDTO.getParentId() == 0 && !LevelEnum.ONE.getCode().equals(requestDTO.getLevel())) {
-            return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
+            return ResultUtil.fail(PmsErrorEnum.PARENT_LEVEL_ERROR);
         }
         return ResultUtil.success();
     }
@@ -60,17 +60,12 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
     private CategoryDO setPath(CategoryDO result) {
         CategoryDO categoryDO = new CategoryDO();
         StringBuilder path = new StringBuilder();
-        switch (result.getLevel()) {
-            case 1: {
-                path.append(StrUtil.DOT).append(result.getId()).append(StrUtil.DOT);
-                break;
-            }
+        if (result.getLevel() == 1) {
+            path.append(StrUtil.DOT).append(result.getId()).append(StrUtil.DOT);
             // 2,3级别一致
-            default: {
-                CategoryDO parentCategoryDO = categoryMapper.selectById(result.getParentId());
-                path.append(parentCategoryDO.getPath()).append(result.getId()).append(StrUtil.DOT);
-                break;
-            }
+        } else {
+            CategoryDO parentCategoryDO = categoryMapper.selectById(result.getParentId());
+            path.append(parentCategoryDO.getPath()).append(result.getId()).append(StrUtil.DOT);
         }
         categoryDO.setPath(path.toString());
         categoryDO.setId(result.getId());

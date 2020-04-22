@@ -8,7 +8,7 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.response.PageAttributeTypeResponseDTO;
+import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @description: 属性分类分页处理器
+ * @description: 属性类别分页处理器
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttributeTypeRequestDTO, AttributeTypeDO, PageAttributeTypeResponseDTO> {
+public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttributeTypeRequestDTO, AttributeTypeDO, AttributeTypeResponseDTO> {
 
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
@@ -33,19 +33,19 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     private CategorySupport categorySupport;
 
     @Override
-    public BaseResult<ResponsePage<PageAttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<AttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
                 .queryWrapper(requestDTO.getCategoryId(), requestDTO.getShowName());
         IPage<AttributeTypeDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = attributeTypeMapper.selectPage(page, queryWrapper);
-        List<PageAttributeTypeResponseDTO> record = page.getRecords().stream()
-                .map(doo -> doConvertDto(doo, PageAttributeTypeResponseDTO.class))
+        List<AttributeTypeResponseDTO> record = page.getRecords().stream()
+                .map(doo -> doConvertDto(doo, AttributeTypeResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage(page.getTotal(), record));
     }
 
     @Override
-    protected void customerConvertDto(PageAttributeTypeResponseDTO result, AttributeTypeDO doo) {
+    protected void customerConvertDto(AttributeTypeResponseDTO result, AttributeTypeDO doo) {
         if (doo.getCategoryId() != null) {
             result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
         }

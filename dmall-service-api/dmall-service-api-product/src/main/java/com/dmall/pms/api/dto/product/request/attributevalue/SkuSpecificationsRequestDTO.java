@@ -3,19 +3,17 @@ package com.dmall.pms.api.dto.product.request.attributevalue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * @description: SKU规格实体
+ * @description: Sku规格实体
  * @author: created by hang.yu on 2019/12/26 22:57
  */
 @Data
-@Accessors(chain = true)
-@ApiModel(value = "SkuSpecificationsRequestDTO", description = "SKU规格实体")
+@ApiModel(value = "SkuSpecificationsRequestDTO", description = "Sku规格实体")
 public class SkuSpecificationsRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -8325127816306812382L;

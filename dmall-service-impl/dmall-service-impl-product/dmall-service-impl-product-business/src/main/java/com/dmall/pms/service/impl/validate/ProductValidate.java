@@ -1,10 +1,10 @@
-package com.dmall.pms.service.impl.product.common;
+package com.dmall.pms.service.impl.validate;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.dto.product.request.attributevalue.*;
-import com.dmall.pms.api.enums.ProductErrorEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.BrandDO;
@@ -39,13 +39,14 @@ public class ProductValidate {
     @Autowired
     private CategoryCacheService categoryCacheService;
 
+
     public BaseResult validate(ProductExtRequestDTO extDTO) {
         List<Long> categoryIds = extDTO.getCategoryIds();
         Long[] categoryIdArray = new Long[categoryIds.size()];
         Set<Long> set = new HashSet<>(categoryIds);
         // 商品分类不能重复
         if (set.size() != categoryIds.size()) {
-            return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_REPEATED);
+            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_REPEATED);
         }
         // 分类存在 且是三级分类,品牌存在
         BaseResult validate = basicValidate(extDTO.getBrandId(), categoryIds.toArray(categoryIdArray));
@@ -63,18 +64,18 @@ public class ProductValidate {
         for (Long categoryId : categoryIds) {
             CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
             if (categoryDO == null) {
-                return ResultUtil.fail(ProductErrorEnum.CATEGORY_NOT_EXISTS);
+                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
             }
             // 校验是否是三级分类
             if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
-                return ResultUtil.fail(ProductErrorEnum.CATEGORY_LEVEL_ERROR);
+                return ResultUtil.fail(PmsErrorEnum.CATEGORY_LEVEL_ERROR);
             }
         }
 
         // 校验品牌是否存在
         BrandDO brandDO = brandCacheService.selectById(brandId);
         if (brandDO == null) {
-            return ResultUtil.fail(ProductErrorEnum.BRAND_NOT_EXISTS);
+            return ResultUtil.fail(PmsErrorEnum.BRAND_NOT_EXIST);
         }
         return ResultUtil.success();
     }
@@ -87,26 +88,26 @@ public class ProductValidate {
         for (SpecificationsRequestDTO specification : attributeRequest.getSpecifications()) {
             AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
             if (attributeDO == null) {
-                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
+                return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NOT_EXIST);
             }
         }
         // 属性存在
         for (SalePointRequestDTO salePoint : attributeRequest.getSalePoints()) {
             AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
             if (attributeDO == null) {
-                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
+                return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NOT_EXIST);
             }
         }
-        // 属性分类存在
+        // 属性类别存在
         for (ParamRequestDTO param : attributeRequest.getParams()) {
             AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(param.getAttributeTypeId());
             if (attributeTypeDO == null) {
-                return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_TYPE_NOT_EXISTS);
+                return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
             }
             for (ParamValueRequestDTO paramAttribute : param.getParamAttributes()) {
                 AttributeDO attributeDO = attributeCacheService.selectById(paramAttribute.getAttributeId());
                 if (attributeDO == null) {
-                    return ResultUtil.fail(ProductErrorEnum.ATTRIBUTE_NOT_EXISTS);
+                    return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
                 }
             }
         }

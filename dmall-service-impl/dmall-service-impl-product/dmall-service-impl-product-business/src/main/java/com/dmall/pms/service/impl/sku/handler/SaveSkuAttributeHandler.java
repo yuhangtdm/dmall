@@ -29,7 +29,6 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
     @Autowired
     private SkuExtSupport skuExtSupport;
 
-
     @Override
     public BaseResult<Long> validate(SaveSkuAttributeRequestDTO requestDTO) {
         return skuSupport.validate(requestDTO.getProductId(), requestDTO.getSkuId());

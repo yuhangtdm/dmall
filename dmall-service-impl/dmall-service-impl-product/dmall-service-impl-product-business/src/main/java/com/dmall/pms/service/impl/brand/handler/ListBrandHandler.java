@@ -3,12 +3,12 @@ package com.dmall.pms.service.impl.brand.handler;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.response.BrandResponseDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Component
-public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO, BrandDO, CommonBrandResponseDTO> {
+public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO, BrandDO, BrandResponseDTO> {
 
     @Autowired
     private BrandMapper brandMapper;
@@ -37,7 +37,7 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
     private BrandCacheService brandCacheService;
 
     @Override
-    public BaseResult<List<CommonBrandResponseDTO>> processor(ListBrandRequestDTO requestDTO) {
+    public BaseResult<List<BrandResponseDTO>> processor(ListBrandRequestDTO requestDTO) {
         List<BrandDO> brandDOS;
         if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter(), requestDTO.getCategoryId())) {
             brandDOS = brandCacheService.selectAll();
@@ -53,9 +53,9 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
             }
 
         }
-        List<CommonBrandResponseDTO> list = brandDOS.stream()
+        List<BrandResponseDTO> list = brandDOS.stream()
                 .filter(Objects::nonNull)
-                .map(doo -> doConvertDto(doo, CommonBrandResponseDTO.class))
+                .map(doo -> doConvertDto(doo, BrandResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(list);
     }

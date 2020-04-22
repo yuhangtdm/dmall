@@ -13,7 +13,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/26 22:46
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "ParamValueResponseDTO", description = "参数值响应实体")
 public class ParamValueResponseDTO implements Serializable {
 

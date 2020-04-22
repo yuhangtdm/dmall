@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.brand.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -14,7 +13,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SaveBrandRequestDTO", description = "新增品牌请求实体")
 public class SaveBrandRequestDTO implements Serializable {
 

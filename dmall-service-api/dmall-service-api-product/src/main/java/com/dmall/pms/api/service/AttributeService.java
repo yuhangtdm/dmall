@@ -2,12 +2,11 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.pms.api.dto.attribute.common.CommonAttributeResponseDTO;
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.response.PageAttributeResponseDTO;
+import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -40,14 +39,14 @@ public interface AttributeService {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询属性")
     @ApiImplicitParam(name = "id", value = "属性id", required = true, dataType = "int", paramType = "path")
-    BaseResult<CommonAttributeResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<AttributeResponseDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("/list")
     @ApiOperation(value = "属性列表")
-    BaseResult<List<CommonAttributeResponseDTO>> list(@Valid @RequestBody ListAttributeRequestDTO requestDTO);
+    BaseResult<List<AttributeResponseDTO>> list(@Valid @RequestBody ListAttributeRequestDTO requestDTO);
 
     @PostMapping("/page")
     @ApiOperation(value = "属性分页")
-    BaseResult<ResponsePage<PageAttributeResponseDTO>> page(@Valid @RequestBody PageAttributeRequestDTO requestDTO);
+    BaseResult<ResponsePage<AttributeResponseDTO>> page(@Valid @RequestBody PageAttributeRequestDTO requestDTO);
 
 }

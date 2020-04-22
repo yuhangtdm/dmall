@@ -3,8 +3,8 @@ package com.dmall.pms.api.dto.sku.response.get;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,9 +12,10 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/29 16:29
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SkuAttributeValueResponseDTO", description = "sku属性值响应实体")
-public class SkuAttributeValueResponseDTO {
+public class SkuAttributeValueResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = -3574763781998162025L;
 
     @ApiModelProperty(value = "商品分类id列表", position = 1)
     private List<Long> categoryIds;

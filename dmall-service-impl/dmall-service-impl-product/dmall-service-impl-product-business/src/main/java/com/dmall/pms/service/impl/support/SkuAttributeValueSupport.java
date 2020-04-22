@@ -30,7 +30,6 @@ public class SkuAttributeValueSupport {
      */
     public void setSkuAttributeValue(Long productId, Long skuId, List<Long> productAttributeValueList) {
         List<SkuAttributeValueDO> oldList = listBySkuId(skuId);
-
         if (CollUtil.isNotEmpty(oldList)) {
             List<SkuAttributeValueDO> skuAttributeList = productAttributeValueList.stream()
                     .map(productAttributeValueId -> {
@@ -68,7 +67,6 @@ public class SkuAttributeValueSupport {
                         .in(SkuAttributeValueDO::getProductAttributeValueId, deleteIdList));
             }
         }
-
     }
 
     /**

@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.product.request.attributevalue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,7 +14,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/26 22:29
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SalePointRequestDTO", description = "卖点")
 public class SalePointRequestDTO implements Serializable {
 

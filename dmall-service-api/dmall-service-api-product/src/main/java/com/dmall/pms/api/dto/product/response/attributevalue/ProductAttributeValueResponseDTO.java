@@ -12,7 +12,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2019/12/27 21:40
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "ProductAttributeValueResponseDTO", description = "商品属性值响应实体")
 public class ProductAttributeValueResponseDTO implements Serializable {
 

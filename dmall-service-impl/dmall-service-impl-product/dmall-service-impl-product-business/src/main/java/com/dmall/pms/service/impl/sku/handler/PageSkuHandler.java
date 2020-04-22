@@ -7,7 +7,7 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageMapper;
@@ -32,12 +32,12 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
     @Autowired
     private SkuStockSupport skuStockSupport;
 
-
     @Override
     public BaseResult<ResponsePage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
         Page<PageSkuResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<PageSkuResponseDTO> skuList = skuPageMapper.skuPage(page, requestDTO).stream()
-                .map(skuPageVO -> doConvertDto(skuPageVO, PageSkuResponseDTO.class)).collect(Collectors.toList());
+                .map(skuPageVO -> doConvertDto(skuPageVO, PageSkuResponseDTO.class))
+                .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), skuList));
     }
 

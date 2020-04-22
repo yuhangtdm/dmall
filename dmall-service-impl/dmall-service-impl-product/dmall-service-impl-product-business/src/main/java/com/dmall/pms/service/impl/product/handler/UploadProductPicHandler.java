@@ -6,8 +6,8 @@ import com.dmall.common.dto.UploadResult;
 import com.dmall.component.file.qiniu.QiNiuConstants;
 import com.dmall.component.file.qiniu.QiNiuFileManager;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
-import com.dmall.pms.api.enums.ProductErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,8 +32,8 @@ public class UploadProductPicHandler extends AbstractCommonHandler<MultipartFile
             UploadResult uploadResult = qiNiuFileManager.upload(file, QiNiuConstants.PRODUCT);
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
-            log.error("upload product pic failed", e);
-            return ResultUtil.fail(ProductErrorEnum.UPLOAD_PRODUCT_ERROR);
+            log.error("upload product pic error", e);
+            return ResultUtil.fail(PmsErrorEnum.UPLOAD_PRODUCT_ERROR);
         }
     }
 }

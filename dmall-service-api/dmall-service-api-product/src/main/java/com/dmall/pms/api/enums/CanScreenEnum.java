@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.category.enums;
+package com.dmall.pms.api.enums;
 
 import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
@@ -12,12 +12,23 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CanScreenEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 不可筛选
+     */
     NOT(1, "不可筛选"),
+
+    /**
+     * 单选
+     */
     SINGLE(2, "单选"),
+
+    /**
+     * 多选
+     */
     MULTI(3, "多选"),
     ;
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

@@ -11,24 +11,43 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CommentLevelEnum implements CodeDescDataEnum<Integer, Integer> {
+    /**
+     * 1
+     */
     ONE(1, "差评", 3),
+
+    /**
+     * 2
+     */
     TOW(2, "差评", 3),
+
+    /**
+     * 3
+     */
     THREE(3, "中评", 2),
+
+    /**
+     * 4
+     */
     FORE(4, "好评", 1),
+
+    /**
+     * 5
+     */
     FIVE(5, "好评", 1);
 
     /**
      * 评分
      */
-    private Integer code;
+    private final Integer code;
 
     /**
      * 描述
      */
-    private String desc;
+    private final String desc;
 
     /**
      * 等级
      */
-    private Integer data;
+    private final Integer data;
 }

@@ -19,14 +19,14 @@ public class AttributeTypeSupport {
     private AttributeTypeMapper attributeTypeMapper;
 
     /**
-     * 根据分类id查询列表
+     * 根据商品分类id查询属性类别列表
      */
-    public List<AttributeTypeDO> listByCategotyId(Long categoryId) {
+    public List<AttributeTypeDO> listByCategoryId(Long categoryId) {
         return attributeTypeMapper.selectList(Wrappers.<AttributeTypeDO>lambdaQuery().eq(AttributeTypeDO::getCategoryId, categoryId));
     }
 
     /**
-     * 根据分类id查删除
+     * 根据分类id删除属性类别
      */
     public void deleteByCategoryId(Long categoryId) {
         attributeTypeMapper.delete(Wrappers.<AttributeTypeDO>lambdaQuery().eq(AttributeTypeDO::getCategoryId, categoryId));

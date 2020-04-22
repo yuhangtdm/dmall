@@ -77,7 +77,7 @@ public class ImportSkuToEsHandler {
             skuEsDTO.setSkuDescription(skuDO.getDescription());
             skuEsDTO.setSkuMainPic(skuDO.getPic());
             skuEsDTO.setSkuStock(skuDO.getStock());
-            // todo 调用sku评论数量接口
+            // todo 调用sku评价数量接口
             skuEsDTO.setSkuCommentCount(999L);
             // todo 调用sku销量接口
             skuEsDTO.setSkuSaleCount(1999L);

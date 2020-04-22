@@ -1,14 +1,13 @@
 package com.dmall.pms.api.dto.sku.request.update;
 
 import com.dmall.pms.api.dto.sku.request.save.MediaRequestDTO;
-import com.dmall.pms.api.dto.sku.response.MediaResponseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,11 +15,12 @@ import java.util.List;
  * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "UpdateSkuRequestDTO", description = "修改sku请求实体")
-public class UpdateSkuRequestDTO {
+public class UpdateSkuRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "sku基本信息", position = 1)
+    private static final long serialVersionUID = 118363411506947845L;
+
+    @ApiModelProperty(value = "sku基本信息", required = true, position = 1)
     @Valid
     @NotNull(message = "sku基本信息不能为空")
     private BasicSkuRequestDTO basicSkuRequestDTO;

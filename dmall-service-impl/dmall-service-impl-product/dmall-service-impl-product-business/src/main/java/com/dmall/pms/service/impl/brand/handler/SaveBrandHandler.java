@@ -5,10 +5,10 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
-import com.dmall.pms.api.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public class SaveBrandHandler extends AbstractCommonHandler<SaveBrandRequestDTO,
         BrandDO brandDO = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, requestDTO.getName()));
         // 名称唯一
         if (brandDO != null) {
-            return ResultUtil.fail(BrandErrorEnum.BRAND_NAME_UNIQUE);
+            return ResultUtil.fail(PmsErrorEnum.BRAND_NAME_UNIQUE);
         }
         return ResultUtil.success();
     }

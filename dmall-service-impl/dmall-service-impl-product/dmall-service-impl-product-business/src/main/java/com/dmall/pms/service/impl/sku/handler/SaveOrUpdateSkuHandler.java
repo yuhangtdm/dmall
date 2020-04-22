@@ -6,9 +6,9 @@ import com.dmall.common.enums.YNEnum;
 import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuRequestDTO;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
@@ -34,21 +34,21 @@ public class SaveOrUpdateSkuHandler extends AbstractCommonHandler<SaveSkuRequest
         // 商品必须存在
         ProductDO productDO = productMapper.selectById(requestDTO.getProductId());
         if (productDO == null) {
-            return ResultUtil.fail(SkuErrorEnum.PRODUCT_NOT_EXISTS);
+            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NOT_EXISTS);
         }
         // 名称必须唯一
         SkuDO skuDO = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getName, requestDTO.getName()));
         if (requestDTO.getId() == null) {
             if (skuDO != null) {
-                return ResultUtil.fail(SkuErrorEnum.SKU_NAME_EXISTS);
+                return ResultUtil.fail(PmsErrorEnum.SKU_NAME_EXISTS);
             }
         } else {
             SkuDO sku = skuMapper.selectById(requestDTO.getId());
             if (sku == null) {
-                return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+                return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
             }
             if (skuDO != null && !skuDO.getId().equals(requestDTO.getId())) {
-                return ResultUtil.fail(SkuErrorEnum.SKU_NAME_EXISTS);
+                return ResultUtil.fail(PmsErrorEnum.SKU_NAME_EXISTS);
             }
         }
         return ResultUtil.success();

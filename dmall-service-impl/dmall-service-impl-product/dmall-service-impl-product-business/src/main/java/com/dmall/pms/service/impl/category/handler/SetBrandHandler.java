@@ -1,22 +1,21 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.category.request.setbrand.BrandIdsDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.generator.service.IBrandService;
+import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.generator.service.ICategoryBrandService;
-import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, CategoryDO, Void> {
 
     @Autowired
-    private IBrandService iBrandService;
+    private BrandMapper brandMapper;
 
     @Autowired
     private ICategoryBrandService iCategoryBrandService;
@@ -39,15 +38,16 @@ public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, C
 
     @Override
     public BaseResult validate(SetBrandRequestDTO requestDTO) {
-        Set<Long> brandIds = requestDTO.getBrandIds().stream().map(BrandIdsDTO::getBrandId).collect(Collectors.toSet());
+        Set<Long> brandIds = requestDTO.getBrandIds().stream()
+                .map(BrandIdsDTO::getBrandId).collect(Collectors.toSet());
         // 品牌id不能有重复
         if (brandIds.size() != requestDTO.getBrandIds().size()) {
-            return ResultUtil.fail(CategoryErrorEnum.BRAND_IDS_REPEATED);
+            return ResultUtil.fail(PmsErrorEnum.BRAND_IDS_REPEATED);
         }
-        Collection<BrandDO> brandDOS = iBrandService.listByIds(brandIds);
+        List<BrandDO> brands = brandMapper.selectBatchIds(brandIds);
         // 品牌id必须存在
-        if (brandDOS.size() != requestDTO.getBrandIds().size()) {
-            return ResultUtil.fail(CategoryErrorEnum.BRAND_ID_INVALID);
+        if (brands.size() != requestDTO.getBrandIds().size()) {
+            return ResultUtil.fail(PmsErrorEnum.BRAND_ID_INVALID);
         }
         return categorySupport.validate(requestDTO.getCategoryId());
     }

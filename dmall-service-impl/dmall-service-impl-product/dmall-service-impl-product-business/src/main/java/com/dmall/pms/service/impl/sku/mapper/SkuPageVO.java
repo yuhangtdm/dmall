@@ -15,7 +15,6 @@ public class SkuPageVO implements Serializable {
 
     private static final long serialVersionUID = -7294050181109624050L;
 
-
     /**
      * id
      */

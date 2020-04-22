@@ -8,7 +8,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.comment.request.SaveCommentRequestDTO;
 import com.dmall.pms.api.enums.CommentLevelEnum;
-import com.dmall.pms.api.enums.SkuErrorEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CommentDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.CommentMapper;
@@ -36,7 +36,7 @@ public class SaveCommentHandler extends AbstractCommonHandler<List<SaveCommentRe
         for (SaveCommentRequestDTO saveCommentRequestDTO : requestDTO) {
             SkuDO skuDO = skuMapper.selectById(saveCommentRequestDTO.getSkuId());
             if (skuDO == null) {
-                return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+                return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
             }
             CommentDO commentDO = new CommentDO();
             commentDO.setProductId(skuDO.getProductId());

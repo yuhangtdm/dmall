@@ -1,13 +1,12 @@
 package com.dmall.pms.api.dto.attribute.request;
 
 import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
-import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -17,13 +16,12 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2019-12-02 23:17:59
  */
 @Data
-@Accessors(chain = true)
-@ApiModel(value = "ListAttributeRequestDTO", description = "属性列表请求实体")
+@ApiModel(value = "ListAttributeRequestDTO", description = "商品属性列表请求实体")
 public class ListAttributeRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "一级分类id", position = 1)
+    @ApiModelProperty(value = "一级分类id", required = true, position = 1)
     @NotNull(message = "一级分类id不能为空")
     private Long categoryId;
 

@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.category.enums;
+package com.dmall.pms.api.enums;
 
 import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
@@ -11,12 +11,24 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum LevelEnum implements CodeDescEnum<Integer> {
+
+    /**
+     * 1级
+     */
     ONE(1, "1级"),
+
+    /**
+     * 2级
+     */
     TWO(2, "2级"),
+
+    /**
+     * 3级
+     */
     THREE(3, "3级"),
     ;
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

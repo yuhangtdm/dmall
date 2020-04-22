@@ -1,11 +1,11 @@
-package com.dmall.pms.service.impl.attribute.validate;
+package com.dmall.pms.service.impl.validate;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.common.enums.YNEnum;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.YNEnum;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.AttributeErrorEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,15 +23,16 @@ public class AttributeValidate {
         // 从列表获取 不支持新增 可选值为空
         if (InputTypeEnum.LIST.getCode().equals(inputType) && CollUtil.isEmpty(inputList)
                 && YNEnum.N.getCode().equals(handAddStatus)) {
-            return ResultUtil.fail(AttributeErrorEnum.ATTRIBUTE_DATA_INVALID);
+            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_DATA_INVALID);
         }
         // 可选值列表不能重复
         if (CollUtil.isNotEmpty(inputList)) {
             HashSet<String> strings = new HashSet<>(inputList);
             if (strings.size() != inputList.size()) {
-                return ResultUtil.fail(AttributeErrorEnum.INPUT_LIST_INVALID);
+                return ResultUtil.fail(PmsErrorEnum.INPUT_LIST_INVALID);
             }
         }
         return ResultUtil.success();
     }
+
 }

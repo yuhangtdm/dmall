@@ -10,7 +10,7 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
-import com.dmall.pms.api.dto.brand.response.PageBrandResponseDTO;
+import com.dmall.pms.api.dto.brand.response.BrandResponseDTO;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Component
-public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO, BrandDO, PageBrandResponseDTO> {
+public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO, BrandDO, BrandResponseDTO> {
 
     @Autowired
     private BrandMapper brandMapper;
 
     @Override
-    public BaseResult<ResponsePage<PageBrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<BrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
@@ -38,8 +38,8 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
 
         Page<BrandDO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         IPage<BrandDO> brandDOIPage = brandMapper.selectPage(page, queryWrapper);
-        List<PageBrandResponseDTO> record = brandDOIPage.getRecords().stream()
-                .map(doo -> doConvertDto(doo, PageBrandResponseDTO.class))
+        List<BrandResponseDTO> record = brandDOIPage.getRecords().stream()
+                .map(doo -> doConvertDto(doo, BrandResponseDTO.class))
                 .collect(Collectors.toList());
 
         return ResultUtil.success(new ResponsePage(brandDOIPage.getTotal(), record));

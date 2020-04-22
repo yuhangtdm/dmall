@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,16 +14,19 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "CheckOrderSkuRequestDTO", description = "校验订单请求实体")
-public class CheckOrderSkuRequestDTO {
-    @ApiModelProperty(value = "skuId", position = 1)
+public class CheckOrderSkuRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 6205798068684074150L;
+
+    @ApiModelProperty(value = "skuId", required = true, position = 1)
     @NotNull(message = "skuId不能为空")
     private Long skuId;
 
-    @ApiModelProperty(value = "数量", position = 1)
+    @ApiModelProperty(value = "数量", required = true, position = 1)
     @NotNull(message = "数量不能为空")
     private Integer count;
 
-    @ApiModelProperty(value = "sku单价", position = 1)
+    @ApiModelProperty(value = "sku单价", required = true, position = 1)
     @NotNull(message = "sku单价不能为空不能为空")
     private BigDecimal skuPrice;
 }

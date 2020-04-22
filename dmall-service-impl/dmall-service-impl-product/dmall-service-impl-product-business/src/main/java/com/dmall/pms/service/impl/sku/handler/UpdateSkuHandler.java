@@ -7,9 +7,9 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.sku.request.update.BasicSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuExtSupport;
 import com.dmall.pms.service.impl.support.SkuMediaSupport;
@@ -40,12 +40,12 @@ public class UpdateSkuHandler extends AbstractCommonHandler<UpdateSkuRequestDTO,
         BasicSkuRequestDTO basicSku = requestDTO.getBasicSkuRequestDTO();
         SkuDO sku = skuMapper.selectById(basicSku.getId());
         if (sku == null) {
-            return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
         }
         // 名称必须唯一
         SkuDO skuDO = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getName, basicSku.getName()));
         if (skuDO != null && !skuDO.getId().equals(sku.getId())) {
-            return ResultUtil.fail(SkuErrorEnum.SKU_NAME_EXISTS);
+            return ResultUtil.fail(PmsErrorEnum.SKU_NAME_EXISTS);
         }
         return ResultUtil.success();
     }

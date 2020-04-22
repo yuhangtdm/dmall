@@ -1,8 +1,8 @@
 package com.dmall.pms.api.dto.attribute.response;
 
-import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
-import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,13 +11,13 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 
 /**
- * @description: 属性分页响应实体
+ * @description: 商品属性分页响应实体
  * @author: created by hang.yu on 2019/12/24 22:28
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "PageAttributeResponseDTO", description = "属性分页响应实体")
-public class PageAttributeResponseDTO {
+@ApiModel(value = "AttributeResponseDTO", description = "商品属性响应实体")
+public class AttributeResponseDTO {
 
     @ApiModelProperty(value = "id", position = 1)
     private Long id;

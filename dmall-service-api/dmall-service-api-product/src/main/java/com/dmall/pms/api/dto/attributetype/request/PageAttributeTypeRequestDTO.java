@@ -8,13 +8,12 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: 属性分类分页请求实体
+ * @description: 属性类别分页请求实体
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageAttributeTypeRequestDTO", description = "属性分类分页请求实体")
+@ApiModel(value = "PageAttributeTypeRequestDTO", description = "属性类别分页请求实体")
 public class PageAttributeTypeRequestDTO extends PageRequestDTO {
 
     @ApiModelProperty(value = "商品分类id", position = 5)

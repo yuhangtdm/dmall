@@ -14,11 +14,12 @@ import java.util.List;
  */
 @Component
 public class CategoryAttributeSupport {
+
     @Autowired
     private CategoryAttributeMapper categoryAttributeMapper;
 
     /**
-     * 根据分类id查询
+     * 根据商品分类id查询
      */
     public List<CategoryAttributeDO> listByCategoryId(Long categoryId) {
         return categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
@@ -34,7 +35,7 @@ public class CategoryAttributeSupport {
     }
 
     /**
-     * 根据分类id删除
+     * 根据商品分类id删除
      */
     public void deleteByCategoryId(Long categoryId) {
         categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()

@@ -1,11 +1,10 @@
-package com.dmall.pms.api.dto.product.common;
+package com.dmall.pms.api.dto.product.request;
 
 import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.pms.api.dto.product.enums.UnitEnum;
+import com.dmall.pms.api.enums.UnitEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -13,12 +12,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @description: 修改商品基础信息实体
+ * @description: 商品基础信息实体
  * @author: created by hang.yu on 2019/12/10 21:43
  */
 @Data
-@Accessors(chain = true)
-@ApiModel(value = "BasicProductRequestDTO", description = "修改商品基础信息实体")
+@ApiModel(value = "BasicProductRequestDTO", description = "商品基础信息实体")
 public class BasicProductRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1619159990632457989L;

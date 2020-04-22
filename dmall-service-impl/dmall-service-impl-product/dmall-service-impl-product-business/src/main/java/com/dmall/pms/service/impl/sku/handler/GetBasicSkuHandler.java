@@ -6,9 +6,9 @@ import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
@@ -42,7 +42,7 @@ public class GetBasicSkuHandler extends AbstractCommonHandler<List<Long>, SkuDO,
         for (Long id : ids) {
             SkuDO skuDO = skuMapper.selectById(id);
             if (skuDO == null) {
-                return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+                return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
             }
             result.add(getBasicSkuResponseDTO(skuDO));
         }

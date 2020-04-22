@@ -6,8 +6,8 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.component.file.qiniu.QiNiuConstants;
 import com.dmall.component.file.qiniu.QiNiuFileManager;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
-import com.dmall.pms.api.enums.BrandErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,8 +32,8 @@ public class UploadLogoHandler extends AbstractCommonHandler<MultipartFile, Bran
             UploadResult uploadResult = qiNiuFileManager.upload(file, QiNiuConstants.BRAND);
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
-            log.error("upload logo failed", e);
-            return ResultUtil.fail(BrandErrorEnum.UPLOAD_LOGO_ERROR);
+            log.error("upload brand logo error", e);
+            return ResultUtil.fail(PmsErrorEnum.UPLOAD_LOGO_ERROR);
         }
     }
 

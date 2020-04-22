@@ -55,7 +55,6 @@ public class SkuExtSupport {
                     .findAny();
             any.ifPresent(attributeValue -> specificationsObj.put(attributeDO.getShowName(), attributeValue.getAttributeValue()));
         }
-
         // 卖点
         JSONObject saleObj = new JSONObject();
         for (SalePointResponseDTO salePoint : extResponseDTO.getSalePoints()) {
@@ -65,7 +64,6 @@ public class SkuExtSupport {
                     .findAny();
             any.ifPresent(productAttributeValue -> saleObj.put(attributeDO.getShowName(), productAttributeValue.getAttributeValue()));
         }
-
         // 参数
         JSONArray paramArr = new JSONArray();
         for (ParamResponseDTO param : extResponseDTO.getParams()) {
@@ -146,6 +144,5 @@ public class SkuExtSupport {
      */
     public void deleteByProductId(Long productId) {
         skuExtMapper.delete(Wrappers.<SkuExtDO>lambdaQuery().eq(SkuExtDO::getProductId, productId));
-
     }
 }

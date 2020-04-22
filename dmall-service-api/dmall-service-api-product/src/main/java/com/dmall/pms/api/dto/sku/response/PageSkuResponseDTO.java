@@ -1,12 +1,12 @@
 package com.dmall.pms.api.dto.sku.response;
 
 import com.dmall.common.enums.YNEnum;
-import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,9 +15,10 @@ import java.util.Date;
  * @author: created by hang.yu on 2019/12/16 20:42
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "PageSkuResponseDTO", description = "sku分页响应实体")
-public class PageSkuResponseDTO {
+public class PageSkuResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = 3433486822455672942L;
 
     @ApiModelProperty(value = "skuId", position = 1)
     private Long id;

@@ -1,11 +1,10 @@
 package com.dmall.pms.api.dto.category.request.setattribute;
 
 import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.pms.api.dto.category.enums.CanScreenEnum;
+import com.dmall.pms.api.enums.CanScreenEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,7 +13,6 @@ import javax.validation.constraints.NotNull;
  * @author: created by hang.yu on 2019/12/25 23:00
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "AttributeIdsDTO", description = "属性列表实体")
 public class AttributeIdsDTO {
 

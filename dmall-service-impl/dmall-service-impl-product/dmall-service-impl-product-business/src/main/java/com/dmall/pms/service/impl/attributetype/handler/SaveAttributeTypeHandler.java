@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @description: 新增属性分类处理器
+ * @description: 新增属性类别处理器
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component

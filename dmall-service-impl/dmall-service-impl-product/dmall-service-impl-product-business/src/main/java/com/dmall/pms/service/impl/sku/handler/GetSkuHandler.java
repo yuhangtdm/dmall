@@ -6,10 +6,10 @@ import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pms.api.dto.sku.enums.SkuAuditStatusEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
@@ -45,7 +45,7 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
     public BaseResult<GetSkuResponseDTO> processor(Long id) {
         SkuDO skuDO = skuMapper.selectById(id);
         if (skuDO == null) {
-            return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
         }
         GetSkuResponseDTO getSkuResponseDTO = new GetSkuResponseDTO();
         // sku基本信息
@@ -62,8 +62,8 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
 
     private BasicSkuResponseDTO getBasicSkuResponseDTO(SkuDO skuDO) {
         BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
-        basicSku.setAuditStatus(EnumUtil.getCodeDescEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
         basicSku.setNewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getNewStatus()));
+        basicSku.setAuditStatus(EnumUtil.getCodeDescEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
         basicSku.setRecommendStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getRecommendStatus()));
         basicSku.setPreviewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getPreviewStatus()));
         basicSku.setPublishStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getPublishStatus()));

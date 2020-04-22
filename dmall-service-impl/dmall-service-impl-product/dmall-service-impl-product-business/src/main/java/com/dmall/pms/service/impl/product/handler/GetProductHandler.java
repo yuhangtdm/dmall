@@ -6,9 +6,9 @@ import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.response.get.BasicProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.api.enums.ProductErrorEnum;
 import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class GetProductHandler extends AbstractCommonHandler<Long, ProductDO, Ge
     public BaseResult<GetProductResponseDTO> processor(Long id) {
         ProductDO productDO = productMapper.selectById(id);
         if (productDO == null) {
-            return ResultUtil.fail(ProductErrorEnum.PRODUCT_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NOT_EXISTS);
         }
         GetProductResponseDTO responseDTO = new GetProductResponseDTO();
         // 设置商品基本信息

@@ -6,10 +6,10 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
-import com.dmall.pms.api.enums.BrandErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,12 +31,12 @@ public class UpdateBrandHandler extends AbstractCommonHandler<UpdateBrandRequest
         // 品牌必须存在
         BrandDO brandDO = brandMapper.selectById(requestDTO.getId());
         if (brandDO == null) {
-            return ResultUtil.fail(BrandErrorEnum.BRAND_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.BRAND_NOT_EXIST);
         }
         // 品牌名称唯一
         BrandDO nameBrand = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, requestDTO.getName()));
         if (nameBrand != null && ObjectUtil.notEqual(nameBrand.getId(), requestDTO.getId())) {
-            return ResultUtil.fail(BrandErrorEnum.BRAND_NAME_UNIQUE);
+            return ResultUtil.fail(PmsErrorEnum.BRAND_NAME_UNIQUE);
         }
         return ResultUtil.success();
     }

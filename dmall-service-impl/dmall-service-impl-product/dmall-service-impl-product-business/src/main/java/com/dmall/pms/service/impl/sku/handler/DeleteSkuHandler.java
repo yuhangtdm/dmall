@@ -3,9 +3,9 @@ package com.dmall.pms.service.impl.sku.handler;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import com.dmall.pms.service.impl.support.CategorySkuSupport;
 import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuExtSupport;
@@ -39,7 +39,7 @@ public class DeleteSkuHandler extends AbstractCommonHandler<Long, SkuDO, Long> {
     public BaseResult<Long> validate(Long id) {
         SkuDO sku = skuMapper.selectById(id);
         if (sku == null) {
-            return ResultUtil.fail(SkuErrorEnum.SKU_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
         }
         return ResultUtil.success();
     }

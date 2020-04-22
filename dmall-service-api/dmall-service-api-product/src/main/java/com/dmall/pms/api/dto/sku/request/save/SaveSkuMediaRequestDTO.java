@@ -3,11 +3,11 @@ package com.dmall.pms.api.dto.sku.request.save;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,9 +15,10 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/16 17:41
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SaveSkuMediaRequestDTO", description = "新增sku图片实体")
-public class SaveSkuMediaRequestDTO {
+public class SaveSkuMediaRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 7184334204043962937L;
 
     @ApiModelProperty(value = "属性值id", required = true, position = 1)
     @NotNull(message = "skuId不能为空")

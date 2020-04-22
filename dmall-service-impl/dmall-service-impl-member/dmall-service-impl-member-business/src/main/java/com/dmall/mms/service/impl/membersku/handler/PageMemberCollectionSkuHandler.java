@@ -20,7 +20,6 @@ import com.dmall.mms.generator.dataobject.MemberCollectionSkuDO;
 import com.dmall.mms.generator.mapper.MemberCollectionSkuMapper;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
-import com.dmall.pms.api.enums.SkuErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

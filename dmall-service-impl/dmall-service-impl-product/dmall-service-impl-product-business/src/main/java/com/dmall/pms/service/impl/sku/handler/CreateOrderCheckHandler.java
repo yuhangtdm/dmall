@@ -9,7 +9,7 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.CheckCreateOrderRequestDTO;
 import com.dmall.pms.api.dto.sku.request.CheckOrderSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
-import com.dmall.pms.api.enums.CheckCreateOrderErrorEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,38 +35,34 @@ public class CreateOrderCheckHandler extends AbstractCommonHandler<CheckCreateOr
         List<Long> skuIds = orderSku.stream().map(CheckOrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, CheckOrderSkuRequestDTO> skuMap = orderSku.stream()
                 .collect(Collectors.toMap(CheckOrderSkuRequestDTO::getSkuId, checkOrderSkuRequestDTO -> checkOrderSkuRequestDTO));
-
         // step1. 调用sku接口获取sku信息
         BaseResult<List<BasicSkuResponseDTO>> skuResponse = getBasicSkuHandler.processor(skuIds);
         if (!skuResponse.getResult()) {
             return ResultUtil.fail(BasicStatusEnum.FAIL);
         }
-
         List<BasicSkuResponseDTO> skuData = skuResponse.getData();
-
         //  step2. 验证价格
         BigDecimal skuTotalPrice = BigDecimal.ZERO;
         for (BasicSkuResponseDTO sku : skuData) {
             if (!NumberUtil.equals(skuMap.get(sku.getId()).getSkuPrice(), sku.getPrice())) {
-                return ResultUtil.fail(CheckCreateOrderErrorEnum.SKU_PRICE_CHANGE);
+                return ResultUtil.fail(PmsErrorEnum.SKU_PRICE_CHANGE);
             }
             skuTotalPrice = skuTotalPrice.add(sku.getPrice());
         }
         if (!NumberUtil.equals(skuTotalPrice, requestDTO.getTotalSkuPrice())) {
-            return ResultUtil.fail(CheckCreateOrderErrorEnum.SKU_TOTAL_PRICE_CHANGE);
+            return ResultUtil.fail(PmsErrorEnum.SKU_TOTAL_PRICE_CHANGE);
         }
         BigDecimal freightPrice = FreightPriceUtil.getFreightPrice(skuTotalPrice);
         if (!NumberUtil.equals(freightPrice, requestDTO.getFreightPrice())) {
-            return ResultUtil.fail(CheckCreateOrderErrorEnum.FREIGHT_CHANGE);
+            return ResultUtil.fail(PmsErrorEnum.FREIGHT_CHANGE);
         }
         if (!NumberUtil.equals(NumberUtil.add(skuTotalPrice, freightPrice), requestDTO.getOrderPrice())) {
-            return ResultUtil.fail(CheckCreateOrderErrorEnum.ORDER_PRICE_CHANGE);
+            return ResultUtil.fail(PmsErrorEnum.ORDER_PRICE_CHANGE);
         }
-
         // step3. 验证库存
         for (BasicSkuResponseDTO sku : skuData) {
             if (skuMap.get(sku.getId()).getCount() > sku.getSalableStock()) {
-                return ResultUtil.fail(CheckCreateOrderErrorEnum.INSUFFICIENT_INVENTORY);
+                return ResultUtil.fail(PmsErrorEnum.INSUFFICIENT_INVENTORY);
             }
         }
         return skuResponse;

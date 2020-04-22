@@ -1,16 +1,17 @@
 package com.dmall.pms.service.impl.category.handler;
 
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.category.request.setattribute.AttributeIdsDTO;
 import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.generator.mapper.CategoryMapper;
+import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.generator.service.ICategoryAttributeService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.api.enums.CategoryErrorEnum;
 import com.dmall.pms.service.impl.support.AttributeTypeSupport;
 import com.dmall.pms.service.impl.support.CategorySupport;
 import com.google.common.collect.Lists;
@@ -32,7 +33,7 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     private CategorySupport categorySupport;
 
     @Autowired
-    private CategoryMapper categoryMapper;
+    private AttributeMapper categoryMapper;
 
     @Autowired
     private CategoryCacheService categoryCacheService;
@@ -50,12 +51,12 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
                 .map(AttributeIdsDTO::getAttributeId)
                 .collect(Collectors.toSet());
         if (requestDTO.getAttributes().size() != attributeIds.size()) {
-            return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_ID_REPEATED);
+            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_ID_REPEATED);
         }
         // 属性列表的id都必须存在
-        List<CategoryDO> categoryDOList = categoryMapper.selectBatchIds(attributeIds);
-        if (categoryDOList.size() != attributeIds.size()) {
-            return ResultUtil.fail(CategoryErrorEnum.ATTRIBUTE_ID_INVALID);
+        List<AttributeDO> attributes = categoryMapper.selectBatchIds(attributeIds);
+        if (attributes.size() != attributeIds.size()) {
+            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_ID_INVALID);
         }
         return categorySupport.validate(requestDTO.getCategoryId());
     }

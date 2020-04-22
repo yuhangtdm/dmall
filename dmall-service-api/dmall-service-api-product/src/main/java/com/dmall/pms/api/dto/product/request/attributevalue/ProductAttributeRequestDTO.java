@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.product.request.attributevalue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,7 +14,6 @@ import java.util.List;
  * @author: created by hang.yu on 2020/1/4 10:52
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "ProductAttributeRequestDTO", description = "商品请求属性信息")
 public class ProductAttributeRequestDTO {
 

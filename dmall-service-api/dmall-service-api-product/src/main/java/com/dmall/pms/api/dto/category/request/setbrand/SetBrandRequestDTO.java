@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.category.request.setbrand;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,7 +15,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/4 22:40
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SetBrandRequestDTO", description = "设置品牌请求实体")
 public class SetBrandRequestDTO implements Serializable {
     private static final long serialVersionUID = 2020918577643316332L;

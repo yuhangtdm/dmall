@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @description: 属性分类表
+ * @description: 属性类别表
  * @author: created by hang.yu on 2019-12-19 20:57:18
  */
 @Data

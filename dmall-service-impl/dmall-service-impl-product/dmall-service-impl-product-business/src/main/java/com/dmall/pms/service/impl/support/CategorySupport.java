@@ -5,8 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
-import com.dmall.pms.api.enums.CategoryErrorEnum;
+import com.dmall.pms.api.enums.LevelEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
@@ -56,15 +56,18 @@ public class CategorySupport {
                 .map(CategoryDO::getId).collect(Collectors.toList());
     }
 
+    /**
+     * 校验分类
+     */
     public BaseResult validate(Long categoryId) {
         CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
         // 分类id必须存在
         if (categoryDO == null) {
-            return ResultUtil.fail(CategoryErrorEnum.CATEGORY_NOT_EXIST);
+            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
         }
         // 分类级别必须是3级
         if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
-            return ResultUtil.fail(CategoryErrorEnum.PARENT_LEVEL_ERROR);
+            return ResultUtil.fail(PmsErrorEnum.PARENT_LEVEL_ERROR);
         }
         return ResultUtil.success();
     }

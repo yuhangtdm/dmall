@@ -22,7 +22,6 @@ import com.dmall.oms.service.impl.support.SubOrderJobSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
 import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import com.dmall.pms.api.dto.comment.request.SaveCommentRequestDTO;
-import com.dmall.pms.api.enums.StarEnum;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.springframework.beans.factory.annotation.Autowired;

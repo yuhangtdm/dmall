@@ -1,8 +1,6 @@
 package com.dmall.pms.generator.dataobject;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -35,7 +33,7 @@ public class ProductAttributeValueDO implements Serializable {
     private Long productId;
 
     /**
-     * 属性分类id
+     * 属性类别id
      */
     private Long attributeTypeId;
 

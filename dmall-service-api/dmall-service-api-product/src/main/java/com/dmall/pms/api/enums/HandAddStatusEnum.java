@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.attribute.enums;
+package com.dmall.pms.api.enums;
 
 import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum HandAddStatusEnum implements CodeDescEnum<String> {
 
+    /**
+     * 支持
+     */
     Y("Y", "支持"),
+
+    /**
+     * 不支持
+     */
     N("N", "不支持"),
     ;
 
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 }

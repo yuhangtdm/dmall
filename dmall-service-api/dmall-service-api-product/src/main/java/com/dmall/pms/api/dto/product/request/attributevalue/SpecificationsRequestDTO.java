@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.product.request.attributevalue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,7 +15,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/26 22:29
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SpecificationsRequestDTO", description = "销售规格")
 public class SpecificationsRequestDTO implements Serializable {
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @description:
+ * @description: CategoryProductSupport
  * @author: created by hang.yu on 2019/12/29 17:53
  */
 @Component
@@ -19,7 +19,7 @@ public class CategoryProductSupport {
     private CategoryProductMapper categoryProductMapper;
 
     /**
-     * 根据分类查询
+     * 根据分类id查询
      */
     public List<CategoryProductDO> listByCategoryId(Long categoryId) {
         return categoryProductMapper.selectList(Wrappers.<CategoryProductDO>lambdaQuery()

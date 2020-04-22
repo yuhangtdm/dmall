@@ -1,4 +1,4 @@
-package com.dmall.pms.api.dto.attribute.enums;
+package com.dmall.pms.api.enums;
 
 import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
@@ -12,10 +12,17 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TypeEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 普通属性
+     */
     NORMAL(1, "普通属性"),
+
+    /**
+     * 公共属性
+     */
     PUBLIC(2, "公共属性");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

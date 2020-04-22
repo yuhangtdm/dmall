@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -13,7 +12,6 @@ import org.hibernate.validator.constraints.Length;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "PageBrandRequestDTO", description = "品牌分页请求实体")
 public class PageBrandRequestDTO extends PageRequestDTO {

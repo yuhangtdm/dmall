@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.product.request.attributevalue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/26 22:54
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "AddSkuRequestDTO", description = "sku实体")
 public class AddSkuRequestDTO implements Serializable {
 
@@ -33,7 +31,7 @@ public class AddSkuRequestDTO implements Serializable {
     @NotNull(message = "价格不能为空")
     private BigDecimal price;
 
-    @ApiModelProperty(value = "库存", required = true, position = 3)
+    @ApiModelProperty(value = "库存", position = 3)
     @NotNull(message = "库存不能为空")
     private Integer stock;
 

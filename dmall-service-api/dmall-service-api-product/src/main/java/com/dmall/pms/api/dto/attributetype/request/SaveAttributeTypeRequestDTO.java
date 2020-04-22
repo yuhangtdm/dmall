@@ -9,12 +9,11 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
- * @description: 新增属性分类请求实体
+ * @description: 新增属性类别请求实体
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Data
-@Accessors(chain = true)
-@ApiModel(value = "SaveAttributeTypeRequestDTO", description = "新增属性分类请求实体")
+@ApiModel(value = "SaveAttributeTypeRequestDTO", description = "新增属性类别请求实体")
 public class SaveAttributeTypeRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 7821691533714257307L;

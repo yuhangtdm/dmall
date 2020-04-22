@@ -1,14 +1,14 @@
 package com.dmall.pms.api.dto.sku.request.update;
 
-import com.dmall.common.enums.YNEnum;
 import com.dmall.common.dto.validate.ValueInEnum;
+import com.dmall.common.enums.YNEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -16,9 +16,10 @@ import java.math.BigDecimal;
  * @author: created by hang.yu on 2019/12/16 17:53
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "BasicSkuRequestDTO", description = "修改sku基本信息实体")
-public class BasicSkuRequestDTO {
+public class BasicSkuRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 1286014880301318692L;
 
     @ApiModelProperty(value = "skuId", required = true, position = 1)
     @NotNull(message = "skuId不能为空")

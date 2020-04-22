@@ -2,23 +2,21 @@ package com.dmall.pms.api.dto.attribute.request;
 
 import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.pms.api.dto.attribute.enums.HandAddStatusEnum;
-import com.dmall.pms.api.dto.attribute.enums.InputTypeEnum;
-import com.dmall.pms.api.dto.attribute.enums.TypeEnum;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @description: 属性分页请求实体
  * @author: created by hang.yu on 2019-12-16 15:14:49
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageAttributeRequestDTO", description = "属性分页请求实体")
+@ApiModel(value = "PageAttributeRequestDTO", description = "商品属性分页请求实体")
 public class PageAttributeRequestDTO extends PageRequestDTO {
 
     @ApiModelProperty(value = "分类id", position = 5)

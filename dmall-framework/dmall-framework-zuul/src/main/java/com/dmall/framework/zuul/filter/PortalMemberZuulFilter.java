@@ -7,6 +7,7 @@ import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.SourceEnum;
 import com.dmall.common.model.portal.PortalMemberDTO;
+import com.dmall.common.util.AjaxUtil;
 import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.framework.zuul.AdminUserErrorEnum;
@@ -84,7 +85,7 @@ public class PortalMemberZuulFilter extends ZuulFilter {
         }
         if (StrUtil.isBlank(header)) {
             requestContext.setSendZuulResponse(false);
-            requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.SOURCE_BLANK)));
+            requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.SOURCE_NOT_BLANK)));
             requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
         }
@@ -98,7 +99,7 @@ public class PortalMemberZuulFilter extends ZuulFilter {
         if (StrUtil.isBlank(token)) {
             requestContext.setSendZuulResponse(false);
             if (AjaxUtil.isAjax(request)) {
-                requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.TOKEN_BLANK)));
+                requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.TOKEN_NOT_BLANK)));
                 requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             } else {
                 // 重定向到登录地址

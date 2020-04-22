@@ -1,7 +1,7 @@
 package com.dmall.pms.service.impl.category;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
+import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
@@ -70,12 +70,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public BaseResult<CommonCategoryResponseDTO> get(Long id) {
+    public BaseResult<CategoryResponseDTO> get(Long id) {
         return getCategoryHandler.handler(id);
     }
 
     @Override
-    public BaseResult<List<CommonCategoryResponseDTO>> list(@RequestBody ListCategoryRequestDTO requestDTO) {
+    public BaseResult<List<CategoryResponseDTO>> list(@RequestBody ListCategoryRequestDTO requestDTO) {
         return listCategoryHandler.handler(requestDTO);
     }
 

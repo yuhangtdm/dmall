@@ -1,7 +1,7 @@
 package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.pms.api.dto.category.common.CommonCategoryResponseDTO;
+import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
@@ -41,11 +41,11 @@ public interface CategoryService {
     @ApiOperation(value = "根据id查询分类")
     @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{id}")
-    BaseResult<CommonCategoryResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<CategoryResponseDTO> get(@PathVariable("id") Long id);
 
     @ApiOperation(value = "分类列表")
     @PostMapping("/list")
-    BaseResult<List<CommonCategoryResponseDTO>> list(@Valid @RequestBody ListCategoryRequestDTO requestDTO);
+    BaseResult<List<CategoryResponseDTO>> list(@Valid @RequestBody ListCategoryRequestDTO requestDTO);
 
     @ApiOperation(value = "分类zTree树")
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")
@@ -56,7 +56,7 @@ public interface CategoryService {
     @PostMapping("/setBrand")
     BaseResult<Void> setBrand(@Valid @RequestBody SetBrandRequestDTO requestDTO);
 
-    @ApiOperation(value = "设置属性分类")
+    @ApiOperation(value = "设置属性类别")
     @PostMapping("/setAttributeType")
     BaseResult<Void> setAttributeType(@Valid @RequestBody SetAttributeTypeRequestDTO requestDTO);
 

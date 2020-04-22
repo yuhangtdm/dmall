@@ -6,15 +6,17 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 媒体响应实体
  * @author: created by hang.yu on 2019/12/17 14:28
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "MediaResponseDTO", description = "媒体响应实体")
-public class MediaResponseDTO {
+public class MediaResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = -2057535932319627063L;
 
     @ApiModelProperty(value = "skuMediaId", position = 1)
     private Long skuMediaId;

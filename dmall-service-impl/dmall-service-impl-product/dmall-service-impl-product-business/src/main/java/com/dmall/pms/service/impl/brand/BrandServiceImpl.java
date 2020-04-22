@@ -3,12 +3,11 @@ package com.dmall.pms.service.impl.brand;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
-import com.dmall.pms.api.dto.brand.common.CommonBrandResponseDTO;
 import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
-import com.dmall.pms.api.dto.brand.response.PageBrandResponseDTO;
+import com.dmall.pms.api.dto.brand.response.BrandResponseDTO;
 import com.dmall.pms.api.service.BrandService;
 import com.dmall.pms.service.impl.brand.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,17 +61,17 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BaseResult<CommonBrandResponseDTO> get(Long id) {
+    public BaseResult<BrandResponseDTO> get(Long id) {
         return getBrandHandler.handler(id);
     }
 
     @Override
-    public BaseResult<List<CommonBrandResponseDTO>> list(@RequestBody ListBrandRequestDTO requestDTO) {
+    public BaseResult<List<BrandResponseDTO>> list(@RequestBody ListBrandRequestDTO requestDTO) {
         return listBrandHandler.handler(requestDTO);
     }
 
     @Override
-    public BaseResult<ResponsePage<PageBrandResponseDTO>> page(@RequestBody PageBrandRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<BrandResponseDTO>> page(@RequestBody PageBrandRequestDTO requestDTO) {
         return pageBrandHandler.handler(requestDTO);
     }
 

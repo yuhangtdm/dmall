@@ -1,12 +1,10 @@
 package com.dmall.pms.api.dto.category.response;
 
-import com.dmall.pms.api.dto.category.enums.LevelEnum;
+import com.dmall.pms.api.enums.LevelEnum;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,8 +14,6 @@ import java.util.List;
  * @author: created by hang.yu on 2019/11/24 18:30
  */
 @Data
-@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "ZTreeCategoryResponseDTO", description = "ZTree分类树实体")
 public class ZTreeCategoryResponseDTO implements Serializable {
 
@@ -35,7 +31,7 @@ public class ZTreeCategoryResponseDTO implements Serializable {
     @ApiModelProperty(value = "排序", position = 4)
     private Integer sort;
 
-    @ApiModelProperty(value = "级别", position = 6)
+    @ApiModelProperty(value = "级别", position = 5)
     private LevelEnum level;
 
     @ApiModelProperty(value = "子元素", position = 6)

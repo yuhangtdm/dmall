@@ -98,4 +98,8 @@ public interface SkuService {
     @GetMapping("unLockStock")
     @ApiOperation(value = "释放库存")
     BaseResult<Void> unLockStock(@RequestBody @Valid StockRequestDTO requestDTO);
+
+    // TODO 商品的es操作
+
+    // TODO 商品评价展示
 }

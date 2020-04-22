@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
  * @author: created by hang.yu on 2019-12-16 15:14:50
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "PageSkuRequestDTO", description = "sku分页请求实体")
 public class PageSkuRequestDTO extends PageRequestDTO {

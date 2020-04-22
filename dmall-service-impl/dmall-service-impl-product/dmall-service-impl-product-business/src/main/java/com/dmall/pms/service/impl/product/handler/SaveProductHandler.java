@@ -2,21 +2,21 @@ package com.dmall.pms.service.impl.product.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.util.BeanUtil;
-import com.dmall.common.util.NoUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.dto.product.common.BasicProductRequestDTO;
+import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.dataobject.CategoryProductDO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.CategoryProductMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.product.common.ProductValidate;
-import com.dmall.pms.api.enums.ProductErrorEnum;
+import com.dmall.pms.service.impl.validate.ProductValidate;
 import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.impl.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         ProductDO productDO = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery()
                 .eq(ProductDO::getName, requestDTO.getBasicProduct().getName()));
         if (productDO != null) {
-            return ResultUtil.fail(ProductErrorEnum.PRODUCT_NAME_EXISTS);
+            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NAME_EXISTS);
         }
         // 校验商品扩展参数
         return productValidate.validate(requestDTO.getExt());
@@ -78,6 +78,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         BasicProductRequestDTO basicProduct = requestDTO.getBasicProduct();
         ProductExtRequestDTO productAttribute = requestDTO.getExt();
         ProductDO productDO = BeanUtil.copyProperties(basicProduct, ProductDO.class);
+        productDO.setId(IdGeneratorUtil.snowflakeId());
         productDO.setBrandId(productAttribute.getBrandId());
         productMapper.insert(productDO);
         for (Long categoryId : requestDTO.getExt().getCategoryIds()) {
@@ -88,7 +89,6 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
             categoryProductDO.setCascadeCategoryId(categoryDO.getPath());
             categoryProductMapper.insert(categoryProductDO);
         }
-
         return productDO;
     }
 

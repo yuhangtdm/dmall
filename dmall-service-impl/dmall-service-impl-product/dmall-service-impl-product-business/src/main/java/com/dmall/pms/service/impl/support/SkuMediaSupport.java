@@ -2,8 +2,8 @@ package com.dmall.pms.service.impl.support;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.pms.api.dto.sku.response.MediaResponseDTO;
 import com.dmall.pms.api.dto.sku.request.save.MediaRequestDTO;
+import com.dmall.pms.api.dto.sku.response.MediaResponseDTO;
 import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.service.ISkuMediaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,8 @@ public class SkuMediaSupport {
      * 新增或删除skuMedia
      */
     public void saveOrDeleteSkuMedia(Long productId, Long skuId, List<MediaRequestDTO> mediaList) {
-        List<SkuMediaDO> mediaDoList = iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
+        List<SkuMediaDO> mediaDoList = iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery()
+                .eq(SkuMediaDO::getSkuId, skuId));
         if (CollUtil.isEmpty(mediaDoList)) {
             List<SkuMediaDO> skuMediaList = mediaList.stream()
                     .map(mediaRequestDTO -> buildSkuMediaDO(productId, skuId, mediaRequestDTO))
@@ -47,8 +48,7 @@ public class SkuMediaSupport {
                     .collect(Collectors.toList());
             iSkuMediaService.saveBatch(skuMediaList);
             if (CollUtil.isNotEmpty(deleteIdList)) {
-                iSkuMediaService.remove(Wrappers.<SkuMediaDO>lambdaQuery()
-                        .in(SkuMediaDO::getId, deleteIdList));
+                iSkuMediaService.remove(Wrappers.<SkuMediaDO>lambdaQuery().in(SkuMediaDO::getId, deleteIdList));
             }
         }
     }
@@ -85,6 +85,9 @@ public class SkuMediaSupport {
 
     }
 
+    /**
+     * 构建SkuMediaDO
+     */
     private SkuMediaDO buildSkuMediaDO(Long productId, Long skuId, MediaRequestDTO mediaDTO) {
         SkuMediaDO skuMediaDO = new SkuMediaDO();
         skuMediaDO.setProductId(productId);
