@@ -10,7 +10,7 @@ import com.dmall.oms.api.dto.writelogisticsno.WriteLogisticsNoRequestDTO;
 import com.dmall.oms.api.enums.AfterSaleLogTitleEnum;
 import com.dmall.oms.api.enums.AfterSaleLogTypeEnum;
 import com.dmall.oms.api.enums.AfterSaleStatusEnum;
-import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
 import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
@@ -38,14 +38,14 @@ public class WriteLogisticsNoHandler extends AbstractCommonHandler<WriteLogistic
     public BaseResult<Long> processor(WriteLogisticsNoRequestDTO requestDTO) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(requestDTO.getAfterSaleId());
         if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         if (AfterSaleStatusEnum.WAIT_SEND_BACK.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_APPROVAL);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_APPROVAL);
         }
         orderAfterSaleApplyDO.setStatus(AfterSaleStatusEnum.RE_PROGRESS.getCode());
         orderAfterSaleApplyDO.setWriteLogisticsNoTime(new Date());

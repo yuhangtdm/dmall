@@ -1,14 +1,14 @@
 package com.dmall.cart.service.impl.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.cart.api.dto.delete.DeleteCartRequestDTO;
 import com.dmall.cart.api.dto.list.CartListResponseDTO;
 import com.dmall.cart.generator.dataobject.CartItemDO;
 import com.dmall.cart.generator.mapper.CartItemMapper;
+import com.dmall.cart.service.impl.AddCartUtil;
 import com.dmall.cart.service.impl.cache.CartCacheService;
-import com.dmall.cart.service.impl.cache.Constants;
 import com.dmall.cart.service.impl.dto.CartDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
@@ -57,11 +57,15 @@ public class DeleteCartHandler extends AbstractCommonHandler<DeleteCartRequestDT
      */
     private void notLoginDeleteCart(List<Long> skuIds) {
         // 查询cookie中的购物车数据
-        String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), Constants.COOKIE_NAME, true);
+        String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), AddCartUtil.COOKIE_NAME, true);
         if (StrUtil.isNotBlank(cartJson)) {
-            List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
-            cartDTOS.removeIf(next -> skuIds.contains(next.getSkuId()));
-            CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JsonUtil.toJson(cartDTOS), Constants.COOKIE_STORE_TIME, true);
+            List<CartDTO> carts = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {
+            });
+            if (CollUtil.isNotEmpty(carts)) {
+                carts.removeIf(next -> skuIds.contains(next.getSkuId()));
+                CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME, JsonUtil.toJson(carts),
+                        AddCartUtil.COOKIE_STORE_TIME, true);
+            }
         }
     }
 

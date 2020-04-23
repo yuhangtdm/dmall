@@ -18,8 +18,8 @@ import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.generator.service.IAttributeTypeService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.support.AttributeTypeSupport;
-import com.dmall.pms.service.impl.support.CategorySupport;
+import com.dmall.pms.service.support.AttributeTypeSupport;
+import com.dmall.pms.service.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

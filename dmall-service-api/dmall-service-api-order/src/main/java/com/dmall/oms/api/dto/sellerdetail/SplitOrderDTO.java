@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "SplitOrderDTO", description = "拆单响应实体")
-public class SplitOrderDTO {
+public class SplitOrderDTO implements Serializable {
+
+    private static final long serialVersionUID = -2739597871713302148L;
 
     @ApiModelProperty(value = "订单拆分情况", position = 1)
     private SplitEnum split;

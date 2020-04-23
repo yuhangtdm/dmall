@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 售后单审批请求实体
@@ -12,13 +13,15 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "AfterSaleApprovalRequestDTO", description = "售后单审批请求实体")
-public class AfterSaleApprovalRequestDTO {
+public class AfterSaleApprovalRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "售后单号", position = 1)
+    private static final long serialVersionUID = 2975626221588805130L;
+
+    @ApiModelProperty(value = "售后单号", required = true, position = 1)
     @NotNull(message = "售后单号不能为空")
     private Long afterSaleId;
 
-    @ApiModelProperty(value = "审核结果", position = 2)
+    @ApiModelProperty(value = "审核结果", required = true, position = 2)
     @NotNull(message = "审核结果不能为空")
     private Boolean result;
 

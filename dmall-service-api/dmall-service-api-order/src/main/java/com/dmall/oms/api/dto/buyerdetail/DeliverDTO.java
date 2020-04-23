@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
  * @description: 配送信息响应实体
@@ -12,7 +12,9 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "DeliverDTO", description = "配送信息响应实体")
-public class DeliverDTO {
+public class DeliverDTO implements Serializable {
+
+    private static final long serialVersionUID = -8205380475715188666L;
 
     @ApiModelProperty(value = "物流单号", position = 1)
     private String logisticsNo;

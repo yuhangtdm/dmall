@@ -43,20 +43,20 @@ public class ApplyReturnHandler extends AbstractCommonHandler<OrderApplyReturnRe
         // 校验orderItem存在
         OrderItemDO orderItemDO = orderItemMapper.selectById(requestDTO.getOrderItemId());
         if (orderItemDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 校验order存在
         OrderDO orderDO = orderMapper.selectById(orderItemDO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 校验订单状态必须为 已完成
         if (OrderStatusEnum.COMPLETED.getCode().equals(orderDO.getStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.APPLY_REFUND_ERROR);
+            return ResultUtil.fail(OmsErrorEnum.APPLY_REFUND_ERROR);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         // 新增售后服务表
         Long id = insertAfterSale(requestDTO, orderItemDO, orderDO);

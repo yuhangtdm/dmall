@@ -69,7 +69,7 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
     public BaseResult<Long> processor(DeliverRequestDTO requestDTO) {
         SubOrderDO subOrderDO = subOrderMapper.selectById(requestDTO.getSubOrderId());
         if (subOrderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.SUB_ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.SUB_ORDER_NOT_EXISTS);
         }
         subOrderDO.setStatus(SubOrderStatusEnum.WAIT_RECEIVE.getCode());
         subOrderDO.setLogisticsNo(requestDTO.getLogisticsNo());
@@ -77,7 +77,7 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
         subOrderDO.setExpressFee(requestDTO.getExpressFee());
         AdminUserDTO adminUser = AdminUserContextHolder.get();
         if (adminUser.getWarehouseId() == null) {
-            return ResultUtil.fail(OrderErrorEnum.DELIVER_PERSON_WAREHOUSE_EMPTY);
+            return ResultUtil.fail(OmsErrorEnum.DELIVER_PERSON_WAREHOUSE_EMPTY);
         }
         // 获取仓库信息
         BaseResult<DeliverWarehouseResponseDTO> warehouseBaseResult = deliverWarehouseFeign.get(adminUser.getWarehouseId());

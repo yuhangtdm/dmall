@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,7 +15,9 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "PaymentDTO", description = "支付信息响应实体")
-public class PaymentDTO {
+public class PaymentDTO implements Serializable {
+
+    private static final long serialVersionUID = -6608065966835180364L;
 
     @ApiModelProperty(value = "支付方式", position = 1)
     private PaymentTypeEnum paymentType;

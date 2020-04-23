@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 新增购物车请求实体
@@ -13,13 +14,15 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "AddCartRequestDTO", description = "新增购物车请求实体")
-public class AddCartRequestDTO {
+public class AddCartRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "skuId", position = 1)
+    private static final long serialVersionUID = 8545516051845208825L;
+
+    @ApiModelProperty(value = "skuId", required = true, position = 1)
     @NotNull(message = "skuId不能为空")
     private Long skuId;
 
-    @ApiModelProperty(value = "数量", position = 2)
+    @ApiModelProperty(value = "数量", required = true, position = 2)
     @NotNull(message = "数量不能为空")
     @Min(value = 1, message = "数量不能小于1")
     private Integer number;

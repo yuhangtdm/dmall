@@ -20,6 +20,7 @@ import java.util.Date;
 @ApiModel(value = "PageOrderResponseDTO", description = "拆单分页响应实体")
 public class DemolitionOrderPageResponseDTO implements Serializable {
 
+    private static final long serialVersionUID = 7077582388689077395L;
     /**
      * 订单号
      */

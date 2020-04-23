@@ -16,10 +16,10 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2020/3/27 23:36
  */
 @Data
-@ApiModel(value = "SaveMemberInvoiceRequestDTO", description =  "新增会员发票请求实体")
+@ApiModel(value = "SaveMemberInvoiceRequestDTO", description = "新增会员发票请求实体")
 public class SaveMemberInvoiceRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "发票抬头 1-个人;2-单位", position = 2)
+    @ApiModelProperty(value = "发票抬头 1-个人;2-单位", required = true, position = 2)
     @NotNull(message = "发票抬头不能为空")
     @ValueInEnum(InvoiceHeaderEnum.class)
     private Integer invoiceHeader;
@@ -27,7 +27,7 @@ public class SaveMemberInvoiceRequestDTO implements Serializable {
     @ApiModelProperty(value = "个人名称", position = 3)
     private String personalName;
 
-    @ApiModelProperty(value = "收票人手机号", position = 4)
+    @ApiModelProperty(value = "收票人手机号", required = true, position = 4)
     @NotBlank(message = "收票人手机号不能为空")
     private String receiverPhone;
 
@@ -40,7 +40,7 @@ public class SaveMemberInvoiceRequestDTO implements Serializable {
     @ApiModelProperty(value = "纳税人识别号", position = 7)
     private String customerTaxNumber;
 
-    @ApiModelProperty(value = "发票内容 1-商品类别;2-商品明细", position = 8)
+    @ApiModelProperty(value = "发票内容 1-商品类别;2-商品明细", required = true, position = 8)
     @NotNull(message = "发票内容不能为空")
     @ValueInEnum(InvoiceContentEnum.class)
     private Integer invoiceContent;

@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 public class CartSkuResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -755948561683037853L;
+
     @ApiModelProperty(value = "skuId", position = 1)
     private Long skuId;
 
@@ -40,12 +41,12 @@ public class CartSkuResponseDTO implements Serializable {
     @ApiModelProperty(value = "上架状态,Y-上架;N-下架", position = 8)
     private Boolean status;
 
-    @ApiModelProperty(value = "是否降价", position = 8)
+    @ApiModelProperty(value = "是否降价", position = 3)
     private Boolean hasReductionPrice;
 
-    @ApiModelProperty(value = "下降的价钱", position = 9)
+    @ApiModelProperty(value = "下降的价钱", position = 10)
     private BigDecimal reductionPrice;
 
-    @ApiModelProperty(value = "是否勾选", position = 9)
+    @ApiModelProperty(value = "是否勾选", position = 11)
     private Boolean checked;
 }

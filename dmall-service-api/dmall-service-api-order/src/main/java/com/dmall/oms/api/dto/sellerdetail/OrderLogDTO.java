@@ -5,13 +5,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @description: 订单日志信息
  * @author: created by hang.yu on 2020/4/7 23:10
  */
 @Data
 @ApiModel(value = "OrderLogDTO", description = "订单日志信息")
-public class OrderLogDTO {
+public class OrderLogDTO implements Serializable {
+
+    private static final long serialVersionUID = -8250416732694944881L;
 
     @ApiModelProperty(value = "orderLogId", position = 1)
     private Long orderLogId;

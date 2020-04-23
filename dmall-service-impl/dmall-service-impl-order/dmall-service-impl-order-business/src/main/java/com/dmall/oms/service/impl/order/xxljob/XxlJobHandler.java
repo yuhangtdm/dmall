@@ -22,6 +22,7 @@ import com.dmall.oms.service.impl.support.SubOrderJobSupport;
 import com.dmall.oms.service.impl.support.SubOrderSupport;
 import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
 import com.dmall.pms.api.dto.comment.request.SaveCommentRequestDTO;
+import com.dmall.pms.api.enums.CommentLevelEnum;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,13 +68,14 @@ public class XxlJobHandler {
     @Autowired
     private XxlJobSupport xxlJobSupport;
 
+    private static final String DEFAULT_GOOD_COMMENT = "默认好评";
+
     /**
      * 自动确认收货
      */
     @XxlJob(OrderConstants.AUTO_RECEIVE_HANDLER)
     @Transactional(rollbackFor = Exception.class)
     public ReturnT<String> autoReceive(String param) {
-
         Long subOrderId = Long.valueOf(param);
         // 子订单存在 直接返回
         SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
@@ -185,8 +187,8 @@ public class XxlJobHandler {
             saveCommentRequestDTO.setSkuId(skuId);
             saveCommentRequestDTO.setOrderId(orderId);
             saveCommentRequestDTO.setSubOrderId(subOrderId);
-            saveCommentRequestDTO.setContent("默认好评");
-            saveCommentRequestDTO.setStar(StarEnum.FIVE.getCode());
+            saveCommentRequestDTO.setContent(DEFAULT_GOOD_COMMENT);
+            saveCommentRequestDTO.setStar(CommentLevelEnum.FIVE.getCode());
             return saveCommentRequestDTO;
         }).collect(Collectors.toList());
     }

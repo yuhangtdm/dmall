@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,9 +17,11 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "DeleteCartRequestDTO", description = "删除购物车请求实体")
-public class DeleteCartRequestDTO {
+public class DeleteCartRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "skuIds", position = 1)
+    private static final long serialVersionUID = 8213310789899867270L;
+
+    @ApiModelProperty(value = "skuIds", required = true, position = 1)
     @NotNull(message = "商品列表不能为空")
     @Size(min = 1, message = "商品列表不能为空")
     private List<Long> skuIds;

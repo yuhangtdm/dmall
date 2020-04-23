@@ -1,7 +1,5 @@
 package com.dmall.oms.api.dto.myaftersalepage;
 
-import com.dmall.common.dto.validate.ValueInEnum;
-import com.dmall.oms.api.enums.AfterSaleStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,6 +15,8 @@ import java.util.Date;
 @ApiModel(value = "MyAfterSalePageResponseDTO", description = "我的售后单分页响应实体")
 public class MyAfterSalePageResponseDTO implements Serializable {
 
+    private static final long serialVersionUID = -3288320865097059188L;
+    
     @ApiModelProperty(value = "售后单号", position = 1)
     private Long afterSaleId;
 

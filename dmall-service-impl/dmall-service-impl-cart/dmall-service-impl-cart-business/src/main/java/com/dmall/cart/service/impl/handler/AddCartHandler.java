@@ -8,7 +8,7 @@ import com.dmall.cart.generator.dataobject.CartItemDO;
 import com.dmall.cart.generator.mapper.CartItemMapper;
 import com.dmall.cart.service.impl.AddCartUtil;
 import com.dmall.cart.service.impl.cache.CartCacheService;
-import com.dmall.cart.service.impl.enums.OperateEnum;
+import com.dmall.cart.api.enums.OperateEnum;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
@@ -43,9 +43,9 @@ public class AddCartHandler extends AbstractCommonHandler<AddCartRequestDTO, Car
         if (!basic.getResult()) {
             return ResultUtil.fail(basic.getCode(), basic.getMsg());
         }
-        BasicSkuResponseDTO skuData = basic.getData().get(0);
         // 获取当前登录用户
         PortalMemberDTO login = PortalMemberContextHolder.get();
+        BasicSkuResponseDTO skuData = basic.getData().get(0);
         if (login == null) {
             AddCartUtil.notLoginAddCart(requestDTO.getNumber(), OperateEnum.ADD, skuData);
         } else {
@@ -56,6 +56,9 @@ public class AddCartHandler extends AbstractCommonHandler<AddCartRequestDTO, Car
         return ResultUtil.success(getAddCartResponse(requestDTO, skuData));
     }
 
+    /**
+     * 处理购物车
+     */
     private void handlerCart(PortalMemberDTO login, CartItemDO cartItemDO) {
         if (cartItemDO.getId() != null) {
             cartMapper.updateById(cartItemDO);
@@ -65,6 +68,9 @@ public class AddCartHandler extends AbstractCommonHandler<AddCartRequestDTO, Car
         cartCacheService.insert(login.getId(), cartItemDO);
     }
 
+    /**
+     * 构建响应实体
+     */
     private AddCartResponseDTO getAddCartResponse(AddCartRequestDTO requestDTO, BasicSkuResponseDTO skuData) {
         AddCartResponseDTO responseDTO = new AddCartResponseDTO();
         responseDTO.setSkuId(skuData.getId());

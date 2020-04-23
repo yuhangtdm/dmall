@@ -1,10 +1,9 @@
 package com.dmall.mms.service.impl.member;
 
-
 import com.dmall.common.dto.BaseResult;
-import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.ResetPasswordRequestDTO;
-import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
+import com.dmall.mms.api.dto.member.RegisterMemberRequestDTO;
+import com.dmall.mms.api.dto.member.ResetPasswordRequestDTO;
+import com.dmall.mms.api.dto.member.UpdatePasswordRequestDTO;
 import com.dmall.mms.api.service.MemberService;
 import com.dmall.mms.service.impl.member.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;

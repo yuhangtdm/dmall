@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "AfterSaleLogDTO", description = "售后单日志实体")
-public class AfterSaleLogDTO {
+public class AfterSaleLogDTO implements Serializable {
+
+    private static final long serialVersionUID = 8099181513321987957L;
 
     @ApiModelProperty(value = "logId", position = 1)
     private Long logId;

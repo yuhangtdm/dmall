@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 申请退货请求实体
@@ -13,32 +14,34 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "OrderApplyReturnRequestDTO", description = "申请退货请求实体")
-public class OrderApplyReturnRequestDTO {
+public class OrderApplyReturnRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "订单项号", position = 1)
+    private static final long serialVersionUID = -2076730577371710660L;
+
+    @ApiModelProperty(value = "订单项号", required = true, position = 1)
     @NotNull(message = "订单项号不能为空")
     private Long orderItemId;
 
-    @ApiModelProperty(value = "提交数量", position = 2)
+    @ApiModelProperty(value = "提交数量", required = true, position = 2)
     @NotNull(message = "提交数量不能为空")
     private Integer number;
 
-    @ApiModelProperty(value = "退货原因", position = 3)
+    @ApiModelProperty(value = "退货原因", required = true, position = 3)
     @NotNull(message = "退货原因不能为空")
     private String reason;
 
     @ApiModelProperty(value = "退货描述", position = 4)
     private String description;
 
-    @ApiModelProperty(value = "买家发货人姓名", position = 5)
+    @ApiModelProperty(value = "买家发货人姓名", required = true, position = 5)
     @NotBlank(message = "买家发货人姓名不能为空")
     private String buyerName;
 
-    @ApiModelProperty(value = "买家发货人电话", position = 6)
+    @ApiModelProperty(value = "买家发货人电话", required = true, position = 6)
     @NotBlank(message = "买家发货人电话不能为空")
     private String buyerPhone;
 
-    @ApiModelProperty(value = "买家发货人详细地址", position = 7)
+    @ApiModelProperty(value = "买家发货人详细地址", required = true, position = 7)
     @NotBlank(message = "买家发货人详细地址不能为空")
     private String buyerDetailAddress;
 

@@ -14,7 +14,7 @@ public enum  InvoiceContentEnum implements CodeDescEnum<Integer> {
     CATEGORY(1, "商品类别"),
     DETAIL(2, "商品明细"),
     ;
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

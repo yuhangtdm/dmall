@@ -6,7 +6,7 @@ import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.api.enums.OrderOperateEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
@@ -40,19 +40,19 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
     public BaseResult<Long> processor(Long orderId) {
         OrderDO orderDO = orderMapper.selectById(orderId);
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         if (!OrderStatusEnum.CANCELED.getCode().equals(orderDO.getStatus()) ||
                 !OrderStatusEnum.COMPLETED.getCode().equals(orderDO.getStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.DELETE_STATUS_ERROR);
+            return ResultUtil.fail(OmsErrorEnum.DELETE_STATUS_ERROR);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
 
         if (CollUtil.isNotEmpty(afterSaleSupport.listInNotDeleteStatus(orderId))){
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_ING);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_ING);
         }
 
         orderMapper.deleteById(orderId);

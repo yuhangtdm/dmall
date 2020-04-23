@@ -2,7 +2,7 @@ package com.dmall.mms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberDTO;
-import com.dmall.mms.api.dto.member.request.WeiBoLoginRequestDTO;
+import com.dmall.mms.api.dto.member.WeiBoLoginRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

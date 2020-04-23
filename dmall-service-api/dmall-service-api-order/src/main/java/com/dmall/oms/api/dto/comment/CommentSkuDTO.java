@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 评价商品信息
@@ -14,7 +15,9 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "CommentSkuDTO", description = "评价商品信息")
-public class CommentSkuDTO {
+public class CommentSkuDTO implements Serializable {
+
+    private static final long serialVersionUID = -4946053939457979462L;
 
     @ApiModelProperty(value = "skuId", position = 1)
     @NotNull(message = "skuId不能为空")

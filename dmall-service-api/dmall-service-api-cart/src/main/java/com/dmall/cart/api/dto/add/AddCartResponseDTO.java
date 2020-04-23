@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -12,7 +13,9 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "AddCartResponseDTO", description = "新增购物车响应实体")
-public class AddCartResponseDTO {
+public class AddCartResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = -3502323342644824079L;
 
     @ApiModelProperty(value = "skuId", position = 1)
     private Long skuId;

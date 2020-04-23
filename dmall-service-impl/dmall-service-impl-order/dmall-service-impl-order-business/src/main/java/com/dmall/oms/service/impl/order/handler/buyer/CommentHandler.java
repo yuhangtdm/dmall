@@ -10,8 +10,7 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.comment.CommentRequestDTO;
 import com.dmall.oms.api.dto.comment.CommentSkuDTO;
 import com.dmall.oms.api.enums.OrderCommentStatusEnum;
-import com.dmall.oms.api.enums.OrderErrorEnum;
-import com.dmall.oms.api.enums.SplitEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.feign.CommentFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
@@ -54,22 +53,22 @@ public class CommentHandler extends AbstractCommonHandler<CommentRequestDTO, Sub
     public BaseResult<Long> processor(CommentRequestDTO requestDTO) {
         SubOrderDO subOrderDO = subOrderMapper.selectById(requestDTO.getSubOrderId());
         if (subOrderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderDO.getCreator())) {
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         // 已全部评价则不可评价
         if (OrderCommentStatusEnum.ALL.getCode().equals(orderDO.getCommentStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.COMMENT_ERROR);
+            return ResultUtil.fail(OmsErrorEnum.COMMENT_ERROR);
         }
         if (OrderCommentStatusEnum.ALL.getCode().equals(subOrderDO.getCommentStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.COMMENT_ERROR);
+            return ResultUtil.fail(OmsErrorEnum.COMMENT_ERROR);
         }
 
         // 子订单 评价状态默认是 部分评价
@@ -114,7 +113,7 @@ public class CommentHandler extends AbstractCommonHandler<CommentRequestDTO, Sub
                 .filter(orderItem -> skuIds.contains(orderItem.getSkuId())).collect(Collectors.toList());
         for (OrderItemDO orderItemDO : waitCommentOrderItemList) {
             if (YNEnum.Y.getCode().equals(orderItemDO.getCommentStatus())) {
-                throw new BusinessException(OrderErrorEnum.COMMENT_ERROR);
+                throw new BusinessException(OmsErrorEnum.COMMENT_ERROR);
             }
             orderItemDO.setCommentStatus(YNEnum.Y.getCode());
             orderItemMapper.updateById(orderItemDO);

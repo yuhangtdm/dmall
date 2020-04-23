@@ -68,20 +68,20 @@ public class SellerReceiveHandler extends AbstractCommonHandler<Long, OrderAfter
     public BaseResult processor(Long afterSaleId) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
         if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
         }
         if (AfterSaleStatusEnum.RE_PROGRESS.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_APPROVAL);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_APPROVAL);
         }
         // 校验orderItem存在
         OrderItemDO orderItemDO = orderItemMapper.selectById(orderAfterSaleApplyDO.getOrderItemId());
         if (orderItemDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 校验order存在
         OrderDO orderDO = orderMapper.selectById(orderItemDO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.SYSTEM,

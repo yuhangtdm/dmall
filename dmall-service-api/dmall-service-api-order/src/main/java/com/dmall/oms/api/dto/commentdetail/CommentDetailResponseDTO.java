@@ -4,16 +4,19 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @description:
+ * @description: 评价详情响应实体
  * @author: created by hang.yu on 2020/4/12 16:46
  */
 @Data
-@ApiModel(value = "CommentDetailResponseDTO", description = "评价详情请求实体")
-public class CommentDetailResponseDTO {
+@ApiModel(value = "CommentDetailResponseDTO", description = "评价详情响应实体")
+public class CommentDetailResponseDTO implements Serializable{
+
+    private static final long serialVersionUID = -4884566657214529723L;
 
     @ApiModelProperty(value = "skuId", position = 1)
     private Long skuId;

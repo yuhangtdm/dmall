@@ -8,7 +8,7 @@ import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.ProductAttributeValueDO;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
-import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.support.ProductAttributeValueSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

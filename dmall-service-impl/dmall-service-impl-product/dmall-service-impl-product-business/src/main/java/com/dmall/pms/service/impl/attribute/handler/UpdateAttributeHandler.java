@@ -11,8 +11,8 @@ import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
-import com.dmall.pms.service.impl.validate.AttributeValidate;
-import com.dmall.pms.service.impl.support.CategoryAttributeSupport;
+import com.dmall.pms.service.validate.AttributeValidate;
+import com.dmall.pms.service.support.CategoryAttributeSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

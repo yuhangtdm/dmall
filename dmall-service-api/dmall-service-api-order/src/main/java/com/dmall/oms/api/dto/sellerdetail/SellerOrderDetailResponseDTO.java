@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "SellerOrderDetailResponseDTO", description = "卖家端订单详情响应实体")
-public class SellerOrderDetailResponseDTO {
+public class SellerOrderDetailResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = 418758724210223609L;
 
     @ApiModelProperty(value = "订单基础信息", position = 1)
     private OrderBasicDTO basicOrder;

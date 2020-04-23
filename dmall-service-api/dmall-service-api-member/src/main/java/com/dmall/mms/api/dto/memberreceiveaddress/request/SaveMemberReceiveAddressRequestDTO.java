@@ -4,7 +4,6 @@ import com.dmall.common.dto.validate.PhoneNumber;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +14,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2020-02-23 19:42:03
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "SaveMemberReceiveAddressRequestDTO", description = "新增会员收货地址请求实体")
 public class SaveMemberReceiveAddressRequestDTO implements Serializable {
 
@@ -42,11 +40,11 @@ public class SaveMemberReceiveAddressRequestDTO implements Serializable {
     @NotBlank(message = "所在市不能为空")
     private String city;
 
-    @ApiModelProperty(value = "所在区/县", position = 9, required = true)
+    @ApiModelProperty(value = "所在区/县", position = 6, required = true)
     @NotBlank(message = "所在区/县不能为空")
     private String region;
 
-    @ApiModelProperty(value = "详细地址", position = 10, required = true)
+    @ApiModelProperty(value = "详细地址", position = 7, required = true)
     @NotBlank(message = "详细地址不能为空")
     private String detailAddress;
 }

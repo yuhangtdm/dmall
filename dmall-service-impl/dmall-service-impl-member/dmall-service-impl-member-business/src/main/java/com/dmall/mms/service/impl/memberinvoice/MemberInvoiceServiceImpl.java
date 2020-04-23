@@ -1,14 +1,11 @@
 package com.dmall.mms.service.impl.memberinvoice;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.mms.api.dto.memberinvoice.GetMemberInvoiceResponseDTO;
+import com.dmall.mms.api.dto.memberinvoice.MemberInvoiceResponseDTO;
 import com.dmall.mms.api.dto.memberinvoice.SaveMemberInvoiceRequestDTO;
 import com.dmall.mms.api.dto.memberinvoice.UpdateMemberInvoiceRequestDTO;
 import com.dmall.mms.api.service.MemberInvoiceService;
-import com.dmall.mms.service.impl.memberinvoice.handler.DeleteMemberInvoiceHandler;
-import com.dmall.mms.service.impl.memberinvoice.handler.GetMemberInvoiceHandler;
-import com.dmall.mms.service.impl.memberinvoice.handler.SaveMemberInvoiceHandler;
-import com.dmall.mms.service.impl.memberinvoice.handler.UpdateMemberInvoiceHandler;
+import com.dmall.mms.service.impl.memberinvoice.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +29,9 @@ public class MemberInvoiceServiceImpl implements MemberInvoiceService {
     @Autowired
     private DeleteMemberInvoiceHandler deleteMemberInvoiceHandler;
 
+    @Autowired
+    private GetMemberInvoiceByMemberIdHandler getMemberInvoiceByMemberIdHandler;
+
     @Override
     public BaseResult<Long> save(@RequestBody SaveMemberInvoiceRequestDTO requestDTO) {
         return saveMemberInvoiceHandler.handler(requestDTO);
@@ -48,12 +48,12 @@ public class MemberInvoiceServiceImpl implements MemberInvoiceService {
     }
 
     @Override
-    public BaseResult<GetMemberInvoiceResponseDTO> get(Long id) {
+    public BaseResult<MemberInvoiceResponseDTO> get(Long id) {
         return getMemberInvoiceHandler.handler(id);
     }
 
     @Override
-    public BaseResult<GetMemberInvoiceResponseDTO> getByMemberId(Long memberId) {
-        return null;
+    public BaseResult<MemberInvoiceResponseDTO> getByMemberId(Long memberId) {
+        return getMemberInvoiceByMemberIdHandler.handler(memberId);
     }
 }

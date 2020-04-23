@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -12,7 +13,9 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "LogisticsDTO", description = "物流信息响应实体")
-public class LogisticsDTO {
+public class LogisticsDTO implements Serializable {
+
+    private static final long serialVersionUID = 3406891549914195804L;
 
     @ApiModelProperty(value = "物流公司", position = 1)
     private String logisticsCompany;

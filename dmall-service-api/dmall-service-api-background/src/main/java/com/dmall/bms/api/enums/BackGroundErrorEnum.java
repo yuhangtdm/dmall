@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: 后台错误枚举
+ * @description: 后台错误枚举 1000开头
  * @author: created by hang.yu on 2020/4/21 22:13
  */
 @Getter

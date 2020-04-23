@@ -7,9 +7,9 @@ import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.mms.api.enums.MmsErrorEnum;
 import com.dmall.mms.generator.dataobject.MemberReceiveAddressDO;
 import com.dmall.mms.generator.mapper.MemberReceiveAddressMapper;
-import com.dmall.mms.api.enums.MemberReceiveAddressErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,24 +29,22 @@ public class SetDefaultReceiveAddressHandler extends AbstractCommonHandler<Long,
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
         // 地址必须存在且为当前登录人的
         MemberReceiveAddressDO receiveAddressDO = memberReceiveAddressMapper.selectById(id);
-        if (receiveAddressDO == null){
-            return ResultUtil.fail(MemberReceiveAddressErrorEnum.MEMBER_RECEIVE_ADDRESS_NOT_EXIST);
+        if (receiveAddressDO == null) {
+            return ResultUtil.fail(MmsErrorEnum.MEMBER_RECEIVE_ADDRESS_NOT_EXIST);
         }
-        if (!loginMember.getId().equals(receiveAddressDO.getCreator())){
-            return ResultUtil.fail(MemberReceiveAddressErrorEnum.MEMBER_RECEIVE_ADDRESS_UPDATE_ERROR);
+        if (!loginMember.getId().equals(receiveAddressDO.getCreator())) {
+            return ResultUtil.fail(MmsErrorEnum.MEMBER_RECEIVE_ADDRESS_UPDATE_ERROR);
         }
         // 先设置所有的地址为非默认
         MemberReceiveAddressDO addressDO = new MemberReceiveAddressDO();
         addressDO.setDefaultStatus(YNEnum.N.getCode());
         memberReceiveAddressMapper.update(addressDO, Wrappers.<MemberReceiveAddressDO>lambdaUpdate()
                 .eq(MemberReceiveAddressDO::getCreator, loginMember.getId()));
-
         // 将当前地址设置为默认
         MemberReceiveAddressDO defaultAddress = new MemberReceiveAddressDO();
         defaultAddress.setId(id);
         defaultAddress.setDefaultStatus(YNEnum.Y.getCode());
         memberReceiveAddressMapper.updateById(defaultAddress);
-
         return ResultUtil.success(id);
     }
 }

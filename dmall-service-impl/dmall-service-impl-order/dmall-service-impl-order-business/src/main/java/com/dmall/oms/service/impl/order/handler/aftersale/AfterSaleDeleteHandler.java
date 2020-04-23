@@ -9,7 +9,7 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.enums.AfterSaleLogTitleEnum;
 import com.dmall.oms.api.enums.AfterSaleLogTypeEnum;
 import com.dmall.oms.api.enums.AfterSaleStatusEnum;
-import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
 import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
@@ -35,20 +35,20 @@ public class AfterSaleDeleteHandler extends AbstractCommonHandler<Long, OrderAft
     private OrderAfterSaleLogSupport orderAfterSaleLogSupport;
 
     @Override
-    public BaseResult processor(Long afterSaleId) {
+    public BaseResult<Long> processor(Long afterSaleId) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
         if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         // 非 已完成 和 已关闭状态 和 已拒绝不可删除
         if (!AfterSaleStatusEnum.COMPLETED.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
                 !AfterSaleStatusEnum.CLOSED.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
                 !AfterSaleStatusEnum.REFUSE.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_DELETE);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_DELETE);
         }
         orderAfterSaleApplyDO.setStatus(AfterSaleStatusEnum.DELETED.getCode());
         orderAfterSaleApplyDO.setDeleteTime(new Date());

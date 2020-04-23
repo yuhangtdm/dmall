@@ -12,8 +12,8 @@ import com.dmall.common.util.FreightPriceUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.common.util.threadpool.ThreadPoolUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.mms.api.dto.memberinvoice.GetMemberInvoiceResponseDTO;
-import com.dmall.mms.api.dto.memberreceiveaddress.response.ListReceiveAddressResponseDTO;
+import com.dmall.mms.api.dto.memberinvoice.MemberInvoiceResponseDTO;
+import com.dmall.mms.api.dto.memberreceiveaddress.response.ReceiveAddressResponseDTO;
 import com.dmall.oms.api.dto.totrade.request.ToTradeRequestDTO;
 import com.dmall.oms.api.dto.totrade.request.TradeSkuRequestDTO;
 import com.dmall.oms.api.dto.totrade.response.AddressResponseDTO;
@@ -102,7 +102,7 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
      * 异步获取收货地址数据
      */
     private List<AddressResponseDTO> getMemberAddressFeign() {
-        BaseResult<List<ListReceiveAddressResponseDTO>> listBaseResult = memberAddressFeign.list();
+        BaseResult<List<ReceiveAddressResponseDTO>> listBaseResult = memberAddressFeign.list();
         if (!listBaseResult.getResult()) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
@@ -127,11 +127,11 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
      */
     private InvoiceResponseDTO getMemberInvoice(Long memberId) {
 
-        BaseResult<GetMemberInvoiceResponseDTO> memberResponse = memberInvoiceFeign.getByMemberId(memberId);
+        BaseResult<MemberInvoiceResponseDTO> memberResponse = memberInvoiceFeign.getByMemberId(memberId);
         if (!memberResponse.getResult()) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
-        GetMemberInvoiceResponseDTO memberInvoiceResponseDTO = memberResponse.getData();
+        MemberInvoiceResponseDTO memberInvoiceResponseDTO = memberResponse.getData();
         InvoiceResponseDTO invoiceResponse = new InvoiceResponseDTO();
         invoiceResponse.setId(memberInvoiceResponseDTO.getId());
         invoiceResponse.setInvoiceHeader(memberInvoiceResponseDTO.getInvoiceHeader());

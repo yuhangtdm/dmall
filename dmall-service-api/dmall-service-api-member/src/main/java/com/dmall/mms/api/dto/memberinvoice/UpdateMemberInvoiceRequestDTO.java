@@ -12,10 +12,10 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2020/3/27 23:36
  */
 @Data
-@ApiModel(value = "UpdateMemberInvoiceRequestDTO", description =  "修改会员发票请求实体")
+@ApiModel(value = "UpdateMemberInvoiceRequestDTO", description = "修改会员发票请求实体")
 public class UpdateMemberInvoiceRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "发票id", position = 1)
+    @ApiModelProperty(value = "发票id", required = true, position = 1)
     @NotNull(message = "发票id不能为空")
     private Long id;
 

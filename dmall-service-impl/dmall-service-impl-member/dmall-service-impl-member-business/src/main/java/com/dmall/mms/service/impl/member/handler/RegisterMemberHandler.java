@@ -4,12 +4,12 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.util.PasswordUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.mms.api.dto.member.enums.SourceTypeEnum;
-import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
+import com.dmall.mms.api.enums.MmsErrorEnum;
+import com.dmall.mms.api.enums.SourceTypeEnum;
+import com.dmall.mms.api.dto.member.RegisterMemberRequestDTO;
 import com.dmall.mms.generator.dataobject.MemberDO;
 import com.dmall.mms.generator.mapper.MemberMapper;
-import com.dmall.mms.api.enums.MemberErrorEnum;
-import com.dmall.mms.service.impl.support.MemberSupport;
+import com.dmall.mms.service.support.MemberSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,17 +32,17 @@ public class RegisterMemberHandler extends AbstractCommonHandler<RegisterMemberR
         // 邮箱必须唯一
         MemberDO byEmail = memberSupport.getByEmail(requestDTO.getEmail());
         if (byEmail != null){
-            return ResultUtil.fail(MemberErrorEnum.EMAIL_EXISTS);
+            return ResultUtil.fail(MmsErrorEnum.EMAIL_EXISTS);
         }
         // 手机号必须唯一
         MemberDO byPhone = memberSupport.getByPhone(requestDTO.getPhone());
         if (byPhone != null) {
-            return ResultUtil.fail(MemberErrorEnum.REGISTER_PHONE_EXISTS);
+            return ResultUtil.fail(MmsErrorEnum.REGISTER_PHONE_EXISTS);
         }
         // 会员名称必须唯一
         MemberDO byName = memberSupport.getByName(requestDTO.getMemberName());
         if (byName != null) {
-            return ResultUtil.fail(MemberErrorEnum.REGISTER_NAME_EXISTS);
+            return ResultUtil.fail(MmsErrorEnum.REGISTER_NAME_EXISTS);
         }
         return ResultUtil.success();
     }

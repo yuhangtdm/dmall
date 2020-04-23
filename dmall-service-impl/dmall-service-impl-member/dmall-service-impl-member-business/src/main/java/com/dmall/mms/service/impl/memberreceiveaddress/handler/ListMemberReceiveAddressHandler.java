@@ -6,7 +6,7 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.mms.api.dto.memberreceiveaddress.response.ListReceiveAddressResponseDTO;
+import com.dmall.mms.api.dto.memberreceiveaddress.response.ReceiveAddressResponseDTO;
 import com.dmall.mms.generator.dataobject.MemberReceiveAddressDO;
 import com.dmall.mms.generator.mapper.MemberReceiveAddressMapper;
 import com.google.common.collect.Lists;
@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
-public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void, MemberReceiveAddressDO, ListReceiveAddressResponseDTO> {
+public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void, MemberReceiveAddressDO, ReceiveAddressResponseDTO> {
 
     @Autowired
     private MemberReceiveAddressMapper memberReceiveAddressMapper;
 
     @Override
-    public BaseResult<List<ListReceiveAddressResponseDTO>> processor(Void aVoid) {
+    public BaseResult<List<ReceiveAddressResponseDTO>> processor(Void aVoid) {
         // 查询地址列表
         List<MemberReceiveAddressDO> list = memberReceiveAddressMapper.selectList(Wrappers.<MemberReceiveAddressDO>lambdaQuery()
                 .orderByDesc(MemberReceiveAddressDO::getModifier));
@@ -44,12 +44,12 @@ public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void,
                 index = i;
             }
         }
+        // 将默认地址交换到第一个
         if (index != -1 && index != 0){
             Collections.swap(list, 0, index);
         }
-
-        List<ListReceiveAddressResponseDTO> collect = list.stream()
-                .map(addressDO -> doConvertDto(addressDO, ListReceiveAddressResponseDTO.class))
+        List<ReceiveAddressResponseDTO> collect = list.stream()
+                .map(addressDO -> doConvertDto(addressDO, ReceiveAddressResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }

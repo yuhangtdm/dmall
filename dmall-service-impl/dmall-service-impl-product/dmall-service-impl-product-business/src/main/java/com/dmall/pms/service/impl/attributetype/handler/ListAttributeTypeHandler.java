@@ -14,7 +14,7 @@ import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
-import com.dmall.pms.service.impl.support.CategorySupport;
+import com.dmall.pms.service.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

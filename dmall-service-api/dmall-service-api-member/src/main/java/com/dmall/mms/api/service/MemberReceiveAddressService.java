@@ -3,8 +3,7 @@ package com.dmall.mms.api.service;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.SaveMemberReceiveAddressRequestDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.UpdateMemberReceiveAddressRequestDTO;
-import com.dmall.mms.api.dto.memberreceiveaddress.response.GetReceiveAddressResponseDTO;
-import com.dmall.mms.api.dto.memberreceiveaddress.response.ListReceiveAddressResponseDTO;
+import com.dmall.mms.api.dto.memberreceiveaddress.response.ReceiveAddressResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +22,7 @@ public interface MemberReceiveAddressService {
 
     @GetMapping("/list")
     @ApiOperation(value = "会员收货地址列表")
-    BaseResult<List<ListReceiveAddressResponseDTO>> list();
+    BaseResult<List<ReceiveAddressResponseDTO>> list();
 
     @PostMapping
     @ApiOperation(value = "新增会员收货地址")
@@ -46,7 +45,7 @@ public interface MemberReceiveAddressService {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询会员收货地址")
     @ApiImplicitParam(name = "id", value = "会员收货地址id", required = true, dataType = "int", paramType = "path")
-    BaseResult<GetReceiveAddressResponseDTO> get(@PathVariable("id") Long id);
+    BaseResult<ReceiveAddressResponseDTO> get(@PathVariable("id") Long id);
 
 
 }

@@ -1,5 +1,6 @@
 package com.dmall.common.util;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 
 import javax.servlet.http.Cookie;
@@ -25,7 +26,7 @@ public class CookieUtil {
             value = URLUtil.encodeAll(value);
         }
         Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
+        cookie.setPath(StrUtil.SLASH);
         if (maxAge > 0) {
             cookie.setMaxAge(maxAge);
         }
@@ -37,7 +38,7 @@ public class CookieUtil {
      */
     public static void removeCookie(HttpServletResponse response, String name) {
         Cookie uid = new Cookie(name, null);
-        uid.setPath("/");
+        uid.setPath(StrUtil.SLASH);
         uid.setMaxAge(0);
         response.addCookie(uid);
     }
@@ -58,7 +59,6 @@ public class CookieUtil {
                     } else {
                         return cookie.getValue();
                     }
-
                 }
             }
         }

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description: 申请退款请求实体
@@ -12,13 +13,13 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "OrderApplyRefundRequestDTO", description = "申请退款请求实体")
-public class OrderApplyRefundRequestDTO {
+public class OrderApplyRefundRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "订单项号", position = 1)
+    @ApiModelProperty(value = "订单项号", required = true, position = 1)
     @NotNull(message = "订单项号不能为空")
     private Long orderItemId;
 
-    @ApiModelProperty(value = "退款原因", position = 2)
+    @ApiModelProperty(value = "退款原因", required = true, position = 2)
     @NotNull(message = "退款原因不能为空")
     private String reason;
 

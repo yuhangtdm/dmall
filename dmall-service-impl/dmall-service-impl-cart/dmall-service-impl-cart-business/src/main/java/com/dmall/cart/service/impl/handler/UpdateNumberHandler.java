@@ -7,7 +7,7 @@ import com.dmall.cart.generator.dataobject.CartItemDO;
 import com.dmall.cart.generator.mapper.CartItemMapper;
 import com.dmall.cart.service.impl.AddCartUtil;
 import com.dmall.cart.service.impl.cache.CartCacheService;
-import com.dmall.cart.service.impl.enums.OperateEnum;
+import com.dmall.cart.api.enums.OperateEnum;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;

@@ -1,11 +1,11 @@
 package com.dmall.oms.api.dto.buyerdetail;
 
-import com.dmall.oms.api.dto.aftersaledetail.AfterSaleDTO;
 import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +14,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "BuyerOrderDetailResponseDTO", description = "买家端订单详情响应实体")
-public class BuyerOrderDetailResponseDTO {
+public class BuyerOrderDetailResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = 4591177717438624078L;
 
     @ApiModelProperty(value = "订单号", position = 1)
     private Long orderId;

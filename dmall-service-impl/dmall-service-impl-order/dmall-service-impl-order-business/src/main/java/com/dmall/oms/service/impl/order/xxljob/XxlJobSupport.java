@@ -2,7 +2,7 @@ package com.dmall.oms.service.impl.order.xxljob;
 
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.model.exception.BusinessException;
-import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.xxl.job.core.biz.model.ReturnT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,10 @@ public class XxlJobSupport {
                 XxlJobUtil.buildXxlJobInfo(jobName, param, jobDesc, cron), ReturnT.class);
         ReturnT body = jobResponseEntity.getBody();
         if (HttpStatus.OK != jobResponseEntity.getStatusCode() || body == null) {
-            throw new BusinessException(OrderErrorEnum.CREATE_JOB_ERROR);
+            throw new BusinessException(OmsErrorEnum.CREATE_JOB_ERROR);
         } else {
             if (HttpStatus.OK.value() != body.getCode()) {
-                throw new BusinessException(OrderErrorEnum.CREATE_JOB_ERROR);
+                throw new BusinessException(OmsErrorEnum.CREATE_JOB_ERROR);
             }
         }
         return Integer.parseInt(body.getContent().toString());

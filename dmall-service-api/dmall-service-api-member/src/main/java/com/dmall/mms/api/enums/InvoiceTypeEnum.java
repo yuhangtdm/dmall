@@ -12,18 +12,28 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum InvoiceTypeEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 无需发票
+     */
     NO_NEED(0, "无需发票"),
 
-    Electronics(1, "电子发票"),
+    /**
+     * 电子发票
+     */
+    ELECTRONICS(1, "电子发票"),
 
+    /**
+     * 纸质发票
+     */
     PAPER(2, "纸质发票");
+
     /**
      * code
      */
-    private Integer code;
+    private final Integer code;
 
     /**
      * desc
      */
-    private String desc;
+    private final String desc;
 }

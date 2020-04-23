@@ -10,6 +10,7 @@ import com.dmall.oms.api.dto.aftersalepage.AfterSalePageResponseDTO;
 import com.dmall.oms.api.dto.applyrefund.OrderApplyRefundRequestDTO;
 import com.dmall.oms.api.dto.applyreturn.OrderApplyReturnRequestDTO;
 import com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageRequestDTO;
+import com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageResponseDTO;
 import com.dmall.oms.api.dto.writelogisticsno.WriteLogisticsNoRequestDTO;
 import com.dmall.oms.api.service.OrderAfterSaleService;
 import com.dmall.oms.service.impl.order.handler.aftersale.*;
@@ -116,12 +117,12 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult afterSaleDelete(Long afterSaleId) {
+    public BaseResult<Long> afterSaleDelete(Long afterSaleId) {
         return afterSaleDeleteHandler.handler(afterSaleId);
     }
 
     @Override
-    public BaseResult myAfterSalePage(@RequestBody MyAfterSalePageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<MyAfterSalePageResponseDTO>> myAfterSalePage(@RequestBody MyAfterSalePageRequestDTO requestDTO) {
         return myAfterSalePageHandler.handler(requestDTO);
     }
 }

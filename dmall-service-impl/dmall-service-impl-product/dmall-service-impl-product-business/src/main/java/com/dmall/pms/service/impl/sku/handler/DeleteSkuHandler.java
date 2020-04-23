@@ -6,10 +6,10 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.support.CategorySkuSupport;
-import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
-import com.dmall.pms.service.impl.support.SkuExtSupport;
-import com.dmall.pms.service.impl.support.SkuMediaSupport;
+import com.dmall.pms.service.support.CategorySkuSupport;
+import com.dmall.pms.service.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.support.SkuExtSupport;
+import com.dmall.pms.service.support.SkuMediaSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

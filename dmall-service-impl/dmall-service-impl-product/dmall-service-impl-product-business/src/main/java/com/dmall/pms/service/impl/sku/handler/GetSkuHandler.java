@@ -12,10 +12,10 @@ import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
-import com.dmall.pms.service.impl.support.SkuExtSupport;
-import com.dmall.pms.service.impl.support.SkuMediaSupport;
-import com.dmall.pms.service.impl.support.SkuStockSupport;
+import com.dmall.pms.service.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.support.SkuExtSupport;
+import com.dmall.pms.service.support.SkuMediaSupport;
+import com.dmall.pms.service.support.SkuStockSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

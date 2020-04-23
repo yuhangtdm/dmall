@@ -2,7 +2,7 @@ package com.dmall.mms.service.impl.member;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberDTO;
-import com.dmall.mms.api.dto.member.request.WeiBoLoginRequestDTO;
+import com.dmall.mms.api.dto.member.WeiBoLoginRequestDTO;
 import com.dmall.mms.api.service.ThirdPartyPlatformService;
 import com.dmall.mms.service.impl.member.handler.WeiBoRegisterHandler;
 import org.springframework.beans.factory.annotation.Autowired;

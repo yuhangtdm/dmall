@@ -3,7 +3,7 @@ package com.dmall.mms.service.impl.membersku;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.mms.api.dto.membersku.response.PageMemberCollectionSkuResponseDTO;
+import com.dmall.mms.api.dto.membersku.MemberCollectionSkuResponseDTO;
 import com.dmall.mms.api.service.MemberSkuService;
 import com.dmall.mms.service.impl.membersku.handler.MemberCancelCollectionSkuHandler;
 import com.dmall.mms.service.impl.membersku.handler.MemberCollectionSkuHandler;
@@ -28,7 +28,7 @@ public class MemberCollectionSkuServiceImpl implements MemberSkuService {
     private MemberCancelCollectionSkuHandler memberCancelCollectionSkuHandler;
 
     @Override
-    public BaseResult<ResponsePage<PageMemberCollectionSkuResponseDTO>> collectionPage(PageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<MemberCollectionSkuResponseDTO>> collectionPage(PageRequestDTO requestDTO) {
         return pageMemberCollectionSkuHandler.handler(requestDTO);
     }
 

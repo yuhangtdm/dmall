@@ -66,23 +66,23 @@ public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApp
     public BaseResult<Long> processor(AfterSaleApprovalRequestDTO requestDTO) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(requestDTO.getAfterSaleId());
         if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
         }
         // 校验orderItem存在
         OrderItemDO orderItemDO = orderItemMapper.selectById(orderAfterSaleApplyDO.getOrderItemId());
         if (orderItemDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 校验order存在
         OrderDO orderDO = orderMapper.selectById(orderItemDO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         if (AfterSaleTypeEnum.REFUND.getCode().equals(orderAfterSaleApplyDO.getType())) {
             // 退款
             if (requestDTO.getResult()) {
                 if (AfterSaleStatusEnum.REFUND_PROGRESS.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
-                    return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_APPROVAL);
+                    return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_APPROVAL);
                 }
                 // 调用支付服务的退款接口
                 BaseResult baseResult = paymentFeign.applyRefund(AfterSaleSupport.buildApplyRefundRequest(orderItemDO,
@@ -114,7 +114,7 @@ public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApp
         } else {
             // 退货
             if (AfterSaleStatusEnum.APPLY.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
-                return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_APPROVAL);
+                return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_APPROVAL);
             }
             // 修改售后服务表
             if (requestDTO.getResult()) {

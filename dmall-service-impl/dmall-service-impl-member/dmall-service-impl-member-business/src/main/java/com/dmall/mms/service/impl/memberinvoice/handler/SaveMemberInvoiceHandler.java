@@ -1,14 +1,12 @@
 package com.dmall.mms.service.impl.memberinvoice.handler;
 
-import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.mms.api.dto.memberinvoice.SaveMemberInvoiceRequestDTO;
-import com.dmall.mms.api.enums.InvoiceHeaderEnum;
-import com.dmall.mms.api.enums.MemberInvoiceErrorEnum;
 import com.dmall.mms.generator.dataobject.MemberInvoiceDO;
 import com.dmall.mms.generator.mapper.MemberInvoiceMapper;
+import com.dmall.mms.service.validate.MemberInvoiceValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,19 +22,8 @@ public class SaveMemberInvoiceHandler extends AbstractCommonHandler<SaveMemberIn
 
     @Override
     public BaseResult<Long> validate(SaveMemberInvoiceRequestDTO requestDTO) {
-        if (requestDTO.getInvoiceHeader().equals(InvoiceHeaderEnum.PERSONAL.getCode())) {
-            if (StrUtil.isBlank(requestDTO.getPersonalName())) {
-                return ResultUtil.fail(MemberInvoiceErrorEnum.PERSONAL_NAME_EMPTY);
-            }
-        } else {
-            if (StrUtil.isBlank(requestDTO.getCompanyName())) {
-                return ResultUtil.fail(MemberInvoiceErrorEnum.COMPANY_NAME_EMPTY);
-            }
-            if (StrUtil.isBlank(requestDTO.getCustomerTaxNumber())) {
-                return ResultUtil.fail(MemberInvoiceErrorEnum.CUSTOMER_TAX_NUMBER_EMPTY);
-            }
-        }
-        return ResultUtil.success();
+        return MemberInvoiceValidate.validate(requestDTO.getInvoiceHeader(), requestDTO.getPersonalName(),
+                requestDTO.getCompanyName(), requestDTO.getCustomerTaxNumber());
     }
 
     @Override

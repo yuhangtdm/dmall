@@ -14,12 +14,13 @@ import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.mms.api.dto.membersku.response.PageMemberCollectionSkuResponseDTO;
+import com.dmall.mms.api.dto.membersku.MemberCollectionSkuResponseDTO;
 import com.dmall.mms.feign.SkuServiceFeign;
 import com.dmall.mms.generator.dataobject.MemberCollectionSkuDO;
 import com.dmall.mms.generator.mapper.MemberCollectionSkuMapper;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
-public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRequestDTO, MemberCollectionSkuDO, PageMemberCollectionSkuResponseDTO> {
+public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRequestDTO, MemberCollectionSkuDO, MemberCollectionSkuResponseDTO> {
 
     @Autowired
     private MemberCollectionSkuMapper memberCollectionSkuMapper;
@@ -42,7 +43,7 @@ public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRe
     private static final String PRICE_REDUCTION_TAG = "比收藏时降价{}元";
 
     @Override
-    public BaseResult<ResponsePage<PageMemberCollectionSkuResponseDTO>> processor(PageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<MemberCollectionSkuResponseDTO>> processor(PageRequestDTO requestDTO) {
         // 获取当前登录会员
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
 
@@ -52,16 +53,16 @@ public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRe
 
         IPage<MemberCollectionSkuDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = memberCollectionSkuMapper.selectPage(page, wrapper);
-        List<PageMemberCollectionSkuResponseDTO> collect = page.getRecords().stream()
-                .map(memberCollectionSkuDO -> doConvertDto(memberCollectionSkuDO, PageMemberCollectionSkuResponseDTO.class))
+        List<MemberCollectionSkuResponseDTO> collect = page.getRecords().stream()
+                .map(memberCollectionSkuDO -> doConvertDto(memberCollectionSkuDO, MemberCollectionSkuResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 
     @Override
-    protected void customerConvertDto(PageMemberCollectionSkuResponseDTO result, MemberCollectionSkuDO doo) {
+    protected void customerConvertDto(MemberCollectionSkuResponseDTO result, MemberCollectionSkuDO doo) {
         BaseResult<GetSkuResponseDTO> skuResponse = skuServiceFeign.get(doo.getSkuId());
-        if (skuResponse.getCode().equals(SkuErrorEnum.SKU_NOT_EXIST)) {
+        if (PmsErrorEnum.SKU_NOT_EXISTS.getCode().equals(skuResponse.getCode())) {
             result.setSkuStatus(YNEnum.N.getCode());
             return;
         }
@@ -73,7 +74,8 @@ public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRe
         result.setSkuName(basicSku.getName());
         result.setSkuStatus(YNEnum.Y.getCode());
         if (result.getPrice().compareTo(basicSku.getPrice()) < 0) {
-            result.setPriceReductionTag(StrUtil.format(PRICE_REDUCTION_TAG, result.getPrice().subtract(basicSku.getPrice())));
+            result.setPriceReductionTag(StrUtil.format(PRICE_REDUCTION_TAG,
+                    result.getPrice().subtract(basicSku.getPrice())));
         }
     }
 

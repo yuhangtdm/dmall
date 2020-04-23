@@ -12,7 +12,7 @@ import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.generator.service.ICategoryBrandService;
-import com.dmall.pms.service.impl.support.CategorySupport;
+import com.dmall.pms.service.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -3,7 +3,7 @@ package com.dmall.mms.api.service;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.mms.api.dto.membersku.response.PageMemberCollectionSkuResponseDTO;
+import com.dmall.mms.api.dto.membersku.MemberCollectionSkuResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +19,7 @@ public interface MemberSkuService {
 
     @PostMapping("/collection/page")
     @ApiOperation(value = "会员收藏sku分页")
-    BaseResult<ResponsePage<PageMemberCollectionSkuResponseDTO>> collectionPage(PageRequestDTO requestDTO);
+    BaseResult<ResponsePage<MemberCollectionSkuResponseDTO>> collectionPage(PageRequestDTO requestDTO);
 
     @GetMapping("/collection/{skuId}")
     @ApiOperation(value = "收藏sku")

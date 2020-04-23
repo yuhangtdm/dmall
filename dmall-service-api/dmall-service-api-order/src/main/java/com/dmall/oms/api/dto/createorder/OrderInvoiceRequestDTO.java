@@ -18,11 +18,13 @@ import java.io.Serializable;
 @ApiModel(value = "OrderInvoiceRequestDTO", description = "订单发票实体")
 public class OrderInvoiceRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "发票id", position = 1)
+    private static final long serialVersionUID = -1480167265648146117L;
+
+    @ApiModelProperty(value = "发票id", required = true, position = 1)
     @NotNull(message = "发票id不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "发票抬头 1-个人;2-单位", position = 2)
+    @ApiModelProperty(value = "发票抬头 1-个人;2-单位", required = true, position = 2)
     @NotNull(message = "发票抬头不能为空")
     @ValueInEnum(InvoiceHeaderTypeEnum.class)
     private Integer invoiceHeader;
@@ -42,7 +44,7 @@ public class OrderInvoiceRequestDTO implements Serializable {
     @ApiModelProperty(value = "纳税人识别号", position = 7)
     private String customerTaxNumber;
 
-    @ApiModelProperty(value = "发票内容 1-商品类别;2-商品明细", position = 8)
+    @ApiModelProperty(value = "发票内容 1-商品类别;2-商品明细", required = true, position = 8)
     @NotNull(message = "发票内容不能为空")
     @ValueInEnum(InvoiceContentEnum.class)
     private Integer invoiceContent;

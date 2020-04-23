@@ -12,7 +12,7 @@ import com.dmall.pms.api.dto.sku.request.PageSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.response.PageSkuResponseDTO;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageMapper;
 import com.dmall.pms.service.impl.sku.mapper.SkuPageVO;
-import com.dmall.pms.service.impl.support.SkuStockSupport;
+import com.dmall.pms.service.support.SkuStockSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

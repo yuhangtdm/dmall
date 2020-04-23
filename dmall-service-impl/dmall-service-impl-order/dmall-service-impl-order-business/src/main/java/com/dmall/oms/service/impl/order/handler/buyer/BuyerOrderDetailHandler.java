@@ -9,7 +9,7 @@ import com.dmall.mms.api.enums.InvoiceContentEnum;
 import com.dmall.mms.api.enums.InvoiceHeaderEnum;
 import com.dmall.oms.api.dto.buyerdetail.*;
 import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
-import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
@@ -54,11 +54,11 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
     public BaseResult<BuyerOrderDetailResponseDTO> processor(Long subOrderId) {
         SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
         if (subOrderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         BuyerOrderDetailResponseDTO responseDTO = new BuyerOrderDetailResponseDTO();
         responseDTO.setOrderId(orderDO.getId());

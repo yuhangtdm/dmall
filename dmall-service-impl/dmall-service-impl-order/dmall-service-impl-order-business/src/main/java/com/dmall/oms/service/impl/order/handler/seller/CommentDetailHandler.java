@@ -7,7 +7,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.commentdetail.CommentDetailResponseDTO;
 import com.dmall.oms.api.enums.OrderCommentStatusEnum;
-import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.feign.CommentFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
@@ -47,18 +47,18 @@ public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO
     public BaseResult<List<CommentDetailResponseDTO>> processor(Long subOrderId) {
         SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
         if (subOrderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         if (OrderCommentStatusEnum.NO.getCode().equals(subOrderDO.getCommentStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.COMMENT_DETAIL_ERROR);
+            return ResultUtil.fail(OmsErrorEnum.COMMENT_DETAIL_ERROR);
         }
         // 调用pms查看评价列表
         BaseResult<List<CommentResponseDTO>> baseResult = commentFeign.list(subOrderId);

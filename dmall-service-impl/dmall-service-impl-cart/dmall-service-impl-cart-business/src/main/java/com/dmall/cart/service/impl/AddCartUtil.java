@@ -4,11 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSON;
+import com.dmall.cart.api.enums.OperateEnum;
 import com.dmall.cart.generator.dataobject.CartItemDO;
-import com.dmall.cart.service.impl.cache.Constants;
 import com.dmall.cart.service.impl.dto.CartDTO;
-import com.dmall.cart.service.impl.enums.OperateEnum;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.CookieUtil;
@@ -23,19 +21,28 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @description:
+ * @description: 购物车工具类
  * @author: created by hang.yu on 2020/3/14 17:18
  */
 public class AddCartUtil {
+
+    public static final String COOKIE_NAME = "cart";
+
+    public static final Integer COOKIE_STORE_TIME = 60 * 60 * 24;
+
+    private AddCartUtil() {
+    }
+
 
     /**
      * 未登录时添加购物车
      */
     public static void notLoginAddCart(Integer number, OperateEnum operateEnum, BasicSkuResponseDTO skuData) {
         // 查询cookie中的购物车数据
-        String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), Constants.COOKIE_NAME, true);
+        String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), AddCartUtil.COOKIE_NAME, true);
         if (StrUtil.isNotBlank(cartJson)) {
-            List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
+            List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {
+            });
             Optional<CartDTO> first = cartDTOS.stream()
                     .filter(cartDTO -> cartDTO.getSkuId().equals(skuData.getId()))
                     .findFirst();
@@ -46,7 +53,8 @@ public class AddCartUtil {
                 cartDTO.setGmtModified(new DateTime());
                 cartDTO.setNumber(operateEnum == OperateEnum.ADD ? (number + cartDTO.getNumber()) : number);
                 cartDTO.setTotalPrice(NumberUtil.mul(cartDTO.getNumber(), cartDTO.getPrice()));
-                CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JsonUtil.toJson(cartDTOS), Constants.COOKIE_STORE_TIME, true);
+                CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME,
+                        JsonUtil.toJson(cartDTOS), AddCartUtil.COOKIE_STORE_TIME, true);
             } else {
                 addCookieCart(number, skuData, cartDTOS);
             }
@@ -56,7 +64,7 @@ public class AddCartUtil {
     }
 
     /**
-     * 已登录时添加购物午餐
+     * 已登录时添加购物车
      */
     public static CartItemDO loginAddCart(Integer number, OperateEnum operateEnum, BasicSkuResponseDTO skuData,
                                           PortalMemberDTO login, List<CartItemDO> cartItemDOS) {
@@ -79,6 +87,9 @@ public class AddCartUtil {
         }
     }
 
+    /**
+     * 添加cookie
+     */
     private static void addCookieCart(Integer number, BasicSkuResponseDTO skuData, List<CartDTO> cartDTOS) {
         CartDTO cartDTO = new CartDTO();
         cartDTO.setSkuId(skuData.getId());
@@ -87,9 +98,13 @@ public class AddCartUtil {
         cartDTO.setTotalPrice(NumberUtil.mul(cartDTO.getNumber(), cartDTO.getPrice()));
         cartDTO.setChecked(false);
         cartDTOS.add(cartDTO);
-        CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JsonUtil.toJson(cartDTOS), Constants.COOKIE_STORE_TIME, true);
+        CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME, JsonUtil.toJson(cartDTOS),
+                AddCartUtil.COOKIE_STORE_TIME, true);
     }
 
+    /**
+     * 插入表
+     */
     private static CartItemDO getInsertCartDb(Integer number, BasicSkuResponseDTO skuData, PortalMemberDTO login) {
         CartItemDO cartItemDO = new CartItemDO();
         cartItemDO.setSkuId(skuData.getId());

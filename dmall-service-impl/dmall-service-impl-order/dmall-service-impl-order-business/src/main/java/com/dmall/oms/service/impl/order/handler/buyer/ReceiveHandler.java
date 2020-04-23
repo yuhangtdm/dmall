@@ -61,20 +61,20 @@ public class ReceiveHandler extends AbstractCommonHandler<Long, OrderDO, Long> {
         // 子订单存在
         SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
         if (subOrderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 订单存在
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 必须为待收货状态才可以确认收货
         if (!SubOrderStatusEnum.WAIT_SHIP.getCode().equals(subOrderDO.getStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.RECEIVER_STATUS);
+            return ResultUtil.fail(OmsErrorEnum.RECEIVER_STATUS);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderDO.getCreator())) {
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
 
         // 修改状态为已收货

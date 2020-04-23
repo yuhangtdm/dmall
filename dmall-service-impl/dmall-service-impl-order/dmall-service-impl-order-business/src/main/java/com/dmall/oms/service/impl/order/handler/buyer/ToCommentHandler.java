@@ -1,9 +1,8 @@
 package com.dmall.oms.service.impl.order.handler.buyer;
 
 import com.dmall.common.util.ResultUtil;
-import com.dmall.oms.api.dto.comment.CommentSkuDTO;
 import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
-import com.dmall.oms.api.enums.OrderErrorEnum;
+import com.dmall.oms.api.enums.OmsErrorEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +33,7 @@ public class ToCommentHandler extends AbstractCommonHandler<Long, SubOrderDO, To
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         ToCommentDbDTO toCommentDbDTO = commentMapper.toComment(subOrderId, portalMemberDTO.getId());
         if (toCommentDbDTO == null) {
-            return ResultUtil.fail(OrderErrorEnum.NOT_COMMENT);
+            return ResultUtil.fail(OmsErrorEnum.NOT_COMMENT);
         }
         ToCommentResponseDTO responseDTO = new ToCommentResponseDTO();
         responseDTO.setSubOrderId(toCommentDbDTO.getSubOrderId());

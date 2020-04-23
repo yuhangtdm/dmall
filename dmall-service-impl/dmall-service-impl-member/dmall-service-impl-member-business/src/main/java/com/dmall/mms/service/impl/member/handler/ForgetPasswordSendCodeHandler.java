@@ -9,9 +9,9 @@ import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.notify.email.MailServiceImpl;
 import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.mms.api.enums.MmsErrorEnum;
 import com.dmall.mms.generator.dataobject.MemberDO;
-import com.dmall.mms.api.enums.MemberErrorEnum;
-import com.dmall.mms.service.impl.support.CacheKeySupport;
+import com.dmall.mms.service.support.CacheKeySupport;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -48,7 +48,7 @@ public class ForgetPasswordSendCodeHandler extends AbstractCommonHandler<String,
         // 校验是否三分钟内 邮件已发送
         String key = cacheKeySupport.generateForgetPassword(email);
         if (redisTemplate.opsForValue().get(key) != null) {
-            return ResultUtil.fail(MemberErrorEnum.EMAIL_SEND);
+            return ResultUtil.fail(MmsErrorEnum.EMAIL_SEND);
         }
         Map<String, Object> value = Maps.newHashMap();
         // 生成6位随机数

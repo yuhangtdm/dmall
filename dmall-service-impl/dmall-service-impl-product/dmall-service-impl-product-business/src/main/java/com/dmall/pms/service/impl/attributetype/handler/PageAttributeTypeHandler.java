@@ -12,7 +12,7 @@ import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
-import com.dmall.pms.service.impl.support.CategorySupport;
+import com.dmall.pms.service.support.CategorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

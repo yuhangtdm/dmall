@@ -19,11 +19,13 @@ import java.util.List;
 @ApiModel(value = "DemolitionOrderRequestDTO", description = "拆单请求实体")
 public class DemolitionOrderRequestDTO implements Serializable {
 
-    @ApiModelProperty(value = "订单号", position = 1)
+    private static final long serialVersionUID = -9085008153967825057L;
+
+    @ApiModelProperty(value = "订单号", required = true, position = 1)
     @NotNull(message = "订单号不能为空")
     private Long orderId;
 
-    @ApiModelProperty(value = "拆单方式", position = 2)
+    @ApiModelProperty(value = "拆单方式", required = true, position = 2)
     @NotNull(message = "拆单方式不能为空")
     @ValueInEnum(SplitEnum.class)
     private Integer split;

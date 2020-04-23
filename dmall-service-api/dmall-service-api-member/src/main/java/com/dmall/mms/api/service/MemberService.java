@@ -1,9 +1,9 @@
 package com.dmall.mms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.mms.api.dto.member.request.RegisterMemberRequestDTO;
-import com.dmall.mms.api.dto.member.request.ResetPasswordRequestDTO;
-import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
+import com.dmall.mms.api.dto.member.RegisterMemberRequestDTO;
+import com.dmall.mms.api.dto.member.ResetPasswordRequestDTO;
+import com.dmall.mms.api.dto.member.UpdatePasswordRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

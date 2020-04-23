@@ -13,7 +13,7 @@ import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.support.SkuExtSupport;
+import com.dmall.pms.service.support.SkuExtSupport;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

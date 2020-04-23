@@ -6,8 +6,8 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
-import com.dmall.pms.service.impl.support.SkuSupport;
+import com.dmall.pms.service.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

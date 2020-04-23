@@ -34,22 +34,22 @@ public class AfterSaleClosedHandler extends AbstractCommonHandler<Long, OrderAft
     public BaseResult processor(Long afterSaleId) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
         if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         if (AfterSaleTypeEnum.REFUND.getCode().equals(orderAfterSaleApplyDO.getType())) {
             // 非 退款中不可关闭
             if (!AfterSaleStatusEnum.REFUND_PROGRESS.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
-                return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_CLOSED);
+                return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_CLOSED);
             }
         } else {
             // 非 已申请和待寄回不可关闭
             if (!AfterSaleStatusEnum.APPLY.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
                     !AfterSaleStatusEnum.WAIT_SEND_BACK.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
-                return ResultUtil.fail(OrderErrorEnum.AFTER_SALE_CLOSED);
+                return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_CLOSED);
             }
         }
         orderAfterSaleApplyDO.setCloseTime(new Date());

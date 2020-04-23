@@ -16,9 +16,9 @@ import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.CategoryProductMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.impl.validate.ProductValidate;
-import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
-import com.dmall.pms.service.impl.support.SkuSupport;
+import com.dmall.pms.service.validate.ProductValidate;
+import com.dmall.pms.service.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

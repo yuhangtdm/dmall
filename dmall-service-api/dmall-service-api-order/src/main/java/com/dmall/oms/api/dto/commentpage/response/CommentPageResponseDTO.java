@@ -2,11 +2,11 @@ package com.dmall.oms.api.dto.commentpage.response;
 
 import com.dmall.common.enums.YNEnum;
 import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
-import com.dmall.oms.api.enums.SubOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +16,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "CommentPageResponseDTO", description = "评价分页响应实体")
-public class CommentPageResponseDTO {
+public class CommentPageResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = 3975461322846825672L;
 
     @ApiModelProperty(value = "子订单号", position = 1)
     private Long subOrderId;

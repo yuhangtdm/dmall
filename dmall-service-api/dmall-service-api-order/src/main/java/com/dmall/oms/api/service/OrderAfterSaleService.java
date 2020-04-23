@@ -10,6 +10,7 @@ import com.dmall.oms.api.dto.aftersalepage.AfterSalePageResponseDTO;
 import com.dmall.oms.api.dto.applyrefund.OrderApplyRefundRequestDTO;
 import com.dmall.oms.api.dto.applyreturn.OrderApplyReturnRequestDTO;
 import com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageRequestDTO;
+import com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageResponseDTO;
 import com.dmall.oms.api.dto.writelogisticsno.WriteLogisticsNoRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -68,15 +69,15 @@ public interface OrderAfterSaleService {
     @GetMapping("/close/{afterSaleId}")
     @ApiOperation(value = "买家关闭售后单")
     @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
-    BaseResult afterSaleClosed(@PathVariable("afterSaleId") Long afterSaleId);
+    BaseResult<Long> afterSaleClosed(@PathVariable("afterSaleId") Long afterSaleId);
 
     @GetMapping("/delete/{afterSaleId}")
     @ApiOperation(value = "买家删除售后单")
     @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
-    BaseResult afterSaleDelete(@PathVariable("afterSaleId") Long afterSaleId);
+    BaseResult<Long> afterSaleDelete(@PathVariable("afterSaleId") Long afterSaleId);
 
     @PostMapping("/buyer/Page")
     @ApiOperation(value = "买家售后单分页")
-    BaseResult myAfterSalePage(@RequestBody @Valid MyAfterSalePageRequestDTO requestDTO);
+    BaseResult<ResponsePage<MyAfterSalePageResponseDTO>> myAfterSalePage(@RequestBody @Valid MyAfterSalePageRequestDTO requestDTO);
 
 }

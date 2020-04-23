@@ -13,7 +13,6 @@ import com.dmall.oms.feign.PaymentFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
-import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.support.*;
 import com.dmall.pay.api.dto.listpayment.ListPaymentResponseDTO;
@@ -58,7 +57,7 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         SellerOrderDetailResponseDTO responseDTO = new SellerOrderDetailResponseDTO();
         OrderDO orderDO = orderMapper.selectById(orderId);
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         responseDTO.setBasicOrder(buildOrderBasic(orderDO));
         responseDTO.setReceiver(buildReceiver(orderDO));

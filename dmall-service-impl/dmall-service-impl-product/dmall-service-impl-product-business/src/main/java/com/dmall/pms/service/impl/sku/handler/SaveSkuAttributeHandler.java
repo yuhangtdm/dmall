@@ -5,9 +5,9 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuAttributeRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
-import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
-import com.dmall.pms.service.impl.support.SkuExtSupport;
-import com.dmall.pms.service.impl.support.SkuSupport;
+import com.dmall.pms.service.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.support.SkuExtSupport;
+import com.dmall.pms.service.support.SkuSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

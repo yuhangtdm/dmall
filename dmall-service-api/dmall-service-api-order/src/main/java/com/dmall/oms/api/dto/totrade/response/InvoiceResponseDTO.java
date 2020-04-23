@@ -14,6 +14,8 @@ import java.io.Serializable;
 @ApiModel(value = "InvoiceResponseDTO", description = "发票实体")
 public class InvoiceResponseDTO implements Serializable {
 
+    private static final long serialVersionUID = -850112885912797017L;
+
     @ApiModelProperty(value = "发票id", position = 1)
     private Long id;
 

@@ -1,12 +1,11 @@
 package com.dmall.mms.service.impl.memberreceiveaddress;
 
+import com.dmall.common.dto.BaseResult;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.SaveMemberReceiveAddressRequestDTO;
 import com.dmall.mms.api.dto.memberreceiveaddress.request.UpdateMemberReceiveAddressRequestDTO;
-import com.dmall.mms.api.dto.memberreceiveaddress.response.GetReceiveAddressResponseDTO;
-import com.dmall.mms.api.dto.memberreceiveaddress.response.ListReceiveAddressResponseDTO;
+import com.dmall.mms.api.dto.memberreceiveaddress.response.ReceiveAddressResponseDTO;
 import com.dmall.mms.api.service.MemberReceiveAddressService;
 import com.dmall.mms.service.impl.memberreceiveaddress.handler.*;
-import com.dmall.common.dto.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +39,7 @@ public class MemberReceiveAddressServiceImpl implements MemberReceiveAddressServ
     private GetMemberReceiveAddressHandler getMemberReceiveAddressHandler;
 
     @Override
-    public BaseResult<List<ListReceiveAddressResponseDTO>> list() {
+    public BaseResult<List<ReceiveAddressResponseDTO>> list() {
         return listMemberReceiveAddressHandler.handler(null);
     }
 
@@ -66,7 +65,7 @@ public class MemberReceiveAddressServiceImpl implements MemberReceiveAddressServ
     }
 
     @Override
-    public BaseResult<GetReceiveAddressResponseDTO> get(Long id) {
+    public BaseResult<ReceiveAddressResponseDTO> get(Long id) {
         return getMemberReceiveAddressHandler.handler(id);
     }
 }

@@ -12,9 +12,9 @@ import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.service.impl.validate.ProductValidate;
-import com.dmall.pms.service.impl.support.ProductAttributeValueSupport;
-import com.dmall.pms.service.impl.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.validate.ProductValidate;
+import com.dmall.pms.service.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.support.SkuAttributeValueSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -81,5 +81,4 @@ public interface BuyerOrderService {
     @ApiOperation(value = "评价分页")
     BaseResult<ResponsePage<CommentPageResponseDTO>> commentPage(@RequestBody @Valid CommentPageRequestDTO requestDTO);
 
-
 }

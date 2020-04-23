@@ -1,0 +1,38 @@
+package com.dmall.pms.service.validate;
+
+import cn.hutool.core.collection.CollUtil;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.YNEnum;
+import com.dmall.common.util.ResultUtil;
+import com.dmall.pms.api.enums.InputTypeEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
+
+import java.util.HashSet;
+import java.util.List;
+
+/**
+ * @description: AttributeValidate
+ * @author: created by hang.yu on 2019/12/31 12:21
+ */
+public class AttributeValidate {
+
+    /**
+     * 新增或更新的公共校验
+     */
+    public static BaseResult validate(Integer inputType, List<String> inputList, String handAddStatus) {
+        // 从列表获取 不支持新增 可选值为空
+        if (InputTypeEnum.LIST.getCode().equals(inputType) && CollUtil.isEmpty(inputList)
+                && YNEnum.N.getCode().equals(handAddStatus)) {
+            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_DATA_INVALID);
+        }
+        // 可选值列表不能重复
+        if (CollUtil.isNotEmpty(inputList)) {
+            HashSet<String> strings = new HashSet<>(inputList);
+            if (strings.size() != inputList.size()) {
+                return ResultUtil.fail(PmsErrorEnum.INPUT_LIST_INVALID);
+            }
+        }
+        return ResultUtil.success();
+    }
+
+}

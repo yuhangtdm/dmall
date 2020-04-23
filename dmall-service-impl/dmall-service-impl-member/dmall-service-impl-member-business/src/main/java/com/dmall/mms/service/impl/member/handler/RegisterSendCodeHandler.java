@@ -7,10 +7,10 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.notify.email.MailServiceImpl;
 import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.mms.api.enums.MmsErrorEnum;
 import com.dmall.mms.generator.dataobject.MemberDO;
-import com.dmall.mms.api.enums.MemberErrorEnum;
-import com.dmall.mms.service.impl.support.CacheKeySupport;
-import com.dmall.mms.service.impl.support.MemberSupport;
+import com.dmall.mms.service.support.CacheKeySupport;
+import com.dmall.mms.service.support.MemberSupport;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -47,17 +47,17 @@ public class RegisterSendCodeHandler extends AbstractCommonHandler<String, Membe
     public BaseResult<Void> processor(String email) {
         // 校验是否已注册
         MemberDO memberDO = memberSupport.getByEmail(email);
-        if (memberDO != null){
-            return ResultUtil.fail(MemberErrorEnum.EMAIL_EXISTS);
+        if (memberDO != null) {
+            return ResultUtil.fail(MmsErrorEnum.EMAIL_EXISTS);
         }
         // 校验是否三分钟内 邮件已发送
-        String key = cacheKeySupport.generateRegister( email);
+        String key = cacheKeySupport.generateRegister(email);
         if (redisTemplate.opsForValue().get(key) != null) {
-            return ResultUtil.fail(MemberErrorEnum.EMAIL_SEND);
+            return ResultUtil.fail(MmsErrorEnum.EMAIL_SEND);
         }
         Map<String, Object> value = Maps.newHashMap();
         // 生成6位随机数
-        String code = RandomUtil.randomString(RandomUtil.BASE_NUMBER,6);
+        String code = RandomUtil.randomString(RandomUtil.BASE_NUMBER, 6);
         value.put("code", code);
         // 发送邮件
         mailServiceImpl.sendHtmlMail(email, config.getProperty("registerSubject", "注册"), TEMPLATE, value);

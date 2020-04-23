@@ -5,22 +5,29 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: InvoiceHeaderEnum
+ * @description: 发票头类型枚举
  * @author: created by hang.yu on 2020/3/27 23:42
  */
 @Getter
 @AllArgsConstructor
 public enum InvoiceHeaderEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 个人
+     */
     PERSONAL(1, "个人"),
+
+    /**
+     * 公司
+     */
     COMPANY(2, "公司");
     /**
      * code
      */
-    private Integer code;
+    private final Integer code;
 
     /**
      * desc
      */
-    private String desc;
+    private final String desc;
 }

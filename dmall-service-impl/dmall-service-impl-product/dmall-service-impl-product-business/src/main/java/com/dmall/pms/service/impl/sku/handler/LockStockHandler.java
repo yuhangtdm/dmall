@@ -5,7 +5,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
 import com.dmall.pms.generator.dataobject.SkuDO;
-import com.dmall.pms.service.impl.support.SkuStockSupport;
+import com.dmall.pms.service.support.SkuStockSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -4,13 +4,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @description: 发票信息响应实体
  * @author: created by hang.yu on 2020/4/5 22:37
  */
 @Data
 @ApiModel(value = "InvoiceDTO", description = "发票信息响应实体")
-public class InvoiceDTO {
+public class InvoiceDTO implements Serializable {
+
+    private static final long serialVersionUID = -4732997304294108698L;
 
     @ApiModelProperty(value = "发票抬头", position = 1)
     private String invoiceHeader;

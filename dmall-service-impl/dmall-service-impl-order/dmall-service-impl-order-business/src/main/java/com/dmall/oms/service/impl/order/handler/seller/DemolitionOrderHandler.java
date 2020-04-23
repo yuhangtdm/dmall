@@ -6,7 +6,6 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
-import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.demolitionorder.DemolitionDetailRequestDTO;
@@ -59,21 +58,21 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
     public BaseResult<Long> processor(DemolitionOrderRequestDTO requestDTO) {
         // 拆单方式不能为 未拆分
         if (SplitEnum.NOT.getCode().equals(requestDTO.getSplit())) {
-            return ResultUtil.fail(OrderErrorEnum.SPLIT_WAY_ERROR);
+            return ResultUtil.fail(OmsErrorEnum.SPLIT_WAY_ERROR);
         } else {
             // 如果是已拆分 或 无需拆分 拆单明细不能为空
             if (CollUtil.isEmpty(requestDTO.getDetails())) {
-                return ResultUtil.fail(OrderErrorEnum.SPLIT_DETAIL_NOT_EMPTY);
+                return ResultUtil.fail(OmsErrorEnum.SPLIT_DETAIL_NOT_EMPTY);
             }
         }
         OrderDO orderDO = orderMapper.selectById(requestDTO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
 
         // 已经拆过单不可再拆分
         if (!SplitEnum.NOT.getCode().equals(orderDO.getSplit())) {
-            return ResultUtil.fail(OrderErrorEnum.SPLITED);
+            return ResultUtil.fail(OmsErrorEnum.SPLIT);
         }
         orderDO.setSplit(requestDTO.getSplit());
         orderDO.setSplitReason(requestDTO.getSplitReason());
@@ -96,7 +95,7 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
             for (Long orderItemId : detail.getOrderItemIds()) {
                 OrderItemDO orderItemDO = orderItemMapper.selectById(orderItemId);
                 if (orderItemDO == null){
-                    throw new BusinessException(OrderErrorEnum.ORDER_NOT_EXISTS);
+                    throw new BusinessException(OmsErrorEnum.ORDER_NOT_EXISTS);
                 }
                 orderItemDO.setSubOrderId(subOrderDO.getId());
                 orderItemMapper.updateById(orderItemDO);

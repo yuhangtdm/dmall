@@ -6,11 +6,11 @@ import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.util.PasswordUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.mms.api.dto.member.request.UpdatePasswordRequestDTO;
+import com.dmall.mms.api.dto.member.UpdatePasswordRequestDTO;
+import com.dmall.mms.api.enums.MmsErrorEnum;
 import com.dmall.mms.feign.PortalLoginServiceFeign;
 import com.dmall.mms.generator.dataobject.MemberDO;
 import com.dmall.mms.generator.mapper.MemberMapper;
-import com.dmall.mms.api.enums.MemberErrorEnum;
 import com.dmall.sso.api.dto.portal.PortalLoginRequestDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +36,11 @@ public class UpdatePasswordHandler extends AbstractCommonHandler<UpdatePasswordR
 
         // 判断是否是本人修改
         if (!requestDTO.getEmail().equals(loginMember.getEmail())) {
-            return ResultUtil.fail(MemberErrorEnum.EMAIL_ERROR);
+            return ResultUtil.fail(MmsErrorEnum.EMAIL_ERROR);
         }
         // 判断原密码是否正确
         if (!requestDTO.getOldPassword().equals(loginMember.getPassword())) {
-            return ResultUtil.fail(MemberErrorEnum.PASSWORD_ERROR);
+            return ResultUtil.fail(MmsErrorEnum.PASSWORD_ERROR);
         }
 
         // 修改新密码

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.cart.generator.dataobject.CartItemDO;
 import com.dmall.cart.generator.mapper.CartItemMapper;
 import com.dmall.component.cache.redis.CacheNameConstants;
-import com.dmall.component.cache.redis.DMallRedisProperties;
 import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.component.cache.redis.mapcache.MapCacheable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,10 @@ import java.util.stream.Collectors;
 @MapCacheable(cacheNames = CacheNameConstants.CATEGORY)
 public class CartCacheService {
 
+    private static final String COOKIE_NAME = "cart";
+
+    private static final Integer COOKIE_STORE_TIME = 60 * 60 * 24;
+
     @Autowired
     private MapCacheUtil mapCacheUtil;
 
@@ -32,16 +35,13 @@ public class CartCacheService {
     private CartItemMapper cartItemMapper;
 
     @Autowired
-    private RedisTemplate<String, Object> dMallRedisTemplate;
-
-    @Autowired
-    private DMallRedisProperties dMallRedisProperties;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 获取购物车的key
      */
-    public String getCartKey(Long skuId) {
-        return StrUtil.format("{}:memberId_{}", dMallRedisProperties.getCacheKeyPrefix(), skuId);
+    public String getCartKey(Long memberId) {
+        return StrUtil.format("memberId_{}",  memberId);
     }
 
     /**
@@ -65,11 +65,10 @@ public class CartCacheService {
      * 查询缓存列表
      */
     public List<CartItemDO> list(Long memberId) {
-        HashOperations<String, String, CartItemDO> ops = dMallRedisTemplate.opsForHash();
+        HashOperations<String, String, CartItemDO> ops = redisTemplate.opsForHash();
         List<CartItemDO> values = ops.values(this.getCartKey(memberId));
         if (CollUtil.isEmpty(values)) {
-            return cartItemMapper.selectList(Wrappers.<CartItemDO>lambdaQuery()
-                    .eq(CartItemDO::getMemberId, memberId));
+            return cartItemMapper.selectList(Wrappers.<CartItemDO>lambdaQuery().eq(CartItemDO::getMemberId, memberId));
         }
         return values;
     }

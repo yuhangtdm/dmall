@@ -6,12 +6,12 @@ import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.mms.api.dto.member.enums.GenderEnum;
-import com.dmall.mms.api.dto.member.enums.SourceTypeEnum;
-import com.dmall.mms.api.dto.member.request.WeiBoLoginRequestDTO;
+import com.dmall.mms.api.enums.GenderEnum;
+import com.dmall.mms.api.enums.SourceTypeEnum;
+import com.dmall.mms.api.dto.member.WeiBoLoginRequestDTO;
 import com.dmall.mms.generator.dataobject.MemberDO;
 import com.dmall.mms.generator.mapper.MemberMapper;
-import com.dmall.mms.service.impl.support.MemberSupport;
+import com.dmall.mms.service.support.MemberSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class WeiBoRegisterHandler extends AbstractCommonHandler<WeiBoLoginRequestDTO, MemberDO, PortalMemberDTO> {
 
+    private static final String MEMBER_NAME_PREFIX = "wb_";
     @Autowired
     private MemberSupport memberSupport;
 
@@ -30,13 +31,12 @@ public class WeiBoRegisterHandler extends AbstractCommonHandler<WeiBoLoginReques
 
     @Override
     public BaseResult<PortalMemberDTO> processor(WeiBoLoginRequestDTO requestDTO) {
-
         // 根据微博id查询有无会员记录
         MemberDO byWeiBoId = memberSupport.getByWeiBoNo(requestDTO.getWeiBoNo());
         if (byWeiBoId == null) {
             // 注册用户
             MemberDO memberDO = new MemberDO();
-            memberDO.setMemberName(requestDTO.getName());
+            memberDO.setMemberName(MEMBER_NAME_PREFIX + requestDTO.getName());
             memberDO.setNickName(requestDTO.getNickName());
             memberDO.setGender(EnumUtil.getData(GenderEnum.class, requestDTO.getIcon()));
             memberDO.setIcon(requestDTO.getIcon());

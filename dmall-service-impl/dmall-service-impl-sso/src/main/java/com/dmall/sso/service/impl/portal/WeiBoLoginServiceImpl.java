@@ -7,7 +7,7 @@ import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.util.HttpClientUtil;
-import com.dmall.mms.api.dto.member.request.WeiBoLoginRequestDTO;
+import com.dmall.mms.api.dto.member.WeiBoLoginRequestDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
 import com.dmall.sso.api.enums.ThirdPartyPlatformErrorEnum;
 import com.dmall.sso.api.service.WeiBoLoginService;

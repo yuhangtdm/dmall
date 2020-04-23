@@ -8,7 +8,6 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.applyrefund.OrderApplyRefundRequestDTO;
 import com.dmall.oms.api.enums.*;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
-import com.dmall.oms.generator.dataobject.OrderAfterSaleLogDO;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
@@ -44,20 +43,20 @@ public class ApplyRefundHandler extends AbstractCommonHandler<OrderApplyRefundRe
         // 校验orderItem存在
         OrderItemDO orderItemDO = orderItemMapper.selectById(requestDTO.getOrderItemId());
         if (orderItemDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 校验order存在
         OrderDO orderDO = orderMapper.selectById(orderItemDO.getOrderId());
         if (orderDO == null) {
-            return ResultUtil.fail(OrderErrorEnum.ORDER_NOT_EXISTS);
+            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
         }
         // 校验订单状态必须为 待发货
         if (!OrderStatusEnum.WAIT_SHIP.getCode().equals(orderDO.getStatus())) {
-            return ResultUtil.fail(OrderErrorEnum.APPLY_REFUND_ERROR);
+            return ResultUtil.fail(OmsErrorEnum.APPLY_REFUND_ERROR);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
-            return ResultUtil.fail(OrderErrorEnum.NO_AUTHORITY);
+            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         // 新增售后服务表
         Long id = insertAfterSale(requestDTO, orderItemDO, orderDO);

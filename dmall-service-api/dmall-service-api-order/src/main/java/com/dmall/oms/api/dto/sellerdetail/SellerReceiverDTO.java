@@ -4,13 +4,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @description: 收货人响应实体
  * @author: created by hang.yu on 2020/4/5 22:27
  */
 @Data
 @ApiModel(value = "SellerReceiverDTO", description = "收货人响应实体")
-public class SellerReceiverDTO {
+public class SellerReceiverDTO implements Serializable {
+
+    private static final long serialVersionUID = -5329886026564755631L;
 
     @ApiModelProperty(value = "收货地址id", position = 1)
     private Long receiverId;

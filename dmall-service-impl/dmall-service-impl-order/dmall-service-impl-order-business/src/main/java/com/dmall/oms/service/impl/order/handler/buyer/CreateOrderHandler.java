@@ -96,12 +96,12 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         String checkKey = StrUtil.format(OrderConstants.CHECK_ORDER_KEY, loginMember.getId());
         // 校验3秒钟之内不能重复提交订单
         if (!distributedLockService.getLock(checkKey, requestDTO.getOrderKey(), 3)) {
-            return ResultUtil.fail(OrderErrorEnum.SUBMIT_REPEAT);
+            return ResultUtil.fail(OmsErrorEnum.SUBMIT_REPEAT);
         }
         // 校验订单提交成功之后不能重复下单
         String key = StrUtil.format(OrderConstants.ORDER_KEY, loginMember.getId());
         if (redisTemplate.opsForValue().get(key) == null) {
-            return ResultUtil.fail(OrderErrorEnum.SUBMIT_REPEAT);
+            return ResultUtil.fail(OmsErrorEnum.SUBMIT_REPEAT);
         }
         List<Long> skuIds = requestDTO.getOrderSku().stream().map(OrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, OrderSkuRequestDTO> skuMap = requestDTO.getOrderSku().stream()
@@ -172,7 +172,7 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         orderDO.setReceiverDetailAddress(address.getDetailAddress());
 
         // 发票相关
-        orderDO.setInvoiceType(InvoiceTypeEnum.Electronics.getCode());
+        orderDO.setInvoiceType(InvoiceTypeEnum.ELECTRONICS.getCode());
         OrderInvoiceRequestDTO invoice = requestDTO.getOrderInvoiceRequestDTO();
         orderDO.setInvoiceHeader(invoice.getInvoiceHeader());
         orderDO.setInvoiceContent(invoice.getInvoiceContent());

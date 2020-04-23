@@ -6,7 +6,7 @@ import com.dmall.pms.generator.dataobject.CategorySkuDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.CategorySkuMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.impl.support.CategorySkuSupport;
+import com.dmall.pms.service.support.CategorySkuSupport;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -7,6 +7,7 @@ import com.dmall.component.file.qiniu.QiNiuConstants;
 import com.dmall.component.file.qiniu.QiNiuFileManager;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.generator.dataobject.OrderDO;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ public class UploadApplyCredentialsHandler extends AbstractCommonHandler<Multipa
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
             log.error("upload credentials failed", e);
-            return ResultUtil.fail(BrandErrorEnum.UPLOAD_LOGO_ERROR);
+            return ResultUtil.fail(PmsErrorEnum.UPLOAD_LOGO_ERROR);
         }
     }
 }

@@ -1,13 +1,13 @@
 package com.dmall.cart.service.impl.handler;
 
-import cn.hutool.json.JSON;
+import cn.hutool.core.collection.CollUtil;
 import com.dmall.cart.api.dto.list.CartListResponseDTO;
 import com.dmall.cart.api.dto.select.SelectCartRequestDTO;
-import com.dmall.cart.api.dto.select.SelectTypeEnum;
+import com.dmall.cart.api.enums.SelectTypeEnum;
 import com.dmall.cart.generator.dataobject.CartItemDO;
 import com.dmall.cart.generator.mapper.CartItemMapper;
+import com.dmall.cart.service.impl.AddCartUtil;
 import com.dmall.cart.service.impl.cache.CartCacheService;
-import com.dmall.cart.service.impl.cache.Constants;
 import com.dmall.cart.service.impl.dto.CartDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.YNEnum;
@@ -58,15 +58,19 @@ public class SelectCartHandler extends AbstractCommonHandler<SelectCartRequestDT
      */
     private void notLoginUpdateCart(Integer type, List<Long> skuIds) {
         // 查询cookie中的购物车数据
-        String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), Constants.COOKIE_NAME, true);
-        List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
+        String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), AddCartUtil.COOKIE_NAME, true);
+        List<CartDTO> carts = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {
+        });
 
-        for (CartDTO cartDTO : cartDTOS) {
-            if (skuIds.contains(cartDTO.getSkuId())) {
-                cartDTO.setChecked(type.equals(SelectTypeEnum.CHECK.getCode()));
+        if (CollUtil.isNotEmpty(carts)) {
+            for (CartDTO cartDTO : carts) {
+                if (skuIds.contains(cartDTO.getSkuId())) {
+                    cartDTO.setChecked(type.equals(SelectTypeEnum.CHECK.getCode()));
+                }
             }
+            CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME, JsonUtil.toJson(carts),
+                    AddCartUtil.COOKIE_STORE_TIME, true);
         }
-        CookieUtil.addCookie(ResponseUtil.getResponse(), Constants.COOKIE_NAME, JsonUtil.toJson(cartDTOS), Constants.COOKIE_STORE_TIME, true);
     }
 
     /**
