@@ -10,6 +10,7 @@ import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +27,13 @@ public class UpdateBrandHandler extends AbstractCommonHandler<UpdateBrandRequest
     @Autowired
     private BrandCacheService brandCacheService;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(UpdateBrandRequestDTO requestDTO) {
         // 品牌必须存在
-        BrandDO brandDO = brandMapper.selectById(requestDTO.getId());
-        if (brandDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.BRAND_NOT_EXIST);
-        }
+       pmsValidate.validateBrand(requestDTO.getId());
         // 品牌名称唯一
         BrandDO nameBrand = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, requestDTO.getName()));
         if (nameBrand != null && ObjectUtil.notEqual(nameBrand.getId(), requestDTO.getId())) {

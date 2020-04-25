@@ -15,13 +15,13 @@ import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
-import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
-import com.dmall.oms.service.impl.support.AfterSaleSupport;
-import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
-import com.dmall.oms.service.impl.support.SubOrderSupport;
-import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
+import com.dmall.oms.service.support.AfterSaleSupport;
+import com.dmall.oms.service.support.OrderAfterSaleLogSupport;
+import com.dmall.oms.service.support.SubOrderSupport;
+import com.dmall.oms.service.support.SyncEsOrderSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,30 +54,21 @@ public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApp
     private SyncEsOrderSupport syncEsOrderSupport;
 
     @Autowired
-    private OrderItemMapper orderItemMapper;
-
-    @Autowired
     private OrderMapper orderMapper;
 
     @Autowired
     private OrderAfterSaleLogSupport orderAfterSaleLogSupport;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult<Long> processor(AfterSaleApprovalRequestDTO requestDTO) {
-        OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(requestDTO.getAfterSaleId());
-        if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
-        }
+        OrderAfterSaleApplyDO orderAfterSaleApplyDO = omsValidate.validateOrderAfterSale(requestDTO.getAfterSaleId());
         // 校验orderItem存在
-        OrderItemDO orderItemDO = orderItemMapper.selectById(orderAfterSaleApplyDO.getOrderItemId());
-        if (orderItemDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        OrderItemDO orderItemDO = omsValidate.validateOrderItem(orderAfterSaleApplyDO.getOrderItemId());
         // 校验order存在
-        OrderDO orderDO = orderMapper.selectById(orderItemDO.getOrderId());
-        if (orderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        OrderDO orderDO = omsValidate.validateOrder(orderItemDO.getOrderId());
         if (AfterSaleTypeEnum.REFUND.getCode().equals(orderAfterSaleApplyDO.getType())) {
             // 退款
             if (requestDTO.getResult()) {

@@ -5,24 +5,21 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dmall.common.util.EnumUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.enums.HandAddStatusEnum;
-import com.dmall.pms.api.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.PmsErrorEnum;
-import com.dmall.pms.api.enums.TypeEnum;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
-import com.dmall.pms.api.enums.LevelEnum;
+import com.dmall.pms.api.enums.*;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.service.impl.attribute.mapper.AttributePageMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,27 +40,16 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
     private AttributeMapper attributeMapper;
 
     @Autowired
-    private CategoryCacheService categoryCacheService;
+    private PmsValidate pmsValidate;
 
-    @Override
-    public BaseResult<ResponsePage<AttributeResponseDTO>> validate(PageAttributeRequestDTO requestDTO) {
-        // 分类必须存在 且必须是一级分类
-        if (requestDTO.getCategoryId() != null) {
-            CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-            if (categoryDO == null) {
-                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
-            }
-            if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
-                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
-            }
-        }
-        return ResultUtil.success();
-    }
 
     @Override
     public BaseResult<ResponsePage<AttributeResponseDTO>> processor(PageAttributeRequestDTO requestDTO) {
         if (requestDTO.getCategoryId() != null) {
-            CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
+            CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
+            if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
+                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
+            }
             // 一级分类
             if (LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
                 LambdaQueryWrapper<AttributeDO> wrapper = Wrappers.<AttributeDO>lambdaQuery()

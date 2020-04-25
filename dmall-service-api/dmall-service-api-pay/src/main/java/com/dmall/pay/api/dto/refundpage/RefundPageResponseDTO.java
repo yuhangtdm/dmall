@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 @ApiModel(value = "RefundPageResponseDTO", description = "退款明细分页响应实体")
 public class RefundPageResponseDTO implements Serializable {
 
+    private static final long serialVersionUID = 8981035676577072486L;
+
     @ApiModelProperty(value = "售后单号", position = 1)
     private Long afterSaleId;
 

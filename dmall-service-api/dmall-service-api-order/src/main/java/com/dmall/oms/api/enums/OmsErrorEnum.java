@@ -147,6 +147,12 @@ public enum OmsErrorEnum implements ErrorCodeEnum {
      */
     CREATE_JOB_ERROR("1526", "创建自动收货的job失败"),
 
+    /**
+     * 订单项不存在
+     */
+    ORDER_ITEM_NOT_EXISTS("1527","订单项不存在"),
+
+
     ;
 
     /**

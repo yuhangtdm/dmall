@@ -1,15 +1,16 @@
 package com.dmall.pms.service.impl.attribute.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.ProductAttributeValueDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.support.CategoryAttributeSupport;
 import com.dmall.pms.service.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +32,13 @@ public class DeleteAttributeHandler extends AbstractCommonHandler<Long, Attribut
     @Autowired
     private CategoryAttributeSupport categoryAttributeSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(Long id) {
         // 属性必须存在
-        AttributeDO attributeDO = attributeCacheService.selectById(id);
-        if (attributeDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NOT_EXIST);
-        }
+        pmsValidate.validateAttribute(id);
         // 属性下有商品 则不能删除
         List<ProductAttributeValueDO> productAttributeValueDOS = productAttributeValueSupport.listByAttributeId(id);
         if (CollUtil.isNotEmpty(productAttributeValueDOS)) {

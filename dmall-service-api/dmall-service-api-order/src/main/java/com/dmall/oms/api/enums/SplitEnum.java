@@ -11,13 +11,23 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SplitEnum implements CodeDescEnum<Integer> {
+    /**
+     * 未拆分
+     */
+    NOT(1, "未拆分"),
 
-    NOT(1,"未拆分"),
+    /**
+     * 无需拆分
+     */
     NOT_NEED(2, "无需拆分"),
+
+    /**
+     * 已拆分
+     */
     IS(3, "已拆分"),
 
     ;
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

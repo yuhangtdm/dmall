@@ -10,7 +10,7 @@ import com.dmall.oms.feign.SkuFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
-import com.dmall.oms.service.impl.support.OrderLogSupport;
+import com.dmall.oms.service.support.OrderLogSupport;
 import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;

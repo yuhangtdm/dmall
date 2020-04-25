@@ -1,16 +1,16 @@
 package com.dmall.pms.service.impl.product.handler;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.product.response.get.BasicProductResponseDTO;
 import com.dmall.pms.api.dto.product.response.get.GetProductResponseDTO;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.support.SkuSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,12 +30,12 @@ public class GetProductHandler extends AbstractCommonHandler<Long, ProductDO, Ge
     @Autowired
     private SkuSupport skuSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<GetProductResponseDTO> processor(Long id) {
-        ProductDO productDO = productMapper.selectById(id);
-        if (productDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NOT_EXISTS);
-        }
+        ProductDO productDO = pmsValidate.validateProduct(id);
         GetProductResponseDTO responseDTO = new GetProductResponseDTO();
         // 设置商品基本信息
         BasicProductResponseDTO basicProduct = BeanUtil.copyProperties(productDO, BasicProductResponseDTO.class);

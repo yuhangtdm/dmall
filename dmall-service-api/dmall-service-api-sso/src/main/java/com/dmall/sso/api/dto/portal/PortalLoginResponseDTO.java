@@ -10,7 +10,6 @@ import lombok.experimental.Accessors;
  * @author: created by hang.yu on 2020/1/6 23:10
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "PortalLoginResponseDTO", description = "商城登录响应实体")
 public class PortalLoginResponseDTO {
 

@@ -8,6 +8,7 @@ import com.dmall.pms.generator.dataobject.SkuExtDO;
 import com.dmall.pms.generator.mapper.SkuExtMapper;
 import com.dmall.pms.service.support.SkuExtSupport;
 import com.dmall.pms.service.support.SkuSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +28,12 @@ public class SaveSkuExtHandler extends AbstractCommonHandler<SaveSkuExtRequestDT
     @Autowired
     private SkuExtSupport skuExtSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult validate(SaveSkuExtRequestDTO requestDTO) {
-        return skuSupport.validate(requestDTO.getProductId(), requestDTO.getSkuId());
+        return pmsValidate.skuValidate(requestDTO.getProductId(), requestDTO.getSkuId());
     }
 
     @Override

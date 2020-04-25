@@ -1,4 +1,4 @@
-package com.dmall.pay.service.impl;
+package com.dmall.pay.api.enums;
 
 import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
@@ -36,15 +36,15 @@ public enum AliTradeStatusEnum implements CodeDescEnum<String> {
     /**
      * 交易码
      */
-    private String code;
+    private final String code;
 
     /**
      * 交易描述
      */
-    private String desc;
+    private final String desc;
 
     /**
      * 是否触发通知
      */
-    private boolean notify;
+    private final boolean notify;
 }

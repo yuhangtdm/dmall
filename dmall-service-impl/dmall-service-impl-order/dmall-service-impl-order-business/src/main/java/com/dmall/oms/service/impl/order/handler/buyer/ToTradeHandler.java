@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 @Component
 public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Void, ToTradeResponseDTO> {
 
-    private ThreadPoolExecutor pool = ThreadPoolUtil.createThreadPool("trade");
+    private final ThreadPoolExecutor pool = ThreadPoolUtil.createThreadPool("trade");
 
     @Autowired
     private SkuFeign skuFeign;

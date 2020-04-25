@@ -4,9 +4,8 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.brand.response.BrandResponseDTO;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.BrandDO;
-import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +17,11 @@ import org.springframework.stereotype.Component;
 public class GetBrandHandler extends AbstractCommonHandler<Long, BrandDO, BrandResponseDTO> {
 
     @Autowired
-    private BrandCacheService brandCacheService;
+    private PmsValidate pmsValidate;
 
     @Override
     public BaseResult<BrandResponseDTO> processor(Long id) {
-        BrandDO brandDO = brandCacheService.selectById(id);
-        if (brandDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.BRAND_NOT_EXIST);
-        }
+        BrandDO brandDO = pmsValidate.validateBrand(id);
         return ResultUtil.success(doConvertDto(brandDO, BrandResponseDTO.class));
     }
 

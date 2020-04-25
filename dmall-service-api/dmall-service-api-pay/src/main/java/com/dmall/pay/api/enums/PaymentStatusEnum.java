@@ -26,7 +26,7 @@ public enum PaymentStatusEnum implements CodeDescEnum<Integer> {
      */
     PAY_FAILED(3, "支付失败");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

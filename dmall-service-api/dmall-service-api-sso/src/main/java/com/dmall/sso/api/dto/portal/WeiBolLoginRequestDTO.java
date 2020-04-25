@@ -13,7 +13,6 @@ import java.util.Date;
  * @author: created by hang.yu on 2020/1/6 23:10
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "WeiBolLoginRequestDTO", description = "前台商城登录请求实体")
 public class WeiBolLoginRequestDTO {
 

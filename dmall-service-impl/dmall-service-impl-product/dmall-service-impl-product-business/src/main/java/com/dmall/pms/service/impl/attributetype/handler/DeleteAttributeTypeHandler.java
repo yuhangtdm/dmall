@@ -1,14 +1,15 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.ProductAttributeValueDO;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,13 +28,13 @@ public class DeleteAttributeTypeHandler extends AbstractCommonHandler<Long, Attr
     @Autowired
     private ProductAttributeValueSupport productAttributeValueSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(Long id) {
         // 属性类别必须存在
-        AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(id);
-        if (attributeTypeDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
-        }
+       pmsValidate.validateAttributeType(id);
         // 商品属性值不存在该属性类别
         List<ProductAttributeValueDO> attributeValueDOS = productAttributeValueSupport.listByAttributeTypeId(id);
         if (CollUtil.isNotEmpty(attributeValueDOS)) {

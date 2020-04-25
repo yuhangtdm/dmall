@@ -1,21 +1,18 @@
-package com.dmall.oms.service.impl.order.handler.seller;
+package com.dmall.oms.service.impl.order.handler.buyer;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.model.portal.PortalMemberContextHolder;
-import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.commentdetail.CommentDetailResponseDTO;
-import com.dmall.oms.api.enums.OrderCommentStatusEnum;
 import com.dmall.oms.api.enums.OmsErrorEnum;
+import com.dmall.oms.api.enums.OrderCommentStatusEnum;
 import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.feign.CommentFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
-import com.dmall.oms.generator.mapper.OrderMapper;
-import com.dmall.oms.generator.mapper.SubOrderMapper;
-import com.dmall.oms.service.impl.support.OrderItemSupport;
+import com.dmall.oms.service.support.OrderItemSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import com.dmall.pms.api.dto.comment.response.CommentResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,31 +29,19 @@ import java.util.stream.Collectors;
 public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO, List<CommentDetailResponseDTO>> {
 
     @Autowired
-    private SubOrderMapper subOrderMapper;
-
-    @Autowired
-    private OrderMapper orderMapper;
-
-    @Autowired
     private CommentFeign commentFeign;
 
     @Autowired
     private OrderItemSupport orderItemSupport;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult<List<CommentDetailResponseDTO>> processor(Long subOrderId) {
-        SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
-        if (subOrderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
-        OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
-        if (orderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
-        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
-            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
-        }
+        SubOrderDO subOrderDO = omsValidate.validateSubOrder(subOrderId);
+        OrderDO orderDO = omsValidate.validateOrder(subOrderDO.getOrderId());
+        omsValidate.authentication(orderDO.getCreator());
         if (OrderCommentStatusEnum.NO.getCode().equals(subOrderDO.getCommentStatus())) {
             return ResultUtil.fail(OmsErrorEnum.COMMENT_DETAIL_ERROR);
         }
@@ -66,15 +51,15 @@ public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO
             return ResultUtil.fail(baseResult.getCode(), baseResult.getMsg());
         }
         List<CommentResponseDTO> data = baseResult.getData();
+        List<OrderItemDO> orderItemList;
         if (SplitEnum.NOT_NEED.getCode().equals(orderDO.getSplit())) {
             // 无需拆单
-            List<OrderItemDO> orderItemList = orderItemSupport.listByOrderId(subOrderDO.getOrderId());
-            return buildResult(data, orderItemList);
+            orderItemList = orderItemSupport.listByOrderId(subOrderDO.getOrderId());
         } else {
             // 已拆单
-            List<OrderItemDO> orderItemList = orderItemSupport.listBySubOrderId(subOrderDO.getOrderId());
-            return buildResult(data, orderItemList);
+            orderItemList = orderItemSupport.listBySubOrderId(subOrderDO.getOrderId());
         }
+        return buildResult(data, orderItemList);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.dmall.pay.service.impl.support;
+package com.dmall.pay.service.support;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.enums.YNEnum;
@@ -17,6 +17,9 @@ public class PaymentInfoSupport {
     @Autowired
     private PaymentInfoMapper paymentInfoMapper;
 
+    /**
+     * 根据订单号获取支付记录
+     */
     public PaymentInfoDO getByOrderId(Long orderId) {
         return paymentInfoMapper.selectOne(Wrappers.lambdaQuery(new PaymentInfoDO())
                 .eq(PaymentInfoDO::getOrderId, orderId)

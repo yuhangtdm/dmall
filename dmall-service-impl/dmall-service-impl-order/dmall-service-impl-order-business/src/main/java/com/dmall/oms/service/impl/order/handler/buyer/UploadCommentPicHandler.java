@@ -32,7 +32,7 @@ public class UploadCommentPicHandler extends AbstractCommonHandler<MultipartFile
             UploadResult uploadResult = qiNiuFileManager.upload(file, QiNiuConstants.COMMENT);
             return ResultUtil.success(uploadResult);
         } catch (IOException e) {
-            log.error("upload comment failed", e);
+            log.error("upload comment error", e);
             return ResultUtil.fail(PmsErrorEnum.UPLOAD_LOGO_ERROR);
         }
     }

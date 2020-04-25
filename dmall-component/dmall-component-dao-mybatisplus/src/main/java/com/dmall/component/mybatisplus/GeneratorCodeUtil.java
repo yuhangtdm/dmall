@@ -1,4 +1,4 @@
-package com.dmall.component.mybatisplus.generator;
+package com.dmall.component.mybatisplus;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -9,6 +9,10 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.dmall.component.mybatisplus.generator.DMallAutoGenerator;
+import com.dmall.component.mybatisplus.generator.DMallVelocityTemplateEngine;
+import com.dmall.component.mybatisplus.generator.GeneratorDTO;
+import com.dmall.component.mybatisplus.generator.MybatisPlusConstants;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -23,9 +27,10 @@ public class GeneratorCodeUtil {
 
     public static void main(String[] args) {
         GeneratorDTO generator = new GeneratorDTO();
-        generator.setModule("demo");
+        generator.setModule("product");
         generator.setDatabaseUrl(StrUtil.format(generator.getDatabaseUrl(), generator.getModule()));
         generator.setGenerateCustomer(true);
+        generator.setTableNames(new String[]{"pms_sku_audit"});
         moduleGenerator(generator);
     }
 

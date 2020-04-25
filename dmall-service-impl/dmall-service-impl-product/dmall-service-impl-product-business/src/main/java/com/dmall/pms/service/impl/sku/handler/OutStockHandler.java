@@ -1,14 +1,13 @@
 package com.dmall.pms.service.impl.sku.handler;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.SkuStockRequestDTO;
 import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,14 +23,14 @@ public class OutStockHandler extends AbstractCommonHandler<StockRequestDTO, SkuD
     @Autowired
     private SkuMapper skuMapper;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult processor(StockRequestDTO requestDTO){
          List<SkuStockRequestDTO> skuList = requestDTO.getSku();
         for (SkuStockRequestDTO skuRequestDTO : skuList) {
-            SkuDO skuDO = skuMapper.selectById(skuRequestDTO.getSkuId());
-            if (skuDO == null){
-                throw new BusinessException(PmsErrorEnum.SKU_NOT_EXISTS);
-            }
+            SkuDO skuDO = pmsValidate.validateSku(skuRequestDTO.getSkuId());
             skuDO.setStock(skuDO.getStock() - skuRequestDTO.getNumber());
             skuMapper.updateById(skuDO);
         }

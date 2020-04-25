@@ -8,7 +8,7 @@ import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.RequestUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.sso.api.dto.portal.LoginTypeEnum;
+import com.dmall.sso.api.enums.LoginTypeEnum;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
 import com.dmall.sso.service.impl.SsoProperties;
 import com.dmall.sso.service.impl.portal.dataobject.MemberDO;

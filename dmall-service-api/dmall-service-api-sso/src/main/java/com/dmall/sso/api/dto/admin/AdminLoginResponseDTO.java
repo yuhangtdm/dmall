@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
  * @author: created by hang.yu on 2020/1/6 23:10
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "AdminLoginResponseDTO", description = "后台登录响应实体")
 public class AdminLoginResponseDTO {
 

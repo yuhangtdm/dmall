@@ -17,7 +17,8 @@ import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.oms.service.impl.order.xxljob.XxlJobSupport;
-import com.dmall.oms.service.impl.support.*;
+import com.dmall.oms.service.support.*;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,12 @@ import java.util.Optional;
  */
 @Component
 public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, SubOrderDO, Long> {
+
+    private static final String LOG_CONTENT = "子订单:{}已发货";
+
+    private static final String ORDER_LOG_CONTENT = "订单已全部发货";
+
+    private static final String JOB_DESC = "子订单:{}已发货,15天后自动确认收货";
 
     @Autowired
     private SubOrderMapper subOrderMapper;
@@ -59,18 +66,12 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
     @Autowired
     private SubOrderJobSupport subOrderJobSupport;
 
-    private static final String LOG_CONTENT = "子订单:{}已发货";
-
-    private static final String ORDER_LOG_CONTENT = "订单已全部发货";
-
-    private static final String JOB_DESC = "子订单:{}已发货,15天后自动确认收货";
+    @Autowired
+    private OmsValidate omsValidate;
 
     @Override
     public BaseResult<Long> processor(DeliverRequestDTO requestDTO) {
-        SubOrderDO subOrderDO = subOrderMapper.selectById(requestDTO.getSubOrderId());
-        if (subOrderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.SUB_ORDER_NOT_EXISTS);
-        }
+        SubOrderDO subOrderDO = omsValidate.validateSubOrder(requestDTO.getSubOrderId());
         subOrderDO.setStatus(SubOrderStatusEnum.WAIT_RECEIVE.getCode());
         subOrderDO.setLogisticsNo(requestDTO.getLogisticsNo());
         subOrderDO.setLogisticsCompany(requestDTO.getLogisticsCompany());

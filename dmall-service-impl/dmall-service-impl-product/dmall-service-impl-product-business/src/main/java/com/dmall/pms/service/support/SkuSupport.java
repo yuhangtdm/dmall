@@ -4,15 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.common.util.IdGeneratorUtil;
-import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.SkuSpecificationsRequestDTO;
 import com.dmall.pms.api.dto.product.response.get.SkuListResponseDTO;
 import com.dmall.pms.api.enums.SkuAuditStatusEnum;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.CategorySkuMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
@@ -128,21 +125,6 @@ public class SkuSupport {
                 }).collect(Collectors.toList());
     }
 
-    /**
-     * 公共校验逻辑
-     */
-    public BaseResult validate(Long productId, Long skuId) {
-        // 商品必须存在
-        ProductDO productDO = productMapper.selectById(productId);
-        if (productDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NOT_EXISTS);
-        }
-        SkuDO skuDO = skuMapper.selectById(skuId);
-        if (skuDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
-        }
-        return ResultUtil.success();
-    }
 
     /**
      * 根据productId删除sku相关数据
@@ -159,5 +141,12 @@ public class SkuSupport {
      */
     public void deleteByProductId(Long productId) {
         skuMapper.delete(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productId));
+    }
+
+    /**
+     * 根据名称获取sku
+     */
+    public SkuDO getByName(String name) {
+        return skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getName, name));
     }
 }

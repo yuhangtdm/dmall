@@ -21,19 +21,19 @@ public class CreatePaymentRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 8089554331548887891L;
 
-    @ApiModelProperty(value = "订单号", position = 1)
+    @ApiModelProperty(value = "订单号", required = true, position = 1)
     @NotNull(message = "订单号不能为空")
     private Long orderId;
 
-    @ApiModelProperty(value = "订单标题", position = 2)
+    @ApiModelProperty(value = "订单标题", required = true, position = 2)
     @NotBlank(message = "订单标题不能为空")
     private String subject;
 
-    @ApiModelProperty(value = "订单金额", position = 3)
+    @ApiModelProperty(value = "订单金额", required = true, position = 3)
     @NotNull(message = "订单金额不能为空")
     private BigDecimal amount;
 
-    @ApiModelProperty(value = "支付方式", position = 4)
+    @ApiModelProperty(value = "支付方式", required = true, position = 4)
     @NotNull(message = "支付方式不能为空")
     @ValueInEnum(PaymentTypeEnum.class)
     private Integer paymentType;

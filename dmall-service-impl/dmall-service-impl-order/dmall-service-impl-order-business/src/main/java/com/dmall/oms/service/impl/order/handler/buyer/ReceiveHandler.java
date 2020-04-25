@@ -15,10 +15,11 @@ import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
 import com.dmall.oms.service.impl.order.xxljob.XxlJobSupport;
-import com.dmall.oms.service.impl.support.OrderItemSupport;
-import com.dmall.oms.service.impl.support.SubOrderJobSupport;
-import com.dmall.oms.service.impl.support.SubOrderSupport;
-import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
+import com.dmall.oms.service.support.OrderItemSupport;
+import com.dmall.oms.service.support.SubOrderJobSupport;
+import com.dmall.oms.service.support.SubOrderSupport;
+import com.dmall.oms.service.support.SyncEsOrderSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,33 +54,26 @@ public class ReceiveHandler extends AbstractCommonHandler<Long, OrderDO, Long> {
     @Autowired
     private SubOrderJobSupport subOrderJobSupport;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     private static final String JOB_DESC = "子订单:{}已确认收货,skuIds:{},15天后自动好评";
 
 
     @Override
     public BaseResult<Long> processor(Long subOrderId) {
         // 子订单存在
-        SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
-        if (subOrderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        SubOrderDO subOrderDO = omsValidate.validateSubOrder(subOrderId);
         // 订单存在
-        OrderDO orderDO = orderMapper.selectById(subOrderDO.getOrderId());
-        if (orderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        OrderDO orderDO = omsValidate.validateOrder(subOrderDO.getOrderId());
+        omsValidate.authentication(orderDO.getCreator());
         // 必须为待收货状态才可以确认收货
         if (!SubOrderStatusEnum.WAIT_SHIP.getCode().equals(subOrderDO.getStatus())) {
             return ResultUtil.fail(OmsErrorEnum.RECEIVER_STATUS);
         }
-        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(orderDO.getCreator())) {
-            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
-        }
-
         // 修改状态为已收货
-        subOrderDO.setStatus(SubOrderStatusEnum.COMPLETED.getCode());
         subOrderDO.setDeliverType(DeliverTypeEnum.HANDLE.getCode());
+        subOrderDO.setStatus(SubOrderStatusEnum.COMPLETED.getCode());
         subOrderMapper.updateById(subOrderDO);
         // 判断是否需要修改
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(orderDO.getId());

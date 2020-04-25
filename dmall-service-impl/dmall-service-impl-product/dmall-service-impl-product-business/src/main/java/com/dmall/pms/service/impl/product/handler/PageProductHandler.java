@@ -9,8 +9,8 @@ import com.dmall.pms.api.dto.product.request.PageProductRequestDTO;
 import com.dmall.pms.api.dto.product.response.PageProductResponseDTO;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
-import com.dmall.pms.service.validate.ProductValidate;
 import com.dmall.pms.service.impl.product.mapper.ProductPageMapper;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,11 +31,11 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
     private ProductPageMapper productPageMapper;
 
     @Autowired
-    private ProductValidate productValidate;
+    private PmsValidate pmsValidate;
 
     @Override
     public BaseResult validate(PageProductRequestDTO requestDTO) {
-        return productValidate.basicValidate(requestDTO.getBrandId(), requestDTO.getCategoryId());
+        return pmsValidate.commonValidate(requestDTO.getBrandId(), requestDTO.getCategoryId());
     }
 
     @Override

@@ -10,16 +10,13 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
-import com.dmall.pms.api.enums.LevelEnum;
-import com.dmall.pms.api.enums.HandAddStatusEnum;
-import com.dmall.pms.api.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.PmsErrorEnum;
-import com.dmall.pms.api.enums.TypeEnum;
+import com.dmall.pms.api.enums.*;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,14 +40,14 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
     @Autowired
     private CategoryCacheService categoryCacheService;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult validate(ListAttributeRequestDTO requestDTO) {
         // 分类必须存在 且必须是一级分类
         if (requestDTO.getCategoryId() != null) {
-            CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-            if (categoryDO == null) {
-                return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
-            }
+            CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
             if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
                 return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
             }

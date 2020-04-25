@@ -17,10 +17,10 @@ import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
-import com.dmall.oms.service.impl.support.OrderItemSupport;
-import com.dmall.oms.service.impl.support.SubOrderJobSupport;
-import com.dmall.oms.service.impl.support.SubOrderSupport;
-import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
+import com.dmall.oms.service.support.OrderItemSupport;
+import com.dmall.oms.service.support.SubOrderJobSupport;
+import com.dmall.oms.service.support.SubOrderSupport;
+import com.dmall.oms.service.support.SyncEsOrderSupport;
 import com.dmall.pms.api.dto.comment.request.SaveCommentRequestDTO;
 import com.dmall.pms.api.enums.CommentLevelEnum;
 import com.xxl.job.core.biz.model.ReturnT;
@@ -40,6 +40,8 @@ import java.util.stream.Collectors;
  */
 @Component
 public class XxlJobHandler {
+
+    private static final String DEFAULT_GOOD_COMMENT = "默认好评";
 
     @Autowired
     private SubOrderMapper subOrderMapper;
@@ -67,8 +69,6 @@ public class XxlJobHandler {
 
     @Autowired
     private XxlJobSupport xxlJobSupport;
-
-    private static final String DEFAULT_GOOD_COMMENT = "默认好评";
 
     /**
      * 自动确认收货
@@ -207,6 +207,5 @@ public class XxlJobHandler {
             orderItemMapper.updateById(orderItemDO);
         }
     }
-
 
 }

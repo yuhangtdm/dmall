@@ -8,11 +8,10 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.comment.request.SaveCommentRequestDTO;
 import com.dmall.pms.api.enums.CommentLevelEnum;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CommentDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.CommentMapper;
-import com.dmall.pms.generator.mapper.SkuMapper;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,15 +28,12 @@ public class SaveCommentHandler extends AbstractCommonHandler<List<SaveCommentRe
     private CommentMapper commentMapper;
 
     @Autowired
-    private SkuMapper skuMapper;
+    private PmsValidate pmsValidate;
 
     @Override
     public BaseResult processor(List<SaveCommentRequestDTO> requestDTO) {
         for (SaveCommentRequestDTO saveCommentRequestDTO : requestDTO) {
-            SkuDO skuDO = skuMapper.selectById(saveCommentRequestDTO.getSkuId());
-            if (skuDO == null) {
-                return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
-            }
+            SkuDO skuDO = pmsValidate.validateSku(saveCommentRequestDTO.getSkuId());
             CommentDO commentDO = new CommentDO();
             commentDO.setProductId(skuDO.getProductId());
             commentDO.setSkuId(skuDO.getId());

@@ -10,7 +10,6 @@ import lombok.experimental.Accessors;
  * @author: created by hang.yu on 2020/1/11 22:19
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "PermissionResponseDTO", description = "权限列表响应实体")
 public class PermissionResponseDTO {
 

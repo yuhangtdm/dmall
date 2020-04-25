@@ -13,7 +13,8 @@ import com.dmall.oms.api.enums.AfterSaleStatusEnum;
 import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
-import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
+import com.dmall.oms.service.support.OrderAfterSaleLogSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,12 +35,12 @@ public class WriteLogisticsNoHandler extends AbstractCommonHandler<WriteLogistic
     @Autowired
     private OrderAfterSaleLogSupport orderAfterSaleLogSupport;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult<Long> processor(WriteLogisticsNoRequestDTO requestDTO) {
-        OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(requestDTO.getAfterSaleId());
-        if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
-        }
+        OrderAfterSaleApplyDO orderAfterSaleApplyDO = omsValidate.validateOrderAfterSale(requestDTO.getAfterSaleId());
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
             return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);

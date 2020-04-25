@@ -17,8 +17,9 @@ import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
-import com.dmall.oms.service.impl.support.OrderLogSupport;
-import com.dmall.oms.service.impl.support.SyncEsOrderSupport;
+import com.dmall.oms.service.support.OrderLogSupport;
+import com.dmall.oms.service.support.SyncEsOrderSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrderRequestDTO, SubOrderDO, Long> {
+
+    private static final String LOG_CONTENT = "拆单成功,类型:无需拆单";
+
+    private static final String LOG_CONTENT_SPLIT = "拆单成功,子订单号:{}";
 
     @Autowired
     private SubOrderMapper subOrderMapper;
@@ -44,9 +49,8 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
     @Autowired
     private SyncEsOrderSupport syncEsOrderSupport;
 
-    private static final String LOG_CONTENT = "拆单成功,类型:无需拆单";
-
-    private static final String LOG_CONTENT_SPLIT = "拆单成功,子订单号:{}";
+    @Autowired
+    private OmsValidate omsValidate;
 
     /**
      * 拆单逻辑：
@@ -65,10 +69,7 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
                 return ResultUtil.fail(OmsErrorEnum.SPLIT_DETAIL_NOT_EMPTY);
             }
         }
-        OrderDO orderDO = orderMapper.selectById(requestDTO.getOrderId());
-        if (orderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        OrderDO orderDO = omsValidate.validateOrder(requestDTO.getOrderId());
 
         // 已经拆过单不可再拆分
         if (!SplitEnum.NOT.getCode().equals(orderDO.getSplit())) {

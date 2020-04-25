@@ -4,10 +4,9 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,18 +18,15 @@ import org.springframework.stereotype.Component;
 public class UpdateCategoryHandler extends AbstractCommonHandler<UpdateCategoryRequestDTO, CategoryDO, Long> {
 
     @Autowired
-    private CategoryMapper categoryMapper;
+    private CategoryCacheService categoryCacheService;
 
     @Autowired
-    private CategoryCacheService categoryCacheService;
+    private PmsValidate pmsValidate;
 
     @Override
     public BaseResult<Long> validate(UpdateCategoryRequestDTO requestDTO) {
         // 分类不存在
-        CategoryDO categoryDO = categoryMapper.selectById(requestDTO.getId());
-        if (categoryDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
-        }
+        pmsValidate.validateCategory(requestDTO.getId());
         return ResultUtil.success();
     }
 

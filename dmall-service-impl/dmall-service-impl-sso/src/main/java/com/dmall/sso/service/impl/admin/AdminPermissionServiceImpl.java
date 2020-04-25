@@ -9,7 +9,6 @@ import com.dmall.sso.service.impl.admin.handler.UserRoleHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -26,12 +25,12 @@ public class AdminPermissionServiceImpl implements AdminPermissionService {
     private UserPermissionHandler userPermissionHandler;
 
     @Override
-    public BaseResult<List<RoleResponseDTO>> listRoles(@NotBlank(message = "用户名称不能为空") String userName) {
+    public BaseResult<List<RoleResponseDTO>> listRoles(String userName) {
         return userRoleHandler.handler(userName);
     }
 
     @Override
-    public BaseResult<List<PermissionResponseDTO>> listPermissions(@NotBlank(message = "用户名称不能为空") String userName) {
+    public BaseResult<List<PermissionResponseDTO>> listPermissions(String userName) {
         return userPermissionHandler.handler(userName);
     }
 }

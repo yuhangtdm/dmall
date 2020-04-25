@@ -12,13 +12,22 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RefundStatusEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 退款中
+     */
     REFUND_ING(1, "退款中"),
 
+    /**
+     * 退款成功
+     */
     REFUND_SUCCESS(2, "退款成功"),
 
+    /**
+     * 退款失败
+     */
     REFUND_FAIL(3, "退款失败");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

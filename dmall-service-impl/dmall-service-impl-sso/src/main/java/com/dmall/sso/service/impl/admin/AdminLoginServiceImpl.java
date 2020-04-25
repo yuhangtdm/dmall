@@ -4,12 +4,12 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.model.admin.AdminUserDTO;
+import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.sso.api.dto.admin.AdminLoginRequestDTO;
 import com.dmall.sso.api.dto.admin.AdminLoginResponseDTO;
-import com.dmall.sso.api.enums.AdminLoginErrorEnum;
+import com.dmall.sso.api.enums.SsoErrorEnum;
 import com.dmall.sso.api.service.AdminLoginService;
 import com.dmall.sso.service.impl.SsoProperties;
 import com.google.common.collect.Lists;
@@ -31,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 @RestController
 public class AdminLoginServiceImpl implements AdminLoginService {
 
+    private static final String KEY_PREFIX = "admin_{}";
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -47,18 +49,18 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         try {
             subject.login(usernamePasswordToken);
         } catch (UnknownAccountException e) {
-            throw new BusinessException(AdminLoginErrorEnum.USER_NAME_INCORRECT);
+            throw new BusinessException(SsoErrorEnum.USER_NAME_INCORRECT);
         } catch (IncorrectCredentialsException e) {
-            throw new BusinessException(AdminLoginErrorEnum.PASSWORD_INCORRECT);
+            throw new BusinessException(SsoErrorEnum.PASSWORD_INCORRECT);
         } catch (LockedAccountException e) {
-            throw new BusinessException(AdminLoginErrorEnum.USER_INVALID);
+            throw new BusinessException(SsoErrorEnum.USER_INVALID);
         } catch (AuthenticationException e) {
-            throw new BusinessException(AdminLoginErrorEnum.AUTHENTICATION_FAILED);
+            throw new BusinessException(SsoErrorEnum.AUTHENTICATION_FAILED);
         }
 
         AdminUserDTO adminUserDTO = (AdminUserDTO) subject.getPrincipal();
         String token = IdUtil.simpleUUID();
-        redisTemplate.opsForValue().set(StrUtil.format("admin_{}", token), adminUserDTO, ssoProperties.getAdminTtlDay(), TimeUnit.DAYS);
+        redisTemplate.opsForValue().set(StrUtil.format(KEY_PREFIX, token), adminUserDTO, ssoProperties.getAdminTtlDay(), TimeUnit.DAYS);
         AdminLoginResponseDTO responseDTO = new AdminLoginResponseDTO();
         responseDTO.setToken(token);
         responseDTO.setUrl(StrUtil.isNotBlank(requestDTO.getUrl()) ? requestDTO.getUrl() : ssoProperties.getAdminSuccessUrl());

@@ -10,8 +10,16 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  InvoiceContentEnum implements CodeDescEnum<Integer> {
+public enum InvoiceContentEnum implements CodeDescEnum<Integer> {
+
+    /**
+     * 商品类别
+     */
     CATEGORY(1, "商品类别"),
+
+    /**
+     * 商品明细
+     */
     DETAIL(2, "商品明细"),
     ;
     private final Integer code;

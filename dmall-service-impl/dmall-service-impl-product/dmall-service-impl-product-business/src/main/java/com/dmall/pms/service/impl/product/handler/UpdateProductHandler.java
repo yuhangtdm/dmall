@@ -1,20 +1,20 @@
 package com.dmall.pms.service.impl.product.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.common.util.BeanUtil;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
-import com.dmall.pms.service.validate.ProductValidate;
 import com.dmall.pms.service.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.support.ProductSupport;
 import com.dmall.pms.service.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +31,7 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     private ProductMapper productMapper;
 
     @Autowired
-    private ProductValidate productValidate;
+    private PmsValidate pmsValidate;
 
     @Autowired
     private ProductAttributeValueSupport productAttributeValueSupport;
@@ -39,16 +39,17 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     @Autowired
     private SkuAttributeValueSupport skuAttributeValueSupport;
 
+    @Autowired
+    private ProductSupport productSupport;
+
     @Override
     public BaseResult<Long> validate(UpdateProductRequestDTO requestDTO) {
         // 校验id是否存在
-        ProductDO productDO = productMapper.selectById(requestDTO.getId());
-        if (productDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.PRODUCT_NOT_EXISTS);
-        }
+        pmsValidate.validateProduct(requestDTO.getId());
+
         BasicProductRequestDTO basicProduct = requestDTO.getBasicProduct();
         // 校验商品名称必须唯一
-        ProductDO nameProduct = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery().eq(ProductDO::getName, basicProduct.getName()));
+        ProductDO nameProduct = productSupport.getByName(basicProduct.getName());
         if (nameProduct != null && !nameProduct.getId().equals(requestDTO.getId())) {
             return ResultUtil.fail(PmsErrorEnum.PRODUCT_NAME_EXISTS);
         }
@@ -57,7 +58,7 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         if (CollUtil.isEmpty(skuAttributeValues)) {
             return ResultUtil.success();
         }
-        return productValidate.attributeValidate(requestDTO.getExt());
+        return pmsValidate.attributeValidate(requestDTO.getExt());
     }
 
     @Override

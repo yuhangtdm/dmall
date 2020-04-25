@@ -12,10 +12,22 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum OrderDeliverStatusEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 待发货
+     */
     WAIT(1, "待发货"),
-    PART(2, "部分发货"),
-    ALL(3, "全部发货");
-    private Integer code;
 
-    private String desc;
+    /**
+     * 部分发货
+     */
+    PART(2, "部分发货"),
+
+    /**
+     * 全部发货
+     */
+    ALL(3, "全部发货");
+
+    private final Integer code;
+
+    private final String desc;
 }

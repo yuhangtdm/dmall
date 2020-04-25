@@ -9,18 +9,16 @@ import com.dmall.mms.api.enums.InvoiceContentEnum;
 import com.dmall.mms.api.enums.InvoiceHeaderEnum;
 import com.dmall.oms.api.dto.buyerdetail.*;
 import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
-import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.api.enums.OrderStatusEnum;
 import com.dmall.oms.api.enums.SplitEnum;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.OrderStatusDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
-import com.dmall.oms.generator.mapper.OrderMapper;
-import com.dmall.oms.generator.mapper.SubOrderMapper;
-import com.dmall.oms.service.impl.support.AfterSaleSupport;
-import com.dmall.oms.service.impl.support.OrderItemSupport;
-import com.dmall.oms.service.impl.support.OrderStatusSupport;
+import com.dmall.oms.service.support.AfterSaleSupport;
+import com.dmall.oms.service.support.OrderItemSupport;
+import com.dmall.oms.service.support.OrderStatusSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,12 +34,6 @@ import java.util.stream.Collectors;
 public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO, BuyerOrderDetailResponseDTO> {
 
     @Autowired
-    private SubOrderMapper subOrderMapper;
-
-    @Autowired
-    private OrderMapper orderMapper;
-
-    @Autowired
     private OrderStatusSupport orderStatusSupport;
 
     @Autowired
@@ -50,16 +42,14 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
     @Autowired
     private OrderItemSupport orderItemSupport;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult<BuyerOrderDetailResponseDTO> processor(Long subOrderId) {
-        SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
-        if (subOrderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
-        OrderDO orderDO = orderMapper.selectById(subOrderDO.getOrderId());
-        if (orderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        SubOrderDO subOrderDO = omsValidate.validateSubOrder(subOrderId);
+        OrderDO orderDO = omsValidate.validateOrder(subOrderDO.getOrderId());
+        omsValidate.authentication(orderDO.getCreator());
         BuyerOrderDetailResponseDTO responseDTO = new BuyerOrderDetailResponseDTO();
         responseDTO.setOrderId(orderDO.getId());
         responseDTO.setSubOrderId(subOrderId);

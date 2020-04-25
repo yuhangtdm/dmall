@@ -3,14 +3,12 @@ package com.dmall.oms.service.impl.order.handler.buyer;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.exception.BusinessException;
-import com.dmall.common.model.portal.PortalMemberContextHolder;
-import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.comment.CommentRequestDTO;
 import com.dmall.oms.api.dto.comment.CommentSkuDTO;
-import com.dmall.oms.api.enums.OrderCommentStatusEnum;
 import com.dmall.oms.api.enums.OmsErrorEnum;
+import com.dmall.oms.api.enums.OrderCommentStatusEnum;
 import com.dmall.oms.feign.CommentFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
@@ -18,7 +16,8 @@ import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.generator.mapper.SubOrderMapper;
-import com.dmall.oms.service.impl.support.OrderItemSupport;
+import com.dmall.oms.service.support.OrderItemSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import com.dmall.pms.api.dto.comment.request.SaveCommentRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,20 +48,14 @@ public class CommentHandler extends AbstractCommonHandler<CommentRequestDTO, Sub
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult<Long> processor(CommentRequestDTO requestDTO) {
-        SubOrderDO subOrderDO = subOrderMapper.selectById(requestDTO.getSubOrderId());
-        if (subOrderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
-        OrderDO orderDO = orderMapper.selectById(subOrderDO.getOrderId());
-        if (orderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
-        PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(orderDO.getCreator())) {
-            return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
-        }
+        SubOrderDO subOrderDO = omsValidate.validateSubOrder(requestDTO.getSubOrderId());
+        OrderDO orderDO = omsValidate.validateOrder(subOrderDO.getOrderId());
+        omsValidate.authentication(orderDO.getCreator());
         // 已全部评价则不可评价
         if (OrderCommentStatusEnum.ALL.getCode().equals(orderDO.getCommentStatus())) {
             return ResultUtil.fail(OmsErrorEnum.COMMENT_ERROR);

@@ -1,17 +1,17 @@
 package com.dmall.pms.service.impl.category.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.dataobject.CategoryProductDO;
 import com.dmall.pms.generator.dataobject.CategorySkuDO;
-import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.support.*;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,9 +23,6 @@ import java.util.List;
  */
 @Component
 public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryDO, Long> {
-
-    @Autowired
-    private CategoryMapper categoryMapper;
 
     @Autowired
     private CategorySupport categorySupport;
@@ -48,13 +45,13 @@ public class DeleteCategoryHandler extends AbstractCommonHandler<Long, CategoryD
     @Autowired
     private CategoryAttributeSupport categoryAttributeSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(Long id) {
         // 分类不存在
-        CategoryDO categoryDO = categoryMapper.selectById(id);
-        if (categoryDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
-        }
+        CategoryDO categoryDO = pmsValidate.validateCategory(id);
         // 删除1、2级分类必须没有子分类
         if (!categoryDO.getLevel().equals(LevelEnum.THREE.getCode())) {
             List<CategoryDO> categoryDOList = categorySupport.listByParentId(id);

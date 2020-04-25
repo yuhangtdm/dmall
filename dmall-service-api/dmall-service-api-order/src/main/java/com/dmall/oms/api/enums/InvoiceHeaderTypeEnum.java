@@ -12,10 +12,17 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum InvoiceHeaderTypeEnum implements CodeDescEnum<Integer> {
 
+    /**
+     * 个人
+     */
     PERSONAL(1, "个人"),
+
+    /**
+     * 公司
+     */
     COMPANY(2, "公司"),
     ;
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

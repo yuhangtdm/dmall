@@ -12,7 +12,8 @@ import com.dmall.oms.api.enums.AfterSaleStatusEnum;
 import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
-import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
+import com.dmall.oms.service.support.OrderAfterSaleLogSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,21 +28,20 @@ public class AfterSaleDeleteHandler extends AbstractCommonHandler<Long, OrderAft
 
     private static final String LOG_CONTENT = "服务单{}已删除";
 
-
     @Autowired
     private OrderAfterSaleApplyMapper orderAfterSaleApplyMapper;
 
     @Autowired
     private OrderAfterSaleLogSupport orderAfterSaleLogSupport;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult<Long> processor(Long afterSaleId) {
-        OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
-        if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
-        }
+        OrderAfterSaleApplyDO orderAfterSaleApplyDO = omsValidate.validateOrderAfterSale(afterSaleId);
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
+        if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())) {
             return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         // 非 已完成 和 已关闭状态 和 已拒绝不可删除

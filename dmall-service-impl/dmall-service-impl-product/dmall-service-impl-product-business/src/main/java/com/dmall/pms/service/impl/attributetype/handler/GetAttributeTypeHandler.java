@@ -4,10 +4,9 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.support.CategorySupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,17 +18,14 @@ import org.springframework.stereotype.Component;
 public class GetAttributeTypeHandler extends AbstractCommonHandler<Long, AttributeTypeDO, AttributeTypeResponseDTO> {
 
     @Autowired
-    private AttributeTypeCacheService attributeTypeCacheService;
+    private CategorySupport categorySupport;
 
     @Autowired
-    private CategorySupport categorySupport;
+    private PmsValidate pmsValidate;
 
     @Override
     public BaseResult<AttributeTypeResponseDTO> processor(Long id) {
-        AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(id);
-        if (attributeTypeDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
-        }
+        AttributeTypeDO attributeTypeDO = pmsValidate.validateAttributeType(id);
         return ResultUtil.success(doConvertDto(attributeTypeDO, AttributeTypeResponseDTO.class));
     }
 

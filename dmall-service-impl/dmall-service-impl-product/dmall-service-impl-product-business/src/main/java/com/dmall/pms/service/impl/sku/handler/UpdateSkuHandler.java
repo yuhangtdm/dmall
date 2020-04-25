@@ -1,10 +1,9 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.common.util.BeanUtil;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.update.BasicSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
 import com.dmall.pms.api.enums.PmsErrorEnum;
@@ -13,6 +12,8 @@ import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.support.SkuExtSupport;
 import com.dmall.pms.service.support.SkuMediaSupport;
+import com.dmall.pms.service.support.SkuSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,15 +36,19 @@ public class UpdateSkuHandler extends AbstractCommonHandler<UpdateSkuRequestDTO,
     @Autowired
     private SkuExtSupport skuExtSupport;
 
+    @Autowired
+    private SkuSupport skuSupport;
+
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(UpdateSkuRequestDTO requestDTO) {
         BasicSkuRequestDTO basicSku = requestDTO.getBasicSkuRequestDTO();
-        SkuDO sku = skuMapper.selectById(basicSku.getId());
-        if (sku == null) {
-            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
-        }
+        SkuDO sku = pmsValidate.validateSku(basicSku.getId());
+
         // 名称必须唯一
-        SkuDO skuDO = skuMapper.selectOne(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getName, basicSku.getName()));
+        SkuDO skuDO = skuSupport.getByName(basicSku.getName());
         if (skuDO != null && !skuDO.getId().equals(sku.getId())) {
             return ResultUtil.fail(PmsErrorEnum.SKU_NAME_EXISTS);
         }

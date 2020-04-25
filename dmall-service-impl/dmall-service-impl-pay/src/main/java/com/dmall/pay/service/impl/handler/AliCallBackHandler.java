@@ -13,7 +13,7 @@ import com.dmall.pay.api.enums.PaymentStatusEnum;
 import com.dmall.pay.config.AliPayConfig;
 import com.dmall.pay.generator.dataobject.PaymentInfoDO;
 import com.dmall.pay.generator.mapper.PaymentInfoMapper;
-import com.dmall.pay.service.impl.AliTradeStatusEnum;
+import com.dmall.pay.api.enums.AliTradeStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @description:
+ * @description: AliCallBackHandler
  * @author: created by hang.yu on 2020/4/3 23:55
  */
 @Slf4j

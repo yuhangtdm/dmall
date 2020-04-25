@@ -7,14 +7,13 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
-import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
 import com.dmall.pms.service.support.CategorySupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,14 +38,11 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
     private CategorySupport categorySupport;
 
     @Autowired
-    private CategoryMapper categoryMapper;
+    private PmsValidate pmsValidate;
 
     @Override
     public BaseResult validate(ListAttributeTypeRequestDTO requestDTO) {
-        CategoryDO categoryDO = categoryMapper.selectById(requestDTO.getCategoryId());
-        if (categoryDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
-        }
+        CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
         return ResultUtil.success();
     }
 

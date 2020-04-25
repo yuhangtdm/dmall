@@ -1,11 +1,10 @@
 package com.dmall.pms.service.impl.product.handler;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.IdGeneratorUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.util.BeanUtil;
+import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
 import com.dmall.pms.api.dto.product.request.save.SaveProductRequestDTO;
@@ -16,9 +15,10 @@ import com.dmall.pms.generator.dataobject.ProductDO;
 import com.dmall.pms.generator.mapper.CategoryProductMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
-import com.dmall.pms.service.validate.ProductValidate;
 import com.dmall.pms.service.support.ProductAttributeValueSupport;
+import com.dmall.pms.service.support.ProductSupport;
 import com.dmall.pms.service.support.SkuSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +42,10 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
     private CategoryProductMapper categoryProductMapper;
 
     @Autowired
-    private ProductValidate productValidate;
+    private PmsValidate pmsValidate;
+
+    @Autowired
+    private ProductSupport productSupport;
 
     @Autowired
     private ProductAttributeValueSupport productAttributeValueSupport;
@@ -50,13 +53,12 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
     @Override
     public BaseResult<Long> validate(SaveProductRequestDTO requestDTO) {
         // 商品名称必须唯一
-        ProductDO productDO = productMapper.selectOne(Wrappers.<ProductDO>lambdaQuery()
-                .eq(ProductDO::getName, requestDTO.getBasicProduct().getName()));
+        ProductDO productDO = productSupport.getByName(requestDTO.getBasicProduct().getName());
         if (productDO != null) {
             return ResultUtil.fail(PmsErrorEnum.PRODUCT_NAME_EXISTS);
         }
         // 校验商品扩展参数
-        return productValidate.validate(requestDTO.getExt());
+        return pmsValidate.productExtValidate(requestDTO.getExt());
     }
 
     @Override

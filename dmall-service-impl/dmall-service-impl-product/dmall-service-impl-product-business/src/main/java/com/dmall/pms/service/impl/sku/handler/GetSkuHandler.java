@@ -6,16 +6,16 @@ import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pms.api.enums.PmsErrorEnum;
-import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.api.dto.sku.response.get.BasicSkuResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.GetSkuResponseDTO;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.support.SkuExtSupport;
 import com.dmall.pms.service.support.SkuMediaSupport;
 import com.dmall.pms.service.support.SkuStockSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,12 +41,12 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
     @Autowired
     private SkuStockSupport skuStockSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<GetSkuResponseDTO> processor(Long id) {
-        SkuDO skuDO = skuMapper.selectById(id);
-        if (skuDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
-        }
+        SkuDO skuDO = pmsValidate.validateSku(id);
         GetSkuResponseDTO getSkuResponseDTO = new GetSkuResponseDTO();
         // sku基本信息
         getSkuResponseDTO.setBasicSku(getBasicSkuResponseDTO(skuDO));

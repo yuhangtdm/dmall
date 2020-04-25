@@ -10,11 +10,17 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum  JobTypeEnum implements CodeDescEnum<Integer> {
+public enum JobTypeEnum implements CodeDescEnum<Integer> {
 
-    AUTO_RECEIVE(1,"自动收货"),
+    /**
+     * 自动收货
+     */
+    AUTO_RECEIVE(1, "自动收货"),
 
-    AUTO_GOOD_COMMENT(2,"自动好评"),
+    /**
+     * 自动好评
+     */
+    AUTO_GOOD_COMMENT(2, "自动好评"),
     ;
 
 

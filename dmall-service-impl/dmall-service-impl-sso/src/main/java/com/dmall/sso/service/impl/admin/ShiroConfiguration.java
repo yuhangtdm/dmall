@@ -30,6 +30,9 @@ public class ShiroConfiguration {
         return hashedCredentialsMatcher;
     }
 
+    /**
+     * realm
+     */
     @Bean
     public AuthenticationRealm shiroRealm(){
         AuthenticationRealm authenticationRealm = new AuthenticationRealm();
@@ -37,6 +40,9 @@ public class ShiroConfiguration {
         return authenticationRealm;
     }
 
+    /**
+     * securityManager
+     */
     @Bean
     public SecurityManager securityManager(){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
@@ -44,6 +50,9 @@ public class ShiroConfiguration {
         return securityManager;
     }
 
+    /**
+     * shiroFilterFactoryBean
+     */
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();

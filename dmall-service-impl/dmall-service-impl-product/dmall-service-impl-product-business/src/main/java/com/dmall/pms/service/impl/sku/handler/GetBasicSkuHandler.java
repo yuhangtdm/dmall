@@ -46,7 +46,6 @@ public class GetBasicSkuHandler extends AbstractCommonHandler<List<Long>, SkuDO,
             }
             result.add(getBasicSkuResponseDTO(skuDO));
         }
-
         return ResultUtil.success(result);
     }
 

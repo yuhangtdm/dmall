@@ -1,9 +1,6 @@
-package com.dmall.oms.service.impl.support;
+package com.dmall.oms.service.support;
 
 import com.dmall.common.constants.MqConstants;
-import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.enums.RocketMQDelayLevelEnum;
-import com.dmall.common.model.exception.BusinessException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQLocalRequestCallback;

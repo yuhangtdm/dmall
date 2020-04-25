@@ -9,7 +9,8 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.enums.*;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
-import com.dmall.oms.service.impl.support.OrderAfterSaleLogSupport;
+import com.dmall.oms.service.support.OrderAfterSaleLogSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,12 +31,12 @@ public class AfterSaleClosedHandler extends AbstractCommonHandler<Long, OrderAft
     @Autowired
     private OrderAfterSaleLogSupport orderAfterSaleLogSupport;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult processor(Long afterSaleId) {
-        OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
-        if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
-        }
+        OrderAfterSaleApplyDO orderAfterSaleApplyDO = omsValidate.validateOrderAfterSale(afterSaleId);
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
         if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
             return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);

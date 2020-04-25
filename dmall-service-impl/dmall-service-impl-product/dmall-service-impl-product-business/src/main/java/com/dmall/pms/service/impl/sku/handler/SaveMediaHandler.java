@@ -1,14 +1,15 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.save.SaveSkuMediaRequestDTO;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.dataobject.SkuMediaDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.support.SkuMediaSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,12 +26,12 @@ public class SaveMediaHandler extends AbstractCommonHandler<SaveSkuMediaRequestD
     @Autowired
     private SkuMediaSupport skuMediaSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult processor(SaveSkuMediaRequestDTO requestDTO) {
-        SkuDO skuDO = skuMapper.selectById(requestDTO.getSkuId());
-        if (skuDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
-        }
+        SkuDO skuDO = pmsValidate.validateSku(requestDTO.getSkuId());
         skuMediaSupport.saveOrDeleteSkuMedia(skuDO.getProductId(), skuDO.getId(), requestDTO.getMediaList());
         SkuDO sku = new SkuDO();
         sku.setId(requestDTO.getSkuId());

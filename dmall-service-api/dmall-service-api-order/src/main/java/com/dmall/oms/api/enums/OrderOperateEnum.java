@@ -79,7 +79,7 @@ public enum OrderOperateEnum implements CodeDescEnum<Integer> {
 
     ;
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

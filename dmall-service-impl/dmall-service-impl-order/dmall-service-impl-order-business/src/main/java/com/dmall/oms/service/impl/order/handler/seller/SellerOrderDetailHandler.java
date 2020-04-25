@@ -14,7 +14,8 @@ import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
-import com.dmall.oms.service.impl.support.*;
+import com.dmall.oms.service.support.*;
+import com.dmall.oms.service.validate.OmsValidate;
 import com.dmall.pay.api.dto.listpayment.ListPaymentResponseDTO;
 import com.dmall.pay.api.enums.PaymentStatusEnum;
 import com.dmall.pay.api.enums.PaymentTypeEnum;
@@ -52,13 +53,13 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
     @Autowired
     private PaymentFeign payFeign;
 
+    @Autowired
+    private OmsValidate omsValidate;
+
     @Override
     public BaseResult<SellerOrderDetailResponseDTO> processor(Long orderId) {
         SellerOrderDetailResponseDTO responseDTO = new SellerOrderDetailResponseDTO();
-        OrderDO orderDO = orderMapper.selectById(orderId);
-        if (orderDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        OrderDO orderDO = omsValidate.validateOrder(orderId);
         responseDTO.setBasicOrder(buildOrderBasic(orderDO));
         responseDTO.setReceiver(buildReceiver(orderDO));
         responseDTO.setInvoice(buildInvoice(orderDO));

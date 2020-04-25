@@ -12,12 +12,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DeliverTypeEnum implements CodeDescEnum<Integer> {
     /**
-     * 手动取消
+     * 会员手动确认收货
      */
     HANDLE(1, "会员手动确认收货"),
 
     /**
-     * 自动取消
+     * 系统自动确认收货
      */
     AUTO(2, "系统自动确认收货"),
     ;

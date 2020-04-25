@@ -4,12 +4,13 @@ import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
+import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +27,13 @@ public class SaveCategoryHandler extends AbstractCommonHandler<SaveCategoryReque
     @Autowired
     private CategoryCacheService categoryCacheService;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(SaveCategoryRequestDTO requestDTO) {
         if (requestDTO.getParentId() != 0) {
-            CategoryDO parentCategoryDO = categoryMapper.selectById(requestDTO.getParentId());
+            CategoryDO parentCategoryDO = pmsValidate.validateCategory(requestDTO.getParentId());
             // 上级id是否存在
             if (parentCategoryDO == null) {
                 return ResultUtil.fail(PmsErrorEnum.PARENT_CATEGORY_NOT_EXIST);

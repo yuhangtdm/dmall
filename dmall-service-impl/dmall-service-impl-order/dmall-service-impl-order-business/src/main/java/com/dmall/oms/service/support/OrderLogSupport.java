@@ -1,7 +1,4 @@
-package com.dmall.oms.service.impl.support;
-
-import java.util.Date;
-import java.util.List;
+package com.dmall.oms.service.support;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -15,6 +12,8 @@ import com.dmall.oms.generator.mapper.OrderLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @description: OrderLogSupport
  * @author: created by hang.yu on 2020/4/5 21:33
@@ -25,6 +24,9 @@ public class OrderLogSupport {
     @Autowired
     private OrderLogMapper orderLogMapper;
 
+    /**
+     * 根据订单号查询
+     */
     public List<OrderLogDO> listByOrderId(Long orderId) {
         return orderLogMapper.selectList(Wrappers.<OrderLogDO>lambdaQuery()
                 .eq(OrderLogDO::getOrderId, orderId));

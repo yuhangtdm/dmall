@@ -1,4 +1,4 @@
-package com.dmall.sso.api.dto.portal;
+package com.dmall.sso.api.enums;
 
 import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public enum LoginTypeEnum implements CodeDescEnum<String> {
     ;
 
 
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 }

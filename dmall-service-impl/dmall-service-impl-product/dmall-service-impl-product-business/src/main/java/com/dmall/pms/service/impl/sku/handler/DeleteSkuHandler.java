@@ -1,15 +1,15 @@
 package com.dmall.pms.service.impl.sku.handler;
 
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
-import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.support.CategorySkuSupport;
 import com.dmall.pms.service.support.SkuAttributeValueSupport;
 import com.dmall.pms.service.support.SkuExtSupport;
 import com.dmall.pms.service.support.SkuMediaSupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,12 +35,12 @@ public class DeleteSkuHandler extends AbstractCommonHandler<Long, SkuDO, Long> {
     @Autowired
     private CategorySkuSupport categorySkuSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(Long id) {
-        SkuDO sku = skuMapper.selectById(id);
-        if (sku == null) {
-            return ResultUtil.fail(PmsErrorEnum.SKU_NOT_EXISTS);
-        }
+        pmsValidate.validateSku(id);
         return ResultUtil.success();
     }
 

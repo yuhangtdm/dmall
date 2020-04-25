@@ -5,12 +5,12 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.aftersaledetail.AfterSaleDetailResponseDTO;
 import com.dmall.oms.api.dto.common.BuyerOrderItemDTO;
-import com.dmall.oms.api.enums.OmsErrorEnum;
 import com.dmall.oms.generator.dataobject.OrderAfterSaleApplyDO;
 import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.mapper.OrderAfterSaleApplyMapper;
 import com.dmall.oms.generator.mapper.OrderItemMapper;
-import com.dmall.oms.service.impl.support.AfterSaleSupport;
+import com.dmall.oms.service.support.AfterSaleSupport;
+import com.dmall.oms.service.validate.OmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,24 +22,15 @@ import org.springframework.stereotype.Component;
 public class AfterSaleDetailHandler extends AbstractCommonHandler<Long, OrderAfterSaleApplyDO, AfterSaleDetailResponseDTO> {
 
     @Autowired
-    private OrderAfterSaleApplyMapper orderAfterSaleApplyMapper;
-
-    @Autowired
-    private OrderItemMapper orderItemMapper;
-
-    @Autowired
     private AfterSaleSupport afterSaleSupport;
+
+    @Autowired
+    private OmsValidate omsValidate;
 
     @Override
     public BaseResult<AfterSaleDetailResponseDTO> processor(Long afterSaleId) {
-        OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(afterSaleId);
-        if (orderAfterSaleApplyDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
-        }
-        OrderItemDO orderItemDO = orderItemMapper.selectById(orderAfterSaleApplyDO.getOrderItemId());
-        if (orderItemDO == null) {
-            return ResultUtil.fail(OmsErrorEnum.ORDER_NOT_EXISTS);
-        }
+        OrderAfterSaleApplyDO orderAfterSaleApplyDO = omsValidate.validateOrderAfterSale(afterSaleId);
+        OrderItemDO orderItemDO = omsValidate.validateOrderItem(orderAfterSaleApplyDO.getOrderItemId());
         return ResultUtil.success(buildAfterSaleDetailResponse(afterSaleId, orderItemDO));
     }
 

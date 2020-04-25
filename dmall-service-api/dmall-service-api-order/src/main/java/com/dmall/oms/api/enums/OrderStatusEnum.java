@@ -43,7 +43,7 @@ public enum OrderStatusEnum implements CodeDescEnum<Integer> {
     CLOSED(6, "交易关闭"),
 
     ;
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 }

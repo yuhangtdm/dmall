@@ -40,4 +40,11 @@ public class CategoryBrandSupport {
     public void deleteByCategoryId(Long categoryId) {
         categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, categoryId));
     }
+
+    /**
+     * 根据品牌id删除
+     */
+    public void deleteByBrandId(Long brandId) {
+        categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getBrandId, brandId));
+    }
 }

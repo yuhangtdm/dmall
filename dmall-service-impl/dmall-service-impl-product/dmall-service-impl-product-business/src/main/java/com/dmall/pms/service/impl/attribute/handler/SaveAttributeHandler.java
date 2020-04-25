@@ -2,17 +2,17 @@ package com.dmall.pms.service.impl.attribute.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
 import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
-import com.dmall.pms.service.validate.AttributeValidate;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,18 +29,18 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
     @Autowired
     private AttributeCacheService attributeCacheService;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult<Long> validate(SaveAttributeRequestDTO requestDTO) {
         // 分类id必须存在
-        CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-        if (categoryDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
-        }
+        CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
         // 必须为1级分类
         if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
             return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
         }
-        return AttributeValidate.validate(requestDTO.getInputType(), requestDTO.getInputList(), requestDTO.getHandAddStatus());
+        return pmsValidate.attributeValidate(requestDTO.getInputType(), requestDTO.getInputList(), requestDTO.getHandAddStatus());
     }
 
     @Override

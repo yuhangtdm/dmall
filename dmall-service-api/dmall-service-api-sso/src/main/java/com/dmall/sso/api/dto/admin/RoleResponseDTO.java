@@ -3,14 +3,12 @@ package com.dmall.sso.api.dto.admin;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * @description: 角色列表响应实体
  * @author: created by hang.yu on 2020/1/11 22:19
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "RoleResponseDTO", description = "角色列表响应实体")
 public class RoleResponseDTO {
 

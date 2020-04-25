@@ -14,6 +14,7 @@ import com.dmall.pms.generator.service.ICategoryAttributeService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.support.AttributeTypeSupport;
 import com.dmall.pms.service.support.CategorySupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,9 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     @Autowired
     private AttributeTypeSupport attributeTypeSupport;
 
+    @Autowired
+    private PmsValidate pmsValidate;
+
     @Override
     public BaseResult validate(SetAttributeRequestDTO requestDTO) {
         // 属性列表不能重复
@@ -65,7 +69,7 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     public BaseResult processor(SetAttributeRequestDTO requestDTO) {
         // 先删除后插入
         attributeTypeSupport.deleteByCategoryId(requestDTO.getCategoryId());
-        CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
+        CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
         List<CategoryAttributeDO> list = Lists.newArrayList();
         for (AttributeIdsDTO attributeIdDTO : requestDTO.getAttributes()) {
             CategoryAttributeDO categoryAttributeDO = new CategoryAttributeDO();

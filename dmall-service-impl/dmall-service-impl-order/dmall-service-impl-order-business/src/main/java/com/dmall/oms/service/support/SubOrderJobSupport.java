@@ -1,6 +1,4 @@
-package com.dmall.oms.service.impl.support;
-
-import java.util.Date;
+package com.dmall.oms.service.support;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.oms.api.enums.JobTypeEnum;
@@ -27,6 +25,9 @@ public class SubOrderJobSupport {
         subOrderJobMapper.insert(subOrderJobDO);
     }
 
+    /**
+     * 根据子订单号查询
+     */
     public SubOrderJobDO findBySubOrderId(Long subOrderId) {
         return subOrderJobMapper.selectOne(Wrappers.<SubOrderJobDO>lambdaQuery()
                 .eq(SubOrderJobDO::getSubOrderId, subOrderId));
