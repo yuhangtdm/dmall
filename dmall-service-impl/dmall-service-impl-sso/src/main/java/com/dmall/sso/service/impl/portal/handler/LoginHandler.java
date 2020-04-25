@@ -12,6 +12,7 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.sso.api.enums.LoginTypeEnum;
 import com.dmall.sso.api.dto.portal.PortalLoginRequestDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
+import com.dmall.sso.api.enums.SsoErrorEnum;
 import com.dmall.sso.service.impl.SsoProperties;
 import com.dmall.sso.service.impl.portal.PasswordUtil;
 import com.dmall.sso.service.impl.portal.dataobject.MemberDO;
@@ -48,14 +49,14 @@ public class LoginHandler extends AbstractCommonHandler<PortalLoginRequestDTO, M
         // 根据用户名查询用户
         MemberDO memberDO = memberMapper.login(requestDTO.getMemberName());
         if (memberDO == null) {
-            return ResultUtil.fail(PortalLoginErrorEnum.MEMBER_NAME_INCORRECT);
+            return ResultUtil.fail(SsoErrorEnum.MEMBER_NAME_INCORRECT);
         }
         // 比较密码
         if (!PasswordUtil.checkPassword(memberDO.getEmail(), requestDTO.getPassword(), memberDO.getPassword())) {
-            return ResultUtil.fail(PortalLoginErrorEnum.PASSWORD_INCORRECT);
+            return ResultUtil.fail(SsoErrorEnum.PASSWORD_INCORRECT);
         }
         if (YNEnum.Y.getCode().equals(memberDO.getIsDeleted())) {
-            return ResultUtil.fail(PortalLoginErrorEnum.USER_INVALID);
+            return ResultUtil.fail(SsoErrorEnum.USER_INVALID);
         }
         // 生成token 并缓存
         String token = IdUtil.simpleUUID();

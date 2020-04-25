@@ -45,6 +45,12 @@ public class SellerOrderServiceImpl implements SellerOrderService {
     @Autowired
     private SellerOrderDetailHandler sellerOrderDetailHandler;
 
+    @Autowired
+    private SkuSaleCountHandler skuSaleCountHandler;
+
+    @Autowired
+    private ProductSaleCountHandler productSaleCountHandler;
+
     @Override
     public BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>> demolitionOrderPage(@RequestBody DemolitionOrderPageRequestDTO requestDTO) {
         return demolitionOrderPageHandler.handler(requestDTO);
@@ -75,6 +81,16 @@ public class SellerOrderServiceImpl implements SellerOrderService {
     @Override
     public BaseResult<SellerOrderDetailResponseDTO> sellerDetail(Long orderId) {
         return sellerOrderDetailHandler.handler(orderId);
+    }
+
+    @Override
+    public BaseResult<Integer> skuSaleCount(Long skuId) {
+        return skuSaleCountHandler.handler(skuId);
+    }
+
+    @Override
+    public BaseResult<Integer> productSaleCount(Long productId) {
+        return productSaleCountHandler.handler(productId);
     }
 
 }

@@ -6,13 +6,12 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.sku.request.update.BasicSkuRequestDTO;
 import com.dmall.pms.api.dto.sku.request.update.UpdateSkuRequestDTO;
+import com.dmall.pms.api.enums.AuditTypeEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
+import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.SkuMapper;
-import com.dmall.pms.service.support.SkuAttributeValueSupport;
-import com.dmall.pms.service.support.SkuExtSupport;
-import com.dmall.pms.service.support.SkuMediaSupport;
-import com.dmall.pms.service.support.SkuSupport;
+import com.dmall.pms.service.support.*;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,6 +41,9 @@ public class UpdateSkuHandler extends AbstractCommonHandler<UpdateSkuRequestDTO,
     @Autowired
     private PmsValidate pmsValidate;
 
+    @Autowired
+    private SkuAuditSupport skuAuditSupport;
+
     @Override
     public BaseResult<Long> validate(UpdateSkuRequestDTO requestDTO) {
         BasicSkuRequestDTO basicSku = requestDTO.getBasicSkuRequestDTO();
@@ -69,6 +71,7 @@ public class UpdateSkuHandler extends AbstractCommonHandler<UpdateSkuRequestDTO,
         // sku扩展信息
         skuExtSupport.setSkuExt(sku.getProductId(), sku.getId(), requestDTO.getProductAttributeValueList(),
                 requestDTO.getDetailHtml(), requestDTO.getDetailMobileHtml());
+        skuAuditSupport.insert(skuDO.getProductId(), skuDO.getId(), AuditTypeEnum.SKU_UPDATE);
         return ResultUtil.success(skuDO.getId());
     }
 

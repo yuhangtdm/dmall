@@ -233,7 +233,7 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
     private String getDtoPackage(String entityName, String mod) {
         return MybatisPlusConstants.PACKAGE_PARENT_NAME +
                 StringPool.DOT +
-                generator.getModule() +
+                generator.getBusiness() +
                 StringPool.DOT +
                 MybatisPlusConstants.API +
                 StringPool.DOT +
@@ -250,7 +250,7 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
     private String getServicePackage() {
         return MybatisPlusConstants.PACKAGE_PARENT_NAME +
                 StringPool.DOT +
-                generator.getModule() +
+                generator.getBusiness() +
                 StringPool.DOT +
                 MybatisPlusConstants.API +
                 StringPool.DOT +
@@ -263,7 +263,7 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
     private String getServiceImplPackage(String entityName) {
         return MybatisPlusConstants.PACKAGE_PARENT_NAME +
                 StringPool.DOT +
-                generator.getModule() +
+                generator.getBusiness() +
                 StringPool.DOT +
                 MybatisPlusConstants.SERVICE +
                 StringPool.DOT +

@@ -24,7 +24,7 @@ public class SkuDO implements Serializable {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
     /**
@@ -121,11 +121,6 @@ public class SkuDO implements Serializable {
      * 是否是预告sku Y-是;N-否
      */
     private String previewStatus;
-
-    /**
-     * 审核状态 1-未审核;2-审核通过;3-审核不通过
-     */
-    private Integer auditStatus;
 
     /**
      * 优惠方式

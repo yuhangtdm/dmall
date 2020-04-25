@@ -11,6 +11,7 @@ import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.ProductMapper;
+import com.dmall.pms.generator.mapper.SkuAuditMapper;
 import com.dmall.pms.generator.mapper.SkuMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
@@ -47,6 +48,9 @@ public class PmsValidate {
 
     @Autowired
     private AttributeTypeCacheService attributeTypeCacheService;
+
+    @Autowired
+    private SkuAuditMapper skuAuditMapper;
 
     /**
      * 校验商品必须存在
@@ -114,6 +118,17 @@ public class PmsValidate {
             throw new BusinessException(PmsErrorEnum.ATTRIBUTE_NOT_EXIST);
         }
         return attributeDO;
+    }
+
+    /**
+     * 校验审核记录必须存在
+     */
+    public SkuAuditDO validateAudit(Long auditId){
+        SkuAuditDO skuAuditDO = skuAuditMapper.selectById(auditId);
+        if (skuAuditDO == null) {
+            throw new BusinessException(PmsErrorEnum.AUDIT_NOT_EXIST);
+        }
+        return skuAuditDO;
     }
 
     /**
@@ -221,6 +236,5 @@ public class PmsValidate {
         validateSku(skuId);
         return ResultUtil.success();
     }
-
 
 }

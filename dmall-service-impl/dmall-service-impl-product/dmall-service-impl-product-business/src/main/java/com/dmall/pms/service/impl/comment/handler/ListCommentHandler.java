@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pms.api.dto.comment.response.CommentResponseDTO;
+import com.dmall.pms.api.dto.comment.response.CommentPageResponseDTO;
 import com.dmall.pms.generator.dataobject.CommentDO;
 import com.dmall.pms.generator.mapper.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +18,17 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-04-12 15:31:43
  */
 @Component
-public class ListCommentHandler extends AbstractCommonHandler<Long, CommentDO, List<CommentResponseDTO>> {
+public class ListCommentHandler extends AbstractCommonHandler<Long, CommentDO, List<CommentPageResponseDTO>> {
 
     @Autowired
     private CommentMapper commentMapper;
 
     @Override
-    public BaseResult<List<CommentResponseDTO>> processor(Long subOrderId) {
+    public BaseResult<List<CommentPageResponseDTO>> processor(Long subOrderId) {
         List<CommentDO> commentList = commentMapper.selectList(Wrappers.<CommentDO>lambdaQuery()
                 .eq(CommentDO::getSubOrderId, subOrderId));
-        List<CommentResponseDTO> collect = commentList.stream().map(commentDO -> {
-            CommentResponseDTO responseDTO = new CommentResponseDTO();
+        List<CommentPageResponseDTO> collect = commentList.stream().map(commentDO -> {
+            CommentPageResponseDTO responseDTO = new CommentPageResponseDTO();
             responseDTO.setId(commentDO.getId());
             responseDTO.setSkuId(commentDO.getSkuId());
             responseDTO.setSubOrderId(commentDO.getSubOrderId());

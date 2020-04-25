@@ -59,7 +59,7 @@ public class SkuServiceImpl implements SkuService {
     private SaveMediaHandler saveMediaHandler;
 
     @Autowired
-    private DeleteSkuHandler deleteSkuHandler;
+    private OnPublishHandler onPublishHandler;
 
     @Autowired
     private GetBasicSkuHandler getBasicSkuHandler;
@@ -110,10 +110,15 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> delete(Long id) {
-        return deleteSkuHandler.handler(id);
+    public BaseResult<Long> onPublish(Long id) {
+        return onPublishHandler.handler(id);
     }
+
+    @Override
+    public BaseResult<Long> offPublish(Long id) {
+        return null;
+    }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)

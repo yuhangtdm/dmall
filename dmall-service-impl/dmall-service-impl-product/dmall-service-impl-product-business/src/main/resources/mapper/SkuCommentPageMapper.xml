@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.pms.service.impl.comment.mapper.SkuCommentMapper">
+
+    <select id="page" resultType="com.dmall.pms.api.dto.comment.response.CommentPageResponseDTO">
+        SELECT
+        pc.id AS id pc.sku_id AS skuId,
+        pc.sub_order_id AS subOrderId,
+        pc.content AS content,
+        pc.star AS star,
+        pc.medias AS medias,
+        pc.gmt_created AS createTime,
+        ps.sku_specifications_json AS skuSpecificationsJson
+        FROM
+        pms_comment pc
+        INNER JOIN pms_sku_ext ps ON pc.sku_id = ps.sku_id
+        WHERE pc.is_deleted='N' AND ps.is_deleted='N'
+        <if test="request.productId!= null">
+            and pc.product_id = #{request.productId}
+        </if>
+        <if test="request.skuId!= null">
+            and pp.sku_id = #{request.skuId}
+        </if>
+        <if test="request.commentLevel!= null">
+            and pc.level = #{request.commentLevel}
+        </if>
+        <if test="request.hasPic!= null and request.hasPic">
+            and pc.medias is not null
+        </if>
+    </select>
+
+</mapper>

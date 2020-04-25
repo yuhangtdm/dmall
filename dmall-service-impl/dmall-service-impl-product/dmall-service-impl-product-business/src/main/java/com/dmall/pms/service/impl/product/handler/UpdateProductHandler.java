@@ -46,7 +46,6 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     public BaseResult<Long> validate(UpdateProductRequestDTO requestDTO) {
         // 校验id是否存在
         pmsValidate.validateProduct(requestDTO.getId());
-
         BasicProductRequestDTO basicProduct = requestDTO.getBasicProduct();
         // 校验商品名称必须唯一
         ProductDO nameProduct = productSupport.getByName(basicProduct.getName());

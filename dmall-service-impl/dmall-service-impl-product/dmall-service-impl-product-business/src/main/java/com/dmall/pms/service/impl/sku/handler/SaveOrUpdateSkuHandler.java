@@ -55,7 +55,6 @@ public class SaveOrUpdateSkuHandler extends AbstractCommonHandler<SaveSkuRequest
         SkuDO skuDO = dtoConvertDo(requestDTO, SkuDO.class);
         if (requestDTO.getId() == null) {
             skuDO.setId(IdGeneratorUtil.snowflakeId());
-            skuDO.setAuditStatus(SkuAuditStatusEnum.NOT_AUDIT.getCode());
             skuDO.setPublishStatus(YNEnum.N.getCode());
             skuMapper.insert(skuDO);
         } else {

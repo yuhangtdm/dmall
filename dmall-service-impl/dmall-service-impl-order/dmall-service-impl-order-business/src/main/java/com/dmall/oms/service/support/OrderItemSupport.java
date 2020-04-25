@@ -33,6 +33,20 @@ public class OrderItemSupport {
     }
 
     /**
+     * 根据skuId查询
+     */
+    public List<OrderItemDO> listBySkuId(Long skuId) {
+        return orderItemMapper.selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getSkuId, skuId));
+    }
+
+    /**
+     * 根据商品Id查询
+     */
+    public List<OrderItemDO> listByProductId(Long productId) {
+        return orderItemMapper.selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getProductId, productId));
+    }
+
+    /**
      * 根据订单号和skuId查询
      */
     public OrderItemDO findByOrderIdAndSkuId(Long orderId, Long skuId) {

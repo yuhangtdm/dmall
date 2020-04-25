@@ -75,7 +75,6 @@ public class SkuSupport {
             skuDO.setBrandId(brandId);
             skuDO.setPrice(addSkuRequestDTO.getPrice());
             skuDO.setStock(addSkuRequestDTO.getStock());
-            skuDO.setAuditStatus(SkuAuditStatusEnum.NOT_AUDIT.getCode());
             skuDO.setPublishStatus(YNEnum.N.getCode());
             skuDO.setSort(i + 1);
             skuMapper.insert(skuDO);

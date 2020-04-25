@@ -9,6 +9,7 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.util.HttpClientUtil;
 import com.dmall.mms.api.dto.member.WeiBoLoginRequestDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
+import com.dmall.sso.api.enums.SsoErrorEnum;
 import com.dmall.sso.api.service.WeiBoLoginService;
 import com.dmall.sso.service.impl.feign.ThirdPartyPlatformFeign;
 import com.dmall.sso.service.impl.portal.handler.WeiBoLoginHandler;
@@ -66,7 +67,7 @@ public class WeiBoLoginServiceImpl implements WeiBoLoginService {
         });
         if (accessTokenObject == null || StrUtil.isNotBlank(accessTokenObject.get("error_code"))) {
             log.error("获取ACCESS_TOKEN错误,{}", result);
-            return ResultUtil.fail(ThirdPartyPlatformErrorEnum.WEI_BO_ERROR);
+            return ResultUtil.fail(SsoErrorEnum.WEI_BO_ERROR);
         }
         String access_token = accessTokenObject.get("access_token");
         String uid = accessTokenObject.get("uid");
@@ -76,7 +77,7 @@ public class WeiBoLoginServiceImpl implements WeiBoLoginService {
 
         if (userInfoObject == null || StrUtil.isNotBlank(userInfoObject.getStr("error_code"))) {
             log.error("获取微博用户信息错误,{}", userInfo);
-            return ResultUtil.fail(ThirdPartyPlatformErrorEnum.WEI_BO_ERROR);
+            return ResultUtil.fail(SsoErrorEnum.WEI_BO_ERROR);
         }
         // 调用member接口注册
         BaseResult<PortalMemberDTO> weiBoLogin = thirdPartyPlatformFeign.weiBoLogin(getWeiBoLoginRequestDTO(userInfoObject));

@@ -29,4 +29,5 @@ public class GetSkuResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "sku扩展响应实体", position = 4)
     private SkuExtResponseDTO skuExt;
+
 }

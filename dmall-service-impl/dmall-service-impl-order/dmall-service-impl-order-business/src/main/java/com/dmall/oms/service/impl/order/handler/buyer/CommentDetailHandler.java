@@ -13,7 +13,7 @@ import com.dmall.oms.generator.dataobject.OrderItemDO;
 import com.dmall.oms.generator.dataobject.SubOrderDO;
 import com.dmall.oms.service.support.OrderItemSupport;
 import com.dmall.oms.service.validate.OmsValidate;
-import com.dmall.pms.api.dto.comment.response.CommentResponseDTO;
+import com.dmall.pms.api.dto.comment.response.CommentPageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,11 +46,11 @@ public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO
             return ResultUtil.fail(OmsErrorEnum.COMMENT_DETAIL_ERROR);
         }
         // 调用pms查看评价列表
-        BaseResult<List<CommentResponseDTO>> baseResult = commentFeign.list(subOrderId);
+        BaseResult<List<CommentPageResponseDTO>> baseResult = commentFeign.list(subOrderId);
         if (!baseResult.getResult()) {
             return ResultUtil.fail(baseResult.getCode(), baseResult.getMsg());
         }
-        List<CommentResponseDTO> data = baseResult.getData();
+        List<CommentPageResponseDTO> data = baseResult.getData();
         List<OrderItemDO> orderItemList;
         if (SplitEnum.NOT_NEED.getCode().equals(orderDO.getSplit())) {
             // 无需拆单
@@ -65,9 +65,9 @@ public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO
     /**
      * 构建结果
      */
-    private BaseResult<List<CommentDetailResponseDTO>> buildResult(List<CommentResponseDTO> data, List<OrderItemDO> orderItemList) {
+    private BaseResult<List<CommentDetailResponseDTO>> buildResult(List<CommentPageResponseDTO> data, List<OrderItemDO> orderItemList) {
         List<CommentDetailResponseDTO> collect = orderItemList.stream().map(orderItemDO -> {
-            Optional<CommentResponseDTO> any = data.stream()
+            Optional<CommentPageResponseDTO> any = data.stream()
                     .filter(commentResponseDTO -> orderItemDO.getSkuId().equals(commentResponseDTO.getSkuId()))
                     .findAny();
             CommentDetailResponseDTO responseDTO = new CommentDetailResponseDTO();
@@ -77,10 +77,10 @@ public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO
             responseDTO.setSkuNumber(orderItemDO.getSkuNumber());
             responseDTO.setSkuTotalPrice(orderItemDO.getSkuTotalPrice());
             if (any.isPresent()) {
-                CommentResponseDTO commentResponseDTO = any.get();
-                responseDTO.setStar(commentResponseDTO.getStar());
-                responseDTO.setContent(commentResponseDTO.getContent());
-                responseDTO.setCreateTime(commentResponseDTO.getCreateTime());
+                CommentPageResponseDTO commentPageResponseDTO = any.get();
+                responseDTO.setStar(commentPageResponseDTO.getStar());
+                responseDTO.setContent(commentPageResponseDTO.getContent());
+                responseDTO.setCreateTime(commentPageResponseDTO.getCreateTime());
             }
             return responseDTO;
         }).collect(Collectors.toList());

@@ -17,6 +17,11 @@ public class GeneratorDTO {
     private String module;
 
     /**
+     * 业务名称
+     */
+    private String business;
+
+    /**
      * 数据库地址 默认值 本地
      */
     private String databaseUrl = "localhost:3306/dmall_{}";
@@ -40,4 +45,5 @@ public class GeneratorDTO {
      * 是否生成自定义的文件
      */
     private boolean generateCustomer;
+
 }

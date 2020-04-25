@@ -11,6 +11,7 @@ import com.dmall.pms.api.enums.CommentLevelEnum;
 import com.dmall.pms.generator.dataobject.CommentDO;
 import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.CommentMapper;
+import com.dmall.pms.service.support.SkuImportEsSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,9 @@ public class SaveCommentHandler extends AbstractCommonHandler<List<SaveCommentRe
     @Autowired
     private PmsValidate pmsValidate;
 
+    @Autowired
+    private SkuImportEsSupport skuImportEsSupport;
+
     @Override
     public BaseResult processor(List<SaveCommentRequestDTO> requestDTO) {
         for (SaveCommentRequestDTO saveCommentRequestDTO : requestDTO) {
@@ -47,6 +51,7 @@ public class SaveCommentHandler extends AbstractCommonHandler<List<SaveCommentRe
             commentDO.setLevel(EnumUtil.getData(CommentLevelEnum.class, saveCommentRequestDTO.getStar()));
             commentDO.setMedias(saveCommentRequestDTO.getMedias());
             commentMapper.insert(commentDO);
+            skuImportEsSupport.sendSyncSkuMq(skuDO.getId());
         }
         return ResultUtil.success();
     }

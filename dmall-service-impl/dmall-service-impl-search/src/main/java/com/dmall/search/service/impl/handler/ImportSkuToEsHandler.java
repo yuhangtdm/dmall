@@ -3,12 +3,16 @@ package com.dmall.search.service.impl.handler;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.BasicStatusEnum;
+import com.dmall.common.model.exception.BusinessException;
 import com.dmall.component.elasticsearch.ESDao;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.*;
 import com.dmall.search.api.dto.AttributeDTO;
 import com.dmall.search.api.dto.AttributeValueDTO;
 import com.dmall.search.api.dto.BrandDTO;
+import com.dmall.search.service.feign.SellerOrderFeign;
 import com.dmall.search.service.impl.es.EsConstants;
 import com.dmall.search.service.impl.es.SkuEsDTO;
 import com.google.common.collect.Lists;
@@ -53,15 +57,21 @@ public class ImportSkuToEsHandler {
     @Autowired
     private AttributeMapper attributeMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Autowired
+    private SellerOrderFeign sellerOrderFeign;
+
     /**
      * 操作es的sku数据
      */
     public void operateEsSku(Long skuId) {
         SkuDO skuDO = skuMapper.selectById(skuId);
-        if (skuDO == null){
+        if (skuDO == null) {
             // 删除
             esDao.delete(EsConstants.INDEX_NAME, EsConstants.TYPE_NAME, skuId);
-        }else {
+        } else {
             // 查询商品
             ProductDO productDO = productMapper.selectById(skuDO.getProductId());
             // 查询分类
@@ -77,10 +87,12 @@ public class ImportSkuToEsHandler {
             skuEsDTO.setSkuDescription(skuDO.getDescription());
             skuEsDTO.setSkuMainPic(skuDO.getPic());
             skuEsDTO.setSkuStock(skuDO.getStock());
-            // todo 调用sku评价数量接口
-            skuEsDTO.setSkuCommentCount(999L);
-            // todo 调用sku销量接口
-            skuEsDTO.setSkuSaleCount(1999L);
+            skuEsDTO.setSkuCommentCount(commentMapper.selectCount(Wrappers.<CommentDO>lambdaQuery().eq(CommentDO::getSkuId, skuDO.getId())));
+            BaseResult<Integer> skuSaleCountResult = sellerOrderFeign.skuSaleCount(skuDO.getId());
+            if (!skuSaleCountResult.getResult()) {
+                throw new BusinessException(BasicStatusEnum.FAIL);
+            }
+            skuEsDTO.setSkuSaleCount(skuSaleCountResult.getData());
             skuEsDTO.setSkuOnPublishTime(DateUtil.format(skuDO.getOnPublishTime(), DatePattern.NORM_DATE_PATTERN));
             skuEsDTO.setProductId(skuDO.getProductId());
             skuEsDTO.setProductName(productDO.getName());
@@ -115,7 +127,7 @@ public class ImportSkuToEsHandler {
                     CategoryAttributeDO categoryAttributeDO = categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
                             .eq(CategoryAttributeDO::getCategoryId, categoryId)
                             .eq(CategoryAttributeDO::getAttributeId, attrId));
-                    if (categoryAttributeDO != null){
+                    if (categoryAttributeDO != null) {
                         Integer canScreen = categoryAttributeDO.getCanScreen();
                         // 可搜索
                         if (!canScreen.equals(1)) {

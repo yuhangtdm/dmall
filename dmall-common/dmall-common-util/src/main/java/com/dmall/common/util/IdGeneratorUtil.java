@@ -7,10 +7,12 @@ import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 
-// todo
 public class IdGeneratorUtil {
  
     private static long workerId = 0;
+
+    // 雪花算法
+    private static final Snowflake snowflake = IdUtil.createSnowflake(workerId, 1);
 
     static {
         try {
@@ -34,11 +36,10 @@ public class IdGeneratorUtil {
         return prefix + tenantId + module + RandomUtil.randomNumbers(3);
     }
 
-    // 雪花算法
-    private static Snowflake snowflake = IdUtil.createSnowflake(workerId, 1);
- 
     public static synchronized long snowflakeId() {
-        return snowflake.nextId();
+        Snowflake snowflake = IdUtil.createSnowflake(1, 1);
+        long id = snowflake.nextId();
+        return id;
     }
  
     public static synchronized long snowflakeId(long workerId, long dataCenterId) {

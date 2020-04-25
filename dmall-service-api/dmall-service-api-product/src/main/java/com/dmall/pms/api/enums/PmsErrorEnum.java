@@ -207,6 +207,12 @@ public enum PmsErrorEnum implements ErrorCodeEnum {
      */
     MEDIA_NOT_EXIST("1072", "媒体列表为空"),
 
+    /**
+     * 审核记录不存在
+     */
+    AUDIT_NOT_EXIST("1073", "审核记录不存在"),
+
+
     ;
 
     /**

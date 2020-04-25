@@ -26,6 +26,10 @@
         </dependency>
         <dependency>
             <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-order</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
             <artifactId>dmall-service-impl-product-generator</artifactId>
         </dependency>
         <dependency>

@@ -11,10 +11,8 @@ import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -306,7 +304,7 @@ public class DMallAutoGenerator extends AutoGenerator {
                 .append(StrUtil.format(MybatisPlusConstants.API_MODULE_NAME, generator.getModule()))
                 .append(MybatisPlusConstants.SRC_MAIN_JAVA)
                 .append(MybatisPlusConstants.COM_DMALL)
-                .append(generator.getModule())
+                .append(generator.getBusiness())
                 .append(File.separator)
                 .append(MybatisPlusConstants.API)
                 .append(File.separator);
@@ -321,7 +319,7 @@ public class DMallAutoGenerator extends AutoGenerator {
                 .append(StrUtil.format(MybatisPlusConstants.BUSINESS_MODULE_NAME, generator.getModule(), generator.getModule()))
                 .append(MybatisPlusConstants.SRC_MAIN_JAVA)
                 .append(MybatisPlusConstants.COM_DMALL)
-                .append(generator.getModule())
+                .append(generator.getBusiness())
                 .append(File.separator)
                 .append(MybatisPlusConstants.SERVICE)
                 .append(File.separator)

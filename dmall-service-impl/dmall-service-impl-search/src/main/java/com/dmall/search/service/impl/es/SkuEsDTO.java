@@ -60,12 +60,12 @@ public class SkuEsDTO implements Serializable {
     /**
      * sku评论数量
      */
-    private Long skuCommentCount;
+    private Integer skuCommentCount;
 
     /**
      * sku销量
      */
-    private Long skuSaleCount;
+    private Integer skuSaleCount;
 
     /**
      * sku上架时间

@@ -9,12 +9,11 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: 修改es里sku的信息
- * todo 新增sku  修改sku 下架sku 购买sku 评价sku 都需要发送消息到rocketmq
  * @author: created by hang.yu on 2020/3/25 23:31
  */
 @Component
-@RocketMQMessageListener(topic = MqConstants.SYNC_ES_SKU,consumerGroup = "searchConsumer")
-public class SaveOrUpdateSkuEsConsumer  implements RocketMQListener<Long> {
+@RocketMQMessageListener(topic = MqConstants.SYNC_ES_SKU, consumerGroup = "searchConsumer")
+public class SaveOrUpdateSkuEsConsumer implements RocketMQListener<Long> {
 
     @Autowired
     private ImportSkuToEsHandler importSkuToEsHandler;

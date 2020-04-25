@@ -52,7 +52,6 @@ public class GetBasicSkuHandler extends AbstractCommonHandler<List<Long>, SkuDO,
     private BasicSkuResponseDTO getBasicSkuResponseDTO(SkuDO skuDO) {
         BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);
         ProductDO productDO = productMapper.selectById(skuDO.getProductId());
-        basicSku.setAuditStatus(EnumUtil.getCodeDescEnum(SkuAuditStatusEnum.class, skuDO.getAuditStatus()));
         basicSku.setNewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getNewStatus()));
         basicSku.setRecommendStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getRecommendStatus()));
         basicSku.setPreviewStatus(EnumUtil.getCodeDescEnum(YNEnum.class, skuDO.getPreviewStatus()));

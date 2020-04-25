@@ -60,10 +60,15 @@ public interface SkuService {
     @ApiOperation(value = "4.保存sku图片信息,返回skuId")
     BaseResult<Long> saveSkuMedia(@Valid @RequestBody SaveSkuMediaRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/onPublish/{id}")
     @ApiOperation(value = "删除sku")
     @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
-    BaseResult<Long> delete(@PathVariable("id") Long id);
+    BaseResult<Long> onPublish(@PathVariable("id") Long id);
+
+    @DeleteMapping("/offPublish/{id}")
+    @ApiOperation(value = "删除sku")
+    @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> offPublish(@PathVariable("id") Long id);
 
     @PutMapping
     @ApiOperation(value = "修改sku")
@@ -99,7 +104,4 @@ public interface SkuService {
     @ApiOperation(value = "释放库存")
     BaseResult<Void> unLockStock(@RequestBody @Valid StockRequestDTO requestDTO);
 
-    // TODO 商品的es操作
-
-    // TODO 商品评价展示
 }

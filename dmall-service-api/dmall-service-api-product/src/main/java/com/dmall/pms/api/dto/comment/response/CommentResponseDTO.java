@@ -1,42 +1,38 @@
 package com.dmall.pms.api.dto.comment.response;
 
+import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @description: 商品评价响应实体
- * @author: created by hang.yu on 2020-04-12 15:31:43
+ * @author: created by hang.yu on 2020/4/25 17:08
  */
 @Data
 @ApiModel(value = "CommentResponseDTO", description = "商品评价响应实体")
 public class CommentResponseDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1788168265292904367L;
 
-    @ApiModelProperty(value = "id", position = 1)
-    private Long id;
+    @ApiModelProperty(value = "分页数据", position = 1)
+    private ResponsePage<CommentPageResponseDTO> page;
 
-    @ApiModelProperty(value = "skuId", position = 2)
-    private Long skuId;
+    @ApiModelProperty(value = "评价总数", position = 2)
+    private Integer commentCount;
 
-    @ApiModelProperty(value = "子订单号", position = 3)
-    private Long subOrderId;
+    @ApiModelProperty(value = "好评数", position = 3)
+    private Integer goodCommentCount;
 
-    @ApiModelProperty(value = "评价内容", position = 4)
-    private String content;
+    @ApiModelProperty(value = "中评数", position = 4)
+    private Integer middleCommentCount;
 
-    @ApiModelProperty(value = "评分 1-5", position = 5)
-    private Integer star;
+    @ApiModelProperty(value = "差评数", position = 5)
+    private Integer badCommentCount;
 
-    @ApiModelProperty(value = "媒体对象 图片或视频,多个以逗号隔开", position = 7)
-    private String medias;
-
-    @ApiModelProperty(value = "评价时间", position = 8)
-    private Date createTime;
+    @ApiModelProperty(value = "有图评价数", position = 6)
+    private Integer hasPicCommentCount;
 
 }

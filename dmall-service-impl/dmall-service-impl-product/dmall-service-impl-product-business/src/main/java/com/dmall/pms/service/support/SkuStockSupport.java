@@ -18,6 +18,9 @@ public class SkuStockSupport {
     @Autowired
     private RedisTemplate<String, Integer> redisTemplate;
 
+    @Autowired
+    private SkuImportEsSupport skuImportEsSupport;
+
     private static final String SKU_STOCK_KEY = "stock:sku_{}";
 
     /**
@@ -34,6 +37,7 @@ public class SkuStockSupport {
         for (SkuStockRequestDTO skuRequest : sku) {
             redisTemplate.opsForValue()
                     .decrement(StrUtil.format(SKU_STOCK_KEY, skuRequest.getSkuId()), skuRequest.getNumber());
+            skuImportEsSupport.sendSyncSkuMq(skuRequest.getSkuId());
         }
     }
 

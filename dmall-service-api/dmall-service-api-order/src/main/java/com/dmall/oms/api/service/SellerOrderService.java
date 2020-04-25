@@ -2,8 +2,6 @@ package com.dmall.oms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.oms.api.dto.commentpage.CommentPageRequestDTO;
-import com.dmall.oms.api.dto.commentpage.response.CommentPageResponseDTO;
 import com.dmall.oms.api.dto.deliver.DeliverRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageResponseDTO;
@@ -54,5 +52,13 @@ public interface SellerOrderService {
     @ApiOperation(value = "卖家端订单详情")
     BaseResult<SellerOrderDetailResponseDTO> sellerDetail(@PathVariable("orderId") Long orderId);
 
+    @GetMapping("/skuSaleCount/{skuId}")
+    @ApiImplicitParam(name = "orderId", value = "skuId", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "获取sku销量")
+    BaseResult<Integer> skuSaleCount(@PathVariable("skuId") Long skuId);
 
+    @GetMapping("/productSaleCount/{productId}")
+    @ApiImplicitParam(name = "orderId", value = "productId", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "获取商品销量")
+    BaseResult<Integer> productSaleCount(@PathVariable("productId") Long productId);
 }

@@ -28,7 +28,8 @@ public class GeneratorCodeUtil {
     public static void main(String[] args) {
         GeneratorDTO generator = new GeneratorDTO();
         generator.setModule("product");
-        generator.setDatabaseUrl(StrUtil.format(generator.getDatabaseUrl(), generator.getModule()));
+        generator.setBusiness("pms");
+        generator.setDatabaseUrl(StrUtil.format(generator.getDatabaseUrl(), "pms"));
         generator.setGenerateCustomer(true);
         generator.setTableNames(new String[]{"pms_sku_audit"});
         moduleGenerator(generator);
@@ -47,7 +48,7 @@ public class GeneratorCodeUtil {
         // 包配置
         PackageConfig packageConfig = getPackageConfig(generator);
         // 策略配置
-        StrategyConfig strategyConfig = getStrategyConfig(generator.getModule(), generator.getTableNames());
+        StrategyConfig strategyConfig = getStrategyConfig(generator.getBusiness(), generator.getTableNames());
         // 模板配置
         TemplateConfig templateConfig = getTemplateConfig();
         DMallAutoGenerator dMallAutoGenerator = new DMallAutoGenerator();
@@ -111,14 +112,14 @@ public class GeneratorCodeUtil {
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setEntity(MybatisPlusConstants.ENTITY_PACKAGE_NAME)
                 .setParent(MybatisPlusConstants.PACKAGE_PARENT_NAME)
-                .setModuleName(generator.getModule() + StringPool.DOT + MybatisPlusConstants.PACKAGE_GENERATOR_NAME);
+                .setModuleName(generator.getBusiness() + StringPool.DOT + MybatisPlusConstants.PACKAGE_GENERATOR_NAME);
         return packageConfig;
     }
 
     /**
      * 定义策略
      */
-    private static StrategyConfig getStrategyConfig(String module, String... tableNames) {
+    private static StrategyConfig getStrategyConfig(String tablePrefix, String... tableNames) {
         StrategyConfig strategyConfig = new StrategyConfig();
         //使用lombok
         strategyConfig.setEntityLombokModel(true)
@@ -127,7 +128,7 @@ public class GeneratorCodeUtil {
                 // 实体属性驼峰命名
                 .setColumnNaming(NamingStrategy.underline_to_camel)
                 // 表前缀
-                .setTablePrefix(module + StrUtil.UNDERLINE);
+                .setTablePrefix(tablePrefix + StrUtil.UNDERLINE);
         if (tableNames != null) {
             strategyConfig.setInclude(tableNames);
         }
