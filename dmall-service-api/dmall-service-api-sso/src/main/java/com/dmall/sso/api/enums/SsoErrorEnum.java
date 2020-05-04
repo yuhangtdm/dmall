@@ -35,23 +35,23 @@ public enum SsoErrorEnum implements ErrorCodeEnum {
     /**
      * 您还不是会员,前去注册
      */
-    MEMBER_NAME_INCORRECT("1610", "您还不是会员,前去注册"),
+    MEMBER_NAME_INCORRECT("1604", "您还不是会员,前去注册"),
 
     /**
      * 您的密码错误
      */
-    MEMBER_PASSWORD_INCORRECT("1611", "您的密码错误"),
+    MEMBER_PASSWORD_INCORRECT("1605", "您的密码错误"),
 
     /**
      * 您的账号已被锁定,请联系管理员
      */
-    MEMBER_INVALID("1612", "您的账号已被锁定,请联系管理员"),
+    MEMBER_INVALID("1606", "您的账号已被锁定,请联系管理员"),
 
 
     /**
      * 微博暂时无法正常使用
      */
-    WEI_BO_ERROR("1613", "微博暂时无法正常使用"),
+    WEI_BO_ERROR("1607", "微博暂时无法正常使用"),
 
     ;
     /**

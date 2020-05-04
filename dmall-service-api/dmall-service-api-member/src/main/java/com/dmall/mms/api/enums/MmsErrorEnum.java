@@ -80,27 +80,27 @@ public enum MmsErrorEnum implements ErrorCodeEnum {
     /**
      * 收货地址最多只有20个
      */
-    MEMBER_RECEIVE_ADDRESS_COUNT_LIMIT("1220", "收货地址最多只有20个"),
+    MEMBER_RECEIVE_ADDRESS_COUNT_LIMIT("1215", "收货地址最多只有20个"),
 
     /**
      * 该会员收货地址不存在
      */
-    MEMBER_RECEIVE_ADDRESS_NOT_EXIST("1221", "该会员收货地址不存在"),
+    MEMBER_RECEIVE_ADDRESS_NOT_EXIST("1216", "该会员收货地址不存在"),
 
     /**
      * 您不能操作他人的地址
      */
-    MEMBER_RECEIVE_ADDRESS_UPDATE_ERROR("1222", "您不能操作他人的地址"),
+    MEMBER_RECEIVE_ADDRESS_UPDATE_ERROR("1217", "您不能操作他人的地址"),
 
     /**
      * 该会员收藏的sku不存在
      */
-    MEMBER_COLLECTION_SKU_NOT_EXIST("1230", "该会员收藏的sku不存在"),
+    MEMBER_COLLECTION_SKU_NOT_EXIST("1218", "该会员收藏的sku不存在"),
 
     /**
      * 您不可取消他人收藏的sku
      */
-    MEMBER_COLLECTION_SKU_ERROR("1231", "您不可取消他人收藏的sku"),
+    MEMBER_COLLECTION_SKU_ERROR("1219", "您不可取消他人收藏的sku"),
 
     ;
     /**

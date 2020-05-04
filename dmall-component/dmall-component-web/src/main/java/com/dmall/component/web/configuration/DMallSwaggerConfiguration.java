@@ -2,7 +2,7 @@ package com.dmall.component.web.configuration;
 
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.enums.component.*;
+import com.dmall.common.enums.component.WebErrorEnum;
 import com.dmall.common.enums.error.ErrorCodeEnum;
 import com.dmall.common.model.BasicConfiguration;
 import com.dmall.common.model.exception.ComponentException;
@@ -29,7 +29,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,11 +53,6 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
 
     static {
         errorEnums.addAll(Arrays.asList(BasicStatusEnum.values()));
-        errorEnums.addAll(Arrays.asList(CacheRedisErrorEnum.values()));
-        errorEnums.addAll(Arrays.asList(ESErrorEnum.values()));
-        errorEnums.addAll(Arrays.asList(QiNiuErrorEnum.values()));
-        errorEnums.addAll(Arrays.asList(SendEmailErrorEnum.values()));
-        errorEnums.addAll(Arrays.asList(WebErrorEnum.values()));
     }
 
     @Override

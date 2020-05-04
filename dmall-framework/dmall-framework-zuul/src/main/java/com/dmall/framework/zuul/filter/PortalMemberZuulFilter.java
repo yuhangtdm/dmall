@@ -5,6 +5,7 @@ import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.ContentType;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.enums.SourceEnum;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.AjaxUtil;
@@ -99,7 +100,7 @@ public class PortalMemberZuulFilter extends ZuulFilter {
         if (StrUtil.isBlank(token)) {
             requestContext.setSendZuulResponse(false);
             if (AjaxUtil.isAjax(request)) {
-                requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.TOKEN_NOT_BLANK)));
+                requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN)));
                 requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             } else {
                 // 重定向到登录地址

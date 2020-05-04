@@ -8,13 +8,13 @@ import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.rbac.shiro.feign.AdminPermissionFeign;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageRequestDTO;
 import com.dmall.oms.api.dto.deliverpage.DeliverOrderPageResponseDTO;
 import com.dmall.oms.api.enums.SubOrderStatusEnum;
-import com.dmall.oms.feign.RoleFeign;
-import com.dmall.oms.service.impl.order.mapper.dto.DeliverOrderPageDbDTO;
 import com.dmall.oms.service.impl.order.mapper.DeliverOrderPageMapper;
+import com.dmall.oms.service.impl.order.mapper.dto.DeliverOrderPageDbDTO;
 import com.dmall.sso.api.dto.admin.RoleResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderPageRequestDTO, DeliverOrderPageDbDTO, DeliverOrderPageResponseDTO> {
 
     @Autowired
-    private RoleFeign roleFeign;
+    private AdminPermissionFeign roleFeign;
 
     @Autowired
     private DeliverOrderPageMapper deliverOrderPageMapper;

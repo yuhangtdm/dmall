@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: redis异常枚举类
+ * @description: redis异常枚举类 50000开头
  * @author: created by hang.yu on 2019/11/12 23:42
  */
 @Getter

@@ -8,6 +8,8 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.TimeZone;
+
 /**
  * @description: 网关启动类
  * 访问路由规则 : API网关地址+访问的服务名称+接口URI
@@ -22,6 +24,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class ZuulApplication {
 
     public static void main(String[] args) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
         SpringApplication.run(ZuulApplication.class, args);
     }
 

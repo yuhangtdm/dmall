@@ -12,10 +12,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AdminUserErrorEnum implements ErrorCodeEnum {
 
-    /**
-     * token不能为空
-     */
-    TOKEN_NOT_BLANK("60000", "token不能为空"),
 
     /**
      * source不能为空

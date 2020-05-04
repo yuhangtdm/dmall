@@ -20,8 +20,9 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
         <apollo.version>1.0.0</apollo.version>
-        <swagger2.version>2.7.0</swagger2.version>
+        <swagger2.version>2.9.2</swagger2.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <swagger-annotations.version>1.5.21</swagger-annotations.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <druid.version>1.1.10</druid.version>
         <spring-boot-admin.version>2.1.5</spring-boot-admin.version>
@@ -43,6 +44,7 @@
         <rocketmq-spring.version>2.1.0</rocketmq-spring.version>
         <xxl-job-core.version>2.1.2</xxl-job-core.version>
         <alipay-sdk-java.version>4.9.79.ALL</alipay-sdk-java.version>
+        <guava.version>29.0-jre</guava.version>
     </properties>
 
     <dependencies>
@@ -63,7 +65,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <!--springbootAdmin-->
             <dependency>
                 <groupId>de.codecentric</groupId>
@@ -97,7 +98,16 @@
                 <artifactId>swagger-bootstrap-ui</artifactId>
                 <version>${swagger-bootstrap-ui.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
             <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -248,7 +258,11 @@
                 <artifactId>alipay-sdk-java</artifactId>
                 <version>${alipay-sdk-java.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
 
             <!--======================本项目模块======================-->
             <!--dmall-common-->
@@ -356,7 +370,6 @@
                 <artifactId>dmall-service-api-demo</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <!--impl-generator -->
             <dependency>
                 <groupId>com.allInJava</groupId>

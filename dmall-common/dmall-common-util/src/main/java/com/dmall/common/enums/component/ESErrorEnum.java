@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: elasticSearch的错误枚举类
+ * @description: elasticSearch的错误枚举类 50100开头
  * @author: created by hang.yu on 2019/11/7 21:41
  */
 @Getter

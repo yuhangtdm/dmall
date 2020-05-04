@@ -2,11 +2,8 @@ package com.dmall.sso.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.portal.PortalMemberDTO;
-import com.dmall.sso.api.dto.admin.AdminLoginRequestDTO;
-import com.dmall.sso.api.dto.admin.AdminLoginResponseDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginRequestDTO;
 import com.dmall.sso.api.dto.portal.PortalLoginResponseDTO;
-import com.dmall.sso.api.dto.portal.WeiBolLoginRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;

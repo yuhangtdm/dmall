@@ -17,11 +17,6 @@ public interface OrderConstants {
     String CHECK_ORDER_KEY = "check_memberId_{}";
 
     /**
-     * 订单的消费者组
-     */
-    String CONSUMER_GROUP = "orderConsumer";
-
-    /**
      * xxl-job默认的执行器
      */
     Integer DEFAULT_JOB_GROUP = 1;
@@ -40,4 +35,21 @@ public interface OrderConstants {
      * 时间
      */
     Integer DELAY_DAY = 15;
+
+    /**
+     * 延迟取消订单成功的consumer
+     */
+    String DELAY_CANCEL_ORDER_CONSUMER = "dmall-service-impl-order-delayCancelOrderConsumer";
+
+    /**
+     * 支付成功的consumer
+     */
+    String PAY_SUCCESS_CONSUMER = "dmall-service-impl-order-paySuccessConsumer";
+
+
+
+    /**
+     * 同步sku到es的consumer
+     */
+    String SYNC_ES_ORDER_CONSUMER = "dmall-service-impl-order-syncEs_OrderConsumer";
 }

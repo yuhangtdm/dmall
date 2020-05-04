@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-
 /**
  * @description: 后台用户服务实现
  * @author: created by hang.yu on 2020-01-13 23:04:03
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
     private SetRolesHandler setRolesHandler;
 
     @Autowired
-    private SetPermissionsHandler setPermissionsHandler;
+    private UserSetPermissionsHandler userSetPermissionsHandler;
 
 
     @Override
@@ -86,7 +84,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> setPermissions(@RequestBody SetPermissionsExtRequestDTO requestDTO) {
-        return setPermissionsHandler.handler(requestDTO);
+        return userSetPermissionsHandler.handler(requestDTO);
     }
 
 

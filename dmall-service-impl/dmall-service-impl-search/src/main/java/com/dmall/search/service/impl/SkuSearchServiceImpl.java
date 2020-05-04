@@ -6,6 +6,7 @@ import com.dmall.search.api.dto.SearchResponseDTO;
 import com.dmall.search.api.service.SkuSearchService;
 import com.dmall.search.service.impl.handler.SkuSearchHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,7 +20,7 @@ public class SkuSearchServiceImpl implements SkuSearchService {
     private SkuSearchHandler skuSearchHandler;
 
     @Override
-    public BaseResult<SearchResponseDTO> skuSearch(SearchRequestDTO requestDTO) {
+    public BaseResult<SearchResponseDTO> skuSearch(@RequestBody SearchRequestDTO requestDTO) {
         return skuSearchHandler.handler(requestDTO);
     }
 }

@@ -25,18 +25,17 @@ public enum PaymentErrorEnum implements ErrorCodeEnum {
     /**
      * 订单不存在
      */
-    OUT_TRADE_NO_NOT_EXISTS("1403", "订单不存在"),
+    OUT_TRADE_NO_NOT_EXISTS("1402", "订单不存在"),
 
     /**
      * 支付方式不存在
      */
-    PAYMENT_TYPE__NOT_EXISTS("1404", "支付方式不存在"),
+    PAYMENT_TYPE__NOT_EXISTS("1403", "支付方式不存在"),
 
     /**
      * 退款失败
      */
-    REFUND_ERROR("1405", "退款失败"),
-
+    REFUND_ERROR("1404", "退款失败"),
 
     ;
 

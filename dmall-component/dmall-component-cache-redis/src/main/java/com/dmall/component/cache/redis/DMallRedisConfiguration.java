@@ -145,7 +145,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * key和 HashKey 设置为字符串类型,且配置了缓存前缀
      * value和HashValue 序列化器为jdk序列化
      */
-    @Bean
+    @Bean("redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(connectionFactory);

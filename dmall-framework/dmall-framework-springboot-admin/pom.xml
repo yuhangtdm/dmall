@@ -49,7 +49,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <!--   pull docker镜像的插件        -->
-            <!--<plugin>
+            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.1.0</version>
@@ -61,11 +61,22 @@
                             <goal>build</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>push-image</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <imageName>192.168.38.157:5000/${project.artifactId}:${project.version}</imageName>
+                        </configuration>
+                    </execution>
                 </executions>
                 <configuration>
                     <imageName>192.168.38.157:5000/${project.artifactId}:${project.version}</imageName>
                     <dockerHost>http://192.168.38.157:2375</dockerHost>
                     <baseImage>java:8</baseImage>
+                    <forceTags>true</forceTags>
                     <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]
                     </entryPoint>
                     <resources>
@@ -76,7 +87,7 @@
                         </resource>
                     </resources>
                 </configuration>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 

@@ -8,6 +8,7 @@ import com.dmall.oms.feign.SkuFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
+import com.dmall.oms.service.impl.order.handler.CommonStockHandler;
 import com.dmall.pay.api.enums.PaymentStatusEnum;
 import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import java.util.Date;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(topic = MqConstants.PAY_SUCCESS_TOPIC, consumerGroup = OrderConstants.CONSUMER_GROUP)
+@RocketMQMessageListener(topic = MqConstants.PAY_SUCCESS_TOPIC, consumerGroup = OrderConstants.PAY_SUCCESS_CONSUMER)
 public class PaySuccessConsumer implements RocketMQListener<Long> {
 
     @Autowired

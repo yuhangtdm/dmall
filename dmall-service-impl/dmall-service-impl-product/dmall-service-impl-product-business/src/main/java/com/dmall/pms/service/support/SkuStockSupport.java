@@ -16,7 +16,7 @@ import java.util.List;
 public class SkuStockSupport {
 
     @Autowired
-    private RedisTemplate<String, Integer> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     private SkuImportEsSupport skuImportEsSupport;
@@ -27,7 +27,7 @@ public class SkuStockSupport {
      * 获取当前可售库存
      */
     public Integer getSaleableStock(Long skuId) {
-        return redisTemplate.opsForValue().get(StrUtil.format(SKU_STOCK_KEY, skuId));
+        return (Integer) redisTemplate.opsForValue().get(StrUtil.format(SKU_STOCK_KEY, skuId));
     }
 
     /**

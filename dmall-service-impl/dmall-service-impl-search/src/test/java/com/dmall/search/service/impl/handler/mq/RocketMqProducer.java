@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RocketMqProducer {
 
-    public static final String NAME_SERVER = "192.168.38.163:9876;192.168.38.164:9876";
+    public static final String NAME_SERVER = "106.15.43.197:9876";
 
     public static void main(String[] args) throws Exception {
         sendSync();
@@ -30,14 +30,14 @@ public class RocketMqProducer {
      */
     public static void sendSync() throws Exception {
         // 实例化消息生产者Producer
-        DefaultMQProducer producer = new DefaultMQProducer("syncGroup");
+        DefaultMQProducer producer = new DefaultMQProducer("test");
         // 设置NameServer的地址
         producer.setNamesrvAddr(NAME_SERVER);
         // 启动Producer实例
         producer.start();
         for (int i = 0; i < 5; i++) {
             // 创建消息，并指定Topic，Tag和消息体
-            Message msg = new Message("syncTopic",
+            Message msg = new Message("test",
                     "TagA",
                     ("sendSync RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET)
             );

@@ -10,6 +10,7 @@ import com.dmall.oms.feign.SkuFeign;
 import com.dmall.oms.generator.dataobject.OrderDO;
 import com.dmall.oms.generator.mapper.OrderMapper;
 import com.dmall.oms.service.impl.order.OrderConstants;
+import com.dmall.oms.service.impl.order.handler.CommonStockHandler;
 import com.dmall.oms.service.support.OrderLogSupport;
 import com.dmall.pms.api.dto.sku.request.StockRequestDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ import java.util.Date;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(topic = MqConstants.DELAY_CANCEL_ORDER_TOPIC, consumerGroup = OrderConstants.CONSUMER_GROUP)
+@RocketMQMessageListener(topic = MqConstants.DELAY_CANCEL_ORDER_TOPIC, consumerGroup = OrderConstants.DELAY_CANCEL_ORDER_CONSUMER)
 public class CancelOrderConsumer implements RocketMQListener<Long> {
 
     @Autowired

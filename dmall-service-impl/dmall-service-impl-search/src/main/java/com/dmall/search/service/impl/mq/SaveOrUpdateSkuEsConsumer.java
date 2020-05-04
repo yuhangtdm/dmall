@@ -12,8 +12,13 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/3/25 23:31
  */
 @Component
-@RocketMQMessageListener(topic = MqConstants.SYNC_ES_SKU, consumerGroup = "searchConsumer")
+@RocketMQMessageListener(topic = MqConstants.SYNC_ES_SKU, consumerGroup = SaveOrUpdateSkuEsConsumer.SYNC_ES_SKU_CONSUMER)
 public class SaveOrUpdateSkuEsConsumer implements RocketMQListener<Long> {
+
+    /**
+     * 同步sku到es的consumer
+     */
+    public static final String SYNC_ES_SKU_CONSUMER = "dmall-service-impl-order-syncEsSkuConsumer";
 
     @Autowired
     private ImportSkuToEsHandler importSkuToEsHandler;

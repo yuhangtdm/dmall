@@ -1,7 +1,7 @@
 package com.dmall.common.constants;
 
 /**
- * @description: MQ topic 常量
+ * @description: MQ 常量
  * @author: created by hang.yu on 2020/4/4 13:41
  */
 public interface MqConstants {
@@ -25,4 +25,5 @@ public interface MqConstants {
      * 同步sku到es的topic
      */
     String SYNC_ES_ORDER = "sync_es_order_topic";
+
 }

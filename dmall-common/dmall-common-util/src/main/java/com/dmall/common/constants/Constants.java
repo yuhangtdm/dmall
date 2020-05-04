@@ -66,4 +66,8 @@ public interface Constants {
      */
     String LOCAL = "local";
 
+    /**
+     * SWAGGER
+     */
+    String SWAGGER = "/v2/api-docs";
 }

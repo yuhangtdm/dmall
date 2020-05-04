@@ -39,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
     private PageRoleHandler pageRoleHandler;
 
     @Autowired
-    private SetPermissionsHandler setPermissionsHandler;
+    private RoleSetPermissionsHandler roleSetPermissionsHandler;
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveRoleRequestDTO requestDTO) {
@@ -74,7 +74,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> setPermissions(SetPermissionsRequestDTO requestDTO) {
-        return setPermissionsHandler.handler(requestDTO);
+        return roleSetPermissionsHandler.handler(requestDTO);
     }
 
 }

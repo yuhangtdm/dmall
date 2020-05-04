@@ -21,6 +21,10 @@ public class CommonFilterUtil {
      */
     public static boolean adminFilter(HttpServletRequest request, AdminProperties adminProperties) throws Exception {
         String header = request.getHeader(Constants.SOURCE);
+        String uri = request.getRequestURI();
+        if (uri.contains(Constants.SWAGGER)) {
+            return true;
+        }
         if (StrUtil.isBlank(header)) {
             return false;
         }
@@ -28,12 +32,17 @@ public class CommonFilterUtil {
         if (!SourceEnum.ADMIN.getCode().equals(header)) {
             return true;
         }
+
         // 未配置白名单 或白名单内的URL有效
         return CollUtil.isEmpty(adminProperties.getWhiteList())
                 || adminProperties.getWhiteList().contains(RequestMappingUtil.getValue(request));
     }
 
     public static boolean portalFilter(HttpServletRequest request, PortalProperties portalProperties) throws Exception {
+        String uri = request.getRequestURI();
+        if (uri.contains(Constants.SWAGGER)) {
+            return true;
+        }
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {
             return false;
@@ -42,6 +51,7 @@ public class CommonFilterUtil {
         if (!SourceEnum.PORTAL.getCode().equals(header)) {
             return true;
         }
+
         return CollUtil.isEmpty(portalProperties.getWhiteList())
                 || portalProperties.getWhiteList().contains(RequestMappingUtil.getValue(request));
     }

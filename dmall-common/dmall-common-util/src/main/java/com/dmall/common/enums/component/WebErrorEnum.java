@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: web组件异常枚举
+ * @description: web组件异常枚举 50400开头
  * @author: created by hang.yu on 2019/11/15 23:12
  */
 @Getter

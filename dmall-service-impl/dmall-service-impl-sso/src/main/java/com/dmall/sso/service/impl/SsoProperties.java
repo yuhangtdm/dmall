@@ -1,8 +1,5 @@
 package com.dmall.sso.service.impl;
 
-import cn.hutool.core.util.StrUtil;
-import com.dmall.common.model.exception.BusinessException;
-import com.dmall.common.model.exception.ComponentException;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -39,17 +36,6 @@ public class SsoProperties {
 
     @PostConstruct
     public void check(){
-        if (StrUtil.isBlank(adminSuccessUrl)){
-            throw new RuntimeException("adminSuccessUrl is not blank");
-        }
-        if (StrUtil.isBlank(portalSuccessUrl)){
-            throw new RuntimeException("portalSuccessUrl is not blank");
-        }
-        if (adminTtlDay == null){
-            throw new RuntimeException("adminTtlDay is not null");
-        }
-        if (portalTtlDay == null){
-            throw new RuntimeException("portalTtlDay is not null");
-        }
+
     }
 }

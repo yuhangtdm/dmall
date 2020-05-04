@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(topic = MqConstants.SYNC_ES_ORDER, consumerGroup = OrderConstants.CONSUMER_GROUP)
+@RocketMQMessageListener(topic = MqConstants.SYNC_ES_ORDER, consumerGroup = OrderConstants.SYNC_ES_ORDER_CONSUMER)
 public class InsertOrderEsConsumer implements RocketMQListener<Long> {
 
     @Autowired

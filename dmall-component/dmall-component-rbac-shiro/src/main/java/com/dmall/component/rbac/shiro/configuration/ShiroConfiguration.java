@@ -23,8 +23,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.Filter;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -46,7 +44,20 @@ public class ShiroConfiguration implements BasicConfiguration {
 
     private static final String FILTER_PATH = StrUtil.format("{},{},{}", ADMIN_USER, PERMISSION, PORTAL_MEMBER);
 
+    /**
+     * 过滤一切请求
+     */
     private static final String PATH = "/**";
+
+    /**
+     * 放行的请求
+     */
+    private static final String PASS_PATH = "/v2/api-docs";
+
+    /**
+     * anon
+     */
+    private static final String ANON = "anon";
 
     @Autowired
     private AdminProperties adminProperties;
@@ -73,14 +84,17 @@ public class ShiroConfiguration implements BasicConfiguration {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        //自定义过滤器
+        // 自定义过滤器
         Map<String, Filter> customisedFilter = Maps.newHashMap();
         customisedFilter.put(ADMIN_USER, adminUserFilter());
         customisedFilter.put(PERMISSION, adminPermissionFilter());
         customisedFilter.put(PORTAL_MEMBER, portalMemberFilter());
 
+        // 配置过滤器
         Map<String, String> filterChainDefinitionMap = Maps.newLinkedHashMap();
+        filterChainDefinitionMap.put(PASS_PATH, ANON);
         filterChainDefinitionMap.put(PATH, FILTER_PATH);
+
         shiroFilterFactoryBean.setFilters(customisedFilter);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: QiNiuErrorEnum
+ * @description: QiNiuErrorEnum 50200开头
  * @author: created by hang.yu on 2019/12/17 10:41
  */
 @Getter

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: 发送邮件异常枚举类
+ * @description: 发送邮件异常枚举类 50300开头
  * @author: created by hang.yu on 2019/11/12 23:42
  */
 @Getter
