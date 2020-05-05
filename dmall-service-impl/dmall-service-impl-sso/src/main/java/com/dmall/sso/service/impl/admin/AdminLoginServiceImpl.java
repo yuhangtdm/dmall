@@ -33,6 +33,8 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     private static final String KEY_PREFIX = "admin_{}";
 
+    private static final Integer REMEMBER_ME = 30;
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -60,16 +62,24 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
         AdminUserDTO adminUserDTO = (AdminUserDTO) subject.getPrincipal();
         String token = IdUtil.simpleUUID();
-        redisTemplate.opsForValue().set(StrUtil.format(KEY_PREFIX, token), adminUserDTO, ssoProperties.getAdminTtlDay(), TimeUnit.DAYS);
+        if (requestDTO.getRememberMe() != null && requestDTO.getRememberMe()){
+            // 30天免登录
+            redisTemplate.opsForValue().set(StrUtil.format(KEY_PREFIX, token), adminUserDTO,
+                    REMEMBER_ME, TimeUnit.DAYS);
+        }else {
+            redisTemplate.opsForValue().set(StrUtil.format(KEY_PREFIX, token), adminUserDTO,
+                    ssoProperties.getAdminTtlDay(), TimeUnit.DAYS);
+        }
+
         AdminLoginResponseDTO responseDTO = new AdminLoginResponseDTO();
         responseDTO.setToken(token);
-        responseDTO.setUrl(StrUtil.isNotBlank(requestDTO.getUrl()) ? requestDTO.getUrl() : ssoProperties.getAdminSuccessUrl());
+        responseDTO.setUrl(requestDTO.getUrl());
         return ResultUtil.success(responseDTO);
     }
 
     @Override
     public BaseResult<Void> logout(String token) {
-        redisTemplate.delete(Lists.newArrayList(token));
+        redisTemplate.delete(Lists.newArrayList(StrUtil.format(KEY_PREFIX, token)));
         return ResultUtil.success();
     }
 
@@ -77,7 +87,8 @@ public class AdminLoginServiceImpl implements AdminLoginService {
      * 校验token是否存在
      */
     public BaseResult<AdminUserDTO> checkToken(@RequestParam String token) {
-        AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
+        AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue()
+                .get(StrUtil.format(KEY_PREFIX, token));
         if (adminUserDTO == null) {
             return ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN);
         }

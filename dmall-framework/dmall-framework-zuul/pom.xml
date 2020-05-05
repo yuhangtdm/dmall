@@ -60,6 +60,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-component-web</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,14 +1,13 @@
 package com.dmall.demo;
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.dmall.demo.generator.dataobject.UserDO;
 import com.dmall.demo.service.impl.user.cache.UserCacheService;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,6 +28,11 @@ public class RedisTest extends BaseTest {
     @Test
     public void testSet() {
         redisTemplate.opsForValue().set("hello", "redis");
+    }
+
+    @Test
+    public void testDeleteHello(){
+        redisTemplate.delete(Lists.newArrayList("hello"));
     }
 
     @Test

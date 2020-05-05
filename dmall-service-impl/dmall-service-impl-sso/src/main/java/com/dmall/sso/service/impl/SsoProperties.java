@@ -14,24 +14,19 @@ import javax.annotation.PostConstruct;
 public class SsoProperties {
 
     /**
-     * 后台登录成功后默认跳转的url
-     */
-    private String adminSuccessUrl;
-
-    /**
      * 前台登录成功后默认跳转的url
      */
     private String portalSuccessUrl;
 
     /**
-     * 后台用户的ttl
+     * 后台用户默认的ttl
      */
-    private Integer adminTtlDay;
+    private Integer adminTtlDay = 1;
 
     /**
-     * 后台用户的ttl
+     * 前台商城用户默认的ttl
      */
-    private Integer portalTtlDay;
+    private Integer portalTtlDay = 1;
 
 
     @PostConstruct
