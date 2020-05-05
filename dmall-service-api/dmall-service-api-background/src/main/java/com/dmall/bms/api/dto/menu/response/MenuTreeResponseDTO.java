@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,9 +32,15 @@ public class MenuTreeResponseDTO implements Serializable {
     private String url;
 
     @ApiModelProperty(value = "菜单地址", position = 6)
+    private String icon;
+
+    @ApiModelProperty(value = "菜单打开方式", position = 7)
+    private String target;
+
+    @ApiModelProperty(value = "菜单排序", position = 8)
     private Integer sort;
 
-    @ApiModelProperty(value = "子菜单", position = 7)
+    @ApiModelProperty(value = "子菜单", position = 9)
     private List<MenuTreeResponseDTO> child = Lists.newArrayList();
 
 }

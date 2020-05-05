@@ -4,7 +4,7 @@
  * version:2.0
  * description:layuimini 单页框架扩展
  */
-layui.define(["element", "jquery"], function (exports) {
+layui.define(["element", "jquery", "layer"], function (exports) {
     var element = layui.element,
         $ = layui.$,
         // miniAdmin = layui.miniAdmin,

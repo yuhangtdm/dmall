@@ -9,6 +9,8 @@
 			p.name,
 			p.type,
 			p.url,
+			p.icon,
+			p.target,
 			p.sort
 		FROM
 			bms_menu p

@@ -50,9 +50,14 @@ public class ShiroConfiguration implements BasicConfiguration {
     private static final String PATH = "/**";
 
     /**
-     * 放行的请求
+     * swagger请求放行
      */
     private static final String PASS_PATH = "/v2/api-docs";
+
+    /**
+     * actuator请求放行
+     */
+    private static final String ACTUATOR = "/actuator/**";
 
     /**
      * anon
@@ -93,6 +98,7 @@ public class ShiroConfiguration implements BasicConfiguration {
         // 配置过滤器
         Map<String, String> filterChainDefinitionMap = Maps.newLinkedHashMap();
         filterChainDefinitionMap.put(PASS_PATH, ANON);
+        filterChainDefinitionMap.put(ACTUATOR, ANON);
         filterChainDefinitionMap.put(PATH, FILTER_PATH);
 
         shiroFilterFactoryBean.setFilters(customisedFilter);

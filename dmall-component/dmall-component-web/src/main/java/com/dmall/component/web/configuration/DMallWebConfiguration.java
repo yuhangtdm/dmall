@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author: created by hang.yu on 2019/10/16 22:28
  */
 @Configuration
-@ComponentScan(basePackages = {"com.dmall.component.web"})
+@ComponentScan(basePackages = {"com.dmall.component.web","com.dmall.common.util"})
 public class DMallWebConfiguration implements WebMvcConfigurer {
 
     @Bean

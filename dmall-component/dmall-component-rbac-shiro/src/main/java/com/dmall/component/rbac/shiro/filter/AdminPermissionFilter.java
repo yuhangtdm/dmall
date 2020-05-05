@@ -4,7 +4,6 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
-import com.dmall.common.util.AjaxUtil;
 import com.dmall.common.util.RequestMappingUtil;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
@@ -60,12 +59,7 @@ public class AdminPermissionFilter extends PathMatchingFilter {
                 return true;
             }
         }
-        if (AjaxUtil.isAjax(request)) {
-            ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_ALLOW));
-        } else {
-            // 重定向到未授权地址
-            response.sendRedirect(adminProperties.getUnauthorizedUrl());
-        }
+        ResponseUtil.writeJson(response, ResultUtil.fail(BasicStatusEnum.USER_NOT_ALLOW));
         return false;
     }
 

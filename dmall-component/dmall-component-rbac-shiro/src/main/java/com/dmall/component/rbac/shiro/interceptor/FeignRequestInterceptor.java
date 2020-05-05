@@ -28,7 +28,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         if (portalMemberDTO != null) {
             String userJson = JsonUtil.toJson(portalMemberDTO);
             requestTemplate.header(Constants.PORTAL_MEMBER, userJson);
-            requestTemplate.header(Constants.SOURCE, adminUserDTO.getSource());
+            requestTemplate.header(Constants.SOURCE, portalMemberDTO.getSource());
         }
     }
 }

@@ -26,10 +26,10 @@ layui.define(['layer', 'table', 'form'], function (e) {
         msg: function (content) {
             msg(content);
         },
-        msgBack: function(content, callback){
+        msgBack: function (content, callback) {
             msgBack(content, callback);
         },
-        error:function(content){
+        error: function (content) {
             error(content);
         },
         getToken: function () {
@@ -70,7 +70,6 @@ layui.define(['layer', 'table', 'form'], function (e) {
                 request.setRequestHeader("source", "admin");
                 request.setRequestHeader("token", getToken());
             },
-            contentType: 'application/json;charset=utf-8',
             success: function (response) {
                 callback(response);
             },
@@ -122,7 +121,7 @@ layui.define(['layer', 'table', 'form'], function (e) {
         layer.msg(content, {
             icon: 1,
             time: 1000
-        },callback);
+        }, callback);
     }
 
     /**

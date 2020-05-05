@@ -23,4 +23,5 @@ public class AdminProperties {
      * 白名单
      */
     private List<String> whiteList = Lists.newArrayList();
+
 }

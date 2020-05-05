@@ -1,11 +1,19 @@
 package com.dmall.web.admin.controller;
-
+import cn.hutool.core.collection.CollUtil;
+import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.JsonUtil;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.web.admin.feign.MenuFeign;
+import com.dmall.web.admin.vo.HomeInfoVO;
 import com.dmall.web.admin.vo.IndexVO;
+import com.dmall.web.admin.vo.LogoInfoVO;
+import com.dmall.web.admin.vo.MenuInfoVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description: 首页控制器
@@ -14,10 +22,65 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexController {
 
-    private String json ="{\"homeInfo\":{\"title\":\"首页\",\"href\":\"page/welcome-1.html?t=1\"},\"logoInfo\":{\"title\":\"LAYUI MINI\",\"image\":\"images/logo.png\",\"href\":\"\"},\"menuInfo\":[{\"title\":\"常规管理\",\"icon\":\"fa fa-address-book\",\"href\":\"\",\"target\":\"_self\",\"child\":[{\"title\":\"主页模板\",\"href\":\"\",\"icon\":\"fa fa-home\",\"target\":\"_self\",\"child\":[{\"title\":\"主页一\",\"href\":\"page/welcome-1.html\",\"icon\":\"fa fa-tachometer\",\"target\":\"_self\"},{\"title\":\"主页二\",\"href\":\"page/welcome-2.html\",\"icon\":\"fa fa-tachometer\",\"target\":\"_self\"},{\"title\":\"主页三\",\"href\":\"page/welcome-3.html\",\"icon\":\"fa fa-tachometer\",\"target\":\"_self\"}]},{\"title\":\"菜单管理\",\"href\":\"page/menu.html\",\"icon\":\"fa fa-window-maximize\",\"target\":\"_self\"},{\"title\":\"系统设置\",\"href\":\"page/setting.html\",\"icon\":\"fa fa-gears\",\"target\":\"_self\"},{\"title\":\"表格示例\",\"href\":\"page/table.html\",\"icon\":\"fa fa-file-text\",\"target\":\"_self\"},{\"title\":\"表单示例\",\"href\":\"\",\"icon\":\"fa fa-calendar\",\"target\":\"_self\",\"child\":[{\"title\":\"普通表单\",\"href\":\"page/form.html\",\"icon\":\"fa fa-list-alt\",\"target\":\"_self\"},{\"title\":\"分步表单\",\"href\":\"page/form-step.html\",\"icon\":\"fa fa-navicon\",\"target\":\"_self\"}]},{\"title\":\"登录模板\",\"href\":\"\",\"icon\":\"fa fa-flag-o\",\"target\":\"_self\",\"child\":[{\"title\":\"登录-1\",\"href\":\"page/login-1.html\",\"icon\":\"fa fa-stumbleupon-circle\",\"target\":\"_blank\"},{\"title\":\"登录-2\",\"href\":\"page/login-2.html\",\"icon\":\"fa fa-viacoin\",\"target\":\"_blank\"}]},{\"title\":\"异常页面\",\"href\":\"\",\"icon\":\"fa fa-home\",\"target\":\"_self\",\"child\":[{\"title\":\"404页面\",\"href\":\"page/404.html\",\"icon\":\"fa fa-hourglass-end\",\"target\":\"_self\"}]},{\"title\":\"其它界面\",\"href\":\"\",\"icon\":\"fa fa-snowflake-o\",\"target\":\"\",\"child\":[{\"title\":\"按钮示例\",\"href\":\"page/button.html\",\"icon\":\"fa fa-snowflake-o\",\"target\":\"_self\"},{\"title\":\"弹出层\",\"href\":\"page/layer.html\",\"icon\":\"fa fa-shield\",\"target\":\"_self\"}]}]},{\"title\":\"组件管理\",\"icon\":\"fa fa-lemon-o\",\"href\":\"\",\"target\":\"_self\",\"child\":[{\"title\":\"图标列表\",\"href\":\"page/icon.html\",\"icon\":\"fa fa-dot-circle-o\",\"target\":\"_self\"},{\"title\":\"图标选择\",\"href\":\"page/icon-picker.html\",\"icon\":\"fa fa-adn\",\"target\":\"_self\"},{\"title\":\"颜色选择\",\"href\":\"page/color-select.html\",\"icon\":\"fa fa-dashboard\",\"target\":\"_self\"},{\"title\":\"下拉选择\",\"href\":\"page/table-select.html\",\"icon\":\"fa fa-angle-double-down\",\"target\":\"_self\"},{\"title\":\"文件上传\",\"href\":\"page/upload.html\",\"icon\":\"fa fa-arrow-up\",\"target\":\"_self\"},{\"title\":\"富文本编辑器\",\"href\":\"page/editor.html\",\"icon\":\"fa fa-edit\",\"target\":\"_self\"},{\"title\":\"省市县区选择器\",\"href\":\"page/area.html\",\"icon\":\"fa fa-rocket\",\"target\":\"_self\"}]},{\"title\":\"其它管理\",\"icon\":\"fa fa-slideshare\",\"href\":\"\",\"target\":\"_self\",\"child\":[{\"title\":\"多级菜单\",\"href\":\"\",\"icon\":\"fa fa-meetup\",\"target\":\"\",\"child\":[{\"title\":\"按钮1\",\"href\":\"page/button.html?v=1\",\"icon\":\"fa fa-calendar\",\"target\":\"_self\",\"child\":[{\"title\":\"按钮2\",\"href\":\"page/button.html?v=2\",\"icon\":\"fa fa-snowflake-o\",\"target\":\"_self\",\"child\":[{\"title\":\"按钮3\",\"href\":\"page/button.html?v=3\",\"icon\":\"fa fa-snowflake-o\",\"target\":\"_self\"},{\"title\":\"表单4\",\"href\":\"page/form.html?v=1\",\"icon\":\"fa fa-calendar\",\"target\":\"_self\"}]}]}]},{\"title\":\"失效菜单\",\"href\":\"page/error.html\",\"icon\":\"fa fa-superpowers\",\"target\":\"_self\"}]}]}";
+    @Autowired
+    private MenuFeign menuFeign;
 
     @RequestMapping("/index")
-    public BaseResult<IndexVO> index(){
-        return ResultUtil.success(JsonUtil.fromJson(json, IndexVO.class));
+    public BaseResult<IndexVO> index() {
+        BaseResult<List<MenuTreeResponseDTO>> menuTreeResult = menuFeign.myTree();
+        if (!menuTreeResult.getResult()) {
+            return ResultUtil.fail(menuTreeResult.getCode(), menuTreeResult.getMsg());
+        }
+        return ResultUtil.success(buildVo(menuTreeResult.getData()));
+    }
+
+    /**
+     * 构建返回出参
+     */
+    private IndexVO buildVo(List<MenuTreeResponseDTO> data) {
+        IndexVO indexVO = new IndexVO();
+        indexVO.setHomeInfo(buildHomeInfoVO());
+        indexVO.setLogoInfo(buildLogoInfoVO());
+        indexVO.setMenuInfo(buildMenuInfo(data));
+        return indexVO;
+    }
+
+    /**
+     * 构建HomeInfo
+     */
+    private HomeInfoVO buildHomeInfoVO() {
+        HomeInfoVO homeInfoVO = new HomeInfoVO();
+        homeInfoVO.setTitle("首页");
+        homeInfoVO.setHref("page/welcome-1.html?t=1");
+        return homeInfoVO;
+    }
+
+    /**
+     * 构建LogoInfo
+     */
+    private LogoInfoVO buildLogoInfoVO() {
+        LogoInfoVO logoInfoVO = new LogoInfoVO();
+        logoInfoVO.setTitle("地猫商城");
+        logoInfoVO.setImage("images/logo.png");
+        return logoInfoVO;
+    }
+
+    /**
+     * 构建菜单信息
+     */
+    private List<MenuInfoVO> buildMenuInfo(List<MenuTreeResponseDTO> data) {
+        return data.stream().map(menuTreeResponse -> {
+            MenuInfoVO menuInfoVO = new MenuInfoVO();
+            menuInfoVO.setId(menuTreeResponse.getId());
+            menuInfoVO.setPid(menuTreeResponse.getParentId());
+            menuInfoVO.setTitle(menuTreeResponse.getName());
+            menuInfoVO.setIcon(menuTreeResponse.getIcon());
+            menuInfoVO.setHref(menuTreeResponse.getUrl());
+            menuInfoVO.setTarget(menuTreeResponse.getTarget());
+            if (CollUtil.isNotEmpty(menuTreeResponse.getChild())) {
+                menuInfoVO.setChild(buildMenuInfo(menuTreeResponse.getChild()));
+            }
+            return menuInfoVO;
+        }).collect(Collectors.toList());
     }
 }
