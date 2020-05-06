@@ -2,12 +2,12 @@ package com.dmall.component.rbac.shiro.filter;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.json.JSON;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.portal.PortalMemberContextHolder;
 import com.dmall.common.model.portal.PortalMemberDTO;
 import com.dmall.common.util.JsonUtil;
+import com.dmall.common.util.RequestMappingUtil;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.PortalProperties;
@@ -37,7 +37,8 @@ public class PortalMemberFilter extends PathMatchingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilterUtil.portalFilter(request, portalProperties);
+        String requestMapping = RequestMappingUtil.getValue(request);
+        boolean filter = CommonFilterUtil.portalFilter(request, requestMapping, portalProperties);
         if (filter) {
             return true;
         }
@@ -48,7 +49,7 @@ public class PortalMemberFilter extends PathMatchingFilter {
             return false;
         }
         PortalMemberDTO portalMemberDTO = JsonUtil.fromJson(URLUtil.decode(userDto), PortalMemberDTO.class);
-        if (portalMemberDTO != null){
+        if (portalMemberDTO != null) {
             PortalMemberContextHolder.set(portalMemberDTO);
         }
         return true;

@@ -40,13 +40,13 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilterUtil.adminFilter(request, adminProperties);
+        String requestMapping = RequestMappingUtil.getValue(request);
+        boolean filter = CommonFilterUtil.adminFilter(request, requestMapping,adminProperties);
         if (filter) {
             return true;
         }
-        String requestMapping = RequestMappingUtil.getValue(request);
         // 非RequestMapping的url
-        if (requestMapping == null){
+        if (requestMapping == null) {
             return true;
         }
         // 调用sso获取权限数据

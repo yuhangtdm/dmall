@@ -37,7 +37,7 @@ public class PageMenuHandler extends AbstractCommonHandler<PageMenuRequestDTO, M
                 .eq(requestDTO.getType() != null, MenuDO::getType, requestDTO.getType())
                 .like(StrUtil.isNotBlank(requestDTO.getName()), MenuDO::getName, requestDTO.getName())
                 .like(StrUtil.isNotBlank(requestDTO.getUrl()), MenuDO::getUrl, requestDTO.getUrl());
-        page = menuMapper.selectPage(page, wrapper);
+        menuMapper.selectPage(page, wrapper);
 
         List<PageMenuResponseDTO> collect = page.getRecords().stream()
                 .map(menuDO -> doConvertDto(menuDO, PageMenuResponseDTO.class))

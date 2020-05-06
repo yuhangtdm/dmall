@@ -7,6 +7,7 @@ import com.dmall.common.enums.BasicStatusEnum;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.JsonUtil;
+import com.dmall.common.util.RequestMappingUtil;
 import com.dmall.common.util.ResponseUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.AdminProperties;
@@ -36,7 +37,8 @@ public class AdminUserFilter extends PathMatchingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean filter = CommonFilterUtil.adminFilter(request, adminProperties);
+        String requestMapping = RequestMappingUtil.getValue(request);
+        boolean filter = CommonFilterUtil.adminFilter(request, requestMapping, adminProperties);
         if (filter) {
             return true;
         }
@@ -55,7 +57,7 @@ public class AdminUserFilter extends PathMatchingFilter {
     }
 
     @Override
-    protected void postHandle(ServletRequest request, ServletResponse response) throws Exception {
+    protected void postHandle(ServletRequest request, ServletResponse response) {
         AdminUserContextHolder.remove();
     }
 }

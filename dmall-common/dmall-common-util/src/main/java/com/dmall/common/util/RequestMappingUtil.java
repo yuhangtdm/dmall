@@ -22,6 +22,9 @@ public class RequestMappingUtil {
         RequestMappingHandlerMapping mapping = SpringUtil.getBean(RequestMappingHandlerMapping.class);
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = mapping.getHandlerMethods();
         HandlerExecutionChain handler = mapping.getHandler(request);
+        if (handler == null) {
+            return null;
+        }
         HandlerMethod handlerMethod = (HandlerMethod) handler.getHandler();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()) {
             RequestMappingInfo k = entry.getKey();

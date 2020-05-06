@@ -32,9 +32,17 @@ layui.define(['layer', 'table', 'form'], function (e) {
         error: function (content) {
             error(content);
         },
+        errorBack: function(content, callback){
+            errorBack(content, callback);
+        },
         getToken: function () {
             return getToken();
         },
+        initPage: function (id, url, cols) {
+            initPage(id, url, cols);
+        },
+
+
         open: function (url, title, width, height, full, max) {
             open(url, title, width, height, full, max);
         },
@@ -44,9 +52,7 @@ layui.define(['layer', 'table', 'form'], function (e) {
         deleteById: function (url, callbak) {
             deleteById(url, callbak);
         },
-        initPage: function (id, url, cols) {
-            initPage(id, url, cols);
-        },
+
         initSimplePage: function (id, url, cols) {
             initSimplePage(id, url, cols);
         },
@@ -132,6 +138,16 @@ layui.define(['layer', 'table', 'form'], function (e) {
     }
 
     /**
+     * 错误提示 默认弹出1秒后执行回调函数
+     */
+    function errorBack(content, callback) {
+        layer.msg(content, {
+            icon: 2,
+            time: 1000
+        }, callback);
+    }
+
+    /**
      * 获取token
      */
     function getToken() {
@@ -142,6 +158,55 @@ layui.define(['layer', 'table', 'form'], function (e) {
             return layui.data('token').value;
         }
     }
+
+    /**
+     * 公共表格初始化方法
+     */
+    function initPage(id, url, cols) {
+        table.render({
+            elem: '#' + id,
+            id: id,
+            url: url,
+            method:'post',
+            contentType:'application/json',
+            headers: {
+                source: 'admin',
+                token: getToken()
+            },
+            cellMinWidth: 100,
+            toolbar: '#toolbarDemo',
+            text: {
+                none: '暂无相关数据'
+            },
+            cols: cols,
+            page: true,
+            loading: true,
+            request: {
+                pageName: 'current',
+                limitName: 'size'
+            },
+            done: function (res, curr, count) {
+                if (res.code === '408') {
+                    // 用户未登陆 跳转登录页面
+                    errorBack('登录已失效',function () {
+                        window.location.href = 'page/login.html';
+                    })
+                }
+            },
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.data != null){
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.count, //解析数据长度
+                        "data": res.data.data //解析数据列表
+                    }
+                }
+            }
+        });
+    }
+
+
 
     function validateNumber(number) {
         if (parseInt(number) < 0 || number.indexOf(".") > -1) {
@@ -286,30 +351,6 @@ layui.define(['layer', 'table', 'form'], function (e) {
         });
     }
 
-    /**
-     * 公共表格初始化方法
-     */
-    function initPage(id, url, cols) {
-        table.render({
-            elem: '#' + id,
-            id: id,
-            url: url,
-            cellMinWidth: 100,
-            toolbar: '#toolbarDemo',
-            text: {
-                none: '暂无相关数据'
-            },
-            cols: cols,
-            page: true,
-            loading: true,
-            request: {
-                pageName: 'current',
-                limitName: 'size'
-            },
-            done: function (res, curr, count) {
-            }
-        });
-    }
 
     /**
      * 简单表格初始化方法

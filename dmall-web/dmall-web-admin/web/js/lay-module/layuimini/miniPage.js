@@ -7,11 +7,9 @@
 layui.define(["element", "jquery", "layer"], function (exports) {
     var element = layui.element,
         $ = layui.$,
-        // miniAdmin = layui.miniAdmin,
         layer = layui.layer;
 
-
-    var miniPage = {
+     var miniPage = {
 
         /**
          * 初始化tab
