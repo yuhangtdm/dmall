@@ -19,22 +19,26 @@ public class RequestMappingUtil {
      * 获取RequestMapping的url
      */
     public static String getValue(HttpServletRequest request) throws Exception {
-        RequestMappingHandlerMapping mapping = SpringUtil.getBean(RequestMappingHandlerMapping.class);
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = mapping.getHandlerMethods();
-        HandlerExecutionChain handler = mapping.getHandler(request);
-        if (handler == null) {
-            return null;
-        }
-        HandlerMethod handlerMethod = (HandlerMethod) handler.getHandler();
-        for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()) {
-            RequestMappingInfo k = entry.getKey();
-            HandlerMethod v = entry.getValue();
-            if (handlerMethod.getMethod().equals(v.getMethod())) {
-                Set<String> patterns = k.getPatternsCondition().getPatterns();
-                if (!patterns.isEmpty()) {
-                    return patterns.iterator().next();
+        try {
+            RequestMappingHandlerMapping mapping = SpringUtil.getBean(RequestMappingHandlerMapping.class);
+            Map<RequestMappingInfo, HandlerMethod> handlerMethods = mapping.getHandlerMethods();
+            HandlerExecutionChain handler = mapping.getHandler(request);
+            if (handler == null) {
+                return null;
+            }
+            HandlerMethod handlerMethod = (HandlerMethod) handler.getHandler();
+            for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()) {
+                RequestMappingInfo k = entry.getKey();
+                HandlerMethod v = entry.getValue();
+                if (handlerMethod.getMethod().equals(v.getMethod())) {
+                    Set<String> patterns = k.getPatternsCondition().getPatterns();
+                    if (!patterns.isEmpty()) {
+                        return patterns.iterator().next();
+                    }
                 }
             }
+        } catch (Exception e) {
+            return null;
         }
         return null;
     }

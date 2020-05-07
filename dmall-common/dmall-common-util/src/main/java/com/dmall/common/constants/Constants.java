@@ -70,4 +70,9 @@ public interface Constants {
      * SWAGGER
      */
     String SWAGGER = "/v2/api-docs";
+
+    /**
+     * 默认密码
+     */
+    String PASSWORD = "123456";
 }

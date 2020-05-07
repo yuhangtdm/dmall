@@ -36,14 +36,9 @@ layui.use(['form', 'crud'], function () {
                 key: 'value',
                 value: response.data.token
             }
-            if (form.rememberMe === 'true') {
-                layui.data('token', obj);
-            } else {
-                // 页面关闭后失效
-                layui.sessionData('token', obj);
-            }
+            layui.data('token', obj);
             crud.msgBack('登录成功', function () {
-                window.location.href = '/index.html';
+                window.location.href = '/';
             });
         } else {
            crud.error(response.msg);

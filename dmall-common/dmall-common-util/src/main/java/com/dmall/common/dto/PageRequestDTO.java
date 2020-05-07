@@ -21,12 +21,12 @@ public class PageRequestDTO implements Serializable {
     @ApiModelProperty(value = "当前页码", required = true, position = 1)
     @NotNull(message = "当前页码不能为空")
     @Min(value = 1, message = "当前页码必须大于1")
-    private Integer current;
+    private Integer current = 1;
 
     @ApiModelProperty(value = "每页记录数", required = true, position = 2)
     @NotNull(message = "每页记录数不能为空")
     @Min(value = 1, message = "每页记录数必须大于1")
-    private Integer size;
+    private Integer size = 15;
 
     @ApiModelProperty(value = "排序字段", position = 3)
     private String sortField;

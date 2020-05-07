@@ -1,7 +1,8 @@
-layui.define(['layer', 'table', 'form'], function (e) {
+layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
     var layer = layui.layer;
     var $ = layui.$;
     var table = layui.table;
+    var miniPage = layui.miniPage;
     var form = layui.form;
 
     // 请求后台的统一地址前缀
@@ -32,7 +33,7 @@ layui.define(['layer', 'table', 'form'], function (e) {
         error: function (content) {
             error(content);
         },
-        errorBack: function(content, callback){
+        errorBack: function (content, callback) {
             errorBack(content, callback);
         },
         getToken: function () {
@@ -41,14 +42,13 @@ layui.define(['layer', 'table', 'form'], function (e) {
         initPage: function (id, url, cols) {
             initPage(id, url, cols);
         },
-
-
-        open: function (url, title, width, height, full, max) {
-            open(url, title, width, height, full, max);
+        formatDate: function (date) {
+            return formatDate(date);
         },
-        openForm: function (url, title, width, height, full) {
-            openForm(url, title, width, height, full);
+        open: function (href, title) {
+            open(href, title);
         },
+
         deleteById: function (url, callbak) {
             deleteById(url, callbak);
         },
@@ -77,7 +77,16 @@ layui.define(['layer', 'table', 'form'], function (e) {
                 request.setRequestHeader("token", getToken());
             },
             success: function (response) {
-                callback(response);
+                if (response.code === '0') {
+                    msgBack(response.msg, callback(response));
+                } else if (response.code === '408') {
+                    // 用户未登陆 跳转登录页面
+                    errorBack('登录已失效', function () {
+                        window.location.href = 'page/login.html';
+                    });
+                } else {
+                    error(response.msg);
+                }
             },
             error: function (response) {
                 layer.msg(response.msg, {icon: 2})
@@ -101,7 +110,16 @@ layui.define(['layer', 'table', 'form'], function (e) {
             },
             success: function (response) {
                 parent.layer.closeAll('loading');
-                callback(response);
+                if (response.code === '0') {
+                    callback(response);
+                } else if (response.code === '408') {
+                    // 用户未登陆 跳转登录页面
+                    errorBack('登录已失效', function () {
+                        window.location.href = 'page/login.html';
+                    });
+                } else {
+                    error(response.msg);
+                }
             },
             error: function (response) {
                 parent.layer.closeAll('loading');
@@ -151,9 +169,6 @@ layui.define(['layer', 'table', 'form'], function (e) {
      * 获取token
      */
     function getToken() {
-        if (layui.sessionData('token').value && layui.sessionData('token').value !== undefined) {
-            return layui.sessionData('token').value;
-        }
         if (layui.data('token').value && layui.data('token').value !== undefined) {
             return layui.data('token').value;
         }
@@ -167,8 +182,8 @@ layui.define(['layer', 'table', 'form'], function (e) {
             elem: '#' + id,
             id: id,
             url: url,
-            method:'post',
-            contentType:'application/json',
+            method: 'post',
+            contentType: 'application/json',
             headers: {
                 source: 'admin',
                 token: getToken()
@@ -188,13 +203,13 @@ layui.define(['layer', 'table', 'form'], function (e) {
             done: function (res, curr, count) {
                 if (res.code === '408') {
                     // 用户未登陆 跳转登录页面
-                    errorBack('登录已失效',function () {
+                    errorBack('登录已失效', function () {
                         window.location.href = 'page/login.html';
                     })
                 }
             },
-            parseData: function(res) { //res 即为原始返回的数据
-                if (res.data != null){
+            parseData: function (res) { //res 即为原始返回的数据
+                if (res.data != null) {
                     return {
                         "code": res.code, //解析接口状态
                         "msg": res.msg, //解析提示文本
@@ -206,67 +221,48 @@ layui.define(['layer', 'table', 'form'], function (e) {
         });
     }
 
+    /**
+     * 格式化时间
+     */
+    function formatDate(date) {
+        if (date) {
+            return layui.util.toDateString(date, 'yyyy-MM-dd HH:mm:ss');
+        } else {
+            return '';
+        }
+    }
 
+    /**
+     * 打开页面
+     * @param href 页面地址
+     * @param title 页面标题
+     */
+    function open(href, title) {
+        var content = miniPage.getHrefContent(href);
+        var openWH = miniPage.getOpenWidthHeight();
+        layer.open({
+            title: title,
+            type: 1,
+            shade: 0.2,
+            maxmin: true,
+            shadeClose: true,
+            area: [openWH[0] + 'px', openWH[1] + 'px'],
+            offset: [openWH[2] + 'px', openWH[3] + 'px'],
+            content: content,
+            // 层销毁后会回调
+            end :function () {
+                //  刷新页面的搜索
+                $("button[lay-filter='formSearch']").click();
+            }
+        });
+
+    }
 
     function validateNumber(number) {
         if (parseInt(number) < 0 || number.indexOf(".") > -1) {
             layer.msg('输入值不能为负数或小数', {type: 2});
             return false;
         }
-    }
-
-    /**
-     * 打开弹窗表单
-     */
-    function openForm(url, title, width, height, full) {
-        layer.open({
-            type: 2,
-            area: [width, height],
-            title: title,
-            content: url,
-            maxmin: true,
-            shadeClose: true,
-            success: function (layero, index) {
-                if (full && full == true) {
-                    layer.full(index);
-                }
-            }
-        });
-    }
-
-    /**
-     * 打开页面
-     */
-    function open(url, title, width, height, full, max) {
-        if (!max) {
-            max = true;
-        }
-        layer.open({
-            type: 2,
-            area: [width, height],
-            title: title,
-            content: url,
-            maxmin: max,
-            offset: '5px',
-            shadeClose: true,
-            success: function (layero, index) {
-                if (full) {
-                    layer.full(index);
-                }
-            },
-            btn: ['确定', '取消'],
-            yes: function (index, layero) {
-                //获取子页面的body元素
-                var body = layer.getChildFrame('body', index);
-                // 执行子页面提交数据的方法
-                body.find('button[lay-submit]').click();
-            },
-            // 层销毁后会回调
-            end: function () {
-                //  刷新页面的搜索
-                $("button[lay-filter='formSearch']").click();
-            }
-        });
     }
 
 
@@ -351,29 +347,6 @@ layui.define(['layer', 'table', 'form'], function (e) {
         });
     }
 
-
-    /**
-     * 简单表格初始化方法
-     */
-    function initSimplePage(id, url, cols) {
-        table.render({
-            elem: '#' + id,
-            id: id,
-            url: url,
-            text: {
-                none: '暂无相关数据'
-            },
-            cols: cols,
-            page: true,
-            loading: true,
-            request: {
-                pageName: 'current',
-                limitName: 'size'
-            },
-            done: function (res, curr, count) {
-            }
-        });
-    }
 
     /**
      * 格式化表单对象的方法

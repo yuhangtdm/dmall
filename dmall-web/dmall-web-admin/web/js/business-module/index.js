@@ -22,7 +22,6 @@ layui.use(['jquery', 'miniAdmin', 'crud'], function () {
      */
     function logout() {
         var token = crud.getToken();
-        console.log(token);
         crud.get(ssoUrl + '/admin/logout?token=' + token, logoutSuccess);
     }
 
@@ -30,7 +29,6 @@ layui.use(['jquery', 'miniAdmin', 'crud'], function () {
         if (response.result) {
             crud.msgBack('退出登录成功', function () {
                 layui.data('token', null);
-                layui.sessionData('token', null);
                 window.location.href = 'page/login.html';
             })
         } else {

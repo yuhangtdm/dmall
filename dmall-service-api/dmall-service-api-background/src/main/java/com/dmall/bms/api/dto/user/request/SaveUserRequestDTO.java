@@ -37,12 +37,8 @@ public class SaveUserRequestDTO implements Serializable {
     @Email(message = "邮箱格式不正确")
     private String email;
 
-    @ApiModelProperty(value = "密码", required = true, position = 5)
-    @NotBlank(message = "密码不能为空")
-    private String password;
-
     @ApiModelProperty(value = "真实姓名", required = true, position = 6)
-    @NotBlank(message = "手机号不能为空")
+    @NotBlank(message = "真实姓名不能为空")
     private String realName;
 
     @ApiModelProperty(value = "头像", position = 7)

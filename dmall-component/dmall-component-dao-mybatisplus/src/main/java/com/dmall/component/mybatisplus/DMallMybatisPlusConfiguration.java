@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableConfigurationProperties({DMallMybatisPlusProperties.class})
 @EnableTransactionManagement
-@ConditionalOnProperty(prefix = "dmall.mybatis.plus", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "enabled", havingValue = "true")
 public class DMallMybatisPlusConfiguration implements BasicConfiguration {
 
     @Autowired
@@ -62,6 +62,5 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
     public AutoFillHandler autoFillHandler() {
         return new AutoFillHandler();
     }
-
 
 }

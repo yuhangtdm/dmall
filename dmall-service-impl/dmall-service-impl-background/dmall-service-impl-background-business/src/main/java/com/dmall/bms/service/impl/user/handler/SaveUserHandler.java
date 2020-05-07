@@ -6,6 +6,7 @@ import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
 import com.dmall.bms.service.impl.support.UserSupport;
+import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.util.PasswordUtil;
@@ -45,13 +46,13 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
     @Override
     public BaseResult<Long> processor(SaveUserRequestDTO requestDTO) {
         UserDO userDO = dtoConvertDo(requestDTO, UserDO.class);
+        userDO.setPassword(PasswordUtil.getPassword(requestDTO.getUserName(), Constants.PASSWORD));
         userMapper.insert(userDO);
         return ResultUtil.success(userDO.getId());
     }
 
     @Override
     protected void customerConvertDo(UserDO result, SaveUserRequestDTO saveUserRequestDTO) {
-        result.setPassword(PasswordUtil.getPassword(result.getUserName(), result.getPassword()));
         // 一期默认只有一个店铺
         result.setMerchantsId(1L);
     }

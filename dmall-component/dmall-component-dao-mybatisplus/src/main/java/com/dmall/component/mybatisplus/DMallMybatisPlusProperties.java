@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: created by hang.yu on 2019/11/2 16:50
  */
 @Data
-@ConfigurationProperties(prefix = "dmall.mybatis.plus")
+@ConfigurationProperties(prefix = "dmall.mybatisplus")
 public class DMallMybatisPlusProperties {
 
     /**
