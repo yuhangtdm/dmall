@@ -97,6 +97,11 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
      */
     PERMISSION_ID_NOT_EXIST("1044","权限id不存在"),
 
+    /**
+     * 不可修改他人的信息
+     */
+    NO_AUTH_UPDATE("1045", "不可修改他人的信息"),
+
     ;
     /**
      * 错误码

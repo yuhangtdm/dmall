@@ -27,12 +27,12 @@ public interface AdminPermissionService {
      */
     @GetMapping("/listRoles")
     @ApiOperation(value = "获取角色列表")
-    BaseResult<List<RoleResponseDTO>> listRoles(@NotBlank(message = "用户名称不能为空") @RequestParam String userName);
+    BaseResult<List<RoleResponseDTO>> listRoles(@NotBlank(message = "手机号不能为空") @RequestParam String phone);
 
     /**
      * 获取权限列表
      */
     @GetMapping("/listPermissions")
     @ApiOperation(value = "获取权限列表")
-    BaseResult<List<PermissionResponseDTO>> listPermissions(@NotBlank(message = "用户名称不能为空") @RequestParam String userName);
+    BaseResult<List<PermissionResponseDTO>> listPermissions(@NotBlank(message = "手机号不能为空") @RequestParam String phone);
 }

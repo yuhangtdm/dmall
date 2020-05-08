@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -58,6 +57,14 @@ public class MapCacheUtil {
         Assert.notNull(key, "key not null");
         Assert.notNull(hashKey, "hashKey not null");
         redisTemplate.opsForHash().delete(key, hashKey);
+    }
+
+    /**
+     * 删除缓存
+     */
+    public void delete(String key) {
+        Assert.notNull(key, "key not null");
+        redisTemplate.opsForHash().delete(key);
     }
 
     /**

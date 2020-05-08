@@ -25,12 +25,12 @@ public class AdminPermissionServiceImpl implements AdminPermissionService {
     private UserPermissionHandler userPermissionHandler;
 
     @Override
-    public BaseResult<List<RoleResponseDTO>> listRoles(String userName) {
-        return userRoleHandler.handler(userName);
+    public BaseResult<List<RoleResponseDTO>> listRoles(String phone) {
+        return userRoleHandler.handler(phone);
     }
 
     @Override
-    public BaseResult<List<PermissionResponseDTO>> listPermissions(String userName) {
-        return userPermissionHandler.handler(userName);
+    public BaseResult<List<PermissionResponseDTO>> listPermissions(String phone) {
+        return userPermissionHandler.handler(phone);
     }
 }

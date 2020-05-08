@@ -15,16 +15,13 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "PageUserRequestDTO", description = "后台用户分页请求实体")
 public class PageUserRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "用户名", position = 5)
-    private String userName;
+    @ApiModelProperty(value = "手机号", position = 5)
+    private String phone;
 
     @ApiModelProperty(value = "昵称", position = 6)
     private String nickName;
 
-    @ApiModelProperty(value = "手机号", position = 7)
-    private String phone;
-
-    @ApiModelProperty(value = "真实姓名", position = 8)
+    @ApiModelProperty(value = "真实姓名", position = 7)
     private String realName;
 
 }

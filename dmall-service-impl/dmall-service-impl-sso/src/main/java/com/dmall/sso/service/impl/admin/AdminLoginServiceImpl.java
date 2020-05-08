@@ -1,17 +1,21 @@
 package com.dmall.sso.service.impl.admin;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
+import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.sso.api.dto.admin.AdminLoginRequestDTO;
 import com.dmall.sso.api.dto.admin.AdminLoginResponseDTO;
 import com.dmall.sso.api.enums.SsoErrorEnum;
 import com.dmall.sso.api.service.AdminLoginService;
 import com.dmall.sso.service.impl.SsoProperties;
+import com.dmall.sso.service.impl.admin.dataobject.UserDO;
+import com.dmall.sso.service.impl.admin.mapper.UserMapper;
 import com.google.common.collect.Lists;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -22,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @description: 登录服务
@@ -30,8 +36,6 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 public class AdminLoginServiceImpl implements AdminLoginService {
-
-    private static final String KEY_PREFIX = "admin_{}";
 
     private static final Integer REMEMBER_ME = 30;
 
@@ -41,11 +45,17 @@ public class AdminLoginServiceImpl implements AdminLoginService {
     @Autowired
     private SsoProperties ssoProperties;
 
+    @Autowired
+    private MapCacheUtil mapCacheUtil;
+
+    @Autowired
+    private UserMapper userMapper;
+
     /**
      * 登录
      */
     public BaseResult<AdminLoginResponseDTO> login(@RequestBody AdminLoginRequestDTO requestDTO) {
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(requestDTO.getUserName(), requestDTO.getPassword());
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(requestDTO.getPhone(), requestDTO.getPassword());
         Subject subject = SecurityUtils.getSubject();
         // 登录
         try {
@@ -62,14 +72,19 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
         AdminUserDTO adminUserDTO = (AdminUserDTO) subject.getPrincipal();
         String token = IdUtil.simpleUUID();
-        if (requestDTO.getRememberMe() != null && requestDTO.getRememberMe()){
+
+        if (requestDTO.getRememberMe() != null && requestDTO.getRememberMe()) {
             // 30天免登录
-            redisTemplate.opsForValue().set(StrUtil.format(KEY_PREFIX, token), adminUserDTO,
+            adminUserDTO.setRememberMe(true);
+            redisTemplate.opsForValue().set(token, adminUserDTO,
                     REMEMBER_ME, TimeUnit.DAYS);
-        }else {
-            redisTemplate.opsForValue().set(StrUtil.format(KEY_PREFIX, token), adminUserDTO,
+        } else {
+            adminUserDTO.setRememberMe(false);
+            redisTemplate.opsForValue().set(token, adminUserDTO,
                     ssoProperties.getAdminTtlDay(), TimeUnit.DAYS);
         }
+        // 将token和用户账号关联
+        mapCacheUtil.put(adminUserDTO.getPhone(), token, token);
 
         AdminLoginResponseDTO responseDTO = new AdminLoginResponseDTO();
         responseDTO.setToken(token);
@@ -79,7 +94,9 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Override
     public BaseResult<Void> logout(String token) {
-        redisTemplate.delete(Lists.newArrayList(StrUtil.format(KEY_PREFIX, token)));
+        redisTemplate.delete(Lists.newArrayList(token));
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        mapCacheUtil.delete(adminUserDTO.getPhone(), token);
         return ResultUtil.success();
     }
 
@@ -87,12 +104,43 @@ public class AdminLoginServiceImpl implements AdminLoginService {
      * 校验token是否存在
      */
     public BaseResult<AdminUserDTO> checkToken(@RequestParam String token) {
-        AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue()
-                .get(StrUtil.format(KEY_PREFIX, token));
+        AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
         if (adminUserDTO == null) {
             return ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN);
         }
         return ResultUtil.success(adminUserDTO);
+    }
+
+    @Override
+    public BaseResult<Void> clearLogin(String phone) {
+        List<Object> values = mapCacheUtil.values(phone);
+        List<String> tokens = values.stream().map(Object::toString).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(tokens)) {
+            redisTemplate.delete(tokens);
+        }
+        mapCacheUtil.delete(phone);
+        return ResultUtil.success();
+    }
+
+    @Override
+    public BaseResult<Void> updateLogin(Long id) {
+        UserDO userDO = userMapper.selectById(id);
+        if (userDO != null) {
+            List<Object> values = mapCacheUtil.values(userDO.getPhone());
+            List<String> tokens = values.stream().map(Object::toString).collect(Collectors.toList());
+            for (String token : tokens) {
+                AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
+                if (adminUserDTO != null) {
+                    adminUserDTO.setNickName(userDO.getNickName());
+                    adminUserDTO.setPhone(userDO.getPhone());
+                    adminUserDTO.setRealName(userDO.getRealName());
+                    adminUserDTO.setIcon(userDO.getIcon());
+                    adminUserDTO.setWarehouseId(userDO.getWarehouseId());
+                    redisTemplate.opsForValue().set(token, adminUserDTO);
+                }
+            }
+        }
+        return ResultUtil.success();
     }
 
 }

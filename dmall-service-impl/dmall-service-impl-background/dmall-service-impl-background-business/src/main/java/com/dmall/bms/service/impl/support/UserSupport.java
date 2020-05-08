@@ -19,8 +19,8 @@ public class UserSupport {
     /**
      * 根据用户名查询用户信息
      */
-    public UserDO getByUserName(String userName){
+    public UserDO getByPhone(String phone){
         return userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
-            .eq(UserDO::getUserName,userName));
+            .eq(UserDO::getPhone,phone));
     }
 }

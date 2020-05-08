@@ -50,7 +50,7 @@ public class LogAdvice implements MethodInterceptor {
             AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
             if (adminUserDTO != null) {
                 webLog.setUserId(adminUserDTO.getId());
-                webLog.setUserName(adminUserDTO.getUserName());
+                webLog.setUserName(adminUserDTO.getPhone());
             }
             PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
             if (portalMemberDTO != null) {

@@ -33,12 +33,9 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
     @Override
     public BaseResult<Long> validate(SaveUserRequestDTO requestDTO) {
         // 用户名唯一
-        UserDO userDO = userSupport.getByUserName(requestDTO.getUserName());
+        UserDO userDO = userSupport.getByPhone(requestDTO.getPhone());
         if (userDO != null) {
             return ResultUtil.fail(BackGroundErrorEnum.USER_NAME_EXIST);
-        }
-        if (requestDTO.getWarehouseId() != null) {
-            deliverWarehouseSupport.validateWarehouse(requestDTO.getWarehouseId());
         }
         return ResultUtil.success();
     }
@@ -46,7 +43,7 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
     @Override
     public BaseResult<Long> processor(SaveUserRequestDTO requestDTO) {
         UserDO userDO = dtoConvertDo(requestDTO, UserDO.class);
-        userDO.setPassword(PasswordUtil.getPassword(requestDTO.getUserName(), Constants.PASSWORD));
+        userDO.setPassword(PasswordUtil.getPassword(requestDTO.getPhone(), Constants.PASSWORD));
         userMapper.insert(userDO);
         return ResultUtil.success(userDO.getId());
     }

@@ -14,7 +14,11 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
         return [
             [
                 {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: 'ID', sort: true},
+                {
+                    field: 'id', title: 'ID', templet: function (d) {
+                        return d.id.toString();
+                    }, sort: true
+                },
                 {field: 'userName', title: '用户名'},
                 {field: 'nickName', title: '昵称'},
                 {field: 'phone', title: '手机号'},
@@ -22,7 +26,7 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
                 {field: 'realName', title: '真实姓名'},
                 {field: 'icon', title: '头像'},
                 {field: 'warehouseId', title: '仓库id'},
-                {field: 'gmtModified', title: '修改时间', templet : "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
+                {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
                 {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 150}
             ]
         ];
@@ -30,26 +34,29 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
 
     // 监听搜索操作
     form.on('submit(formSearch)', function (data) {
-        table.reload('user', {
-            where: data.field
-        });
-        //执行搜索重载
-       /* table.reload('currentTableId', {
-
-            page: {
-                curr: 1
-            }
-            , where: {
-                searchParams: result
-            }
-        }, 'data');*/
-
-        return false;
+        return crud.search('user', data);
     });
 
+    // 监听头工具栏事件
     table.on('toolbar(user)', function (obj) {
         if (obj.event === 'add') {
-            crud.open('/page/system/user/userAdd.html','新增用户');
+            crud.open('/page/system/user/userAdd.html', '新增用户');
+        }
+    });
+
+    //监听行工具事件
+    table.on('tool(user)', function (obj) {
+        var data = obj.data;
+        switch (obj.event) {
+            case 'disable':
+                crud.confirm("确定禁用该用户?", bmsUrl + '/user/disable/' + data.id);
+                break;
+            case 'enable':
+                crud.confirm("确定启用该用户?", bmsUrl + '/user/enable/' + data.id);
+                break;
+            case 'resetPassword':
+                crud.confirm("确定重置密码?", bmsUrl + '/user/resetPassword/' + data.id);
+                break;
         }
     });
 

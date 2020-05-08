@@ -1,5 +1,7 @@
 package com.dmall.bms.api.dto.user.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,13 +20,11 @@ public class UserResponseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "商家店铺id", position = 2)
     private Long merchantsId;
-
-    @ApiModelProperty(value = "用户名", position = 3)
-    private String userName;
 
     @ApiModelProperty(value = "昵称", position = 4)
     private String nickName;
@@ -46,6 +46,9 @@ public class UserResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "备注", position = 10)
     private String remark;
+
+    @ApiModelProperty(value = "状态", position = 10)
+    private String status;
 
     @ApiModelProperty(value = "创建人", position = 11)
     private Long creator;

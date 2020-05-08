@@ -23,12 +23,12 @@ public class UserPermissionHandler extends AbstractCommonHandler<String, Permiss
     private UserPermissionsMapper userPermissionsMapper;
 
     @Override
-    public BaseResult<List<PermissionResponseDTO>> processor(String userName) {
+    public BaseResult<List<PermissionResponseDTO>> processor(String phone) {
         // 用户的权限以及额外的加权限
-        List<PermissionResponseDTO> permissionDOS = userPermissionsMapper.listByUserName(userName);
+        List<PermissionResponseDTO> permissionDOS = userPermissionsMapper.listByPhone(phone);
 
         // 用户的减权限
-        List<Long> ids = userPermissionsMapper.subPermissionsByUserName(userName);
+        List<Long> ids = userPermissionsMapper.subPermissionsByPhone(phone);
 
         // 返回的数据
         List<PermissionResponseDTO> result = permissionDOS.stream()

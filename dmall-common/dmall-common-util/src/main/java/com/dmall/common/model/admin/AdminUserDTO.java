@@ -24,11 +24,6 @@ public class AdminUserDTO implements Serializable {
     private Long merchantsId;
 
     /**
-     * 用户名
-     */
-    private String userName;
-
-    /**
      * 昵称
      */
     private String nickName;
@@ -49,8 +44,18 @@ public class AdminUserDTO implements Serializable {
     private String source;
 
     /**
+     * 头像
+     */
+    private String icon;
+
+    /**
      * 仓库id
      */
     private Long warehouseId;
+
+    /**
+     * 记住登录
+     */
+    private Boolean rememberMe;
 
 }

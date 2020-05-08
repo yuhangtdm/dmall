@@ -19,10 +19,6 @@ public class SaveUserRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -2300902524929507216L;
 
-    @ApiModelProperty(value = "用户名", required = true, position = 1)
-    @NotBlank(message = "用户名不能为空")
-    private String userName;
-
     @ApiModelProperty(value = "昵称", required = true, position = 2)
     @NotBlank(message = "昵称不能为空")
     private String nickName;
@@ -46,8 +42,5 @@ public class SaveUserRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "备注", position = 8)
     private String remark;
-
-    @ApiModelProperty(value = "仓库id", position = 9)
-    private Long warehouseId;
 
 }

@@ -51,7 +51,7 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         }
         // 调用sso获取权限数据
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
-        BaseResult<List<PermissionResponseDTO>> listBaseResult = adminPermissionFeign.listPermissions(adminUserDTO.getUserName());
+        BaseResult<List<PermissionResponseDTO>> listBaseResult = adminPermissionFeign.listPermissions(adminUserDTO.getPhone());
         List<PermissionResponseDTO> permissionList = listBaseResult.getData();
         String method = request.getMethod();
         for (PermissionResponseDTO permission : permissionList) {

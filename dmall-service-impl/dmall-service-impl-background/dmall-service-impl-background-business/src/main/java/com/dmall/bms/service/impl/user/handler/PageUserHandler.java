@@ -33,7 +33,6 @@ public class PageUserHandler extends AbstractCommonHandler<PageUserRequestDTO, U
     public BaseResult<ResponsePage<UserResponseDTO>> processor(PageUserRequestDTO requestDTO) {
         IPage<UserDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         LambdaQueryWrapper<UserDO> like = Wrappers.<UserDO>lambdaQuery()
-                .like(StrUtil.isNotBlank(requestDTO.getUserName()), UserDO::getUserName, requestDTO.getUserName())
                 .like(StrUtil.isNotBlank(requestDTO.getNickName()), UserDO::getNickName, requestDTO.getNickName())
                 .like(StrUtil.isNotBlank(requestDTO.getRealName()), UserDO::getRealName, requestDTO.getRealName())
                 .like(StrUtil.isNotBlank(requestDTO.getPhone()), UserDO::getPhone, requestDTO.getPhone());

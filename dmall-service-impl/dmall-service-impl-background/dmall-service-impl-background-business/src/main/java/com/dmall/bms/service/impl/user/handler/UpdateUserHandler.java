@@ -2,10 +2,13 @@ package com.dmall.bms.service.impl.user.handler;
 
 import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;
+import com.dmall.bms.feign.AdminLoginFeign;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.model.admin.AdminUserContextHolder;
+import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +27,11 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
     @Autowired
     private DeliverWarehouseSupport deliverWarehouseSupport;
 
+    @Autowired
+    private AdminLoginFeign adminLoginFeign;
+
     @Override
-    public BaseResult<Long> validate(UpdateUserRequestDTO requestDTO) {
+    public BaseResult<Long> processor(UpdateUserRequestDTO requestDTO) {
         // id存在
         UserDO userDO = userMapper.selectById(requestDTO.getId());
         if (userDO == null) {
@@ -34,15 +40,33 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
         if (requestDTO.getWarehouseId() != null) {
             deliverWarehouseSupport.validateWarehouse(requestDTO.getWarehouseId());
         }
+        boolean flag = true;
+        if (requestDTO.getPhone() != null && requestDTO.getPhone().equals(userDO.getPhone())) {
+            // 手机号修改清空登录信息
+            flag = false;
+            adminLoginFeign.clearLogin(userDO.getPhone());
+        }
 
-        return ResultUtil.success();
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        if (adminUserDTO.getId().equals(userDO.getId())) {
+            return ResultUtil.fail(BackGroundErrorEnum.NO_AUTH_UPDATE);
+        }
+        buildUserDO(userDO, requestDTO);
+        userMapper.updateById(userDO);
+        // 更新登录信息
+        if (flag) {
+            adminLoginFeign.updateLogin(userDO.getId());
+        }
+        return ResultUtil.success(userDO.getId());
     }
 
-    @Override
-    public BaseResult<Long> processor(UpdateUserRequestDTO requestDTO) {
-        UserDO userDO = dtoConvertDo(requestDTO, UserDO.class);
-        userMapper.updateById(userDO);
-        return ResultUtil.success(userDO.getId());
+    private void buildUserDO(UserDO userDO, UpdateUserRequestDTO requestDTO) {
+        userDO.setNickName(requestDTO.getNickName());
+        userDO.setPhone(requestDTO.getPhone());
+        userDO.setRealName(requestDTO.getRealName());
+        userDO.setIcon(requestDTO.getIcon());
+        userDO.setRemark(requestDTO.getRemark());
+        userDO.setWarehouseId(requestDTO.getWarehouseId());
     }
 
 }

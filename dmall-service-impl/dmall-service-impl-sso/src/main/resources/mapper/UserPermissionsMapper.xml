@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dmall.sso.service.impl.admin.mapper.UserPermissionsMapper">
 
-    <select id="listByUserName" resultType="com.dmall.sso.api.dto.admin.PermissionResponseDTO">
+    <select id="listByPhone" resultType="com.dmall.sso.api.dto.admin.PermissionResponseDTO">
        SELECT DISTINCT
 			p.id,
 			p. CODE,
@@ -16,7 +16,7 @@
 		INNER JOIN bms_user_role ur ON ur.role_id = r.id
 		INNER JOIN bms_user u ON u.id = ur.user_id
 		WHERE
-			u.user_name = #{userName}
+			u.phone = #{phone}
 		AND p.is_deleted = 'N'
 		AND rp.is_deleted = 'N'
 		AND r.is_deleted = 'N'
@@ -39,21 +39,21 @@
 						bms_user_permission b
 					INNER JOIN bms_user u ON b.user_id = u.id
 					WHERE
-						u.user_name = #{userName}
+						u.phone = #{phone}
 					AND b.is_deleted = 'N'
 					AND U.is_deleted = 'N'
 					AND b.type = '+'
 				)
     </select>
 
-	<select id="subPermissionsByUserName" resultType="long">
+	<select id="subPermissionsByPhone" resultType="long">
 		SELECT
 			distinct b.permission_id
 		FROM
 			bms_user_permission b
 		INNER JOIN bms_user u ON b.user_id = u.id
 		WHERE
-			u.user_name = #{userName}
+			u.phone = #{phone}
 		AND b.is_deleted = 'N'
 		AND U.is_deleted = 'N'
 		AND b.type = '-'

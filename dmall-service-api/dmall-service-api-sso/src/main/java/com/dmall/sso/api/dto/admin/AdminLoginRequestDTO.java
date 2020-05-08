@@ -14,9 +14,9 @@ import javax.validation.constraints.NotBlank;
 @ApiModel(value = "AdminLoginRequestDTO", description = "后台登录请求实体")
 public class AdminLoginRequestDTO {
 
-    @ApiModelProperty(value = "用户名", required = true, position = 1)
-    @NotBlank(message = "用户名不能为空")
-    private String userName;
+    @ApiModelProperty(value = "手机号", required = true, position = 1)
+    @NotBlank(message = "手机号不能为空")
+    private String phone;
 
     @ApiModelProperty(value = "密码", required = true, position = 2)
     @NotBlank(message = "密码不能为空")

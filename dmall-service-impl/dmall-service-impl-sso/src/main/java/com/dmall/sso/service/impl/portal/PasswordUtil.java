@@ -26,6 +26,6 @@ public class PasswordUtil {
 
 
     public static void main(String[] args) {
-        System.out.println(getPassword("ls","123456"));
+        System.out.println(getPassword("18502165640","123456"));
     }
 }

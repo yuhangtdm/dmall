@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface UserRoleMapper {
 
-    List<RoleDO> listByUserName(@Param("userName") String userName);
+    List<RoleDO> listByPhone(@Param("phone") String phone);
 }

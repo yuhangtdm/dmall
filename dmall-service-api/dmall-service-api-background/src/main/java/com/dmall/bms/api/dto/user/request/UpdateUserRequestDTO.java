@@ -34,7 +34,7 @@ public class UpdateUserRequestDTO implements Serializable {
     @ApiModelProperty(value = "备注", position = 6)
     private String remark;
 
-    @ApiModelProperty(value = "仓库id", position = 9)
+    @ApiModelProperty(value = "仓库id", position = 7)
     private Long warehouseId;
 
 }

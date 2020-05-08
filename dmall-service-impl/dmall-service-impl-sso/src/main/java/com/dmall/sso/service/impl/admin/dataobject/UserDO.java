@@ -32,19 +32,19 @@ public class UserDO implements Serializable {
     private Long merchantsId;
 
     /**
-     * 用户名
+     * 仓库id
      */
-    private String userName;
-
-    /**
-     * 昵称
-     */
-    private String nickName;
+    private Long warehouseId;
 
     /**
      * 手机号
      */
     private String phone;
+
+    /**
+     * 昵称
+     */
+    private String nickName;
 
     /**
      * 密码
@@ -65,6 +65,11 @@ public class UserDO implements Serializable {
      * 备注
      */
     private String remark;
+
+    /**
+     * Y-可用;N-不可用
+     */
+    private String status;
 
     /**
      * 创建人

@@ -28,14 +28,28 @@ public interface UserService {
     @ApiOperation(value = "新增后台用户")
     BaseResult<Long> save(@Valid @RequestBody SaveUserRequestDTO requestDTO);
 
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除后台用户")
+    @GetMapping("/disable/{id}")
+    @ApiOperation(value = "启用后台用户")
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
-    BaseResult<Long> delete(@PathVariable("id") Long id);
+    BaseResult<Long> disable(@PathVariable("id") Long id);
+
+    @GetMapping("/enable/{id}")
+    @ApiOperation(value = "启用后台用户")
+    @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> enable(@PathVariable("id") Long id);
+
+    @GetMapping("/resetPassword/{id}")
+    @ApiOperation(value = "重置密码")
+    @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> resetPassword(@PathVariable("id") Long id);
 
     @PutMapping
     @ApiOperation(value = "修改后台用户")
     BaseResult<Long> update(@Valid @RequestBody UpdateUserRequestDTO requestDTO);
+
+    @PostMapping("/updatePassword")
+    @ApiOperation(value = "修改密码")
+    BaseResult<Long> updatePassword(@Valid @RequestBody UpdatePasswordRequestDTO requestDTO);
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询后台用户")

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface UserPermissionsMapper {
 
-    List<PermissionResponseDTO > listByUserName(@Param("userName") String userName);
+    List<PermissionResponseDTO > listByPhone(@Param("phone") String phone);
 
-    List<Long> subPermissionsByUserName(@Param("userName") String userName);
+    List<Long> subPermissionsByPhone(@Param("phone") String phone);
 }

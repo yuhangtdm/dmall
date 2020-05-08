@@ -16,8 +16,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
-
 /**
  * @description: AuthenticationRealm
  * @author: created by hang.yu on 2020/1/11 16:42
@@ -35,12 +33,12 @@ public class AuthenticationRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String userName = (String) authenticationToken.getPrincipal();
-        UserDO userDO = userSupport.getByUserName(userName);
+        String phone = (String) authenticationToken.getPrincipal();
+        UserDO userDO = userSupport.getByPhone(phone);
         if (userDO == null) {
             throw new UnknownAccountException();
         }
-        if (YNEnum.Y.getCode().equals(userDO.getIsDeleted())) {
+        if (YNEnum.N.getCode().equals(userDO.getStatus())) {
             throw new LockedAccountException();
         }
         // 插入登录记录
@@ -49,7 +47,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
         adminUserDTO.setSource(Constants.ADMIN_USER);
         // 密码加密和比较交给shiro
         return new SimpleAuthenticationInfo(adminUserDTO, userDO.getPassword(),
-                    ByteSource.Util.bytes(userDO.getUserName()),
+                    ByteSource.Util.bytes(userDO.getPhone()),
                     getName());
     }
 

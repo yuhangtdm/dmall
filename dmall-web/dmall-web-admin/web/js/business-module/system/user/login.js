@@ -18,7 +18,7 @@ layui.use(['form', 'crud'], function () {
     form.on('submit(login)', function (data) {
         form = data.field;
         var loginObj = {
-            'userName': form.userName,
+            'phone': form.phone,
             'password': form.password,
             'rememberMe': form.rememberMe
         };
@@ -31,7 +31,6 @@ layui.use(['form', 'crud'], function () {
      */
     function loginSuccess(response) {
         if (response.code === '0') {
-            // 设置token
             var obj = {
                 key: 'value',
                 value: response.data.token

@@ -23,8 +23,8 @@ public class UserRoleHandler extends AbstractCommonHandler<String, RoleDO, RoleR
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public BaseResult processor(String userName) {
-        List<RoleDO> roleDOS = userRoleMapper.listByUserName(userName);
+    public BaseResult processor(String phone) {
+        List<RoleDO> roleDOS = userRoleMapper.listByPhone(phone);
         List<RoleResponseDTO> result = roleDOS.stream().map(doo -> doConvertDto(doo, RoleResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(result);

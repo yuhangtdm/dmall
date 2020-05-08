@@ -59,7 +59,7 @@ public class AutoFillHandler implements MetaObjectHandler {
         }
         // 前台商城创建人和更新人
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (adminUserDTO != null) {
+        if (portalMemberDTO != null) {
             setFieldValByName(MybatisPlusConstants.MODIFIER, portalMemberDTO.getId(), metaObject);
         }
     }

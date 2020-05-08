@@ -48,14 +48,16 @@ layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
         open: function (href, title) {
             open(href, title);
         },
-
+        confirm: function (text, url) {
+            confirm(text, url);
+        },
+        search: function (tableId, data) {
+            return search(tableId, data);
+        },
         deleteById: function (url, callbak) {
             deleteById(url, callbak);
         },
 
-        initSimplePage: function (id, url, cols) {
-            initSimplePage(id, url, cols);
-        },
         toJson: function (formId) {
             return toJson(formId);
         },
@@ -89,7 +91,7 @@ layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
                 }
             },
             error: function (response) {
-                layer.msg(response.msg, {icon: 2})
+                layer.msg('服务器冒烟了', {icon: 2})
             },
         });
     }
@@ -123,7 +125,7 @@ layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
             },
             error: function (response) {
                 parent.layer.closeAll('loading');
-                layer.msg(response.msg, {icon: 2})
+                layer.msg('服务器冒烟了', {icon: 2})
             },
         });
     }
@@ -250,12 +252,34 @@ layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
             offset: [openWH[2] + 'px', openWH[3] + 'px'],
             content: content,
             // 层销毁后会回调
-            end :function () {
+            end: function () {
                 //  刷新页面的搜索
                 $("button[lay-filter='formSearch']").click();
             }
         });
 
+    }
+
+    /**
+     * 确认框
+     */
+    function confirm(text, url) {
+        layer.confirm(text, {icon: 3, title: '提示'}, function (index) {
+            get(url, function () {
+                //  刷新页面的搜索
+                $("button[lay-filter='formSearch']").click();
+            });
+        });
+    }
+
+    function search(tableId, data) {
+        table.reload(tableId, {
+            page: {
+                curr: 1
+            },
+            where: data.field,
+        });
+        return false;
     }
 
     function validateNumber(number) {

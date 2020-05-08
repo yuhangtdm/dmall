@@ -1,16 +1,12 @@
 package com.dmall.bms.generator.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @description: 后台用户表
@@ -39,11 +35,6 @@ public class UserDO implements Serializable {
      * 仓库id
      */
     private Long warehouseId;
-
-    /**
-     * 用户名
-     */
-    private String userName;
 
     /**
      * 昵称
@@ -79,6 +70,11 @@ public class UserDO implements Serializable {
      * 备注
      */
     private String remark;
+
+    /**
+     * Y-可用;N-不可用
+     */
+    private String status;
 
     /**
      * 创建人
