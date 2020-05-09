@@ -54,6 +54,9 @@ layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
         search: function (tableId, data) {
             return search(tableId, data);
         },
+        fillForm(url, formId) {
+            fillForm(url, formId);
+        },
         deleteById: function (url, callbak) {
             deleteById(url, callbak);
         },
@@ -272,6 +275,9 @@ layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
         });
     }
 
+    /**
+     * 搜索的公共方法
+     */
     function search(tableId, data) {
         table.reload(tableId, {
             page: {
@@ -281,6 +287,114 @@ layui.define(['layer', 'table', 'form', 'miniPage'], function (e) {
         });
         return false;
     }
+
+    /**
+     * 为表单填充值
+     * @param url
+     * @param formId
+     */
+    function fillForm(url, formId) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            beforeSend: function (request) {
+                request.setRequestHeader("source", "admin");
+                request.setRequestHeader("token", getToken());
+            },
+            success: function (response) {
+                if (response.code === '0') {
+                    // 进行填充
+                    initForm(response.data, formId);
+                    form.render();
+                } else if (response.code === '408') {
+                    // 用户未登陆 跳转登录页面
+                    errorBack('登录已失效', function () {
+                        window.location.href = 'page/login.html';
+                    });
+                } else {
+                    error(response.msg);
+                }
+            },
+            error: function (response) {
+                layer.msg('服务器冒烟了', {icon: 2})
+            },
+        });
+    }
+
+    /**
+     * 为表单赋值
+     */
+    function initForm(bean, formId) {
+        console.log(formId);
+        console.log(bean);
+        for (var prop in bean) {
+            var value = bean[prop];
+            // null过滤
+            if (Object.prototype.toString.call(value) === "[object Null]") {
+                continue;
+            }
+            // 对象递归调用该方法
+            if (Object.prototype.toString.call(value) === "[object Object]") {
+                initForm(value, formId);
+            }
+            initData(prop, value, formId);
+        }
+    }
+
+    /**
+     * 表单内简单类型的赋值
+     */
+    function initData(prop, value, formId) {
+        $("#" + formId).find("[name='" + prop + "'],[name='" + prop + "[]']").each(function () {
+            var tagName = $(this)[0].tagName;
+            var type = $(this).attr('type');
+            // input标签
+            if (tagName === 'INPUT') {
+                // 单选框
+                if (type === 'radio') {
+                    $(this).attr('checked', value === $(this).val());
+                } else if (type === 'checkbox') {
+                    //复选框支持数组和字符串以逗号分隔两种
+                    if (Object.prototype.toString.call(value) === "[object Array]") {
+                        // 数组
+                        for (var i = 0; i < value.length; i++) {
+                            if ($(this).val() === value[i]) {
+                                $(this).attr('checked', true);
+                            }
+                        }
+                    } else {
+                        var values = value.split(",");
+                        for (var j = 0; j < values.length; j++) {
+                            if ($(this).val() === values[j]) {
+                                $(this).attr('checked', true);
+                            }
+                        }
+                    }
+                } else {
+                    $(this).val(value);
+                    console.log($(this).val());
+                }
+            } else if (tagName === 'IMG') {
+                // 图片
+                $(this).attr('src', value);
+            } else if (tagName === 'SELECT') {
+                //多选框支持数组和字符串以逗号分隔两种
+                if (Object.prototype.toString.call(value) === "[object Array]") {
+                    var selectValue = '';
+                    for (var k = 0; k < value.length; k++) {
+                        selectValue = value[k] + ",";
+                    }
+                    $(this).val(selectValue.substring(0, selectValue.length - 1));
+                } else {
+                    $(this).val(value);
+                }
+            } else if (tagName === 'TEXTAREA') {
+                // 文本域
+                $(this).val(value);
+            }
+        });
+    }
+
 
     function validateNumber(number) {
         if (parseInt(number) < 0 || number.indexOf(".") > -1) {

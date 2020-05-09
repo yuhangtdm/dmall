@@ -1,10 +1,12 @@
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
-        <div class="layui-form layuimini-form">
+        <form class="layui-form layuimini-form" id="updateUserForm">
+            <input type="hidden" name="id">
             <div class="layui-form-item">
-                <label class="layui-form-label required">用户名</label>
+                <label class="layui-form-label required">手机号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="userName" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名"
+                    <input type="number" name="phone" lay-verify="required|phone" lay-reqtext="手机号不能为空"
+                           placeholder="请输入手机号"
                            value="" class="layui-input">
                 </div>
             </div>
@@ -12,15 +14,6 @@
                 <label class="layui-form-label required">昵称</label>
                 <div class="layui-input-block">
                     <input type="text" name="nickName" lay-verify="required" lay-reqtext="昵称不能为空" placeholder="请输入昵称"
-                           value="" class="layui-input">
-
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label required">手机号</label>
-                <div class="layui-input-block">
-                    <input type="number" name="phone" lay-verify="required|phone" lay-reqtext="手机号不能为空"
-                           placeholder="请输入手机号"
                            value="" class="layui-input">
                 </div>
             </div>
@@ -48,10 +41,10 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                    <button class="layui-btn" lay-submit lay-filter="saveBtn">确认修改</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <script src="../../../js/business-module/system/user/userUpdate.js"></script>
