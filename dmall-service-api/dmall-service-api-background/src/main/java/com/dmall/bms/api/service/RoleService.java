@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/role")
 public interface RoleService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增后台角色")
     BaseResult<Long> save(@Valid @RequestBody SaveRoleRequestDTO requestDTO);
 
@@ -29,7 +29,7 @@ public interface RoleService {
     @ApiImplicitParam(name = "id", value = "后台角色id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改后台角色")
     BaseResult<Long> update(@Valid @RequestBody UpdateRoleRequestDTO requestDTO);
 

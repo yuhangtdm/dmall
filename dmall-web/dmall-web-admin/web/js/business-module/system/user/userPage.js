@@ -7,7 +7,7 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
 
     // 初始化表格数据
     crud.initPage('user', bmsUrl + '/user/page', buildColumn());
-
+    crud.initSelect('status');
     /**
      * 构建table列
      */

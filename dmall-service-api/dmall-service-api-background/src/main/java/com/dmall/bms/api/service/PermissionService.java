@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/permission")
 public interface PermissionService {
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增权限")
     BaseResult<Long> save(@Valid @RequestBody SavePermissionRequestDTO requestDTO);
 
@@ -32,7 +32,7 @@ public interface PermissionService {
     @ApiImplicitParam(name = "id", value = "权限id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "修改权限")
     BaseResult<Long> update(@Valid @RequestBody UpdatePermissionRequestDTO requestDTO);
 

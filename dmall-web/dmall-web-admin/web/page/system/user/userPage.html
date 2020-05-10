@@ -7,21 +7,15 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户名</label>
+                            <label class="layui-form-label">手机号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userName" autocomplete="off" class="layui-input">
+                                <input type="text" name="phone" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">昵称</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="nickName" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">手机号</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="phone" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -34,6 +28,12 @@
                             <label class="layui-form-label">真实姓名</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="realName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">是否可用</label>
+                            <div class="layui-input-block">
+                                <select id="status" selectName="YNEnum"></select>
                             </div>
                         </div>
                         <div class="layui-inline">

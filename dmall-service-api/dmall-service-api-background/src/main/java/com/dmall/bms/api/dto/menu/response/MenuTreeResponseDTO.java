@@ -1,5 +1,7 @@
 package com.dmall.bms.api.dto.menu.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,6 +19,7 @@ import java.util.List;
 public class MenuTreeResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "id", position = 1)
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "父id", position = 2)

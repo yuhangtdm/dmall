@@ -31,6 +31,7 @@ public class SelectController {
         enumPackages.add("com.dmall.pay.api.enums");
         enumPackages.add("com.dmall.pms.api.enums");
         enumPackages.add("com.dmall.sso.api.enums");
+        enumPackages.add("com.dmall.common.enums");
     }
 
     @RequestMapping("/select")

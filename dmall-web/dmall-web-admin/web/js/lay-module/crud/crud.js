@@ -124,6 +124,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
         $.ajax({
             type: 'POST',
             url: url,
+            async: false,
             data: JSON.stringify(requestData),
             contentType: 'application/json;charset=utf-8',
             beforeSend: function (request) {
@@ -160,6 +161,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
             url: url,
             data: JSON.stringify(requestData),
             contentType: 'application/json;charset=utf-8',
+            async: false,
             beforeSend: function (request) {
                 parent.layer.load(1);
                 request.setRequestHeader("source", "admin");
@@ -205,6 +207,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
         $.ajax({
             type: 'DELETE',
             url: url,
+            async: false,
             beforeSend: function (request) {
                 parent.layer.load(1);
                 request.setRequestHeader("source", "admin");

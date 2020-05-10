@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="../../../css/formSelects-v4.css">
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="roleUpdateForm">
+        <div class="layui-form-item">
+            <input type="hidden" name="id">
+            <label class="layui-form-label required">角色名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="昵称不能为空" placeholder="请输入昵称"
+                       value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注信息</label>
+            <div class="layui-input-block">
+                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/system/role/roleUpdate.js"></script>

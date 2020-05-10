@@ -1,0 +1,47 @@
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="roleDetailForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">ID</label>
+            <div class="layui-input-block">
+                <input type="number" name="id" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">角色名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注信息</label>
+            <div class="layui-input-block">
+                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建人</label>
+            <div class="layui-input-block">
+                <input type="text" name="creator" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtCreated" name="gmtCreated" readonly class="layui-input date">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改人</label>
+            <div class="layui-input-block">
+                <input type="text" name="modifier" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtModified" name="gmtModified" readonly class="layui-input date">
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/system/role/roleDetail.js"></script>
