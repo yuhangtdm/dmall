@@ -5,7 +5,6 @@ import com.dmall.bms.feign.AdminLoginFeign;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Component
-public class DisableUserHandler extends AbstractCommonHandler<Long, UserDO, Long> {
+public class DeleteUserHandler extends AbstractCommonHandler<Long, UserDO, Long> {
 
     @Autowired
     private UserMapper userMapper;
@@ -32,8 +31,7 @@ public class DisableUserHandler extends AbstractCommonHandler<Long, UserDO, Long
         if (userDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
         }
-        userDO.setStatus(YNEnum.N.getCode());
-        userMapper.updateById(userDO);
+        userMapper.deleteById(id);
         // 退出登录
         BaseResult<Void> clearLoginResult = adminLoginFeign.clearLogin(userDO.getPhone());
         if (!clearLoginResult.getResult()){

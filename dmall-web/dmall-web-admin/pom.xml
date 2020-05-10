@@ -27,6 +27,42 @@
             <groupId>com.allInJava</groupId>
             <artifactId>dmall-service-api-background</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-cart</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-member</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-order</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-pay</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-product</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-search</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.allInJava</groupId>
+            <artifactId>dmall-service-api-sso</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.12</version>
+        </dependency>
+
     </dependencies>
 
 </project>

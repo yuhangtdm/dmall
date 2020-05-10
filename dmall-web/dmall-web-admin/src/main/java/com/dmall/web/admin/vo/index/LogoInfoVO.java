@@ -1,4 +1,4 @@
-package com.dmall.web.admin.vo;
+package com.dmall.web.admin.vo.index;
 
 import lombok.Data;
 

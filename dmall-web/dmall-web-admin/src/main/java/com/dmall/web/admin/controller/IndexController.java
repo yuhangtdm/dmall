@@ -1,13 +1,13 @@
 package com.dmall.web.admin.controller;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.model.admin.AdminUserContextHolder;
+import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.web.admin.feign.MenuFeign;
-import com.dmall.web.admin.vo.HomeInfoVO;
-import com.dmall.web.admin.vo.IndexVO;
-import com.dmall.web.admin.vo.LogoInfoVO;
-import com.dmall.web.admin.vo.MenuInfoVO;
+import com.dmall.web.admin.vo.index.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +42,11 @@ public class IndexController {
         indexVO.setHomeInfo(buildHomeInfoVO());
         indexVO.setLogoInfo(buildLogoInfoVO());
         indexVO.setMenuInfo(buildMenuInfo(data));
+        indexVO.setUserInfo(buildUserInfo());
         return indexVO;
     }
+
+
 
     /**
      * 构建HomeInfo
@@ -61,7 +64,12 @@ public class IndexController {
     private LogoInfoVO buildLogoInfoVO() {
         LogoInfoVO logoInfoVO = new LogoInfoVO();
         logoInfoVO.setTitle("地猫商城");
-        logoInfoVO.setImage("images/logo.png");
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        if (StrUtil.isNotBlank(adminUserDTO.getIcon())){
+            logoInfoVO.setImage(adminUserDTO.getIcon());
+        }else {
+            logoInfoVO.setImage("images/logo.png");
+        }
         return logoInfoVO;
     }
 
@@ -82,5 +90,15 @@ public class IndexController {
             }
             return menuInfoVO;
         }).collect(Collectors.toList());
+    }
+
+    /**
+     * 构建登录用户昵称
+     */
+    private UserInfoVO buildUserInfo() {
+        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setNickName(adminUserDTO.getNickName());
+        return userInfoVO;
     }
 }

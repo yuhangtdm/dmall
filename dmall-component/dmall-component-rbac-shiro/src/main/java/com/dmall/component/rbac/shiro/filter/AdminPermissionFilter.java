@@ -41,7 +41,7 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String requestMapping = RequestMappingUtil.getValue(request);
-        boolean filter = CommonFilterUtil.adminFilter(request, requestMapping,adminProperties);
+        boolean filter = CommonFilterUtil.adminAuthFilter(request, requestMapping,adminProperties);
         if (filter) {
             return true;
         }

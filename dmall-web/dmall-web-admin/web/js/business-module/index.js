@@ -6,6 +6,7 @@ layui.use(['jquery', 'miniAdmin', 'crud'], function () {
     var options = {
         iniUrl: webAdminUrl + "/index",    // 初始化接口
         clearUrl: "api/clear.json", // 缓存清理接口
+        selectUrl: webAdminUrl + "/select", // 获取下拉框数据源接口
         renderPageVersion: true,    // 初始化页面是否加版本号
         bgColorDefault: false,      // 主题默认配置
         multiModule: true,          // 是否开启多模块

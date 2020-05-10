@@ -1,0 +1,66 @@
+{
+  "code": 0,
+  "msg": "success",
+  "data": [
+    {
+      "name": "安康市",
+      "value": 1,
+      "selected": "",
+      "disabled": ""
+    },
+    {
+      "name": "三亚市",
+      "value": 2,
+      "selected": "",
+      "disabled": ""
+    },
+    {
+      "name": "林芝地区",
+      "value": 3,
+      "selected": "selected",
+      "disabled": ""
+    },
+    {
+      "name": "北京市",
+      "value": 4,
+      "selected": "",
+      "disabled": "disabled"
+    },
+    {
+      "name": "莆田市",
+      "value": 5,
+      "selected": "",
+      "disabled": ""
+    },
+    {
+      "name": "红河哈尼族彝族自治州",
+      "value": 6,
+      "selected": "selected",
+      "disabled": ""
+    },
+    {
+      "name": "陇南市",
+      "value": 7,
+      "selected": "selected",
+      "disabled": ""
+    },
+    {
+      "name": "吴忠市",
+      "value": 8,
+      "selected": "",
+      "disabled": ""
+    },
+    {
+      "name": "巴音郭楞蒙古自治州",
+      "value": 9,
+      "selected": "",
+      "disabled": "disabled"
+    },
+    {
+      "name": "梧州市",
+      "value": 10,
+      "selected": "selected",
+      "disabled": "disabled"
+    }
+  ]
+}

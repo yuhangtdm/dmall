@@ -60,14 +60,6 @@ public class MapCacheUtil {
     }
 
     /**
-     * 删除缓存
-     */
-    public void delete(String key) {
-        Assert.notNull(key, "key not null");
-        redisTemplate.opsForHash().delete(key);
-    }
-
-    /**
      * 根据key获取缓存
      */
     public List<Object> values(String key) {

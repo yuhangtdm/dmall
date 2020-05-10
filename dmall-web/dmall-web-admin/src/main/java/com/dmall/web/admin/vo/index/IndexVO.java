@@ -1,4 +1,4 @@
-package com.dmall.web.admin.vo;
+package com.dmall.web.admin.vo.index;
 
 import lombok.Data;
 
@@ -14,6 +14,8 @@ public class IndexVO {
     private HomeInfoVO homeInfo;
 
     private LogoInfoVO logoInfo;
+
+    private UserInfoVO userInfo;
 
     private List<MenuInfoVO> menuInfo;
 }

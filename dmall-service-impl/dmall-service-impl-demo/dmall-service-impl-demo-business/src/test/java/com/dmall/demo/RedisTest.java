@@ -1,4 +1,5 @@
 package com.dmall.demo;
+import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.demo.generator.dataobject.UserDO;
 import com.dmall.demo.service.impl.user.cache.UserCacheService;
 import com.google.common.collect.Lists;
@@ -24,6 +25,9 @@ public class RedisTest extends BaseTest {
 
     @Autowired
     private UserCacheService userCacheService;
+
+    @Autowired
+    private MapCacheUtil mapCacheUtil;
 
     @Test
     public void testSet() {
@@ -84,5 +88,10 @@ public class RedisTest extends BaseTest {
     @Test
     public void testDelete(){
         userCacheService.deleteById(1251871969155014662L);
+    }
+
+    @Test
+    public void tt(){
+        mapCacheUtil.delete("18502165640");
     }
 }

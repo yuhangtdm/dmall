@@ -55,6 +55,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ResetPasswordUserHandler resetPasswordUserHandler;
 
+    @Autowired
+    private GetCurrentUserHandler getCurrentUserHandler;
+
+    @Autowired
+    private DeleteUserHandler deleteUserHandler;
+
     @Override
     public BaseResult<Long> save(@RequestBody SaveUserRequestDTO requestDTO) {
         return saveUserHandler.handler(requestDTO);
@@ -77,6 +83,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public BaseResult<Long> delete(Long id) {
+        return deleteUserHandler.handler(id);
+    }
+
+    @Override
     public BaseResult<Long> update(@RequestBody UpdateUserRequestDTO requestDTO) {
         return updateUserHandler.handler(requestDTO);
     }
@@ -89,6 +100,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public BaseResult<UserResponseDTO> get(Long id) {
         return getUserHandler.handler(id);
+    }
+
+    @Override
+    public BaseResult<UserResponseDTO> getCurrentUser() {
+        return getCurrentUserHandler.handler(null);
     }
 
     @Override

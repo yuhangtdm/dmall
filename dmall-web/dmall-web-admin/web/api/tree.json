@@ -1,0 +1,40 @@
+{
+  "code": 0,
+  "msg": "success",
+  "data": [
+    {
+      "value": 4,
+      "pid": 0,
+      "name": "dmall云",
+      "children": [
+        {
+          "value": 1,
+          "pid": 4,
+          "name": "系统管理",
+          "icon": "fa fa-calendar",
+          "href": "",
+          "target": "_self",
+          "children": [
+            {
+              "value": 2,
+              "pid": 1,
+              "name": "菜单列表",
+              "icon": "fa fa-window-maximize",
+              "href": "page/system/menu/menuPage.html",
+              "target": "_self"
+            },
+            {
+              "value": 3,
+              "pid": 1,
+              "name": "用户列表",
+              "icon": "fa fa-file-text",
+              "href": "page/system/user/userPage.html",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

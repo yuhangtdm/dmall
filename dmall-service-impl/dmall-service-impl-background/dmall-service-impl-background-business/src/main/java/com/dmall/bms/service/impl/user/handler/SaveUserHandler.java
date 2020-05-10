@@ -32,7 +32,7 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
 
     @Override
     public BaseResult<Long> validate(SaveUserRequestDTO requestDTO) {
-        // 用户名唯一
+        // 手机号唯一
         UserDO userDO = userSupport.getByPhone(requestDTO.getPhone());
         if (userDO != null) {
             return ResultUtil.fail(BackGroundErrorEnum.USER_NAME_EXIST);

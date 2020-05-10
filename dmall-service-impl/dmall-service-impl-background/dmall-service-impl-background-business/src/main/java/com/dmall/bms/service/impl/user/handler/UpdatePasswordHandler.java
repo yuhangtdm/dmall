@@ -29,18 +29,16 @@ public class UpdatePasswordHandler extends AbstractCommonHandler<UpdatePasswordR
 
     @Override
     public BaseResult processor(UpdatePasswordRequestDTO requestDTO) {
-        // id存在
-        UserDO userDO = userMapper.selectById(requestDTO.getId());
-        if (userDO == null) {
-            return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
-        }
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
-        if (adminUserDTO.getId().equals(userDO.getId())) {
-            return ResultUtil.fail(BackGroundErrorEnum.NO_AUTH_UPDATE);
+        UserDO userDO = userMapper.selectById(adminUserDTO.getId());
+        String oldPassword = PasswordUtil.getPassword(userDO.getPhone(), requestDTO.getOldPassword());
+        if (!oldPassword.equals(userDO.getPassword())) {
+            return ResultUtil.fail(BackGroundErrorEnum.PASSWORD_ERROR);
         }
         userDO.setPassword(PasswordUtil.getPassword(userDO.getPhone(), requestDTO.getNewPassword()));
+        userMapper.updateById(userDO);
         // 清除登录信息
         adminLoginFeign.clearLogin(userDO.getPhone());
-        return ResultUtil.success(requestDTO.getId());
+        return ResultUtil.success(userDO.getId());
     }
 }

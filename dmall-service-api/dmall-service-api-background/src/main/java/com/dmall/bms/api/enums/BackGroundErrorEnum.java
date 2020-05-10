@@ -102,6 +102,11 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
      */
     NO_AUTH_UPDATE("1045", "不可修改他人的信息"),
 
+    /**
+     * 原密码不正确
+     */
+    PASSWORD_ERROR("1046","原密码不正确"),
+
     ;
     /**
      * 错误码

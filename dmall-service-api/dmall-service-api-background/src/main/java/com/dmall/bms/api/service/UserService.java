@@ -43,6 +43,11 @@ public interface UserService {
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> resetPassword(@PathVariable("id") Long id);
 
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除用户")
+    @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
+    BaseResult<Long> delete(@PathVariable("id") Long id);
+
     @PutMapping
     @ApiOperation(value = "修改后台用户")
     BaseResult<Long> update(@Valid @RequestBody UpdateUserRequestDTO requestDTO);
@@ -55,6 +60,10 @@ public interface UserService {
     @ApiOperation(value = "根据id查询后台用户")
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
     BaseResult<UserResponseDTO> get(@PathVariable("id") Long id);
+
+    @GetMapping
+    @ApiOperation(value = "根据id查询后台用户")
+    BaseResult<UserResponseDTO> getCurrentUser();
 
     @PostMapping("/page")
     @ApiOperation(value = "后台用户分页")

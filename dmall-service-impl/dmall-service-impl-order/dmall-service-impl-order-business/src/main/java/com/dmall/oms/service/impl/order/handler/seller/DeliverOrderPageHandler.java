@@ -39,7 +39,7 @@ public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderP
     public BaseResult<ResponsePage<DeliverOrderPageResponseDTO>> processor(DeliverOrderPageRequestDTO requestDTO) {
         // 获取当前登录人的角色
         AdminUserDTO adminUser = AdminUserContextHolder.get();
-        BaseResult<List<RoleResponseDTO>> listBaseResult = roleFeign.listRoles(adminUser.getUserName());
+        BaseResult<List<RoleResponseDTO>> listBaseResult = roleFeign.listRoles(adminUser.getPhone());
         if (listBaseResult.getResult()) {
             return ResultUtil.fail(listBaseResult.getCode(), listBaseResult.getMsg());
         }

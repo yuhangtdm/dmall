@@ -40,23 +40,15 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
         if (requestDTO.getWarehouseId() != null) {
             deliverWarehouseSupport.validateWarehouse(requestDTO.getWarehouseId());
         }
-        boolean flag = true;
-        if (requestDTO.getPhone() != null && requestDTO.getPhone().equals(userDO.getPhone())) {
-            // 手机号修改清空登录信息
-            flag = false;
-            adminLoginFeign.clearLogin(userDO.getPhone());
-        }
-
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
-        if (adminUserDTO.getId().equals(userDO.getId())) {
+        if (!adminUserDTO.getId().equals(userDO.getId())) {
             return ResultUtil.fail(BackGroundErrorEnum.NO_AUTH_UPDATE);
         }
+
         buildUserDO(userDO, requestDTO);
         userMapper.updateById(userDO);
         // 更新登录信息
-        if (flag) {
-            adminLoginFeign.updateLogin(userDO.getId());
-        }
+        adminLoginFeign.updateLogin(userDO.getId());
         return ResultUtil.success(userDO.getId());
     }
 
@@ -64,6 +56,7 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
         userDO.setNickName(requestDTO.getNickName());
         userDO.setPhone(requestDTO.getPhone());
         userDO.setRealName(requestDTO.getRealName());
+        userDO.setEmail(requestDTO.getEmail());
         userDO.setIcon(requestDTO.getIcon());
         userDO.setRemark(requestDTO.getRemark());
         userDO.setWarehouseId(requestDTO.getWarehouseId());

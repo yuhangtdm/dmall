@@ -15,13 +15,13 @@ import java.util.List;
 public class AdminProperties {
 
     /**
-     * 未授权地址
-     */
-    private String unauthorizedUrl;
-
-    /**
      * 白名单
      */
     private List<String> whiteList = Lists.newArrayList();
+
+    /**
+     * 权限白名单
+     */
+    private List<String> authWhiteList = Lists.newArrayList();
 
 }

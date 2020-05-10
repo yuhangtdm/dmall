@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
-import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.util.ResultUtil;
@@ -94,9 +93,11 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Override
     public BaseResult<Void> logout(String token) {
-        redisTemplate.delete(Lists.newArrayList(token));
-        AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
-        mapCacheUtil.delete(adminUserDTO.getPhone(), token);
+        AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
+        if (adminUserDTO != null) {
+            redisTemplate.delete(Lists.newArrayList(token));
+            mapCacheUtil.delete(adminUserDTO.getPhone(), token);
+        }
         return ResultUtil.success();
     }
 
@@ -117,8 +118,8 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         List<String> tokens = values.stream().map(Object::toString).collect(Collectors.toList());
         if (CollUtil.isNotEmpty(tokens)) {
             redisTemplate.delete(tokens);
+            mapCacheUtil.delete(phone, tokens.toArray(new String[0]));
         }
-        mapCacheUtil.delete(phone);
         return ResultUtil.success();
     }
 
@@ -136,7 +137,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
                     adminUserDTO.setRealName(userDO.getRealName());
                     adminUserDTO.setIcon(userDO.getIcon());
                     adminUserDTO.setWarehouseId(userDO.getWarehouseId());
-                    redisTemplate.opsForValue().set(token, adminUserDTO);
+                    redisTemplate.opsForValue().set(token, adminUserDTO, redisTemplate.getExpire(token));
                 }
             }
         }

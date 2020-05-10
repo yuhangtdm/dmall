@@ -29,6 +29,18 @@ public class CommonFilterUtil {
         return adminProperties.getWhiteList().contains(requestMapping);
     }
 
+    public static boolean adminAuthFilter(HttpServletRequest request, String requestMapping, AdminProperties adminProperties) {
+        String header = request.getHeader(Constants.SOURCE);
+        if (StrUtil.isBlank(header)) {
+            return false;
+        }
+        // 后台管理系统才做拦截
+        if (!SourceEnum.ADMIN.getCode().equals(header)) {
+            return true;
+        }
+        return adminProperties.getAuthWhiteList().contains(requestMapping);
+    }
+
     public static boolean portalFilter(HttpServletRequest request, String requestMapping, PortalProperties portalProperties) {
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {
