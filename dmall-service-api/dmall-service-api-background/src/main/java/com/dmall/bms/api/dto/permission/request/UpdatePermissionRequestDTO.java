@@ -33,7 +33,4 @@ public class UpdatePermissionRequestDTO {
     @ValueInEnum(HttpMethodEnum.class)
     private String method;
 
-    @ApiModelProperty(value = "图标", position = 6)
-    private String icon;
-
 }

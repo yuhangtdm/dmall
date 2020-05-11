@@ -46,6 +46,10 @@ public interface MenuService {
     @ApiOperation(value = "菜单分页")
     BaseResult<ResponsePage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO);
 
+    @GetMapping("/list")
+    @ApiOperation(value = "菜单Tree分页")
+    BaseResult<List<PageMenuResponseDTO>> list();
+
     @GetMapping("/tree")
     @ApiOperation(value = "菜单树")
     BaseResult<List<MenuTreeResponseDTO>> tree();

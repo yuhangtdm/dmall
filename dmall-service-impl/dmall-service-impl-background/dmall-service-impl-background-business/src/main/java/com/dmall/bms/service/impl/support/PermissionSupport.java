@@ -38,13 +38,12 @@ public class PermissionSupport {
     /**
      * 构建公共的wrapper
      */
-    public static LambdaQueryWrapper buildWrapper(Long serviceId, String code, String name, String uri, String method) {
-        LambdaQueryWrapper<PermissionDO> wrapper = Wrappers.<PermissionDO>lambdaQuery()
-                .eq(serviceId != null, PermissionDO::getServiceId, serviceId)
+    public static LambdaQueryWrapper buildWrapper(String appId, String code, String name, String uri, String method) {
+        return Wrappers.<PermissionDO>lambdaQuery()
+                .eq(StrUtil.isNotBlank(appId), PermissionDO::getAppId, appId)
                 .like(StrUtil.isNotBlank(code), PermissionDO::getCode, code)
                 .like(StrUtil.isNotBlank(name), PermissionDO::getName, name)
                 .eq(StrUtil.isNotBlank(uri), PermissionDO::getUri, uri)
                 .eq(StrUtil.isNotBlank(method), PermissionDO::getMethod, method);
-        return wrapper;
     }
 }

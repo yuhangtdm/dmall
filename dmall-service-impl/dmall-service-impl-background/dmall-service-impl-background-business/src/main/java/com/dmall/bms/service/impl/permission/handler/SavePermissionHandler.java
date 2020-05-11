@@ -3,9 +3,7 @@ package com.dmall.bms.service.impl.permission.handler;
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
-import com.dmall.bms.generator.dataobject.ServiceDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
-import com.dmall.bms.generator.mapper.ServiceMapper;
 import com.dmall.bms.service.impl.support.PermissionSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
@@ -26,16 +24,8 @@ public class SavePermissionHandler extends AbstractCommonHandler<SavePermissionR
     @Autowired
     private PermissionSupport permissionSupport;
 
-    @Autowired
-    private ServiceMapper serviceMapper;
-
     @Override
     public BaseResult<Long> validate(SavePermissionRequestDTO requestDTO) {
-        // 服务必须存在
-        ServiceDO serviceDO = serviceMapper.selectById(requestDTO.getServiceId());
-        if (serviceDO == null) {
-            return ResultUtil.fail(BackGroundErrorEnum.SERVICE_NOT_EXIST);
-        }
         // 权限码唯一
         PermissionDO permissionDO = permissionSupport.getByCode(requestDTO.getCode());
         if (permissionDO != null) {

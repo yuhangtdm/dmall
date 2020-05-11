@@ -1,0 +1,65 @@
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="permissionDetailForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">权限编号</label>
+            <div class="layui-input-block">
+                <input type="number" name="id" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">服务id</label>
+            <div class="layui-input-block">
+                <input type="text" name="appId" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">权限码</label>
+            <div class="layui-input-block">
+                <input type="text" name="code" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">权限名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">权限地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="uri" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求方式</label>
+            <div class="layui-input-block">
+                <select id="method" name="method" selectName="HttpMethodEnum"></select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建人</label>
+            <div class="layui-input-block">
+                <input type="text" name="creator" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtCreated" name="gmtCreated" readonly class="layui-input date">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改人</label>
+            <div class="layui-input-block">
+                <input type="text" name="modifier" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtModified" name="gmtModified" readonly class="layui-input date">
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/system/permission/permissionDetail.js"></script>

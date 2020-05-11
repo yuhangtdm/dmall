@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="../../../css/formSelects-v4.css">
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="permissionUpdateForm">
+        <div class="layui-form-item">
+            <input type="hidden" name="id">
+            <label class="layui-form-label required">权限码</label>
+            <div class="layui-input-block">
+                <input type="text" name="code" lay-verify="required" lay-reqtext="权限码不能为空" placeholder="请输入昵称"
+                        class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">权限名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="权限名称不能为空" placeholder="请输入昵称"
+                        class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">权限地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="uri" lay-verify="required" lay-reqtext="权限地址不能为空" placeholder="请输入昵称"
+                        class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求方式</label>
+            <div class="layui-input-block">
+                <select id="method" name="method" selectName="HttpMethodEnum"></select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/system/permission/permissionUpdate.js"></script>

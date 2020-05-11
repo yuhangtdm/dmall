@@ -20,7 +20,7 @@ public class SavePermissionRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "服务id", required = true, position = 1)
     @NotNull(message = "服务id不能为空")
-    private Long serviceId;
+    private String appId;
 
     @ApiModelProperty(value = "权限码", required = true, position = 2)
     @NotBlank(message = "权限码不能为空")

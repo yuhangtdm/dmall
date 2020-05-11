@@ -44,6 +44,8 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MyMenuTreeHandler myMenuTreeHandler;
 
+    @Autowired
+    private ListMenuHandler listMenuHandler;
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveMenuRequestDTO requestDTO) {
@@ -68,6 +70,11 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public BaseResult<ResponsePage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO) {
         return pageMenuHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<PageMenuResponseDTO>> list() {
+        return listMenuHandler.handler(null);
     }
 
     @Override

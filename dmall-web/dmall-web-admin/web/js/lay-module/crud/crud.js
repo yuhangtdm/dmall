@@ -1,10 +1,11 @@
-layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e) {
+layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], function (e) {
     var layer = layui.layer;
     var $ = layui.$;
     var table = layui.table;
     var miniPage = layui.miniPage;
     var form = layui.form;
     var formSelects = layui.formSelects;
+    var laydate = layui.laydate;
 
     // 请求后台的统一地址前缀
     window.requestUrl = 'http://localhost:7010';
@@ -51,6 +52,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
         },
         initPage: function (id, url, cols) {
             initPage(id, url, cols);
+        },
+        initTreeTable(id, url, cols) {
+            initTreeTable(id, url, cols);
         },
         open: function (href, title) {
             open(href, title);
@@ -306,7 +310,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
                 token: getToken()
             },
             cellMinWidth: 100,
-            toolbar: '#toolbarDemo',
+            toolbar: 'default',
             text: {
                 none: '暂无相关数据'
             },
@@ -475,7 +479,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
                     }
                 } else {
                     $(this).val(value);
-                    console.log($(this).val());
                 }
             } else if (tagName === 'IMG') {
                 // 图片
@@ -487,9 +490,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
                     for (var k = 0; k < value.length; k++) {
                         selectValue = value[k] + ",";
                     }
-                    $(this).val(selectValue.substring(0, selectValue.length - 1));
+                    $(this).attr('value', selectValue.substring(0, selectValue.length - 1));
                 } else {
-                    $(this).val(value);
+                    $(this).attr('value', value);
                 }
             } else if (tagName === 'TEXTAREA') {
                 // 文本域
@@ -628,11 +631,16 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
             } else {
                 // 单选
                 for (var i = 0; i < arr.length; i++) {
-                    sel.append("<option value=" + arr[i].value + ">" + arr[i].name + "</option>");
+                    if (arr[i].name) {
+                        sel.append("<option value=" + arr[i].value + ">" + arr[i].name + "</option>");
+                    } else {
+                        sel.append("<option value=" + arr[i].value + ">" + arr[i].value + "</option>");
+                    }
                 }
                 if (value) {
                     sel.val(value);
                 }
+
                 form.render();
             }
         }
@@ -679,6 +687,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
         }
     }
 
+    /**
+     * 展示图片
+     */
     function showImg(imgUrl) {
         if (imgUrl) {
             return '<img src=' + imgUrl + '  height="30px"  width="30px"/>';
@@ -686,6 +697,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects'], function (e)
             return '';
         }
     }
+
 
     function validateNumber(number) {
         if (parseInt(number) < 0 || number.indexOf(".") > -1) {

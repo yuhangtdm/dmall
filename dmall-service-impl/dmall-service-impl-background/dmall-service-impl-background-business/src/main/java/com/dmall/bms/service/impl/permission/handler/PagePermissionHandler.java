@@ -30,7 +30,7 @@ public class PagePermissionHandler extends AbstractCommonHandler<PagePermissionR
 
     @Override
     public BaseResult<ResponsePage<PermissionResponseDTO>> processor(PagePermissionRequestDTO requestDTO) {
-        LambdaQueryWrapper wrapper = PermissionSupport.buildWrapper(requestDTO.getServiceId(), requestDTO.getCode(),
+        LambdaQueryWrapper wrapper = PermissionSupport.buildWrapper(requestDTO.getAppId(), requestDTO.getCode(),
                 requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
 
         IPage<PermissionDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());

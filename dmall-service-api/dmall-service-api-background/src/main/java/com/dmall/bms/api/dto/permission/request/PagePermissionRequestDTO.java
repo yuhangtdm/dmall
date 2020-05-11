@@ -17,8 +17,8 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "PagePermissionRequestDTO", description = "权限分页请求实体")
 public class PagePermissionRequestDTO extends PageRequestDTO {
 
-    @ApiModelProperty(value = "父级id", position = 1)
-    private Long serviceId;
+    @ApiModelProperty(value = "服务appId", position = 1)
+    private String appId;
 
     @ApiModelProperty(value = "权限码", position = 2)
     private String code;

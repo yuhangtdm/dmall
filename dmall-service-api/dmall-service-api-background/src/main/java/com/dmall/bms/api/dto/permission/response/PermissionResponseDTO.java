@@ -23,8 +23,8 @@ public class PermissionResponseDTO implements Serializable {
     @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
-    @ApiModelProperty(value = "父级id", position = 2)
-    private Integer parentId;
+    @ApiModelProperty(value = "服务id", position = 2)
+    private String appId;
 
     @ApiModelProperty(value = "权限码", position = 3)
     private String code;
@@ -32,17 +32,11 @@ public class PermissionResponseDTO implements Serializable {
     @ApiModelProperty(value = "权限名称", position = 4)
     private String name;
 
-    @ApiModelProperty(value = "1-接口地址;2-目录;3-菜单", position = 5)
-    private Integer type;
-
     @ApiModelProperty(value = "权限地址", position = 6)
     private String uri;
 
     @ApiModelProperty(value = "请求方式", position = 6)
     private String method;
-
-    @ApiModelProperty(value = "图标", position = 8)
-    private String icon;
 
     @ApiModelProperty(value = "创建人", position = 9)
     private Long creator;

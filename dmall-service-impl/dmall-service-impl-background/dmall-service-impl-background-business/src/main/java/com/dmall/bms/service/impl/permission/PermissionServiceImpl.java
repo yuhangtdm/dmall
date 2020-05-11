@@ -40,7 +40,6 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private PagePermissionHandler pagePermissionHandler;
 
-
     @Override
     public BaseResult<Long> save(@RequestBody SavePermissionRequestDTO requestDTO) {
         return savePermissionHandler.handler(requestDTO);
