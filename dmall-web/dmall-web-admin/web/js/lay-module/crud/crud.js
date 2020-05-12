@@ -29,8 +29,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
         put: function (url, requestData, callBack) {
             put(url, requestData, callBack);
         },
-        delete: function (text, url) {
-            deleteById(text, url);
+        delete: function (text, url, endCallback) {
+            deleteById(text, url, endCallback);
         },
         confirm: function (text, url) {
             confirm(text, url);
@@ -56,8 +56,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
         initTreeTable(id, url, cols) {
             initTreeTable(id, url, cols);
         },
-        open: function (href, title) {
-            open(href, title);
+        open: function (href, title, endCallback) {
+            open(href, title, endCallback);
         },
         search: function (tableId, data) {
             return search(tableId, data);
@@ -194,12 +194,16 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
     /**
      * 删除操作
      */
-    function deleteById(text, url) {
+    function deleteById(text, url, endCallback) {
         layer.confirm(text, {icon: 3, title: '提示'}, function (index) {
             deleteOperation(url, function () {
                 //  刷新页面的搜索
                 layer.close(index);
-                $("button[lay-filter='formSearch']").click();
+                if (endCallback){
+                    endCallback();
+                }else {
+                    $("button[lay-filter='formSearch']").click();
+                }
             });
         });
     }
@@ -310,7 +314,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
                 token: getToken()
             },
             cellMinWidth: 100,
-            toolbar: 'default',
+            toolbar: '#toolbarDemo',
             text: {
                 none: '暂无相关数据'
             },
@@ -357,8 +361,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
      * 打开页面
      * @param href 页面地址
      * @param title 页面标题
+     * @param endCallBack 关闭页面的回调函数
      */
-    function open(href, title) {
+    function open(href, title, endCallBack) {
         var content = miniPage.getHrefContent(href);
         var openWH = miniPage.getOpenWidthHeight();
         layer.open({
@@ -373,10 +378,13 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
             // 层销毁后会回调
             end: function () {
                 //  刷新页面的搜索
-                $("button[lay-filter='formSearch']").click();
+                if (endCallBack) {
+                    endCallBack();
+                } else {
+                    $("button[lay-filter='formSearch']").click();
+                }
             }
         });
-
     }
 
 

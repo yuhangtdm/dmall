@@ -1,0 +1,52 @@
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="menuUpdateForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级目录</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="parentId">
+                <input type="text" name="parentName" readonly class="layui-input">
+            </div>
+        </div>
+        <div id="openItem" class="layui-form-item">
+            <label class="layui-form-label required">默认是否打开</label>
+            <div class="layui-input-block">
+                <select id="open" name="open" selectName="YNEnum"></select>
+            </div>
+        </div>
+
+        <div id="urlItem" class="layui-form-item">
+            <label class="layui-form-label required">菜单地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" placeholder="请输入菜单地址"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <input type="text" name="icon" placeholder="请输入图标"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">排序</label>
+            <div class="layui-input-block">
+                <input type="number" name="sort" lay-verify="required" lay-reqtext="排序不能为空" placeholder="请输入排序"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/system/menu/menuUpdate.js"></script>

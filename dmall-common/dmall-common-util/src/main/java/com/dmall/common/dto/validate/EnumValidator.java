@@ -1,5 +1,6 @@
 package com.dmall.common.dto.validate;
 
+import cn.hutool.core.util.StrUtil;
 import com.dmall.common.util.EnumUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +19,7 @@ public class EnumValidator implements ConstraintValidator<ValueInEnum, Object> {
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext constraintValidatorContext) {
-        return value == null || values.contains(value);
+        return value == null || StrUtil.isBlank(value.toString()) || values.contains(value);
     }
 
     @Override

@@ -20,7 +20,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         headers: undefined,                              // url模式请求headers
         parseData: undefined,                            // url模式处理请求数据
         request: {pidName: 'pid'},                       // url模式请求字段自定义
-        toolbar: 'default',                              // 表头工具栏
+        toolbar: undefined,                              // 表头工具栏
         defaultToolbar: ['filter', 'exports', 'print'],  // 表头工具栏右侧按钮
         width: undefined,                                // 容器宽度
         height: undefined,                               // 容器高度
@@ -889,7 +889,6 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
             if (typeof col.toolbar === 'function') {
                 content = col.toolbar(d);
             } else if (typeof col.toolbar === 'string') {
-                console.log(col.toolbar);
                 laytpl($(col.toolbar).html()).render(d, function (html) {
                     content = html;
                 });

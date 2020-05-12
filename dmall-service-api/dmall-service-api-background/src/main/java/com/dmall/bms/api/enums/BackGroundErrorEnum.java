@@ -107,6 +107,11 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
      */
     PASSWORD_ERROR("1046","原密码不正确"),
 
+    /**
+     * 默认是否打开不能为空
+     */
+    OPEN_NOT_EMPTY("1047", " 默认是否打开不能为空"),
+
     ;
     /**
      * 错误码

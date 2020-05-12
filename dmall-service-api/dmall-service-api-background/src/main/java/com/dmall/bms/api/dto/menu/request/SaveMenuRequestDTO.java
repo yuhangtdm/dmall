@@ -2,6 +2,7 @@ package com.dmall.bms.api.dto.menu.request;
 
 import com.dmall.bms.api.enums.MenuTypeEnum;
 import com.dmall.common.dto.validate.ValueInEnum;
+import com.dmall.common.enums.YNEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,4 +42,7 @@ public class SaveMenuRequestDTO implements Serializable {
     @ApiModelProperty(value = "排序", position = 6)
     private Integer sort;
 
+    @ApiModelProperty(value = "默认是否打开", position = 6)
+    @ValueInEnum(YNEnum.class)
+    private String open;
 }

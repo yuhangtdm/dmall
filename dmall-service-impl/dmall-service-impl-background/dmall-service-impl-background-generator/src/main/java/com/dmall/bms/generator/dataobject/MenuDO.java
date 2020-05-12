@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @description: 菜单表 
+ * @description: 菜单表
  * @author: created by hang.yu on 2020-02-20 21:36:44
  */
 @Data
@@ -18,7 +18,7 @@ import java.util.Date;
 @TableName("bms_menu")
 public class MenuDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id
@@ -60,6 +60,11 @@ public class MenuDO implements Serializable {
      * 排序
      */
     private Integer sort;
+
+    /**
+     * 默认是否打开
+     */
+    private String open;
 
     /**
      * 创建人

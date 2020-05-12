@@ -36,4 +36,10 @@ public class GetMenuResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "图标", position = 6)
     private String icon;
+
+    @ApiModelProperty(value = "默认是否打开", position = 7)
+    private String open;
+
+    @ApiModelProperty(value = "上级目录名称", position = 7)
+    private String parentName;
 }

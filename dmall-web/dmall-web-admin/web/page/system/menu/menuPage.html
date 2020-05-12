@@ -1,5 +1,17 @@
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add">新增目录</button>
+            </div>
+        </script>
+        <script type="text/html" id="currentTableBar">
+            {{# if (d.type === 1) { }}
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">新增</a>
+            {{# } }}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="update">修改</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs  data-count-delete" lay-event="delete">删除</a>
+        </script>
         <table class="layui-table" id="menu" lay-filter="menu"></table>
     </div>
 </div>

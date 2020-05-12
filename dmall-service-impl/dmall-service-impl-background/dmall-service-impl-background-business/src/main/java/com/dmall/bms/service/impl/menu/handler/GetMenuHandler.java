@@ -26,6 +26,10 @@ public class GetMenuHandler extends AbstractCommonHandler<Long, MenuDO, GetMenuR
         if (menuDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.MENU_NOT_EXIST);
         }
+        if (!menuDO.getParentId().equals(0)){
+            MenuDO parent = menuMapper.selectById(menuDO.getParentId());
+
+        }
         return ResultUtil.success(doConvertDto(menuDO, GetMenuResponseDTO.class));
     }
 

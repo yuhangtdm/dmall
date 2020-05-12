@@ -24,23 +24,25 @@ public class SaveMenuHandler extends AbstractCommonHandler<SaveMenuRequestDTO, M
 
     @Override
     public BaseResult<Long> validate(SaveMenuRequestDTO requestDTO) {
-
         // 上级id不为空时 必须存在 且必须是目录
-        if (requestDTO.getParentId() != null){
+        if (requestDTO.getParentId() != null) {
             MenuDO menuDO = menuMapper.selectById(requestDTO.getParentId());
-            if (menuDO == null){
+            if (menuDO == null) {
                 return ResultUtil.fail(BackGroundErrorEnum.PARENT_NOT_EXIST);
             }
-            if (!MenuTypeEnum.CATALOG.getCode().equals(menuDO.getType())){
+            if (!MenuTypeEnum.CATALOG.getCode().equals(menuDO.getType())) {
                 return ResultUtil.fail(BackGroundErrorEnum.PARENT_NOT_CATALOG);
             }
         }
         // 菜单的路径不能为空
-        if (MenuTypeEnum.MENU.getCode().equals(requestDTO.getType())){
-            if (StrUtil.isBlank(requestDTO.getUrl())){
+        if (MenuTypeEnum.MENU.getCode().equals(requestDTO.getType())) {
+            if (StrUtil.isBlank(requestDTO.getUrl())) {
                 return ResultUtil.fail(BackGroundErrorEnum.URL_BLANK);
             }
-
+        } else {
+            if (StrUtil.isBlank(requestDTO.getOpen())) {
+                return ResultUtil.fail(BackGroundErrorEnum.OPEN_NOT_EMPTY);
+            }
         }
         return ResultUtil.success();
     }
@@ -48,9 +50,15 @@ public class SaveMenuHandler extends AbstractCommonHandler<SaveMenuRequestDTO, M
     @Override
     public BaseResult<Long> processor(SaveMenuRequestDTO requestDTO) {
         MenuDO menuDO = dtoConvertDo(requestDTO, MenuDO.class);
-        if (menuDO.getParentId() == null){
+        if (menuDO.getParentId() == null) {
             menuDO.setParentId(0L);
         }
+        if (MenuTypeEnum.MENU.getCode().equals(requestDTO.getType())) {
+            menuDO.setOpen(null);
+        } else {
+            menuDO.setUrl(null);
+        }
+
         menuMapper.insert(menuDO);
         return ResultUtil.success(menuDO.getId());
     }

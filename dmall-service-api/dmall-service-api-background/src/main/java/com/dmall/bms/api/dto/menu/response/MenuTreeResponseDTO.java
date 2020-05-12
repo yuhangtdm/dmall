@@ -43,7 +43,10 @@ public class MenuTreeResponseDTO implements Serializable {
     @ApiModelProperty(value = "菜单排序", position = 8)
     private Integer sort;
 
-    @ApiModelProperty(value = "子菜单", position = 9)
+    @ApiModelProperty(value = "默认是否打开", position = 9)
+    private String open;
+
+    @ApiModelProperty(value = "子菜单", position = 10)
     private List<MenuTreeResponseDTO> child = Lists.newArrayList();
 
 }

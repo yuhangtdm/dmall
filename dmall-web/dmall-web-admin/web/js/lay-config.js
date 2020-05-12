@@ -26,7 +26,8 @@ layui.config({
     wangEditor: 'wangEditor/wangEditor', // wangEditor富文本扩展
     layarea: 'layarea/layarea', //  省市县区三级联动下拉选择器
     crud: 'crud/crud', // crud扩展
-    formSelects: 'formSelects/formSelects', // crud扩展
+    iconPicker: 'iconPicker/iconPicker', // iconPicker扩展
+    formSelects: 'formSelects/formSelects', // formSelects扩展
     zTree: 'ztree/zTree', // zTree扩展
     ztreecore: 'ztree/ztreecore',
     ztreeexcheck: 'ztree/ztreeexcheck',
