@@ -6,7 +6,7 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
 
     var options = {
         elem: '#menu',
-        url: bmsUrl + '/menu/list',
+        url: bmsUrl + '/menu/tree',
         headers: {
             source: 'admin',
             token: crud.getToken()
@@ -16,7 +16,8 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
             iconIndex: 2,           // 折叠图标显示在第几列
             isPidData: true,        // 是否是id、pid形式数据
             idName: 'id',  // id字段名称
-            pidName: 'parentId'     // pid字段名称
+            pidName: 'parentId',     // pid字段名称
+            childName: 'child',
         },
         cols: buildColumn()
     };
@@ -47,13 +48,16 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
                 break;
             case 'update':
                 id = data.id;
-                crud.open('/page/system/menu/menuUpdate.html', '修改子菜单/目录', reloadTable);
+                if (data.type === 1) {
+                    crud.open('/page/system/menu/catalogUpdate.html', '修改目录', reloadTable);
+                } else {
+                    crud.open('/page/system/menu/menuUpdate.html', '修改菜单', reloadTable);
+                }
                 break;
             case 'delete':
-                var type = data.type;
-                if (type === '1'){
+                if (data.type === 1) {
                     crud.delete("确定删除该目录以及子菜单?", bmsUrl + '/menu/' + data.id, reloadTable);
-                }else {
+                } else {
                     crud.delete("确定删除该菜单?", bmsUrl + '/menu/' + data.id, reloadTable);
                 }
                 break;
@@ -63,15 +67,17 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
     function reloadTable() {
         menuTreeTable.reload(options);
     }
+
     function buildColumn() {
         return [
             [
                 {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: 'ID'},
                 {field: 'name', title: '名称'},
-                {field: 'type', title: '类型'},
+                {field: 'icon', title: '图标', templet: '<div><i class="layui-icon {{d.icon}}"></i></div>'},
+                {field: 'type', title: '类型', templet: "<div>{{layui.crud.getDesc(d.type,'MenuTypeEnum')}}</div>"},
                 {field: 'url', title: '地址'},
-                {field: 'icon', title: '图标'},
+                {field: 'target', title: '菜单打开方式'},
                 {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 200}
             ]
         ];

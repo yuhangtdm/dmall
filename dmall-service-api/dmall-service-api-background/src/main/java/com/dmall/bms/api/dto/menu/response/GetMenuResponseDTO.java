@@ -19,7 +19,7 @@ public class GetMenuResponseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "名称", position = 2)
@@ -40,6 +40,12 @@ public class GetMenuResponseDTO implements Serializable {
     @ApiModelProperty(value = "默认是否打开", position = 7)
     private String open;
 
-    @ApiModelProperty(value = "上级目录名称", position = 7)
+    @ApiModelProperty(value = "上级目录名称", position = 8)
     private String parentName;
+
+    @ApiModelProperty(value = "菜单打开方式", position = 9)
+    private String target;
+
+    @ApiModelProperty(value = "排序", position = 10)
+    private Integer sort;
 }

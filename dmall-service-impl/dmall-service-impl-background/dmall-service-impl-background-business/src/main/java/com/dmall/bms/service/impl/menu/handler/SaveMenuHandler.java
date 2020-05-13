@@ -39,6 +39,9 @@ public class SaveMenuHandler extends AbstractCommonHandler<SaveMenuRequestDTO, M
             if (StrUtil.isBlank(requestDTO.getUrl())) {
                 return ResultUtil.fail(BackGroundErrorEnum.URL_BLANK);
             }
+            if (StrUtil.isBlank(requestDTO.getTarget())) {
+                return ResultUtil.fail(BackGroundErrorEnum.TARGET_NOT_EMPTY);
+            }
         } else {
             if (StrUtil.isBlank(requestDTO.getOpen())) {
                 return ResultUtil.fail(BackGroundErrorEnum.OPEN_NOT_EMPTY);
@@ -57,8 +60,8 @@ public class SaveMenuHandler extends AbstractCommonHandler<SaveMenuRequestDTO, M
             menuDO.setOpen(null);
         } else {
             menuDO.setUrl(null);
+            menuDO.setTarget(null);
         }
-
         menuMapper.insert(menuDO);
         return ResultUtil.success(menuDO.getId());
     }

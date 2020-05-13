@@ -65,37 +65,37 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
     /**
      * 该角色名称已存在
      */
-    NAME_EXIST("1030","该角色名称已存在"),
+    NAME_EXIST("1030", "该角色名称已存在"),
 
     /**
      * 该后台角色不存在
      */
-    ROLE_NOT_EXIST("1031","该后台角色不存在"),
+    ROLE_NOT_EXIST("1031", "该后台角色不存在"),
 
     /**
      * 该用户名称已存在
      */
-    USER_NAME_EXIST("1040","该用户名称已存在"),
+    USER_NAME_EXIST("1040", "该用户名称已存在"),
 
     /**
      * 该用户不存在
      */
-    USER_NOT_EXIST("1041","该用户不存在"),
+    USER_NOT_EXIST("1041", "该用户不存在"),
 
     /**
      * 上传头像失败
      */
-    UPLOAD_PIC_ERROR("1042","上传头像失败"),
+    UPLOAD_PIC_ERROR("1042", "上传头像失败"),
 
     /**
      * 角色id不存在
      */
-    ROLE_ID_NOT_EXIST("1043","角色id不存在"),
+    ROLE_ID_NOT_EXIST("1043", "角色id不存在"),
 
     /**
      * 权限id不存在
      */
-    PERMISSION_ID_NOT_EXIST("1044","权限id不存在"),
+    PERMISSION_ID_NOT_EXIST("1044", "权限id不存在"),
 
     /**
      * 不可修改他人的信息
@@ -105,12 +105,17 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
     /**
      * 原密码不正确
      */
-    PASSWORD_ERROR("1046","原密码不正确"),
+    PASSWORD_ERROR("1046", "原密码不正确"),
 
     /**
      * 默认是否打开不能为空
      */
     OPEN_NOT_EMPTY("1047", " 默认是否打开不能为空"),
+
+    /**
+     * 菜单打开方式不能为空
+     */
+    TARGET_NOT_EMPTY("1048", "菜单打开方式不能为空"),
 
     ;
     /**

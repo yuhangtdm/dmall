@@ -1,9 +1,11 @@
 package com.dmall.bms.api.dto.menu.request;
 
+import com.dmall.bms.api.enums.MenuTargetEnum;
+import com.dmall.common.dto.validate.ValueInEnum;
+import com.dmall.common.enums.YNEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,7 +15,6 @@ import java.io.Serializable;
  * @author: created by hang.yu on 2020-02-20 21:36:43
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "UpdateMenuRequestDTO", description = "修改菜单请求实体")
 public class UpdateMenuRequestDTO implements Serializable {
 
@@ -32,4 +33,14 @@ public class UpdateMenuRequestDTO implements Serializable {
     @ApiModelProperty(value = "图标", position = 4)
     private String icon;
 
+    @ApiModelProperty(value = "排序", position = 6)
+    private Integer sort;
+
+    @ApiModelProperty(value = "默认是否打开", position = 7)
+    @ValueInEnum(YNEnum.class)
+    private String open;
+
+    @ApiModelProperty(value = "菜单打开方式", position = 8)
+    @ValueInEnum(MenuTargetEnum.class)
+    private String target;
 }

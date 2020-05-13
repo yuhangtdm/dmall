@@ -26,11 +26,12 @@ public class GetMenuHandler extends AbstractCommonHandler<Long, MenuDO, GetMenuR
         if (menuDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.MENU_NOT_EXIST);
         }
-        if (!menuDO.getParentId().equals(0)){
+        GetMenuResponseDTO getMenuResponseDTO = doConvertDto(menuDO, GetMenuResponseDTO.class);
+        if (menuDO.getParentId() != 0) {
             MenuDO parent = menuMapper.selectById(menuDO.getParentId());
-
+            getMenuResponseDTO.setParentName(parent.getName());
         }
-        return ResultUtil.success(doConvertDto(menuDO, GetMenuResponseDTO.class));
+        return ResultUtil.success(getMenuResponseDTO);
     }
 
 }

@@ -13,14 +13,18 @@ layui.use(['form', 'crud'], function () {
 
     crud.initFormSelect('menuAddForm');
 
+    // 图标选择器的使用
+    crud.showIcon('icon');
 
     form.on('select(type)', function (data) {
         if (data.value === '1') {
-            $("#openItem").attr('class', "layui-form-item");
-            $("#urlItem").attr('class', "layui-form-item layui-hide");
+            $("#openItem").removeClass('layui-hide');
+            $("#urlItem").addClass('layui-hide');
+            $("#targetItem").addClass('layui-hide');
         } else {
-            $("#openItem").attr('class', "layui-form-item layui-hide");
-            $("#urlItem").attr('class', "layui-form-item");
+            $("#openItem").addClass('layui-hide');
+            $("#urlItem").removeClass('layui-hide');
+            $("#targetItem").removeClass('layui-hide');
         }
     });
 
@@ -31,4 +35,6 @@ layui.use(['form', 'crud'], function () {
         });
         return false;
     });
+
+
 });

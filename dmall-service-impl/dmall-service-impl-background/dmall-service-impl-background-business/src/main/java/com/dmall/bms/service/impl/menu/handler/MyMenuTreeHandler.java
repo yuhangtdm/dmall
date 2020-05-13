@@ -29,7 +29,6 @@ public class MyMenuTreeHandler extends AbstractCommonHandler<Void, MenuDO, MenuT
         // 获取当前登录的用户
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
         List<MenuTreeResponseDTO> allMenus = userMenuMapper.listByUserId(adminUserDTO.getId());
-
         return ResultUtil.success(MenuSupport.getMenuTrees(allMenus));
     }
 

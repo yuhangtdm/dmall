@@ -30,7 +30,6 @@ public class MenuTreeHandler extends AbstractCommonHandler<Void, MenuDO, MenuTre
         List<MenuTreeResponseDTO> allMenus = menuMapper.selectList(Wrappers.emptyWrapper()).stream()
                 .map(menuDO -> doConvertDto(menuDO, MenuTreeResponseDTO.class))
                 .collect(Collectors.toList());
-
         return ResultUtil.success(MenuSupport.getMenuTrees(allMenus));
     }
 }

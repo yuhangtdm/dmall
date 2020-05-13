@@ -1,13 +1,11 @@
 package com.dmall.bms.api.service;
 
-import com.dmall.bms.api.dto.menu.request.PageMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.bms.api.dto.menu.response.PageMenuResponseDTO;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -42,13 +40,9 @@ public interface MenuService {
     @ApiImplicitParam(name = "id", value = "菜单表 id", required = true, dataType = "int", paramType = "path")
     BaseResult<GetMenuResponseDTO> get(@PathVariable("id") Long id);
 
-    @PostMapping("/page")
-    @ApiOperation(value = "菜单分页")
-    BaseResult<ResponsePage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO);
-
-    @GetMapping("/list")
+    @GetMapping("/treePage")
     @ApiOperation(value = "菜单Tree分页")
-    BaseResult<List<PageMenuResponseDTO>> list();
+    BaseResult<List<PageMenuResponseDTO>> treePage();
 
     @GetMapping("/tree")
     @ApiOperation(value = "菜单树")

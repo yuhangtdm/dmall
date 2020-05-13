@@ -3,13 +3,11 @@ package com.dmall.bms.service.impl.menu;
 import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.bms.api.dto.menu.response.PageMenuResponseDTO;
-import com.dmall.bms.api.dto.menu.request.PageMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.bms.api.service.MenuService;
 import com.dmall.bms.service.impl.menu.handler.*;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.ResponsePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,16 +34,13 @@ public class MenuServiceImpl implements MenuService {
     private GetMenuHandler getMenuHandler;
 
     @Autowired
-    private PageMenuHandler pageMenuHandler;
-
-    @Autowired
     private MenuTreeHandler menuTreeHandler;
 
     @Autowired
     private MyMenuTreeHandler myMenuTreeHandler;
 
     @Autowired
-    private ListMenuHandler listMenuHandler;
+    private TreePageMenuHandler treePageMenuHandler;
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveMenuRequestDTO requestDTO) {
@@ -68,13 +63,8 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public BaseResult<ResponsePage<PageMenuResponseDTO>> page(@RequestBody PageMenuRequestDTO requestDTO) {
-        return pageMenuHandler.handler(requestDTO);
-    }
-
-    @Override
-    public BaseResult<List<PageMenuResponseDTO>> list() {
-        return listMenuHandler.handler(null);
+    public BaseResult<List<PageMenuResponseDTO>> treePage() {
+        return treePageMenuHandler.handler(null);
     }
 
     @Override

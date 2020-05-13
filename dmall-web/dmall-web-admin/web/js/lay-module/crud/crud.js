@@ -1,4 +1,4 @@
-layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], function (e) {
+layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'iconPicker'], function (e) {
     var layer = layui.layer;
     var $ = layui.$;
     var table = layui.table;
@@ -6,6 +6,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
     var form = layui.form;
     var formSelects = layui.formSelects;
     var laydate = layui.laydate;
+    var iconPicker = layui.iconPicker;
 
     // 请求后台的统一地址前缀
     window.requestUrl = 'http://localhost:7010';
@@ -53,9 +54,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
         initPage: function (id, url, cols) {
             initPage(id, url, cols);
         },
-        initTreeTable(id, url, cols) {
-            initTreeTable(id, url, cols);
-        },
         open: function (href, title, endCallback) {
             open(href, title, endCallback);
         },
@@ -64,6 +62,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
         },
         fillForm(url, formId) {
             fillForm(url, formId);
+        },
+        dataForm(data, formId) {
+            dataForm(data, formId);
         },
         formatDate(date) {
             return formatDate(date);
@@ -82,6 +83,12 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
         },
         showImg(imgUrl) {
             return showImg(imgUrl);
+        },
+        showIcon(id) {
+            showIcon(id);
+        },
+        getDesc(code, selectName) {
+            return getDesc(code, selectName);
         },
         toJson: function (formId) {
             return toJson(formId);
@@ -199,9 +206,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
             deleteOperation(url, function () {
                 //  刷新页面的搜索
                 layer.close(index);
-                if (endCallback){
+                if (endCallback) {
                     endCallback();
-                }else {
+                } else {
                     $("button[lay-filter='formSearch']").click();
                 }
             });
@@ -432,10 +439,23 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
                     error(response.msg);
                 }
             },
-            error: function (response) {
+            error: function () {
                 layer.msg('服务器冒烟了', {icon: 2})
             },
         });
+    }
+
+    /**
+     * 为表单填充值
+     */
+    function dataForm(data, formId) {
+        // 进行数据填充
+        initForm(data, formId);
+        // 初始化下拉框
+        initFormSelect(formId);
+        // 初始化日期
+        initFormDate(formId);
+        form.render();
     }
 
     /**
@@ -696,12 +716,52 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate'], f
     }
 
     /**
+     * 初始化图标
+     */
+    function showIcon(id) {
+        // 图标选择器的使用
+        iconPicker.render({
+            // 选择器，推荐使用input
+            elem: '#' + id,
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false
+            search: true,
+            // 点击回调
+            click: function (data) {
+                $("#" + id).val(data.icon);
+            }
+        });
+    }
+
+    /**
      * 展示图片
      */
     function showImg(imgUrl) {
         if (imgUrl) {
             return '<img src=' + imgUrl + '  height="30px"  width="30px"/>';
         } else {
+            return '';
+        }
+    }
+
+    /**
+     * 根据code获取desc
+     */
+    function getDesc(code, selectName) {
+        var selectData = layui.data('selectData').value;
+        if (selectData) {
+            var arr = [];
+            for (var k = 0; k < selectData.count; k++) {
+                if (selectName === selectData.data[k].selectName) {
+                    arr = selectData.data[k].items;
+                }
+            }
+            for (var i = 0; i < arr.length; i++) {
+                if (code === arr[i].value) {
+                    return arr[i].name;
+                }
+            }
             return '';
         }
     }

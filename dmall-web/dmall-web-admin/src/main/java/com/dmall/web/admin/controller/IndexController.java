@@ -46,8 +46,6 @@ public class IndexController {
         return indexVO;
     }
 
-
-
     /**
      * 构建HomeInfo
      */

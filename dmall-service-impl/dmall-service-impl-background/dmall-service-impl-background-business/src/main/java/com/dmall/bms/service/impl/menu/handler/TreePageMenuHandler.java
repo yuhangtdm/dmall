@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-02-20 21:36:43
  */
 @Component
-public class ListMenuHandler extends AbstractCommonHandler<Void, MenuDO, PageMenuResponseDTO> {
+public class TreePageMenuHandler extends AbstractCommonHandler<Void, MenuDO, PageMenuResponseDTO> {
 
     @Autowired
     private MenuMapper menuMapper;

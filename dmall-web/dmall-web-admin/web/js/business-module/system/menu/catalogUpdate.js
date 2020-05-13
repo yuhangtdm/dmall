@@ -12,8 +12,9 @@ layui.use(['form', 'crud', 'iconPicker'], function () {
     }
 
     crud.showIcon('icon');
+
     crud.get(bmsUrl + '/menu/' + id, function (response) {
-        crud.dataForm(response.data, 'menuUpdateForm');
+        crud.dataForm(response.data, 'catalogUpdateForm');
         iconPicker.checkIcon('icon', response.data.icon);
     })
 

@@ -1,5 +1,6 @@
 package com.dmall.bms.api.dto.menu.request;
 
+import com.dmall.bms.api.enums.MenuTargetEnum;
 import com.dmall.bms.api.enums.MenuTypeEnum;
 import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.common.enums.YNEnum;
@@ -45,4 +46,8 @@ public class SaveMenuRequestDTO implements Serializable {
     @ApiModelProperty(value = "默认是否打开", position = 6)
     @ValueInEnum(YNEnum.class)
     private String open;
+
+    @ApiModelProperty(value = "菜单打开方式", position = 7)
+    @ValueInEnum(MenuTargetEnum.class)
+    private String target;
 }
