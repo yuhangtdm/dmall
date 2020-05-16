@@ -5,7 +5,7 @@ import com.dmall.bms.api.dto.permission.request.ListPermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.response.PermissionResponseDTO;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
-import com.dmall.bms.service.impl.support.PermissionSupport;
+import com.dmall.bms.service.support.PermissionSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -28,8 +28,7 @@ public class ListPermissionHandler extends AbstractCommonHandler<ListPermissionR
     @Override
     public BaseResult<List<PermissionResponseDTO>> processor(ListPermissionRequestDTO requestDTO) {
         LambdaQueryWrapper<PermissionDO> wrapper = PermissionSupport.buildWrapper(requestDTO.getAppId(),
-                 requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
-
+                requestDTO.getBusiness(), requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
         List<PermissionDO> permissionList = permissionMapper.selectList(wrapper);
 
         List<PermissionResponseDTO> collect = permissionList.stream()

@@ -1,10 +1,12 @@
-package com.dmall.bms.service.impl.support;
+package com.dmall.bms.service.support;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @description: RoleSupport

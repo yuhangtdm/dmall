@@ -18,8 +18,11 @@ public class ListPermissionRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "服务id", position = 2)
+    @ApiModelProperty(value = "服务id", position = 1)
     private String appId;
+
+    @ApiModelProperty(value = "业务名称", position = 2)
+    private String business;
 
     @ApiModelProperty(value = "权限名称", position = 4)
     private String name;

@@ -4,7 +4,7 @@ import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
-import com.dmall.bms.service.impl.support.RoleSupport;
+import com.dmall.bms.service.support.RoleSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;

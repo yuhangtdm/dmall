@@ -1,7 +1,7 @@
 package com.dmall.bms.service.impl.role.handler;
 
 import com.dmall.bms.generator.dataobject.RoleMenuDO;
-import com.dmall.bms.service.impl.support.RoleMenuSupport;
+import com.dmall.bms.service.support.RoleMenuSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;

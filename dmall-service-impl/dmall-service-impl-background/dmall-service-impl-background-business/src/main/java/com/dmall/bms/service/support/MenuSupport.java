@@ -1,4 +1,4 @@
-package com.dmall.bms.service.impl.support;
+package com.dmall.bms.service.support;
 
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.google.common.collect.Lists;

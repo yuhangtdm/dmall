@@ -4,7 +4,7 @@
 
     <select id="listByUserId" resultType="long">
         select
-            p.id
+            distinct p.id
         from bms_permission p
 	    inner join bms_role_permission rp on p.id = rp.permission_id
 	    inner join bms_role r on r.id = rp.role_id
@@ -13,6 +13,28 @@
 	    where u.user_id = #{userId} and p.is_deleted = 'N'
 	    and rp.is_deleted = 'N' and r.is_deleted = 'N'
 	    and ur.is_deleted = 'N' and u.is_deleted = 'N'
+    </select>
+
+    <select id="listAllByUserId" resultType="long">
+        select
+            distinct p.id
+        from bms_permission p
+	    inner join bms_role_permission rp on p.id = rp.permission_id
+	    inner join bms_role r on r.id = rp.role_id
+	    inner join bms_user_role ur on ur.role_id = r.id
+	    inner join bms_user u on u.id = ur.user_id
+	    where u.user_id = #{userId} and p.is_deleted = 'N'
+	    and rp.is_deleted = 'N' and r.is_deleted = 'N'
+	    and ur.is_deleted = 'N' and u.is_deleted = 'N'
+	    UNION
+			SELECT
+					b.permission_id
+				FROM
+					bms_user_permission b
+				WHERE
+					 b.user_id = #{userId}
+				AND b.is_deleted = 'N'
+				AND b.type = '+'
     </select>
 
 </mapper>

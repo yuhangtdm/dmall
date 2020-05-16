@@ -1,10 +1,13 @@
 package com.dmall.bms.service.impl.user;
 
+import com.dmall.bms.api.dto.permission.response.tab.TabPermissionResponseDTO;
 import com.dmall.bms.api.dto.user.request.*;
 import com.dmall.bms.api.dto.user.response.UserResponseDTO;
+import com.dmall.bms.api.dto.user.response.UserRoleResponseDTO;
 import com.dmall.bms.api.service.UserService;
 import com.dmall.bms.service.impl.user.handler.*;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.CheckedDTO;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @description: 后台用户服务实现
@@ -60,6 +64,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private DeleteUserHandler deleteUserHandler;
+
+    @Autowired
+    private UserRoleHandler userRoleHandler;
+
+    @Autowired
+    private UserTabPermissionHandler userTabPermissionHandler;
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveUserRequestDTO requestDTO) {
@@ -119,15 +129,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> setRoles(@RequestBody SetRolesRequestDTO requestDTO) {
+    public BaseResult<Long> setRole(@RequestBody CheckedDTO requestDTO) {
         return setRolesHandler.handler(requestDTO);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> setPermissions(@RequestBody SetPermissionsExtRequestDTO requestDTO) {
+    public BaseResult<Long> setPermission(@RequestBody CheckedDTO requestDTO) {
         return userSetPermissionsHandler.handler(requestDTO);
     }
 
+    @Override
+    public BaseResult<List<UserRoleResponseDTO>> roleList(Long id) {
+        return userRoleHandler.handler(id);
+    }
+
+    @Override
+    public BaseResult<List<TabPermissionResponseDTO>> tab(Long id) {
+        return userTabPermissionHandler.handler(id);
+    }
 
 }

@@ -5,7 +5,7 @@ import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.feign.AdminLoginFeign;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
-import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
+import com.dmall.bms.service.support.DeliverWarehouseSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;

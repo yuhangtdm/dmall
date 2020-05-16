@@ -73,6 +73,14 @@ layui.define(["jquery", "miniMenu", "element", "miniPage", "miniTheme", "crud"],
                         listen: true,
                     });
                     miniAdmin.deleteLoader(options.loadingTime);
+                    // 下拉框数据
+                    crud.get(options.selectUrl, function (response) {
+                        var obj = {
+                            key: 'value',
+                            value: response
+                        }
+                        layui.data('selectData', obj);
+                    });
                 } else {
                     if (response.code === '408') {
                         // 用户未登陆 跳转登录页面
@@ -83,14 +91,7 @@ layui.define(["jquery", "miniMenu", "element", "miniPage", "miniTheme", "crud"],
                 }
             });
 
-            // 下拉框数据
-            crud.get(options.selectUrl, function (response) {
-                var obj = {
-                    key: 'value',
-                    value: response
-                }
-                layui.data('selectData', obj);
-            });
+
         },
 
         /**

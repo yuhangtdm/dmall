@@ -1,4 +1,4 @@
-package com.dmall.bms.service.impl.support;
+package com.dmall.bms.service.support;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;

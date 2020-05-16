@@ -5,7 +5,6 @@ import com.dmall.bms.api.dto.permission.request.PagePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.response.PermissionResponseDTO;
-import com.dmall.bms.api.dto.permission.response.tab.TabPermissionResponseDTO;
 import com.dmall.bms.api.service.PermissionService;
 import com.dmall.bms.service.impl.permission.handler.*;
 import com.dmall.common.dto.BaseResult;
@@ -42,8 +41,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private PagePermissionHandler pagePermissionHandler;
 
-    @Autowired
-    private TabPermissionHandler tabPermissionHandler;
+
 
     @Autowired
     private PermissionImportAllHandler permissionImportAllHandler;
@@ -76,11 +74,6 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public BaseResult<ResponsePage<PermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO) {
         return pagePermissionHandler.handler(requestDTO);
-    }
-
-    @Override
-    public BaseResult<List<TabPermissionResponseDTO>> tab(Long id) {
-        return tabPermissionHandler.handler(id);
     }
 
     @Override

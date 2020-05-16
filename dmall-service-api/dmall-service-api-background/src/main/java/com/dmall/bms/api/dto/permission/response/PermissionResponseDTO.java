@@ -26,8 +26,8 @@ public class PermissionResponseDTO implements Serializable {
     @ApiModelProperty(value = "服务id", position = 2)
     private String appId;
 
-    @ApiModelProperty(value = "权限码", position = 3)
-    private String code;
+    @ApiModelProperty(value = "业务名称", position = 3)
+    private String business;
 
     @ApiModelProperty(value = "权限名称", position = 4)
     private String name;

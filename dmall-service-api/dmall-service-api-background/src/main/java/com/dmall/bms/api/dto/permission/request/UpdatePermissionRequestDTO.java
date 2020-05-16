@@ -20,8 +20,8 @@ public class UpdatePermissionRequestDTO {
     @NotNull(message = "id不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "权限码", position = 2)
-    private String code;
+    @ApiModelProperty(value = "业务名称", position = 2)
+    private String business;
 
     @ApiModelProperty(value = "权限名称", position = 3)
     private String name;

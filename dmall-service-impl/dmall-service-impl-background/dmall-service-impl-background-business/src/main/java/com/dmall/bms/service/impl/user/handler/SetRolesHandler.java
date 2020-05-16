@@ -1,6 +1,5 @@
 package com.dmall.bms.service.impl.user.handler;
 
-import com.dmall.bms.api.dto.user.request.SetRolesRequestDTO;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.RoleDO;
 import com.dmall.bms.generator.dataobject.UserDO;
@@ -8,8 +7,9 @@ import com.dmall.bms.generator.dataobject.UserRoleDO;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.bms.generator.mapper.UserRoleMapper;
-import com.dmall.bms.service.impl.support.UserRoleSupport;
+import com.dmall.bms.service.support.UserRoleSupport;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.CheckedDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author: created by hang.yu on 2020/2/20 20:51
  */
 @Component
-public class SetRolesHandler extends AbstractCommonHandler<SetRolesRequestDTO, UserRoleDO, Long> {
+public class SetRolesHandler extends AbstractCommonHandler<CheckedDTO, UserRoleDO, Long> {
 
     @Autowired
     private UserMapper userMapper;
@@ -37,30 +37,30 @@ public class SetRolesHandler extends AbstractCommonHandler<SetRolesRequestDTO, U
     private UserRoleSupport userRoleSupport;
 
     @Override
-    public BaseResult<Long> validate(SetRolesRequestDTO requestDTO) {
+    public BaseResult<Long> validate(CheckedDTO requestDTO) {
         // 用户id必须存在
-        UserDO userDO = userMapper.selectById(requestDTO.getUserId());
+        UserDO userDO = userMapper.selectById(requestDTO.getId());
         if (userDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
         }
         // 角色id集合必须存在
-        List<RoleDO> roleDOS = roleMapper.selectBatchIds(requestDTO.getRoleIds());
-        if (roleDOS.size() != requestDTO.getRoleIds().size()) {
+        List<RoleDO> roleDOS = roleMapper.selectBatchIds(requestDTO.getRelateIds());
+        if (roleDOS.size() != requestDTO.getRelateIds().size()) {
             return ResultUtil.fail(BackGroundErrorEnum.ROLE_ID_NOT_EXIST);
         }
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<Long> processor(SetRolesRequestDTO requestDTO) {
+    public BaseResult<Long> processor(CheckedDTO requestDTO) {
         // 先删除后插入
-        userRoleSupport.deleteByUserId(requestDTO.getUserId());
-        for (Long roleId : requestDTO.getRoleIds()) {
+        userRoleSupport.deleteByUserId(requestDTO.getId());
+        for (Long roleId : requestDTO.getRelateIds()) {
             UserRoleDO userRoleDO = new UserRoleDO()
-                    .setUserId(requestDTO.getUserId())
+                    .setUserId(requestDTO.getId())
                     .setRoleId(roleId);
             userRoleMapper.insert(userRoleDO);
         }
-        return ResultUtil.success(requestDTO.getUserId());
+        return ResultUtil.success(requestDTO.getId());
     }
 }

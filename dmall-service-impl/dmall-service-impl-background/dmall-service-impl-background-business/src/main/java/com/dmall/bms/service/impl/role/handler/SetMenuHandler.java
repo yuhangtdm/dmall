@@ -8,9 +8,9 @@ import com.dmall.bms.generator.dataobject.RoleMenuDO;
 import com.dmall.bms.generator.mapper.MenuMapper;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.generator.mapper.RoleMenuMapper;
-import com.dmall.bms.service.impl.support.RoleMenuSupport;
+import com.dmall.bms.service.support.RoleMenuSupport;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.TreeCheckedDTO;
+import com.dmall.common.dto.CheckedDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/2/20 21:52
  */
 @Component
-public class SetMenuHandler extends AbstractCommonHandler<TreeCheckedDTO, RoleMenuDO, Long> {
+public class SetMenuHandler extends AbstractCommonHandler<CheckedDTO, RoleMenuDO, Long> {
 
     @Autowired
     private RoleMapper roleMapper;
@@ -40,7 +40,7 @@ public class SetMenuHandler extends AbstractCommonHandler<TreeCheckedDTO, RoleMe
     private RoleMenuMapper roleMenuMapper;
 
     @Override
-    public BaseResult<Long> validate(TreeCheckedDTO requestDTO) {
+    public BaseResult<Long> validate(CheckedDTO requestDTO) {
         // 角色必须存在
         RoleDO roleDO = roleMapper.selectById(requestDTO.getId());
         if (roleDO == null) {
@@ -55,7 +55,7 @@ public class SetMenuHandler extends AbstractCommonHandler<TreeCheckedDTO, RoleMe
     }
 
     @Override
-    public BaseResult<Long> processor(TreeCheckedDTO requestDTO) {
+    public BaseResult<Long> processor(CheckedDTO requestDTO) {
         List<RoleMenuDO> listByRoleId = roleMenuSupport.listByRoleId(requestDTO.getId());
         Set<Long> menuIds = requestDTO.getRelateIds();
         // 角色列表为空 只是新增

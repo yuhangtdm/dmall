@@ -5,7 +5,7 @@ import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.dataobject.RolePermissionDO;
 import com.dmall.bms.generator.service.IPermissionService;
 import com.dmall.bms.generator.service.IRolePermissionService;
-import com.dmall.bms.service.impl.support.PermissionSupport;
+import com.dmall.bms.service.support.PermissionSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.swagger.SwaggerInfo;
 import com.dmall.common.util.ResultUtil;

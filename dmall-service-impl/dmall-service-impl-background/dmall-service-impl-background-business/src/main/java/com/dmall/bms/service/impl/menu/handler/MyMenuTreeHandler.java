@@ -3,7 +3,7 @@ package com.dmall.bms.service.impl.menu.handler;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.bms.generator.dataobject.MenuDO;
 import com.dmall.bms.service.impl.mapper.UserMenusMapper;
-import com.dmall.bms.service.impl.support.MenuSupport;
+import com.dmall.bms.service.support.MenuSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;

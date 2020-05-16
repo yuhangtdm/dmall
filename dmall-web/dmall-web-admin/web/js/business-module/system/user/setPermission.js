@@ -6,7 +6,7 @@ layui.use(['form', 'crud'], function () {
     // 当前弹出层，防止ID被覆盖
     var parentIndex = layer.index;
 
-    crud.get(bmsUrl + '/role/tab/' + id, function (response) {
+    crud.get(bmsUrl + '/user/tab/' + id, function (response) {
         for (var i = 0; i < response.data.length; i++) {
             // 生成tab
             if (i === 0) {
@@ -54,7 +54,7 @@ layui.use(['form', 'crud'], function () {
             id: id,
             relateIds: relateIds
         }
-        crud.post(bmsUrl + '/role/setPermission', checkObj, function () {
+        crud.post(bmsUrl + '/user/setPermission', checkObj, function () {
             layer.close(parentIndex);
         })
     })

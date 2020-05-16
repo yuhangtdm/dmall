@@ -1,10 +1,14 @@
 package com.dmall.bms.api.service;
 
-import com.dmall.bms.api.dto.role.request.*;
+import com.dmall.bms.api.dto.permission.response.tab.TabPermissionResponseDTO;
+import com.dmall.bms.api.dto.role.request.ListRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.PageRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
 import com.dmall.bms.api.dto.role.response.RoleResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.common.dto.TreeCheckedDTO;
+import com.dmall.common.dto.CheckedDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -49,14 +53,19 @@ public interface RoleService {
 
     @PostMapping("/setPermission")
     @ApiOperation(value = "设置权限")
-    BaseResult<Long> setPermission(@Valid @RequestBody TreeCheckedDTO requestDTO);
+    BaseResult<Long> setPermission(@Valid @RequestBody CheckedDTO requestDTO);
 
     @PostMapping("/setMenu")
     @ApiOperation(value = "设置菜单")
-    BaseResult<Long> setMenu(@Valid @RequestBody TreeCheckedDTO requestDTO);
+    BaseResult<Long> setMenu(@Valid @RequestBody CheckedDTO requestDTO);
 
     @GetMapping("/getMenus/{id}")
     @ApiOperation(value = "根据角色id查询菜单列表")
     @ApiImplicitParam(name = "id", value = "后台角色id", required = true, dataType = "int", paramType = "path")
     BaseResult<List<Long>> getMenus(@PathVariable("id") Long id);
+
+    @GetMapping("/tab/{id}")
+    @ApiOperation(value = "权限tab")
+    @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<TabPermissionResponseDTO>> tab(@PathVariable("id") Long id);
 }

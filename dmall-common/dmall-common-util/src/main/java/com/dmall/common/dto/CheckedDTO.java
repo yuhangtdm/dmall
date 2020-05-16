@@ -10,12 +10,12 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * @description: TreeCheckedDTO
+ * @description: CheckedDTO
  * @author: created by hang.yu on 2020/5/16 10:51
  */
 @Data
-@ApiModel(value = "TreeCheckedDTO", description = "树的复选框选中请求实体")
-public class TreeCheckedDTO implements Serializable {
+@ApiModel(value = "CheckedDTO", description = "复选框选中请求实体")
+public class CheckedDTO implements Serializable {
 
     @ApiModelProperty(value = "id", required = true, position = 1)
     @NotNull(message = "id不能为空")

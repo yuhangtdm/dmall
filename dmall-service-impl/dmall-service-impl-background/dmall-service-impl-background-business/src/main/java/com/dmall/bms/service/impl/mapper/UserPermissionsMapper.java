@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserPermissionsMapper {
 
     List<Long> listByUserId(Long userId);
+
+    List<Long> listAllByUserId(Long userId);
 }

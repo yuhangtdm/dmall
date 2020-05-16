@@ -7,7 +7,7 @@ import com.dmall.bms.api.dto.permission.request.PagePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.response.PermissionResponseDTO;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
-import com.dmall.bms.service.impl.support.PermissionSupport;
+import com.dmall.bms.service.support.PermissionSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
@@ -30,7 +30,7 @@ public class PagePermissionHandler extends AbstractCommonHandler<PagePermissionR
 
     @Override
     public BaseResult<ResponsePage<PermissionResponseDTO>> processor(PagePermissionRequestDTO requestDTO) {
-        LambdaQueryWrapper wrapper = PermissionSupport.buildWrapper(requestDTO.getAppId(),
+        LambdaQueryWrapper wrapper = PermissionSupport.buildWrapper(requestDTO.getAppId(),requestDTO.getBusiness(),
                 requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
 
         IPage<PermissionDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());

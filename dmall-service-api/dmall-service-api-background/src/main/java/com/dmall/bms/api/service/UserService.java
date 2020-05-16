@@ -1,8 +1,14 @@
 package com.dmall.bms.api.service;
 
+import com.dmall.bms.api.dto.permission.response.tab.TabPermissionResponseDTO;
+import com.dmall.bms.api.dto.user.request.PageUserRequestDTO;
+import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
+import com.dmall.bms.api.dto.user.request.UpdatePasswordRequestDTO;
+import com.dmall.bms.api.dto.user.request.UpdateUserRequestDTO;
 import com.dmall.bms.api.dto.user.response.UserResponseDTO;
-import com.dmall.bms.api.dto.user.request.*;
+import com.dmall.bms.api.dto.user.response.UserRoleResponseDTO;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.CheckedDTO;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
 import io.swagger.annotations.Api;
@@ -14,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @description: 后台用户服务
@@ -74,10 +81,20 @@ public interface UserService {
     BaseResult<UploadResult> uploadIcon(@NotNull(message = "头像不能为空") MultipartFile file);
 
     @ApiOperation(value = "设置角色")
-    @PostMapping("/setRoles")
-    BaseResult<Long> setRoles(@Valid @RequestBody SetRolesRequestDTO requestDTO);
+    @PostMapping("/setRole")
+    BaseResult<Long> setRole(@Valid @RequestBody CheckedDTO requestDTO);
 
     @ApiOperation(value = "设置权限")
-    @PostMapping("/setPermissions")
-    BaseResult<Long> setPermissions(@Valid @RequestBody SetPermissionsExtRequestDTO requestDTO);
+    @PostMapping("/setPermission")
+    BaseResult<Long> setPermission(@Valid @RequestBody CheckedDTO requestDTO);
+
+    @GetMapping("/roleList/{id}")
+    @ApiOperation(value = "根据id查询后台用户")
+    @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<UserRoleResponseDTO>> roleList(@PathVariable("id") Long id);
+
+    @GetMapping("/tab/{id}")
+    @ApiOperation(value = "权限tab")
+    @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<TabPermissionResponseDTO>> tab(@PathVariable("id") Long id);
 }

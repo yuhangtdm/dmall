@@ -4,7 +4,7 @@ import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
-import com.dmall.bms.service.impl.support.PermissionSupport;
+import com.dmall.bms.service.support.PermissionSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;

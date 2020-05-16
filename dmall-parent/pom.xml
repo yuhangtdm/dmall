@@ -45,6 +45,7 @@
         <xxl-job-core.version>2.1.2</xxl-job-core.version>
         <alipay-sdk-java.version>4.9.79.ALL</alipay-sdk-java.version>
         <guava.version>29.0-jre</guava.version>
+        <reflections.version>0.9.12</reflections.version>
     </properties>
 
     <dependencies>
@@ -124,7 +125,6 @@
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
-
             <!--druid数据源-->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -136,7 +136,6 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
-
             <!--elasticsearch-->
             <dependency>
                 <groupId>io.searchbox</groupId>
@@ -148,28 +147,24 @@
                 <artifactId>jna</artifactId>
                 <version>${elasticsearch.jna.version}</version>
             </dependency>
-
             <!--hutool工具类-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-
             <!--fastjson-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-
             <!--logstash-->
             <dependency>
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash.logback.version}</version>
             </dependency>
-
             <!-- 七牛云 -->
             <dependency>
                 <groupId>com.qiniu</groupId>
@@ -182,7 +177,6 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
             </dependency>
-
             <!--httpClient-->
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -194,28 +188,24 @@
                 <artifactId>httpmime</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
-
             <!-- jsoup -->
             <dependency>
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
             </dependency>
-
             <!--模板引擎-->
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity-engine-core.version}</version>
             </dependency>
-
             <!--shiro-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro-spring.version}</version>
             </dependency>
-
             <!--zipkin-->
             <dependency>
                 <groupId>io.zipkin.java</groupId>
@@ -237,12 +227,6 @@
                 <artifactId>zipkin-autoconfigure-storage-elasticsearch-http</artifactId>
                 <version>${zipkin.elasticsearch.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-pool</artifactId>
-                <version>${activemq-pool.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
@@ -262,6 +246,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
             </dependency>
 
             <!--======================本项目模块======================-->

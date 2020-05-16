@@ -8,6 +8,7 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
     // 初始化表格数据
     crud.initPage('user', bmsUrl + '/user/page', buildColumn());
     crud.initSelect('status');
+
     /**
      * 构建table列
      */
@@ -22,7 +23,7 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
                 {field: 'email', title: '邮箱'},
                 {field: 'realName', title: '真实姓名'},
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
-                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 250}
+                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 380}
             ]
         ];
     }
@@ -56,6 +57,12 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
                 break;
             case 'resetPassword':
                 crud.confirm("确定重置密码?", bmsUrl + '/user/resetPassword/' + data.id);
+                break;
+            case 'setRole':
+                crud.openT('/page/system/user/setRole.html', '设置角色');
+                break;
+            case 'setPermission':
+                crud.openT('/page/system/user/setPermission.html', '设置权限');
                 break;
             case 'delete':
                 crud.delete("确定删除该用户?", bmsUrl + '/user/' + data.id);

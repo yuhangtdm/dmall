@@ -8,9 +8,9 @@ import com.dmall.bms.generator.dataobject.RolePermissionDO;
 import com.dmall.bms.generator.mapper.PermissionMapper;
 import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.generator.mapper.RolePermissionMapper;
-import com.dmall.bms.service.impl.support.RolePermissionSupport;
+import com.dmall.bms.service.support.RolePermissionSupport;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.dto.TreeCheckedDTO;
+import com.dmall.common.dto.CheckedDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/2/20 21:52
  */
 @Component
-public class SetPermissionHandler extends AbstractCommonHandler<TreeCheckedDTO, RolePermissionDO, Long> {
+public class SetPermissionHandler extends AbstractCommonHandler<CheckedDTO, RolePermissionDO, Long> {
 
     @Autowired
     private RoleMapper roleMapper;
@@ -40,7 +40,7 @@ public class SetPermissionHandler extends AbstractCommonHandler<TreeCheckedDTO, 
     private RolePermissionSupport rolePermissionSupport;
 
     @Override
-    public BaseResult<Long> validate(TreeCheckedDTO requestDTO) {
+    public BaseResult<Long> validate(CheckedDTO requestDTO) {
         // 角色必须存在
         RoleDO roleDO = roleMapper.selectById(requestDTO.getId());
         if (roleDO == null) {
@@ -55,7 +55,7 @@ public class SetPermissionHandler extends AbstractCommonHandler<TreeCheckedDTO, 
     }
 
     @Override
-    public BaseResult<Long> processor(TreeCheckedDTO requestDTO) {
+    public BaseResult<Long> processor(CheckedDTO requestDTO) {
         List<RolePermissionDO> listByRoleId = rolePermissionSupport.listByRoleId(requestDTO.getId());
         Set<Long> permissionIds = requestDTO.getRelateIds();
         // 角色列表为空 只是新增

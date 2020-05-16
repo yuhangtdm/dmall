@@ -3,7 +3,7 @@ package com.dmall.bms.service.impl.deliverwarehouse.handler;
 import com.dmall.bms.api.dto.deliverwarehouse.UpdateDeliverWarehouseRequestDTO;
 import com.dmall.bms.generator.dataobject.DeliverWarehouseDO;
 import com.dmall.bms.generator.mapper.DeliverWarehouseMapper;
-import com.dmall.bms.service.impl.support.DeliverWarehouseSupport;
+import com.dmall.bms.service.support.DeliverWarehouseSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;

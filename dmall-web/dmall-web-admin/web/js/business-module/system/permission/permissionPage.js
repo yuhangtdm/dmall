@@ -18,12 +18,12 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
                 {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: '权限编号', sort: true},
                 {field: 'name', title: '权限名称'},
-                {field: 'appId', title: '服务id'},
+                {field: 'appId', title: '服务id', width: 250},
                 {field: 'uri', title: '权限地址'},
                 {field: 'method', title: '请求方式'},
                 {field: 'name', title: '权限名称'},
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
-                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 250}
+                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 200}
             ]
         ];
     }

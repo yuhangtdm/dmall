@@ -115,10 +115,12 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             url: url,
             async: false,
             beforeSend: function (request) {
+                parent.layer.load(1);
                 request.setRequestHeader("source", "admin");
                 request.setRequestHeader("token", getToken());
             },
             success: function (response) {
+                parent.layer.closeAll('loading');
                 if (response.code === '0') {
                     callback(response);
                 } else if (response.code === '408') {
@@ -130,7 +132,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                     error(response.msg);
                 }
             },
-            error: function (response) {
+            error: function () {
+                parent.layer.closeAll('loading');
                 layer.msg('服务器冒烟了', {icon: 2})
             },
         });
@@ -261,6 +264,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
      */
     function confirm(text, url) {
         layer.confirm(text, {icon: 3, title: '提示'}, function (index) {
+            layer.close(index);
             get(url, function () {
                 //  刷新页面的搜索
                 $("button[lay-filter='formSearch']").click();
@@ -416,7 +420,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             btn: ['提交'],
             yes: function (index, layero) {
                 //获取子页面的body元素
-                console.log('yes?');
                 layero.find('#submit').click();
             },
             // 层销毁后会回调

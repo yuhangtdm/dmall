@@ -20,6 +20,6 @@ public class TabPermissionResponseDTO {
     @ApiModelProperty(value = "服务名称", position = 2)
     private String appName;
 
-    @ApiModelProperty(value = "权限列表", position = 3)
-    private List<PermissionDTO> permissions;
+    @ApiModelProperty(value = "业务列表", position = 3)
+    private List<BusinessDTO> businessList;
 }

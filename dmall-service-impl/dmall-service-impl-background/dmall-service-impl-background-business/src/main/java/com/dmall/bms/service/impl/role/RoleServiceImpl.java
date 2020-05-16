@@ -1,12 +1,17 @@
 package com.dmall.bms.service.impl.role;
 
-import com.dmall.bms.api.dto.role.request.*;
+import com.dmall.bms.api.dto.permission.response.tab.TabPermissionResponseDTO;
+import com.dmall.bms.api.dto.role.request.ListRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.PageRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.SaveRoleRequestDTO;
+import com.dmall.bms.api.dto.role.request.UpdateRoleRequestDTO;
 import com.dmall.bms.api.dto.role.response.RoleResponseDTO;
 import com.dmall.bms.api.service.RoleService;
+import com.dmall.bms.service.impl.role.handler.TabPermissionHandler;
 import com.dmall.bms.service.impl.role.handler.*;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.common.dto.TreeCheckedDTO;
+import com.dmall.common.dto.CheckedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +53,9 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private GetMenusHandler getMenusHandler;
 
+    @Autowired
+    private TabPermissionHandler tabPermissionHandler;
+
     @Override
     public BaseResult<Long> save(@RequestBody SaveRoleRequestDTO requestDTO) {
         return saveRoleHandler.handler(requestDTO);
@@ -80,13 +88,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> setPermission(TreeCheckedDTO requestDTO) {
+    public BaseResult<Long> setPermission(CheckedDTO requestDTO) {
         return setPermissionHandler.handler(requestDTO);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> setMenu(TreeCheckedDTO requestDTO) {
+    public BaseResult<Long> setMenu(CheckedDTO requestDTO) {
         return setMenuHandler.handler(requestDTO);
     }
 
@@ -95,5 +103,8 @@ public class RoleServiceImpl implements RoleService {
         return getMenusHandler.handler(id);
     }
 
-
+    @Override
+    public BaseResult<List<TabPermissionResponseDTO>> tab(Long id) {
+        return tabPermissionHandler.handler(id);
+    }
 }
