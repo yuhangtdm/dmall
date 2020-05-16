@@ -1,7 +1,5 @@
 layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
-    var $ = layui.jquery,
-        form = layui.form,
-        treeTable = layui.treeTable,
+    var treeTable = layui.treeTable,
         crud = layui.crud;
 
     var options = {
@@ -16,8 +14,7 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
             iconIndex: 2,           // 折叠图标显示在第几列
             isPidData: true,        // 是否是id、pid形式数据
             idName: 'id',  // id字段名称
-            pidName: 'parentId',     // pid字段名称
-            childName: 'child',
+            pidName: 'parentId',
         },
         cols: buildColumn()
     };

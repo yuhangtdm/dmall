@@ -1,7 +1,6 @@
 package com.dmall.bms.service.impl.role.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dmall.bms.api.dto.role.request.SetPermissionsRequestDTO;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
 import com.dmall.bms.generator.dataobject.RoleDO;
@@ -11,6 +10,7 @@ import com.dmall.bms.generator.mapper.RoleMapper;
 import com.dmall.bms.generator.mapper.RolePermissionMapper;
 import com.dmall.bms.service.impl.support.RolePermissionSupport;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.TreeCheckedDTO;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/2/20 21:52
  */
 @Component
-public class RoleSetPermissionsHandler extends AbstractCommonHandler<SetPermissionsRequestDTO, RolePermissionDO, Long> {
+public class SetPermissionHandler extends AbstractCommonHandler<TreeCheckedDTO, RolePermissionDO, Long> {
 
     @Autowired
     private RoleMapper roleMapper;
@@ -40,53 +40,55 @@ public class RoleSetPermissionsHandler extends AbstractCommonHandler<SetPermissi
     private RolePermissionSupport rolePermissionSupport;
 
     @Override
-    public BaseResult<Long> validate(SetPermissionsRequestDTO requestDTO) {
+    public BaseResult<Long> validate(TreeCheckedDTO requestDTO) {
         // 角色必须存在
-        RoleDO roleDO = roleMapper.selectById(requestDTO.getRoleId());
+        RoleDO roleDO = roleMapper.selectById(requestDTO.getId());
         if (roleDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.ROLE_NOT_EXIST);
         }
         // 权限必须存在
-        List<PermissionDO> permissionDOS = permissionMapper.selectBatchIds(requestDTO.getPermissionIds());
-        if (permissionDOS.size() != requestDTO.getPermissionIds().size()) {
+        List<PermissionDO> permissionDOS = permissionMapper.selectBatchIds(requestDTO.getRelateIds());
+        if (permissionDOS.size() != requestDTO.getRelateIds().size()) {
             return ResultUtil.fail(BackGroundErrorEnum.PERMISSION_NOT_EXIST);
         }
         return ResultUtil.success();
     }
 
     @Override
-    public BaseResult<Long> processor(SetPermissionsRequestDTO requestDTO) {
-        List<RolePermissionDO> listByRoleId = rolePermissionSupport.listByRoleId(requestDTO.getRoleId());
-        Set<Long> permissionIds = requestDTO.getPermissionIds();
+    public BaseResult<Long> processor(TreeCheckedDTO requestDTO) {
+        List<RolePermissionDO> listByRoleId = rolePermissionSupport.listByRoleId(requestDTO.getId());
+        Set<Long> permissionIds = requestDTO.getRelateIds();
         // 角色列表为空 只是新增
         if (CollUtil.isEmpty(listByRoleId)) {
             for (Long permissionId : permissionIds) {
                 RolePermissionDO rolePermissionDO = new RolePermissionDO()
-                        .setRoleId(requestDTO.getRoleId())
+                        .setRoleId(requestDTO.getId())
                         .setPermissionId(permissionId);
                 rolePermissionMapper.insert(rolePermissionDO);
             }
         } else {
             // 先删后增
-            List<Long> oldPermissionIds = listByRoleId.stream().map(RolePermissionDO::getPermissionId).collect(Collectors.toList());
+            List<Long> oldPermissionIds = listByRoleId.stream().map(RolePermissionDO::getPermissionId)
+                    .collect(Collectors.toList());
             List<Long> insertPermissionIds = permissionIds.stream()
                     .filter(permissionId -> !oldPermissionIds.contains(permissionId))
                     .collect(Collectors.toList());
-            List<Long> deletePermissionIds = oldPermissionIds.stream().filter(permissionId -> !permissionIds.contains(permissionId))
+            List<Long> deletePermissionIds = oldPermissionIds.stream()
+                    .filter(permissionId -> !permissionIds.contains(permissionId))
                     .collect(Collectors.toList());
             if (CollUtil.isNotEmpty(deletePermissionIds)) {
-                rolePermissionSupport.delete(requestDTO.getRoleId(), deletePermissionIds);
+                rolePermissionSupport.delete(requestDTO.getId(), deletePermissionIds);
             }
             if (CollUtil.isNotEmpty(insertPermissionIds)) {
                 for (Long permissionId : insertPermissionIds) {
                     RolePermissionDO rolePermissionDO = new RolePermissionDO()
-                            .setRoleId(requestDTO.getRoleId())
+                            .setRoleId(requestDTO.getId())
                             .setPermissionId(permissionId);
                     rolePermissionMapper.insert(rolePermissionDO);
                 }
             }
         }
 
-        return ResultUtil.success(requestDTO.getRoleId());
+        return ResultUtil.success(requestDTO.getId());
     }
 }

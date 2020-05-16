@@ -7,9 +7,9 @@ layui.use(['form', 'crud'], function () {
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {
-        crud.post(bmsUrl + '/role', data.field, function () {
-            layer.close(parentIndex);
-        });
+         crud.post(bmsUrl + '/role', data.field, function () {
+             layer.close(parentIndex);
+         });
         return false;
     });
 });

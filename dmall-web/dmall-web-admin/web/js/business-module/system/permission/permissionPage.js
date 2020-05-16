@@ -17,7 +17,6 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
             [
                 {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: '权限编号', sort: true},
-                {field: 'code', title: '权限码', sort: true},
                 {field: 'name', title: '权限名称'},
                 {field: 'appId', title: '服务id'},
                 {field: 'uri', title: '权限地址'},
@@ -38,6 +37,8 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
     table.on('toolbar(permission)', function (obj) {
         if (obj.event === 'add') {
             crud.open('/page/system/permission/permissionAdd.html', '新增权限');
+        }else if (obj.event === 'import'){
+            crud.confirm('确认导入所有权限?', bmsUrl + '/permission/importAll');
         }
     });
 

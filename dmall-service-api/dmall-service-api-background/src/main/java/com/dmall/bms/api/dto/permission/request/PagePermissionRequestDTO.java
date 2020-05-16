@@ -20,9 +20,6 @@ public class PagePermissionRequestDTO extends PageRequestDTO {
     @ApiModelProperty(value = "服务appId", position = 1)
     private String appId;
 
-    @ApiModelProperty(value = "权限码", position = 2)
-    private String code;
-
     @ApiModelProperty(value = "权限名称", position = 3)
     private String name;
 

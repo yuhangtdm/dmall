@@ -1,4 +1,4 @@
-layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'iconPicker'], function (e) {
+layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'iconPicker', 'dtree'], function (e) {
     var layer = layui.layer;
     var $ = layui.$;
     var table = layui.table;
@@ -7,6 +7,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
     var formSelects = layui.formSelects;
     var laydate = layui.laydate;
     var iconPicker = layui.iconPicker;
+    var dtree = layui.dtree;
 
     // 请求后台的统一地址前缀
     window.requestUrl = 'http://localhost:7010';
@@ -57,6 +58,12 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         open: function (href, title, endCallback) {
             open(href, title, endCallback);
         },
+        openT: function (href, title, endCallback) {
+            openT(href, title, endCallback);
+        },
+        openTree: function (title, treeUrl, checkedUrl, confirmUrl) {
+            openTree(title, treeUrl, checkedUrl, confirmUrl);
+        },
         search: function (tableId, data) {
             return search(tableId, data);
         },
@@ -106,6 +113,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         $.ajax({
             type: 'get',
             url: url,
+            async: false,
             beforeSend: function (request) {
                 request.setRequestHeader("source", "admin");
                 request.setRequestHeader("token", getToken());
@@ -382,6 +390,35 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             area: [openWH[0] + 'px', openWH[1] + 'px'],
             offset: [openWH[2] + 'px', openWH[3] + 'px'],
             content: content,
+            end: function () {
+                //  刷新页面的搜索
+                if (endCallBack) {
+                    endCallBack();
+                } else {
+                    $("button[lay-filter='formSearch']").click();
+                }
+            }
+        });
+    }
+
+    function openT(href, title, endCallBack) {
+        var content = miniPage.getHrefContent(href);
+        var openWH = miniPage.getOpenWidthHeight();
+        layer.open({
+            title: title,
+            type: 1,
+            shade: 0.2,
+            maxmin: true,
+            shadeClose: true,
+            area: [openWH[0] + 'px', openWH[1] + 'px'],
+            offset: [openWH[2] + 'px', openWH[3] + 'px'],
+            content: content,
+            btn: ['提交'],
+            yes: function (index, layero) {
+                //获取子页面的body元素
+                console.log('yes?');
+                layero.find('#submit').click();
+            },
             // 层销毁后会回调
             end: function () {
                 //  刷新页面的搜索
@@ -394,6 +431,99 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         });
     }
 
+    /**
+     * 打开带复选框的树
+     * @param title 弹框的标题
+     * @param treeUrl 树数据源的地址
+     * @param checkedUrl 选中框数据源的地址
+     * @param confirmUrl 确认选择的地址
+     */
+    function openTree(title, treeUrl, checkedUrl, confirmUrl) {
+        layer.open({
+            type: 1,
+            title: title,
+            area: ["400px", "80%"],
+            content: '<ul id="openTree" class="dtree" data-id="0"></ul>',
+            btn: ['确认选择'],
+            success: function (layero, index) {
+                var DTree = dtree.render({
+                    elem: "#openTree",
+                    url: treeUrl,
+                    method: 'get',
+                    headers: {
+                        "source": "admin",
+                        "token": getToken()
+                    },
+                    checkbar: true,
+                    dataStyle: "layuiStyle",
+                    skin: "zdy",
+                    response: {statusCode: '0', title: "name"},
+                    success: function (response) {
+                        if (response.code === '0') {
+                            checkArr(response.data, checkedUrl);
+                        }
+                    }
+                });
+            }
+            ,
+            yes: function (index, layero) {
+                var checked = dtree.getCheckbarJsonArrParam("openTree"); // 获取当前选中节点
+                // 构建选中的数据
+                var checkedObj = {
+                    id: id,
+                    relateIds: checked.nodeId
+                };
+                post(confirmUrl, checkedObj, function () {
+                    layer.close(index);
+                })
+            }
+        });
+    }
+
+    /**
+     * 复选框的处理
+     */
+    function checkArr(arr, checkedUrl) {
+        get(checkedUrl, function (response) {
+            doCheck(arr, response.data);
+        })
+    }
+
+    /**
+     * 树 默认打开 复选框根据后台数据进行处理
+     */
+    function doCheck(arr, data) {
+        for (var i = 0; i < arr.length; i++) {
+            var checkArr = [];
+            var checkObj = {
+                'type': '0'
+            };
+            if (contains(data, arr[i].id)) {
+                checkObj.checked = '1';
+            } else {
+                checkObj.checked = '0';
+            }
+            checkArr.push(checkObj);
+            arr[i].checkArr = checkArr;
+            arr[i].spread = true;
+            if (arr[i].children) {
+                doCheck(arr[i].children, data);
+            }
+        }
+    }
+
+    /**
+     * list.contains
+     */
+    function contains(a, obj) {
+        var i = a.length;
+        while (i--) {
+            if (a[i].toString() === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * 搜索的公共方法

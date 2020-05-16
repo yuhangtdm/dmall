@@ -28,7 +28,7 @@ public class ListPermissionHandler extends AbstractCommonHandler<ListPermissionR
     @Override
     public BaseResult<List<PermissionResponseDTO>> processor(ListPermissionRequestDTO requestDTO) {
         LambdaQueryWrapper<PermissionDO> wrapper = PermissionSupport.buildWrapper(requestDTO.getAppId(),
-                requestDTO.getCode(), requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
+                 requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
 
         List<PermissionDO> permissionList = permissionMapper.selectList(wrapper);
 

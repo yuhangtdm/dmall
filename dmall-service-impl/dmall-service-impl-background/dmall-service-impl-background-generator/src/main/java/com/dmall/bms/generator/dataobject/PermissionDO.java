@@ -32,9 +32,9 @@ public class PermissionDO implements Serializable {
     private String appId;
 
     /**
-     * 权限码
+     * 业务模块
      */
-    private String code;
+    private String business;
 
     /**
      * 权限名称
@@ -50,6 +50,8 @@ public class PermissionDO implements Serializable {
      * 权限请求方式 GET; POST; PUT; DELETE
      */
     private String method;
+
+
 
     /**
      * 创建人

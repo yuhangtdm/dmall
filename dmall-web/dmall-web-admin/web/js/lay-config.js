@@ -28,8 +28,6 @@ layui.config({
     crud: 'crud/crud', // crud扩展
     iconPicker: 'iconPicker/iconPicker', // iconPicker扩展
     formSelects: 'formSelects/formSelects', // formSelects扩展
-    zTree: 'ztree/zTree', // zTree扩展
-    ztreecore: 'ztree/ztreecore',
-    ztreeexcheck: 'ztree/ztreeexcheck',
-    ztreeexedit: 'ztree/ztreeexedit',
+    eleTree: 'eletree/eleTree', // eleTree
+    dtree:'dtree/dtree',
 });

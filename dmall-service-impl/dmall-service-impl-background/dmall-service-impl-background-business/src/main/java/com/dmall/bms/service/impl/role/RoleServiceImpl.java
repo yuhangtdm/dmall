@@ -6,6 +6,7 @@ import com.dmall.bms.api.service.RoleService;
 import com.dmall.bms.service.impl.role.handler.*;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.common.dto.TreeCheckedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,13 @@ public class RoleServiceImpl implements RoleService {
     private PageRoleHandler pageRoleHandler;
 
     @Autowired
-    private RoleSetPermissionsHandler roleSetPermissionsHandler;
+    private SetPermissionHandler setPermissionHandler;
+
+    @Autowired
+    private SetMenuHandler setMenuHandler;
+
+    @Autowired
+    private GetMenusHandler getMenusHandler;
 
     @Override
     public BaseResult<Long> save(@RequestBody SaveRoleRequestDTO requestDTO) {
@@ -73,8 +80,20 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Long> setPermissions(SetPermissionsRequestDTO requestDTO) {
-        return roleSetPermissionsHandler.handler(requestDTO);
+    public BaseResult<Long> setPermission(TreeCheckedDTO requestDTO) {
+        return setPermissionHandler.handler(requestDTO);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> setMenu(TreeCheckedDTO requestDTO) {
+        return setMenuHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<Long>> getMenus(Long id) {
+        return getMenusHandler.handler(id);
+    }
+
 
 }

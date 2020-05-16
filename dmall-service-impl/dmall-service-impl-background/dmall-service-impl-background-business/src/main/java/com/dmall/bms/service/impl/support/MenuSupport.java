@@ -26,7 +26,7 @@ public class MenuSupport {
 
         for (MenuTreeResponseDTO menu : allMenus) {
             if (map.get(menu.getParentId()) != null) {
-                map.get(menu.getParentId()).getChild().add(menu);
+                map.get(menu.getParentId()).getChildren().add(menu);
             }
         }
         return resultMenus;

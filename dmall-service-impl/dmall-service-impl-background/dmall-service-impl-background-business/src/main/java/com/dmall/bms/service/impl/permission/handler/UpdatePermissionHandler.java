@@ -31,13 +31,9 @@ public class UpdatePermissionHandler extends AbstractCommonHandler<UpdatePermiss
         if (permissionDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.PERMISSION_NOT_EXIST);
         }
-        // 权限码唯一
-        PermissionDO byCode = permissionSupport.getByCode(requestDTO.getCode());
-        if (byCode != null && !byCode.getId().equals(permissionDO.getId())) {
-            return ResultUtil.fail(BackGroundErrorEnum.CODE_EXIST);
-        }
+
         // 请求方式+uri唯一
-        PermissionDO byUriAndMethod = permissionSupport.getByUriAndMethod(requestDTO.getUri(), requestDTO.getMethod());
+        PermissionDO byUriAndMethod = permissionSupport.getByUriAndMethod(permissionDO.getAppId(), requestDTO.getUri(), requestDTO.getMethod());
         if (byUriAndMethod != null && !byUriAndMethod.getId().equals(permissionDO.getId())) {
             return ResultUtil.fail(BackGroundErrorEnum.URI_METHOD_EXIST);
         }

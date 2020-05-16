@@ -18,19 +18,13 @@ public class PermissionSupport {
     @Autowired
     private PermissionMapper permissionMapper;
 
-    /**
-     * 根据权限code查询实体
-     */
-    public PermissionDO getByCode(String code) {
-        return permissionMapper.selectOne(Wrappers.<PermissionDO>lambdaQuery()
-                .eq(PermissionDO::getCode, code));
-    }
 
     /**
      * 根据uri和method查询实体
      */
-    public PermissionDO getByUriAndMethod(String uri, String method) {
+    public PermissionDO getByUriAndMethod(String appId, String uri, String method) {
         return permissionMapper.selectOne(Wrappers.<PermissionDO>lambdaQuery()
+                .eq(PermissionDO::getAppId, appId)
                 .eq(PermissionDO::getUri, uri)
                 .eq(PermissionDO::getMethod, method));
     }
@@ -38,10 +32,9 @@ public class PermissionSupport {
     /**
      * 构建公共的wrapper
      */
-    public static LambdaQueryWrapper buildWrapper(String appId, String code, String name, String uri, String method) {
+    public static LambdaQueryWrapper buildWrapper(String appId, String name, String uri, String method) {
         return Wrappers.<PermissionDO>lambdaQuery()
                 .eq(StrUtil.isNotBlank(appId), PermissionDO::getAppId, appId)
-                .like(StrUtil.isNotBlank(code), PermissionDO::getCode, code)
                 .like(StrUtil.isNotBlank(name), PermissionDO::getName, name)
                 .eq(StrUtil.isNotBlank(uri), PermissionDO::getUri, uri)
                 .eq(StrUtil.isNotBlank(method), PermissionDO::getMethod, method);

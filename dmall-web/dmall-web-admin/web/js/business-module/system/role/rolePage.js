@@ -18,7 +18,7 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
                 {field: 'name', title: '角色名称'},
                 {field: 'remark', title: '备注'},
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
-                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 250}
+                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 350}
             ]
         ];
     }
@@ -50,7 +50,17 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
             case 'delete':
                 crud.delete("确定删除该角色?", bmsUrl + '/role/' + data.id);
                 break;
+            case 'setMenu':
+                crud.openTree('选择菜单',
+                    bmsUrl + '/menu/tree',
+                    bmsUrl + '/role/getMenus/' + data.id,
+                    bmsUrl + '/role/setMenu');
+                break;
+            case 'setPermission':
+                crud.openT('/page/system/role/setPermission.html', '设置权限');
+                break;
         }
     });
 
-});
+})
+;

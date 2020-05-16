@@ -4,6 +4,7 @@ import com.dmall.bms.api.dto.role.request.*;
 import com.dmall.bms.api.dto.role.response.RoleResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
+import com.dmall.common.dto.TreeCheckedDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -46,8 +47,16 @@ public interface RoleService {
     @ApiOperation(value = "后台角色分页")
     BaseResult<ResponsePage<RoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
 
-    @PostMapping("/setPermissions")
+    @PostMapping("/setPermission")
     @ApiOperation(value = "设置权限")
-    BaseResult<Long> setPermissions(@RequestBody SetPermissionsRequestDTO requestDTO);
+    BaseResult<Long> setPermission(@Valid @RequestBody TreeCheckedDTO requestDTO);
 
+    @PostMapping("/setMenu")
+    @ApiOperation(value = "设置菜单")
+    BaseResult<Long> setMenu(@Valid @RequestBody TreeCheckedDTO requestDTO);
+
+    @GetMapping("/getMenus/{id}")
+    @ApiOperation(value = "根据角色id查询菜单列表")
+    @ApiImplicitParam(name = "id", value = "后台角色id", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<Long>> getMenus(@PathVariable("id") Long id);
 }

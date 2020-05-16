@@ -5,6 +5,7 @@ import com.dmall.bms.api.dto.permission.request.PagePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.SavePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.request.UpdatePermissionRequestDTO;
 import com.dmall.bms.api.dto.permission.response.PermissionResponseDTO;
+import com.dmall.bms.api.dto.permission.response.tab.TabPermissionResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import io.swagger.annotations.Api;
@@ -49,4 +50,12 @@ public interface PermissionService {
     @ApiOperation(value = "权限分页")
     BaseResult<ResponsePage<PermissionResponseDTO>> page(@RequestBody PagePermissionRequestDTO requestDTO);
 
+    @GetMapping("/tab/{id}")
+    @ApiOperation(value = "权限tab")
+    @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<TabPermissionResponseDTO>> tab(@PathVariable("id") Long id);
+
+    @GetMapping("/importAll")
+    @ApiOperation(value = "导入所有权限")
+    BaseResult importAll();
 }

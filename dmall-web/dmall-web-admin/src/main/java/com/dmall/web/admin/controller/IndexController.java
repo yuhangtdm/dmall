@@ -83,8 +83,8 @@ public class IndexController {
             menuInfoVO.setIcon(menuTreeResponse.getIcon());
             menuInfoVO.setHref(menuTreeResponse.getUrl());
             menuInfoVO.setTarget(menuTreeResponse.getTarget());
-            if (CollUtil.isNotEmpty(menuTreeResponse.getChild())) {
-                menuInfoVO.setChild(buildMenuInfo(menuTreeResponse.getChild()));
+            if (CollUtil.isNotEmpty(menuTreeResponse.getChildren())) {
+                menuInfoVO.setChild(buildMenuInfo(menuTreeResponse.getChildren()));
             }
             return menuInfoVO;
         }).collect(Collectors.toList());

@@ -22,19 +22,23 @@ public class SavePermissionRequestDTO implements Serializable {
     @NotNull(message = "服务id不能为空")
     private String appId;
 
-    @ApiModelProperty(value = "权限码", required = true, position = 2)
+    @ApiModelProperty(value = "业务模块", required = true, position = 2)
+    @NotNull(message = "业务模块不能为空")
+    private String business;
+
+    @ApiModelProperty(value = "权限码", required = true, position = 3)
     @NotBlank(message = "权限码不能为空")
     private String code;
 
-    @ApiModelProperty(value = "权限名称", required = true, position = 3)
+    @ApiModelProperty(value = "权限名称", required = true, position = 4)
     @NotBlank(message = "权限名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "权限地址", required = true, position = 4)
+    @ApiModelProperty(value = "权限地址", required = true, position = 5)
     @NotBlank(message = "权限地址不能为空")
     private String uri;
 
-    @ApiModelProperty(value = "请求方式", required = true, position = 5)
+    @ApiModelProperty(value = "请求方式", required = true, position = 6)
     @NotBlank(message = "请求方式不能为空")
     @ValueInEnum(HttpMethodEnum.class)
     private String method;
