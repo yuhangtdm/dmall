@@ -33,7 +33,7 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
     public BaseResult<ResponsePage<BrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
                 .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
-                .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
+                .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
                 .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
 
         Page<BrandDO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());

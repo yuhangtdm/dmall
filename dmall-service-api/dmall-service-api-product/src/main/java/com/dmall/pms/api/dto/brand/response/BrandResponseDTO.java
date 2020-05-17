@@ -1,5 +1,7 @@
 package com.dmall.pms.api.dto.brand.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +22,7 @@ public class BrandResponseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "品牌id", position = 1)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "品牌名称", required = true, position = 2)

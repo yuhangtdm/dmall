@@ -5,7 +5,7 @@ layui.use(['form', 'table', 'crud'], function () {
         crud = layui.crud;
 
     // 初始化表格数据
-    crud.initPage('role', bmsUrl + '/role/page', buildColumn());
+    crud.initPage('brand', pmsUrl + '/brand/page', buildColumn());
 
     /**
      * 构建table列
@@ -14,9 +14,11 @@ layui.use(['form', 'table', 'crud'], function () {
         return [
             [
                 {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: '角色编号', sort: true},
-                {field: 'name', title: '角色名称'},
-                {field: 'remark', title: '备注'},
+                {field: 'id', title: '品牌编号', sort: true},
+                {field: 'logo', title: '品牌logo', templet: "<div>{{layui.crud.showImg(d.logo)}}</div>"},
+                {field: 'name', title: '品牌名称'},
+                {field: 'englishName', title: '英文名称'},
+                {field: 'firstLetter', title: '首字母'},
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
                 {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 320}
             ]
@@ -25,42 +27,32 @@ layui.use(['form', 'table', 'crud'], function () {
 
     // 监听搜索操作
     form.on('submit(formSearch)', function (data) {
-        return crud.search('role', data);
+        return crud.search('brand', data);
     });
 
     // 监听头工具栏事件
-    table.on('toolbar(role)', function (obj) {
+    table.on('toolbar(brand)', function (obj) {
         if (obj.event === 'add') {
-            crud.open('/page/system/role/roleAdd.html', '新增用户');
+            crud.open('/page/pms/brand/brandAdd.html', '新增品牌');
         }
     });
 
     //监听行工具事件
-    table.on('tool(role)', function (obj) {
+    table.on('tool(brand)', function (obj) {
         var data = obj.data;
         // 定义全局变量传输到子页面
         id = data.id;
         switch (obj.event) {
             case 'detail':
-                crud.open('/page/system/role/roleDetail.html', '角色详情');
+                crud.open('/page/pms/brand/brandDetail.html', '品牌详情');
                 break;
             case 'update':
-                crud.open('/page/system/role/roleUpdate.html', '修改角色');
+                crud.open('/page/pms/brand/brandUpdate.html', '修改品牌');
                 break;
             case 'delete':
-                crud.delete("确定删除该角色?", bmsUrl + '/role/' + data.id);
-                break;
-            case 'setMenu':
-                crud.openTree('选择菜单',
-                    bmsUrl + '/menu/tree',
-                    bmsUrl + '/role/getMenus/' + data.id,
-                    bmsUrl + '/role/setMenu');
-                break;
-            case 'setPermission':
-                crud.openT('/page/system/role/setPermission.html', '设置权限');
+                crud.delete("确定删除该品牌?", pmsUrl + '/brand/' + data.id);
                 break;
         }
     });
-
 })
 ;

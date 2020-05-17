@@ -1,9 +1,10 @@
 package com.dmall.pms.api.dto.product.response.attributevalue;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class ParamResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "属性类别id", position = 2)
     @NotNull(message = "属性类别id不能为空")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long attributeTypeId;
 
     @ApiModelProperty(value = "属性值列表", position = 2)

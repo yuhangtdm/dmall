@@ -12,7 +12,7 @@ layui.use(['form', 'miniPage', 'crud'], function () {
             return false;
         }
         // 提交请求
-        crud.post(bmsUrl + '/user/updatePassword', field, function (response) {
+        crud.post(bmsUrl + '/user/updatePassword', field, function () {
             window.location.href = 'page/login.html';
         })
         return false;

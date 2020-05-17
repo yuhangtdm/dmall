@@ -1,5 +1,7 @@
 package com.dmall.pms.api.dto.product.response.attributevalue;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +22,7 @@ public class SpecificationsResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "属性id", position = 1)
     @NotNull(message = "属性id不能为空")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long attributeId;
 
     @ApiModelProperty(value = "商品属性值列表", position = 2)

@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="../../../css/formSelects-v4.css">
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="brandUpdateForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">品牌名称</label>
+            <input type="hidden" name="id">
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="品牌名称不能为空" placeholder="请输入品牌名称"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">英文名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="englishName" placeholder="请输入英文名称"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">首字母</label>
+            <div class="layui-input-block">
+                <input type="text" name="firstLetter" placeholder="请输入首字母"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/pms/brand/brandUpdate.js"></script>

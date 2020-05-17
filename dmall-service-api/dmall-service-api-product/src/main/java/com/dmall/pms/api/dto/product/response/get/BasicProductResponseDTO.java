@@ -1,5 +1,7 @@
 package com.dmall.pms.api.dto.product.response.get;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,6 +17,7 @@ import java.util.Date;
 public class BasicProductResponseDTO {
 
     @ApiModelProperty(value = "商品编号", position = 1)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "商品名称", position = 3)

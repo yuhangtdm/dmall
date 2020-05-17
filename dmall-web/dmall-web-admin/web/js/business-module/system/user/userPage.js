@@ -16,7 +16,7 @@ layui.use(['form', 'table', 'crud', 'element'], function () {
         return [
             [
                 {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: 'ID', sort: true},
+                {field: 'id', title: '用户编号', sort: true},
                 {field: 'icon', title: '头像', templet: "<div>{{layui.crud.showImg(d.icon)}}</div>"},
                 {field: 'phone', title: '手机号'},
                 {field: 'nickName', title: '昵称'},

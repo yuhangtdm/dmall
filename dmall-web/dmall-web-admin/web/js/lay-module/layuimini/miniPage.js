@@ -118,7 +118,8 @@ layui.define(["element", "jquery", "layer"], function (exports) {
                     element.init();
                 },
                 error: function (xhr, textstatus, thrown) {
-                    window.location.href = '/page/404.html';
+                    miniPage.hashChange('/page/404.html');
+                    // window.location.href = '/page/404.html';
                     // return layer.msg('Status:' + xhr.status + '，' + xhr.statusText + '，请稍后再试！');
                 }
             });

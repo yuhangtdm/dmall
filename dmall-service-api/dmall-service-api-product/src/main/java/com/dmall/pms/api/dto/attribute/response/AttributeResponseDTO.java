@@ -3,6 +3,8 @@ package com.dmall.pms.api.dto.attribute.response;
 import com.dmall.pms.api.enums.HandAddStatusEnum;
 import com.dmall.pms.api.enums.InputTypeEnum;
 import com.dmall.pms.api.enums.TypeEnum;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +22,7 @@ import java.util.Date;
 public class AttributeResponseDTO {
 
     @ApiModelProperty(value = "id", position = 1)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "名称", position = 2)

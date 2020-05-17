@@ -1,39 +1,27 @@
 <div class="layuimini-main">
-    <form class="layui-form layuimini-form" id="permissionDetailForm">
+    <form class="layui-form layuimini-form" id="brandDetailForm">
         <div class="layui-form-item">
-            <label class="layui-form-label">权限编号</label>
+            <label class="layui-form-label">品牌编号</label>
             <div class="layui-input-block">
                 <input type="number" name="id" readonly class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">服务id</label>
-            <div class="layui-input-block">
-                <input type="text" name="appId" readonly class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">业务名称</label>
-            <div class="layui-input-block">
-                <input type="text" name="business" readonly class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">权限名称</label>
+            <label class="layui-form-label">品牌名称</label>
             <div class="layui-input-block">
                 <input type="text" name="name" readonly class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">权限地址</label>
+            <label class="layui-form-label ">英文名称</label>
             <div class="layui-input-block">
-                <input type="text" name="uri" readonly class="layui-input">
+                <input type="text" name="englishName" readonly class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">请求方式</label>
+            <label class="layui-form-label ">首字母</label>
             <div class="layui-input-block">
-                <select id="method" name="method" selectName="HttpMethodEnum"></select>
+                <input type="text" name="firstLetter" readonly class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -62,4 +50,4 @@
         </div>
     </form>
 </div>
-<script src="../../../js/business-module/system/permission/permissionDetail.js"></script>
+<script src="../../../js/business-module/pms/brand/brandDetail.js"></script>

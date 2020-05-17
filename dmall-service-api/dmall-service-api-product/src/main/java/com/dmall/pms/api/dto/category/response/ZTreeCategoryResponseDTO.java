@@ -1,6 +1,8 @@
 package com.dmall.pms.api.dto.category.response;
 
 import com.dmall.pms.api.enums.LevelEnum;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +22,7 @@ public class ZTreeCategoryResponseDTO implements Serializable {
     private static final long serialVersionUID = 7853335345390628555L;
 
     @ApiModelProperty(value = "id", position = 1)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "上级id", position = 2)

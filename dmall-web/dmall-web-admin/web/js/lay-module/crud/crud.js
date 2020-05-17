@@ -891,7 +891,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
      */
     function showImg(imgUrl) {
         if (imgUrl) {
-            return '<img src=' + imgUrl + '  height="30px"  width="30px"/>';
+            return '<img src=' + imgUrl + ' />';
         } else {
             return '';
         }

@@ -69,7 +69,7 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
         return [
             [
                 {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: 'ID'},
+                {field: 'id', title: '菜单编号'},
                 {field: 'name', title: '名称'},
                 {field: 'icon', title: '图标', templet: '<div><i class="layui-icon {{d.icon}}"></i></div>'},
                 {field: 'type', title: '类型', templet: "<div>{{layui.crud.getDesc(d.type,'MenuTypeEnum')}}</div>"},

@@ -1,9 +1,10 @@
 package com.dmall.pms.api.dto.sku.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class MediaResponseDTO implements Serializable {
     private static final long serialVersionUID = -2057535932319627063L;
 
     @ApiModelProperty(value = "skuMediaId", position = 1)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long skuMediaId;
 
     @ApiModelProperty(value = "key", position = 2)

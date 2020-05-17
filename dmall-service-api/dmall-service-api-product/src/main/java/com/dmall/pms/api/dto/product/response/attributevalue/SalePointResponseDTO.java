@@ -1,9 +1,10 @@
 package com.dmall.pms.api.dto.product.response.attributevalue;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +20,7 @@ public class SalePointResponseDTO implements Serializable {
     private static final long serialVersionUID = 1441839800494180753L;
 
     @ApiModelProperty(value = "属性id", position = 1)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long attributeId;
 
     @ApiModelProperty(value = "商品属性值列表", position = 2)

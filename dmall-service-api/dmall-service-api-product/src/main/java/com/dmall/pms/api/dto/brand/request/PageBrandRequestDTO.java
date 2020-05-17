@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.validator.constraints.Length;
 
 /**
  * @description: 品牌分页请求实体
@@ -23,7 +22,6 @@ public class PageBrandRequestDTO extends PageRequestDTO {
     private String englishName;
 
     @ApiModelProperty(value = "首字母", position = 7)
-    @Length(max = 1, min = 1, message = "首字母长度固定一位")
     private String firstLetter;
 
 }

@@ -1,5 +1,7 @@
 package com.dmall.pms.api.dto.product.response.get;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,6 +20,7 @@ public class SkuListResponseDTO implements Serializable {
     private static final long serialVersionUID = 3640609472202223262L;
 
     @ApiModelProperty(value = "sku编号", position = 1)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long skuId;
 
     @ApiModelProperty(value = "价格", position = 2)
