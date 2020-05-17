@@ -22,7 +22,7 @@ layui.use(['form', 'crud'], function () {
             'password': form.password,
             'rememberMe': form.rememberMe
         };
-        crud.post(ssoUrl +'/admin/login', loginObj, loginSuccess);
+        crud.post(ssoUrl + '/admin/login', loginObj, loginSuccess);
         return false;
     });
 
@@ -36,11 +36,9 @@ layui.use(['form', 'crud'], function () {
                 value: response.data.token
             }
             layui.data('token', obj);
-            crud.msgBack('登录成功', function () {
-                window.location.href = '/';
-            });
+            window.location.href = '/';
         } else {
-           crud.error(response.msg);
+            crud.error(response.msg);
         }
     }
 

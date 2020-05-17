@@ -18,7 +18,7 @@ layui.use(['form', 'crud'], function () {
         }
         $("#role").append(str);
         form.render();
-    });
+    }, parentIndex);
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {
@@ -30,7 +30,6 @@ layui.use(['form', 'crud'], function () {
             id: id,
             relateIds: relateIds
         }
-        console.log(roleObj);
         crud.post(bmsUrl + '/user/setRole', roleObj, function () {
             layer.close(parentIndex);
         });

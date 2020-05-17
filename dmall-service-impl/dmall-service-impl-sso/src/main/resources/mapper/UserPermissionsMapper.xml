@@ -5,8 +5,7 @@
     <select id="listByPhone" resultType="com.dmall.sso.api.dto.admin.PermissionResponseDTO">
        SELECT DISTINCT
 			p.id,
-			p. CODE,
-			p. NAME,
+			p.name,
 			p.uri,
 			p.method
 		FROM
@@ -25,8 +24,7 @@
 		UNION
 			SELECT DISTINCT
 				p.id,
-				p. CODE,
-				p. NAME,
+				p.name,
 				p.uri,
 				p.method
 			FROM

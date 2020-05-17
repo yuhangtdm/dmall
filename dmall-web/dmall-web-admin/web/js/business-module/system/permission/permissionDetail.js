@@ -1,4 +1,5 @@
 layui.use(['form', 'crud'], function () {
     var crud = layui.crud;
-    crud.fillForm(bmsUrl + '/permission/' + id, 'permissionDetailForm');
+    var parentIndex = layer.index;
+    crud.fillForm(bmsUrl + '/permission/' + id, 'permissionDetailForm', parentIndex);
 });

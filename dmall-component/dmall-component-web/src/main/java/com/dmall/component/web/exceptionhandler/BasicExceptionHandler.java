@@ -1,6 +1,7 @@
 package com.dmall.component.web.exceptionhandler;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dmall.common.constants.WebConstants;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.enums.BasicStatusEnum;
@@ -144,7 +145,9 @@ public class BasicExceptionHandler {
         if (CollUtil.isNotEmpty(data)) {
             log.error("enter the param exception Handler,{}", data);
         }
-        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST, CollUtil.isEmpty(error) ? data : error));
+        List<String> strings = CollUtil.isEmpty(error) ? data : error;
+        String errMsg = CollUtil.join(strings, StrUtil.COMMA);
+        return getCustomException(request, ResultUtil.fail(BasicStatusEnum.BAD_REQUEST.getCode(), errMsg));
     }
 
     /**

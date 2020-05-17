@@ -10,10 +10,10 @@ import com.dmall.common.util.ResultUtil;
 import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.sso.api.dto.admin.AdminLoginRequestDTO;
 import com.dmall.sso.api.dto.admin.AdminLoginResponseDTO;
+import com.dmall.sso.api.dto.admin.UpdateLoginDTO;
 import com.dmall.sso.api.enums.SsoErrorEnum;
 import com.dmall.sso.api.service.AdminLoginService;
 import com.dmall.sso.service.impl.SsoProperties;
-import com.dmall.sso.service.impl.admin.dataobject.UserDO;
 import com.dmall.sso.service.impl.admin.mapper.UserMapper;
 import com.google.common.collect.Lists;
 import org.apache.shiro.SecurityUtils;
@@ -124,20 +124,20 @@ public class AdminLoginServiceImpl implements AdminLoginService {
     }
 
     @Override
-    public BaseResult<Void> updateLogin(Long id) {
-        UserDO userDO = userMapper.selectById(id);
-        if (userDO != null) {
-            List<Object> values = mapCacheUtil.values(userDO.getPhone());
-            List<String> tokens = values.stream().map(Object::toString).collect(Collectors.toList());
-            for (String token : tokens) {
-                AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
-                if (adminUserDTO != null) {
-                    adminUserDTO.setNickName(userDO.getNickName());
-                    adminUserDTO.setPhone(userDO.getPhone());
-                    adminUserDTO.setRealName(userDO.getRealName());
-                    adminUserDTO.setIcon(userDO.getIcon());
-                    adminUserDTO.setWarehouseId(userDO.getWarehouseId());
-                    redisTemplate.opsForValue().set(token, adminUserDTO, redisTemplate.getExpire(token));
+    public BaseResult<Void> updateLogin(UpdateLoginDTO requestDTO) {
+        List<Object> values = mapCacheUtil.values(requestDTO.getPhone());
+        List<String> tokens = values.stream().map(Object::toString).collect(Collectors.toList());
+        for (String token : tokens) {
+            AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
+            if (adminUserDTO != null) {
+                adminUserDTO.setNickName(requestDTO.getNickName());
+                adminUserDTO.setPhone(requestDTO.getPhone());
+                adminUserDTO.setRealName(requestDTO.getRealName());
+                adminUserDTO.setIcon(requestDTO.getIcon());
+                adminUserDTO.setWarehouseId(requestDTO.getWarehouseId());
+                Long expire = redisTemplate.getExpire(token, TimeUnit.SECONDS);
+                if (expire != null) {
+                    redisTemplate.opsForValue().set(token, adminUserDTO, expire, TimeUnit.SECONDS);
                 }
             }
         }

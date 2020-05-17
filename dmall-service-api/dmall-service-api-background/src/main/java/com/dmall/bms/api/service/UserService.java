@@ -32,16 +32,16 @@ import java.util.List;
 public interface UserService {
 
     @PostMapping
-    @ApiOperation(value = "新增后台用户")
+    @ApiOperation(value = "新增用户")
     BaseResult<Long> save(@Valid @RequestBody SaveUserRequestDTO requestDTO);
 
     @GetMapping("/disable/{id}")
-    @ApiOperation(value = "启用后台用户")
+    @ApiOperation(value = "禁用用户")
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> disable(@PathVariable("id") Long id);
 
     @GetMapping("/enable/{id}")
-    @ApiOperation(value = "启用后台用户")
+    @ApiOperation(value = "启用用户")
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> enable(@PathVariable("id") Long id);
 
@@ -56,7 +56,7 @@ public interface UserService {
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
     @PutMapping
-    @ApiOperation(value = "修改后台用户")
+    @ApiOperation(value = "修改信息")
     BaseResult<Long> update(@Valid @RequestBody UpdateUserRequestDTO requestDTO);
 
     @PostMapping("/updatePassword")
@@ -64,16 +64,16 @@ public interface UserService {
     BaseResult<Long> updatePassword(@Valid @RequestBody UpdatePasswordRequestDTO requestDTO);
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "根据id查询后台用户")
+    @ApiOperation(value = "根据id查询用户")
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
     BaseResult<UserResponseDTO> get(@PathVariable("id") Long id);
 
     @GetMapping
-    @ApiOperation(value = "根据id查询后台用户")
+    @ApiOperation(value = "查询当前登录用户")
     BaseResult<UserResponseDTO> getCurrentUser();
 
     @PostMapping("/page")
-    @ApiOperation(value = "后台用户分页")
+    @ApiOperation(value = "用户分页")
     BaseResult<ResponsePage<UserResponseDTO>> page(@RequestBody PageUserRequestDTO requestDTO);
 
     @ApiOperation(value = "上传用户头像")
@@ -89,12 +89,12 @@ public interface UserService {
     BaseResult<Long> setPermission(@Valid @RequestBody CheckedDTO requestDTO);
 
     @GetMapping("/roleList/{id}")
-    @ApiOperation(value = "根据id查询后台用户")
+    @ApiOperation(value = "根据用户id查询角色列表")
     @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
     BaseResult<List<UserRoleResponseDTO>> roleList(@PathVariable("id") Long id);
 
     @GetMapping("/tab/{id}")
-    @ApiOperation(value = "权限tab")
-    @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "int", paramType = "path")
+    @ApiOperation(value = "用户权限tab")
+    @ApiImplicitParam(name = "id", value = "后台用户id", required = true, dataType = "int", paramType = "path")
     BaseResult<List<TabPermissionResponseDTO>> tab(@PathVariable("id") Long id);
 }

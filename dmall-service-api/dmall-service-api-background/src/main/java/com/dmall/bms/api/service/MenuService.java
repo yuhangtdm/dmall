@@ -27,7 +27,7 @@ public interface MenuService {
     BaseResult<Long> save(@Valid @RequestBody SaveMenuRequestDTO requestDTO);
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除菜单表 ")
+    @ApiOperation(value = "删除菜单")
     @ApiImplicitParam(name = "id", value = "菜单表 id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
@@ -41,7 +41,7 @@ public interface MenuService {
     BaseResult<GetMenuResponseDTO> get(@PathVariable("id") Long id);
 
     @GetMapping("/treePage")
-    @ApiOperation(value = "菜单Tree分页")
+    @ApiOperation(value = "菜单树分页")
     BaseResult<List<PageMenuResponseDTO>> treePage();
 
     @GetMapping("/tree")

@@ -16,15 +16,15 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/5/16 11:04
  */
 @Component
-public class GetMenusHandler extends AbstractCommonHandler<Long, RoleMenuDO, List> {
+public class GetMenusHandler extends AbstractCommonHandler<Long, RoleMenuDO, List<String>> {
 
     @Autowired
     private RoleMenuSupport roleMenuSupport;
 
     @Override
-    public BaseResult<List<Long>> processor(Long roleId) {
-        List<Long> menuIds = roleMenuSupport.listByRoleId(roleId).stream()
-                .map(RoleMenuDO::getMenuId).collect(Collectors.toList());
+    public BaseResult<List<String>> processor(Long roleId) {
+        List<String> menuIds = roleMenuSupport.listByRoleId(roleId).stream()
+                .map(RoleMenuDO::getMenuId).map(String::valueOf).collect(Collectors.toList());
         return ResultUtil.success(menuIds);
     }
 }

@@ -20,7 +20,7 @@ layui.use(['form', 'crud'], function () {
                 var business = response.data[i].businessList[j];
                 str += business.name + "&nbsp;&nbsp;&nbsp;&nbsp;";
                 for (var k = 0; k < business.permissions.length; k++) {
-                    if (k !== 0 && k % 10 === 0){
+                    if (k !== 0 && k % 10 === 0) {
                         str += "<br/><br/>";
                     }
                     var permission = business.permissions[k];
@@ -43,7 +43,7 @@ layui.use(['form', 'crud'], function () {
             }
             form.render();
         }
-    })
+    }, parentIndex)
 
     $("#submit").bind('click', function () {
         var relateIds = [];

@@ -5,6 +5,7 @@ import com.dmall.bms.feign.AdminLoginFeign;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -31,8 +32,11 @@ public class DeleteUserHandler extends AbstractCommonHandler<Long, UserDO, Long>
         if (userDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
         }
+        if (YNEnum.N.getCode().equals(userDO.getStatus())){
+            return ResultUtil.fail(BackGroundErrorEnum.DELETE_ERROR);
+        }
         userMapper.deleteById(id);
-        // 退出登录
+        // 清空登录
         BaseResult<Void> clearLoginResult = adminLoginFeign.clearLogin(userDO.getPhone());
         if (!clearLoginResult.getResult()){
             throw new BusinessException(clearLoginResult.getCode(), clearLoginResult.getMsg());

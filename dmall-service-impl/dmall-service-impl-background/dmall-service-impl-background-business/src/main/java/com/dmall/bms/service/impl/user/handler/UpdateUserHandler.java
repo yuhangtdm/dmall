@@ -9,8 +9,10 @@ import com.dmall.bms.service.support.DeliverWarehouseSupport;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.model.admin.AdminUserContextHolder;
 import com.dmall.common.model.admin.AdminUserDTO;
+import com.dmall.common.util.BeanUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
+import com.dmall.sso.api.dto.admin.UpdateLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,22 +46,15 @@ public class UpdateUserHandler extends AbstractCommonHandler<UpdateUserRequestDT
         if (!adminUserDTO.getId().equals(userDO.getId())) {
             return ResultUtil.fail(BackGroundErrorEnum.NO_AUTH_UPDATE);
         }
-
-        buildUserDO(userDO, requestDTO);
-        userMapper.updateById(userDO);
+        userMapper.updateById(dtoConvertDo(requestDTO, UserDO.class));
         // 更新登录信息
-        adminLoginFeign.updateLogin(userDO.getId());
+        UpdateLoginDTO updateLogin = BeanUtil.copyProperties(requestDTO, UpdateLoginDTO.class);
+        updateLogin.setPhone(userDO.getPhone());
+        BaseResult<Void> updateLoginResult = adminLoginFeign.updateLogin(updateLogin);
+        if (!updateLoginResult.getResult()) {
+            return ResultUtil.fail(updateLoginResult.getCode(), updateLoginResult.getMsg());
+        }
         return ResultUtil.success(userDO.getId());
-    }
-
-    private void buildUserDO(UserDO userDO, UpdateUserRequestDTO requestDTO) {
-        userDO.setNickName(requestDTO.getNickName());
-        userDO.setPhone(requestDTO.getPhone());
-        userDO.setRealName(requestDTO.getRealName());
-        userDO.setEmail(requestDTO.getEmail());
-        userDO.setIcon(requestDTO.getIcon());
-        userDO.setRemark(requestDTO.getRemark());
-        userDO.setWarehouseId(requestDTO.getWarehouseId());
     }
 
 }

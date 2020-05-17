@@ -4,10 +4,10 @@ import com.dmall.bms.api.dto.user.request.SaveUserRequestDTO;
 import com.dmall.bms.api.enums.BackGroundErrorEnum;
 import com.dmall.bms.generator.dataobject.UserDO;
 import com.dmall.bms.generator.mapper.UserMapper;
-import com.dmall.bms.service.support.DeliverWarehouseSupport;
 import com.dmall.bms.service.support.UserSupport;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.enums.YNEnum;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.rbac.shiro.util.PasswordUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
@@ -26,9 +26,6 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
 
     @Autowired
     private UserSupport userSupport;
-
-    @Autowired
-    private DeliverWarehouseSupport deliverWarehouseSupport;
 
     @Override
     public BaseResult<Long> validate(SaveUserRequestDTO requestDTO) {
@@ -51,6 +48,7 @@ public class SaveUserHandler extends AbstractCommonHandler<SaveUserRequestDTO, U
     @Override
     protected void customerConvertDo(UserDO result, SaveUserRequestDTO saveUserRequestDTO) {
         // 一期默认只有一个店铺
+        result.setStatus(YNEnum.Y.getCode());
         result.setMerchantsId(1L);
     }
 }

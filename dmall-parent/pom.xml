@@ -24,6 +24,7 @@
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
         <swagger-annotations.version>1.5.21</swagger-annotations.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
+        <dynamic-datasource-spring-boot-starter.version>3.0.0</dynamic-datasource-spring-boot-starter.version>
         <druid.version>1.1.10</druid.version>
         <spring-boot-admin.version>2.1.5</spring-boot-admin.version>
         <nacos-config-spring-boot.version>0.2.1</nacos-config-spring-boot.version>
@@ -124,6 +125,11 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot-starter.version}</version>
             </dependency>
             <!--druid数据源-->
             <dependency>

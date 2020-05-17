@@ -90,8 +90,6 @@ layui.define(["jquery", "miniMenu", "element", "miniPage", "miniTheme", "crud"],
                     }
                 }
             });
-
-
         },
 
         /**

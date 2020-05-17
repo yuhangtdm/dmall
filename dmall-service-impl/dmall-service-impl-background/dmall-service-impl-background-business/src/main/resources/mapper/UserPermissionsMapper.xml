@@ -10,7 +10,7 @@
 	    inner join bms_role r on r.id = rp.role_id
 	    inner join bms_user_role ur on ur.role_id = r.id
 	    inner join bms_user u on u.id = ur.user_id
-	    where u.user_id = #{userId} and p.is_deleted = 'N'
+	    where u.id = #{userId} and p.is_deleted = 'N'
 	    and rp.is_deleted = 'N' and r.is_deleted = 'N'
 	    and ur.is_deleted = 'N' and u.is_deleted = 'N'
     </select>
@@ -23,7 +23,7 @@
 	    inner join bms_role r on r.id = rp.role_id
 	    inner join bms_user_role ur on ur.role_id = r.id
 	    inner join bms_user u on u.id = ur.user_id
-	    where u.user_id = #{userId} and p.is_deleted = 'N'
+	    where u.id = #{userId} and p.is_deleted = 'N'
 	    and rp.is_deleted = 'N' and r.is_deleted = 'N'
 	    and ur.is_deleted = 'N' and u.is_deleted = 'N'
 	    UNION

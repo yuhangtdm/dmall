@@ -26,29 +26,29 @@ import java.util.List;
 public interface RoleService {
 
     @PostMapping
-    @ApiOperation(value = "新增后台角色")
+    @ApiOperation(value = "新增角色")
     BaseResult<Long> save(@Valid @RequestBody SaveRoleRequestDTO requestDTO);
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除后台角色")
+    @ApiOperation(value = "删除角色")
     @ApiImplicitParam(name = "id", value = "后台角色id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
     @PutMapping
-    @ApiOperation(value = "修改后台角色")
+    @ApiOperation(value = "修改角色")
     BaseResult<Long> update(@Valid @RequestBody UpdateRoleRequestDTO requestDTO);
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "根据id查询后台角色")
+    @ApiOperation(value = "根据id查询角色")
     @ApiImplicitParam(name = "id", value = "后台角色id", required = true, dataType = "int", paramType = "path")
     BaseResult<RoleResponseDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("/list")
-    @ApiOperation(value = "后台角色列表")
+    @ApiOperation(value = "角色列表")
     BaseResult<List<RoleResponseDTO>> list(@RequestBody ListRoleRequestDTO requestDTO);
 
     @PostMapping("/page")
-    @ApiOperation(value = "后台角色分页")
+    @ApiOperation(value = "角色分页")
     BaseResult<ResponsePage<RoleResponseDTO>> page(@RequestBody PageRoleRequestDTO requestDTO);
 
     @PostMapping("/setPermission")
@@ -62,10 +62,10 @@ public interface RoleService {
     @GetMapping("/getMenus/{id}")
     @ApiOperation(value = "根据角色id查询菜单列表")
     @ApiImplicitParam(name = "id", value = "后台角色id", required = true, dataType = "int", paramType = "path")
-    BaseResult<List<Long>> getMenus(@PathVariable("id") Long id);
+    BaseResult<List<String>> getMenus(@PathVariable("id") Long id);
 
     @GetMapping("/tab/{id}")
-    @ApiOperation(value = "权限tab")
+    @ApiOperation(value = "角色权限tab")
     @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "int", paramType = "path")
     BaseResult<List<TabPermissionResponseDTO>> tab(@PathVariable("id") Long id);
 }

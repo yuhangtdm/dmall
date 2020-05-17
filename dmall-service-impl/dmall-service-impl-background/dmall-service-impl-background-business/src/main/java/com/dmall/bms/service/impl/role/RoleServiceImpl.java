@@ -99,7 +99,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public BaseResult<List<Long>> getMenus(Long id) {
+    public BaseResult<List<String>> getMenus(Long id) {
         return getMenusHandler.handler(id);
     }
 

@@ -16,7 +16,7 @@ layui.use(['form', 'crud', 'iconPicker'], function () {
     crud.get(bmsUrl + '/menu/' + id, function (response) {
         crud.dataForm(response.data, 'catalogUpdateForm');
         iconPicker.checkIcon('icon', response.data.icon);
-    })
+    }, parentIndex)
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {

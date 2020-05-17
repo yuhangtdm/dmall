@@ -75,7 +75,7 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
     /**
      * 该用户名称已存在
      */
-    USER_NAME_EXIST("1040", "该用户名称已存在"),
+    USER_NAME_EXIST("1040", "该手机号已存在"),
 
     /**
      * 该用户不存在
@@ -116,6 +116,11 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
      * 菜单打开方式不能为空
      */
     TARGET_NOT_EMPTY("1048", "菜单打开方式不能为空"),
+
+    /**
+     * 当前状态不可删除
+     */
+    DELETE_ERROR("1049", "当前状态不可删除"),
 
     ;
     /**
