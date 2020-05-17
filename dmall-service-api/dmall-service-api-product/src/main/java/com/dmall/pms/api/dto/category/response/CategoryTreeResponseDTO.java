@@ -4,20 +4,22 @@ import com.dmall.pms.api.enums.LevelEnum;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
- * @description: ZTree树响应实体
+ * @description: 分类树响应实体
  * @author: created by hang.yu on 2019/11/24 18:30
  */
 @Data
-@ApiModel(value = "ZTreeCategoryResponseDTO", description = "ZTree分类树实体")
-public class ZTreeCategoryResponseDTO implements Serializable {
+@ApiModel(value = "CategoryTreeResponseDTO", description = "分类树响应实体")
+public class CategoryTreeResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 7853335345390628555L;
 
@@ -37,12 +39,15 @@ public class ZTreeCategoryResponseDTO implements Serializable {
     @ApiModelProperty(value = "级别", position = 5)
     private LevelEnum level;
 
-    @ApiModelProperty(value = "子元素", position = 6)
-    private List<ZTreeCategoryResponseDTO> children = Lists.newArrayList();
+    @ApiModelProperty(value = "是否打开", position = 6)
+    private Boolean spread;
 
-    @ApiModelProperty(value = "是否打开", position = 7)
-    private Boolean open = false;
-
-    @ApiModelProperty(value = "是否为父元素", position = 8)
+    @ApiModelProperty(value = "是否为父元素", position = 7)
     private Boolean isParent = false;
+
+    @ApiModelProperty(value = "子元素", position = 8)
+    private List<CategoryTreeResponseDTO> children = Lists.newArrayList();
+
+    @ApiModelProperty(value = "自定义数据", position = 9)
+    private Map<String, Object> basicData = Maps.newHashMap();
 }

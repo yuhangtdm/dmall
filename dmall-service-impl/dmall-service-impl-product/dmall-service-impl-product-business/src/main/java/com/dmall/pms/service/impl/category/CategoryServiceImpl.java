@@ -8,7 +8,7 @@ import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
-import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
+import com.dmall.pms.api.dto.category.response.CategoryTreeResponseDTO;
 import com.dmall.pms.api.service.CategoryService;
 import com.dmall.pms.service.impl.category.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     private ListCategoryHandler listCategoryHandler;
 
     @Autowired
-    private ZTreeCategoryHandler zTreeCategoryHandler;
+    private CategoryTreeHandler categoryTreeHandler;
 
     @Autowired
     private SetBrandHandler setBrandHandler;
@@ -80,8 +80,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public BaseResult<List<ZTreeCategoryResponseDTO>> zTree(Long parentId) {
-        return zTreeCategoryHandler.handler(parentId);
+    public BaseResult<List<CategoryTreeResponseDTO>> tree(Long parentId) {
+        return categoryTreeHandler.handler(parentId);
     }
 
     @Override

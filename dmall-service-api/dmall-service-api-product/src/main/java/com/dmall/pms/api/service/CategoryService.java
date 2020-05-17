@@ -8,7 +8,7 @@ import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
-import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
+import com.dmall.pms.api.dto.category.response.CategoryTreeResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -47,10 +47,10 @@ public interface CategoryService {
     @PostMapping("/list")
     BaseResult<List<CategoryResponseDTO>> list(@Valid @RequestBody ListCategoryRequestDTO requestDTO);
 
-    @ApiOperation(value = "分类zTree树")
+    @ApiOperation(value = "分类树")
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")
-    @GetMapping("/zTree/{parentId}")
-    BaseResult<List<ZTreeCategoryResponseDTO>> zTree(@PathVariable("parentId") Long parentId);
+    @GetMapping("/tree/{parentId}")
+    BaseResult<List<CategoryTreeResponseDTO>> tree(@PathVariable("parentId") Long parentId);
 
     @ApiOperation(value = "设置品牌")
     @PostMapping("/setBrand")

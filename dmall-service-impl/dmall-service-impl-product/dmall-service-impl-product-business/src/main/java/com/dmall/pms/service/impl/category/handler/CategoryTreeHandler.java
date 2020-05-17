@@ -6,12 +6,13 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
-import com.dmall.pms.api.dto.category.response.ZTreeCategoryResponseDTO;
+import com.dmall.pms.api.dto.category.response.CategoryTreeResponseDTO;
 import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019/11/24 18:36
  */
 @Component
-public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO, ZTreeCategoryResponseDTO> {
+public class CategoryTreeHandler extends AbstractCommonHandler<Long, CategoryDO, CategoryTreeResponseDTO> {
 
     @Autowired
     private CategoryMapper categoryMapper;
@@ -44,29 +45,34 @@ public class ZTreeCategoryHandler extends AbstractCommonHandler<Long, CategoryDO
                     .like(CategoryDO::getPath, categoryDO.getPath())
                     .orderByAsc(CategoryDO::getSort));
         }
-        Map<Long, ZTreeCategoryResponseDTO> zTreeMap = categoryDOList.stream()
-                .map(doo -> doConvertDto(doo, ZTreeCategoryResponseDTO.class))
-                .collect(Collectors.toMap(ZTreeCategoryResponseDTO::getId, responseDTO -> responseDTO));
+        Map<Long, CategoryTreeResponseDTO> treeMap = categoryDOList.stream()
+                .map(doo -> doConvertDto(doo, CategoryTreeResponseDTO.class))
+                .collect(Collectors.toMap(CategoryTreeResponseDTO::getId, responseDTO -> responseDTO));
 
         if (parentId != 0L) {
-            zTreeMap.get(parentId).setOpen(Boolean.TRUE);
+            treeMap.get(parentId).setSpread(Boolean.TRUE);
         }
-        return ResultUtil.success(tree(zTreeMap, parentId));
+        return ResultUtil.success(tree(treeMap, parentId));
     }
 
     @Override
-    protected void customerConvertDto(ZTreeCategoryResponseDTO result, CategoryDO doo) {
-        result.setOpen(Boolean.FALSE);
+    protected void customerConvertDto(CategoryTreeResponseDTO result, CategoryDO doo) {
+        result.setSpread(Boolean.FALSE);
         result.setIsParent(LevelEnum.ONE.getCode().equals(doo.getLevel())
                 || LevelEnum.TWO.getCode().equals(doo.getLevel()));
         result.setLevel(EnumUtil.getCodeDescEnum(LevelEnum.class, doo.getLevel()));
+        result.setName(result.getName().trim());
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("sort",result.getSort());
+        map.put("description",doo.getDescription());
+        result.setBasicData(map);
     }
 
     /**
      * 构建树
      */
-    private List<ZTreeCategoryResponseDTO> tree(Map<Long, ZTreeCategoryResponseDTO> zTreeMap, Long parentId) {
-        List<ZTreeCategoryResponseDTO> tree = Lists.newArrayList();
+    private List<CategoryTreeResponseDTO> tree(Map<Long, CategoryTreeResponseDTO> zTreeMap, Long parentId) {
+        List<CategoryTreeResponseDTO> tree = Lists.newArrayList();
         // 添加parentId自身
         zTreeMap.forEach((k, v) -> {
             if (parentId == 0L && ObjectUtil.equal(v.getParentId(), parentId)) {

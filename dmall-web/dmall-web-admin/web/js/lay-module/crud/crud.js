@@ -477,7 +477,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                     },
                     checkbar: true,
                     dataStyle: "layuiStyle",
-                    skin: "zdy",
+                    skin: "laySimple",
                     response: {statusCode: '0', title: "name"},
                     success: function (response) {
                         if (response.code === '0') {
