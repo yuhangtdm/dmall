@@ -14,7 +14,7 @@
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </encoder>
-        <file>${LOG_FILE_PATH}.log</file>
+        <file>${LOG_FILE_PATH}/${LOG_FILE}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>${LOG_FILE_MAX_SIZE:-200MB}</maxFileSize>
@@ -31,7 +31,7 @@
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </encoder>
-        <file>${LOG_FILE_PATH}_error.log</file>
+        <file>${LOG_FILE_PATH}/${LOG_FILE}_error.log</file>
         <!-- 滚动策略 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 设置error日志路径 -->

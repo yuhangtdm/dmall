@@ -1,12 +1,10 @@
 package com.dmall.pms.service.impl.brand;
 
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.CheckedDTO;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
-import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
-import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
-import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
-import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.request.*;
 import com.dmall.pms.api.dto.brand.response.BrandResponseDTO;
 import com.dmall.pms.api.service.BrandService;
 import com.dmall.pms.service.impl.brand.handler.*;
@@ -45,6 +43,12 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private UploadLogoHandler uploadLogoHandler;
 
+    @Autowired
+    private SetCategoryHandler setCategoryHandler;
+
+    @Autowired
+    private GetBrandCategoryHandler getBrandCategoryHandler;
+
     @Override
     public BaseResult<Long> save(@RequestBody SaveBrandRequestDTO requestDTO) {
         return saveBrandHandler.handler(requestDTO);
@@ -80,5 +84,14 @@ public class BrandServiceImpl implements BrandService {
         return uploadLogoHandler.handler(file);
     }
 
+    @Override
+    public BaseResult<Void> setCategory(@RequestBody CheckedDTO requestDTO) {
+        return setCategoryHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<String>> getCategory(Long id) {
+        return getBrandCategoryHandler.handler(id);
+    }
 
 }

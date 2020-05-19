@@ -13,6 +13,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label required">分类名称</label>
                             <div class="layui-input-block">
+                                <input type="hidden" id="id" name="id">
                                 <input type="text" id="name" name="name" lay-verify="required" lay-reqtext="分类名称不能为空"
                                        placeholder="请输入分类名称"
                                        class="layui-input">
@@ -27,9 +28,16 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
+                            <label class="layui-form-label ">排序</label>
+                            <div class="layui-input-block">
+                                <input type="number" id="sort" name="sort" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
                             <label class="layui-form-label ">分类描述</label>
                             <div class="layui-input-block">
-                                <textarea name="description" class="layui-textarea" placeholder="请输入分类描述"></textarea>
+                                <textarea id="description" name="description" class="layui-textarea"
+                                          placeholder="请输入分类描述"></textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">

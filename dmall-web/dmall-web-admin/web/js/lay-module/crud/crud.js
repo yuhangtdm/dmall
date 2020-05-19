@@ -76,8 +76,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         formatDate(date) {
             return formatDate(date);
         },
-        initSelect(selectId) {
-            initSelect(selectId);
+        initSelect(selectId, url) {
+            initSelect(selectId, url);
         },
         initFormSelect(formId) {
             initFormSelect(formId);
@@ -460,14 +460,26 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
      * @param confirmUrl 确认选择的地址
      */
     function openTree(title, treeUrl, checkedUrl, confirmUrl) {
+        var content = ' <div class="layui-inline" style="margin-top: 10px;margin-bottom: 10px">\n' +
+            '                            <label class="layui-form-label">节点名称</label>\n' +
+            '                            <div class="layui-input-inline">\n' +
+            '                                <input type="text" name="fuzzySearchInput" autocomplete="off" class="layui-input">\n' +
+            '                            </div>\n' +
+            '                        </div>\n' +
+            '                        <div class="layui-inline" style="margin-top: 10px;margin-bottom: 10px">\n' +
+            '                            <button class="layui-btn" id="search">\n' +
+            '                                <i class="layui-icon"></i>搜 索\n' +
+            '                            </button>\n' +
+            '                        </div><ul id="openTree" class="dtree" data-id="0"></ul>';
+        var DTree;
         layer.open({
             type: 1,
             title: title,
             area: ["400px", "80%"],
-            content: '<ul id="openTree" class="dtree" data-id="0"></ul>',
+            content: content,
             btn: ['确认选择'],
             success: function (layero, index) {
-                var DTree = dtree.render({
+                DTree = dtree.render({
                     elem: "#openTree",
                     url: treeUrl,
                     method: 'get',
@@ -481,7 +493,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                     response: {statusCode: '0', title: "name"},
                     success: function (response) {
                         if (response.code === '0') {
-                            checkArr(response.data, checkedUrl);
+                            if (checkedUrl) {
+                                checkArr(response.data, checkedUrl);
+                            }
                         }
                     }
                 });
@@ -499,6 +513,12 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 })
             }
         });
+        $("#search").click(function () {
+            var input = $("input[name='fuzzySearchInput']").val();
+            // 调用内置函数搜索节点
+            DTree.fuzzySearch(input);
+        })
+
     }
 
     /**
@@ -526,7 +546,11 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             }
             checkArr.push(checkObj);
             arr[i].checkArr = checkArr;
-            arr[i].spread = true;
+            if (arr[i].open === 'Y') {
+                arr[i].spread = true;
+            } else {
+                arr[i].spread = false;
+            }
             if (arr[i].children) {
                 doCheck(arr[i].children, data);
             }
@@ -693,34 +717,35 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
     /**
      * 初始化下拉框 包括单选 多选 联动选择  树
      */
-    function initSelect(selectId) {
-        select($("#" + selectId));
+    function initSelect(selectId, url) {
+        select($("#" + selectId), url);
     }
 
     /**
      * 下拉框具体的加载方法
      */
-    function select(sel) {
+    function select(sel, url) {
         var value = sel.val() || sel.attr("value");
         sel.empty();
         sel.append("<option value=''>请选择</option>");
         var xm = sel.attr("xm-select");
         // 下拉框的类型 normal-普通单选框  linkage-联动框 tree-树 region-省市区
         var type = sel.attr("selectType");
-        // 下拉框的请求地址
-        var url = sel.attr("selectUrl");
 
         // 省市区、联动、树
         selectOther(xm, type, url, value);
 
-        // 选择名称
-        var selectName = sel.attr("selectName");
-        // 单选、普通多选
-        if (url) {
-            selectByUrl(url, xm, type, value, sel);
-        } else if (selectName) {
-            selectByJson(selectName, xm, type, value, sel);
+        // 普通
+        if (type === 'normal') {
+            var selectName = sel.attr("selectName");
+            // 单选、普通多选
+            if (url) {
+                selectByUrl(url, xm, type, value, sel);
+            } else if (selectName) {
+                selectByJson(selectName, xm, type, value, sel);
+            }
         }
+
     }
 
     /**
@@ -744,6 +769,10 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             // 联动
             formSelects.data(xm, 'server', {
                 url: url,
+                header: {
+                    source: 'admin',
+                    token: getToken()
+                },
                 linkage: true,
                 success: function () {
                     if (value) {
@@ -755,6 +784,10 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             // 树
             formSelects.data(xm, 'server', {
                 url: url,
+                header: {
+                    source: 'admin',
+                    token: getToken()
+                },
                 success: function () {
                     if (value) {
                         formSelects.value(xm, value.split(","));
@@ -773,6 +806,10 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             //多选
             formSelects.data(xm, 'server', {
                 url: url,
+                header: {
+                    source: 'admin',
+                    token: getToken()
+                },
                 success: function () {
                     formSelects.value(xm, value.split(","));
                 }

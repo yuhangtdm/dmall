@@ -17,8 +17,17 @@ layui.use(['form', 'crud', 'dtree'], function () {
         dataStyle: "layuiStyle",
         skin: "zdy",
         toolbar: true,
+        menubar: true,
+        menubarTips:{
+            group: ["moveDown", "moveUp", "refresh"], //按钮组
+        },
         response: {statusCode: '0', title: "name"},
         toolbarShow: [], // 取消自带的操作
+        success: function (response) {
+            if (response.code === '0') {
+                update(response.data);
+            }
+        },
         toolbarFun: {
             loadToolbarBefore: function (buttons, param, $div) {
                 if (param.level === '3') {
@@ -33,23 +42,22 @@ layui.use(['form', 'crud', 'dtree'], function () {
                     $("#parentName").val(node.context);
                     $("#parentId").val(node.nodeId);
                     $("#level").val(parseInt(node.level) + 1);
-                    var basicData = node.basicData;
-                    if (basicData.description !== null) {
-                        $("#description").val(basicData.description);
-                    }
                 }
             },
             {
                 toolbarId: "updateC", icon: "dtree-icon-bianji", title: "修改", handler: function (node, $div) {
-                    console.log(node);
                     var basicData = node.basicData;
-                    if (basicData.description != null) {
-                        $("#description").text(basicData.description);
+                    if (basicData.description) {
+                        $("#description").val(basicData.description);
                     }
+                    if (basicData.sort) {
+                        $("#sort").val(basicData.sort);
+                    }
+                    $("#id").val(node.nodeId);
                     $("#name").val(node.context);
                     if (node.parentId !== '-1') {
                         var param = dtree.getParentParam(tree, node.nodeId);
-                        $("#parentId").val(node.nodeId);
+                        $("#parentId").val(param.nodeId);
                         $("#parentName").val(param.context);
                         $("#level").val(node.level);
                     } else {
@@ -64,41 +72,51 @@ layui.use(['form', 'crud', 'dtree'], function () {
                 icon: "dtree-icon-roundclose",
                 title: "删除",
                 handler: function (node, $div) {
-                    // var url;
-                    // if (node.level == 1) {
-                    //     return false
-                    // }
-                    // else if (node.level == 2) {
-                    //     url = "/monitor/system-info/";
-                    // } else if (node.level == 3) {
-                    //     url = "/monitor/service-resources-info/"
-                    // }
-                    // del(node, url);//调用删除函数
-                    // DTree5.partialRefreshDel($div); // 这样即可删除节点
+                    crud.delete('确定删除该分类?', pmsUrl + '/category/' + node.nodeId, function () {
+                        // 刷新树
+                        refreshForm();
+                        tree.refreshTree();
+                    });
                 }
             }]
     });
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {
-        crud.post(pmsUrl + '/category', data.field, function () {
-            // 刷新树
-            tree.refreshTree();
-            refreshForm();
-        });
+        var field = data.field;
+        if (field.id) {
+            crud.put(pmsUrl + '/category', data.field, function () {
+                // 刷新树
+                refreshForm();
+                tree.refreshTree();
+            });
+        } else {
+            crud.post(pmsUrl + '/category', data.field, function () {
+                // 刷新树
+                refreshForm();
+                tree.refreshTree();
+            });
+        }
         return false;
     });
 
     function refreshForm() {
-        console.log('xx');
-        form.val("categoryEditForm", {
-            "name": '',
-            "parentId": '0',
-            "level": '1',
-            "parentName": '',
-            "description": ''
-        });
-        form.render(); //刷新表单
+        $("#id").val('');
+        $("#name").val('');
+        $("#sort").val('');
+        $("#parentId").val('0');
+        $("#parentName").val('');
+        $("#level").val('1');
+        $("#description").val('');
+    }
+
+    function update(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            arr[i].disabled = false;
+            if (arr[i].children) {
+                update(arr[i].children);
+            }
+        }
     }
 })
 ;

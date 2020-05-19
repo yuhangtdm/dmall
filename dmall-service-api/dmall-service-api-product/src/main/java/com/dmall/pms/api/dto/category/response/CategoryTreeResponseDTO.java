@@ -1,6 +1,5 @@
 package com.dmall.pms.api.dto.category.response;
 
-import com.dmall.pms.api.enums.LevelEnum;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.google.common.collect.Lists;
@@ -36,18 +35,18 @@ public class CategoryTreeResponseDTO implements Serializable {
     @ApiModelProperty(value = "排序", position = 4)
     private Integer sort;
 
-    @ApiModelProperty(value = "级别", position = 5)
-    private LevelEnum level;
-
     @ApiModelProperty(value = "是否打开", position = 6)
-    private Boolean spread;
+    private String open;
 
     @ApiModelProperty(value = "是否为父元素", position = 7)
     private Boolean isParent = false;
 
-    @ApiModelProperty(value = "子元素", position = 8)
+    @ApiModelProperty(value = "是否可选", position = 8)
+    private Boolean disabled = false;
+
+    @ApiModelProperty(value = "子元素", position = 9)
     private List<CategoryTreeResponseDTO> children = Lists.newArrayList();
 
-    @ApiModelProperty(value = "自定义数据", position = 9)
+    @ApiModelProperty(value = "自定义数据", position = 10)
     private Map<String, Object> basicData = Maps.newHashMap();
 }

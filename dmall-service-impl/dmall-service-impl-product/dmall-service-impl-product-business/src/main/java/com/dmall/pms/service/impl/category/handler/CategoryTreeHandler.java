@@ -3,7 +3,7 @@ package com.dmall.pms.service.impl.category.handler;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.EnumUtil;
+import com.dmall.common.enums.YNEnum;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.category.response.CategoryTreeResponseDTO;
@@ -39,7 +39,7 @@ public class CategoryTreeHandler extends AbstractCommonHandler<Long, CategoryDO,
         }
         List<CategoryDO> categoryDOList;
         if (parentId == 0L) {
-            categoryDOList = categoryMapper.selectList(Wrappers.emptyWrapper());
+            categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().orderByAsc(CategoryDO::getSort));
         } else {
             categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
                     .like(CategoryDO::getPath, categoryDO.getPath())
@@ -50,22 +50,24 @@ public class CategoryTreeHandler extends AbstractCommonHandler<Long, CategoryDO,
                 .collect(Collectors.toMap(CategoryTreeResponseDTO::getId, responseDTO -> responseDTO));
 
         if (parentId != 0L) {
-            treeMap.get(parentId).setSpread(Boolean.TRUE);
+            treeMap.get(parentId).setOpen(YNEnum.Y.getCode());
         }
         return ResultUtil.success(tree(treeMap, parentId));
     }
 
     @Override
     protected void customerConvertDto(CategoryTreeResponseDTO result, CategoryDO doo) {
-        result.setSpread(Boolean.FALSE);
+        result.setOpen(YNEnum.N.getCode());
         result.setIsParent(LevelEnum.ONE.getCode().equals(doo.getLevel())
                 || LevelEnum.TWO.getCode().equals(doo.getLevel()));
-        result.setLevel(EnumUtil.getCodeDescEnum(LevelEnum.class, doo.getLevel()));
         result.setName(result.getName().trim());
         Map<String, Object> map = Maps.newHashMap();
-        map.put("sort",result.getSort());
-        map.put("description",doo.getDescription());
+        map.put("sort", result.getSort());
+        map.put("description", doo.getDescription());
         result.setBasicData(map);
+        if (!LevelEnum.THREE.getCode().equals(doo.getLevel())) {
+            result.setDisabled(true);
+        }
     }
 
     /**

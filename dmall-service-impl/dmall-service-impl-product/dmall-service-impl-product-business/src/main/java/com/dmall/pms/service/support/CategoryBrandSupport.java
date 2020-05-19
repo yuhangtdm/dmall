@@ -47,4 +47,11 @@ public class CategoryBrandSupport {
     public void deleteByBrandId(Long brandId) {
         categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getBrandId, brandId));
     }
+
+    public void delete(Long brandId, List<Long> categoryIds) {
+        categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery()
+                .eq(CategoryBrandDO::getBrandId, brandId)
+                .in(CategoryBrandDO::getCategoryId, categoryIds)
+        );
+    }
 }

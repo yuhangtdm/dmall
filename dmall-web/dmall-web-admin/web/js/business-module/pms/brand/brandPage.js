@@ -52,6 +52,11 @@ layui.use(['form', 'table', 'crud'], function () {
             case 'delete':
                 crud.delete("确定删除该品牌?", pmsUrl + '/brand/' + data.id);
                 break;
+            case 'setCategory':
+                crud.openTree('设置商品分类', pmsUrl + '/category/tree/0',
+                    pmsUrl + '/brand/getCategory/' + data.id,
+                    pmsUrl + '/brand/setCategory');
+                break;
         }
     });
 })
