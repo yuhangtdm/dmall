@@ -212,6 +212,11 @@ public enum PmsErrorEnum implements ErrorCodeEnum {
      */
     AUDIT_NOT_EXIST("1139", "审核记录不存在"),
 
+    /**
+     * 展示名称不能为空
+     */
+    ATTRIBUTE_SHOW_NAME_EMPTY("1140", "展示名称不能为空"),
+
     ;
 
     /**

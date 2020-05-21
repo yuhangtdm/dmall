@@ -30,4 +30,5 @@ layui.config({
     formSelects: 'formSelects/formSelects', // formSelects扩展
     eleTree: 'eletree/eleTree', // eleTree
     dtree:'dtree/dtree',
+    inputTags:'inputTags/inputTags',
 });

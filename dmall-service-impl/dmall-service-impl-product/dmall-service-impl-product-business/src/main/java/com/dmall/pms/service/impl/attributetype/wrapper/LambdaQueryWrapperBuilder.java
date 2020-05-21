@@ -15,7 +15,8 @@ public class LambdaQueryWrapperBuilder {
         return Wrappers.<AttributeTypeDO>lambdaQuery()
                 .eq(categoryId != null, AttributeTypeDO::getCategoryId, categoryId)
                 .like(StrUtil.isNotBlank(showName), AttributeTypeDO::getShowName, showName)
-                .orderByAsc(AttributeTypeDO::getSort);
+                ;
+//                .orderByAsc(AttributeTypeDO::getSort);
     }
 
 }

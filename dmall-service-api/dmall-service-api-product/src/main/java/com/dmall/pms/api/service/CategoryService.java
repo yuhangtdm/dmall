@@ -52,13 +52,6 @@ public interface CategoryService {
     @GetMapping("/tree/{parentId}")
     BaseResult<List<CategoryTreeResponseDTO>> tree(@PathVariable("parentId") Long parentId);
 
-    @ApiOperation(value = "设置品牌")
-    @PostMapping("/setBrand")
-    BaseResult<Void> setBrand(@Valid @RequestBody SetBrandRequestDTO requestDTO);
-
-    @ApiOperation(value = "设置属性类别")
-    @PostMapping("/setAttributeType")
-    BaseResult<Void> setAttributeType(@Valid @RequestBody SetAttributeTypeRequestDTO requestDTO);
 
     @ApiOperation(value = "设置属性")
     @PostMapping("/setAttribute")

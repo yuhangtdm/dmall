@@ -3,10 +3,19 @@
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
         <div class="layui-row">
-            <div class="layui-col-lg4">
-                <ul id="iframeTree1" class="dtree" data-id="0"></ul>
+            <div class="layui-col-lg3">
+                <div class="layui-inline">
+                    <label class="layui-form-label">节点名称</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="fuzzySearchInput" autocomplete="off" class="layui-input">
+                    </div>
+                    <button class="layui-btn layui-btn-sm" id="search">
+                        <i class="layui-icon"></i>搜 索
+                    </button>
+                    <ul id="iframeTree1" class="dtree" data-id="0"></ul>
+                </div>
             </div>
-            <div class="layui-col-lg8">
+            <div class="layui-col-lg9">
                 <fieldset class="layui-elem-field">
                     <legend>编辑商品分类</legend>
                     <form class="layui-form layuimini-form" id="categoryEditForm">
@@ -14,7 +23,8 @@
                             <label class="layui-form-label required">分类名称</label>
                             <div class="layui-input-block">
                                 <input type="hidden" id="id" name="id">
-                                <input type="text" id="name" name="name" lay-verify="required" lay-reqtext="分类名称不能为空"
+                                <input type="text" id="name" name="name" lay-verify="required"
+                                       lay-reqtext="分类名称不能为空"
                                        placeholder="请输入分类名称"
                                        class="layui-input">
                             </div>
@@ -51,4 +61,5 @@
         </div>
     </div>
 </div>
+
 <script src="../../../js/business-module/pms/category/categoryTree.js"></script>

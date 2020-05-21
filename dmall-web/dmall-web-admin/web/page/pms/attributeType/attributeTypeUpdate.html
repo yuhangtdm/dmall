@@ -1,0 +1,25 @@
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="attributeTypeUpdateForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">商品分类</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="id">
+                <input type="text" name="cascadeCategoryName" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">展示名称</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="id">
+                <input type="text" name="showName" lay-verify="required" lay-reqtext="展示名称不能为空" placeholder="请输入展示名称"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="saveBtn">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/pms/attributeType/attributeTypeUpdate.js"></script>

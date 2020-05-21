@@ -2,17 +2,16 @@ package com.dmall.pms.service.impl.attributetype;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
+import com.dmall.pms.api.dto.attributetype.request.*;
 import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
 import com.dmall.pms.api.service.AttributeTypeService;
 import com.dmall.pms.service.impl.attributetype.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -40,9 +39,18 @@ public class AttributeTypeServiceImpl implements AttributeTypeService {
     @Autowired
     private PageAttributeTypeHandler pageAttributeTypeHandler;
 
+    @Autowired
+    private BatchSaveAttributeTypeHandler batchSaveAttributeTypeHandler;
+
     @Override
     public BaseResult<Long> save(@RequestBody SaveAttributeTypeRequestDTO requestDTO) {
         return saveAttributeTypeHandler.handler(requestDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Long> batchSave(@Valid BatchSaveAttributeTypeRequestDTO requestDTO) {
+        return batchSaveAttributeTypeHandler.handler(requestDTO);
     }
 
     @Override

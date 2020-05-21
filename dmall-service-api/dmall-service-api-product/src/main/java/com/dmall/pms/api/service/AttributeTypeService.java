@@ -2,10 +2,7 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.SaveAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.attributetype.request.UpdateAttributeTypeRequestDTO;
+import com.dmall.pms.api.dto.attributetype.request.*;
 import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -26,6 +23,10 @@ public interface AttributeTypeService {
     @PostMapping
     @ApiOperation(value = "新增属性类别")
     BaseResult<Long> save(@Valid @RequestBody SaveAttributeTypeRequestDTO requestDTO);
+
+    @PostMapping
+    @ApiOperation(value = "批量新增属性类别")
+    BaseResult<Long> batchSave(@Valid @RequestBody BatchSaveAttributeTypeRequestDTO requestDTO);
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除属性类别")

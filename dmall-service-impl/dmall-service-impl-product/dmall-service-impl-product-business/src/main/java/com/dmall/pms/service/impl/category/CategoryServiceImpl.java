@@ -1,13 +1,11 @@
 package com.dmall.pms.service.impl.category;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
-import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
+import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import com.dmall.pms.api.dto.category.response.CategoryTreeResponseDTO;
 import com.dmall.pms.api.service.CategoryService;
 import com.dmall.pms.service.impl.category.handler.*;
@@ -82,18 +80,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public BaseResult<List<CategoryTreeResponseDTO>> tree(Long parentId) {
         return categoryTreeHandler.handler(parentId);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Void> setBrand(@RequestBody SetBrandRequestDTO requestDTO) {
-        return setBrandHandler.handler(requestDTO);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Void> setAttributeType(@RequestBody SetAttributeTypeRequestDTO requestDTO) {
-        return setAttributeTypeHandler.handler(requestDTO);
     }
 
     @Override

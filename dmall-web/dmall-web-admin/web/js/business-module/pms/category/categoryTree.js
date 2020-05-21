@@ -39,6 +39,10 @@ layui.use(['form', 'crud', 'dtree'], function () {
         toolbarExt: [
             {
                 toolbarId: "addC", icon: "dtree-icon-add-circle", title: "新增子分类", handler: function (node, $div) {
+                    $("#id").val('');
+                    $("#name").val('');
+                    $("#sort").val('');
+                    $("#description").val('');
                     $("#parentName").val(node.context);
                     $("#parentId").val(node.nodeId);
                     $("#level").val(parseInt(node.level) + 1);
@@ -99,6 +103,12 @@ layui.use(['form', 'crud', 'dtree'], function () {
         }
         return false;
     });
+
+    $("#search").click(function () {
+        var input = $("input[name='fuzzySearchInput']").val();
+        // 调用内置函数搜索节点
+        tree.fuzzySearch(input);
+    })
 
     function refreshForm() {
         $("#id").val('');
