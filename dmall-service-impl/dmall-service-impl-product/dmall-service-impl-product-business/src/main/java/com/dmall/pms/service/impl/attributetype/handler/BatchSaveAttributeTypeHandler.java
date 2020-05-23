@@ -1,5 +1,6 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
@@ -10,10 +11,12 @@ import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.support.AttributeTypeSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,12 +35,20 @@ public class BatchSaveAttributeTypeHandler extends AbstractCommonHandler<BatchSa
     @Autowired
     private CategoryCacheService categoryCacheService;
 
+    @Autowired
+    private AttributeTypeSupport attributeTypeSupport;
+
     @Override
     public BaseResult<Void> processor(BatchSaveAttributeTypeRequestDTO requestDTO) {
         pmsValidate.validateCategory(requestDTO.getCategoryId());
         Optional<String> any = requestDTO.getShowNames().stream().filter(StrUtil::isBlank).findAny();
         if (any.isPresent()) {
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_SHOW_NAME_EMPTY);
+        }
+        List<AttributeTypeDO> list = attributeTypeSupport.listByCategoryId(requestDTO.getCategoryId());
+        int sort = 0;
+        if (CollUtil.isNotEmpty(list)) {
+            sort = list.size();
         }
         for (int i = 0; i < requestDTO.getShowNames().size(); i++) {
             String showName = requestDTO.getShowNames().get(i);
@@ -47,7 +58,7 @@ public class BatchSaveAttributeTypeHandler extends AbstractCommonHandler<BatchSa
             attributeType.setCascadeCategoryId(categoryDO.getPath());
             attributeType.setName(StrUtil.format("{}_{}", categoryDO.getName(), showName));
             attributeType.setShowName(showName);
-            attributeType.setSort(i + 1);
+            attributeType.setSort(sort + i + 1);
             attributeTypeCacheService.insert(attributeType);
         }
         return ResultUtil.success();

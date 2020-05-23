@@ -24,7 +24,7 @@ public interface AttributeTypeService {
     @ApiOperation(value = "新增属性类别")
     BaseResult<Long> save(@Valid @RequestBody SaveAttributeTypeRequestDTO requestDTO);
 
-    @PostMapping
+    @PostMapping("/batchSave")
     @ApiOperation(value = "批量新增属性类别")
     BaseResult<Long> batchSave(@Valid @RequestBody BatchSaveAttributeTypeRequestDTO requestDTO);
 

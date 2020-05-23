@@ -9,17 +9,23 @@ layui.use(['form', 'crud', 'dtree', 'inputTags'], function () {
 
     crud.singleTree('selTree', pmsUrl + '/category/tree/0');
 
-    inputTags.render({
-        elem: '#inputTags',//定义输入框input对象
-        content: ['sss'],//默认标签
-        aldaBtn: true,//是否开启获取所有数据的按钮
-        done: function (value) { //回车后的回调
-        }
-    });
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {
-        crud.post(pmsUrl + '/attributeType', data.field, function () {
+        var field = data.field;
+        var showName = field.showName;
+        var checked = dtree.getCheckbarJsonArrParam("selTree"); // 获取当前选中节点
+        if (checked.nodeId.length === 0) {
+            layer.msg('商品分类不能为空', {
+                icon: 5
+            });
+            return false;
+        }
+        var obj = {
+            categoryId: checked.nodeId[0],
+            showNames: showName.split(',').reverse()
+        };
+        crud.post(pmsUrl + '/attributeType/batchSave', obj, function () {
             layer.close(parentIndex);
         });
         return false;

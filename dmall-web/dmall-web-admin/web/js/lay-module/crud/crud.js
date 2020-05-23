@@ -243,7 +243,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             $.ajax({
                 type: 'DELETE',
                 url: url,
-                async: false,
+                async: true,
                 beforeSend: function (request) {
                     loading = layer.msg('正在提交', {icon: 16, shade: 0.3, time: 0});
                     request.setRequestHeader("source", "admin");
