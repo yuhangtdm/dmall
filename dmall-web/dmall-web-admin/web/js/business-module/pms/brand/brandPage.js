@@ -53,7 +53,7 @@ layui.use(['form', 'table', 'crud'], function () {
                 crud.delete("确定删除该品牌?", pmsUrl + '/brand/' + data.id);
                 break;
             case 'setCategory':
-                crud.openTree('设置商品分类', pmsUrl + '/category/tree/0',
+                crud.openTree('设置商品分类(只可选三级分类)', pmsUrl + '/category/tree/0/4',
                     pmsUrl + '/brand/getCategory/' + data.id,
                     pmsUrl + '/brand/setCategory');
                 break;

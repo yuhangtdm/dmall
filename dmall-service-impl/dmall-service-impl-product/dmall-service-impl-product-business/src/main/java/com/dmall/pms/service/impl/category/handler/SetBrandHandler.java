@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019/12/4 22:44
  */
 @Component
+@Deprecated
 public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, CategoryDO, Void> {
 
     @Autowired

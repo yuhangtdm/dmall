@@ -11,7 +11,7 @@ layui.use(['form', 'crud', 'iconPicker'], function () {
         $("input[name='parentName']").val(parentName);
     }
 
-    crud.showIcon('icon');
+    crud.initIcon('icon');
 
     crud.get(bmsUrl + '/menu/' + id, function (response) {
         crud.dataForm(response.data, 'catalogUpdateForm');

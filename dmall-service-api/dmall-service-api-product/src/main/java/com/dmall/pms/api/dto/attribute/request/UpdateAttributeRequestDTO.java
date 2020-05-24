@@ -11,7 +11,6 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @description: 修改属性请求实体
@@ -40,13 +39,10 @@ public class UpdateAttributeRequestDTO implements Serializable {
     private Integer inputType;
 
     @ApiModelProperty(value = "可选值列表", position = 5)
-    private List<String> inputList;
+    private String inputList;
 
     @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 6)
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
-
-    @ApiModelProperty(value = "备注", position = 7)
-    private String remark;
 
 }

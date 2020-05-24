@@ -2,27 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dmall.pms.service.impl.attribute.mapper.AttributePageMapper">
 
-
     <select id="pageAttribute" resultType="com.dmall.pms.generator.dataobject.AttributeDO">
-        select
+        select DISTINCT
         a.id, a.name, a.show_name, a.type, a.input_type, a.input_list, a.hand_add_status, a.creator, a.gmt_created,
         a.modifier, a.gmt_modified, a.is_deleted
         from pms_attribute a left join pms_category_attribute ca on a.id = ca.attribute_id
         <where>
             <if test="request.showName != null and request.showName != ''">
-                a.show_name like '%${showName}%'
+                and a.show_name like '%${request.showName}%'
             </if>
             <if test="request.type != null ">
-                a.type = #{type}
+                and a.type = #{request.type}
             </if>
             <if test="request.inputType != null ">
-                a.input_type = #{request.inputType}
+                and a.input_type = #{request.inputType}
             </if>
-            <if test="request.handAddStatus != null ">
-                a.hand_add_status = #{request.handAddStatus}
+            <if test="request.handAddStatus != null and request.handAddStatus != ''">
+                and a.hand_add_status = #{request.handAddStatus}
             </if>
             <if test="request.categoryId != null ">
-                ca.category_id = #{request.categoryId}
+                and ca.category_id = #{request.categoryId}
             </if>
         </where>
     </select>

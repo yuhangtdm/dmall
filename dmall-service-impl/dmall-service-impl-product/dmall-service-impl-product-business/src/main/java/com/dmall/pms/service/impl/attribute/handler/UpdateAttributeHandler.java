@@ -60,7 +60,6 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
 
     @Override
     protected void customerConvertDo(AttributeDO result, UpdateAttributeRequestDTO requestDTO) {
-        result.setInputList(CollUtil.join(requestDTO.getInputList(), StrUtil.COMMA));
     }
 
 }

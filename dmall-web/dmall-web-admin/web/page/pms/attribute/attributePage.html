@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="../../../css/dtree/dtree.css">
+<link rel="stylesheet" href="../../../css/dtree/font/dtreefont.css">
+<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="" id="attributeSearchForm">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">商品分类</label>
+                        <div class="layui-input-block">
+                            <ul id="selTree"  class="dtree" data-id="0" style="z-index: 9999 !important;"></ul>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">展示名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="showName" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性类型</label>
+                        <div class="layui-input-block">
+                            <select id="type" name="type" selectName="TypeEnum"></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性录入方式</label>
+                        <div class="layui-input-block">
+                            <select id="inputType" name="inputType" selectName="InputTypeEnum"></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否支持手动新增</label>
+                        <div class="layui-input-block">
+                            <select id="handAddStatus" name="handAddStatus" selectName="HandAddStatusEnum"></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button type="submit" class="layui-btn hidden" lay-submit lay-filter="formSearch">
+                            <i class="layui-icon"></i>搜 索
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add">新增属性</button>
+            </div>
+        </script>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="update">修改</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs  data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+        <table class="layui-hide" id="attribute" lay-filter="attribute"></table>
+
+    </div>
+</div>
+<script src="../../../js/business-module/pms/attribute/attributePage.js"></script>

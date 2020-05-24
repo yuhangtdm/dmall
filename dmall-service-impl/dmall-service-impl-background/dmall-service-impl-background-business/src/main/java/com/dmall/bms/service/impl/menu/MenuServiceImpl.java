@@ -1,13 +1,14 @@
 package com.dmall.bms.service.impl.menu;
 
+import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
+import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.bms.api.dto.menu.response.PageMenuResponseDTO;
-import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
-import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.bms.api.service.MenuService;
 import com.dmall.bms.service.impl.menu.handler.*;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.dtree.DTreeResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,7 +69,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public BaseResult<List<MenuTreeResponseDTO>> tree() {
+    public BaseResult<List<DTreeResponseDTO>> tree() {
         return menuTreeHandler.handler(null);
     }
 

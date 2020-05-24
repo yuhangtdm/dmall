@@ -1,11 +1,15 @@
-layui.use(['form', 'table', 'crud'], function () {
+layui.use(['form', 'table', 'crud', 'dtree',], function () {
     var $ = layui.jquery,
         form = layui.form,
         table = layui.table,
+        dtree = layui.dtree,
         crud = layui.crud;
 
     // 初始化表格数据
     crud.initPage('attributeType', pmsUrl + '/attributeType/page', buildColumn());
+
+    // 单选
+    crud.selectTree('selTree', pmsUrl + '/category/tree/0/4', 'only');
 
     /**
      * 构建table列
@@ -27,6 +31,10 @@ layui.use(['form', 'table', 'crud'], function () {
 
     // 监听搜索操作
     form.on('submit(formSearch)', function (data) {
+        var checked = dtree.getCheckbarJsonArrParam("selTree"); // 获取当前选中节点
+        if (checked.nodeId.length !== 0) {
+            data.field.categoryId = checked.nodeId[0];
+        }
         return crud.search('attributeType', data);
     });
 

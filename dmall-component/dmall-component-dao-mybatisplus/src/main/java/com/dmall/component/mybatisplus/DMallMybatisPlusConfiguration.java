@@ -47,7 +47,7 @@ public class DMallMybatisPlusConfiguration implements BasicConfiguration {
      * 性能分析拦截器，不建议生产使用
      */
     @Bean
-    @ConditionalOnProperty(prefix = "dmall.mybatis.plus", value = "performance", havingValue = "true")
+    @ConditionalOnProperty(prefix = "dmall.mybatisplus", value = "performance", havingValue = "true")
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         performanceInterceptor.setMaxTime(dmallMybatisPlusProperties.getMaxTime());

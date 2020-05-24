@@ -28,7 +28,5 @@ layui.config({
     crud: 'crud/crud', // crud扩展
     iconPicker: 'iconPicker/iconPicker', // iconPicker扩展
     formSelects: 'formSelects/formSelects', // formSelects扩展
-    eleTree: 'eletree/eleTree', // eleTree
     dtree:'dtree/dtree',
-    inputTags:'inputTags/inputTags',
 });

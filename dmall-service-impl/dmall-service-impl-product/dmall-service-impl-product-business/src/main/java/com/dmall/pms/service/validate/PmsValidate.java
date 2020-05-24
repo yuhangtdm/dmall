@@ -1,8 +1,7 @@
 package com.dmall.pms.service.validate;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.enums.YNEnum;
 import com.dmall.common.model.exception.BusinessException;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.dto.product.request.attributevalue.*;
@@ -17,6 +16,7 @@ import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.brand.cache.BrandCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -134,16 +134,18 @@ public class PmsValidate {
     /**
      * 新增或更新的公共校验
      */
-    public  BaseResult attributeValidate(Integer inputType, List<String> inputList, String handAddStatus) {
+    public  BaseResult attributeValidate(Integer inputType, String inputList, String handAddStatus) {
         // 从列表获取 不支持新增 可选值为空
-        if (InputTypeEnum.LIST.getCode().equals(inputType) && CollUtil.isEmpty(inputList)
-                && YNEnum.N.getCode().equals(handAddStatus)) {
-            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_DATA_INVALID);
-        }
-        // 可选值列表不能重复
-        if (CollUtil.isNotEmpty(inputList)) {
-            HashSet<String> strings = new HashSet<>(inputList);
-            if (strings.size() != inputList.size()) {
+        if (InputTypeEnum.LIST.getCode().equals(inputType)) {
+            if (StrUtil.isBlank(handAddStatus)){
+                return ResultUtil.fail(PmsErrorEnum.HAND_ADD_STATUS_EMPTY);
+            }
+            if (StrUtil.isBlank(inputList)){
+                return ResultUtil.fail(PmsErrorEnum.INPUT_LIST_BLANK);
+            }
+            String[] split = inputList.split(StrUtil.COMMA);
+            HashSet<String> strings = Sets.newHashSet(inputList.split(StrUtil.COMMA));
+            if (strings.size() != split.length) {
                 return ResultUtil.fail(PmsErrorEnum.INPUT_LIST_INVALID);
             }
         }

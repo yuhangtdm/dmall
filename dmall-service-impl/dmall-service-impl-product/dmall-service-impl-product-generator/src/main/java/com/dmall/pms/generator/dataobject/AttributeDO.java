@@ -37,11 +37,6 @@ public class AttributeDO implements Serializable {
     private String showName;
 
     /**
-     * 备注
-     */
-    private String remark;
-
-    /**
      * 属性类型 1-普通属性;2-公共属性
      */
     private Integer type;

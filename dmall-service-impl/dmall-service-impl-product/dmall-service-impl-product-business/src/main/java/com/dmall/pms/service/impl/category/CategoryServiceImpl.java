@@ -1,12 +1,12 @@
 package com.dmall.pms.service.impl.category;
 
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.dtree.DTreeResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
-import com.dmall.pms.api.dto.category.response.CategoryTreeResponseDTO;
 import com.dmall.pms.api.service.CategoryService;
 import com.dmall.pms.service.impl.category.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +42,6 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryTreeHandler categoryTreeHandler;
 
     @Autowired
-    private SetBrandHandler setBrandHandler;
-
-    @Autowired
-    private SetAttributeTypeHandler setAttributeTypeHandler;
-
-    @Autowired
     private SetAttributeHandler setAttributeHandler;
 
     @Override
@@ -78,8 +72,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public BaseResult<List<CategoryTreeResponseDTO>> tree(Long parentId) {
-        return categoryTreeHandler.handler(parentId);
+    public BaseResult<List<DTreeResponseDTO>> tree(Long parentId, Integer type) {
+        return categoryTreeHandler.handler(new CategoryTreeDTO(parentId, type));
     }
 
     @Override

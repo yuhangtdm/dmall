@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.util.StopWatch;
 
 import java.util.List;
 
@@ -65,9 +66,12 @@ public class MapCacheAspect {
             MapListCache mapListCache = methodSignature.getMethod().getAnnotation(MapListCache.class);
             String key = ObjectUtil.or(StrUtil.isNotBlank(mapListCache.key()), mapListCache.key(),
                     mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
+            StopWatch stopWatch = new StopWatch();
+            stopWatch.start();
             List<Object> values = mapCacheUtil.values(key);
             if (CollUtil.isNotEmpty(values)) {
-                log.info("cache hit,key:{}", key);
+                stopWatch.stop();
+                log.info("cache hit,key:{},time:{}", key, stopWatch.getTotalTimeMillis());
                 return values;
             } else {
                 log.info("cache miss,key:{}", key);
@@ -83,7 +87,7 @@ public class MapCacheAspect {
             }
 
         } catch (Throwable e) {
-            log.error("MapListCache error",e);
+            log.error("MapListCache error", e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_LIST_CACHE_ERROR);
         }
     }
@@ -102,9 +106,12 @@ public class MapCacheAspect {
             String className = joinPoint.getTarget().getClass().getName();
             String key = ObjectUtil.or(StrUtil.isNotBlank(mapGetCache.key()), mapGetCache.key(),
                     mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
+            StopWatch stopWatch = new StopWatch();
+            stopWatch.start();
             Object cacheResult = mapCacheUtil.get(key, String.valueOf(args[0]));
             if (cacheResult != null) {
-                log.info("cache hit,key:{},hashKey:{}", key, args[0]);
+                stopWatch.stop();
+                log.info("cache hit,key:{},hashKey:{},time:{}", key, args[0], stopWatch.getTotalTimeMillis());
                 return cacheResult;
             } else {
                 log.info("cache miss,key:{},hashKey:{}", key, args[0]);
@@ -114,7 +121,7 @@ public class MapCacheAspect {
             }
 
         } catch (Throwable e) {
-            log.error("MapGetCache error",e);
+            log.error("MapGetCache error", e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_GET_CACHE_ERROR);
         }
     }
@@ -139,7 +146,7 @@ public class MapCacheAspect {
             }
             return result;
         } catch (Throwable e) {
-            log.error("MapPostCache error",e);
+            log.error("MapPostCache error", e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_POST_CACHE_ERROR);
         }
     }
@@ -165,7 +172,7 @@ public class MapCacheAspect {
             }
             return result;
         } catch (Throwable e) {
-            log.error("MapPutCache error",e);
+            log.error("MapPutCache error", e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_PUT_CACHE_ERROR);
         }
     }
@@ -188,7 +195,7 @@ public class MapCacheAspect {
             log.info("delete cache success,key:{},hashKey:{}", key, args[0]);
             return result;
         } catch (Throwable e) {
-            log.error("MapDeleteCache error",e);
+            log.error("MapDeleteCache error", e);
             throw new ComponentException(CacheRedisErrorEnum.MAP_DELETE_CACHE_ERROR);
         }
     }

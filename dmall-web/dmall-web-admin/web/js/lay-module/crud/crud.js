@@ -34,23 +34,20 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             delete: function (text, url, endCallback) {
                 deleteById(text, url, endCallback);
             },
-            confirm: function (text, url) {
-                confirm(text, url);
+            confirm: function (text, url, endCallback) {
+                confirm(text, url, endCallback);
             },
             msg: function (content) {
                 msg(content);
             },
             msgBack: function (content, callback) {
-                msgContentBack(content, callback);
+                msgBack(content, callback);
             },
             error: function (content) {
                 error(content);
             },
             errorBack: function (content, callback) {
                 errorBack(content, callback);
-            },
-            getToken: function () {
-                return getToken();
             },
             initPage: function (id, url, cols) {
                 initPage(id, url, cols);
@@ -64,6 +61,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             openTree: function (title, treeUrl, checkedUrl, confirmUrl) {
                 openTree(title, treeUrl, checkedUrl, confirmUrl);
             },
+            selectTree(id, url, type, checkUrl) {
+                selectTree(id, url, type, checkUrl);
+            },
             search: function (tableId, data) {
                 return search(tableId, data);
             },
@@ -73,32 +73,32 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             dataForm(data, formId) {
                 dataForm(data, formId);
             },
-            formatDate(date) {
-                return formatDate(date);
+            initFormSelect(formId) {
+                initFormSelect(formId);
             },
             initSelect(selectId, url) {
                 initSelect(selectId, url);
             },
-            initFormSelect(formId) {
-                initFormSelect(formId);
+            initFormDate(formId, format, type) {
+                initFormDate(formId, format, type);
             },
             initDate(domId, format, type) {
                 initDate(domId, format, type);
             },
-            singleTree(id, url, checkUrl) {
-                singleTree(id, url, checkUrl);
+            formatDate(date) {
+                return formatDate(date);
             },
-            initFormDate(formId, format, type) {
-                initFormDate(formId, format, type);
+            initIcon(id) {
+                initIcon(id);
             },
             showImg(imgUrl) {
                 return showImg(imgUrl);
             },
-            showIcon(id) {
-                showIcon(id);
-            },
             getDesc(code, selectName) {
                 return getDesc(code, selectName);
+            },
+            getToken: function () {
+                return getToken();
             },
             toJson: function (formId) {
                 return toJson(formId);
@@ -162,7 +162,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 },
                 success: function (response) {
                     if (response.code === '0') {
-                        msgBack(response, callback);
+                        successBack(response, callback);
                     } else if (response.code === '408') {
                         // 用户未登陆 跳转登录页面
                         errorBack('登录已失效', function () {
@@ -182,7 +182,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         *put请求
+         * put请求
          */
         function put(url, requestData, callback) {
             var loading;
@@ -199,7 +199,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 },
                 success: function (response) {
                     if (response.code === '0') {
-                        msgBack(response, callback);
+                        successBack(response, callback);
                     } else if (response.code === '408') {
                         // 用户未登陆 跳转登录页面
                         errorBack('登录已失效', function () {
@@ -220,7 +220,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 删除操作
+         * delete请求
          */
         function deleteById(text, url, endCallback) {
             layer.confirm(text, {icon: 3, title: '提示'}, function (index) {
@@ -236,7 +236,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 删除
+         * 删除操作
          */
         function deleteOperation(url, callback) {
             var loading;
@@ -251,7 +251,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 },
                 success: function (response) {
                     if (response.code === '0') {
-                        msgBack(response, callback);
+                        successBack(response, callback);
                     } else if (response.code === '408') {
                         // 用户未登陆 跳转登录页面
                         errorBack('登录已失效', function () {
@@ -271,14 +271,21 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 确认框
+         * 弹出确认框
+         * @param text  弹出框的内容
+         * @param url  确认后请求的地址
+         * @param endCallback  回调函数
          */
-        function confirm(text, url) {
+        function confirm(text, url, endCallback) {
             layer.confirm(text, {icon: 3, title: '提示'}, function (index) {
                 layer.close(index);
                 get(url, function () {
-                    //  刷新页面的搜索
-                    $("button[lay-filter='formSearch']").click();
+                    if (endCallback) {
+                        endCallback();
+                    } else {
+                        //  刷新页面的搜索
+                        $("button[lay-filter='formSearch']").click();
+                    }
                 });
             });
         }
@@ -294,10 +301,10 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 成功提示 默认弹出1秒后执行回调函数
+         * 执行成功后提示 默认弹出1秒后执行回调函数
          * 要求 先弹出消息 再关闭弹窗 必须是如下的写法
          */
-        function msgBack(response, callback) {
+        function successBack(response, callback) {
             layer.msg(response.msg, {
                 icon: 1,
                 time: 1000
@@ -306,7 +313,10 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             });
         }
 
-        function msgContentBack(content, callback) {
+        /**
+         * 成功提示 默认弹出1秒后执行回调函数
+         */
+        function msgBack(content, callback) {
             layer.msg(content, {
                 icon: 1,
                 time: 1000
@@ -328,15 +338,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 icon: 2,
                 time: 2000
             }, callback);
-        }
-
-        /**
-         * 获取token
-         */
-        function getToken() {
-            if (layui.data('token').value && layui.data('token').value !== undefined) {
-                return layui.data('token').value;
-            }
         }
 
         /**
@@ -387,17 +388,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 格式化时间
-         */
-        function formatDate(date) {
-            if (date) {
-                return layui.util.toDateString(date, 'yyyy-MM-dd HH:mm:ss');
-            } else {
-                return '';
-            }
-        }
-
-        /**
          * 打开页面
          * @param href 页面地址
          * @param title 页面标题
@@ -426,6 +416,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             });
         }
 
+        /**
+         * 打开带提交按钮的弹框
+         */
         function openT(href, title, endCallBack) {
             var content = miniPage.getHrefContent(href);
             var openWH = miniPage.getOpenWidthHeight();
@@ -456,7 +449,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 打开带复选框的树
+         * 打开带复选框的树的弹框
          * @param title 弹框的标题
          * @param treeUrl 树数据源的地址
          * @param checkedUrl 选中框数据源的地址
@@ -493,18 +486,28 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                         checkbar: true,
                         dataStyle: "layuiStyle",
                         skin: "laySimple",
-                        response: {statusCode: '0', title: "name"},
+                        response: {statusCode: '0'},
                         success: function (response) {
                             if (response.code === '0') {
                                 if (checkedUrl) {
                                     checkArr(response.data, checkedUrl);
                                 }
+                            } else if (response.code === '408') {
+                                // 用户未登陆 跳转登录页面
+                                errorBack('登录已失效', function () {
+                                    layer.close(index);
+                                    window.location.href = 'page/login.html';
+                                })
+                            } else {
+                                errorBack(response.msg, function () {
+                                    layer.close(index);
+                                })
                             }
                         }
                     });
                 }
                 ,
-                yes: function (index, layero) {
+                yes: function (index) {
                     var checked = dtree.getCheckbarJsonArrParam("openTree"); // 获取当前选中节点
                     // 构建选中的数据
                     var checkedObj = {
@@ -516,39 +519,16 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                     })
                 }
             });
+            // 搜索功能
             $("#search").click(function () {
                 var input = $("input[name='fuzzySearchInput']").val();
                 // 调用内置函数搜索节点
                 DTree.fuzzySearch(input);
             })
-
-        }
-
-        function dTree(treeUrl, checkedUrl) {
-            var DTree = dtree.render({
-                elem: "#openTree",
-                url: treeUrl,
-                method: 'get',
-                headers: {
-                    "source": "admin",
-                    "token": getToken()
-                },
-                checkbar: true,
-                dataStyle: "layuiStyle",
-                skin: "laySimple",
-                response: {statusCode: '0', title: "name"},
-                success: function (response) {
-                    if (response.code === '0') {
-                        if (checkedUrl) {
-                            checkArr(response.data, checkedUrl);
-                        }
-                    }
-                }
-            });
         }
 
         /**
-         * 复选框的处理
+         * 私有方法 复选框的处理
          */
         function checkArr(arr, checkedUrl) {
             get(checkedUrl, function (response) {
@@ -557,7 +537,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 树 默认打开 复选框根据后台数据进行处理
+         * 私有方法 树 默认打开 复选框根据后台数据进行处理
          */
         function doCheck(arr, data) {
             for (var i = 0; i < arr.length; i++) {
@@ -572,11 +552,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 }
                 checkArr.push(checkObj);
                 arr[i].checkArr = checkArr;
-                if (arr[i].open === 'Y') {
-                    arr[i].spread = true;
-                } else {
-                    arr[i].spread = false;
-                }
                 if (arr[i].children) {
                     doCheck(arr[i].children, data);
                 }
@@ -584,7 +559,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * list.contains
+         * 私有方法 list.contains
          */
         function contains(a, obj) {
             var i = a.length;
@@ -594,6 +569,51 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 }
             }
             return false;
+        }
+
+        /**
+         * 打开下拉框树
+         * @param id
+         * @param url
+         * @param type  all,no-all,p-casc,self,only
+         * @param checkUrl
+         */
+        function selectTree(id, url, type, checkUrl) {
+            dtree.renderSelect({
+                elem: "#" + id,
+                width: "100%", // 指定树的宽度
+                method: 'get',
+                headers: {
+                    "source": "admin",
+                    "token": getToken()
+                },
+                url: url,
+                checkbar: true,
+                checkbarType: type,// 单选
+                menubar: true, //开启菜单栏
+                menubarTips: {
+                    group: ["moveDown", "moveUp", "refresh", "searchNode"], //按钮组
+                },
+                dataStyle: "layuiStyle",
+                skin: "laySimple",
+                response: {statusCode: '0'},
+                success: function (response) {
+                    if (response.code === '0') {
+                        if (checkUrl) {
+                            checkArr(response.data, checkUrl);
+                        } else {
+                            doCheck(response.data);
+                        }
+                    } else if (response.code === '408') {
+                        // 用户未登陆 跳转登录页面
+                        errorBack('登录已失效', function () {
+                            window.location.href = 'page/login.html';
+                        })
+                    } else {
+                        errorBack(response.msg);
+                    }
+                }
+            });
         }
 
         /**
@@ -661,7 +681,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 为表单赋值
+         * 私有方法 为表单赋值
          */
         function initForm(bean, formId) {
             for (var prop in bean) {
@@ -708,7 +728,13 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                             }
                         }
                     } else {
-                        $(this).val(value);
+                        var selectName = $(this).attr("selectName");
+                        if (selectName){
+                            $(this).val(getDesc(value, selectName));
+                        }else {
+                            $(this).val(value);
+                        }
+
                     }
                 } else if (tagName === 'IMG') {
                     // 图片
@@ -732,6 +758,13 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
+         * 初始化下拉框 包括单选 多选 联动选择  树
+         */
+        function initSelect(selectId, url) {
+            select($("#" + selectId), url);
+        }
+
+        /**
          * 初始化表单的所有下拉框 包括单选 多选 联动选择  树
          */
         function initFormSelect(formId) {
@@ -741,40 +774,39 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 初始化下拉框 包括单选 多选 联动选择  树
-         */
-        function initSelect(selectId, url) {
-            select($("#" + selectId), url);
-        }
-
-        /**
-         * 下拉框具体的加载方法
+         * 私有方法 下拉框具体的加载方法
          */
         function select(sel, url) {
             var value = sel.val() || sel.attr("value");
             sel.empty();
             sel.append("<option value=''>请选择</option>");
             var xm = sel.attr("xm-select");
-            // 下拉框的类型 normal-普通单选框  linkage-联动框 tree-树 region-省市区
-            var type = sel.attr("selectType");
+            var selectName = sel.attr("selectName");
 
-            // 省市区、联动、树
-            selectOther(xm, type, url, value);
-
-            // 普通
-            if (type === 'normal') {
-                // 单选、普通多选
+            // 多选
+            if (xm) {
+                // 下拉框的类型 normal-普通单选框  linkage-联动框 tree-树 region-省市区
+                var type = sel.attr("selectType");
+                // 省市区、联动、树
+                selectOther(xm, type, url, value);
+                if (type === 'normal') {
+                    if (url) {
+                        selectByUrl(url, xm, type, value, sel);
+                    } else {
+                        selectByJson(selectName, xm, type, value, sel);
+                    }
+                }
+            } else {
                 if (url) {
-                    selectByUrl(url, xm, type, value, sel);
+                    selectByUrl(url, xm, '', value, sel);
                 } else {
-                    var selectName = sel.attr("selectName");
-                    selectByJson(selectName, xm, type, value, sel);
+                    selectByJson(selectName, xm, '', value, sel);
                 }
             }
-
         }
 
         /**
+         * 私有方法
          * 省市区
          * 联动
          * 树
@@ -827,6 +859,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
+         * 私有方法
          * 下拉框 数据源来自请求的接口
          */
         function selectByUrl(url, xm, type, value, sel) {
@@ -857,6 +890,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
+         * 私有方法
          * 下拉框 数据源来自静态化json
          */
         function selectByJson(selectName, xm, type, value, sel) {
@@ -901,7 +935,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 初始化日期
+         * 私有方法 初始化日期
          * @param domId
          * @param format
          * @param type
@@ -933,9 +967,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 初始化图标
+         * 初始化图标选择器
          */
-        function showIcon(id) {
+        function initIcon(id) {
             // 图标选择器的使用
             iconPicker.render({
                 // 选择器，推荐使用input
@@ -952,7 +986,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 展示图片
+         * table展示图片
          */
         function showImg(imgUrl) {
             if (imgUrl) {
@@ -963,7 +997,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 根据code获取desc
+         * table中根据code获取desc
          */
         function getDesc(code, selectName) {
             var selectData = layui.data('selectData').value;
@@ -984,38 +1018,23 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
-         * 打开下拉框树
-         * 单选
+         * 格式化时间
          */
-        function singleTree(id, url, checkUrl) {
-            dtree.renderSelect({
-                elem: "#" + id,
-                width: "100%", // 指定树的宽度
-                method: 'get',
-                headers: {
-                    "source": "admin",
-                    "token": getToken()
-                },
-                url: url,
-                checkbar: true,
-                checkbarType: "only",// 单选
-                menubar: true, //开启菜单栏
-                menubarTips: {
-                    group: ["moveDown", "moveUp", "refresh", "searchNode"], //按钮组
-                },
-                dataStyle: "layuiStyle",
-                skin: "laySimple",
-                response: {statusCode: '0', title: "name"},
-                success: function (response) {
-                    if (response.code === '0') {
-                        if (checkUrl) {
-                            checkArr(response.data, checkUrl);
-                        } else {
-                            doCheck(response.data);
-                        }
-                    }
-                }
-            });
+        function formatDate(date) {
+            if (date) {
+                return layui.util.toDateString(date, 'yyyy-MM-dd HH:mm:ss');
+            } else {
+                return '';
+            }
+        }
+
+        /**
+         * 获取token
+         */
+        function getToken() {
+            if (layui.data('token').value && layui.data('token').value !== undefined) {
+                return layui.data('token').value;
+            }
         }
 
         /**
@@ -1050,7 +1069,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             });
             return o;
         }
-
 
         e('crud', obj);
     }

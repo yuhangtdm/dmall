@@ -62,6 +62,7 @@
         <module>dmall-service-impl/dmall-service-impl-pay</module>
         <module>dmall-service-impl/dmall-service-impl-demo/dmall-service-impl-demo-business</module>
         <module>dmall-service-impl/dmall-service-impl-demo/dmall-service-impl-demo-generator</module>
+
         <!--dmall-web-->
         <module>dmall-web/dmall-web-admin</module>
     </modules>

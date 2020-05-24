@@ -1,0 +1,71 @@
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="attributeDetailForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">属性编号</label>
+            <div class="layui-input-block">
+                <input type="number" name="id" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">一级商品分类名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="categoryName" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">展示名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="showName" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">属性类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="type" readonly class="layui-input" selectName="TypeEnum">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">属性录入方式</label>
+            <div class="layui-input-block">
+                <input type="text" name="inputType" readonly class="layui-input" selectName="InputTypeEnum">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">是否支持手动新增</label>
+            <div class="layui-input-block">
+                <input type="text" name="handAddStatus" readonly class="layui-input" selectName="HandAddStatusEnum">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">可选值列表</label>
+            <div class="layui-input-block">
+                <textarea name="inputList" class="layui-textarea" readonly></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建人</label>
+            <div class="layui-input-block">
+                <input type="text" name="creator" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtCreated" name="gmtCreated" readonly class="layui-input date">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改人</label>
+            <div class="layui-input-block">
+                <input type="text" name="modifier" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtModified" name="gmtModified" readonly class="layui-input date">
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/pms/attribute/attributeDetail.js"></script>

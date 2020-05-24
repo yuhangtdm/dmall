@@ -14,7 +14,7 @@ layui.use(['form', 'crud'], function () {
     crud.initFormSelect('menuAddForm');
 
     // 图标选择器的使用
-    crud.showIcon('icon');
+    crud.initIcon('icon');
 
     form.on('select(type)', function (data) {
         if (data.value === '1') {

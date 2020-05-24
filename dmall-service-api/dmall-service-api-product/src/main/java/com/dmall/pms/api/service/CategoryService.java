@@ -1,14 +1,12 @@
 package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
+import com.dmall.common.dto.dtree.DTreeResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
-import com.dmall.pms.api.dto.category.request.setattributetype.SetAttributeTypeRequestDTO;
-import com.dmall.pms.api.dto.category.request.setbrand.SetBrandRequestDTO;
-import com.dmall.pms.api.dto.category.response.CategoryTreeResponseDTO;
+import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -49,9 +47,9 @@ public interface CategoryService {
 
     @ApiOperation(value = "分类树")
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")
-    @GetMapping("/tree/{parentId}")
-    BaseResult<List<CategoryTreeResponseDTO>> tree(@PathVariable("parentId") Long parentId);
-
+    @GetMapping("/tree/{parentId}/{type}")
+    BaseResult<List<DTreeResponseDTO>> tree(@PathVariable("parentId") Long parentId,
+                                            @PathVariable("type") Integer type);
 
     @ApiOperation(value = "设置属性")
     @PostMapping("/setAttribute")

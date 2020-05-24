@@ -1,14 +1,13 @@
-layui.use(['form', 'crud', 'dtree', 'inputTags'], function () {
+layui.use(['form', 'crud', 'dtree'], function () {
     var form = layui.form,
         dtree = layui.dtree,
         crud = layui.crud,
-        $ = layui.$,
-        inputTags = layui.inputTags;
+        $ = layui.$;
+
     // 当前弹出层，防止ID被覆盖
     var parentIndex = layer.index;
 
-    crud.singleTree('selTree', pmsUrl + '/category/tree/0');
-
+    crud.selectTree('category', pmsUrl + '/category/tree/0/4', 'only');
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {

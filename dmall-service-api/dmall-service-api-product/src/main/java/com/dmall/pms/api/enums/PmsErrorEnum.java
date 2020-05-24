@@ -23,9 +23,9 @@ public enum PmsErrorEnum implements ErrorCodeEnum {
     CATEGORY_NOT_INVALID("1101", "商品分类级别不合法"),
 
     /**
-     * 该属性参数无效
+     * 是否支持手动新增不能为空
      */
-    ATTRIBUTE_DATA_INVALID("1102", "该属性参数无效"),
+    HAND_ADD_STATUS_EMPTY("1102", "是否支持手动新增不能为空"),
 
     /**
      * 可选值列表不能重复
@@ -216,6 +216,12 @@ public enum PmsErrorEnum implements ErrorCodeEnum {
      * 展示名称不能为空
      */
     ATTRIBUTE_SHOW_NAME_EMPTY("1140", "展示名称不能为空"),
+
+    /**
+     * 可选值列表不能为空
+     */
+    INPUT_LIST_BLANK("1141", "可选值列表不能为空"),
+
 
     ;
 

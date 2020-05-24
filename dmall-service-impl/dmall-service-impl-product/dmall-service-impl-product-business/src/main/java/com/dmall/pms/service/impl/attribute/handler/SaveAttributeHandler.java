@@ -1,11 +1,12 @@
 package com.dmall.pms.service.impl.attribute.handler;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
 import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
@@ -52,8 +53,12 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
 
     @Override
     protected void customerConvertDo(AttributeDO result, SaveAttributeRequestDTO requestDTO) {
-        result.setInputList(CollUtil.join(requestDTO.getInputList(), StrUtil.COMMA));
         CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
         result.setName(StrUtil.format("{}_{}", categoryDO.getName(), requestDTO.getShowName()));
+        // 手工录入
+        if (InputTypeEnum.HANDLE.getCode().equals(requestDTO.getInputType())) {
+            result.setHandAddStatus(HandAddStatusEnum.Y.getCode());
+            result.setInputList(null);
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
 import com.dmall.bms.api.dto.menu.response.PageMenuResponseDTO;
 import com.dmall.common.dto.BaseResult;
+import com.dmall.common.dto.dtree.DTreeResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +47,7 @@ public interface MenuService {
 
     @GetMapping("/tree")
     @ApiOperation(value = "菜单树")
-    BaseResult<List<MenuTreeResponseDTO>> tree();
+    BaseResult<List<DTreeResponseDTO>> tree();
 
     @GetMapping("/myTree")
     @ApiOperation(value = "当前用户的菜单树")

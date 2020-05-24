@@ -1,8 +1,5 @@
 package com.dmall.pms.api.dto.attribute.response;
 
-import com.dmall.pms.api.enums.HandAddStatusEnum;
-import com.dmall.pms.api.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.TypeEnum;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
@@ -32,16 +29,16 @@ public class AttributeResponseDTO {
     private String showName;
 
     @ApiModelProperty(value = "类型", position = 4)
-    private TypeEnum type;
+    private Integer type;
 
     @ApiModelProperty(value = "属性录入方式", position = 5)
-    private InputTypeEnum inputType;
+    private Integer inputType;
 
     @ApiModelProperty(value = "可选值列表 以逗号隔开", position = 6)
     private String inputList;
 
     @ApiModelProperty(value = "是否支持手动新增", position = 7)
-    private HandAddStatusEnum handAddStatus;
+    private String handAddStatus;
 
     @ApiModelProperty(value = "创建人", position = 9)
     private Long creator;
@@ -57,4 +54,7 @@ public class AttributeResponseDTO {
 
     @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 13)
     private String isDeleted;
+
+    @ApiModelProperty(value = "一级分类名称", position = 14)
+    private String categoryName;
 }

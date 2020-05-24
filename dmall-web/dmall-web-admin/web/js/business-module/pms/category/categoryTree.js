@@ -7,7 +7,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
 
     var tree = dtree.render({
         elem: "#iframeTree1",
-        url: pmsUrl + "/category/tree/0",
+        url: pmsUrl + "/category/tree/0/0",
         method: 'get',
         headers: {
             "source": "admin",
@@ -18,14 +18,22 @@ layui.use(['form', 'crud', 'dtree'], function () {
         skin: "zdy",
         toolbar: true,
         menubar: true,
-        menubarTips:{
+        checkbar: false,
+        menubarTips: {
             group: ["moveDown", "moveUp", "refresh"], //按钮组
         },
-        response: {statusCode: '0', title: "name"},
+        response: {statusCode: '0'},
         toolbarShow: [], // 取消自带的操作
         success: function (response) {
             if (response.code === '0') {
-                update(response.data);
+
+            } else if (response.code === '408') {
+                // 用户未登陆 跳转登录页面
+                crud.errorBack('登录已失效', function () {
+                    window.location.href = 'page/login.html';
+                })
+            } else {
+                crud.errorBack(response.msg);
             }
         },
         toolbarFun: {
@@ -110,6 +118,9 @@ layui.use(['form', 'crud', 'dtree'], function () {
         tree.fuzzySearch(input);
     })
 
+    /**
+     * 刷新表单
+     */
     function refreshForm() {
         $("#id").val('');
         $("#name").val('');
@@ -120,13 +131,5 @@ layui.use(['form', 'crud', 'dtree'], function () {
         $("#description").val('');
     }
 
-    function update(arr) {
-        for (var i = 0; i < arr.length; i++) {
-            arr[i].disabled = false;
-            if (arr[i].children) {
-                update(arr[i].children);
-            }
-        }
-    }
 })
 ;
