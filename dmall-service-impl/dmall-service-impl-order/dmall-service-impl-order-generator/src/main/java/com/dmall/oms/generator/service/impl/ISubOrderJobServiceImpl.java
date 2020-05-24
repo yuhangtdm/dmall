@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * @description: 子订单job表 
+ * @description: 子订单job表
  * @author: created by hang.yu on 2020-04-18 21:31:27
  */
 @Service

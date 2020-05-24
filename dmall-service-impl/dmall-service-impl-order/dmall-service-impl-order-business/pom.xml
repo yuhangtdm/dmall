@@ -9,7 +9,7 @@
         <artifactId>dmall-parent</artifactId>
         <groupId>com.allInJava</groupId>
         <version>1.0.0-SNAPSHOT</version>
-       <!-- <relativePath>../../../dmall-parent/pom.xml</relativePath>-->
+        <!-- <relativePath>../../../dmall-parent/pom.xml</relativePath>-->
     </parent>
 
     <artifactId>dmall-service-impl-order-business</artifactId>

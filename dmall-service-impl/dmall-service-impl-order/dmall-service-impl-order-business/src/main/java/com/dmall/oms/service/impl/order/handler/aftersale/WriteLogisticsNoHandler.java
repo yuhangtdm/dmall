@@ -42,7 +42,7 @@ public class WriteLogisticsNoHandler extends AbstractCommonHandler<WriteLogistic
     public BaseResult<Long> processor(WriteLogisticsNoRequestDTO requestDTO) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = omsValidate.validateOrderAfterSale(requestDTO.getAfterSaleId());
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
+        if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())) {
             return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         if (AfterSaleStatusEnum.WAIT_SEND_BACK.getCode().equals(orderAfterSaleApplyDO.getStatus())) {

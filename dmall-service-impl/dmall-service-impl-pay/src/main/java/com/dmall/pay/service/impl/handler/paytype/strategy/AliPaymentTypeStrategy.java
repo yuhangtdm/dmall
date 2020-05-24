@@ -1,4 +1,5 @@
 package com.dmall.pay.service.impl.handler.paytype.strategy;
+
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
@@ -75,12 +76,12 @@ public class AliPaymentTypeStrategy extends AbstractPaymentTypeService {
         request.setBizContent(bizContent.toJSONString());
         try {
             AlipayTradeRefundResponse response = alipayClient.execute(request);
-            if(response.isSuccess()){
+            if (response.isSuccess()) {
                 return ResultUtil.success(response.getTradeNo());
             } else {
                 return ResultUtil.fail(PaymentErrorEnum.CREATE_ALI_ERROR);
             }
-        }catch (AlipayApiException e){
+        } catch (AlipayApiException e) {
             log.error("refund error", e);
             return ResultUtil.fail(PaymentErrorEnum.CREATE_ALI_ERROR);
         }

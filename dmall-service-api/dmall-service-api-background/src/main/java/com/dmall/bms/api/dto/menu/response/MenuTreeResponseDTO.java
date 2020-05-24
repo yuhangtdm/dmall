@@ -19,7 +19,7 @@ import java.util.List;
 public class MenuTreeResponseDTO implements Serializable {
 
     @ApiModelProperty(value = "id", position = 1)
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "父id", position = 2)

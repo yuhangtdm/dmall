@@ -31,7 +31,7 @@ public class RegisterMemberHandler extends AbstractCommonHandler<RegisterMemberR
 
         // 邮箱必须唯一
         MemberDO byEmail = memberSupport.getByEmail(requestDTO.getEmail());
-        if (byEmail != null){
+        if (byEmail != null) {
             return ResultUtil.fail(MmsErrorEnum.EMAIL_EXISTS);
         }
         // 手机号必须唯一

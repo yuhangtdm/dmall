@@ -19,53 +19,53 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ${businessServiceImpl} implements ${businessService} {
 
-    @Autowired
-    private ${saveHandler} ${saveHandlerName};
+@Autowired
+private ${saveHandler} ${saveHandlerName};
 
-    @Autowired
-    private ${deleteHandler} ${deleteHandlerName};
+@Autowired
+private ${deleteHandler} ${deleteHandlerName};
 
-    @Autowired
-    private ${updateHandler} ${updateHandlerName};
+@Autowired
+private ${updateHandler} ${updateHandlerName};
 
-    @Autowired
-    private ${getHandler} ${getHandlerName};
+@Autowired
+private ${getHandler} ${getHandlerName};
 
-    @Autowired
-    private ${listHandler} ${listHandlerName};
+@Autowired
+private ${listHandler} ${listHandlerName};
 
-    @Autowired
-    private ${pageHandler} ${pageHandlerName};
+@Autowired
+private ${pageHandler} ${pageHandlerName};
 
 
-    @Override
-    public BaseResult<Long> save(@RequestBody ${saveRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> save(@RequestBody ${saveRequestDto} requestDTO){
         return ${saveHandlerName}.handler(requestDTO);
-    }
+        }
 
-    @Override
-    public BaseResult<Long> delete(Long id) {
+@Override
+public BaseResult<Long> delete(Long id){
         return ${deleteHandlerName}.handler(id);
-    }
+        }
 
-    @Override
-    public BaseResult<Long> update(@RequestBody ${updateRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> update(@RequestBody ${updateRequestDto} requestDTO){
         return ${updateHandlerName}.handler(requestDTO);
-    }
+        }
 
-    @Override
-    public BaseResult<${responseDto}> get(Long id) {
+@Override
+public BaseResult<${responseDto}> get(Long id){
         return ${getHandlerName}.handler(id);
-    }
+        }
 
-    @Override
-    public BaseResult<List<${responseDto}>> list(@RequestBody ${listRequestDto} requestDTO) {
+@Override
+public BaseResult<List<${responseDto}>>list(@RequestBody ${listRequestDto} requestDTO){
         return ${listHandlerName}.handler(requestDTO);
-    }
+        }
 
-    @Override
-    public BaseResult<ResponsePage<${responseDto}>> page(@RequestBody ${pageRequestDto} requestDTO) {
+@Override
+public BaseResult<ResponsePage<${responseDto}>>page(@RequestBody ${pageRequestDto} requestDTO){
         return ${pageHandlerName}.handler(requestDTO);
-    }
+        }
 
-}
+        }

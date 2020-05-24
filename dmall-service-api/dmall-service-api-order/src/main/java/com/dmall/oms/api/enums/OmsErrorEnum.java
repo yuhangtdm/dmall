@@ -150,7 +150,7 @@ public enum OmsErrorEnum implements ErrorCodeEnum {
     /**
      * 订单项不存在
      */
-    ORDER_ITEM_NOT_EXISTS("1527","订单项不存在"),
+    ORDER_ITEM_NOT_EXISTS("1527", "订单项不存在"),
 
     ;
 

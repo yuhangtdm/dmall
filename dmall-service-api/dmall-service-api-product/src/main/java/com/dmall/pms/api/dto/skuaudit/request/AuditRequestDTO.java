@@ -20,7 +20,7 @@ public class AuditRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "审核记录id",required = true, position = 1)
+    @ApiModelProperty(value = "审核记录id", required = true, position = 1)
     @NotNull(message = "审核记录id不能为空")
     private Long auditId;
 

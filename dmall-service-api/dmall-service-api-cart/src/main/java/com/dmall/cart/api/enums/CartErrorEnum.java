@@ -15,12 +15,11 @@ public enum CartErrorEnum implements ErrorCodeEnum {
     /**
      * 购物车列表为空
      */
-    CART_LIST_EMPTY("1300","购物车列表为空")
-    ;
+    CART_LIST_EMPTY("1300", "购物车列表为空");
 
-   /**
-    * 错误码
-    */
+    /**
+     * 错误码
+     */
     private final String code;
 
     /**

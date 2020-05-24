@@ -19,10 +19,11 @@ public class PermissionTest extends BaseTest {
     private RestTemplate restTemplate;
 
     @Test
-    public void test(){
+    public void test() {
         ResponseEntity<String> forEntity = restTemplate.getForEntity(URL, String.class);
         String body = forEntity.getBody();
-        SwaggerInfo swagger = JsonUtil.fromJson(body, new TypeReference<SwaggerInfo>(){});
+        SwaggerInfo swagger = JsonUtil.fromJson(body, new TypeReference<SwaggerInfo>() {
+        });
         System.out.println(swagger);
     }
 }

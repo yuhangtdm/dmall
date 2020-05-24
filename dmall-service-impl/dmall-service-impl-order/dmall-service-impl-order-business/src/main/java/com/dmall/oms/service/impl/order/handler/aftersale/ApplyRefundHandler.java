@@ -45,7 +45,7 @@ public class ApplyRefundHandler extends AbstractCommonHandler<OrderApplyRefundRe
             return ResultUtil.fail(OmsErrorEnum.APPLY_REFUND_ERROR);
         }
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(orderDO.getCreator())){
+        if (!portalMemberDTO.getId().equals(orderDO.getCreator())) {
             return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         // 新增售后服务表

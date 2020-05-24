@@ -8,5 +8,5 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/2/29 17:16
  */
 @FeignClient(value = "dmall-service-impl-product")
-public interface SkuServiceFeign  extends SkuService {
+public interface SkuServiceFeign extends SkuService {
 }

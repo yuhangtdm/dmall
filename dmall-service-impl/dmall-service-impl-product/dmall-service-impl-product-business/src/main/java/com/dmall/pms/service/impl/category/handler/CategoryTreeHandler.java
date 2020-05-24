@@ -98,7 +98,7 @@ public class CategoryTreeHandler extends AbstractCommonHandler<CategoryTreeDTO, 
                             || LevelEnum.THREE.getCode().equals(doo.getLevel()));
                     break;
                 }
-                case TWO_THREE:{
+                case TWO_THREE: {
                     responseDTO.setDisabled(LevelEnum.TWO.getCode().equals(doo.getLevel())
                             || LevelEnum.THREE.getCode().equals(doo.getLevel()));
                     break;

@@ -30,6 +30,7 @@ public class TestUpdate {
 
     @Autowired
     private ICategoryService categoryService;
+
     @Test
     public void test() {
         AttributeTypeDO attributeTypeDO = new AttributeTypeDO();

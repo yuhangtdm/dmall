@@ -32,13 +32,13 @@ public class DeleteUserHandler extends AbstractCommonHandler<Long, UserDO, Long>
         if (userDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.USER_NOT_EXIST);
         }
-        if (YNEnum.N.getCode().equals(userDO.getStatus())){
+        if (YNEnum.N.getCode().equals(userDO.getStatus())) {
             return ResultUtil.fail(BackGroundErrorEnum.DELETE_ERROR);
         }
         userMapper.deleteById(id);
         // 清空登录
         BaseResult<Void> clearLoginResult = adminLoginFeign.clearLogin(userDO.getPhone());
-        if (!clearLoginResult.getResult()){
+        if (!clearLoginResult.getResult()) {
             throw new BusinessException(clearLoginResult.getCode(), clearLoginResult.getMsg());
         }
         return ResultUtil.success(id);

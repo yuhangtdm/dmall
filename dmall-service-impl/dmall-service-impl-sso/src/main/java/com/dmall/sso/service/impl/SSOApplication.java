@@ -18,7 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableHystrix
 @EnableApolloConfig
-@MapperScan(basePackages = {"com.dmall.sso.service.impl.admin.mapper","com.dmall.sso.service.impl.portal.mapper"})
+@MapperScan(basePackages = {"com.dmall.sso.service.impl.admin.mapper", "com.dmall.sso.service.impl.portal.mapper"})
 @EnableConfigurationProperties({SsoProperties.class})
 @SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 public class SSOApplication {

@@ -105,7 +105,7 @@ public class ProductAttributeValueDO implements Serializable {
         ProductAttributeValueDO that = (ProductAttributeValueDO) o;
         return Objects.equals(productId, that.productId) &&
                 Objects.equals(attributeId, that.attributeId) &&
-                Objects.equals(attributeValue, that.attributeValue) ;
+                Objects.equals(attributeValue, that.attributeValue);
     }
 
     @Override

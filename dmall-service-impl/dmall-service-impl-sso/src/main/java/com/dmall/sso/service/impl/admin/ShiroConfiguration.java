@@ -23,7 +23,7 @@ public class ShiroConfiguration {
      * 加密方式和加密次数
      */
     @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName(Constants.MD5);
         hashedCredentialsMatcher.setHashIterations(Constants.ENCRYPT_TIME);
@@ -34,7 +34,7 @@ public class ShiroConfiguration {
      * realm
      */
     @Bean
-    public AuthenticationRealm shiroRealm(){
+    public AuthenticationRealm shiroRealm() {
         AuthenticationRealm authenticationRealm = new AuthenticationRealm();
         authenticationRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return authenticationRealm;
@@ -44,8 +44,8 @@ public class ShiroConfiguration {
      * securityManager
      */
     @Bean
-    public SecurityManager securityManager(){
-        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+    public SecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(shiroRealm());
         return securityManager;
     }

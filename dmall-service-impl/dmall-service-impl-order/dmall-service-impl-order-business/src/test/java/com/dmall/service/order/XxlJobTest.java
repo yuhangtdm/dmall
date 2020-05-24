@@ -30,7 +30,8 @@ public class XxlJobTest {
     public static void main(String[] args) {
         test();
     }
-    public static void test(){
+
+    public static void test() {
 
         Map<String, String> map = Maps.newHashMap();
         map.put("appname", "test");

@@ -22,7 +22,7 @@ import java.util.Date;
 @TableName("oms_order_return_apply")
 public class OrderReturnApplyDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

@@ -18,14 +18,14 @@ public class RocketMqConsumer {
     public static final String NAME_SERVER = "192.168.38.163:9876;192.168.38.164:9876";
 
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         loadBalance();
     }
 
     /**
      * 负载均衡方式消费消息
      */
-    public static void loadBalance() throws Exception{
+    public static void loadBalance() throws Exception {
         // 实例化消息生产者,指定组名
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("group2");
         // 指定Namesrv地址信息.
@@ -52,7 +52,7 @@ public class RocketMqConsumer {
     /**
      * 广播方式消费消息
      */
-    public static void broadcast() throws Exception{
+    public static void broadcast() throws Exception {
         // 实例化消息生产者,指定组名
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("group1");
         // 指定Namesrv地址信息.

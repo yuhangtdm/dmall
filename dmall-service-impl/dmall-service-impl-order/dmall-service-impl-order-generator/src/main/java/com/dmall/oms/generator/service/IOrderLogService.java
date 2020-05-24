@@ -4,7 +4,7 @@ import com.dmall.oms.generator.dataobject.OrderLogDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * @description: 
+ * @description:
  * @author: created by hang.yu on 2020-04-05 21:32:40
  */
 public interface IOrderLogService extends IService<OrderLogDO> {

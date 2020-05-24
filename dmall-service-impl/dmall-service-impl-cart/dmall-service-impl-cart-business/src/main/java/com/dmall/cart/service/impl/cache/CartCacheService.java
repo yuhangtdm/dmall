@@ -41,7 +41,7 @@ public class CartCacheService {
      * 获取购物车的key
      */
     public String getCartKey(Long memberId) {
-        return StrUtil.format("memberId_{}",  memberId);
+        return StrUtil.format("memberId_{}", memberId);
     }
 
     /**

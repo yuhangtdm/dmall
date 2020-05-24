@@ -18,7 +18,7 @@ import java.util.Date;
 @TableName("mms_member_login_log")
 public class MemberLoginLogDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

@@ -16,17 +16,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ${saveHandler} extends AbstractCommonHandler<${saveRequestDto}, ${entity}, Long> {
 
-    @Autowired
-    private ${table.mapperName} ${mapperName};
+@Autowired
+private ${table.mapperName} ${mapperName};
 
-    @Override
-    public BaseResult<Long> validate(${saveRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> validate(${saveRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-    @Override
-    public BaseResult<Long> processor(${saveRequestDto} requestDTO) {
+@Override
+public BaseResult<Long> processor(${saveRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-}
+        }

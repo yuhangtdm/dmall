@@ -37,7 +37,7 @@ public class ResetPasswordUserHandler extends AbstractCommonHandler<Long, UserDO
         userMapper.updateById(userDO);
         // 退出登录
         BaseResult<Void> clearLoginResult = adminLoginFeign.clearLogin(userDO.getPhone());
-        if (!clearLoginResult.getResult()){
+        if (!clearLoginResult.getResult()) {
             throw new BusinessException(clearLoginResult.getCode(), clearLoginResult.getMsg());
         }
         return ResultUtil.success(id);

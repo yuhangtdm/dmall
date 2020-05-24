@@ -17,10 +17,10 @@ import java.util.Date;
 @ApiModel(value = "PermissionResponseDTO", description = "权限响应实体")
 public class PermissionResponseDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "服务id", position = 2)

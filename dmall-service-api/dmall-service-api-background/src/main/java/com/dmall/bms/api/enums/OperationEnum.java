@@ -14,13 +14,12 @@ public enum OperationEnum implements CodeDescEnum<String> {
     /**
      * 加权限
      */
-    ADD("+","加权限"),
+    ADD("+", "加权限"),
 
     /**
      * 减权限
      */
-    SUB("-","减权限")
-    ;
+    SUB("-", "减权限");
 
     private final String code;
 

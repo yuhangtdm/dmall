@@ -18,7 +18,7 @@ import java.util.Date;
 @TableName("oms_order_status")
 public class OrderStatusDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

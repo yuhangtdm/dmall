@@ -20,7 +20,7 @@ public enum AfterSaleStatusEnum implements CodeDescEnum<Integer> {
     /**
      * 待寄回
      */
-    WAIT_SEND_BACK(2,"待寄回"),
+    WAIT_SEND_BACK(2, "待寄回"),
 
     /**
      * 退/换货中

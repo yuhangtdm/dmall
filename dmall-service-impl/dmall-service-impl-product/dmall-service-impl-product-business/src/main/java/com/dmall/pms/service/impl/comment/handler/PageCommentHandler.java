@@ -33,14 +33,14 @@ public class PageCommentHandler extends AbstractCommonHandler<PageCommentRequest
         skuCommentMapper.page(page, requestDTO);
         CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
         commentResponseDTO.setPage(new ResponsePage<>(page.getTotal(), page.getRecords()));
-        if (requestDTO.getSkuId() != null){
+        if (requestDTO.getSkuId() != null) {
             Long skuId = requestDTO.getSkuId();
             commentResponseDTO.setCommentCount(commentSupport.countByProductId(skuId));
             commentResponseDTO.setGoodCommentCount(commentSupport.countBySkuId(skuId, CommentEnum.GOOD.getCode()));
             commentResponseDTO.setMiddleCommentCount(commentSupport.countBySkuId(skuId, CommentEnum.MIDDLE.getCode()));
             commentResponseDTO.setBadCommentCount(commentSupport.countBySkuId(skuId, CommentEnum.BAD.getCode()));
             commentResponseDTO.setHasPicCommentCount(commentSupport.countBySkuIdHasPic(skuId));
-        }else {
+        } else {
             Long productId = requestDTO.getProductId();
             commentResponseDTO.setCommentCount(commentSupport.countByProductId(productId));
             commentResponseDTO.setGoodCommentCount(commentSupport.countByProductId(productId, CommentEnum.GOOD.getCode()));

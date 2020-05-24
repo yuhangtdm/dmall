@@ -7,7 +7,7 @@ layui.use(['form', 'miniPage', 'crud'], function () {
     //监听提交
     form.on('submit(saveBtn)', function (data) {
         var field = data.field;
-        if (field.newPassword !== field.confirmNewPassword){
+        if (field.newPassword !== field.confirmNewPassword) {
             crud.error('请确认新密码是否一致');
             return false;
         }

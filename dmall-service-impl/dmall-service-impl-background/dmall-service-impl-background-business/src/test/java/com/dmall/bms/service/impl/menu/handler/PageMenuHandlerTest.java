@@ -31,8 +31,8 @@ public class PageMenuHandlerTest extends BaseTest {
     }
 
     @Test
-    public void test(){
-        IPage<UserDO> page = new Page<>(1,2);
+    public void test() {
+        IPage<UserDO> page = new Page<>(1, 2);
         userMapper.selectPage(page, Wrappers.emptyWrapper());
         System.out.println(page.getRecords());
         System.out.println(page.getTotal());

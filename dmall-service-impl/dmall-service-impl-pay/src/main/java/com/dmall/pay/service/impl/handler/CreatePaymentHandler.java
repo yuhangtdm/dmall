@@ -27,7 +27,7 @@ public class CreatePaymentHandler extends AbstractCommonHandler<CreatePaymentReq
     @Override
     public BaseResult<CreatePaymentResponseDTO> processor(CreatePaymentRequestDTO requestDTO) {
         PaymentTypeEnum paymentTypeEnum = EnumUtil.getCodeDescEnum(PaymentTypeEnum.class, requestDTO.getPaymentType());
-        if (paymentTypeEnum == null){
+        if (paymentTypeEnum == null) {
             return ResultUtil.fail(PaymentErrorEnum.PAYMENT_ORDER_EXISTS);
         }
         PaymentTypeService instance = paymentTypeFactory.createInstance(paymentTypeEnum);

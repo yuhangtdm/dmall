@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "CommentDetailResponseDTO", description = "评价详情响应实体")
-public class CommentDetailResponseDTO implements Serializable{
+public class CommentDetailResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -4884566657214529723L;
 

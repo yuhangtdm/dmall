@@ -15,7 +15,7 @@ import lombok.Data;
 public class UserRoleResponseDTO {
 
     @ApiModelProperty(value = "roleId", position = 1)
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long roleId;
 
     @ApiModelProperty(value = "角色名称", position = 2)

@@ -95,7 +95,7 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
             subOrderMapper.insert(subOrderDO);
             for (Long orderItemId : detail.getOrderItemIds()) {
                 OrderItemDO orderItemDO = orderItemMapper.selectById(orderItemId);
-                if (orderItemDO == null){
+                if (orderItemDO == null) {
                     throw new BusinessException(OmsErrorEnum.ORDER_NOT_EXISTS);
                 }
                 orderItemDO.setSubOrderId(subOrderDO.getId());

@@ -39,11 +39,11 @@ public class ResetPasswordHandler extends AbstractCommonHandler<ResetPasswordReq
         // 验证码不能过期
         String key = cacheKeySupport.generateForgetPassword(requestDTO.getEmail());
         String code = (String) redisTemplate.opsForValue().get(key);
-        if (StrUtil.isBlank(code)){
+        if (StrUtil.isBlank(code)) {
             return ResultUtil.fail(MmsErrorEnum.CHECK_CODE_EXPIRED);
         }
         // 验证码正确
-        if (!code.equals(requestDTO.getCode())){
+        if (!code.equals(requestDTO.getCode())) {
             return ResultUtil.fail(MmsErrorEnum.CHECK_CODE_ERROR);
         }
         // 修改新密码

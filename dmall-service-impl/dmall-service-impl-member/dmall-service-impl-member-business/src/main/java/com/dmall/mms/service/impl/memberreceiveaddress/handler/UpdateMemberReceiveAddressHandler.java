@@ -27,11 +27,11 @@ public class UpdateMemberReceiveAddressHandler extends AbstractCommonHandler<Upd
         // 获取当前登录用户
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
         MemberReceiveAddressDO memberReceiveAddressDO = memberReceiveAddressMapper.selectById(requestDTO.getId());
-        if (memberReceiveAddressDO == null){
+        if (memberReceiveAddressDO == null) {
             return ResultUtil.fail(MmsErrorEnum.MEMBER_RECEIVE_ADDRESS_NOT_EXIST);
         }
         // 判断只有当前会员才能修改
-        if (!loginMember.getId().equals(memberReceiveAddressDO.getCreator())){
+        if (!loginMember.getId().equals(memberReceiveAddressDO.getCreator())) {
             return ResultUtil.fail(MmsErrorEnum.MEMBER_RECEIVE_ADDRESS_UPDATE_ERROR);
         }
         MemberReceiveAddressDO addressDO = dtoConvertDo(requestDTO, MemberReceiveAddressDO.class);

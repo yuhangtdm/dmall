@@ -307,7 +307,7 @@ layui.define(["jquery", "layer"], function (exports) {
                 '/**头部右侧下拉字体颜色 headerRightChildColor */\n' +
                 '.layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child a {\n' +
                 '    color:  ' + bgcolorData.headerRightChildColor + '!important;\n' +
-                '}\n'+
+                '}\n' +
                 '\n' +
                 '/*头部右侧鼠标选中 headerRightColorThis */\n' +
                 '.layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover, .layui-header .layuimini-header-menu.layuimini-pc-show.layui-nav .layui-this a {\n' +

@@ -1,4 +1,5 @@
 package com.dmall.web.admin.controller;
+
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
@@ -63,9 +64,9 @@ public class IndexController {
         LogoInfoVO logoInfoVO = new LogoInfoVO();
         logoInfoVO.setTitle("地猫商城");
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
-        if (StrUtil.isNotBlank(adminUserDTO.getIcon())){
+        if (StrUtil.isNotBlank(adminUserDTO.getIcon())) {
             logoInfoVO.setImage(adminUserDTO.getIcon());
-        }else {
+        } else {
             logoInfoVO.setImage("images/logo.png");
         }
         return logoInfoVO;

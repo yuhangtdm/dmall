@@ -4,13 +4,13 @@
 
     <select id="myAfterSalePage" resultType="com.dmall.oms.api.dto.myaftersalepage.MyAfterSalePageResponseDTO">
         SELECT
-            ooa.id AS afterSaleId ooa.order_id AS orderId,
-            ooi.sku_id AS skuId,
-            ooi.sku_name AS skuName,
-            ooa.gmt_created AS applyTime,
-            ooa.`status` AS STATUS
+        ooa.id AS afterSaleId ooa.order_id AS orderId,
+        ooi.sku_id AS skuId,
+        ooi.sku_name AS skuName,
+        ooa.gmt_created AS applyTime,
+        ooa.`status` AS STATUS
         FROM
-            oms_order_after_sale_apply ooa
+        oms_order_after_sale_apply ooa
         INNER JOIN oms_order_item ooi ON ooa.order_item_id = ooi.id
         where ooa.is_deleted = 'N' and ooi.is_deleted = 'N' and ooa.status!=8
         and ooa.creator = #{request.creator}

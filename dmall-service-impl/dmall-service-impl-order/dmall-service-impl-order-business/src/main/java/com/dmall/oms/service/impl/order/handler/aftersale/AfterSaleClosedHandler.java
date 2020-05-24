@@ -38,7 +38,7 @@ public class AfterSaleClosedHandler extends AbstractCommonHandler<Long, OrderAft
     public BaseResult processor(Long afterSaleId) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = omsValidate.validateOrderAfterSale(afterSaleId);
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())){
+        if (!portalMemberDTO.getId().equals(orderAfterSaleApplyDO.getCreator())) {
             return ResultUtil.fail(OmsErrorEnum.NO_AUTHORITY);
         }
         if (AfterSaleTypeEnum.REFUND.getCode().equals(orderAfterSaleApplyDO.getType())) {

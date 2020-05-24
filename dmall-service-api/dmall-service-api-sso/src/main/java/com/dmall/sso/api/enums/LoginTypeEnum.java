@@ -12,7 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum LoginTypeEnum implements CodeDescEnum<String> {
 
-    PC("1","pc网站"),
+    PC("1", "pc网站"),
     // 2-android;3-ios;4-小程序
 
     ;

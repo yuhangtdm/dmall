@@ -47,8 +47,8 @@ public class AuthenticationRealm extends AuthorizingRealm {
         adminUserDTO.setSource(Constants.ADMIN_USER);
         // 密码加密和比较交给shiro
         return new SimpleAuthenticationInfo(adminUserDTO, userDO.getPassword(),
-                    ByteSource.Util.bytes(userDO.getPhone()),
-                    getName());
+                ByteSource.Util.bytes(userDO.getPhone()),
+                getName());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
         return null;
     }
 
-    private void insertLoginLog(UserDO userDO){
+    private void insertLoginLog(UserDO userDO) {
         UserLoginLogDO userLoginLogDO = new UserLoginLogDO();
         userLoginLogDO.setUserId(userDO.getId());
         userLoginLogDO.setIp(RequestUtil.getIpAddress(RequestUtil.getRequest()));

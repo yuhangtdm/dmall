@@ -10,7 +10,8 @@ import java.util.Date;
  */
 public class CronUtil {
 
-    private CronUtil(){}
+    private CronUtil() {
+    }
 
     private static final String dateFormat = "ss mm HH dd MM ? yyyy";
 
@@ -28,9 +29,9 @@ public class CronUtil {
     }
 
     /**
-     *根据当前日期增加天数后生成cron表达式
+     * 根据当前日期增加天数后生成cron表达式
      */
-    public static String getCronAddDay(int day){
+    public static String getCronAddDay(int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, day);
         return getCron(calendar.getTime());

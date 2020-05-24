@@ -18,7 +18,7 @@ import java.util.Date;
 @TableName("mms_bank_card")
 public class BankCardDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

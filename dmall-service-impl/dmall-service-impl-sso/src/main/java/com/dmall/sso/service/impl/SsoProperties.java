@@ -30,7 +30,7 @@ public class SsoProperties {
 
 
     @PostConstruct
-    public void check(){
+    public void check() {
 
     }
 }

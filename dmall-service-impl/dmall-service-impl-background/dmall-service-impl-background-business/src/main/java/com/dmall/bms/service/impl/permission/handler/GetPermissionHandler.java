@@ -23,7 +23,7 @@ public class GetPermissionHandler extends AbstractCommonHandler<Long, Permission
     @Override
     public BaseResult<PermissionResponseDTO> processor(Long id) {
         PermissionDO permissionDO = permissionMapper.selectById(id);
-        if (permissionDO == null){
+        if (permissionDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.PERMISSION_NOT_EXIST);
         }
         return ResultUtil.success(doConvertDto(permissionDO, PermissionResponseDTO.class));

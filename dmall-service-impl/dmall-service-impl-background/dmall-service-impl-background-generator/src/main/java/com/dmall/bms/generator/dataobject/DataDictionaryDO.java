@@ -18,7 +18,7 @@ import java.util.Date;
 @TableName("bms_data_dictionary")
 public class DataDictionaryDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id ID_WORKER

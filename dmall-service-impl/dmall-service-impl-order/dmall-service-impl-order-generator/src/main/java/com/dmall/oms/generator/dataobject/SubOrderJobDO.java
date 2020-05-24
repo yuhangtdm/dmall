@@ -2,18 +2,22 @@ package com.dmall.oms.generator.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: 子订单job表 
+ * @description: 子订单job表
  * @author: created by hang.yu on 2020-04-18 21:31:27
  */
 @Data
@@ -22,7 +26,7 @@ import lombok.experimental.Accessors;
 @TableName("oms_sub_order_job")
 public class SubOrderJobDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

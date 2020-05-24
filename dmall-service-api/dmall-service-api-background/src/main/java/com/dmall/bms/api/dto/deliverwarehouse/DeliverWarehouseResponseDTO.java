@@ -19,7 +19,7 @@ public class DeliverWarehouseResponseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id", position = 1)
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "商家店铺id", position = 2)

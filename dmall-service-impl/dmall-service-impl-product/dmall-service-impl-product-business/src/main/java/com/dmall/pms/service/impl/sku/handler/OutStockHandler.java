@@ -27,8 +27,8 @@ public class OutStockHandler extends AbstractCommonHandler<StockRequestDTO, SkuD
     private PmsValidate pmsValidate;
 
     @Override
-    public BaseResult processor(StockRequestDTO requestDTO){
-         List<SkuStockRequestDTO> skuList = requestDTO.getSku();
+    public BaseResult processor(StockRequestDTO requestDTO) {
+        List<SkuStockRequestDTO> skuList = requestDTO.getSku();
         for (SkuStockRequestDTO skuRequestDTO : skuList) {
             SkuDO skuDO = pmsValidate.validateSku(skuRequestDTO.getSkuId());
             skuDO.setStock(skuDO.getStock() - skuRequestDTO.getNumber());

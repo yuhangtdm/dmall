@@ -3,9 +3,9 @@ package com.dmall.demo.api.dto.user.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.util.*;
-import java.math.*;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @description: 后台用户列表请求实体

@@ -4,20 +4,20 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.bms.generator.dataobject.UserDO">
-        <id column="id" property="id" />
-        <result column="merchants_id" property="merchantsId" />
-        <result column="user_name" property="userName" />
-        <result column="nick_name" property="nickName" />
-        <result column="phone" property="phone" />
-        <result column="password" property="password" />
-        <result column="real_name" property="realName" />
-        <result column="icon" property="icon" />
-        <result column="remark" property="remark" />
-        <result column="creator" property="creator" />
-        <result column="gmt_created" property="gmtCreated" />
-        <result column="modifier" property="modifier" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="is_deleted" property="isDeleted" />
+        <id column="id" property="id"/>
+        <result column="merchants_id" property="merchantsId"/>
+        <result column="user_name" property="userName"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+        <result column="real_name" property="realName"/>
+        <result column="icon" property="icon"/>
+        <result column="remark" property="remark"/>
+        <result column="creator" property="creator"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="modifier" property="modifier"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

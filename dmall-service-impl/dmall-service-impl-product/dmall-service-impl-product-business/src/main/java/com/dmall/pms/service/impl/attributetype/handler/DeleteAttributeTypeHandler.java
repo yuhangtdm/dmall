@@ -34,7 +34,7 @@ public class DeleteAttributeTypeHandler extends AbstractCommonHandler<Long, Attr
     @Override
     public BaseResult<Long> validate(Long id) {
         // 属性类别必须存在
-       pmsValidate.validateAttributeType(id);
+        pmsValidate.validateAttributeType(id);
         // 商品属性值不存在该属性类别
         List<ProductAttributeValueDO> attributeValueDOS = productAttributeValueSupport.listByAttributeTypeId(id);
         if (CollUtil.isNotEmpty(attributeValueDOS)) {

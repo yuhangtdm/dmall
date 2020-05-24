@@ -18,7 +18,7 @@ import java.util.Date;
 @TableName("bms_permission")
 public class PermissionDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id
@@ -50,7 +50,6 @@ public class PermissionDO implements Serializable {
      * 权限请求方式 GET; POST; PUT; DELETE
      */
     private String method;
-
 
 
     /**

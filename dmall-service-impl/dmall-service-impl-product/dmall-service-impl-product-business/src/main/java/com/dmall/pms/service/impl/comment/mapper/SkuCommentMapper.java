@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface SkuCommentMapper {
 
-    List<CommentPageResponseDTO> page(Page page, @Param("request")PageCommentRequestDTO requestDTO);
+    List<CommentPageResponseDTO> page(Page page, @Param("request") PageCommentRequestDTO requestDTO);
 }

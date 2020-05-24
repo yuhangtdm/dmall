@@ -49,7 +49,7 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
             return ResultUtil.fail(OmsErrorEnum.DELETE_STATUS_ERROR);
         }
 
-        if (CollUtil.isNotEmpty(afterSaleSupport.listInNotDeleteStatus(orderId))){
+        if (CollUtil.isNotEmpty(afterSaleSupport.listInNotDeleteStatus(orderId))) {
             return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_ING);
         }
         orderMapper.deleteById(orderId);

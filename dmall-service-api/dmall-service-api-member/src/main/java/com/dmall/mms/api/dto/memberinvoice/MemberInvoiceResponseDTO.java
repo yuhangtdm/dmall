@@ -9,7 +9,7 @@ import lombok.Data;
  * @author: created by hang.yu on 2020/3/27 23:37
  */
 @Data
-@ApiModel(value = "MemberInvoiceResponseDTO", description =  "获取会员发票响应实体")
+@ApiModel(value = "MemberInvoiceResponseDTO", description = "获取会员发票响应实体")
 public class MemberInvoiceResponseDTO {
 
     @ApiModelProperty(value = "发票id", position = 1)

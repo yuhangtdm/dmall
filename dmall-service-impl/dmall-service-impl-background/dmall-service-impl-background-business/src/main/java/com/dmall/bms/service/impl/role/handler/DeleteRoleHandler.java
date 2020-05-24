@@ -22,7 +22,7 @@ public class DeleteRoleHandler extends AbstractCommonHandler<Long, RoleDO, Long>
     @Override
     public BaseResult<Long> validate(Long id) {
         RoleDO roleDO = roleMapper.selectById(id);
-        if (roleDO == null){
+        if (roleDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.ROLE_NOT_EXIST);
         }
         return ResultUtil.success();

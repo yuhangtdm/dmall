@@ -16,7 +16,7 @@ import java.util.Date;
 public class MyAfterSalePageResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -3288320865097059188L;
-    
+
     @ApiModelProperty(value = "售后单号", position = 1)
     private Long afterSaleId;
 

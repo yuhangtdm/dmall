@@ -18,7 +18,7 @@ import java.util.Date;
 @TableName("bms_user")
 public class UserDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

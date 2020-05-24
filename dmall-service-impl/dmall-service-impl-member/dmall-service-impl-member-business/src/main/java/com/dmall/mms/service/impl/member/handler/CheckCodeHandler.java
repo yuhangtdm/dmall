@@ -27,12 +27,12 @@ public class CheckCodeHandler {
      * 校验验证码
      */
     public BaseResult<String> checkCode(String email, String code) {
-        String key = cacheKeySupport.generateRegister( email);
+        String key = cacheKeySupport.generateRegister(email);
         Object o = redisTemplate.opsForValue().get(key);
         if (o == null) {
             return ResultUtil.fail(MmsErrorEnum.CHECK_CODE_EXPIRED);
         }
-        if (!Objects.equals(o, code)){
+        if (!Objects.equals(o, code)) {
             return ResultUtil.fail(MmsErrorEnum.CHECK_CODE_ERROR);
         }
         return ResultUtil.success(email);

@@ -26,7 +26,7 @@ public enum CommentEnum implements CodeDescEnum<Integer> {
      */
     BAD(3, "差评"),
 
-   ;
+    ;
 
     /**
      * 评分

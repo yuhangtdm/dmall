@@ -3,6 +3,7 @@ package ${responseDtoPackage};
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 import java.io.Serializable;
 import java.util.*;
 import java.math.*;
@@ -13,9 +14,9 @@ import java.math.*;
  */
 @Data
 @ApiModel(value = "${responseDto}", description = "$!{responseComment}")
-public class ${responseDto} implements Serializable {
+public class ${responseDto} implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID=1L;
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
@@ -25,7 +26,7 @@ public class ${responseDto} implements Serializable {
     #if("$!field.comment" != "")
     @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
     #end
-    private ${field.propertyType} ${field.propertyName};
+private ${field.propertyType} ${field.propertyName};
 
 #end
 ## ----------  END 字段循环遍历  ----------

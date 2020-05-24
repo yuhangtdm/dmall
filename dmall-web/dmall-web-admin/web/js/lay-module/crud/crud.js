@@ -729,9 +729,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                         }
                     } else {
                         var selectName = $(this).attr("selectName");
-                        if (selectName){
+                        if (selectName) {
                             $(this).val(getDesc(value, selectName));
-                        }else {
+                        } else {
                             $(this).val(value);
                         }
 

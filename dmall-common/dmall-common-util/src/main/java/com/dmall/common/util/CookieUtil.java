@@ -52,7 +52,7 @@ public class CookieUtil {
             return null;
         }
         for (Cookie cookie : cookies) {
-            if (cookie != null){
+            if (cookie != null) {
                 if (cookieName.equals(cookie.getName())) {
                     if (isDecoder) {//如果涉及中文
                         return URLUtil.decode(cookie.getValue());

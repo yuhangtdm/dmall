@@ -60,7 +60,7 @@ public class OmsValidate {
     /**
      * 校验子订单必须存在
      */
-    public SubOrderDO validateSubOrder(Long subOrderId){
+    public SubOrderDO validateSubOrder(Long subOrderId) {
         SubOrderDO subOrderDO = subOrderMapper.selectById(subOrderId);
         if (subOrderDO == null) {
             throw new BusinessException(OmsErrorEnum.SUB_ORDER_NOT_EXISTS);
@@ -71,7 +71,7 @@ public class OmsValidate {
     /**
      * 校验售后单必须存在
      */
-    public OrderAfterSaleApplyDO validateOrderAfterSale(Long orderAfterSaleId){
+    public OrderAfterSaleApplyDO validateOrderAfterSale(Long orderAfterSaleId) {
         OrderAfterSaleApplyDO orderAfterSaleApplyDO = orderAfterSaleApplyMapper.selectById(orderAfterSaleId);
         if (orderAfterSaleApplyDO == null) {
             throw new BusinessException(OmsErrorEnum.AFTER_SALE_NOT_EXISTS);
@@ -82,9 +82,9 @@ public class OmsValidate {
     /**
      * 横向鉴权
      */
-    public void authentication(Long creator){
+    public void authentication(Long creator) {
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        if (!portalMemberDTO.getId().equals(creator)){
+        if (!portalMemberDTO.getId().equals(creator)) {
             throw new BusinessException(OmsErrorEnum.NO_AUTHORITY);
         }
     }

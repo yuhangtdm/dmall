@@ -1,5 +1,9 @@
 <style>
-    .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
+    .layui-form-item .layui-input-company {
+        width: auto;
+        padding-right: 10px;
+        line-height: 38px;
+    }
 </style>
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
@@ -8,20 +12,22 @@
             <div class="layui-form-item">
                 <label class="layui-form-label required">管理账号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="required" lay-reqtext="管理账号不能为空" placeholder="请输入管理账号"  value="admin" class="layui-input">
+                    <input type="text" name="username" lay-verify="required" lay-reqtext="管理账号不能为空"
+                           placeholder="请输入管理账号" value="admin" class="layui-input">
                     <tip>填写自己管理账号的名称。</tip>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">手机</label>
                 <div class="layui-input-block">
-                    <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机"  value="" class="layui-input">
+                    <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机"
+                           value="" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="email" name="email"  placeholder="请输入邮箱"  value="" class="layui-input">
+                    <input type="email" name="email" placeholder="请输入邮箱" value="" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -40,7 +46,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form','miniPage'], function () {
+    layui.use(['form', 'miniPage'], function () {
         var form = layui.form,
             layer = layui.layer,
             miniPage = layui.miniPage;

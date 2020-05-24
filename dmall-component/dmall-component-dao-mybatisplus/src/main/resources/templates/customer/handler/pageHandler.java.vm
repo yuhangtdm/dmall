@@ -17,17 +17,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ${pageHandler} extends AbstractCommonHandler<${pageRequestDto}, ${entity}, ${responseDto}> {
 
-    @Autowired
-    private ${table.mapperName} ${mapperName};
+@Autowired
+private ${table.mapperName} ${mapperName};
 
-    @Override
-    public BaseResult<ResponsePage<${responseDto}>> validate(${pageRequestDto} requestDTO) {
+@Override
+public BaseResult<ResponsePage<${responseDto}>>validate(${pageRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-    @Override
-    public BaseResult<ResponsePage<${responseDto}>> processor(${pageRequestDto} requestDTO) {
+@Override
+public BaseResult<ResponsePage<${responseDto}>>processor(${pageRequestDto} requestDTO){
         return ResultUtil.success();
-    }
+        }
 
-}
+        }

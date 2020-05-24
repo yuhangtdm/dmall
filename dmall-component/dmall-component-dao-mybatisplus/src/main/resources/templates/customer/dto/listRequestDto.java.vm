@@ -3,6 +3,7 @@ package ${requestDtoPackage};
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 import java.util.*;
 import java.math.*;
 import java.io.Serializable;
@@ -13,19 +14,21 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "${listRequestDto}", description = "$!{listRequestComment}")
-public class ${listRequestDto} implements Serializable {
+public class ${listRequestDto} implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID=1L;
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
     #if(${field.keyFlag})
         #set($keyPropertyName=${field.propertyName})
     #end
-    #if( ("$!field.propertyName" != "id") && ("$!field.propertyName" != "creator") && ("$!field.propertyName" != "gmtCreated")
-    && ("$!field.propertyName" != "modifier") && ("$!field.propertyName" != "gmtModified") && ("$!field.propertyName" != "isDeleted"))
+    #if( ("$!field.propertyName" != "id") && ("$!field.propertyName" != "creator") && (
+        "$!field.propertyName" != "gmtCreated")
+    && ("$!field.propertyName" != "modifier") && ("$!field.propertyName" != "gmtModified") && (
+        "$!field.propertyName" != "isDeleted"))
         #if("$!field.comment" != "")
-    @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
+        @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
         #end
     private ${field.propertyType} ${field.propertyName};
 

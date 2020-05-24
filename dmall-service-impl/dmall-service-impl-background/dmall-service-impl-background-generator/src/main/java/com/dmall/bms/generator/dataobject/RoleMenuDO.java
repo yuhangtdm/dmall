@@ -2,18 +2,22 @@ package com.dmall.bms.generator.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @description: 角色-菜单表 
+ * @description: 角色-菜单表
  * @author: created by hang.yu on 2020-02-20 21:36:44
  */
 @Data
@@ -22,7 +26,7 @@ import lombok.experimental.Accessors;
 @TableName("bms_role_menu")
 public class RoleMenuDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

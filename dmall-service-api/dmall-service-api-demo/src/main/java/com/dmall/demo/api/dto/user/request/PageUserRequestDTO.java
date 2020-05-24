@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.dmall.common.dto.PageRequestDTO;
+
 import java.util.*;
 import java.math.*;
 
@@ -14,8 +15,8 @@ import java.math.*;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PageUserRequestDTO", description =  "后台用户分页请求实体")
-public class PageUserRequestDTO  extends PageRequestDTO {
+@ApiModel(value = "PageUserRequestDTO", description = "后台用户分页请求实体")
+public class PageUserRequestDTO extends PageRequestDTO {
 
     @ApiModelProperty(value = "商家店铺id", position = 2)
     private Long merchantsId;

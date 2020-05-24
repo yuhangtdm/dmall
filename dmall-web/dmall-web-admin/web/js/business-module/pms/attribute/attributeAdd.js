@@ -33,7 +33,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
         }
         var field = data.field;
         if (field.inputType === '2') {
-            if (field.handAddStatus === ''){
+            if (field.handAddStatus === '') {
                 layer.msg('是否支持手动新增不能为空', {
                     icon: 5
                 });

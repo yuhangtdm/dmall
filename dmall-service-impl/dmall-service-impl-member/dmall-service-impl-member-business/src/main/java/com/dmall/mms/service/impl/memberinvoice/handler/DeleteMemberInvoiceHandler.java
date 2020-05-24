@@ -22,7 +22,7 @@ public class DeleteMemberInvoiceHandler extends AbstractCommonHandler<Long, Memb
     @Override
     public BaseResult<Long> processor(Long id) {
         MemberInvoiceDO memberInvoiceDO = memberInvoiceMapper.selectById(id);
-        if (memberInvoiceDO == null){
+        if (memberInvoiceDO == null) {
             return ResultUtil.fail(MmsErrorEnum.INVOICE_NOT_EXISTS);
         }
         memberInvoiceMapper.deleteById(id);

@@ -19,28 +19,28 @@ public class MemberSupport {
     /**
      * 根据邮箱查询会员
      */
-    public MemberDO getByEmail(String email){
+    public MemberDO getByEmail(String email) {
         return memberMapper.selectOne(Wrappers.<MemberDO>lambdaQuery().eq(MemberDO::getEmail, email));
     }
 
     /**
      * 根据手机号查询会员
      */
-    public MemberDO getByPhone(String phone){
+    public MemberDO getByPhone(String phone) {
         return memberMapper.selectOne(Wrappers.<MemberDO>lambdaQuery().eq(MemberDO::getPhone, phone));
     }
 
     /**
      * 根据名称查询会员
      */
-    public MemberDO getByName(String memberName){
+    public MemberDO getByName(String memberName) {
         return memberMapper.selectOne(Wrappers.<MemberDO>lambdaQuery().eq(MemberDO::getMemberName, memberName));
     }
 
     /**
      * 根据微博id查询会员
      */
-    public MemberDO getByWeiBoNo(Long weiBoId){
+    public MemberDO getByWeiBoNo(Long weiBoId) {
         return memberMapper.selectOne(Wrappers.<MemberDO>lambdaQuery().eq(MemberDO::getWeiBoNo, weiBoId));
     }
 

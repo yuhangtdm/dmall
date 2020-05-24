@@ -28,8 +28,8 @@ public class UpdateMemberInvoiceHandler extends AbstractCommonHandler<UpdateMemb
             return ResultUtil.fail(MmsErrorEnum.INVOICE_NOT_EXISTS);
         }
 
-        return MemberInvoiceValidate.validate(requestDTO.getInvoiceHeader(),requestDTO.getPersonalName(),
-                requestDTO.getCompanyName(),  requestDTO.getCustomerTaxNumber() );
+        return MemberInvoiceValidate.validate(requestDTO.getInvoiceHeader(), requestDTO.getPersonalName(),
+                requestDTO.getCompanyName(), requestDTO.getCustomerTaxNumber());
     }
 
     @Override

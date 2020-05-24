@@ -1,4 +1,5 @@
 package com.dmall.bms.service.impl.permission.handler;
+
 import cn.hutool.core.util.StrUtil;
 import com.dmall.bms.api.enums.AppEnum;
 import com.dmall.bms.generator.dataobject.PermissionDO;
@@ -87,7 +88,7 @@ public class PermissionImportAllHandler extends AbstractCommonHandler<Void, Perm
                         }
                         if (v.getDelete() != null) {
                             PermissionDO delete = permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.DELETE.name());
-                            if (delete == null){
+                            if (delete == null) {
                                 PermissionDO permissionDO = new PermissionDO();
                                 permissionDO.setAppId(value.getCode());
                                 permissionDO.setBusiness(v.getDelete().getTags().get(0));
@@ -99,7 +100,7 @@ public class PermissionImportAllHandler extends AbstractCommonHandler<Void, Perm
                         }
                         if (v.getPut() != null) {
                             PermissionDO put = permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.PUT.name());
-                            if (put == null){
+                            if (put == null) {
                                 PermissionDO permissionDO = new PermissionDO();
                                 permissionDO.setAppId(value.getCode());
                                 permissionDO.setBusiness(v.getPut().getTags().get(0));

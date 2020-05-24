@@ -23,7 +23,7 @@ public class UpdateMenuHandler extends AbstractCommonHandler<UpdateMenuRequestDT
     @Override
     public BaseResult<Long> validate(UpdateMenuRequestDTO requestDTO) {
         MenuDO menuDO = menuMapper.selectById(requestDTO.getId());
-        if (menuDO == null){
+        if (menuDO == null) {
             return ResultUtil.fail(BackGroundErrorEnum.MENU_NOT_EXIST);
         }
         return ResultUtil.success();

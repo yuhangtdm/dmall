@@ -1,4 +1,5 @@
 package com.dmall.demo;
+
 import com.dmall.component.cache.redis.mapcache.MapCacheUtil;
 import com.dmall.demo.generator.dataobject.UserDO;
 import com.dmall.demo.service.impl.user.cache.UserCacheService;
@@ -35,7 +36,7 @@ public class RedisTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteHello(){
+    public void testDeleteHello() {
         redisTemplate.delete(Lists.newArrayList("hello"));
     }
 
@@ -50,19 +51,19 @@ public class RedisTest extends BaseTest {
     }
 
     @Test
-    public void testSelectAll(){
+    public void testSelectAll() {
         List<UserDO> userDOS = userCacheService.selectAll();
         System.out.println(userDOS);
     }
 
     @Test
-    public void testGetObj(){
+    public void testGetObj() {
         UserDO userDO = userCacheService.selectById(1251871969155014662L);
         System.out.println(userDO);
     }
 
     @Test
-    public void testInsert(){
+    public void testInsert() {
         UserDO userDO = new UserDO();
         userDO.setMerchantsId(1L);
         userDO.setWarehouseId(1L);
@@ -79,19 +80,19 @@ public class RedisTest extends BaseTest {
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdate() {
         UserDO userDO = userCacheService.selectById(1251871969155014662L);
         userDO.setNickName("烽烟大漠");
         userCacheService.updateById(userDO);
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() {
         userCacheService.deleteById(1251871969155014662L);
     }
 
     @Test
-    public void tt(){
+    public void tt() {
         mapCacheUtil.delete("18502165640");
     }
 }

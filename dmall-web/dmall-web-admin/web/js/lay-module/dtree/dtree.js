@@ -1954,7 +1954,7 @@ layui.define(['jquery', 'layer', 'form'], function (exports) {
                     }
                 }
                 if (typeof checkArrData === 'object') {
-                    if (checkArrData !== null){
+                    if (checkArrData !== null) {
                         if (typeof checkArrData.length === 'undefined') {
                             checkArr.push(checkArrData);
                         } else {

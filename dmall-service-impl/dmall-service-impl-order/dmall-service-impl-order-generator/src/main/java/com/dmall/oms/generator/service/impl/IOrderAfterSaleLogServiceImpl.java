@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * @description: 售后日志表 
+ * @description: 售后日志表
  * @author: created by hang.yu on 2020-04-16 21:57:59
  */
 @Service

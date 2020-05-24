@@ -3,6 +3,7 @@ package ${requestDtoPackage};
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 import java.io.Serializable;
 import java.util.*;
 import java.math.*;
@@ -13,9 +14,9 @@ import java.math.*;
  */
 @Data
 @ApiModel(value = "${saveRequestDto}", description = "$!{saveRequestComment}")
-public class ${saveRequestDto} implements Serializable {
+public class ${saveRequestDto} implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID=1L;
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
@@ -27,7 +28,7 @@ public class ${saveRequestDto} implements Serializable {
     && ("$!field.propertyName" != "modifier") && ("$!field.propertyName" != "gmtModified") && (
         "$!field.propertyName" != "isDeleted"))
         #if("$!field.comment" != "")
-    @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
+        @ApiModelProperty(value = "${field.comment}", position = ${foreach.count})
         #end
     private ${field.propertyType} ${field.propertyName};
 

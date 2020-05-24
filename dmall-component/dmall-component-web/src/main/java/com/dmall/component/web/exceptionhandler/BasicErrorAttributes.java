@@ -21,14 +21,14 @@ public class BasicErrorAttributes extends DefaultErrorAttributes {
         Map<String, Object> errorAttributes = new LinkedHashMap<>();
         if (webRequest.getAttribute(WebConstants.DATA, RequestAttributes.SCOPE_REQUEST) != null) {
             BaseResult baseResult = (BaseResult) webRequest.getAttribute(WebConstants.DATA, RequestAttributes.SCOPE_REQUEST);
-            if (baseResult != null){
+            if (baseResult != null) {
                 errorAttributes.put(WebConstants.RESULT, baseResult.getResult());
                 errorAttributes.put(WebConstants.CODE, baseResult.getCode());
                 errorAttributes.put(WebConstants.MSG, baseResult.getMsg());
                 if (baseResult.getData() != null) {
                     errorAttributes.put(WebConstants.DATA, baseResult.getData());
                 }
-            }else {
+            } else {
                 errorAttributes = super.getErrorAttributes(webRequest, includeStackTrace);
             }
         } else {

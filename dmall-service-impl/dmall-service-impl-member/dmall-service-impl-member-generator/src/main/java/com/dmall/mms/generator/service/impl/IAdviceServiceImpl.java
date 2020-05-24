@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * @description: 会员意见表 
+ * @description: 会员意见表
  * @author: created by hang.yu on 2020-02-22 23:31:54
  */
 @Service

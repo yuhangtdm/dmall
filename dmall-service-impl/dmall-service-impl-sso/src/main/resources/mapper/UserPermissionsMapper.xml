@@ -44,7 +44,7 @@
 				)
     </select>
 
-	<select id="subPermissionsByPhone" resultType="long">
+    <select id="subPermissionsByPhone" resultType="long">
 		SELECT
 			distinct b.permission_id
 		FROM

@@ -33,7 +33,7 @@ public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void,
         List<MemberReceiveAddressDO> list = memberReceiveAddressMapper.selectList(Wrappers.<MemberReceiveAddressDO>lambdaQuery()
                 .orderByDesc(MemberReceiveAddressDO::getModifier));
 
-        if (CollUtil.isEmpty(list)){
+        if (CollUtil.isEmpty(list)) {
             return ResultUtil.success(Lists.newArrayList());
         }
         // 得到默认地址的索引
@@ -45,7 +45,7 @@ public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void,
             }
         }
         // 将默认地址交换到第一个
-        if (index != -1 && index != 0){
+        if (index != -1 && index != 0) {
             Collections.swap(list, 0, index);
         }
         List<ReceiveAddressResponseDTO> collect = list.stream()

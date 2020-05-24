@@ -96,8 +96,8 @@ public class RocketMqProducer {
         producer.start();
         for (int i = 0; i < 5; i++) {
             // 创建消息，并指定Topic，Tag和消息体
-            Message msg = new Message("oneWayTopic" ,
-                    "TagA" ,
+            Message msg = new Message("oneWayTopic",
+                    "TagA",
                     ("Hello oneWay, " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
             );
             // 发送单向消息，没有任何返回结果
@@ -167,7 +167,7 @@ public class RocketMqProducer {
         producer.shutdown();
     }
 
-    public static void sendTransaction() throws Exception{
+    public static void sendTransaction() throws Exception {
         //创建事务监听器
         TransactionListener transactionListener = new TransactionListenerImpl();
         //创建消息生产者

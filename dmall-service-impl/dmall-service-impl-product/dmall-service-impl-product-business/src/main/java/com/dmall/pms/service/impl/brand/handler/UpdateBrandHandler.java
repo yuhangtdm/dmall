@@ -33,7 +33,7 @@ public class UpdateBrandHandler extends AbstractCommonHandler<UpdateBrandRequest
     @Override
     public BaseResult<Long> validate(UpdateBrandRequestDTO requestDTO) {
         // 品牌必须存在
-       pmsValidate.validateBrand(requestDTO.getId());
+        pmsValidate.validateBrand(requestDTO.getId());
         // 品牌名称唯一
         BrandDO nameBrand = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, requestDTO.getName()));
         if (nameBrand != null && ObjectUtil.notEqual(nameBrand.getId(), requestDTO.getId())) {

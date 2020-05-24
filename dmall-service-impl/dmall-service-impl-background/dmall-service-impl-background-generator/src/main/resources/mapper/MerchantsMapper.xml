@@ -4,15 +4,15 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.bms.generator.dataobject.MerchantsDO">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="contact_name" property="contactName" />
-        <result column="contact_tel" property="contactTel" />
-        <result column="creator" property="creator" />
-        <result column="gmt_created" property="gmtCreated" />
-        <result column="modifier" property="modifier" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="is_deleted" property="isDeleted" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="contact_name" property="contactName"/>
+        <result column="contact_tel" property="contactTel"/>
+        <result column="creator" property="creator"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="modifier" property="modifier"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @description: 子订单表 
+ * @description: 子订单表
  * @author: created by hang.yu on 2020-04-04 15:41:10
  */
 @Data
@@ -19,7 +19,7 @@ import java.util.Date;
 @TableName("oms_sub_order")
 public class SubOrderDO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

@@ -35,7 +35,7 @@ public class SendEmailConfiguration implements BasicConfiguration {
     @PostConstruct
     public void check() {
         log.info("init send email successful,from:{}", from);
-        if (StrUtil.isBlank(from)){
+        if (StrUtil.isBlank(from)) {
             throw new ComponentException(SendEmailErrorEnum.SEND_FROM_NULL);
         }
     }

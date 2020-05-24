@@ -123,7 +123,7 @@ public class PmsValidate {
     /**
      * 校验审核记录必须存在
      */
-    public SkuAuditDO validateAudit(Long auditId){
+    public SkuAuditDO validateAudit(Long auditId) {
         SkuAuditDO skuAuditDO = skuAuditMapper.selectById(auditId);
         if (skuAuditDO == null) {
             throw new BusinessException(PmsErrorEnum.AUDIT_NOT_EXIST);
@@ -134,13 +134,13 @@ public class PmsValidate {
     /**
      * 新增或更新的公共校验
      */
-    public  BaseResult attributeValidate(Integer inputType, String inputList, String handAddStatus) {
+    public BaseResult attributeValidate(Integer inputType, String inputList, String handAddStatus) {
         // 从列表获取 不支持新增 可选值为空
         if (InputTypeEnum.LIST.getCode().equals(inputType)) {
-            if (StrUtil.isBlank(handAddStatus)){
+            if (StrUtil.isBlank(handAddStatus)) {
                 return ResultUtil.fail(PmsErrorEnum.HAND_ADD_STATUS_EMPTY);
             }
-            if (StrUtil.isBlank(inputList)){
+            if (StrUtil.isBlank(inputList)) {
                 return ResultUtil.fail(PmsErrorEnum.INPUT_LIST_BLANK);
             }
             String[] split = inputList.split(StrUtil.COMMA);

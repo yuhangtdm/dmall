@@ -9,7 +9,7 @@ layui.define(["element", "jquery", "layer"], function (exports) {
         $ = layui.$,
         layer = layui.layer;
 
-     var miniPage = {
+    var miniPage = {
 
         /**
          * 初始化tab
@@ -298,11 +298,11 @@ layui.define(["element", "jquery", "layer"], function (exports) {
                 var loading = layer.load(0, {shade: false, time: 2 * 1000});
                 var href = $(this).attr('layuimini-href'),
                     target = $(this).attr('target');
-                if(!href) return  ;
-                var me = this ;
-                var el = $("[layuimini-href='"+href+"']",".layuimini-menu-left") ;
+                if (!href) return;
+                var me = this;
+                var el = $("[layuimini-href='" + href + "']", ".layuimini-menu-left");
                 layer.close(window.openTips);
-                if(el.length){
+                if (el.length) {
                     $(el).closest(".layui-nav-tree").find(".layui-this").removeClass("layui-this");
                     $(el).parent().addClass("layui-this");
                 }
@@ -324,11 +324,11 @@ layui.define(["element", "jquery", "layer"], function (exports) {
                 var href = $(this).attr('layuimini-content-href'),
                     title = $(this).attr('data-title'),
                     target = $(this).attr('target');
-                if(!href) return  ;
-                var me = this ;
-                var el = $("[layuimini-href='"+href+"']",".layuimini-menu-left") ;
+                if (!href) return;
+                var me = this;
+                var el = $("[layuimini-href='" + href + "']", ".layuimini-menu-left");
                 layer.close(window.openTips);
-                if(el.length){
+                if (el.length) {
                     $(el).closest(".layui-nav-tree").find(".layui-this").removeClass("layui-this");
                     $(el).parent().addClass("layui-this");
                 }

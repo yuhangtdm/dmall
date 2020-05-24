@@ -8,7 +8,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 
 public class IdGeneratorUtil {
- 
+
     private static long workerId = 0;
 
     // 雪花算法
@@ -41,7 +41,7 @@ public class IdGeneratorUtil {
         long id = snowflake.nextId();
         return id;
     }
- 
+
     public static synchronized long snowflakeId(long workerId, long dataCenterId) {
         Snowflake snowflake = IdUtil.createSnowflake(workerId, dataCenterId);
         return snowflake.nextId();
@@ -50,6 +50,6 @@ public class IdGeneratorUtil {
     public static void main(String[] args) {
         System.out.println(snowflakeId());
     }
- 
+
 }
  

@@ -1,8 +1,24 @@
 <style>
-    .top-panel {border:1px solid #eceff9;border-radius:5px;text-align:center;}
-    .top-panel > .layui-card-body {height:60px;}
-    .top-panel-number {line-height:60px;font-size:30px;border-right:1px solid #eceff9;}
-    .top-panel-tips {line-height:30px;font-size:12px}
+    .top-panel {
+        border: 1px solid #eceff9;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .top-panel > .layui-card-body {
+        height: 60px;
+    }
+
+    .top-panel-number {
+        line-height: 60px;
+        font-size: 30px;
+        border-right: 1px solid #eceff9;
+    }
+
+    .top-panel-tips {
+        line-height: 30px;
+        font-size: 12px
+    }
 </style>
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main welcome">
@@ -101,7 +117,7 @@
     </div>
 </div>
 <script>
-    layui.use(['layer','echarts'], function () {
+    layui.use(['layer', 'echarts'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             echarts = layui.echarts;

@@ -4,15 +4,15 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.bms.generator.dataobject.UserMenuDO">
-        <result column="id" property="id" />
-        <result column="user_id" property="userId" />
-        <result column="menu_id" property="menuId" />
-        <result column="type" property="type" />
-        <result column="creator" property="creator" />
-        <result column="gmt_created" property="gmtCreated" />
-        <result column="modifier" property="modifier" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="is_deleted" property="isDeleted" />
+        <result column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="menu_id" property="menuId"/>
+        <result column="type" property="type"/>
+        <result column="creator" property="creator"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="modifier" property="modifier"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

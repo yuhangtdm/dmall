@@ -13,11 +13,11 @@ public class PasswordUtil {
     /**
      * 加密
      */
-    public static String getPassword(String salt, String password){
-        return new SimpleHash(Constants.MD5,password, ByteSource.Util.bytes(salt),Constants.ENCRYPT_TIME).toString();
+    public static String getPassword(String salt, String password) {
+        return new SimpleHash(Constants.MD5, password, ByteSource.Util.bytes(salt), Constants.ENCRYPT_TIME).toString();
     }
 
-    public static boolean checkPassword(String salt, String sourcePassword, String password){
+    public static boolean checkPassword(String salt, String sourcePassword, String password) {
         return password.equals(getPassword(salt, sourcePassword));
     }
 

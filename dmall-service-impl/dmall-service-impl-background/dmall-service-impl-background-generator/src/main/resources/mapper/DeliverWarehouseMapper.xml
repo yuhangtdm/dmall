@@ -4,22 +4,22 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmall.bms.generator.dataobject.DeliverWarehouseDO">
-        <id column="id" property="id" />
-        <result column="merchants_id" property="merchantsId" />
-        <result column="name" property="name" />
-        <result column="province" property="province" />
-        <result column="city" property="city" />
-        <result column="region" property="region" />
-        <result column="detail_address" property="detailAddress" />
-        <result column="contact_name" property="contactName" />
-        <result column="contact_tel" property="contactTel" />
-        <result column="delivery_status" property="deliveryStatus" />
-        <result column="receive_status" property="receiveStatus" />
-        <result column="creator" property="creator" />
-        <result column="gmt_created" property="gmtCreated" />
-        <result column="modifier" property="modifier" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="is_deleted" property="isDeleted" />
+        <id column="id" property="id"/>
+        <result column="merchants_id" property="merchantsId"/>
+        <result column="name" property="name"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="region" property="region"/>
+        <result column="detail_address" property="detailAddress"/>
+        <result column="contact_name" property="contactName"/>
+        <result column="contact_tel" property="contactTel"/>
+        <result column="delivery_status" property="deliveryStatus"/>
+        <result column="receive_status" property="receiveStatus"/>
+        <result column="creator" property="creator"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="modifier" property="modifier"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
