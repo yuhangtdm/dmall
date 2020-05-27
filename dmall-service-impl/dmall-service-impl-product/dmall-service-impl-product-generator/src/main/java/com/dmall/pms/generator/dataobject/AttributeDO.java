@@ -57,6 +57,11 @@ public class AttributeDO implements Serializable {
     private String handAddStatus;
 
     /**
+     * 一级商品分类id
+     */
+    private Long categoryId;
+
+    /**
      * 创建人
      */
     @TableField(fill = FieldFill.INSERT)

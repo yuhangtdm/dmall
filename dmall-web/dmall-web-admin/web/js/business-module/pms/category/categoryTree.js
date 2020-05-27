@@ -41,6 +41,9 @@ layui.use(['form', 'crud', 'dtree'], function () {
                 if (param.level === '3') {
                     buttons.addC = "";  // 取消新增功能
                 }
+                if (param.level === '1' || param.level === '2') {
+                    buttons.setAttribute = "";  // 取消新增功能
+                }
                 return buttons; // 将按钮对象返回
             }
         },
@@ -88,6 +91,18 @@ layui.use(['form', 'crud', 'dtree'], function () {
                         // 刷新树
                         refreshForm();
                         tree.refreshTree();
+                    });
+                }
+            },{
+                toolbarId: "setAttribute",
+                icon: "dtree-icon-bianji",
+                title: "设置属性",
+                handler: function (node, $div) {
+                    var param = dtree.getParentParam(tree, node.nodeId);
+                    var one = dtree.getParentParam(tree, param.nodeId);
+                    oneLevelId = one.nodeId;
+                    categoryId = node.nodeId;
+                    crud.open('/page/pms/category/setAttribute.html', '设置属性',function () {
                     });
                 }
             }]

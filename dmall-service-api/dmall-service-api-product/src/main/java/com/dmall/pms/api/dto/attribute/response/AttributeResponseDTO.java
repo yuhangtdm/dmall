@@ -1,5 +1,6 @@
 package com.dmall.pms.api.dto.attribute.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
@@ -55,6 +56,14 @@ public class AttributeResponseDTO {
     @ApiModelProperty(value = "状态 N-可用;Y-不可用", position = 13)
     private String isDeleted;
 
-    @ApiModelProperty(value = "一级分类名称", position = 14)
-    private String categoryName;
+    @ApiModelProperty(value = "一级商品分类", position = 14)
+    private Long categoryId;
+
+    @ApiModelProperty(value = "是否选中", position = 15)
+    @JsonProperty(value = "LAY_CHECKED")
+    private Boolean checked;
+
+    @ApiModelProperty(value = "是否可筛选", position = 16)
+    private Integer canScreen;
+
 }

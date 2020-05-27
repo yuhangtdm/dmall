@@ -19,7 +19,7 @@ import com.dmall.pms.generator.service.IAttributeTypeService;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.support.AttributeTypeSupport;
-import com.dmall.pms.service.support.CategorySupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +48,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     private AttributeTypeMapper attributeTypeMapper;
 
     @Autowired
-    private CategorySupport categorySupport;
+    private PmsValidate pmsValidate;
 
     @Autowired
     private AttributeTypeSupport attributeTypeSupport;
@@ -69,7 +69,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
         if (attributeTypes.size() != attributeTypeIds.size()) {
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_ID_INVALID);
         }
-        return categorySupport.validate(requestDTO.getCategoryId());
+        return pmsValidate.validateThreeLevelCategory(requestDTO.getCategoryId());
     }
 
     @Override

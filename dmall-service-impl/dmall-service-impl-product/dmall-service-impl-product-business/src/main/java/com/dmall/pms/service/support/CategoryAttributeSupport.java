@@ -34,6 +34,12 @@ public class CategoryAttributeSupport {
                 .eq(CategoryAttributeDO::getAttributeId, attributeId));
     }
 
+    public CategoryAttributeDO get(Long attributeId, Long categoryId) {
+        return categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                .eq(CategoryAttributeDO::getAttributeId, attributeId)
+                .eq(CategoryAttributeDO::getCategoryId, categoryId));
+    }
+
     /**
      * 根据商品分类id删除
      */
@@ -48,5 +54,14 @@ public class CategoryAttributeSupport {
     public void deleteByAttributeId(Long attributeId) {
         categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
                 .eq(CategoryAttributeDO::getAttributeId, attributeId));
+    }
+
+    /**
+     * 根据属性id和分类id列表删除
+     */
+    public void delete(Long attributeId, List<Long> categoryIds) {
+        categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                .eq(CategoryAttributeDO::getAttributeId, attributeId)
+                .in(CategoryAttributeDO::getCategoryId, categoryIds));
     }
 }

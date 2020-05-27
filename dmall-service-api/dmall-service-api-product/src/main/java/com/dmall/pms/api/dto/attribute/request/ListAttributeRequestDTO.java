@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -22,7 +21,6 @@ public class ListAttributeRequestDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "一级分类id", required = true, position = 1)
-    @NotNull(message = "一级分类id不能为空")
     private Long categoryId;
 
     @ApiModelProperty(value = "展示名称", position = 2)
@@ -39,5 +37,8 @@ public class ListAttributeRequestDTO implements Serializable {
     @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 5)
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
+
+    @ApiModelProperty(value = "三级分类id", required = true, position = 1)
+    private Long threeCategoryId;
 
 }

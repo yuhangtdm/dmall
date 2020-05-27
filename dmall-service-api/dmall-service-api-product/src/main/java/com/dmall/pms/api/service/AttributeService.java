@@ -2,10 +2,7 @@ package com.dmall.pms.api.service;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
+import com.dmall.pms.api.dto.attribute.request.*;
 import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -49,4 +46,12 @@ public interface AttributeService {
     @ApiOperation(value = "属性分页")
     BaseResult<ResponsePage<AttributeResponseDTO>> page(@Valid @RequestBody PageAttributeRequestDTO requestDTO);
 
+    @PostMapping("/setCategory")
+    @ApiOperation(value = "设置商品分类")
+    BaseResult<Void> setCategory(@Valid @RequestBody SetAttributeCategoryRequestDTO requestDTO);
+
+    @GetMapping("/getCategoryIds/{id}")
+    @ApiOperation(value = "获取三级分类id列表")
+    @ApiImplicitParam(name = "id", value = "属性id", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<String>> getCategoryIds(@PathVariable("id") Long id);
 }

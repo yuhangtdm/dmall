@@ -1,4 +1,4 @@
-package com.dmall.pms.service.impl.category;
+package com.dmall.pms.api.dto.category.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

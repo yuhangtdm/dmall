@@ -5,7 +5,7 @@
     <select id="pageAttribute" resultType="com.dmall.pms.generator.dataobject.AttributeDO">
         select DISTINCT
         a.id, a.name, a.show_name, a.type, a.input_type, a.input_list, a.hand_add_status, a.creator, a.gmt_created,
-        a.modifier, a.gmt_modified, a.is_deleted
+        a.modifier, a.gmt_modified, a.is_deleted,ca.category_id
         from pms_attribute a left join pms_category_attribute ca on a.id = ca.attribute_id
         <where>
             <if test="request.showName != null and request.showName != ''">
@@ -24,6 +24,7 @@
                 and ca.category_id = #{request.categoryId}
             </if>
         </where>
+        group by a.id
     </select>
 
 </mapper>

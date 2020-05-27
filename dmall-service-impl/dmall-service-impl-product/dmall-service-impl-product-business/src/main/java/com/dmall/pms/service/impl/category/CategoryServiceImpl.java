@@ -2,10 +2,10 @@ package com.dmall.pms.service.impl.category;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.dtree.DTreeResponseDTO;
+import com.dmall.pms.api.dto.category.request.CategoryTreeDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
-import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import com.dmall.pms.api.service.CategoryService;
 import com.dmall.pms.service.impl.category.handler.*;
@@ -41,9 +41,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryTreeHandler categoryTreeHandler;
 
-    @Autowired
-    private SetAttributeHandler setAttributeHandler;
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> save(@RequestBody SaveCategoryRequestDTO requestDTO) {
@@ -76,9 +73,4 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryTreeHandler.handler(new CategoryTreeDTO(parentId, type));
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public BaseResult<Void> setAttribute(@RequestBody SetAttributeRequestDTO requestDTO) {
-        return setAttributeHandler.handler(requestDTO);
-    }
 }

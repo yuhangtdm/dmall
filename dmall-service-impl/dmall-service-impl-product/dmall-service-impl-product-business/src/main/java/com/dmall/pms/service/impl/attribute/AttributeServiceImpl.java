@@ -2,10 +2,7 @@ package com.dmall.pms.service.impl.attribute;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
-import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.PageAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.SaveAttributeRequestDTO;
-import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
+import com.dmall.pms.api.dto.attribute.request.*;
 import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
 import com.dmall.pms.api.service.AttributeService;
 import com.dmall.pms.service.impl.attribute.handler.*;
@@ -42,6 +39,12 @@ public class AttributeServiceImpl implements AttributeService {
     @Autowired
     private PageAttributeHandler pageAttributeHandler;
 
+    @Autowired
+    private SetAttributeCategoryHandler setAttributeCategoryHandler;
+
+    @Autowired
+    private GetCategoryIdsHandler getCategoryIdsHandler;
+
     @Override
     public BaseResult<Long> save(@RequestBody SaveAttributeRequestDTO requestDTO) {
         return saveAttributeHandler.handler(requestDTO);
@@ -71,6 +74,16 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public BaseResult<ResponsePage<AttributeResponseDTO>> page(PageAttributeRequestDTO requestDTO) {
         return pageAttributeHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<Void> setCategory(@RequestBody SetAttributeCategoryRequestDTO requestDTO) {
+        return setAttributeCategoryHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<String>> getCategoryIds(Long id) {
+        return getCategoryIdsHandler.handler(id);
     }
 
 }

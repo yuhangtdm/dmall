@@ -87,6 +87,18 @@ public class PmsValidate {
     }
 
     /**
+     * 校验分类
+     */
+    public BaseResult validateThreeLevelCategory(Long categoryId) {
+        CategoryDO categoryDO = validateCategory(categoryId);
+        // 分类级别必须是3级
+        if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
+            return ResultUtil.fail(PmsErrorEnum.PARENT_LEVEL_ERROR);
+        }
+        return ResultUtil.success();
+    }
+
+    /**
      * 校验品牌必须存在
      */
     public BrandDO validateBrand(Long brandId) {

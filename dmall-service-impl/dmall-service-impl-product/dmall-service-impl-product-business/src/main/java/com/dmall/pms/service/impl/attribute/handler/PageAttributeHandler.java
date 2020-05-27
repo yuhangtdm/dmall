@@ -17,6 +17,7 @@ import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.service.impl.attribute.mapper.AttributePageMapper;
+import com.dmall.pms.service.support.CategorySupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,6 +41,9 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
     @Autowired
     private PmsValidate pmsValidate;
 
+    @Autowired
+    private CategorySupport categorySupport;
+
     @Override
     public BaseResult<ResponsePage<AttributeResponseDTO>> processor(PageAttributeRequestDTO requestDTO) {
         if (requestDTO.getCategoryId() != null) {
@@ -47,7 +51,7 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
             // 一级分类
             if (LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
                 LambdaQueryWrapper<AttributeDO> wrapper = Wrappers.<AttributeDO>lambdaQuery()
-                        .likeRight(AttributeDO::getName, categoryDO.getName())
+                        .eq(AttributeDO::getCategoryId, requestDTO.getCategoryId())
                         .like(StrUtil.isNotBlank(requestDTO.getShowName()), AttributeDO::getShowName, requestDTO.getShowName())
                         .eq(ObjectUtil.isNotEmpty(requestDTO.getType()), AttributeDO::getType, requestDTO.getType())
                         .eq(ObjectUtil.isNotEmpty(requestDTO.getInputType()), AttributeDO::getInputType, requestDTO.getInputType())
@@ -55,15 +59,20 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
                 IPage<AttributeDO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
                 page = attributeMapper.selectPage(page, wrapper);
                 List<AttributeResponseDTO> collect = page.getRecords().stream()
-                        .map(category -> doConvertDto(category, AttributeResponseDTO.class))
+                        .map(attributeDO -> doConvertDto(attributeDO, AttributeResponseDTO.class))
                         .collect(Collectors.toList());
                 return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
             }
         }
         Page<AttributeResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<AttributeResponseDTO> collect = attributePageMapper.pageAttribute(page, requestDTO).stream()
-                .map(category -> doConvertDto(category, AttributeResponseDTO.class))
-                .collect(Collectors.toList());
+                .map(attributeDO -> {
+                    AttributeResponseDTO attributeResponse = doConvertDto(attributeDO, AttributeResponseDTO.class);
+                    if (attributeResponse.getCategoryId() != null){
+                        attributeResponse.setCategoryId(categorySupport.getId(attributeResponse.getCategoryId(), LevelEnum.ONE));
+                    }
+                    return attributeResponse;
+                }).collect(Collectors.toList());
         page.setRecords(collect);
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), page.getRecords()));
     }

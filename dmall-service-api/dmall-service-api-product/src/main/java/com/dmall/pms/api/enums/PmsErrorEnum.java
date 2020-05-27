@@ -222,7 +222,10 @@ public enum PmsErrorEnum implements ErrorCodeEnum {
      */
     INPUT_LIST_BLANK("1141", "可选值列表不能为空"),
 
-
+    /**
+     * 普通属性不可设置多个商品分类
+     */
+    SET_CATEGORY_ERROR("1142","普通属性不可设置多个商品分类"),
     ;
 
     /**

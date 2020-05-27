@@ -4,18 +4,19 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.request.ListAttributeRequestDTO;
 import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
-import com.dmall.pms.api.enums.*;
+import com.dmall.pms.api.enums.LevelEnum;
+import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
+import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
-import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.support.CategoryAttributeSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
     private AttributeCacheService attributeCacheService;
 
     @Autowired
-    private CategoryCacheService categoryCacheService;
+    private CategoryAttributeSupport categoryAttributeSupport;
 
     @Autowired
     private PmsValidate pmsValidate;
@@ -62,13 +63,8 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
                 requestDTO.getHandAddStatus(), requestDTO.getInputType())) {
             attributeDOS = attributeCacheService.selectAll();
         } else {
-            String categoryName = null;
-            if (requestDTO.getCategoryId() != null) {
-                CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
-                categoryName = categoryDO.getName();
-            }
             LambdaQueryWrapper<AttributeDO> wrapper = Wrappers.<AttributeDO>lambdaQuery()
-                    .likeRight(StrUtil.isNotBlank(categoryName), AttributeDO::getName, categoryName)
+                    .eq(AttributeDO::getCategoryId, requestDTO.getCategoryId())
                     .like(StrUtil.isNotBlank(requestDTO.getShowName()), AttributeDO::getShowName, requestDTO.getShowName())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getType()), AttributeDO::getType, requestDTO.getType())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getInputType()), AttributeDO::getInputType, requestDTO.getInputType())
@@ -77,7 +73,18 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
         }
         List<AttributeResponseDTO> collect = attributeDOS.stream()
                 .filter(Objects::nonNull)
-                .map(attributeDO -> doConvertDto(attributeDO, AttributeResponseDTO.class))
+                .map(attributeDO -> {
+                    AttributeResponseDTO attributeResponseDTO = doConvertDto(attributeDO, AttributeResponseDTO.class);
+                    if (requestDTO.getCategoryId() != null && requestDTO.getThreeCategoryId() != null) {
+                        CategoryAttributeDO categoryAttributeDO = categoryAttributeSupport
+                                .get(attributeResponseDTO.getId(), requestDTO.getThreeCategoryId());
+                        attributeResponseDTO.setChecked(categoryAttributeDO != null);
+                        if (categoryAttributeDO != null){
+                            attributeResponseDTO.setCanScreen(categoryAttributeDO.getCanScreen());
+                        }
+                    }
+                    return attributeResponseDTO;
+                })
                 .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }

@@ -12,7 +12,7 @@ import com.dmall.pms.generator.dataobject.CategoryBrandDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.generator.service.ICategoryBrandService;
-import com.dmall.pms.service.support.CategorySupport;
+import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +35,7 @@ public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, C
     private ICategoryBrandService iCategoryBrandService;
 
     @Autowired
-    private CategorySupport categorySupport;
+    private PmsValidate pmsValidate;
 
     @Override
     public BaseResult validate(SetBrandRequestDTO requestDTO) {
@@ -50,7 +50,7 @@ public class SetBrandHandler extends AbstractCommonHandler<SetBrandRequestDTO, C
         if (brands.size() != requestDTO.getBrandIds().size()) {
             return ResultUtil.fail(PmsErrorEnum.BRAND_ID_INVALID);
         }
-        return categorySupport.validate(requestDTO.getCategoryId());
+        return pmsValidate.validateThreeLevelCategory(requestDTO.getCategoryId());
     }
 
     @Override

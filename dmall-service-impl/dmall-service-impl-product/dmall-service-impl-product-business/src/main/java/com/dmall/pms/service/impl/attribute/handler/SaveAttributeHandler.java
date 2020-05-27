@@ -35,6 +35,8 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
 
     @Override
     public BaseResult<Long> validate(SaveAttributeRequestDTO requestDTO) {
+        //todo 一级分类下的展示名称必须唯一
+
         // 分类id必须存在
         CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
         // 必须为1级分类
@@ -60,5 +62,6 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
             result.setHandAddStatus(HandAddStatusEnum.Y.getCode());
             result.setInputList(null);
         }
+        result.setCategoryId(categoryDO.getId());
     }
 }

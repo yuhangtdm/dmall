@@ -63,14 +63,19 @@ layui.use(['form', 'table', 'crud', 'dtree',], function () {
         id = data.id;
         switch (obj.event) {
             case 'detail':
-                crud.open('/page/pms/attribute/attributeDetail.html', '属性类别详情');
+                crud.open('/page/pms/attribute/attributeDetail.html', '属性详情');
                 break;
             case 'update':
-                crud.open('/page/pms/attribute/attributeUpdate.html', '修改属性类别');
+                crud.open('/page/pms/attribute/attributeUpdate.html', '修改属性');
                 break;
             case 'delete':
                 crud.delete("确定删除该属性?", pmsUrl + '/attribute/' + data.id);
                 break;
+            // case 'setCategory':
+            //     type = data.type;
+            //     categoryId = data.categoryId;
+            //     crud.open('/page/pms/attribute/setCategory.html', '设置商品分类');
+            //     break;
         }
     });
 })

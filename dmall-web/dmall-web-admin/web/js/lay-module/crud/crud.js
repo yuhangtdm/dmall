@@ -52,6 +52,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             initPage: function (id, url, cols) {
                 initPage(id, url, cols);
             },
+            initSimplePage(id, url, cols, queryObj) {
+                initSimplePage(id, url, cols, queryObj);
+            },
             open: function (href, title, endCallback) {
                 open(href, title, endCallback);
             },
@@ -67,8 +70,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             search: function (tableId, data) {
                 return search(tableId, data);
             },
-            fillForm(url, formId, parentIndex) {
-                fillForm(url, formId, parentIndex);
+            fillForm(url, formId, parentIndex, callback) {
+                fillForm(url, formId, parentIndex, callback);
             },
             dataForm(data, formId) {
                 dataForm(data, formId);
@@ -388,6 +391,54 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         }
 
         /**
+         * 不带分页的page
+         */
+        function initSimplePage(id, url, cols, queryObj) {
+            table.render({
+                elem: '#' + id,
+                id: id,
+                url: url,
+                method: 'post',
+                contentType: 'application/json',
+                headers: {
+                    source: 'admin',
+                    token: getToken()
+                },
+                cellMinWidth: 100,
+                toolbar: false,
+                text: {
+                    none: '暂无相关数据'
+                },
+                cols: cols,
+                page: false,
+                loading: true,
+                request: {
+                    pageName: 'current',
+                    limitName: 'size'
+                },
+                where: queryObj,
+                done: function (res, curr, count) {
+                    if (res.code === '408') {
+                        // 用户未登陆 跳转登录页面
+                        errorBack('登录已失效', function () {
+                            window.location.href = 'page/login.html';
+                        })
+                    }
+                },
+                parseData: function (res) { //res 即为原始返回的数据
+                    if (res.data != null) {
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.msg, //解析提示文本
+                            "count": res.count, //解析数据长度
+                            "data": res.data//解析数据列表
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
          * 打开页面
          * @param href 页面地址
          * @param title 页面标题
@@ -620,10 +671,11 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
          * 搜索的公共方法
          */
         function search(tableId, data) {
+            console.log(data.field);
             table.reload(tableId, {
-                page: {
+                /*page: {
                     curr: 1
-                },
+                },*/
                 where: data.field,
             });
             return false;
@@ -632,10 +684,11 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         /**
          * 为表单填充值
          */
-        function fillForm(url, formId, parentIndex) {
+        function fillForm(url, formId, parentIndex, callback) {
             $.ajax({
                 type: 'get',
                 url: url,
+                async: false,
                 beforeSend: function (request) {
                     request.setRequestHeader("source", "admin");
                     request.setRequestHeader("token", getToken());
@@ -648,6 +701,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                         initFormSelect(formId);
                         // 初始化日期
                         initFormDate(formId);
+                        if (callback) {
+                            callback(response);
+                        }
                         form.render();
                     } else if (response.code === '408') {
                         layer.close(parentIndex);
@@ -919,7 +975,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                     if (value) {
                         sel.val(value);
                     }
-
                     form.render();
                 }
             }

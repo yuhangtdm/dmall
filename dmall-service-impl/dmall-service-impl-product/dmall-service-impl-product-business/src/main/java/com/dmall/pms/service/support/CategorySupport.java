@@ -3,10 +3,7 @@ package com.dmall.pms.service.support;
 import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.ResultUtil;
 import com.dmall.pms.api.enums.LevelEnum;
-import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
@@ -43,6 +40,25 @@ public class CategorySupport {
     }
 
     /**
+     * 获取id
+     * PATH 必须合法 如 .1.2.3.
+     */
+    public Long getId(Long categoryId, LevelEnum levelEnum) {
+        CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
+        String path = categoryDO.getPath();
+        String[] split = path.substring(1, path.length() - 1).split(StrUtil.BACKSLASH + StrUtil.DOT);
+        switch (levelEnum) {
+            case ONE:
+                return Long.valueOf(split[0]);
+            case TWO:
+                return Long.valueOf(split[1]);
+            case THREE:
+                return Long.valueOf(split[2]);
+        }
+        return 0L;
+    }
+
+    /**
      * 获取子级下所有的三级分类
      */
     public List<Long> getSubLevelIds(Long categoryId) {
@@ -54,22 +70,6 @@ public class CategorySupport {
                 .like(CategoryDO::getPath, categoryDO.getPath()));
         return categoryDOList.stream().filter(category -> LevelEnum.THREE.getCode().equals(category.getLevel()))
                 .map(CategoryDO::getId).collect(Collectors.toList());
-    }
-
-    /**
-     * 校验分类
-     */
-    public BaseResult validate(Long categoryId) {
-        CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
-        // 分类id必须存在
-        if (categoryDO == null) {
-            return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);
-        }
-        // 分类级别必须是3级
-        if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
-            return ResultUtil.fail(PmsErrorEnum.PARENT_LEVEL_ERROR);
-        }
-        return ResultUtil.success();
     }
 
     /**

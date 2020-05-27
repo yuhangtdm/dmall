@@ -5,7 +5,6 @@ import com.dmall.common.dto.dtree.DTreeResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
-import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -50,9 +49,5 @@ public interface CategoryService {
     @GetMapping("/tree/{parentId}/{type}")
     BaseResult<List<DTreeResponseDTO>> tree(@PathVariable("parentId") Long parentId,
                                             @PathVariable("type") Integer type);
-
-    @ApiOperation(value = "设置属性")
-    @PostMapping("/setAttribute")
-    BaseResult<Void> setAttribute(@Valid @RequestBody SetAttributeRequestDTO requestDTO);
 
 }

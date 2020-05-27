@@ -2,8 +2,11 @@ package com.dmall.pms;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dmall.pms.api.enums.LevelEnum;
+import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
+import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.generator.mapper.CategoryMapper;
 import com.dmall.pms.generator.service.ICategoryService;
@@ -31,6 +34,9 @@ public class TestUpdate {
     @Autowired
     private ICategoryService categoryService;
 
+    @Autowired
+    private AttributeMapper attributeMapper;
+
     @Test
     public void test() {
         AttributeTypeDO attributeTypeDO = new AttributeTypeDO();
@@ -52,6 +58,20 @@ public class TestUpdate {
             categoryDO.setName(categoryDO.getName().trim());
             categoryMapper.updateById(categoryDO);
         }
+    }
+
+    @Test
+    public void test3() {
+        List<AttributeDO> attributeList = attributeMapper.selectList(Wrappers.emptyWrapper());
+        for (AttributeDO attributeDO : attributeList) {
+            String[] s = attributeDO.getName().split("_");
+            CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>
+                    lambdaQuery().eq(CategoryDO::getLevel, LevelEnum.ONE.getCode())
+                    .eq(CategoryDO::getName, s[0]));
+            attributeDO.setCategoryId(categoryDO.getId());
+            attributeMapper.updateById(attributeDO);
+        }
+
     }
 
 

@@ -11,7 +11,6 @@ import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.generator.service.ICategoryAttributeService;
-import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.support.AttributeTypeSupport;
 import com.dmall.pms.service.support.CategorySupport;
 import com.dmall.pms.service.validate.PmsValidate;
@@ -28,6 +27,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019/12/25 23:03
  */
 @Component
+@Deprecated
 public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeRequestDTO, CategoryAttributeDO, Void> {
 
     @Autowired
@@ -35,9 +35,6 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
 
     @Autowired
     private AttributeMapper categoryMapper;
-
-    @Autowired
-    private CategoryCacheService categoryCacheService;
 
     @Autowired
     private ICategoryAttributeService iCategoryAttributeService;
@@ -62,7 +59,7 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
         if (attributes.size() != attributeIds.size()) {
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_ID_INVALID);
         }
-        return categorySupport.validate(requestDTO.getCategoryId());
+        return pmsValidate.validateThreeLevelCategory(requestDTO.getCategoryId());
     }
 
     @Override

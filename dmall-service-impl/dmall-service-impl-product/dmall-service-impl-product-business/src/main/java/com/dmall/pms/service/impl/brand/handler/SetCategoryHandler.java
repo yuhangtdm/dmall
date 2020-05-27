@@ -12,11 +12,12 @@ import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.BrandMapper;
 import com.dmall.pms.generator.mapper.CategoryBrandMapper;
 import com.dmall.pms.generator.mapper.CategoryMapper;
-import com.dmall.pms.generator.service.ICategoryBrandService;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.support.CategoryBrandSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,9 +33,6 @@ public class SetCategoryHandler extends AbstractCommonHandler<CheckedDTO, Catego
     private BrandMapper brandMapper;
 
     @Autowired
-    private ICategoryBrandService iCategoryBrandService;
-
-    @Autowired
     private CategoryMapper categoryMapper;
 
     @Autowired
@@ -42,6 +40,9 @@ public class SetCategoryHandler extends AbstractCommonHandler<CheckedDTO, Catego
 
     @Autowired
     private CategoryBrandMapper categoryBrandMapper;
+
+    @Autowired
+    private CategoryCacheService categoryCacheService;
 
     @Override
     public BaseResult validate(CheckedDTO requestDTO) {
@@ -63,17 +64,11 @@ public class SetCategoryHandler extends AbstractCommonHandler<CheckedDTO, Catego
         Set<Long> categoryIds = requestDTO.getRelateIds();
         // 角色列表为空 只是新增
         if (CollUtil.isEmpty(listByBrandId)) {
-            for (Long categoryId : categoryIds) {
-                CategoryBrandDO categoryBrandDO = new CategoryBrandDO()
-                        .setBrandId(requestDTO.getId())
-                        .setCategoryId(categoryId);
-                CategoryDO categoryDO = categoryMapper.selectById(categoryId);
-                categoryBrandDO.setCascadeCategoryId(categoryDO.getPath());
-                categoryBrandMapper.insert(categoryBrandDO);
-            }
+            insert(requestDTO, categoryIds);
         } else {
             // 先删后增
-            List<Long> oldCategoryIds = listByBrandId.stream().map(CategoryBrandDO::getCategoryId).collect(Collectors.toList());
+            List<Long> oldCategoryIds = listByBrandId.stream().map(CategoryBrandDO::getCategoryId)
+                    .collect(Collectors.toList());
             // 新增的集合
             List<Long> insertCategoryIds = categoryIds.stream()
                     .filter(menuId -> !oldCategoryIds.contains(menuId))
@@ -86,16 +81,23 @@ public class SetCategoryHandler extends AbstractCommonHandler<CheckedDTO, Catego
                 categoryBrandSupport.delete(requestDTO.getId(), deleteCategoryIds);
             }
             if (CollUtil.isNotEmpty(insertCategoryIds)) {
-                for (Long categoryId : insertCategoryIds) {
-                    CategoryBrandDO categoryBrandDO = new CategoryBrandDO()
-                            .setBrandId(requestDTO.getId())
-                            .setCategoryId(categoryId);
-                    CategoryDO categoryDO = categoryMapper.selectById(categoryId);
-                    categoryBrandDO.setCascadeCategoryId(categoryDO.getPath());
-                    categoryBrandMapper.insert(categoryBrandDO);
-                }
+                insert(requestDTO, insertCategoryIds);
             }
         }
         return ResultUtil.success();
+    }
+
+    /**
+     * 新增记录
+     */
+    private void insert(CheckedDTO requestDTO, Collection<Long> categoryIds) {
+        for (Long categoryId : categoryIds) {
+            CategoryBrandDO categoryBrandDO = new CategoryBrandDO()
+                    .setBrandId(requestDTO.getId())
+                    .setCategoryId(categoryId);
+            CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
+            categoryBrandDO.setCascadeCategoryId(categoryDO.getPath());
+            categoryBrandMapper.insert(categoryBrandDO);
+        }
     }
 }

@@ -6,6 +6,8 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
+import com.dmall.pms.api.enums.HandAddStatusEnum;
+import com.dmall.pms.api.enums.InputTypeEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.api.enums.TypeEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
@@ -39,13 +41,16 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
         // 查询属性
         AttributeDO attributeDO = pmsValidate.validateAttribute(requestDTO.getId());
         // 公共属性不能修改为普通属性
-        if (TypeEnum.PUBLIC.getCode().equals(attributeDO.getType()) && TypeEnum.NORMAL.getCode().equals(requestDTO.getType())) {
+        if (TypeEnum.PUBLIC.getCode().equals(attributeDO.getType())
+                && TypeEnum.NORMAL.getCode().equals(requestDTO.getType())) {
+            // 该属性已经挂载多个商品分类
             List<CategoryAttributeDO> list = categoryAttributeSupport.listByAttributeId(requestDTO.getId());
             if (CollUtil.isNotEmpty(list) && list.size() > 1) {
                 return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_INVALID);
             }
         }
-        return pmsValidate.attributeValidate(requestDTO.getInputType(), requestDTO.getInputList(), requestDTO.getHandAddStatus());
+        return pmsValidate.attributeValidate(requestDTO.getInputType(), requestDTO.getInputList(),
+                requestDTO.getHandAddStatus());
 
     }
 
@@ -53,13 +58,20 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
     public BaseResult<Long> processor(UpdateAttributeRequestDTO requestDTO) {
         AttributeDO attributeDO = attributeCacheService.selectById(requestDTO.getId());
         AttributeDO updateDO = dtoConvertDo(requestDTO, AttributeDO.class);
-        updateDO.setName(StrUtil.format("{}_{}", attributeDO.getName().split("_")[0], requestDTO.getShowName()));
+        // 修改名称
+        updateDO.setName(StrUtil.format("{}_{}", attributeDO.getName().split(StrUtil.UNDERLINE)[0],
+                requestDTO.getShowName()));
         attributeCacheService.updateById(updateDO);
         return ResultUtil.success();
     }
 
     @Override
     protected void customerConvertDo(AttributeDO result, UpdateAttributeRequestDTO requestDTO) {
+        // 手工录入
+        if (InputTypeEnum.HANDLE.getCode().equals(requestDTO.getInputType())) {
+            result.setHandAddStatus(HandAddStatusEnum.Y.getCode());
+            result.setInputList(null);
+        }
     }
 
 }

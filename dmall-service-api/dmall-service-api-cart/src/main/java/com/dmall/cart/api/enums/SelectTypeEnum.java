@@ -21,6 +21,7 @@ public enum SelectTypeEnum implements CodeDescEnum<Integer> {
      * 取消勾选
      */
     CANCEL(2, "取消勾选");
+
     private final Integer code;
 
     private final String desc;

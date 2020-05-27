@@ -12,7 +12,7 @@ import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.CategoryMapper;
-import com.dmall.pms.service.impl.category.CategoryTreeDTO;
+import com.dmall.pms.api.dto.category.request.CategoryTreeDTO;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
