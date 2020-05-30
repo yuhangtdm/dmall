@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,7 +16,6 @@ import java.util.Date;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Data
-@Accessors(chain = true)
 @ApiModel(value = "CategoryResponseDTO", description = "商品分类公共响应实体")
 public class CategoryResponseDTO implements Serializable {
 

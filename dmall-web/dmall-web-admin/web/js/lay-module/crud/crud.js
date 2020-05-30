@@ -671,7 +671,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
          * 搜索的公共方法
          */
         function search(tableId, data) {
-            console.log(data.field);
             table.reload(tableId, {
                 /*page: {
                     curr: 1

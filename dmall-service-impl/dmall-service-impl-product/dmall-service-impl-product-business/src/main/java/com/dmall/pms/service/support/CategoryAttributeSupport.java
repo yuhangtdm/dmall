@@ -64,4 +64,13 @@ public class CategoryAttributeSupport {
                 .eq(CategoryAttributeDO::getAttributeId, attributeId)
                 .in(CategoryAttributeDO::getCategoryId, categoryIds));
     }
+
+    /**
+     * 根据分类id和属性id列表删除
+     */
+    public void delete(List<Long> attributeIds, Long categoryId) {
+        categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                .eq(CategoryAttributeDO::getCategoryId, categoryId)
+                .in(CategoryAttributeDO::getAttributeId, attributeIds));
+    }
 }

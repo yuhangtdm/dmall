@@ -102,8 +102,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
                     var one = dtree.getParentParam(tree, param.nodeId);
                     oneLevelId = one.nodeId;
                     categoryId = node.nodeId;
-                    crud.open('/page/pms/category/setAttribute.html', '设置属性',function () {
-                    });
+                    crud.openT('/page/pms/category/setAttribute.html', '设置属性');
                 }
             }]
     });

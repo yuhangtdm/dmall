@@ -63,7 +63,4 @@ public class AttributeResponseDTO {
     @JsonProperty(value = "LAY_CHECKED")
     private Boolean checked;
 
-    @ApiModelProperty(value = "是否可筛选", position = 16)
-    private Integer canScreen;
-
 }

@@ -32,6 +32,10 @@ public class CategorySupport {
      */
     public String getCascadeCategoryName(Long categoryId) {
         CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
+        return getCascadeCategoryName(categoryDO);
+    }
+
+    public String getCascadeCategoryName(CategoryDO categoryDO) {
         StringBuilder sb = new StringBuilder();
         StrUtil.splitTrim(categoryDO.getPath(), CharUtil.DOT).stream().map(Long::valueOf).forEach(id -> {
             sb.append(categoryCacheService.selectById(id).getName()).append(StrUtil.SLASH);

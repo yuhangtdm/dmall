@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/5/26 22:25
  */
 @Component
+@Deprecated
 public class SetAttributeCategoryHandler extends AbstractCommonHandler<SetAttributeCategoryRequestDTO, CategoryAttributeDO, Void> {
 
     @Autowired

@@ -63,10 +63,4 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
         return ResultUtil.success(list);
     }
 
-    @Override
-    protected void customerConvertDto(AttributeTypeResponseDTO result, AttributeTypeDO doo) {
-        if (doo.getCategoryId() != null) {
-            result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
-        }
-    }
 }

@@ -225,7 +225,12 @@ public enum PmsErrorEnum implements ErrorCodeEnum {
     /**
      * 普通属性不可设置多个商品分类
      */
-    SET_CATEGORY_ERROR("1142","普通属性不可设置多个商品分类"),
+    SET_CATEGORY_ERROR("1142", "普通属性不可设置多个商品分类"),
+
+    /**
+     * 该属性不存在
+     */
+    ATTRIBUTE_NAME_EXIST("1143", "该属性名称不存在"),
     ;
 
     /**

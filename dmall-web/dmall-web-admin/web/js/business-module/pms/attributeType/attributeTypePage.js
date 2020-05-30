@@ -19,11 +19,10 @@ layui.use(['form', 'table', 'crud', 'dtree',], function () {
             [
                 {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: '属性类别编号', sort: true},
-                {field: 'cascadeCategoryName', title: '商品分类名称'},
                 {field: 'showName', title: '展示名称'},
                 {field: 'sort', title: '排序'},
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
-                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 320}
+                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 200}
             ]
         ];
     }

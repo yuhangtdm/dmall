@@ -29,4 +29,5 @@ layui.config({
     iconPicker: 'iconPicker/iconPicker', // iconPicker扩展
     formSelects: 'formSelects/formSelects', // formSelects扩展
     dtree: 'dtree/dtree',
+    tableEdit: 'tableEdit/tableEdit',
 });

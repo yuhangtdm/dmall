@@ -1,0 +1,89 @@
+<div class="layuimini-main">
+    <form class="layui-form layuimini-form" id="menuDetailForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单/目录编号</label>
+            <div class="layui-input-block">
+                <input type="number" name="id" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级目录</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="parentId">
+                <input type="text" name="parentName" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="type" selectName="MenuTypeEnum" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <!--
+                                <i name="icon" class="layui-icon"></i>
+                -->
+                <input type="text" id="icon" name="icon" placeholder="请选择图标" readonly lay-filter="icon"
+                       class="layui-input icon">
+            </div>
+        </div>
+        <div id="openItem" class="layui-form-item">
+            <label class="layui-form-label">默认是否打开</label>
+            <div class="layui-input-block">
+                <input type="text" selectName="YNEnum" name="open" readonly class="layui-input">
+            </div>
+        </div>
+        <div id="urlItem" class="layui-form-item">
+            <label class="layui-form-label">菜单地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" readonly class="layui-input">
+            </div>
+        </div>
+        <div id="targetItem" class="layui-form-item">
+            <label class="layui-form-label">菜单打开方式</label>
+            <div class="layui-input-block">
+                <input name="target" selectName="MenuTargetEnum" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="number" name="sort" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建人</label>
+            <div class="layui-input-block">
+                <input type="text" name="creator" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtCreated" name="gmtCreated" readonly class="layui-input date">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改人</label>
+            <div class="layui-input-block">
+                <input type="text" name="modifier" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="gmtModified" name="gmtModified" readonly class="layui-input date">
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../../../js/business-module/system/menu/menuDetail.js"></script>

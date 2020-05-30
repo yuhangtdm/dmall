@@ -6,6 +6,7 @@ import com.dmall.pms.api.dto.category.request.CategoryTreeDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import com.dmall.pms.api.service.CategoryService;
 import com.dmall.pms.service.impl.category.handler.*;
@@ -41,6 +42,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryTreeHandler categoryTreeHandler;
 
+    @Autowired
+    private SetAttributeHandler setAttributeHandler;
+
+    @Autowired
+    private GetAttributeIdsHandler getAttributeIdsHandler;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BaseResult<Long> save(@RequestBody SaveCategoryRequestDTO requestDTO) {
@@ -71,6 +78,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public BaseResult<List<DTreeResponseDTO>> tree(Long parentId, Integer type) {
         return categoryTreeHandler.handler(new CategoryTreeDTO(parentId, type));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult<Void> setCategory(@RequestBody SetAttributeRequestDTO requestDTO) {
+        return setAttributeHandler.handler(requestDTO);
+    }
+
+    @Override
+    public BaseResult<List<String>> getCategoryIds(Long id) {
+        return getAttributeIdsHandler.handler(id);
     }
 
 }

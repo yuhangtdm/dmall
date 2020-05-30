@@ -46,12 +46,5 @@ public interface AttributeService {
     @ApiOperation(value = "属性分页")
     BaseResult<ResponsePage<AttributeResponseDTO>> page(@Valid @RequestBody PageAttributeRequestDTO requestDTO);
 
-    @PostMapping("/setCategory")
-    @ApiOperation(value = "设置商品分类")
-    BaseResult<Void> setCategory(@Valid @RequestBody SetAttributeCategoryRequestDTO requestDTO);
 
-    @GetMapping("/getCategoryIds/{id}")
-    @ApiOperation(value = "获取三级分类id列表")
-    @ApiImplicitParam(name = "id", value = "属性id", required = true, dataType = "int", paramType = "path")
-    BaseResult<List<String>> getCategoryIds(@PathVariable("id") Long id);
 }

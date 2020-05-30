@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/5/27 22:20
  */
 @Component
+@Deprecated
 public class GetCategoryIdsHandler extends AbstractCommonHandler<Long, CategoryAttributeDO, List<String>> {
 
     @Autowired

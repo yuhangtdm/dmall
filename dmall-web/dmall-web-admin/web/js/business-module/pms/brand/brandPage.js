@@ -20,7 +20,7 @@ layui.use(['form', 'table', 'crud'], function () {
                 {field: 'englishName', title: '英文名称'},
                 {field: 'firstLetter', title: '首字母'},
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
-                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 320}
+                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 300}
             ]
         ];
     }

@@ -13,6 +13,7 @@ import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
+import com.dmall.pms.service.support.AttributeSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,10 +34,15 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
     @Autowired
     private PmsValidate pmsValidate;
 
+    @Autowired
+    private AttributeSupport attributeSupport;
+
     @Override
     public BaseResult<Long> validate(SaveAttributeRequestDTO requestDTO) {
-        //todo 一级分类下的展示名称必须唯一
-
+        AttributeDO attributeDO = attributeSupport.getByShowName(requestDTO.getCategoryId(), requestDTO.getShowName());
+        if (attributeDO == null) {
+            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NAME_EXIST);
+        }
         // 分类id必须存在
         CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
         // 必须为1级分类

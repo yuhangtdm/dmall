@@ -12,7 +12,6 @@ import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
 import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
-import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
@@ -75,14 +74,17 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
                 .filter(Objects::nonNull)
                 .map(attributeDO -> {
                     AttributeResponseDTO attributeResponseDTO = doConvertDto(attributeDO, AttributeResponseDTO.class);
-                    if (requestDTO.getCategoryId() != null && requestDTO.getThreeCategoryId() != null) {
+                   /* if (requestDTO.getCategoryId() != null && requestDTO.getThreeCategoryId() != null) {
                         CategoryAttributeDO categoryAttributeDO = categoryAttributeSupport
                                 .get(attributeResponseDTO.getId(), requestDTO.getThreeCategoryId());
                         attributeResponseDTO.setChecked(categoryAttributeDO != null);
-                        if (categoryAttributeDO != null){
-                            attributeResponseDTO.setCanScreen(categoryAttributeDO.getCanScreen());
+                        if (categoryAttributeDO != null) {
+                            CanScreen canScreen = new CanScreen();
+                            canScreen.setName(categoryAttributeDO.getCanScreen());
+                            canScreen.setValue(EnumUtil.getDesc(CanScreenEnum.class, categoryAttributeDO.getCanScreen()));
+                            attributeResponseDTO.setCanScreen(canScreen);
                         }
-                    }
+                    }*/
                     return attributeResponseDTO;
                 })
                 .collect(Collectors.toList());

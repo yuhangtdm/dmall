@@ -1,13 +1,9 @@
 package com.dmall.pms.service.impl.attribute.handler;
 
 import com.dmall.common.dto.BaseResult;
-import com.dmall.common.util.EnumUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attribute.response.AttributeResponseDTO;
-import com.dmall.pms.api.enums.HandAddStatusEnum;
-import com.dmall.pms.api.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.TypeEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;

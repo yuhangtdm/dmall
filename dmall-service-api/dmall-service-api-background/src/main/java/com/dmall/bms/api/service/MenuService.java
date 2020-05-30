@@ -4,7 +4,6 @@ import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
-import com.dmall.bms.api.dto.menu.response.PageMenuResponseDTO;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.dtree.DTreeResponseDTO;
 import io.swagger.annotations.Api;
@@ -40,10 +39,6 @@ public interface MenuService {
     @ApiOperation(value = "根据id查询菜单")
     @ApiImplicitParam(name = "id", value = "菜单表 id", required = true, dataType = "int", paramType = "path")
     BaseResult<GetMenuResponseDTO> get(@PathVariable("id") Long id);
-
-    @GetMapping("/treePage")
-    @ApiOperation(value = "菜单树分页")
-    BaseResult<List<PageMenuResponseDTO>> treePage();
 
     @GetMapping("/tree")
     @ApiOperation(value = "菜单树")

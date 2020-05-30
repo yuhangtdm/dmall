@@ -52,6 +52,7 @@ public class PmsValidate {
     @Autowired
     private SkuAuditMapper skuAuditMapper;
 
+
     /**
      * 校验商品必须存在
      */

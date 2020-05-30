@@ -56,6 +56,7 @@ public class MenuTreeHandler extends AbstractCommonHandler<Void, MenuDO, DTreeRe
         map.put("icon", menuDO.getIcon());
         map.put("target", menuDO.getTarget());
         map.put("sort", menuDO.getSort());
+        map.put("type", menuDO.getType());
         responseDTO.setBasicData(map);
         responseDTO.setChildren(Lists.newArrayList());
         return responseDTO;

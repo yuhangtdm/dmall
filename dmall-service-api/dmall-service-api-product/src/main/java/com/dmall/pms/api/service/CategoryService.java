@@ -5,6 +5,7 @@ import com.dmall.common.dto.dtree.DTreeResponseDTO;
 import com.dmall.pms.api.dto.category.request.ListCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.SaveCategoryRequestDTO;
 import com.dmall.pms.api.dto.category.request.UpdateCategoryRequestDTO;
+import com.dmall.pms.api.dto.category.request.setattribute.SetAttributeRequestDTO;
 import com.dmall.pms.api.dto.category.response.CategoryResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -50,4 +51,12 @@ public interface CategoryService {
     BaseResult<List<DTreeResponseDTO>> tree(@PathVariable("parentId") Long parentId,
                                             @PathVariable("type") Integer type);
 
+    @PostMapping("/setAttribute")
+    @ApiOperation(value = "设置商品属性")
+    BaseResult<Void> setCategory(@Valid @RequestBody SetAttributeRequestDTO requestDTO);
+
+    @GetMapping("/getAttributeIds/{id}")
+    @ApiOperation(value = "获取属性id列表")
+    @ApiImplicitParam(name = "id", value = "三级分类id", required = true, dataType = "int", paramType = "path")
+    BaseResult<List<String>> getCategoryIds(@PathVariable("id") Long id);
 }

@@ -3,20 +3,23 @@ package com.dmall.pms.service.impl.attributetype.handler;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.util.ResultUtil;
+import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attributetype.request.PageAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
+import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.support.CategorySupport;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -29,9 +32,6 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
 
-    @Autowired
-    private CategorySupport categorySupport;
-
     @Override
     public BaseResult<ResponsePage<AttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
@@ -42,13 +42,6 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
                 .map(doo -> doConvertDto(doo, AttributeTypeResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage(page.getTotal(), record));
-    }
-
-    @Override
-    protected void customerConvertDto(AttributeTypeResponseDTO result, AttributeTypeDO doo) {
-        if (doo.getCategoryId() != null) {
-            result.setCascadeCategoryName(categorySupport.getCascadeCategoryName(doo.getCategoryId()));
-        }
     }
 
 }

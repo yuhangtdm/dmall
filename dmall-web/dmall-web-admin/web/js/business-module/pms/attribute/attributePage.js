@@ -33,7 +33,7 @@ layui.use(['form', 'table', 'crud', 'dtree',], function () {
                     templet: "<div>{{layui.crud.getDesc(d.handAddStatus,'HandAddStatusEnum')}}</div>"
                 },
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
-                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 320}
+                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 200}
             ]
         ];
     }
@@ -71,11 +71,6 @@ layui.use(['form', 'table', 'crud', 'dtree',], function () {
             case 'delete':
                 crud.delete("确定删除该属性?", pmsUrl + '/attribute/' + data.id);
                 break;
-            // case 'setCategory':
-            //     type = data.type;
-            //     categoryId = data.categoryId;
-            //     crud.open('/page/pms/attribute/setCategory.html', '设置商品分类');
-            //     break;
         }
     });
 })

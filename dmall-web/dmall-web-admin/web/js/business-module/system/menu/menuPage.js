@@ -36,16 +36,21 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
     //监听行工具事件
     treeTable.on('tool(menu)', function (obj) {
         var data = obj.data;
+        id = data.id;
         // 定义全局变量传输到子页面
         switch (obj.event) {
+            case 'detail':
+                parentId = data.id;
+                parentName = data.name;
+                crud.open('/page/system/menu/menuDetail.html', '菜单/目录详情', reloadTable);
+                break;
             case 'add':
                 parentId = data.id;
                 parentName = data.name;
                 crud.open('/page/system/menu/menuAdd.html', '新增子菜单/目录', reloadTable);
                 break;
             case 'update':
-                id = data.id;
-                if (data.type === 1) {
+                if (data.basicData.type === 1) {
                     crud.open('/page/system/menu/catalogUpdate.html', '修改目录', reloadTable);
                 } else {
                     crud.open('/page/system/menu/menuUpdate.html', '修改菜单', reloadTable);
@@ -70,12 +75,12 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
             [
                 {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: '菜单编号'},
-                {field: 'name', title: '名称'},
-                {field: 'icon', title: '图标', templet: '<div><i class="layui-icon {{d.icon}}"></i></div>'},
-                {field: 'type', title: '类型', templet: "<div>{{layui.crud.getDesc(d.type,'MenuTypeEnum')}}</div>"},
-                {field: 'url', title: '地址'},
-                {field: 'target', title: '菜单打开方式'},
-                {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 200}
+                {field: 'title', title: '名称'},
+                {field: 'icon', title: '图标', templet: '<div><i class="layui-icon {{d.basicData.icon}}"></i></div>'},
+                {field: 'basicData.type', title: '类型', templet: "<div>{{layui.crud.getDesc(d.basicData.type,'MenuTypeEnum')}}</div>"},
+                {field: 'basicData.url', title: '地址',  templet: "<div>{{d.basicData.url === null ? '' : d.basicData.url}}</div>"},
+                {field: 'basicData.target', title: '菜单打开方式',  templet: "<div>{{d.basicData.target === null ? '' : d.basicData.target}}</div>"},
+                {fixed: 'basicData.right', title: '操作', toolbar: '#currentTableBar', width: 200}
             ]
         ];
     }

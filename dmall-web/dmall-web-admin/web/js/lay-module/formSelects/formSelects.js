@@ -1547,7 +1547,6 @@ function _defineProperty(obj, key, value) {
     };
 
     Common.prototype.log = function (obj) {
-        console.log(obj);
     };
 
     var Select4 = function Select4() {

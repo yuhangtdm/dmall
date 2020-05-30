@@ -4,7 +4,6 @@ import com.dmall.bms.api.dto.menu.request.SaveMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.request.UpdateMenuRequestDTO;
 import com.dmall.bms.api.dto.menu.response.GetMenuResponseDTO;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
-import com.dmall.bms.api.dto.menu.response.PageMenuResponseDTO;
 import com.dmall.bms.api.service.MenuService;
 import com.dmall.bms.service.impl.menu.handler.*;
 import com.dmall.common.dto.BaseResult;
@@ -40,9 +39,6 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MyMenuTreeHandler myMenuTreeHandler;
 
-    @Autowired
-    private TreePageMenuHandler treePageMenuHandler;
-
     @Override
     public BaseResult<Long> save(@RequestBody SaveMenuRequestDTO requestDTO) {
         return saveMenuHandler.handler(requestDTO);
@@ -61,11 +57,6 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public BaseResult<GetMenuResponseDTO> get(Long id) {
         return getMenuHandler.handler(id);
-    }
-
-    @Override
-    public BaseResult<List<PageMenuResponseDTO>> treePage() {
-        return treePageMenuHandler.handler(null);
     }
 
     @Override

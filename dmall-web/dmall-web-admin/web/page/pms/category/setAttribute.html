@@ -1,15 +1,14 @@
-<link rel="stylesheet" href="../../../css/dtree/dtree.css">
-<link rel="stylesheet" href="../../../css/dtree/font/dtreefont.css">
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
-        <table class="layui-hide" id="setAttribute" lay-filter="attribute"></table>
+        <table class="layui-hide" id="tableId" lay-filter="tableEvent"></table>
 
-        <script type="text/html" id="switchTpl">
-            <input type="checkbox"  title="不可筛选">
-            <input type="checkbox"  title="单选" checked>
-            <input type="checkbox"  title="多选">
-        </script>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="submit" class="layui-btn layui-hide">确认保存</button>
+            </div>
+        </div>
     </div>
 </div>
+
 <script src="../../../js/business-module/pms/category/setAttribute.js"></script>

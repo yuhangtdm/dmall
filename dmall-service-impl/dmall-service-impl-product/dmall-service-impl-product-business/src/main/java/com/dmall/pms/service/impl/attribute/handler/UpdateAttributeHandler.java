@@ -13,6 +13,7 @@ import com.dmall.pms.api.enums.TypeEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
+import com.dmall.pms.service.support.AttributeSupport;
 import com.dmall.pms.service.support.CategoryAttributeSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
     @Autowired
     private PmsValidate pmsValidate;
 
+    @Autowired
+    private AttributeSupport attributeSupport;
+
     @Override
     public BaseResult validate(UpdateAttributeRequestDTO requestDTO) {
         // 查询属性
@@ -48,6 +52,11 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
             if (CollUtil.isNotEmpty(list) && list.size() > 1) {
                 return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_INVALID);
             }
+        }
+        // 校验展示名称唯一
+        AttributeDO attributeDO1 = attributeSupport.getByShowName(attributeDO.getCategoryId(), requestDTO.getShowName());
+        if (attributeDO1 != null && !attributeDO1.getId().equals(attributeDO.getId())) {
+            return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NAME_EXIST);
         }
         return pmsValidate.attributeValidate(requestDTO.getInputType(), requestDTO.getInputList(),
                 requestDTO.getHandAddStatus());
