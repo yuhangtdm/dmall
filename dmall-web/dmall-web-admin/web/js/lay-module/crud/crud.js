@@ -52,8 +52,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             initPage: function (id, url, cols) {
                 initPage(id, url, cols);
             },
-            initSimplePage(id, url, cols, queryObj) {
-                initSimplePage(id, url, cols, queryObj);
+            initTable(id, url, cols, queryObj) {
+                initTable(id, url, cols, queryObj);
             },
             open: function (href, title, endCallback) {
                 open(href, title, endCallback);
@@ -88,8 +88,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             initDate(domId, format, type) {
                 initDate(domId, format, type);
             },
-            formatDate(date) {
-                return formatDate(date);
+            formatDate(date, format) {
+                return formatDate(date, format);
             },
             initIcon(id) {
                 initIcon(id);
@@ -102,6 +102,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             },
             getToken: function () {
                 return getToken();
+            },
+            contains: function (a, obj) {
+                return contains(a, obj);
             },
             toJson: function (formId) {
                 return toJson(formId);
@@ -393,7 +396,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         /**
          * 不带分页的page
          */
-        function initSimplePage(id, url, cols, queryObj) {
+        function initTable(id, url, cols, queryObj) {
             table.render({
                 elem: '#' + id,
                 id: id,
@@ -613,6 +616,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
          * 私有方法 list.contains
          */
         function contains(a, obj) {
+            if (!a){
+                return false;
+            }
             var i = a.length;
             while (i--) {
                 if (a[i].toString() === obj.toString()) {
@@ -1074,13 +1080,18 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
         /**
          * 格式化时间
          */
-        function formatDate(date) {
+        function formatDate(date, format) {
             if (date) {
-                return layui.util.toDateString(date, 'yyyy-MM-dd HH:mm:ss');
+                if (format) {
+                    return layui.util.toDateString(date, format);
+                } else {
+                    return layui.util.toDateString(date, 'yyyy-MM-dd HH:mm:ss');
+                }
             } else {
                 return '';
             }
         }
+
 
         /**
          * 获取token

@@ -32,7 +32,8 @@ public class MenuTreeHandler extends AbstractCommonHandler<Void, MenuDO, DTreeRe
     @Override
     public BaseResult<List<DTreeResponseDTO>> processor(Void aVoid) {
         // 查询所有菜单
-        List<DTreeResponseDTO> allMenus = menuMapper.selectList(Wrappers.emptyWrapper()).stream()
+        List<DTreeResponseDTO> allMenus = menuMapper.selectList(Wrappers.<MenuDO>lambdaQuery()
+                .orderByAsc(MenuDO::getSort)).stream()
                 .map(this::buildDTreeResponse)
                 .collect(Collectors.toList());
         return ResultUtil.success(DTreeUtil.build(allMenus));

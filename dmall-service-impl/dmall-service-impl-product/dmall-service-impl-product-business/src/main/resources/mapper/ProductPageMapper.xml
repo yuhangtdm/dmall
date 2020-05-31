@@ -4,7 +4,7 @@
 
     <select id="productPage" resultType="com.dmall.pms.generator.dataobject.ProductDO">
         select
-        distinct pp.id, pp.product_no, pp.brand_id, pp.name, pp.pic,pp.on_market_time,pp.unit,pp.weight, pp.creator,
+        distinct pp.id, pp.brand_id, pp.name, pp.pic,pp.on_market_time,pp.unit,pp.weight, pp.creator,
         pp.gmt_created, pp.modifier, pp.gmt_modified, pp.is_deleted
         from pms_product pp
         left join pms_brand pb on pp.brand_id = pb.id
@@ -15,9 +15,6 @@
             </if>
             <if test="request.brandId!= null">
                 and pp.brand_id = #{request.brandId}
-            </if>
-            <if test="request.productNo!= null and request.productNo!=''">
-                and pp.product_no like '%${request.productNo}%'
             </if>
             <if test="request.name!= null and request.name!=''">
                 and pp.name like '%${name}%'

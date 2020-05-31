@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmall.pms.service.impl.attribute.mapper.AttributeListMapper">
+
+    <select id="listAttribute" resultType="com.dmall.pms.generator.dataobject.AttributeDO">
+        select DISTINCT
+        a.id, a.name, a.show_name, a.type, a.input_type, a.input_list, a.hand_add_status, a.creator, a.gmt_created,
+        a.modifier, a.gmt_modified, a.is_deleted,ca.category_id
+        from pms_attribute a left join pms_category_attribute ca on a.id = ca.attribute_id
+        <where>
+            <if test="request.showName != null and request.showName != ''">
+                and a.show_name like '%${request.showName}%'
+            </if>
+            <if test="request.type != null ">
+                and a.type = #{request.type}
+            </if>
+            <if test="request.inputType != null ">
+                and a.input_type = #{request.inputType}
+            </if>
+            <if test="request.handAddStatus != null and request.handAddStatus != ''">
+                and a.hand_add_status = #{request.handAddStatus}
+            </if>
+            <if test="request.categoryId != null ">
+                and a.category_id = #{request.categoryId}
+            </if>
+            <if test="request.threeCategoryIds != null ">
+                and ca.category_id in
+                <foreach item="item" collection="request.threeCategoryIds" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        group by a.id
+    </select>
+
+</mapper>

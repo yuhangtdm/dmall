@@ -35,7 +35,13 @@ public class PageProductHandler extends AbstractCommonHandler<PageProductRequest
 
     @Override
     public BaseResult validate(PageProductRequestDTO requestDTO) {
-        return pmsValidate.commonValidate(requestDTO.getBrandId(), requestDTO.getCategoryId());
+        if (requestDTO.getBrandId() != null){
+            pmsValidate.validateBrand(requestDTO.getBrandId());
+        }
+        if (requestDTO.getCategoryId()!= null){
+            pmsValidate.validateThreeLevelCategory(requestDTO.getCategoryId());
+        }
+        return ResultUtil.success();
     }
 
     @Override

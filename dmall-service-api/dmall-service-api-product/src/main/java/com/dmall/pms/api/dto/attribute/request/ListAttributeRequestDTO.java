@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @description: 属性列表请求实体
@@ -38,7 +39,7 @@ public class ListAttributeRequestDTO implements Serializable {
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
 
-    @ApiModelProperty(value = "三级分类id", required = true, position = 1)
-    private Long threeCategoryId;
+    @ApiModelProperty(value = "三级分类id", required = true, position = 6)
+    private Set<Long> threeCategoryIds;
 
 }

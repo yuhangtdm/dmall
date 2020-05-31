@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @description: 品牌列表请求实体
@@ -30,5 +31,5 @@ public class ListBrandRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "商品分类id", required = true, position = 4)
     @NotNull(message = "商品分类id不能为空")
-    private Long categoryId;
+    private Set<Long> categoryIds;
 }

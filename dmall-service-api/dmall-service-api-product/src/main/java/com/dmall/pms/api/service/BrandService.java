@@ -4,7 +4,10 @@ import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.CheckedDTO;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;
-import com.dmall.pms.api.dto.brand.request.*;
+import com.dmall.pms.api.dto.brand.request.ListBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.request.PageBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.request.SaveBrandRequestDTO;
+import com.dmall.pms.api.dto.brand.request.UpdateBrandRequestDTO;
 import com.dmall.pms.api.dto.brand.response.BrandResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @description: 品牌服务
@@ -64,4 +68,5 @@ public interface BrandService {
     @ApiOperation(value = "根据品牌id查询关联的分类")
     @ApiImplicitParam(name = "id", value = "品牌id", required = true, dataType = "int", paramType = "path")
     BaseResult<List<String>> getCategory(@PathVariable("id") Long id);
+
 }

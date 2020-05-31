@@ -68,6 +68,7 @@ public class PageAttributeHandler extends AbstractCommonHandler<PageAttributeReq
         List<AttributeResponseDTO> collect = attributePageMapper.pageAttribute(page, requestDTO).stream()
                 .map(attributeDO -> {
                     AttributeResponseDTO attributeResponse = doConvertDto(attributeDO, AttributeResponseDTO.class);
+                    // 查询的为三级分类  修改为一级分类后返回
                     if (attributeResponse.getCategoryId() != null) {
                         attributeResponse.setCategoryId(categorySupport.getId(attributeResponse.getCategoryId(), LevelEnum.ONE));
                     }

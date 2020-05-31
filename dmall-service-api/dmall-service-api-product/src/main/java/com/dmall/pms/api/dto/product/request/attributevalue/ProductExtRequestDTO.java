@@ -20,7 +20,7 @@ public class ProductExtRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -4383222923230954323L;
 
-    @ApiModelProperty(value = "商品分类id列表,默认第一个为主分类", required = true, position = 1)
+    @ApiModelProperty(value = "商品分类id列表", required = true, position = 1)
     @NotNull(message = "商品分类id列表不能为空")
     @Size(min = 1, message = "商品分类id列表不能为空")
     private List<Long> categoryIds;

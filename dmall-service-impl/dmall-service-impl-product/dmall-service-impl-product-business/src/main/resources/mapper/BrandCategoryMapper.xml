@@ -28,8 +28,11 @@
         from pms_brand pb
         INNER JOIN pms_category_brand pcb on pb.id = pcb.brand_id
         WHERE pb.is_deleted = 'N' AND pcb.is_deleted = 'N'
-        <if test="categoryId != null">
-            and pcb.category_id = #{categoryId}
+        <if test="categoryIds != null">
+            and pcb.category_id in
+            <foreach item="item" collection="categoryIds" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
         <if test="name != null and name != ''">
             and pb.name like '%${name}%'

@@ -5,7 +5,7 @@
     <select id="skuPage" resultType="com.dmall.pms.service.impl.sku.mapper.SkuPageVO">
         select
         distinct
-        ps.id, ps.product_id, ps.merchants_id, ps.brand_id, pb.name brand_name,pp.product_no,ps.sku_no, ps.name,
+        ps.id, ps.product_id, ps.merchants_id, ps.brand_id, pb.name brand_name,ps.sku_no, ps.name,
         ps.sub_name, ps.description, ps.pic,
         ps.price, ps.vip_price, ps.market_price,
         ps.stock, ps.low_stock, ps.sort, ps.publish_status, ps.on_publish_time, ps.off_publish_time,
@@ -22,9 +22,6 @@
             </if>
             <if test="request.brandId!= null">
                 and ps.brand_id = #{request.brandId}
-            </if>
-            <if test="request.productNo!= null and request.productNo!=''">
-                and ps.product_no like '%${request.productNo}%'
             </if>
             <if test="request.skuNo!= null and request.skuNo!=''">
                 and ps.sku_no like '%${request.skuNo}%'

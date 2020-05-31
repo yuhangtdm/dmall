@@ -41,12 +41,12 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
         switch (obj.event) {
             case 'detail':
                 parentId = data.id;
-                parentName = data.name;
+                parentName = data.title;
                 crud.open('/page/system/menu/menuDetail.html', '菜单/目录详情', reloadTable);
                 break;
             case 'add':
                 parentId = data.id;
-                parentName = data.name;
+                parentName = data.title;
                 crud.open('/page/system/menu/menuAdd.html', '新增子菜单/目录', reloadTable);
                 break;
             case 'update':
@@ -80,7 +80,7 @@ layui.use(['form', 'table', 'crud', 'element', 'treeTable'], function () {
                 {field: 'basicData.type', title: '类型', templet: "<div>{{layui.crud.getDesc(d.basicData.type,'MenuTypeEnum')}}</div>"},
                 {field: 'basicData.url', title: '地址',  templet: "<div>{{d.basicData.url === null ? '' : d.basicData.url}}</div>"},
                 {field: 'basicData.target', title: '菜单打开方式',  templet: "<div>{{d.basicData.target === null ? '' : d.basicData.target}}</div>"},
-                {fixed: 'basicData.right', title: '操作', toolbar: '#currentTableBar', width: 200}
+                {fixed: 'basicData.right', title: '操作', toolbar: '#currentTableBar', width: 300}
             ]
         ];
     }

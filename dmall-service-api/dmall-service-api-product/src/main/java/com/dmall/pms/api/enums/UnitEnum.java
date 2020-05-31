@@ -1,6 +1,6 @@
 package com.dmall.pms.api.enums;
 
-import com.dmall.common.enums.base.CodeEnum;
+import com.dmall.common.enums.base.CodeDescEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,16 +10,18 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum UnitEnum implements CodeEnum<String> {
+public enum UnitEnum implements CodeDescEnum<String> {
     /**
      * kg
      */
-    KG("kg"),
+    KG("kg", "千克"),
 
     /**
      * g
      */
-    G("g"),
+    G("g", "克"),
     ;
     private final String code;
+
+    private final String desc;
 }

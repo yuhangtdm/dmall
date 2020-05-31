@@ -9,7 +9,6 @@
         <result column="category_id" property="categoryId"/>
         <result column="brand_id" property="brandId"/>
         <result column="freight_template_id" property="freightTemplateId"/>
-        <result column="product_no" property="productNo"/>
         <result column="name" property="name"/>
         <result column="pic" property="pic"/>
         <result column="description" property="description"/>
@@ -28,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, merchants_id, category_id, brand_id, freight_template_id, product_no, name, pic, description, unit, weight, remark, on_market_time, cascade_category_id, add_services, creator, gmt_created, modifier, gmt_modified, is_deleted
+        id, merchants_id, category_id, brand_id, freight_template_id,  name, pic, description, unit, weight, remark, on_market_time, cascade_category_id, add_services, creator, gmt_created, modifier, gmt_modified, is_deleted
     </sql>
 
 </mapper>

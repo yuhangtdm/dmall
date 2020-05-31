@@ -94,7 +94,17 @@ public class PmsValidate {
         CategoryDO categoryDO = validateCategory(categoryId);
         // 分类级别必须是3级
         if (!LevelEnum.THREE.getCode().equals(categoryDO.getLevel())) {
-            return ResultUtil.fail(PmsErrorEnum.PARENT_LEVEL_ERROR);
+            throw new BusinessException(PmsErrorEnum.PARENT_LEVEL_ERROR);
+        }
+        return ResultUtil.success();
+    }
+
+    /**
+     * 批量校验分类
+     */
+    public BaseResult validateBatchCategory(Set<Long> categoryIds) {
+        for (Long categoryId : categoryIds) {
+            validateThreeLevelCategory(categoryId);
         }
         return ResultUtil.success();
     }

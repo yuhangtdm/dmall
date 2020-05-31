@@ -1,6 +1,9 @@
 package com.dmall.pms.service.impl.attributetype.handler;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ObjectUtil;
 import com.dmall.common.util.ResultUtil;
@@ -8,11 +11,8 @@ import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.attributetype.request.ListAttributeTypeRequestDTO;
 import com.dmall.pms.api.dto.attributetype.response.AttributeTypeResponseDTO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
-import com.dmall.pms.generator.dataobject.CategoryDO;
 import com.dmall.pms.generator.mapper.AttributeTypeMapper;
 import com.dmall.pms.service.impl.attributetype.cache.AttributeTypeCacheService;
-import com.dmall.pms.service.impl.attributetype.wrapper.LambdaQueryWrapperBuilder;
-import com.dmall.pms.service.support.CategorySupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,25 +35,23 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
     private AttributeTypeCacheService attributeTypeCacheService;
 
     @Autowired
-    private CategorySupport categorySupport;
-
-    @Autowired
     private PmsValidate pmsValidate;
 
     @Override
     public BaseResult validate(ListAttributeTypeRequestDTO requestDTO) {
-        CategoryDO categoryDO = pmsValidate.validateCategory(requestDTO.getCategoryId());
+        pmsValidate.validateBatchCategory(requestDTO.getCategoryIds());
         return ResultUtil.success();
     }
 
     @Override
     public BaseResult<List<AttributeTypeResponseDTO>> processor(ListAttributeTypeRequestDTO requestDTO) {
         List<AttributeTypeDO> attributeTypeDOS;
-        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getShowName())) {
+        if (ObjectUtil.allEmpty(requestDTO.getCategoryIds(), requestDTO.getShowName())) {
             attributeTypeDOS = attributeTypeCacheService.selectAll();
         } else {
-            LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
-                    .queryWrapper(requestDTO.getCategoryId(), requestDTO.getShowName());
+            LambdaQueryWrapper<AttributeTypeDO> queryWrapper = Wrappers.<AttributeTypeDO>lambdaQuery()
+                    .in(CollUtil.isNotEmpty(requestDTO.getCategoryIds()), AttributeTypeDO::getCategoryId, requestDTO.getCategoryIds())
+                    .like(StrUtil.isNotBlank(requestDTO.getShowName()), AttributeTypeDO::getShowName, requestDTO.getShowName());
             attributeTypeDOS = attributeTypeMapper.selectList(queryWrapper);
         }
         List<AttributeTypeResponseDTO> list = attributeTypeDOS.stream()

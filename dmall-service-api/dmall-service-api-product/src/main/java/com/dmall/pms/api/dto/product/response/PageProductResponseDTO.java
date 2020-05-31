@@ -24,9 +24,6 @@ public class PageProductResponseDTO implements Serializable {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    @ApiModelProperty(value = "商品编号", position = 2)
-    private String productNo;
-
     @ApiModelProperty(value = "品牌id", position = 4)
     private Long brandId;
 

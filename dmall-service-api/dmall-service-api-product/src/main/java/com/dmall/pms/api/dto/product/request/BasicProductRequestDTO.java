@@ -25,7 +25,7 @@ public class BasicProductRequestDTO implements Serializable {
     @NotBlank(message = "商品名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "商品介绍", position = 2)
+    @ApiModelProperty(value = "商品描述", position = 2)
     private String description;
 
     @ApiModelProperty(value = "商品单位", position = 3)

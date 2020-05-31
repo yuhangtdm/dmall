@@ -5,7 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @description: 属性类别列表请求实体
@@ -19,7 +21,8 @@ public class ListAttributeTypeRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "三级商品分类id", required = true, position = 1)
     @NotNull(message = "三级商品分类id不能为空")
-    private Long categoryId;
+    @Size(min = 1, message = "三级商品分类id不能为空")
+    private Set<Long> categoryIds;
 
     @ApiModelProperty(value = "展示名称", position = 2)
     private String showName;

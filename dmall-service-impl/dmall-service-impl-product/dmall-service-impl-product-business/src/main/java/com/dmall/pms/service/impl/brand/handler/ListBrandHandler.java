@@ -1,5 +1,6 @@
 package com.dmall.pms.service.impl.brand.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -39,10 +40,10 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
     @Override
     public BaseResult<List<BrandResponseDTO>> processor(ListBrandRequestDTO requestDTO) {
         List<BrandDO> brandDOS;
-        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter(), requestDTO.getCategoryId())) {
+        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter(), requestDTO.getCategoryIds())) {
             brandDOS = brandCacheService.selectAll();
         } else {
-            if (requestDTO.getCategoryId() != null) {
+            if (CollUtil.isNotEmpty(requestDTO.getCategoryIds())) {
                 brandDOS = brandCategoryMapper.selectBrand(requestDTO);
             } else {
                 LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()

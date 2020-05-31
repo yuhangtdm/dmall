@@ -17,17 +17,17 @@ import java.util.List;
 @ApiModel(value = "ProductAttributeRequestDTO", description = "商品请求属性信息")
 public class ProductAttributeRequestDTO {
 
-    @ApiModelProperty(value = "销售规格", required = true, position = 3)
+    @ApiModelProperty(value = "销售规格", required = true, position = 1)
     @Valid
     @NotNull(message = "销售规格不能为空")
     @Size(min = 1, message = "销售规格不能为空")
     private List<SpecificationsRequestDTO> specifications;
 
-    @ApiModelProperty(value = "卖点", position = 4)
+    @ApiModelProperty(value = "卖点", position = 2)
     @Valid
     private List<SalePointRequestDTO> salePoints;
 
-    @ApiModelProperty(value = "参数", position = 5)
+    @ApiModelProperty(value = "参数", position = 3)
     @Valid
     private List<ParamRequestDTO> params;
 }
