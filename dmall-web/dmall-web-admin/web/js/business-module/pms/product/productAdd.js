@@ -8,10 +8,14 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
     var parentIndex = layer.index;
     // 属性列表
     var allAttributeArr = [];
+    // 属性类别列表
+    var allAttributeTypeArr = [];
     // 规格列表
     var specificationsArr = [];
     // 卖点列表
     var salePointArr = [];
+    // 参数列表
+    var paramArr = [];
     var body = $("body");
 
     // 初始化页面
@@ -45,8 +49,27 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
             };
             specificationsArr.push(attribute);
             salePointArr.push(attribute);
-            initAttribute(specificationsArr, allAttributeArr, 'specifications');
-            initAttribute(salePointArr, allAttributeArr, 'salePoint');
+            initAttribute('specifications');
+            initAttribute('salePoint');
+        });
+
+        var attributeTypeObj = {
+            "categoryIds": arr
+        }
+        // 取属性类别列表
+        crud.post(pmsUrl + '/attributeType/list', attributeTypeObj, function (response) {
+            allAttributeTypeArr = response.data;
+            var attributeType = {
+                'attributeTypeId': '',
+                'attributes': []
+            };
+            var attribute = {
+                'attributeId': '',
+                'attributeValues': []
+            };
+            attributeType.attributes.push(attribute);
+            paramArr.push(attributeType);
+            initParam(paramArr, allAttributeTypeArr, allAttributeArr);
         });
     });
 
@@ -61,24 +84,64 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
     }
 
     /**
+     * 初始化参数
+     */
+    function initParam() {
+        var attributeTypeHtml = '';
+        for (var i = 0; i < paramArr.length; i++) {
+            attributeTypeHtml += '<div id=param_"' + i + '" index ="' + i + '" type="param" class="layui-form-item"><div class="layui-inline">';
+            var attrType = paramArr[i];
+            attributeTypeHtml += '<label class="layui-form-label">选择属性类别</label>';
+            attributeTypeHtml += '<div class="layui-input-inline"><select lay-filter="attributeType"><option value=""></option>';
+            var selected = null;
+            for (var j = 0; j < allAttributeTypeArr.length; j++) {
+                if (attrType.attributeTypeId && attrType.attributeTypeId === allAttributeTypeArr[j].id) {
+                    selected = allAttributeTypeArr[j];
+                    attributeTypeHtml += '<option selected value="' + allAttributeTypeArr[j].id + '">' + allAttributeTypeArr[j].showName + '</option>';
+                } else {
+                    attributeTypeHtml += '<option  value="' + allAttributeTypeArr[j].id + '">' + allAttributeTypeArr[j].showName + '</option>';
+                }
+            }
+            attributeTypeHtml += '</select></div>';
+
+            var attributeArr = attrType.attributes;
+
+            attributeTypeHtml += getAttributeHtml(attributeArr);
+
+        }
+        $("#param").html('').append(attributeTypeHtml);
+        form.render();
+    }
+
+    /**
      * 初始化属性
      */
-    function initAttribute(specificationsArr, allAttributeArr, type) {
+    function initAttribute(type) {
         var attributeHtml = '';
-        var arr = [];
         if (type === 'specifications') {
-            arr = specificationsArr;
+            attributeHtml = getAttributeHtml(specificationsArr, type);
         } else if (type === 'salePoint') {
-            arr = salePointArr;
+            attributeHtml = getAttributeHtml(salePointArr, type);
         }
+        $("#" + type).html('').append(attributeHtml);
+        form.render();
+    }
+
+    /**
+     * 获取属性html
+     */
+    function getAttributeHtml(arr, type) {
+        var attributeHtml = '';
         for (var i = 0; i < arr.length; i++) {
-            attributeHtml += '<div id="' + type + "_" + i + '" index="' + i + '" type="' + type + '" class="layui-form-item"><div class="layui-inline">';
-            var attr = specificationsArr[i];
+            if (type) {
+                attributeHtml += '<div id="' + type + "_" + i + '" index="' + i + '" type="' + type + '" class="layui-form-item"><div class="layui-inline">';
+            }
+            var attribute = arr[i];
             attributeHtml += '<label class="layui-form-label">选择属性</label>';
             attributeHtml += '<div class="layui-input-inline"><select><option value=""></option>';
             var selected = null;
             for (var j = 0; j < allAttributeArr.length; j++) {
-                if (attr.attributeId !== '' && attr.attributeId === allAttributeArr[j].id) {
+                if (attribute.attributeId !== '' && attribute.attributeId === allAttributeArr[j].id) {
                     selected = allAttributeArr[j];
                     attributeHtml += '<option selected value="' + allAttributeArr[j].id + '">' + allAttributeArr[j].showName + '</option>';
                 } else {
@@ -86,23 +149,24 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
                 }
             }
             attributeHtml += '</select></div>';
+
             if (selected) {
-                attributeHtml = initAttributeValue(selected, attr, attributeHtml);
+                attributeHtml = getAttributeValueHtml(selected, attribute, attributeHtml);
             }
             attributeHtml += '&nbsp;<button type="button" class="layui-btn layui-btn-primary add">+</button>&nbsp;';
             if (specificationsArr.length !== 1) {
                 attributeHtml += '<a type="button" class="layui-btn layui-btn-primary sub">-</a>';
             }
-            attributeHtml += '</div></div></div><br/>';
+            attributeHtml += '</div></div><br/>';
         }
-        $("#" + type).html('').append(attributeHtml);
-        form.render();
+        return attributeHtml;
+
     }
 
     /**
-     * 初始化属性值
+     * 获取属性值html
      */
-    function initAttributeValue(attribute, attr, attributeHtml) {
+    function getAttributeValueHtml(attribute, attr, attributeHtml) {
         if (attribute.inputType === 2) {
             // 从列表录入
             attributeHtml += '<label class="layui-form-label">选择属性值</label><div class="layui-input-inline">';
@@ -132,34 +196,75 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
     }
 
     /**
+     * 监听属性选择事件
+     */
+    form.on('select', function (data) {
+        var parentId = $(data.elem).parent().parent().parent().attr("index");
+        var type = $(data.elem).parent().parent().parent().attr("type");
+        if (type === 'specifications') {
+            selectAttr(specificationsArr, parentId, data);
+            initAttribute(type);
+        } else if (type === 'salePoint') {
+            selectAttr(salePointArr, parentId, data);
+            initAttribute(type);
+        } else {
+            for (var i = 0; i < paramArr.length; i++) {
+                if (i === parseInt(parentId)) {
+                    paramArr[i].attributes[0].attributeId = data.value;
+                }
+            }
+        }
+    });
+
+    function selectAttr(arr, parentId, data) {
+        for (var i = 0; i < arr.length; i++) {
+            if (i === parseInt(parentId)) {
+                arr[i].attributeId = data.value;
+            }
+        }
+    }
+
+    /**
      * 新增事件
      */
     body.on('click', '.add', function () {
         var parentId = $(this).parent().parent().attr("index");
         var type = $(this).parent().parent().attr("type");
+        if (type === 'specifications') {
+            add(specificationsArr, parentId, type);
+        } else if (type === 'salePoint') {
+            add(salePointArr, parentId, type);
+        } else {
+            add(paramArr, parentId, type);
+        }
+    });
+
+    function add(arr, parentId, type) {
         var attribute = {
             'attributeId': '',
             'attributeValues': []
         };
-        if (type === 'specifications') {
-            var length1 = specificationsArr.length;
-            for (var i = 0; i < length1; i++) {
-                if (i === parseInt(parentId)) {
-                    specificationsArr.splice(i + 1, 0, attribute);
-                }
-            }
-            initAttribute(specificationsArr, allAttributeArr, type);
-        } else if (type === 'salePoint') {
-            var length2 = salePointArr.length;
-            for (var j = 0; j < length2; j++) {
-                if (j === parseInt(parentId)) {
-                    salePointArr.splice(j + 1, 0, attribute);
-                }
-            }
-            initAttribute(salePointArr, allAttributeArr, type);
+        if (type === 'param') {
+            var attributeType = {
+                'attributeTypeId': '',
+                'attributes': []
+            };
+            attributeType.attributes.push(attribute);
+            splice(arr, attributeType, parentId);
+            initParam();
+        } else {
+            splice(arr, attribute, parentId);
+            initAttribute(type);
         }
+    }
 
-    });
+    function splice(arr, obj, parentId) {
+        for (var j = 0; j < arr.length; j++) {
+            if (j === parseInt(parentId)) {
+                arr.splice(j + 1, 0, obj);
+            }
+        }
+    }
 
     /**
      * 减少事件
@@ -171,42 +276,33 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
             specificationsArr = specificationsArr.filter(function (element, index) {
                 return index !== parseInt(parentId);
             });
-            initAttribute(specificationsArr, allAttributeArr, type);
+            initAttribute(type);
         } else if (type === 'salePoint') {
             salePointArr = salePointArr.filter(function (element, index) {
                 return index !== parseInt(parentId);
             });
-            initAttribute(salePointArr, allAttributeArr, type);
+            initAttribute(type);
+        } else {
+            paramArr = paramArr.filter(function (element, index) {
+                return index !== parseInt(parentId);
+            });
+            initParam();
         }
-
     });
 
+
     /**
-     * 监听属性选择事件
+     * 监听属性类别选择事件
      */
-    form.on('select', function (data) {
+    form.on('select(attributeType)', function (data) {
+        console.log('attributeType')
         var parentId = $(data.elem).parent().parent().parent().attr("index");
-        var type = $(data.elem).parent().parent().parent().attr("type");
-        var arr = [];
-        if (type === 'specifications') {
-            arr = specificationsArr;
-        } else if (type === 'salePoint') {
-            arr = salePointArr;
-        }
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; i < paramArr.length; i++) {
             if (i === parseInt(parentId)) {
-                if (type === 'specifications') {
-                    specificationsArr[i].attributeId = data.value;
-                } else if (type === 'salePoint') {
-                    salePointArr[i].attributeId = data.value;
-                }
+                paramArr[i].attributeTypeId = data.value;
             }
         }
-        if (type === 'specifications') {
-            initAttribute(specificationsArr, allAttributeArr, type);
-        } else if (type === 'salePoint') {
-            initAttribute(salePointArr, allAttributeArr, type);
-        }
+        initParam(paramArr);
     });
 
     /**
@@ -219,20 +315,32 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
         $('#' + type + "_" + parentId + ' input[type=checkbox]:checked').each(function () {
             arr.push($(this).val());
         });
-        for (var i = 0; i < specificationsArr.length; i++) {
-            if (i === parseInt(parentId)) {
-                if (type === 'specifications') {
-                    specificationsArr[i].attributeValues = arr;
-                } else if (type === 'salePoint') {
-                    salePointArr[i].attributeValues = arr;
+
+        if (type === 'specifications') {
+            setAttributeValues(specificationsArr, arr, parentId);
+        } else if (type === 'salePoint') {
+            setAttributeValues(salePointArr, arr, parentId);
+        } else {
+            for (var i = 0; i < paramArr.length; i++) {
+                if (i === parseInt(parentId)) {
+                    paramArr[i].attributes[0].attributeValues = arr;
                 }
             }
         }
     });
+
+    function setAttributeValues(attrArr, arr, parentId) {
+        for (var i = 0; i < attrArr.length; i++) {
+            if (i === parseInt(parentId)) {
+                attrArr[i].attributeValues = arr;
+            }
+        }
+    }
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {
         return false;
     });
 
-});
+})
+;
