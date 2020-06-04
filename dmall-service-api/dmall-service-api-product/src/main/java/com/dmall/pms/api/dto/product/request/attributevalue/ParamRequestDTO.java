@@ -28,5 +28,5 @@ public class ParamRequestDTO implements Serializable {
     @Valid
     @NotNull(message = "参数属性列表不能为空")
     @Size(min = 1, message = "参数属性列表不能为空")
-    private List<ParamValueRequestDTO> paramAttributes;
+    private List<ParamValueRequestDTO> attribute;
 }

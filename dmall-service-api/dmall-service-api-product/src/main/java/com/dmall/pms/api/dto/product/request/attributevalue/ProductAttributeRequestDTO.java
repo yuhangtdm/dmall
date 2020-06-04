@@ -27,7 +27,7 @@ public class ProductAttributeRequestDTO {
     @Valid
     private List<SalePointRequestDTO> salePoints;
 
-    @ApiModelProperty(value = "参数", position = 3)
+    @ApiModelProperty(value = "参数列表", required = true, position = 2)
     @Valid
-    private List<ParamRequestDTO> params;
+    private List<ParamValueRequestDTO> params;
 }

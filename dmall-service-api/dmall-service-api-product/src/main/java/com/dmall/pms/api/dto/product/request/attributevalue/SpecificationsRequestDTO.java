@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -24,10 +23,9 @@ public class SpecificationsRequestDTO implements Serializable {
     @NotNull(message = "属性id不能为空")
     private Long attributeId;
 
-    @ApiModelProperty(value = "属性值列表", required = true, position = 2)
-    @Valid
-    @NotNull(message = "属性值列表不能为空")
-    @Size(min = 1, message = "属性值列表不能为空")
-    private List<SpecificationsValueRequestDTO> specificationsValues;
+    @ApiModelProperty(value = "规格属性值列表", required = true, position = 2)
+    @NotNull(message = "规格属性值列表不能为空")
+    @Size(min = 1, message = "规格属性值列表不能为空")
+    private List<String> attributeValues;
 
 }

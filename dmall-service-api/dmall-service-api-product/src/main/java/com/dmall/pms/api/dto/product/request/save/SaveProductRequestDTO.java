@@ -1,7 +1,6 @@
 package com.dmall.pms.api.dto.product.request.save;
 
 import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
-import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.ProductExtRequestDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +9,6 @@ import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @description: 新增商品请求实体
@@ -31,9 +29,5 @@ public class SaveProductRequestDTO implements Serializable {
     @Valid
     @NotNull(message = "商品属性信息不能为空")
     private ProductExtRequestDTO ext;
-
-    @ApiModelProperty(value = "sku列表", position = 3)
-    @Valid
-    private List<AddSkuRequestDTO> skuList;
 
 }

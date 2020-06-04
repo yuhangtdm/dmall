@@ -1,12 +1,14 @@
 package com.dmall.pms.service.support;
 
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dmall.common.constants.Constants;
 import com.dmall.common.enums.YNEnum;
-import com.dmall.pms.api.dto.product.request.attributevalue.*;
+import com.dmall.pms.api.dto.product.request.attributevalue.ParamValueRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.ProductAttributeRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.SalePointRequestDTO;
+import com.dmall.pms.api.dto.product.request.attributevalue.SpecificationsRequestDTO;
 import com.dmall.pms.api.dto.product.response.attributevalue.*;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryProductDO;
@@ -46,8 +48,6 @@ public class ProductAttributeValueSupport {
 
     private static final String VALUE = "value";
 
-    private static final String PIC = "pic";
-
     /**
      * 保存商品属性值
      */
@@ -59,27 +59,23 @@ public class ProductAttributeValueSupport {
         List<SpecificationsRequestDTO> specifications = productExtRequestDTO.getSpecifications();
         for (SpecificationsRequestDTO specification : specifications) {
             JSONArray jsonArray = new JSONArray();
-            for (SpecificationsValueRequestDTO specificationsValue : specification.getSpecificationsValues()) {
+            for (String specificationsValue : specification.getAttributeValues()) {
                 ProductAttributeValueDO attributeValueDO = new ProductAttributeValueDO();
                 attributeValueDO.setProductId(productId);
                 attributeValueDO.setAttributeId(specification.getAttributeId());
                 attributeValueDO.setIsSellingPoint(YNEnum.N.getCode());
                 attributeValueDO.setIsSpecifications(YNEnum.Y.getCode());
                 attributeValueDO.setIsParam(YNEnum.N.getCode());
-                attributeValueDO.setAttributeValue(specificationsValue.getAttributeValue());
-                attributeValueDO.setPic(specificationsValue.getPic());
+                attributeValueDO.setAttributeValue(specificationsValue);
                 if (!list.contains(attributeValueDO)) {
                     list.add(attributeValueDO);
                 } else {
                     ProductAttributeValueDO productAttributeValueDO = find(list, specification.getAttributeId(),
-                            productId, specificationsValue.getAttributeValue());
+                            productId, specificationsValue);
                     productAttributeValueDO.setIsSpecifications(YNEnum.Y.getCode());
                 }
                 JSONObject object = new JSONObject();
-                object.put(VALUE, specificationsValue.getAttributeValue());
-                if (StrUtil.isNotBlank(specificationsValue.getPic())) {
-                    object.put(PIC, specificationsValue.getPic());
-                }
+                object.put(VALUE, specificationsValue);
                 jsonArray.add(object);
             }
             AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
@@ -88,7 +84,7 @@ public class ProductAttributeValueSupport {
         // 卖点
         List<SalePointRequestDTO> salePoints = productExtRequestDTO.getSalePoints();
         for (SalePointRequestDTO salePoint : salePoints) {
-            for (String salePointValue : salePoint.getSalePointValues()) {
+            for (String salePointValue : salePoint.getAttributeValues()) {
                 ProductAttributeValueDO attributeValueDO = new ProductAttributeValueDO();
                 attributeValueDO.setAttributeId(salePoint.getAttributeId());
                 attributeValueDO.setProductId(productId);
@@ -105,24 +101,22 @@ public class ProductAttributeValueSupport {
             }
         }
         // 参数
-        List<ParamRequestDTO> params = productExtRequestDTO.getParams();
-        for (ParamRequestDTO param : params) {
-            for (ParamValueRequestDTO paramAttribute : param.getParamAttributes()) {
-                for (String paramValue : paramAttribute.getParamValues()) {
-                    ProductAttributeValueDO attributeValueDO = new ProductAttributeValueDO();
-                    attributeValueDO.setProductId(productId);
-                    attributeValueDO.setAttributeTypeId(param.getAttributeTypeId());
-                    attributeValueDO.setAttributeId(paramAttribute.getAttributeId());
-                    attributeValueDO.setIsSellingPoint(YNEnum.N.getCode());
-                    attributeValueDO.setIsSpecifications(YNEnum.N.getCode());
-                    attributeValueDO.setIsParam(YNEnum.Y.getCode());
-                    attributeValueDO.setAttributeValue(paramValue);
-                    if (!list.contains(attributeValueDO)) {
-                        list.add(attributeValueDO);
-                    } else {
-                        ProductAttributeValueDO productAttributeValueDO = find(list, paramAttribute.getAttributeId(), productId, paramValue);
-                        productAttributeValueDO.setIsParam(YNEnum.Y.getCode());
-                    }
+        List<ParamValueRequestDTO> params = productExtRequestDTO.getParams();
+        for (ParamValueRequestDTO param : params) {
+            for (String paramValue : param.getAttributeValues()) {
+                ProductAttributeValueDO attributeValueDO = new ProductAttributeValueDO();
+                attributeValueDO.setProductId(productId);
+                attributeValueDO.setAttributeTypeId(param.getAttributeTypeId());
+                attributeValueDO.setAttributeId(param.getAttributeId());
+                attributeValueDO.setIsSellingPoint(YNEnum.N.getCode());
+                attributeValueDO.setIsSpecifications(YNEnum.N.getCode());
+                attributeValueDO.setIsParam(YNEnum.Y.getCode());
+                attributeValueDO.setAttributeValue(paramValue);
+                if (!list.contains(attributeValueDO)) {
+                    list.add(attributeValueDO);
+                } else {
+                    ProductAttributeValueDO productAttributeValueDO = find(list, param.getAttributeId(), productId, paramValue);
+                    productAttributeValueDO.setIsParam(YNEnum.Y.getCode());
                 }
             }
         }

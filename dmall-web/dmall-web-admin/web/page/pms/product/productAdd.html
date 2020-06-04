@@ -6,16 +6,15 @@
             <li>规格信息</li>
             <li>卖点信息</li>
             <li>参数信息</li>
-            <li>sku列表</li>
         </ul>
         <div class="layui-tab-content" style="height: 1000px;">
+            <!-- 基本信息-->
             <div class="layui-tab-item layui-form layui-show">
                 <div class="layui-form-item ">
                     <label class="layui-form-label required">商品名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" lay-verify="required" lay-reqtext="商品名称不能为空"
-                               placeholder="请输入商品名称"
-                               class="layui-input">
+                        <input id="name" type="text" name="name" lay-verify="required"
+                               lay-reqtext="商品名称不能为空" placeholder="请输入商品名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -34,7 +33,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label ">商品重量</label>
                     <div class="layui-input-block">
-                        <input type="text" name="weight" placeholder="请输入英文名称"
+                        <input id="weight" type="text" name="weight" placeholder="请输入商品重量"
                                class="layui-input">
                     </div>
                 </div>
@@ -60,20 +59,29 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 规格-->
             <div class="layui-tab-item layui-form">
                 <div id="specifications">
                     请选择商品分类后操作
                 </div>
             </div>
+            <!--卖点-->
             <div class="layui-tab-item layui-form">
                 <div id="salePoint">
                     请选择商品分类后操作
                 </div>
             </div>
+            <!-- 参数-->
             <div class="layui-tab-item layui-form">
                 <div id="param">
                     请选择商品分类后操作
                 </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="submit" class="layui-btn layui-hide">保存</button>
             </div>
         </div>
     </div>

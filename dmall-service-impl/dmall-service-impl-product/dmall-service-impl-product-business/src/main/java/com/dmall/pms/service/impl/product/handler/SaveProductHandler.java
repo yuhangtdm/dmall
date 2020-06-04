@@ -2,7 +2,6 @@ package com.dmall.pms.service.impl.product.handler;
 
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.BeanUtil;
-import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.common.util.ResultUtil;
 import com.dmall.component.web.handler.AbstractCommonHandler;
 import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
@@ -17,7 +16,6 @@ import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.impl.category.cache.CategoryCacheService;
 import com.dmall.pms.service.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.support.ProductSupport;
-import com.dmall.pms.service.support.SkuSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,19 +28,16 @@ import org.springframework.stereotype.Component;
 public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequestDTO, ProductDO, Long> {
 
     @Autowired
+    private PmsValidate pmsValidate;
+
+    @Autowired
     private ProductMapper productMapper;
-
-    @Autowired
-    private CategoryCacheService categoryCacheService;
-
-    @Autowired
-    private SkuSupport skuSupport;
 
     @Autowired
     private CategoryProductMapper categoryProductMapper;
 
     @Autowired
-    private PmsValidate pmsValidate;
+    private CategoryCacheService categoryCacheService;
 
     @Autowired
     private ProductSupport productSupport;
@@ -66,10 +61,7 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         // 保存商品
         ProductDO productDO = saveProductDO(requestDTO);
         // 保存商品属性值
-        ProductExtRequestDTO ext = requestDTO.getExt();
-        productAttributeValueSupport.saveProductAttributeValue(productDO, ext.getProductAttribute());
-        // 保存sku
-        skuSupport.saveSku(productDO.getId(), ext.getCategoryIds(), ext.getBrandId(), requestDTO.getSkuList());
+        productAttributeValueSupport.saveProductAttributeValue(productDO, requestDTO.getExt().getProductAttribute());
         return ResultUtil.success(productDO.getId());
     }
 
@@ -80,9 +72,9 @@ public class SaveProductHandler extends AbstractCommonHandler<SaveProductRequest
         BasicProductRequestDTO basicProduct = requestDTO.getBasicProduct();
         ProductExtRequestDTO productAttribute = requestDTO.getExt();
         ProductDO productDO = BeanUtil.copyProperties(basicProduct, ProductDO.class);
-        productDO.setId(IdGeneratorUtil.snowflakeId());
         productDO.setBrandId(productAttribute.getBrandId());
         productMapper.insert(productDO);
+        // 分类-商品
         for (Long categoryId : requestDTO.getExt().getCategoryIds()) {
             CategoryProductDO categoryProductDO = new CategoryProductDO();
             categoryProductDO.setCategoryId(categoryId);

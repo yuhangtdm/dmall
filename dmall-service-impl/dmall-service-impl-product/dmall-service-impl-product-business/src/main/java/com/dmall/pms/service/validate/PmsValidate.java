@@ -191,7 +191,6 @@ public class PmsValidate {
         if (!validate.getResult()) {
             return validate;
         }
-
         return attributeValidate(extDTO.getProductAttribute());
     }
 
@@ -222,14 +221,14 @@ public class PmsValidate {
      * 商品属性值校验
      */
     public BaseResult attributeValidate(ProductAttributeRequestDTO attributeRequest) {
-        // 属性存在
+        // 规格属性存在
         for (SpecificationsRequestDTO specification : attributeRequest.getSpecifications()) {
             AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
             if (attributeDO == null) {
                 return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NOT_EXIST);
             }
         }
-        // 属性存在
+        // 卖点属性存在
         for (SalePointRequestDTO salePoint : attributeRequest.getSalePoints()) {
             AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
             if (attributeDO == null) {
@@ -237,16 +236,14 @@ public class PmsValidate {
             }
         }
         // 属性类别存在
-        for (ParamRequestDTO param : attributeRequest.getParams()) {
+        for (ParamValueRequestDTO param : attributeRequest.getParams()) {
             AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(param.getAttributeTypeId());
             if (attributeTypeDO == null) {
                 return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
             }
-            for (ParamValueRequestDTO paramAttribute : param.getParamAttributes()) {
-                AttributeDO attributeDO = attributeCacheService.selectById(paramAttribute.getAttributeId());
-                if (attributeDO == null) {
-                    return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
-                }
+            AttributeDO attributeDO = attributeCacheService.selectById(param.getAttributeId());
+            if (attributeDO == null) {
+                return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_NOT_EXIST);
             }
         }
         return ResultUtil.success();

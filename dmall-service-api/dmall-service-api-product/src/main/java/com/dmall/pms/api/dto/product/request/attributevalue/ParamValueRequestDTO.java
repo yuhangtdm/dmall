@@ -19,12 +19,16 @@ public class ParamValueRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 2436674140152898894L;
 
-    @ApiModelProperty(value = "参数属性id", required = true, position = 1)
+    @ApiModelProperty(value = "参数属性类别id", required = true, position = 1)
+    @NotNull(message = "参数属性类别id不能为空")
+    private Long attributeTypeId;
+
+    @ApiModelProperty(value = "参数属性id", required = true, position = 2)
     @NotNull(message = "参数属性id不能为空")
     private Long attributeId;
 
-    @ApiModelProperty(value = "参数属性值列表", required = true, position = 2)
+    @ApiModelProperty(value = "参数属性值列表", required = true, position = 3)
     @NotNull(message = "参数属性值列表不能为空")
     @Size(min = 1, message = "参数属性值列表不能为空")
-    private List<String> paramValues;
+    private List<String> attributeValues;
 }

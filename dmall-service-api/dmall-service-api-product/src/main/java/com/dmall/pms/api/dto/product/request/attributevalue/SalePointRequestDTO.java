@@ -26,6 +26,6 @@ public class SalePointRequestDTO implements Serializable {
     @ApiModelProperty(value = "卖点属性值列表", required = true, position = 2)
     @NotNull(message = "卖点属性值列表不能为空")
     @Size(min = 1, message = "卖点属性值列表不能为空")
-    private List<String> salePointValues;
+    private List<String> attributeValues;
 
 }
