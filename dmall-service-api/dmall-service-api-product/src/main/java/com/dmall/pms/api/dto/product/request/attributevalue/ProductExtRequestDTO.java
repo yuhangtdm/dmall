@@ -32,7 +32,6 @@ public class ProductExtRequestDTO implements Serializable {
     @ApiModelProperty(value = "商品请求属性信息", required = true, position = 3)
     @Valid
     @NotNull(message = "商品请求属性信息不能为空")
-    @Size(min = 1, message = "商品请求属性信息不能为空")
     private ProductAttributeRequestDTO productAttribute;
 
 }

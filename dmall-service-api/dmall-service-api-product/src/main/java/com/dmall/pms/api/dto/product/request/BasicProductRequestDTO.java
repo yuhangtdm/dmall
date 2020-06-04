@@ -2,9 +2,11 @@ package com.dmall.pms.api.dto.product.request;
 
 import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.pms.api.enums.UnitEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -36,6 +38,8 @@ public class BasicProductRequestDTO implements Serializable {
     private BigDecimal weight;
 
     @ApiModelProperty(value = "上市时间", position = 5)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date onMarketTime;
 
     @ApiModelProperty(value = "商品图片", position = 6)

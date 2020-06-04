@@ -1,7 +1,5 @@
 package com.dmall.pms.api.dto.product.response.attributevalue;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,19 +18,24 @@ public class ProductExtResponseDTO implements Serializable {
     private static final long serialVersionUID = -4383222923230954323L;
 
     @ApiModelProperty(value = "商品分类id列表", position = 1)
-    @JsonSerialize(using = ToStringSerializer.class)
     private List<Long> categoryIds;
 
-    @ApiModelProperty(value = "品牌id", position = 2)
+    @ApiModelProperty(value = "商品分类名称列表", position = 2)
+    private List<String> cascadeCategoryNames;
+
+    @ApiModelProperty(value = "品牌id", position = 3)
     private Long brandId;
 
-    @ApiModelProperty(value = "销售规格", position = 3)
-    private List<SpecificationsResponseDTO> specifications;
+    @ApiModelProperty(value = "品牌名称", position = 4)
+    private String brandName;
 
-    @ApiModelProperty(value = "卖点", position = 4)
-    private List<SalePointResponseDTO> salePoints;
+    @ApiModelProperty(value = "销售规格", position = 5)
+    private List<ProductAttributeResponseDTO> specifications;
 
-    @ApiModelProperty(value = "参数", position = 5)
+    @ApiModelProperty(value = "卖点", position = 6)
+    private List<ProductAttributeResponseDTO> salePoints;
+
+    @ApiModelProperty(value = "参数", position = 7)
     private List<ParamResponseDTO> params;
 
 }

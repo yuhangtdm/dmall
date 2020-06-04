@@ -20,12 +20,14 @@ public class ParamResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -4423360556545433218L;
 
-    @ApiModelProperty(value = "属性类别id", position = 2)
-    @NotNull(message = "属性类别id不能为空")
+    @ApiModelProperty(value = "属性类别id", position = 1)
     @JsonSerialize(using = ToStringSerializer.class)
     private Long attributeTypeId;
 
+    @ApiModelProperty(value = "属性类别名称", position = 2)
+    private String attributeTypeName;
+
     @ApiModelProperty(value = "属性值列表", position = 2)
     @NotNull(message = "属性值列表不能为空")
-    private List<ParamValueResponseDTO> params;
+    private List<ProductAttributeResponseDTO> params;
 }

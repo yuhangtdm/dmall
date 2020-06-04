@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="../../../css/formSelects-v4.css">
+<div class="layuimini-main">
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">基本信息</li>
+            <li>规格信息</li>
+            <li>卖点信息</li>
+            <li>参数信息</li>
+            <li>sku信息</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 1000px;">
+            <!-- 基本信息-->
+            <div class="layui-tab-item layui-form layui-show">
+                <form id="basicProductForm">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">商品名称</label>
+                        <div class="layui-input-block">
+                            <input id="name" type="text" name="name" readonly class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label ">商品描述</label>
+                        <div class="layui-input-block">
+                            <textarea id="description" name="description" readonly class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label ">商品单位</label>
+                        <div class="layui-input-block">
+                            <input id="unit" type="text" name="unit" readonly selectName="UnitEnum" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label ">商品重量</label>
+                        <div class="layui-input-block">
+                            <input id="weight" type="text" name="weight" readonly class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">上市时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="onMarketTime" readonly class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">商品分类</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xx" readonly class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label ">品牌</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="brand" readonly class="layui-input">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 规格-->
+            <div class="layui-tab-item">
+                <table class="layui-hide" id="specificationsTable"></table>
+            </div>
+            <!--卖点-->
+            <div class="layui-tab-item">
+                <div id="salePoint">
+                </div>
+            </div>
+            <!-- 参数-->
+            <div class="layui-tab-item">
+                <div id="param">
+                </div>
+            </div>
+
+            <!-- sku-->
+            <div class="layui-tab-item">
+                <div id="sku">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../js/business-module/pms/product/productDetail.js"></script>

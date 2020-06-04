@@ -59,8 +59,8 @@ public class BasicExceptionHandler {
      * 请求路径不正确异常
      */
     @ExceptionHandler(NoHandlerFoundException.class)
-    public String NoHandlerFoundHandle(HttpServletRequest request) {
-        log.error("enter the NoHandlerFoundException Handler");
+    public String NoHandlerFoundHandle(HttpServletRequest request, Exception e) {
+        log.error("enter the NoHandlerFoundException Handler", e);
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.NOT_FOUND_REQUEST));
     }
 
@@ -68,8 +68,8 @@ public class BasicExceptionHandler {
      * 请求体不合法
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public String httpMessageNotReadableExceptionHandle(HttpServletRequest request) {
-        log.error("enter the HttpMessageNotReadableException Handler");
+    public String httpMessageNotReadableExceptionHandle(HttpServletRequest request, Exception e) {
+        log.error("enter the HttpMessageNotReadableException Handler", e);
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.MEDIA_PARAM_TYPE_ERROR));
     }
 

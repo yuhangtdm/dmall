@@ -26,4 +26,11 @@ public class CategoryProductSupport {
                 .eq(CategoryProductDO::getCategoryId, categoryId));
     }
 
+    /**
+     * 根据商品id查询
+     */
+    public List<CategoryProductDO> listByProductId(Long productId) {
+        return categoryProductMapper.selectList(Wrappers.<CategoryProductDO>lambdaQuery()
+                .eq(CategoryProductDO::getProductId, productId));
+    }
 }

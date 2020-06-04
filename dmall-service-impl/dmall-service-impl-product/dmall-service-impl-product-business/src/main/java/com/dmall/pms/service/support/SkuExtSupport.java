@@ -3,7 +3,10 @@ package com.dmall.pms.service.support;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dmall.pms.api.dto.product.response.attributevalue.*;
+import com.dmall.pms.api.dto.product.response.attributevalue.ParamResponseDTO;
+import com.dmall.pms.api.dto.product.response.attributevalue.ProductAttributeResponseDTO;
+import com.dmall.pms.api.dto.product.response.attributevalue.ProductAttributeValueResponseDTO;
+import com.dmall.pms.api.dto.product.response.attributevalue.ProductExtResponseDTO;
 import com.dmall.pms.api.dto.sku.response.get.SkuExtResponseDTO;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.AttributeTypeDO;
@@ -45,34 +48,36 @@ public class SkuExtSupport {
      */
     public void setSkuExt(Long productId, Long skuId, List<Long> productAttributeValueList,
                           String detailHtml, String detailMobileHtml) {
-        ProductExtResponseDTO extResponseDTO = productAttributeValueSupport.getProductAttributeValue(productId, null);
+        ProductExtResponseDTO extResponse = productAttributeValueSupport.getProductAttributeValue(productId, null);
         // 规格
         JSONObject specificationsObj = new JSONObject();
-        for (SpecificationsResponseDTO specification : extResponseDTO.getSpecifications()) {
+        for (ProductAttributeResponseDTO specification : extResponse.getSpecifications()) {
             AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
-            Optional<ProductAttributeValueResponseDTO> any = specification.getSpecificationsValues().stream()
+            Optional<ProductAttributeValueResponseDTO> any = specification.getAttributeValues().stream()
                     .filter(specifications -> productAttributeValueList.contains(specifications.getProductAttributeValueId()))
                     .findAny();
             any.ifPresent(attributeValue -> specificationsObj.put(attributeDO.getShowName(), attributeValue.getAttributeValue()));
         }
+
         // 卖点
         JSONObject saleObj = new JSONObject();
-        for (SalePointResponseDTO salePoint : extResponseDTO.getSalePoints()) {
+        for (ProductAttributeResponseDTO salePoint : extResponse.getSalePoints()) {
             AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
-            Optional<ProductAttributeValueResponseDTO> any = salePoint.getSalePointValues().stream()
+            Optional<ProductAttributeValueResponseDTO> any = salePoint.getAttributeValues().stream()
                     .filter(specificationsDTO -> productAttributeValueList.contains(specificationsDTO.getProductAttributeValueId()))
                     .findAny();
             any.ifPresent(productAttributeValue -> saleObj.put(attributeDO.getShowName(), productAttributeValue.getAttributeValue()));
         }
+
         // 参数
         JSONArray paramArr = new JSONArray();
-        for (ParamResponseDTO param : extResponseDTO.getParams()) {
+        for (ParamResponseDTO param : extResponse.getParams()) {
             JSONObject type = new JSONObject();
             AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(param.getAttributeTypeId());
             JSONArray value = new JSONArray();
-            for (ParamValueResponseDTO paramValue : param.getParams()) {
+            for (ProductAttributeResponseDTO paramValue : param.getParams()) {
                 AttributeDO attributeDO = attributeCacheService.selectById(paramValue.getAttributeId());
-                Optional<ProductAttributeValueResponseDTO> any = paramValue.getParamValues().stream()
+                Optional<ProductAttributeValueResponseDTO> any = paramValue.getAttributeValues().stream()
                         .filter(specificationsDTO -> productAttributeValueList.contains(specificationsDTO.getProductAttributeValueId()))
                         .findAny();
                 if (any.isPresent()) {
@@ -87,6 +92,7 @@ public class SkuExtSupport {
                 paramArr.add(type);
             }
         }
+
         SkuExtDO skuExtDO = getBySkuId(skuId);
         if (skuExtDO == null) {
             SkuExtDO skuExt = new SkuExtDO();

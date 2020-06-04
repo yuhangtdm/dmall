@@ -23,7 +23,10 @@ public class ParamValueResponseDTO implements Serializable {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long attributeId;
 
-    @ApiModelProperty(value = "商品属性值列表", position = 2)
+    @ApiModelProperty(value = "属性名称", position = 2)
+    private String attributeName;
+
+    @ApiModelProperty(value = "商品属性值列表", position = 3)
     private List<ProductAttributeValueResponseDTO> paramValues;
 
 }

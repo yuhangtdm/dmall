@@ -98,7 +98,7 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
     function initParam() {
         var attributeTypeHtml = '';
         for (var i = 0; i < paramArr.length; i++) {
-            attributeTypeHtml += '<div id=param_"' + i + '" index ="' + i + '" type="param" class="layui-form-item"><div class="layui-inline">';
+            attributeTypeHtml += '<div id=param_' + i + ' index ="' + i + '" type="param" class="layui-form-item"><div class="layui-inline">';
             var attrType = paramArr[i];
             attributeTypeHtml += '<label class="layui-form-label">选择属性类别</label>';
             attributeTypeHtml += '<div class="layui-input-inline"><select lay-filter="attributeType"><option value=""></option>';
@@ -198,9 +198,9 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
             attributeHtml += '</div>';
             if (attribute.handAddStatus === 'Y') {
                 attributeHtml += '<label class="layui-form-label">新增属性值</label>';
-                if (attr.input){
+                if (attr.input) {
                     attributeHtml += '<div class="layui-input-inline"><input type="text" value="' + attr.input + '"  name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
-                }else {
+                } else {
                     attributeHtml += '<div class="layui-input-inline"><input type="text"   name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
 
                 }
@@ -208,9 +208,9 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
         } else {
             // 手工录入
             attributeHtml += '<label class="layui-form-label">新增属性值</label>';
-            if (attr.input){
+            if (attr.input) {
                 attributeHtml += '<div class="layui-input-inline"><input type="text" value="' + attr.input + '"  name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
-            }else {
+            } else {
                 attributeHtml += '<div class="layui-input-inline"><input type="text"  name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
             }
         }
@@ -274,14 +274,16 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
             var attributeType = {
                 'attributeTypeId': '',
                 'attributeId': '',
-                'attributeValues': []
+                'attributeValues': [],
+                'input': ''
             };
             splice(arr, attributeType, parentId);
             initParam();
         } else {
             var attribute = {
                 'attributeId': '',
-                'attributeValues': []
+                'attributeValues': [],
+                'input': ''
             }
             splice(arr, attribute, parentId);
             initAttribute(type);
@@ -343,19 +345,19 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
         var parentId = $(data.elem).parent().parent().parent().attr("index");
         var type = $(data.elem).parent().parent().parent().attr("type");
         var arr = [];
+        console.log(parentId)
+        console.log(type)
         $('#' + type + "_" + parentId + ' input[type=checkbox]:checked').each(function () {
             arr.push($(this).val());
         });
+        console.log(arr)
         if (type === 'specifications') {
             setAttributeValues(specificationsArr, arr, parentId);
         } else if (type === 'salePoint') {
             setAttributeValues(salePointArr, arr, parentId);
         } else {
-            for (var i = 0; i < paramArr.length; i++) {
-                if (i === parseInt(parentId)) {
-                    paramArr[i].attributeValues = arr;
-                }
-            }
+            setAttributeValues(paramArr, arr, parentId);
+            console.log(paramArr)
         }
     });
 
@@ -482,13 +484,13 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
         }
 
         specificationsArr = specificationsArr.filter(function (element, index) {
-            return !element.attributeId;
+            return element.attributeId;
         });
         salePointArr = salePointArr.filter(function (element, index) {
-            return !element.attributeId;
+            return element.attributeId;
         });
         paramArr = paramArr.filter(function (element, index) {
-            return !element.attributeTypeId && !element.attributeId;
+            return element.attributeTypeId && element.attributeId;
         });
 
         pushInput(specificationsArr);
@@ -524,7 +526,9 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
             if (input) {
                 var arr = input.split(",");
                 for (var j = 0; j < attributeArr.length; j++) {
-                    attributeArr[i].attributeValues.push(arr[j]);
+                    if (arr[j]) {
+                        attributeArr[i].attributeValues.push(arr[j]);
+                    }
                 }
             }
         }

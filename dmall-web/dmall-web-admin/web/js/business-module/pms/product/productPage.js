@@ -40,7 +40,7 @@ layui.use(['form', 'table', 'crud'], function () {
     });
 
     //监听行工具事件
-    table.on('tool(brand)', function (obj) {
+    table.on('tool(product)', function (obj) {
         var data = obj.data;
         // 定义全局变量传输到子页面
         id = data.id;

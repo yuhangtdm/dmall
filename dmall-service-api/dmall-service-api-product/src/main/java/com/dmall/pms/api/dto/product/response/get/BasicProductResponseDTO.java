@@ -20,16 +20,16 @@ public class BasicProductResponseDTO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    @ApiModelProperty(value = "商品名称", position = 3)
+    @ApiModelProperty(value = "商品名称", position = 2)
     private String name;
 
-    @ApiModelProperty(value = "商品介绍", position = 4)
+    @ApiModelProperty(value = "商品介绍", position = 3)
     private String description;
 
-    @ApiModelProperty(value = "商品图片", position = 5)
+    @ApiModelProperty(value = "商品图片", position = 4)
     private String pic;
 
-    @ApiModelProperty(value = "上市时间", position = 6)
+    @ApiModelProperty(value = "上市时间", position = 5)
     private Date onMarketTime;
 
 }
