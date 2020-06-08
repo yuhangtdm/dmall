@@ -65,28 +65,28 @@ public class UserSetPermissionsHandler extends AbstractCommonHandler<CheckedDTO,
         Set<Long> permissionIds = requestDTO.getRelateIds();
         List<Long> oldPermissionIds = userPermissionsMapper.listByUserId(requestDTO.getId());
         List<Long> deletePermissionIds = oldPermissionIds.stream()
-                .filter(permissionId -> !permissionIds.contains(permissionId))
-                .collect(Collectors.toList());
+            .filter(permissionId -> !permissionIds.contains(permissionId))
+            .collect(Collectors.toList());
         List<Long> insertPermissionIds = permissionIds.stream()
-                .filter(permissionId -> !oldPermissionIds.contains(permissionId))
-                .collect(Collectors.toList());
+            .filter(permissionId -> !oldPermissionIds.contains(permissionId))
+            .collect(Collectors.toList());
         // 先删除当前用户下的权限
         userPermissionSupport.deleteByUserId(requestDTO.getId());
         if (CollUtil.isNotEmpty(deletePermissionIds)) {
             for (Long permissionId : deletePermissionIds) {
                 UserPermissionDO userPermissionDO = new UserPermissionDO()
-                        .setUserId(requestDTO.getId())
-                        .setPermissionId(permissionId)
-                        .setType(OperationEnum.SUB.getCode());
+                    .setUserId(requestDTO.getId())
+                    .setPermissionId(permissionId)
+                    .setType(OperationEnum.SUB.getCode());
                 userPermissionMapper.insert(userPermissionDO);
             }
         }
         if (CollUtil.isNotEmpty(insertPermissionIds)) {
             for (Long permissionId : insertPermissionIds) {
                 UserPermissionDO userPermissionDO = new UserPermissionDO()
-                        .setUserId(requestDTO.getId())
-                        .setPermissionId(permissionId)
-                        .setType(OperationEnum.ADD.getCode());
+                    .setUserId(requestDTO.getId())
+                    .setPermissionId(permissionId)
+                    .setType(OperationEnum.ADD.getCode());
                 userPermissionMapper.insert(userPermissionDO);
             }
         }

@@ -23,7 +23,6 @@ public enum JobTypeEnum implements CodeDescEnum<Integer> {
     AUTO_GOOD_COMMENT(2, "自动好评"),
     ;
 
-
     private final Integer code;
 
     private final String desc;

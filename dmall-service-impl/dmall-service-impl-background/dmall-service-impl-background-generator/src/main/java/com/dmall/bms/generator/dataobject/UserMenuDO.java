@@ -79,5 +79,4 @@ public class UserMenuDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

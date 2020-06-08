@@ -12,7 +12,8 @@ import com.dmall.mms.api.enums.MmsErrorEnum;
  */
 public class MemberInvoiceValidate {
 
-    public static BaseResult validate(Integer invoiceHeader, String personalName, String companyName, String customerTaxNumber) {
+    public static BaseResult validate(Integer invoiceHeader, String personalName, String companyName,
+        String customerTaxNumber) {
         if (InvoiceHeaderEnum.PERSONAL.getCode().equals(invoiceHeader)) {
             if (StrUtil.isBlank(personalName)) {
                 return ResultUtil.fail(MmsErrorEnum.PERSONAL_NAME_EMPTY);

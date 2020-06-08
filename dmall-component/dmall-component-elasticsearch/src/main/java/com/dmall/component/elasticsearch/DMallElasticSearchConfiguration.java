@@ -25,7 +25,8 @@ public class DMallElasticSearchConfiguration implements BasicConfiguration {
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallElasticSearchProperties", JsonUtil.toJsonPretty(dMallElasticSearchProperties));
+        log.info("init -> [{}],properties:\n{}", "DMallElasticSearchProperties",
+            JsonUtil.toJsonPretty(dMallElasticSearchProperties));
     }
 
     @Bean

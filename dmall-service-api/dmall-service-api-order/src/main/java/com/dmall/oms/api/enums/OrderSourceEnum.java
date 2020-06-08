@@ -27,10 +27,9 @@ public enum OrderSourceEnum implements CodeDescEnum<Integer> {
      */
     SMALL_PROGRAM(3, "小程序"),
 
-
     ;
+
     private final Integer code;
 
     private final String desc;
 }
-

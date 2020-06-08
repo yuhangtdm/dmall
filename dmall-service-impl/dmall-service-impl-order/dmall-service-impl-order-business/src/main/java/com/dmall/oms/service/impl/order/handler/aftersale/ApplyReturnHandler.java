@@ -52,7 +52,7 @@ public class ApplyReturnHandler extends AbstractCommonHandler<OrderApplyReturnRe
         Long id = insertAfterSale(requestDTO, orderItemDO, orderDO);
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(id, AfterSaleLogTypeEnum.MEMBER,
-                AfterSaleLogTitleEnum.APPLY_RETURN, requestDTO.getReason());
+            AfterSaleLogTitleEnum.APPLY_RETURN, requestDTO.getReason());
         return ResultUtil.success(id);
     }
 

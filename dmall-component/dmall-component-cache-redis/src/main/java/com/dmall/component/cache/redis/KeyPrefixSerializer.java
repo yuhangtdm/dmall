@@ -42,5 +42,4 @@ public class KeyPrefixSerializer implements RedisSerializer<String> {
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-
 }

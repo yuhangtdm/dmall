@@ -27,7 +27,7 @@ public class SkuStockSupport {
      * 获取当前可售库存
      */
     public Integer getSaleableStock(Long skuId) {
-        return (Integer) redisTemplate.opsForValue().get(StrUtil.format(SKU_STOCK_KEY, skuId));
+        return (Integer)redisTemplate.opsForValue().get(StrUtil.format(SKU_STOCK_KEY, skuId));
     }
 
     /**
@@ -36,7 +36,7 @@ public class SkuStockSupport {
     public void lockStock(List<SkuStockRequestDTO> sku) {
         for (SkuStockRequestDTO skuRequest : sku) {
             redisTemplate.opsForValue()
-                    .decrement(StrUtil.format(SKU_STOCK_KEY, skuRequest.getSkuId()), skuRequest.getNumber());
+                .decrement(StrUtil.format(SKU_STOCK_KEY, skuRequest.getSkuId()), skuRequest.getNumber());
             skuImportEsSupport.sendSyncSkuMq(skuRequest.getSkuId());
         }
     }
@@ -47,7 +47,7 @@ public class SkuStockSupport {
     public void unLockStock(List<SkuStockRequestDTO> sku) {
         for (SkuStockRequestDTO skuRequest : sku) {
             redisTemplate.opsForValue()
-                    .increment(StrUtil.format(SKU_STOCK_KEY, skuRequest.getSkuId()), skuRequest.getNumber());
+                .increment(StrUtil.format(SKU_STOCK_KEY, skuRequest.getSkuId()), skuRequest.getNumber());
         }
     }
 }

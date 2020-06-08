@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2020-02-22 23:31:54
  */
 @Service
-public class IMemberInvoiceServiceImpl extends ServiceImpl<MemberInvoiceMapper, MemberInvoiceDO> implements IMemberInvoiceService {
+public class IMemberInvoiceServiceImpl extends ServiceImpl<MemberInvoiceMapper, MemberInvoiceDO>
+    implements IMemberInvoiceService {
 
 }

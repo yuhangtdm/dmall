@@ -10,8 +10,7 @@ import java.util.Date;
  */
 public class CronUtil {
 
-    private CronUtil() {
-    }
+    private CronUtil() {}
 
     private static final String dateFormat = "ss mm HH dd MM ? yyyy";
 

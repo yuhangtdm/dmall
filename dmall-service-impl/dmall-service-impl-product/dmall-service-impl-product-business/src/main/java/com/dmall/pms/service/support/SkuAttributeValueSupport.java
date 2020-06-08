@@ -32,25 +32,25 @@ public class SkuAttributeValueSupport {
         List<SkuAttributeValueDO> oldList = listBySkuId(skuId);
         if (CollUtil.isNotEmpty(oldList)) {
             List<SkuAttributeValueDO> skuAttributeList = productAttributeValueList.stream()
-                    .map(productAttributeValueId -> {
-                        SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
-                        skuAttributeValueDO.setProductId(productId);
-                        skuAttributeValueDO.setSkuId(skuId);
-                        skuAttributeValueDO.setProductAttributeValueId(productAttributeValueId);
-                        return skuAttributeValueDO;
-                    }).collect(Collectors.toList());
+                .map(productAttributeValueId -> {
+                    SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
+                    skuAttributeValueDO.setProductId(productId);
+                    skuAttributeValueDO.setSkuId(skuId);
+                    skuAttributeValueDO.setProductAttributeValueId(productAttributeValueId);
+                    return skuAttributeValueDO;
+                }).collect(Collectors.toList());
             iSkuAttributeValueService.saveBatch(skuAttributeList);
         } else {
             List<Long> oldAttributeValueIds = oldList.stream().map(SkuAttributeValueDO::getProductAttributeValueId)
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
             // 新增的id集合
             List<Long> insertIdList = productAttributeValueList.stream()
-                    .filter(attributeValueId -> !oldAttributeValueIds.contains(attributeValueId))
-                    .collect(Collectors.toList());
+                .filter(attributeValueId -> !oldAttributeValueIds.contains(attributeValueId))
+                .collect(Collectors.toList());
             // 删除的id集合
             List<Long> deleteIdList = oldAttributeValueIds.stream()
-                    .filter(attributeValueId -> !productAttributeValueList.contains(attributeValueId))
-                    .collect(Collectors.toList());
+                .filter(attributeValueId -> !productAttributeValueList.contains(attributeValueId))
+                .collect(Collectors.toList());
 
             if (CollUtil.isNotEmpty(insertIdList)) {
                 List<SkuAttributeValueDO> insertList = insertIdList.stream().map(productAttributeValueId -> {
@@ -64,7 +64,7 @@ public class SkuAttributeValueSupport {
             }
             if (CollUtil.isNotEmpty(deleteIdList)) {
                 iSkuAttributeValueService.remove(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                        .in(SkuAttributeValueDO::getProductAttributeValueId, deleteIdList));
+                    .in(SkuAttributeValueDO::getProductAttributeValueId, deleteIdList));
             }
         }
     }
@@ -77,7 +77,7 @@ public class SkuAttributeValueSupport {
         responseDTO.setCategoryIds(categorySkuSupport.getCategoryIds(skuId));
         responseDTO.setBrandId(brandId);
         responseDTO.setProductAttributeValueList(listBySkuId(skuId).stream()
-                .map(SkuAttributeValueDO::getId).collect(Collectors.toList()));
+            .map(SkuAttributeValueDO::getId).collect(Collectors.toList()));
         return responseDTO;
     }
 
@@ -86,7 +86,7 @@ public class SkuAttributeValueSupport {
      */
     public List<SkuAttributeValueDO> listBySkuId(Long skuId) {
         return iSkuAttributeValueService.list(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getSkuId, skuId));
+            .eq(SkuAttributeValueDO::getSkuId, skuId));
     }
 
     /**
@@ -94,7 +94,7 @@ public class SkuAttributeValueSupport {
      */
     public List<SkuAttributeValueDO> listByProductId(Long productId) {
         return iSkuAttributeValueService.list(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getProductId, productId));
+            .eq(SkuAttributeValueDO::getProductId, productId));
     }
 
     /**
@@ -102,7 +102,7 @@ public class SkuAttributeValueSupport {
      */
     public void deleteBySkuId(Long skuId) {
         iSkuAttributeValueService.remove(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getSkuId, skuId));
+            .eq(SkuAttributeValueDO::getSkuId, skuId));
     }
 
     /**
@@ -110,6 +110,6 @@ public class SkuAttributeValueSupport {
      */
     public void deleteByProductId(Long productId) {
         iSkuAttributeValueService.remove(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                .eq(SkuAttributeValueDO::getProductId, productId));
+            .eq(SkuAttributeValueDO::getProductId, productId));
     }
 }

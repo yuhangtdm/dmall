@@ -37,16 +37,16 @@ public class DeliverWarehouseSupport {
         // 如果 默认发货地址,将该店铺之前添加的默认发货地址改为否
         if (YNEnum.Y.getCode().equals(deliverAddress)) {
             deliverWarehouseMapper.update(null, Wrappers.<DeliverWarehouseDO>lambdaUpdate()
-                    .set(DeliverWarehouseDO::getDeliveryStatus, YNEnum.N.getCode())
-                    .eq(DeliverWarehouseDO::getMerchantsId, merchantsId)
-                    .eq(DeliverWarehouseDO::getDeliveryStatus, YNEnum.Y.getCode()));
+                .set(DeliverWarehouseDO::getDeliveryStatus, YNEnum.N.getCode())
+                .eq(DeliverWarehouseDO::getMerchantsId, merchantsId)
+                .eq(DeliverWarehouseDO::getDeliveryStatus, YNEnum.Y.getCode()));
         }
         // 如果 默认收货地址,将该店铺之前添加的默认收货地址改为否
         if (YNEnum.Y.getCode().equals(receiveAddress)) {
             deliverWarehouseMapper.update(null, Wrappers.<DeliverWarehouseDO>lambdaUpdate()
-                    .set(DeliverWarehouseDO::getReceiveStatus, YNEnum.N.getCode())
-                    .eq(DeliverWarehouseDO::getMerchantsId, merchantsId)
-                    .eq(DeliverWarehouseDO::getReceiveStatus, YNEnum.Y.getCode()));
+                .set(DeliverWarehouseDO::getReceiveStatus, YNEnum.N.getCode())
+                .eq(DeliverWarehouseDO::getMerchantsId, merchantsId)
+                .eq(DeliverWarehouseDO::getReceiveStatus, YNEnum.Y.getCode()));
         }
     }
 

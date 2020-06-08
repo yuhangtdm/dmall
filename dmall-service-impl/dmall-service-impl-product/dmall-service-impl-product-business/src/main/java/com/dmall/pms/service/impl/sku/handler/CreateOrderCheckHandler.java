@@ -24,7 +24,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/3/29 11:38
  */
 @Component
-public class CreateOrderCheckHandler extends AbstractCommonHandler<CheckCreateOrderRequestDTO, SkuDO, List<BasicSkuResponseDTO>> {
+public class CreateOrderCheckHandler
+    extends AbstractCommonHandler<CheckCreateOrderRequestDTO, SkuDO, List<BasicSkuResponseDTO>> {
 
     @Autowired
     private GetBasicSkuHandler getBasicSkuHandler;
@@ -34,14 +35,15 @@ public class CreateOrderCheckHandler extends AbstractCommonHandler<CheckCreateOr
         List<CheckOrderSkuRequestDTO> orderSku = requestDTO.getOrderSku();
         List<Long> skuIds = orderSku.stream().map(CheckOrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, CheckOrderSkuRequestDTO> skuMap = orderSku.stream()
-                .collect(Collectors.toMap(CheckOrderSkuRequestDTO::getSkuId, checkOrderSkuRequestDTO -> checkOrderSkuRequestDTO));
+            .collect(Collectors.toMap(CheckOrderSkuRequestDTO::getSkuId,
+                checkOrderSkuRequestDTO -> checkOrderSkuRequestDTO));
         // step1. 调用sku接口获取sku信息
         BaseResult<List<BasicSkuResponseDTO>> skuResponse = getBasicSkuHandler.processor(skuIds);
         if (!skuResponse.getResult()) {
             return ResultUtil.fail(BasicStatusEnum.FAIL);
         }
         List<BasicSkuResponseDTO> skuData = skuResponse.getData();
-        //  step2. 验证价格
+        // step2. 验证价格
         BigDecimal skuTotalPrice = BigDecimal.ZERO;
         for (BasicSkuResponseDTO sku : skuData) {
             if (!NumberUtil.equals(skuMap.get(sku.getId()).getSkuPrice(), sku.getPrice())) {

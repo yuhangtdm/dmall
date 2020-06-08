@@ -51,18 +51,18 @@ public class AliCallBackHandler extends AbstractCommonHandler<Void, PaymentInfoD
     public BaseResult processor(Void aVoid) {
         HttpServletRequest request = RequestUtil.getRequest();
         HttpServletResponse response = ResponseUtil.getResponse();
-        //调用SDK验证签名
+        // 调用SDK验证签名
         try {
             Map<String, String> param = RequestUtil.getParam();
             log.info("aliPay notify param:{}", param);
             boolean signVerified = AlipaySignature.rsaCheckV1(param, AliPayConfig.aliPayPublicKey,
-                    AliPayConfig.charset, AliPayConfig.signType);
+                AliPayConfig.charset, AliPayConfig.signType);
             if (signVerified) {
                 // 1、需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号，
                 String out_trade_no = request.getParameter("out_trade_no");
                 Long orderId = Long.valueOf(out_trade_no);
                 PaymentInfoDO paymentInfoDO = paymentInfoMapper.selectOne(Wrappers.<PaymentInfoDO>lambdaQuery()
-                        .eq(PaymentInfoDO::getOrderId, orderId));
+                    .eq(PaymentInfoDO::getOrderId, orderId));
                 if (paymentInfoDO == null) {
                     log.error("out_trade_no not exists");
                     response.getWriter().println(FAIL);

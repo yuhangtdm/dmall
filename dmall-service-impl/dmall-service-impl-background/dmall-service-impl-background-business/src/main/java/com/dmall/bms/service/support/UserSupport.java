@@ -21,6 +21,6 @@ public class UserSupport {
      */
     public UserDO getByPhone(String phone) {
         return userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
-                .eq(UserDO::getPhone, phone));
+            .eq(UserDO::getPhone, phone));
     }
 }

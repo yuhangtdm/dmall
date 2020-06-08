@@ -10,7 +10,7 @@ public interface EsConstants {
 
     String TYPE_NAME = "doc";
 
-    String[] SEARCH_FIELDS = new String[]{"skuName", "skuSubName", "skuDescription", "productName"};
+    String[] SEARCH_FIELDS = new String[] {"skuName", "skuSubName", "skuDescription", "productName"};
 
     String FILTER_ATTR_VALUE = "attributeValueIds";
 

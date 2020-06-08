@@ -22,7 +22,7 @@ public class PaymentInfoSupport {
      */
     public PaymentInfoDO getByOrderId(Long orderId) {
         return paymentInfoMapper.selectOne(Wrappers.lambdaQuery(new PaymentInfoDO())
-                .eq(PaymentInfoDO::getOrderId, orderId)
-                .eq(PaymentInfoDO::getStatus, YNEnum.Y.getCode()));
+            .eq(PaymentInfoDO::getOrderId, orderId)
+            .eq(PaymentInfoDO::getStatus, YNEnum.Y.getCode()));
     }
 }

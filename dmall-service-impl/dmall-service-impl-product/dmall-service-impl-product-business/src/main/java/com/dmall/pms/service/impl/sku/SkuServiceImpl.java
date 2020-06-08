@@ -95,7 +95,7 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     public BaseResult<UploadResult> upload(Long id, MultipartFile file) {
-        return uploadSkuHandler.handler(new UploadRequestDTO(id, new MultipartFile[]{file}));
+        return uploadSkuHandler.handler(new UploadRequestDTO(id, new MultipartFile[] {file}));
     }
 
     @Override
@@ -118,7 +118,6 @@ public class SkuServiceImpl implements SkuService {
     public BaseResult<Long> offPublish(Long id) {
         return null;
     }
-
 
     @Override
     @Transactional(rollbackFor = Exception.class)

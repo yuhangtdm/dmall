@@ -36,7 +36,6 @@ public class QiNiuFileManager {
 
     private final Region defaultRegion = Region.huadong();
 
-
     public QiNiuFileManager(QiNiuProperties qiNiuProperties) {
         this.qiNiuProperties = qiNiuProperties;
     }
@@ -77,7 +76,8 @@ public class QiNiuFileManager {
     public UploadResult upload(MultipartFile file, String catalog) throws IOException {
         Assert.notNull(file, "file not null");
         Assert.notNull(file.getOriginalFilename(), "fileName not null");
-        String fileType = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(StrUtil.C_DOT) + 1);
+        String fileType =
+            file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(StrUtil.C_DOT) + 1);
         DefaultPutRet upload = this.upload(file.getInputStream(), catalog, fileType);
         UploadResult uploadResult = new UploadResult();
         uploadResult.setKey(upload.key);
@@ -107,7 +107,7 @@ public class QiNiuFileManager {
                 log.error("upload file fail,{}", JsonUtil.toJson(response));
                 throw new ComponentException(QiNiuErrorEnum.QI_NIU_ERROR_ENUM);
             }
-            //解析上传成功的结果
+            // 解析上传成功的结果
             DefaultPutRet defaultPutRet = JsonUtil.fromJson(response.bodyString(), DefaultPutRet.class);
             if (defaultPutRet == null) {
                 log.error("upload file fail,{}", JsonUtil.toJson(response));
@@ -148,13 +148,14 @@ public class QiNiuFileManager {
      * 获取指定大小的文件
      */
     public String getModel(String key, int size) {
-        return StrUtil.format("{}/{}?v={}&{}", qiNiuProperties.getDomain(), key, System.currentTimeMillis(), getSize(size));
+        return StrUtil.format("{}/{}?v={}&{}", qiNiuProperties.getDomain(), key, System.currentTimeMillis(),
+            getSize(size));
     }
 
     /**
      * 获取文件的唯一key
      *
-     * @param catalog  目录
+     * @param catalog 目录
      * @param fileType 文件类型
      */
     public String getKey(String catalog, String fileType) {

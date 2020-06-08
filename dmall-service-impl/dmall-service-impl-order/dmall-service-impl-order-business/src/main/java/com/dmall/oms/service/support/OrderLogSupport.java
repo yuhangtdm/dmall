@@ -29,7 +29,7 @@ public class OrderLogSupport {
      */
     public List<OrderLogDO> listByOrderId(Long orderId) {
         return orderLogMapper.selectList(Wrappers.<OrderLogDO>lambdaQuery()
-                .eq(OrderLogDO::getOrderId, orderId));
+            .eq(OrderLogDO::getOrderId, orderId));
     }
 
     public void insert(Long orderId, OrderOperateEnum operateEnum, boolean admin) {

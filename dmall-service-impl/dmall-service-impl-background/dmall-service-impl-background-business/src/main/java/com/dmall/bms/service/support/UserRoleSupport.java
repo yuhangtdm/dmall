@@ -27,6 +27,6 @@ public class UserRoleSupport {
      */
     public List<UserRoleDO> listByUserId(Long userId) {
         return userRoleMapper.selectList(Wrappers.<UserRoleDO>lambdaQuery()
-                .eq(UserRoleDO::getUserId, userId));
+            .eq(UserRoleDO::getUserId, userId));
     }
 }

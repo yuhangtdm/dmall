@@ -14,8 +14,7 @@ import java.util.Collection;
  */
 public class ResultUtil {
 
-    private ResultUtil() {
-    }
+    private ResultUtil() {}
 
     /**
      * success
@@ -38,7 +37,7 @@ public class ResultUtil {
         baseResult.setData(t);
         baseResult.setMsg(BasicStatusEnum.SUCCESS.getMsg());
         if (t instanceof Collection) {
-            Collection c = (Collection) t;
+            Collection c = (Collection)t;
             baseResult.setCount(c.size());
         }
         return baseResult;

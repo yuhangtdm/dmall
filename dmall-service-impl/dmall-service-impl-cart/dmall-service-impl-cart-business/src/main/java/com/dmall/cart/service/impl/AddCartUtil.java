@@ -30,9 +30,7 @@ public class AddCartUtil {
 
     public static final Integer COOKIE_STORE_TIME = 60 * 60 * 24;
 
-    private AddCartUtil() {
-    }
-
+    private AddCartUtil() {}
 
     /**
      * 未登录时添加购物车
@@ -41,11 +39,10 @@ public class AddCartUtil {
         // 查询cookie中的购物车数据
         String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), AddCartUtil.COOKIE_NAME, true);
         if (StrUtil.isNotBlank(cartJson)) {
-            List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {
-            });
+            List<CartDTO> cartDTOS = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
             Optional<CartDTO> first = cartDTOS.stream()
-                    .filter(cartDTO -> cartDTO.getSkuId().equals(skuData.getId()))
-                    .findFirst();
+                .filter(cartDTO -> cartDTO.getSkuId().equals(skuData.getId()))
+                .findFirst();
             if (first.isPresent()) {
                 CartDTO cartDTO = first.get();
                 // 取最新的价格
@@ -54,7 +51,7 @@ public class AddCartUtil {
                 cartDTO.setNumber(operateEnum == OperateEnum.ADD ? (number + cartDTO.getNumber()) : number);
                 cartDTO.setTotalPrice(NumberUtil.mul(cartDTO.getNumber(), cartDTO.getPrice()));
                 CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME,
-                        JsonUtil.toJson(cartDTOS), AddCartUtil.COOKIE_STORE_TIME, true);
+                    JsonUtil.toJson(cartDTOS), AddCartUtil.COOKIE_STORE_TIME, true);
             } else {
                 addCookieCart(number, skuData, cartDTOS);
             }
@@ -67,12 +64,12 @@ public class AddCartUtil {
      * 已登录时添加购物车
      */
     public static CartItemDO loginAddCart(Integer number, OperateEnum operateEnum, BasicSkuResponseDTO skuData,
-                                          PortalMemberDTO login, List<CartItemDO> cartItemDOS) {
+        PortalMemberDTO login, List<CartItemDO> cartItemDOS) {
         // 会员已登录
         if (CollUtil.isNotEmpty(cartItemDOS)) {
             Optional<CartItemDO> first = cartItemDOS.stream()
-                    .filter(cartItem -> cartItem.getSkuId().equals(skuData.getId()))
-                    .findFirst();
+                .filter(cartItem -> cartItem.getSkuId().equals(skuData.getId()))
+                .findFirst();
             if (first.isPresent()) {
                 CartItemDO cartItemDO = first.get();
                 cartItemDO.setNumber(operateEnum == OperateEnum.ADD ? (cartItemDO.getNumber() + number) : number);
@@ -99,7 +96,7 @@ public class AddCartUtil {
         cartDTO.setChecked(false);
         cartDTOS.add(cartDTO);
         CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME, JsonUtil.toJson(cartDTOS),
-                AddCartUtil.COOKIE_STORE_TIME, true);
+            AddCartUtil.COOKIE_STORE_TIME, true);
     }
 
     /**

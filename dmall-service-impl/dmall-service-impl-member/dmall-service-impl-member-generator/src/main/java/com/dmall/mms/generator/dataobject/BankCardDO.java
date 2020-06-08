@@ -87,5 +87,4 @@ public class BankCardDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

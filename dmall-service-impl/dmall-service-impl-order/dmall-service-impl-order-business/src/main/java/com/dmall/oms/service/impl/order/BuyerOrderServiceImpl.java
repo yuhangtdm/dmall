@@ -92,7 +92,8 @@ public class BuyerOrderServiceImpl implements BuyerOrderService {
     }
 
     @Override
-    public BaseResult<ResponsePage<BuyerOrderPageResponseDTO>> sellerOrderPage(@RequestBody BuyerOrderPageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<BuyerOrderPageResponseDTO>>
+        sellerOrderPage(@RequestBody BuyerOrderPageRequestDTO requestDTO) {
         return buyerOrderPageHandler.handler(requestDTO);
     }
 

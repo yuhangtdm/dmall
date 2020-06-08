@@ -8,5 +8,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/3/26 23:28
  */
 @FeignClient(value = "dmall-service-impl-member")
-public interface MemberInvoiceFeign extends MemberInvoiceService {
-}
+public interface MemberInvoiceFeign extends MemberInvoiceService {}

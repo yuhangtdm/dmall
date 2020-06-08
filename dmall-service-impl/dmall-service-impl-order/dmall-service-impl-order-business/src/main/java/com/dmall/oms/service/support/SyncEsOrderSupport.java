@@ -23,17 +23,17 @@ public class SyncEsOrderSupport {
      */
     public void sendOrderEsMq(Long orderId) {
         rocketMQTemplate.sendAndReceive(MqConstants.SYNC_ES_ORDER, orderId,
-                new RocketMQLocalRequestCallback() {
-                    @Override
-                    public void onSuccess(Object message) {
-                        log.info("sendOrderEsMq success{}", message);
-                    }
+            new RocketMQLocalRequestCallback() {
+                @Override
+                public void onSuccess(Object message) {
+                    log.info("sendOrderEsMq success{}", message);
+                }
 
-                    @SneakyThrows
-                    @Override
-                    public void onException(Throwable e) {
-                        log.error("sendOrderEsMq error", e);
-                    }
-                });
+                @SneakyThrows
+                @Override
+                public void onException(Throwable e) {
+                    log.error("sendOrderEsMq error", e);
+                }
+            });
     }
 }

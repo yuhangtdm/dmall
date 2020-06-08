@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: PmsErrorEnum  1100开头
+ * @description: PmsErrorEnum 1100开头
  * @author: created by hang.yu on 2020/4/21 23:41
  */
 @Getter

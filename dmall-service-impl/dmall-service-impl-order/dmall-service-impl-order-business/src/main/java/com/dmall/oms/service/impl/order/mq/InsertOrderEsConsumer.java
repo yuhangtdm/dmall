@@ -49,7 +49,8 @@ public class InsertOrderEsConsumer implements RocketMQListener<Long> {
             return;
         }
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(orderId);
-        esDao.saveOrUpdate(buildSkuEsDTO(orderDO, subOrderList), EsConstants.INDEX_NAME, EsConstants.TYPE_NAME, orderDO.getId());
+        esDao.saveOrUpdate(buildSkuEsDTO(orderDO, subOrderList), EsConstants.INDEX_NAME, EsConstants.TYPE_NAME,
+            orderDO.getId());
     }
 
     /**
@@ -69,7 +70,7 @@ public class InsertOrderEsConsumer implements RocketMQListener<Long> {
         receiver.setReceiverName(orderDO.getReceiverName());
         receiver.setReceiverPhone(orderDO.getReceiverPhone());
         receiver.setReceiverAddress(orderDO.getReceiverPhone() + orderDO.getReceiverCity()
-                + orderDO.getReceiverRegion() + orderDO.getReceiverDetailAddress());
+            + orderDO.getReceiverRegion() + orderDO.getReceiverDetailAddress());
         orderEsDTO.setReceiver(receiver);
 
         if (SplitEnum.NOT_NEED.getCode().equals(orderDO.getSplit())) {

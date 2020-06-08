@@ -30,4 +30,3 @@ public class CheckOrderSkuRequestDTO implements Serializable {
     @NotNull(message = "sku单价不能为空不能为空")
     private BigDecimal skuPrice;
 }
-

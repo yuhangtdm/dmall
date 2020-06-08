@@ -65,11 +65,12 @@ public class CommentDetailHandler extends AbstractCommonHandler<Long, SubOrderDO
     /**
      * 构建结果
      */
-    private BaseResult<List<CommentDetailResponseDTO>> buildResult(List<CommentPageResponseDTO> data, List<OrderItemDO> orderItemList) {
+    private BaseResult<List<CommentDetailResponseDTO>> buildResult(List<CommentPageResponseDTO> data,
+        List<OrderItemDO> orderItemList) {
         List<CommentDetailResponseDTO> collect = orderItemList.stream().map(orderItemDO -> {
             Optional<CommentPageResponseDTO> any = data.stream()
-                    .filter(commentResponseDTO -> orderItemDO.getSkuId().equals(commentResponseDTO.getSkuId()))
-                    .findAny();
+                .filter(commentResponseDTO -> orderItemDO.getSkuId().equals(commentResponseDTO.getSkuId()))
+                .findAny();
             CommentDetailResponseDTO responseDTO = new CommentDetailResponseDTO();
             responseDTO.setSkuId(orderItemDO.getSkuId());
             responseDTO.setSkuName(orderItemDO.getSkuName());

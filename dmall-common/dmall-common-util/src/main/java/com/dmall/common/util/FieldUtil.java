@@ -11,8 +11,7 @@ import java.lang.reflect.Field;
  */
 public class FieldUtil {
 
-    private FieldUtil() {
-    }
+    private FieldUtil() {}
 
     /**
      * 获取对象属性的第一个注解

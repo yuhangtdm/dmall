@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020-04-05 16:03:43
  */
 @Component
-public class UpdateDeliverWarehouseHandler extends AbstractCommonHandler<UpdateDeliverWarehouseRequestDTO, DeliverWarehouseDO, Long> {
+public class UpdateDeliverWarehouseHandler
+    extends AbstractCommonHandler<UpdateDeliverWarehouseRequestDTO, DeliverWarehouseDO, Long> {
 
     @Autowired
     private DeliverWarehouseMapper deliverWarehouseMapper;
@@ -28,7 +29,7 @@ public class UpdateDeliverWarehouseHandler extends AbstractCommonHandler<UpdateD
         DeliverWarehouseDO deliverWarehouseDO = deliverWarehouseSupport.validateWarehouse(requestDTO.getId());
         DeliverWarehouseDO deliverWarehouse = dtoConvertDo(requestDTO, DeliverWarehouseDO.class);
         deliverWarehouseSupport.updateAddress(deliverWarehouseDO.getMerchantsId(), requestDTO.getDeliverAddress(),
-                requestDTO.getReceiveAddress());
+            requestDTO.getReceiveAddress());
         deliverWarehouseMapper.updateById(deliverWarehouse);
         return ResultUtil.success(requestDTO.getId());
     }

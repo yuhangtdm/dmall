@@ -16,8 +16,11 @@
             <if test="request.brandId!= null">
                 and pp.brand_id = #{request.brandId}
             </if>
+            <if test="request.productNo!= null and request.productNo!=''">
+                and pp.productNo = #{request.productNo}
+            </if>
             <if test="request.name!= null and request.name!=''">
-                and pp.name like '%${name}%'
+                and pp.name like '%${request.name}%'
             </if>
             <if test="request.onMarketTimeStart != null">
                 and pp.onMarketTime <![CDATA[ >= ]]>  #{request.onMarketTimeStart}

@@ -30,7 +30,7 @@ public class RoleMenuSupport {
      */
     public void delete(Long roleId, List<Long> deleteMenuIds) {
         roleMenuMapper.delete(Wrappers.<RoleMenuDO>lambdaQuery()
-                .eq(RoleMenuDO::getRoleId, roleId)
-                .in(RoleMenuDO::getMenuId, deleteMenuIds));
+            .eq(RoleMenuDO::getRoleId, roleId)
+            .in(RoleMenuDO::getMenuId, deleteMenuIds));
     }
 }

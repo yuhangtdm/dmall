@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2019-12-23 21:27:18
  */
 @Service
-public class ICategorySkuServiceImpl extends ServiceImpl<CategorySkuMapper, CategorySkuDO> implements ICategorySkuService {
+public class ICategorySkuServiceImpl extends ServiceImpl<CategorySkuMapper, CategorySkuDO>
+    implements ICategorySkuService {
 
 }

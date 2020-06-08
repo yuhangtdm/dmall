@@ -38,9 +38,8 @@ public class RocketMqProducer {
         for (int i = 0; i < 5; i++) {
             // 创建消息，并指定Topic，Tag和消息体
             Message msg = new Message("test",
-                    "TagA",
-                    ("sendSync RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET)
-            );
+                "TagA",
+                ("sendSync RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
             // 发送消息到一个Broker
             SendResult sendResult = producer.send(msg);
             // 通过sendResult返回消息是否成功送达
@@ -64,9 +63,9 @@ public class RocketMqProducer {
         for (int i = 0; i < 5; i++) {
             // 创建消息，并指定Topic，Tag和消息体
             Message msg = new Message("asyncTopic",
-                    "TagB",
-                    "OrderID188",
-                    "Hello Async".getBytes(RemotingHelper.DEFAULT_CHARSET));
+                "TagB",
+                "OrderID188",
+                "Hello Async".getBytes(RemotingHelper.DEFAULT_CHARSET));
             // SendCallback接收异步返回结果的回调
             producer.send(msg, new SendCallback() {
                 @Override
@@ -97,8 +96,8 @@ public class RocketMqProducer {
         for (int i = 0; i < 5; i++) {
             // 创建消息，并指定Topic，Tag和消息体
             Message msg = new Message("oneWayTopic",
-                    "TagA",
-                    ("Hello oneWay, " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
+                "TagA",
+                ("Hello oneWay, " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
             );
             // 发送单向消息，没有任何返回结果
             producer.sendOneway(msg);
@@ -115,7 +114,7 @@ public class RocketMqProducer {
         DefaultMQProducer producer = new DefaultMQProducer("OrderGroup");
         producer.setNamesrvAddr(NAME_SERVER);
         producer.start();
-        String[] tags = new String[]{"TagA", "TagC", "TagD"};
+        String[] tags = new String[] {"TagA", "TagC", "TagD"};
 
         // 订单列表
         List<OrderStep> orderList = buildOrders();
@@ -131,17 +130,17 @@ public class RocketMqProducer {
             SendResult sendResult = producer.send(msg, new MessageQueueSelector() {
                 @Override
                 public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
-                    Long id = (Long) arg;
-                    //根据订单id选择发送queue
+                    Long id = (Long)arg;
+                    // 根据订单id选择发送queue
                     long index = id % mqs.size();
-                    return mqs.get((int) index);
+                    return mqs.get((int)index);
                 }
-            }, orderList.get(i).getOrderId());//订单id
+            }, orderList.get(i).getOrderId());// 订单id
 
             System.out.println(String.format("SendResult status:%s, queueId:%d, body:%s",
-                    sendResult.getSendStatus(),
-                    sendResult.getMessageQueue().getQueueId(),
-                    body));
+                sendResult.getSendStatus(),
+                sendResult.getMessageQueue().getQueueId(),
+                body));
         }
 
         producer.shutdown();
@@ -168,20 +167,20 @@ public class RocketMqProducer {
     }
 
     public static void sendTransaction() throws Exception {
-        //创建事务监听器
+        // 创建事务监听器
         TransactionListener transactionListener = new TransactionListenerImpl();
-        //创建消息生产者
+        // 创建消息生产者
         TransactionMQProducer producer = new TransactionMQProducer("group6");
         producer.setNamesrvAddr(NAME_SERVER);
-        //生产者这是监听器
+        // 生产者这是监听器
         producer.setTransactionListener(transactionListener);
-        //启动消息生产者
+        // 启动消息生产者
         producer.start();
-        String[] tags = new String[]{"TagA", "TagB", "TagC"};
+        String[] tags = new String[] {"TagA", "TagB", "TagC"};
         for (int i = 0; i < 3; i++) {
             try {
                 Message msg = new Message("TransactionTopic", tags[i % tags.length], "KEY" + i,
-                        ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
+                    ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
                 SendResult sendResult = producer.sendMessageInTransaction(msg, null);
                 System.out.printf("%s%n", sendResult);
                 TimeUnit.SECONDS.sleep(1);
@@ -189,7 +188,7 @@ public class RocketMqProducer {
                 e.printStackTrace();
             }
         }
-        //producer.shutdown();
+        // producer.shutdown();
     }
 
     /**

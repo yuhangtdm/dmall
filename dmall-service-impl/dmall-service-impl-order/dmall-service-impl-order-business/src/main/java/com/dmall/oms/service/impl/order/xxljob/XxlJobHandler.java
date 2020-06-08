@@ -99,9 +99,9 @@ public class XxlJobHandler {
 
         // 判断订单是否需要修改
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(orderDO.getId());
-        List<SubOrderDO> completedList = subOrderList.stream().filter(subOrder ->
-                SubOrderStatusEnum.COMPLETED.getCode().equals(subOrder.getStatus()))
-                .collect(Collectors.toList());
+        List<SubOrderDO> completedList = subOrderList.stream()
+            .filter(subOrder -> SubOrderStatusEnum.COMPLETED.getCode().equals(subOrder.getStatus()))
+            .collect(Collectors.toList());
 
         if (subOrderList.size() == completedList.size()) {
             orderDO.setStatus(OrderStatusEnum.COMPLETED.getCode());
@@ -114,7 +114,6 @@ public class XxlJobHandler {
             xxlJobSupport.deleteJob(bySubOrderId.getXxlJobId());
         }
         return ReturnT.SUCCESS;
-
 
     }
 
@@ -146,30 +145,32 @@ public class XxlJobHandler {
         // 子订单 评价状态默认是 部分评价
         subOrderDO.setCommentStatus(OrderCommentStatusEnum.PART.getCode());
         orderDO.setCommentStatus(OrderCommentStatusEnum.PART.getCode());
-        List<Long> skuIds = Arrays.stream(split[1].split(StrUtil.COMMA)).map(Long::valueOf).collect(Collectors.toList());
+        List<Long> skuIds =
+            Arrays.stream(split[1].split(StrUtil.COMMA)).map(Long::valueOf).collect(Collectors.toList());
 
         List<OrderItemDO> subOrderItemList = orderItemSupport.listBySubOrderId(subOrderDO.getId());
         commentOrderItem(skuIds, subOrderItemList);
-        //  判断是否该子订单的订单项是否全部都已评价
+        // 判断是否该子订单的订单项是否全部都已评价
         List<OrderItemDO> subItemList = orderItemSupport.listBySubOrderId(subOrderDO.getOrderId());
         Optional<OrderItemDO> subItem = subItemList.stream()
-                .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
-                .findAny();
+            .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
+            .findAny();
         if (!subItem.isPresent()) {
             subOrderDO.setCommentStatus(OrderCommentStatusEnum.ALL.getCode());
         }
         subOrderMapper.updateById(subOrderDO);
-        //  判断是否该订单的订单项是否全部都已评价
+        // 判断是否该订单的订单项是否全部都已评价
         List<OrderItemDO> orderItemList = orderItemSupport.listByOrderId(subOrderDO.getOrderId());
         Optional<OrderItemDO> item = orderItemList.stream()
-                .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
-                .findAny();
+            .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
+            .findAny();
         if (!item.isPresent()) {
             orderDO.setCommentStatus(OrderCommentStatusEnum.ALL.getCode());
         }
         orderMapper.updateById(orderDO);
         // 调用pms评价接口
-        List<SaveCommentRequestDTO> saveCommentRequestList = buildCommentRequest(subOrderId, skuIds, subOrderDO.getOrderId());
+        List<SaveCommentRequestDTO> saveCommentRequestList =
+            buildCommentRequest(subOrderId, skuIds, subOrderDO.getOrderId());
         BaseResult saveBaseResult = commentFeign.save(saveCommentRequestList);
         if (!saveBaseResult.getResult()) {
             throw new BusinessException(saveBaseResult.getCode(), saveBaseResult.getMsg());
@@ -198,7 +199,7 @@ public class XxlJobHandler {
      */
     private void commentOrderItem(List<Long> skuIds, List<OrderItemDO> orderItemList) {
         List<OrderItemDO> waitCommentOrderItemList = orderItemList.stream()
-                .filter(orderItem -> skuIds.contains(orderItem.getSkuId())).collect(Collectors.toList());
+            .filter(orderItem -> skuIds.contains(orderItem.getSkuId())).collect(Collectors.toList());
         for (OrderItemDO orderItemDO : waitCommentOrderItemList) {
             if (YNEnum.Y.getCode().equals(orderItemDO.getCommentStatus())) {
                 return;

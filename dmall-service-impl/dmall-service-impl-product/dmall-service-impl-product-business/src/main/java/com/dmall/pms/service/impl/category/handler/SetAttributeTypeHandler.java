@@ -59,7 +59,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     @Override
     public BaseResult validate(SetAttributeTypeRequestDTO requestDTO) {
         Set<Long> attributeTypeIds = requestDTO.getAttributeTypes().stream()
-                .map(AttributeTypeIdsDTO::getAttributeTypeId).collect(Collectors.toSet());
+            .map(AttributeTypeIdsDTO::getAttributeTypeId).collect(Collectors.toSet());
         // 属性类别id不能有重复
         if (attributeTypeIds.size() != requestDTO.getAttributeTypes().size()) {
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_ID_REPEATED);
@@ -75,28 +75,31 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
     @Override
     public BaseResult processor(SetAttributeTypeRequestDTO requestDTO) {
         List<AttributeTypeDO> list = attributeTypeSupport.listByCategoryId(requestDTO.getCategoryId());
-        List<Long> attributeTypeIds = requestDTO.getAttributeTypes().stream().map(AttributeTypeIdsDTO::getAttributeTypeId)
+        List<Long> attributeTypeIds =
+            requestDTO.getAttributeTypes().stream().map(AttributeTypeIdsDTO::getAttributeTypeId)
                 .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(list)) {
             List<Long> deleteAttributeTypeIds = list.stream()
-                    .map(AttributeTypeDO::getId)
-                    .filter(attributeTypeId -> !attributeTypeIds.contains(attributeTypeId))
-                    .collect(Collectors.toList());
+                .map(AttributeTypeDO::getId)
+                .filter(attributeTypeId -> !attributeTypeIds.contains(attributeTypeId))
+                .collect(Collectors.toList());
             // 修改被删除的属性类别以及缓存
             deleteAttributeTypeIds.forEach(attributeTypeId -> {
                 LambdaUpdateWrapper<AttributeTypeDO> updateWrapper = Wrappers.<AttributeTypeDO>update().lambda()
-                        .eq(AttributeTypeDO::getId, attributeTypeId)
-                        .set(AttributeTypeDO::getCategoryId, null)
-                        .set(AttributeTypeDO::getCascadeCategoryId, null);
+                    .eq(AttributeTypeDO::getId, attributeTypeId)
+                    .set(AttributeTypeDO::getCategoryId, null)
+                    .set(AttributeTypeDO::getCascadeCategoryId, null);
                 attributeTypeMapper.update(null, updateWrapper);
-                mapCacheUtil.put(mapCacheUtil.getKey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
-                        String.valueOf(attributeTypeId), iAttributeTypeService.getById(attributeTypeId));
+                mapCacheUtil.put(
+                    mapCacheUtil.getKey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
+                    String.valueOf(attributeTypeId), iAttributeTypeService.getById(attributeTypeId));
             });
         }
 
         // 全量的更新属性类别以及缓存
         requestDTO.getAttributeTypes().forEach(attributeTypeIdDTO -> {
-            AttributeTypeDO attributeTypeDO = attributeTypeCacheService.selectById(attributeTypeIdDTO.getAttributeTypeId());
+            AttributeTypeDO attributeTypeDO =
+                attributeTypeCacheService.selectById(attributeTypeIdDTO.getAttributeTypeId());
             attributeTypeDO.setSort(attributeTypeIdDTO.getSort());
             attributeTypeDO.setCategoryId(requestDTO.getCategoryId());
             CategoryDO categoryDO = categoryCacheService.selectById(requestDTO.getCategoryId());
@@ -104,7 +107,7 @@ public class SetAttributeTypeHandler extends AbstractCommonHandler<SetAttributeT
             attributeTypeDO.setName(StrUtil.format("{}_{}", categoryDO.getName(), attributeTypeDO.getShowName()));
             iAttributeTypeService.updateById(attributeTypeDO);
             mapCacheUtil.put(mapCacheUtil.getKey(CacheNameConstants.ATTRIBUTE_TYPE, AttributeTypeCacheService.class),
-                    String.valueOf(attributeTypeDO.getId()), iAttributeTypeService.getById(attributeTypeDO.getId()));
+                String.valueOf(attributeTypeDO.getId()), iAttributeTypeService.getById(attributeTypeDO.getId()));
         });
 
         return ResultUtil.success();

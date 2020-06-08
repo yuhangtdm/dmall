@@ -26,7 +26,6 @@ public class XxlJobTest {
 
     private static final String url2 = "http://localhost:8080/xxl-job-admin/jobgroup/add";
 
-
     public static void main(String[] args) {
         test();
     }

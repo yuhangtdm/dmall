@@ -105,9 +105,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             },
             contains: function (a, obj) {
                 return contains(a, obj);
-            },
-            toJson: function (formId) {
-                return toJson(formId);
             }
         }
 
@@ -118,7 +115,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             $.ajax({
                 type: 'get',
                 url: url,
-                async: false,
+                async: true,
                 beforeSend: function (request) {
                     layer.load(1);
                     request.setRequestHeader("source", "admin");
@@ -616,7 +613,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
          * 私有方法 list.contains
          */
         function contains(a, obj) {
-            if (!a){
+            if (!a) {
                 return false;
             }
             var i = a.length;
@@ -938,7 +935,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 });
             } else {
                 // 单选
-                $.getJSON(url, function (response) {
+                post(url, {}, function (response) {
                     for (var i = 0; i < response.data.length; i++) {
                         sel.append("<option value=" + response.data[i].value + ">" + response.data[i].name + "</option>");
                     }
@@ -946,7 +943,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                         sel.val(value);
                     }
                     form.render();
-                });
+                })
             }
         }
 
@@ -1092,7 +1089,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             }
         }
 
-
         /**
          * 获取token
          */
@@ -1100,39 +1096,6 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             if (layui.data('token').value && layui.data('token').value !== undefined) {
                 return layui.data('token').value;
             }
-        }
-
-        /**
-         * 格式化表单对象的方法
-         */
-        function toJson(formId) {
-            var o = {};
-            var form = $("#" + formId);
-            var data = form.serializeArray();
-            $.each(data, function () {
-                var name = this.name;
-                var value = this.value;
-                var paths = name.split(".");
-                var len = paths.length;
-                var obj = o;
-                if (name && name !== "undefined") {
-                    $.each(paths, function (i, e) {
-                        if (i === len - 1) {
-                            if (obj[e]) {
-                                obj[e] = obj[e] + "," + value;
-                            } else {
-                                obj[e] = value || '';
-                            }
-                        } else {
-                            if (!obj[e]) {
-                                obj[e] = {};
-                            }
-                        }
-                        obj = o[e];
-                    })
-                }
-            });
-            return o;
         }
 
         e('crud', obj);

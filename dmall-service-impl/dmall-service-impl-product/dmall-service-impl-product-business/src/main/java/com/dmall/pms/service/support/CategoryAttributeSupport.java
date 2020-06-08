@@ -23,7 +23,7 @@ public class CategoryAttributeSupport {
      */
     public List<CategoryAttributeDO> listByCategoryId(Long categoryId) {
         return categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getCategoryId, categoryId));
+            .eq(CategoryAttributeDO::getCategoryId, categoryId));
     }
 
     /**
@@ -31,13 +31,13 @@ public class CategoryAttributeSupport {
      */
     public List<CategoryAttributeDO> listByAttributeId(Long attributeId) {
         return categoryAttributeMapper.selectList(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getAttributeId, attributeId));
+            .eq(CategoryAttributeDO::getAttributeId, attributeId));
     }
 
     public CategoryAttributeDO get(Long attributeId, Long categoryId) {
         return categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getAttributeId, attributeId)
-                .eq(CategoryAttributeDO::getCategoryId, categoryId));
+            .eq(CategoryAttributeDO::getAttributeId, attributeId)
+            .eq(CategoryAttributeDO::getCategoryId, categoryId));
     }
 
     /**
@@ -45,7 +45,7 @@ public class CategoryAttributeSupport {
      */
     public void deleteByCategoryId(Long categoryId) {
         categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getCategoryId, categoryId));
+            .eq(CategoryAttributeDO::getCategoryId, categoryId));
     }
 
     /**
@@ -53,7 +53,7 @@ public class CategoryAttributeSupport {
      */
     public void deleteByAttributeId(Long attributeId) {
         categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getAttributeId, attributeId));
+            .eq(CategoryAttributeDO::getAttributeId, attributeId));
     }
 
     /**
@@ -61,8 +61,8 @@ public class CategoryAttributeSupport {
      */
     public void delete(Long attributeId, List<Long> categoryIds) {
         categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getAttributeId, attributeId)
-                .in(CategoryAttributeDO::getCategoryId, categoryIds));
+            .eq(CategoryAttributeDO::getAttributeId, attributeId)
+            .in(CategoryAttributeDO::getCategoryId, categoryIds));
     }
 
     /**
@@ -70,7 +70,7 @@ public class CategoryAttributeSupport {
      */
     public void delete(List<Long> attributeIds, Long categoryId) {
         categoryAttributeMapper.delete(Wrappers.<CategoryAttributeDO>lambdaQuery()
-                .eq(CategoryAttributeDO::getCategoryId, categoryId)
-                .in(CategoryAttributeDO::getAttributeId, attributeIds));
+            .eq(CategoryAttributeDO::getCategoryId, categoryId)
+            .in(CategoryAttributeDO::getAttributeId, attributeIds));
     }
 }

@@ -31,21 +31,23 @@ public class ListByOrderIdHandler extends AbstractCommonHandler<Long, PaymentInf
     @Override
     public BaseResult processor(Long orderId) {
         List<ListPaymentResponseDTO> collect = paymentInfoMapper.selectList(Wrappers.<PaymentInfoDO>lambdaQuery()
-                .eq(PaymentInfoDO::getOrderId, orderId)).stream().map(paymentInfoDO -> {
-            ListPaymentResponseDTO paymentResponse = new ListPaymentResponseDTO();
-            paymentResponse.setPaymentId(paymentInfoDO.getId());
-            paymentResponse.setOrderId(paymentInfoDO.getOrderId());
-            paymentResponse.setPaymentType(EnumUtil.getCodeDescEnum(PaymentTypeEnum.class, paymentInfoDO.getPaymentType()));
-            paymentResponse.setTradeNo(paymentInfoDO.getTradeNo());
-            paymentResponse.setAmount(paymentInfoDO.getAmount());
-            paymentResponse.setSubject(paymentInfoDO.getSubject());
-            paymentResponse.setPaymentStatus(EnumUtil.getCodeDescEnum(PaymentStatusEnum.class, paymentInfoDO.getPaymentStatus()));
-            paymentResponse.setCallbackContent(paymentInfoDO.getCallbackContent());
-            paymentResponse.setCallBackTime(paymentInfoDO.getCallBackTime());
-            paymentResponse.setBuyerAliPayNo(paymentInfoDO.getBuyerAliPayNo());
-            paymentResponse.setSellerAliPayNo(paymentInfoDO.getSellerAliPayNo());
-            return paymentResponse;
-        }).collect(Collectors.toList());
+            .eq(PaymentInfoDO::getOrderId, orderId)).stream().map(paymentInfoDO -> {
+                ListPaymentResponseDTO paymentResponse = new ListPaymentResponseDTO();
+                paymentResponse.setPaymentId(paymentInfoDO.getId());
+                paymentResponse.setOrderId(paymentInfoDO.getOrderId());
+                paymentResponse
+                    .setPaymentType(EnumUtil.getCodeDescEnum(PaymentTypeEnum.class, paymentInfoDO.getPaymentType()));
+                paymentResponse.setTradeNo(paymentInfoDO.getTradeNo());
+                paymentResponse.setAmount(paymentInfoDO.getAmount());
+                paymentResponse.setSubject(paymentInfoDO.getSubject());
+                paymentResponse.setPaymentStatus(
+                    EnumUtil.getCodeDescEnum(PaymentStatusEnum.class, paymentInfoDO.getPaymentStatus()));
+                paymentResponse.setCallbackContent(paymentInfoDO.getCallbackContent());
+                paymentResponse.setCallBackTime(paymentInfoDO.getCallBackTime());
+                paymentResponse.setBuyerAliPayNo(paymentInfoDO.getBuyerAliPayNo());
+                paymentResponse.setSellerAliPayNo(paymentInfoDO.getSellerAliPayNo());
+                return paymentResponse;
+            }).collect(Collectors.toList());
         return ResultUtil.success(collect);
     }
 }

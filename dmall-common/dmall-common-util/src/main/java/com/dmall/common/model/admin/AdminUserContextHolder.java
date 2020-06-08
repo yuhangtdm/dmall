@@ -6,11 +6,9 @@ package com.dmall.common.model.admin;
  */
 public class AdminUserContextHolder {
 
-    private AdminUserContextHolder() {
-    }
+    private AdminUserContextHolder() {}
 
     private static final InheritableThreadLocal<AdminUserDTO> LOCAL = new InheritableThreadLocal();
-
 
     public static void set(AdminUserDTO user) {
         LOCAL.set(user);

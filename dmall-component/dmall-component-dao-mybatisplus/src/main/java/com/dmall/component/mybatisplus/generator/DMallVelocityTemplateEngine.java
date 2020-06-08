@@ -136,7 +136,7 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
         InjectionConfig ic = cb.getInjectionConfig();
         if (null != ic && null != ic.getFileCreate()) {
             if (ic.getFileCreate() instanceof DMallFileCreate) {
-                DMallFileCreate dc = (DMallFileCreate) ic.getFileCreate();
+                DMallFileCreate dc = (DMallFileCreate)ic.getFileCreate();
                 return dc.isCreate(cb, fileType, filePath);
             }
         }
@@ -157,11 +157,11 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
         objectMap.put("requestDtoPackage", getDtoPackage(entityName, MybatisPlusConstants.REQUEST));
         // response dto package
         objectMap.put("responseDtoPackage", getDtoPackage(entityName, MybatisPlusConstants.RESPONSE));
-        // service  package
+        // service package
         objectMap.put("servicePackage", getServicePackage());
-        // serviceImpl  package
+        // serviceImpl package
         objectMap.put("serviceImplPackage", getServiceImplPackage(entityName));
-        // handler  package
+        // handler package
         objectMap.put("handlerPackage", getHandlerPackage(entityName));
     }
 
@@ -226,22 +226,21 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
         objectMap.put("id", StrUtil.format("{}id", comment));
     }
 
-
     /**
      * 获取自定义dto的包
      */
     private String getDtoPackage(String entityName, String mod) {
         return MybatisPlusConstants.PACKAGE_PARENT_NAME +
-                StringPool.DOT +
-                generator.getBusiness() +
-                StringPool.DOT +
-                MybatisPlusConstants.API +
-                StringPool.DOT +
-                MybatisPlusConstants.DTO +
-                StringPool.DOT +
-                entityName.toLowerCase() +
-                StringPool.DOT +
-                mod;
+            StringPool.DOT +
+            generator.getBusiness() +
+            StringPool.DOT +
+            MybatisPlusConstants.API +
+            StringPool.DOT +
+            MybatisPlusConstants.DTO +
+            StringPool.DOT +
+            entityName.toLowerCase() +
+            StringPool.DOT +
+            mod;
     }
 
     /**
@@ -249,12 +248,12 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
      */
     private String getServicePackage() {
         return MybatisPlusConstants.PACKAGE_PARENT_NAME +
-                StringPool.DOT +
-                generator.getBusiness() +
-                StringPool.DOT +
-                MybatisPlusConstants.API +
-                StringPool.DOT +
-                MybatisPlusConstants.SERVICE;
+            StringPool.DOT +
+            generator.getBusiness() +
+            StringPool.DOT +
+            MybatisPlusConstants.API +
+            StringPool.DOT +
+            MybatisPlusConstants.SERVICE;
     }
 
     /**
@@ -262,14 +261,14 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
      */
     private String getServiceImplPackage(String entityName) {
         return MybatisPlusConstants.PACKAGE_PARENT_NAME +
-                StringPool.DOT +
-                generator.getBusiness() +
-                StringPool.DOT +
-                MybatisPlusConstants.SERVICE +
-                StringPool.DOT +
-                MybatisPlusConstants.IMPL +
-                StringPool.DOT +
-                entityName.toLowerCase();
+            StringPool.DOT +
+            generator.getBusiness() +
+            StringPool.DOT +
+            MybatisPlusConstants.SERVICE +
+            StringPool.DOT +
+            MybatisPlusConstants.IMPL +
+            StringPool.DOT +
+            entityName.toLowerCase();
     }
 
     /**
@@ -277,8 +276,8 @@ public class DMallVelocityTemplateEngine extends VelocityTemplateEngine {
      */
     private String getHandlerPackage(String entityName) {
         return getServiceImplPackage(entityName) +
-                StringPool.DOT +
-                MybatisPlusConstants.HANDLER;
+            StringPool.DOT +
+            MybatisPlusConstants.HANDLER;
     }
 
 }

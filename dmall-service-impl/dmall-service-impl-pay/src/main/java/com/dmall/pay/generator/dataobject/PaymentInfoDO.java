@@ -118,5 +118,4 @@ public class PaymentInfoDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

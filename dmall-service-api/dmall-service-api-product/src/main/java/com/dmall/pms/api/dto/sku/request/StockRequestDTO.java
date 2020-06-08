@@ -26,5 +26,4 @@ public class StockRequestDTO implements Serializable {
     @Valid
     private List<SkuStockRequestDTO> sku;
 
-
 }

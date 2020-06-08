@@ -67,5 +67,4 @@ public class OrderStatusDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

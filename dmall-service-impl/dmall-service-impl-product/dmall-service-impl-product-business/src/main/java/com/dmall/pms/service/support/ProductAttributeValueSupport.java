@@ -81,7 +81,7 @@ public class ProductAttributeValueSupport {
                     list.add(attributeValueDO);
                 } else {
                     ProductAttributeValueDO productAttributeValueDO = find(list, specification.getAttributeId(),
-                            productId, specificationsValue);
+                        productId, specificationsValue);
                     productAttributeValueDO.setIsSpecifications(YNEnum.Y.getCode());
                 }
                 JSONObject object = new JSONObject();
@@ -105,7 +105,8 @@ public class ProductAttributeValueSupport {
                 if (!list.contains(attributeValueDO)) {
                     list.add(attributeValueDO);
                 } else {
-                    ProductAttributeValueDO productAttributeValueDO = find(list, salePoint.getAttributeId(), productId, salePointValue);
+                    ProductAttributeValueDO productAttributeValueDO =
+                        find(list, salePoint.getAttributeId(), productId, salePointValue);
                     productAttributeValueDO.setIsSellingPoint(YNEnum.Y.getCode());
                 }
             }
@@ -125,7 +126,8 @@ public class ProductAttributeValueSupport {
                 if (!list.contains(attributeValueDO)) {
                     list.add(attributeValueDO);
                 } else {
-                    ProductAttributeValueDO productAttributeValueDO = find(list, param.getAttributeId(), productId, paramValue);
+                    ProductAttributeValueDO productAttributeValueDO =
+                        find(list, param.getAttributeId(), productId, paramValue);
                     productAttributeValueDO.setIsParam(YNEnum.Y.getCode());
                 }
             }
@@ -149,8 +151,8 @@ public class ProductAttributeValueSupport {
         List<ParamResponseDTO> params = Lists.newArrayList();
         // 规格
         Map<Long, List<ProductAttributeValueDO>> specificationsMap = list.stream()
-                .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSpecifications()))
-                .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
+            .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSpecifications()))
+            .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
         specificationsMap.forEach((k, v) -> {
             ProductAttributeResponseDTO productAttributeResponse = new ProductAttributeResponseDTO();
             productAttributeResponse.setAttributeId(k);
@@ -168,8 +170,8 @@ public class ProductAttributeValueSupport {
         });
         // 卖点
         Map<Long, List<ProductAttributeValueDO>> salePointMap = list.stream()
-                .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSellingPoint()))
-                .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
+            .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSellingPoint()))
+            .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
         salePointMap.forEach((k, v) -> {
             ProductAttributeResponseDTO salePointResponse = new ProductAttributeResponseDTO();
             AttributeDO attributeDO = attributeCacheService.selectById(k);
@@ -186,12 +188,12 @@ public class ProductAttributeValueSupport {
         });
         // 参数
         Map<Long, List<ProductAttributeValueDO>> paramMap = list.stream()
-                .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsParam()))
-                .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeTypeId));
+            .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsParam()))
+            .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeTypeId));
         paramMap.forEach((k, v) -> {
             List<ProductAttributeResponseDTO> paramValueResponseList = Lists.newArrayList();
             Map<Long, List<ProductAttributeValueDO>> paramValueMap = v.stream()
-                    .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
+                .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
             paramValueMap.forEach((key, value) -> {
                 ProductAttributeResponseDTO paramValueResponse = new ProductAttributeResponseDTO();
                 paramValueResponse.setAttributeId(key);
@@ -214,10 +216,10 @@ public class ProductAttributeValueSupport {
             params.add(paramResponse);
         });
         List<Long> categoryIds = categoryProductSupport.listByProductId(productId).stream()
-                .map(CategoryProductDO::getCategoryId)
-                .collect(Collectors.toList());
+            .map(CategoryProductDO::getCategoryId)
+            .collect(Collectors.toList());
         List<String> cascadeCategoryNames = categoryIds.stream()
-                .map(categoryId -> categorySupport.getCascadeCategoryName(categoryId)).collect(Collectors.toList());
+            .map(categoryId -> categorySupport.getCascadeCategoryName(categoryId)).collect(Collectors.toList());
         ProductExtResponseDTO response = new ProductExtResponseDTO();
         response.setCategoryIds(categoryIds);
         response.setCascadeCategoryNames(cascadeCategoryNames);
@@ -235,7 +237,7 @@ public class ProductAttributeValueSupport {
      */
     public List<ProductAttributeValueDO> listByAttributeTypeId(Long attributeTypeId) {
         return iProductAttributeValueService.list(Wrappers.<ProductAttributeValueDO>lambdaQuery()
-                .eq(ProductAttributeValueDO::getAttributeTypeId, attributeTypeId));
+            .eq(ProductAttributeValueDO::getAttributeTypeId, attributeTypeId));
     }
 
     /**
@@ -243,7 +245,7 @@ public class ProductAttributeValueSupport {
      */
     public List<ProductAttributeValueDO> listByAttributeId(Long attributeId) {
         return iProductAttributeValueService.list(Wrappers.<ProductAttributeValueDO>lambdaQuery()
-                .eq(ProductAttributeValueDO::getAttributeId, attributeId));
+            .eq(ProductAttributeValueDO::getAttributeId, attributeId));
     }
 
     /**
@@ -251,7 +253,7 @@ public class ProductAttributeValueSupport {
      */
     public List<ProductAttributeValueDO> listByProductId(Long productId) {
         return iProductAttributeValueService.list(Wrappers.<ProductAttributeValueDO>lambdaQuery()
-                .eq(ProductAttributeValueDO::getProductId, productId));
+            .eq(ProductAttributeValueDO::getProductId, productId));
     }
 
     /**
@@ -259,25 +261,27 @@ public class ProductAttributeValueSupport {
      */
     public void deleteByProductId(Long productId) {
         iProductAttributeValueService.remove(Wrappers.<ProductAttributeValueDO>lambdaQuery()
-                .eq(ProductAttributeValueDO::getProductId, productId));
+            .eq(ProductAttributeValueDO::getProductId, productId));
     }
 
     /**
      * 根据商品id，属性id，属性值 查询实体
      */
-    public ProductAttributeValueDO getByProductIdAndAttributeValue(Long productId, Long attributeId, String attributeValue) {
+    public ProductAttributeValueDO getByProductIdAndAttributeValue(Long productId, Long attributeId,
+        String attributeValue) {
         return iProductAttributeValueService.getOne(Wrappers.<ProductAttributeValueDO>lambdaQuery()
-                .eq(ProductAttributeValueDO::getProductId, productId)
-                .eq(ProductAttributeValueDO::getAttributeId, attributeId)
-                .eq(ProductAttributeValueDO::getAttributeValue, attributeValue));
+            .eq(ProductAttributeValueDO::getProductId, productId)
+            .eq(ProductAttributeValueDO::getAttributeId, attributeId)
+            .eq(ProductAttributeValueDO::getAttributeValue, attributeValue));
     }
 
     private ProductAttributeValueDO find(List<ProductAttributeValueDO> list, Long attributeId,
-                                         Long productId, String attributeValue) {
+        Long productId, String attributeValue) {
         Optional<ProductAttributeValueDO> any = list.stream()
-                .filter(productAttributeValueDO -> productAttributeValueDO.getAttributeId().equals(attributeId)
-                        && productAttributeValueDO.getProductId().equals(productId)
-                        && productAttributeValueDO.getAttributeValue().equals(attributeValue)).findAny();
+            .filter(productAttributeValueDO -> productAttributeValueDO.getAttributeId().equals(attributeId)
+                && productAttributeValueDO.getProductId().equals(productId)
+                && productAttributeValueDO.getAttributeValue().equals(attributeValue))
+            .findAny();
         return any.orElse(null);
     }
 }

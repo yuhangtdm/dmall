@@ -46,7 +46,6 @@ public interface OrderConstants {
      */
     String PAY_SUCCESS_CONSUMER = "dmall-service-impl-order-paySuccessConsumer";
 
-
     /**
      * 同步sku到es的consumer
      */

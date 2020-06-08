@@ -28,16 +28,16 @@ public class SkuSearchHandlerTest {
     public void processor() {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setCat(3L);
-//        searchRequestDTO.setBra("1");
-//        searchRequestDTO.setKeyword("小米手机");
-//        searchRequestDTO.setEv("30000,30079");
-//        searchRequestDTO.setJl("");
-//        searchRequestDTO.setSort("");
-//        searchRequestDTO.setFrom(0);
-//        searchRequestDTO.setSize(20);
+        // searchRequestDTO.setBra("1");
+        // searchRequestDTO.setKeyword("小米手机");
+        // searchRequestDTO.setEv("30000,30079");
+        // searchRequestDTO.setJl("");
+        // searchRequestDTO.setSort("");
+        // searchRequestDTO.setFrom(0);
+        // searchRequestDTO.setSize(20);
 
         BaseResult<SearchResponseDTO> processor =
-                skuSearchHandler.processor(searchRequestDTO);
+            skuSearchHandler.processor(searchRequestDTO);
 
         log.info("获取结果:\n{}", JSON.toJSONString(processor, true));
     }

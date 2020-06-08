@@ -26,7 +26,7 @@ public class CommonStockHandler {
      */
     public StockRequestDTO build(Long orderId) {
         List<OrderItemDO> orderItemList = orderItemMapper.selectList(Wrappers.<OrderItemDO>lambdaQuery()
-                .eq(OrderItemDO::getOrderId, orderId));
+            .eq(OrderItemDO::getOrderId, orderId));
         List<SkuStockRequestDTO> skuList = orderItemList.stream().map(orderItemDO -> {
             SkuStockRequestDTO skuStockRequestDTO = new SkuStockRequestDTO();
             skuStockRequestDTO.setSkuId(orderItemDO.getSkuId());

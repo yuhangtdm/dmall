@@ -19,7 +19,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
-public class SaveMemberReceiveAddressHandler extends AbstractCommonHandler<SaveMemberReceiveAddressRequestDTO, MemberReceiveAddressDO, Long> {
+public class SaveMemberReceiveAddressHandler
+    extends AbstractCommonHandler<SaveMemberReceiveAddressRequestDTO, MemberReceiveAddressDO, Long> {
 
     private static final Integer MAX_COUNT = 20;
 
@@ -32,7 +33,7 @@ public class SaveMemberReceiveAddressHandler extends AbstractCommonHandler<SaveM
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
         // 限制地址最多20个
         Integer count = memberReceiveAddressMapper.selectCount(Wrappers.<MemberReceiveAddressDO>lambdaQuery()
-                .eq(MemberReceiveAddressDO::getCreator, loginMember.getId()));
+            .eq(MemberReceiveAddressDO::getCreator, loginMember.getId()));
         if (count >= MAX_COUNT) {
             return ResultUtil.fail(MmsErrorEnum.MEMBER_RECEIVE_ADDRESS_COUNT_LIMIT);
         }

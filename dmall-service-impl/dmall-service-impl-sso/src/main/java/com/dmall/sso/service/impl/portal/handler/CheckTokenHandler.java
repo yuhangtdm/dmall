@@ -23,7 +23,8 @@ public class CheckTokenHandler extends AbstractCommonHandler<String, MemberDO, P
 
     @Override
     public BaseResult<PortalMemberDTO> processor(String token) {
-        PortalMemberDTO portalMemberDTO = (PortalMemberDTO) redisTemplate.opsForValue().get(StrUtil.format("portal_{}", token));
+        PortalMemberDTO portalMemberDTO =
+            (PortalMemberDTO)redisTemplate.opsForValue().get(StrUtil.format("portal_{}", token));
         if (portalMemberDTO == null) {
             return ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN);
         }

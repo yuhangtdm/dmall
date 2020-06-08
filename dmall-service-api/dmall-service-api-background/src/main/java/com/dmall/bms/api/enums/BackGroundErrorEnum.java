@@ -123,6 +123,7 @@ public enum BackGroundErrorEnum implements ErrorCodeEnum {
     DELETE_ERROR("1049", "当前状态不可删除"),
 
     ;
+
     /**
      * 错误码
      */

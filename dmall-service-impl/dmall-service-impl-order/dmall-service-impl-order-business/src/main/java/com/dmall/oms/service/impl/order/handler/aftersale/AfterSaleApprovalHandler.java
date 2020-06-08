@@ -33,7 +33,8 @@ import java.util.List;
  * @author: created by hang.yu on 2020/4/15 22:26
  */
 @Component
-public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApprovalRequestDTO, OrderAfterSaleApplyDO, Long> {
+public class AfterSaleApprovalHandler
+    extends AbstractCommonHandler<AfterSaleApprovalRequestDTO, OrderAfterSaleApplyDO, Long> {
 
     @Autowired
     private OrderAfterSaleApplyMapper orderAfterSaleApplyMapper;
@@ -77,7 +78,7 @@ public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApp
                 }
                 // 调用支付服务的退款接口
                 BaseResult baseResult = paymentFeign.applyRefund(AfterSaleSupport.buildApplyRefundRequest(orderItemDO,
-                        orderDO.getPaymentType(), orderAfterSaleApplyDO.getReason()));
+                    orderDO.getPaymentType(), orderAfterSaleApplyDO.getReason()));
                 if (baseResult.getResult()) {
                     return ResultUtil.fail(baseResult.getCode(), baseResult.getMsg());
                 }
@@ -125,9 +126,8 @@ public class AfterSaleApprovalHandler extends AbstractCommonHandler<AfterSaleApp
 
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.SYSTEM,
-                AfterSaleLogTitleEnum.APPROVAL, requestDTO.getHandleNote());
+            AfterSaleLogTitleEnum.APPROVAL, requestDTO.getHandleNote());
         return ResultUtil.success(requestDTO.getAfterSaleId());
     }
-
 
 }

@@ -26,7 +26,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/14 23:21
  */
 @Component
-public class AfterSalePageHandler extends AbstractCommonHandler<AfterSalePageRequestDTO, OrderAfterSaleApplyDO, AfterSalePageResponseDTO> {
+public class AfterSalePageHandler
+    extends AbstractCommonHandler<AfterSalePageRequestDTO, OrderAfterSaleApplyDO, AfterSalePageResponseDTO> {
 
     @Autowired
     private OrderAfterSaleApplyMapper orderAfterSaleApplyMapper;
@@ -35,13 +36,13 @@ public class AfterSalePageHandler extends AbstractCommonHandler<AfterSalePageReq
     public BaseResult<ResponsePage<AfterSalePageResponseDTO>> processor(AfterSalePageRequestDTO requestDTO) {
         IPage<OrderAfterSaleApplyDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         LambdaQueryWrapper<OrderAfterSaleApplyDO> wrapper = Wrappers.<OrderAfterSaleApplyDO>lambdaQuery()
-                .eq(requestDTO.getAfterSaleId() != null, OrderAfterSaleApplyDO::getId, requestDTO.getAfterSaleId())
-                .eq(requestDTO.getOrderId() != null, OrderAfterSaleApplyDO::getOrderId, requestDTO.getOrderId())
-                .eq(requestDTO.getOrderItemId() != null, OrderAfterSaleApplyDO::getOrderItemId, requestDTO.getOrderItemId())
-                .eq(requestDTO.getSubOrderId() != null, OrderAfterSaleApplyDO::getSubOrderId, requestDTO.getSubOrderId())
-                .eq(requestDTO.getType() != null, OrderAfterSaleApplyDO::getType, requestDTO.getType())
-                .eq(requestDTO.getStatus() != null, OrderAfterSaleApplyDO::getStatus, requestDTO.getStatus())
-                .eq(requestDTO.getSkuId() != null, OrderAfterSaleApplyDO::getSkuId, requestDTO.getSkuId());
+            .eq(requestDTO.getAfterSaleId() != null, OrderAfterSaleApplyDO::getId, requestDTO.getAfterSaleId())
+            .eq(requestDTO.getOrderId() != null, OrderAfterSaleApplyDO::getOrderId, requestDTO.getOrderId())
+            .eq(requestDTO.getOrderItemId() != null, OrderAfterSaleApplyDO::getOrderItemId, requestDTO.getOrderItemId())
+            .eq(requestDTO.getSubOrderId() != null, OrderAfterSaleApplyDO::getSubOrderId, requestDTO.getSubOrderId())
+            .eq(requestDTO.getType() != null, OrderAfterSaleApplyDO::getType, requestDTO.getType())
+            .eq(requestDTO.getStatus() != null, OrderAfterSaleApplyDO::getStatus, requestDTO.getStatus())
+            .eq(requestDTO.getSkuId() != null, OrderAfterSaleApplyDO::getSkuId, requestDTO.getSkuId());
         page = orderAfterSaleApplyMapper.selectPage(page, wrapper);
 
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), buildResponse(page)));
@@ -53,8 +54,10 @@ public class AfterSalePageHandler extends AbstractCommonHandler<AfterSalePageReq
             afterSalePageResponseDTO.setAfterSaleId(orderAfterSaleApplyDO.getId());
             afterSalePageResponseDTO.setOrderId(orderAfterSaleApplyDO.getOrderId());
             afterSalePageResponseDTO.setOrderItemId(orderAfterSaleApplyDO.getOrderItemId());
-            afterSalePageResponseDTO.setType(EnumUtil.getCodeDescEnum(AfterSaleTypeEnum.class, orderAfterSaleApplyDO.getType()));
-            afterSalePageResponseDTO.setStatus(EnumUtil.getCodeDescEnum(AfterSaleStatusEnum.class, orderAfterSaleApplyDO.getStatus()));
+            afterSalePageResponseDTO
+                .setType(EnumUtil.getCodeDescEnum(AfterSaleTypeEnum.class, orderAfterSaleApplyDO.getType()));
+            afterSalePageResponseDTO
+                .setStatus(EnumUtil.getCodeDescEnum(AfterSaleStatusEnum.class, orderAfterSaleApplyDO.getStatus()));
             afterSalePageResponseDTO.setHandleMan(orderAfterSaleApplyDO.getHandleMan());
             afterSalePageResponseDTO.setApplyTime(orderAfterSaleApplyDO.getApplyTime());
             afterSalePageResponseDTO.setHandleTime(orderAfterSaleApplyDO.getApprovalTime());

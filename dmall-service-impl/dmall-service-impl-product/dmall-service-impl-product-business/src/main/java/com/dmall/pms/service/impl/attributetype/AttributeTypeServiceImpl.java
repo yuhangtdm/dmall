@@ -74,7 +74,8 @@ public class AttributeTypeServiceImpl implements AttributeTypeService {
     }
 
     @Override
-    public BaseResult<ResponsePage<AttributeTypeResponseDTO>> page(@RequestBody PageAttributeTypeRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<AttributeTypeResponseDTO>>
+        page(@RequestBody PageAttributeTypeRequestDTO requestDTO) {
         return pageAttributeTypeHandler.handler(requestDTO);
     }
 

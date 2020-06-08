@@ -33,13 +33,13 @@ public class PageRoleHandler extends AbstractCommonHandler<PageRoleRequestDTO, R
     public BaseResult<ResponsePage<RoleResponseDTO>> processor(PageRoleRequestDTO requestDTO) {
         IPage<RoleDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         LambdaQueryWrapper<RoleDO> wrapper = Wrappers.<RoleDO>lambdaQuery()
-                .like(StrUtil.isNotBlank(requestDTO.getName()), RoleDO::getName, requestDTO.getName());
+            .like(StrUtil.isNotBlank(requestDTO.getName()), RoleDO::getName, requestDTO.getName());
 
         page = roleMapper.selectPage(page, wrapper);
 
         List<RoleResponseDTO> collect = page.getRecords().stream()
-                .map(roleDO -> doConvertDto(roleDO, RoleResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(roleDO -> doConvertDto(roleDO, RoleResponseDTO.class))
+            .collect(Collectors.toList());
 
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }

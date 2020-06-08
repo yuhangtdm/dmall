@@ -77,7 +77,7 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * prefix:cacheName:类名.方法名:参数
      * 参数: 一个参数 如果do对象 取do的id
      * 如果是其他参数 属性名|属性值
-     * 多个参数     属性名|属性值,属性名|属性值
+     * 多个参数 属性名|属性值,属性名|属性值
      */
     @Override
     public KeyGenerator keyGenerator() {
@@ -125,19 +125,22 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
 
         // 构建缓存配置
-        RedisCacheConfiguration defaultCacheConfig = buildRedisCacheConfiguration(dMallRedisProperties.getCacheKeyPrefix(),
+        RedisCacheConfiguration defaultCacheConfig =
+            buildRedisCacheConfiguration(dMallRedisProperties.getCacheKeyPrefix(),
                 dMallRedisProperties.getTtlUnitEnum(), dMallRedisProperties.getTtl());
 
         // 构建初始化自定义的缓存
         Map<String, RedisCacheConfiguration> initialCacheConfiguration = Maps.newHashMap();
         if (CollUtil.isNotEmpty(dMallRedisProperties.getCustomCaches())) {
-            dMallRedisProperties.getCustomCaches().stream().filter(customCache -> !StringUtils.isBlank(customCache.getName()))
-                    .forEach(customCache -> initialCacheConfiguration.put(customCache.getName(),
-                            buildRedisCacheConfiguration(dMallRedisProperties.getCacheKeyPrefix(), customCache.getTtlUnitEnum(), customCache.getTtl())));
+            dMallRedisProperties.getCustomCaches().stream()
+                .filter(customCache -> !StringUtils.isBlank(customCache.getName()))
+                .forEach(customCache -> initialCacheConfiguration.put(customCache.getName(),
+                    buildRedisCacheConfiguration(dMallRedisProperties.getCacheKeyPrefix(), customCache.getTtlUnitEnum(),
+                        customCache.getTtl())));
         }
         return RedisCacheManager.builder(redisCacheWriter)
-                .cacheDefaults(defaultCacheConfig)
-                .withInitialCacheConfigurations(initialCacheConfiguration).build();
+            .cacheDefaults(defaultCacheConfig)
+            .withInitialCacheConfigurations(initialCacheConfiguration).build();
     }
 
     /**
@@ -206,7 +209,8 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * 分布式锁对象
      */
     @Bean
-    public DistributedLockService distributedLock(RedisTemplate redisTemplate, DefaultRedisScript<Boolean> redisScript) {
+    public DistributedLockService distributedLock(RedisTemplate redisTemplate,
+        DefaultRedisScript<Boolean> redisScript) {
         return new DistributedLockService(redisTemplate, redisScript);
     }
 
@@ -214,12 +218,13 @@ public class DMallRedisConfiguration extends CachingConfigurerSupport implements
      * 构建初始化缓存
      *
      * @param cacheKeyPrefix 缓存前缀
-     * @param ttlUnitEnum    过期单位
-     * @param ttl            过期时间
+     * @param ttlUnitEnum 过期单位
+     * @param ttl 过期时间
      */
-    private RedisCacheConfiguration buildRedisCacheConfiguration(String cacheKeyPrefix, TimeUnit ttlUnitEnum, Long ttl) {
+    private RedisCacheConfiguration buildRedisCacheConfiguration(String cacheKeyPrefix, TimeUnit ttlUnitEnum,
+        Long ttl) {
         return RedisCacheConfiguration.defaultCacheConfig().prefixKeysWith(StrUtil.format("{}:", cacheKeyPrefix))
-                .entryTtl(getDuration(ttlUnitEnum, ttl));
+            .entryTtl(getDuration(ttlUnitEnum, ttl));
     }
 
     /**

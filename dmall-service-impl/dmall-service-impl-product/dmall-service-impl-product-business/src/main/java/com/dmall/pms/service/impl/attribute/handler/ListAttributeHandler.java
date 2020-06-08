@@ -27,7 +27,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeRequestDTO, AttributeDO, AttributeResponseDTO> {
+public class ListAttributeHandler
+    extends AbstractCommonHandler<ListAttributeRequestDTO, AttributeDO, AttributeResponseDTO> {
 
     @Autowired
     private AttributeMapper attributeMapper;
@@ -61,17 +62,16 @@ public class ListAttributeHandler extends AbstractCommonHandler<ListAttributeReq
     public BaseResult<List<AttributeResponseDTO>> processor(ListAttributeRequestDTO requestDTO) {
         List<AttributeDO> attributeDOS;
         if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getShowName(), requestDTO.getType(),
-                requestDTO.getHandAddStatus(), requestDTO.getInputType(), requestDTO.getThreeCategoryIds())) {
+            requestDTO.getHandAddStatus(), requestDTO.getInputType(), requestDTO.getThreeCategoryIds())) {
             attributeDOS = attributeCacheService.selectAll();
         } else {
             attributeDOS = attributeListMapper.listAttribute(requestDTO);
         }
         List<AttributeResponseDTO> collect = attributeDOS.stream()
-                .filter(Objects::nonNull)
-                .map(attributeDO -> doConvertDto(attributeDO, AttributeResponseDTO.class))
-                .collect(Collectors.toList());
+            .filter(Objects::nonNull)
+            .map(attributeDO -> doConvertDto(attributeDO, AttributeResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }
-
 
 }

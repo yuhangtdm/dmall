@@ -40,24 +40,27 @@ public class ListBrandHandler extends AbstractCommonHandler<ListBrandRequestDTO,
     @Override
     public BaseResult<List<BrandResponseDTO>> processor(ListBrandRequestDTO requestDTO) {
         List<BrandDO> brandDOS;
-        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter(), requestDTO.getCategoryIds())) {
+        if (ObjectUtil.allEmpty(requestDTO.getEnglishName(), requestDTO.getName(), requestDTO.getFirstLetter(),
+            requestDTO.getCategoryIds())) {
             brandDOS = brandCacheService.selectAll();
         } else {
             if (CollUtil.isNotEmpty(requestDTO.getCategoryIds())) {
                 brandDOS = brandCategoryMapper.selectBrand(requestDTO);
             } else {
                 LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
-                        .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
-                        .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
-                        .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
+                    .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName,
+                        requestDTO.getEnglishName())
+                    .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
+                    .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter,
+                        requestDTO.getFirstLetter());
                 brandDOS = brandMapper.selectList(queryWrapper);
             }
 
         }
         List<BrandResponseDTO> list = brandDOS.stream()
-                .filter(Objects::nonNull)
-                .map(doo -> doConvertDto(doo, BrandResponseDTO.class))
-                .collect(Collectors.toList());
+            .filter(Objects::nonNull)
+            .map(doo -> doConvertDto(doo, BrandResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(list);
     }
 

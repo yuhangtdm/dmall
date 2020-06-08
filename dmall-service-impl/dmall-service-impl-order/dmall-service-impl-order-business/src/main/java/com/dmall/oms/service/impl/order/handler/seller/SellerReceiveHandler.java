@@ -80,10 +80,10 @@ public class SellerReceiveHandler extends AbstractCommonHandler<Long, OrderAfter
         OrderDO orderDO = omsValidate.validateOrder(orderItemDO.getOrderId());
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.SYSTEM,
-                AfterSaleLogTitleEnum.PRODUCT_RECEIVED, StrUtil.format(RECEIVE_LOG_CONTENT, orderAfterSaleApplyDO.getId()));
+            AfterSaleLogTitleEnum.PRODUCT_RECEIVED, StrUtil.format(RECEIVE_LOG_CONTENT, orderAfterSaleApplyDO.getId()));
         // 调用支付服务的退款接口
         BaseResult baseResult = paymentFeign.applyRefund(AfterSaleSupport.buildApplyRefundRequest(orderItemDO,
-                orderDO.getPaymentType(), orderAfterSaleApplyDO.getReason()));
+            orderDO.getPaymentType(), orderAfterSaleApplyDO.getReason()));
         if (baseResult.getResult()) {
             return ResultUtil.fail(baseResult.getCode(), baseResult.getMsg());
         }
@@ -108,7 +108,7 @@ public class SellerReceiveHandler extends AbstractCommonHandler<Long, OrderAfter
         orderAfterSaleApplyMapper.updateById(orderAfterSaleApplyDO);
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.SYSTEM,
-                AfterSaleLogTitleEnum.REFUND_SUCCESS, StrUtil.format(REFUND_LOG_CONTENT, orderAfterSaleApplyDO.getId()));
+            AfterSaleLogTitleEnum.REFUND_SUCCESS, StrUtil.format(REFUND_LOG_CONTENT, orderAfterSaleApplyDO.getId()));
         return ResultUtil.success(afterSaleId);
     }
 }

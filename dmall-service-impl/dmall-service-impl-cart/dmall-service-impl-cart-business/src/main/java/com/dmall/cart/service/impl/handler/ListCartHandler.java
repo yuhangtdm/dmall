@@ -64,8 +64,7 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
         if (StrUtil.isBlank(cookie)) {
             return ResultUtil.success();
         }
-        List<CartDTO> cartDTOS = JsonUtil.fromJson(cookie, new TypeReference<List<CartDTO>>() {
-        });
+        List<CartDTO> cartDTOS = JsonUtil.fromJson(cookie, new TypeReference<List<CartDTO>>() {});
         if (CollUtil.isNotEmpty(cartDTOS)) {
             List<Long> skuIds = cartDTOS.stream().map(CartDTO::getSkuId).collect(Collectors.toList());
             BaseResult<List<BasicSkuResponseDTO>> basic = skuFeign.getBasic(skuIds);
@@ -79,8 +78,8 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
                 cartSkuResponseDTO.setSkuId(cartDTO.getSkuId());
 
                 Optional<BasicSkuResponseDTO> any = skuResponseDTOList.stream()
-                        .filter(basicData -> basicData.getId().equals(cartDTO.getSkuId()))
-                        .findAny();
+                    .filter(basicData -> basicData.getId().equals(cartDTO.getSkuId()))
+                    .findAny();
                 if (any.isPresent()) {
                     BasicSkuResponseDTO data = any.get();
                     cartSkuResponseDTO.setSkuName(data.getName());
@@ -103,15 +102,15 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
             cartListResponseDTO.setCarts(skuList);
             Integer totalNumber = skuList.stream().mapToInt(CartSkuResponseDTO::getNumber).sum();
             Integer totalCheckedNumber = skuList.stream()
-                    .filter(CartSkuResponseDTO::getChecked)
-                    .mapToInt(CartSkuResponseDTO::getNumber).sum();
+                .filter(CartSkuResponseDTO::getChecked)
+                .mapToInt(CartSkuResponseDTO::getNumber).sum();
             BigDecimal totalPrice = skuList.stream()
-                    .map(CartSkuResponseDTO::getSkuTotalPrice)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(CartSkuResponseDTO::getSkuTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
             BigDecimal totalCheckedPrice = skuList.stream()
-                    .filter(CartSkuResponseDTO::getChecked)
-                    .map(CartSkuResponseDTO::getSkuTotalPrice)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .filter(CartSkuResponseDTO::getChecked)
+                .map(CartSkuResponseDTO::getSkuTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
             cartListResponseDTO.setTotalNumber(totalNumber);
             cartListResponseDTO.setCheckTotalNumber(totalCheckedNumber);
@@ -126,7 +125,8 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
     /**
      * 从缓存中获取购物车
      */
-    private BaseResult<CartListResponseDTO> getCartListFromDb(PortalMemberDTO login, CartListResponseDTO cartListResponseDTO) {
+    private BaseResult<CartListResponseDTO> getCartListFromDb(PortalMemberDTO login,
+        CartListResponseDTO cartListResponseDTO) {
         List<CartItemDO> list = cartCacheService.list(login.getId());
         if (CollUtil.isEmpty(list)) {
             return ResultUtil.fail(CartErrorEnum.CART_LIST_EMPTY);
@@ -142,8 +142,8 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
             CartSkuResponseDTO cartSkuResponseDTO = new CartSkuResponseDTO();
             cartSkuResponseDTO.setSkuId(cartItemDO.getSkuId());
             Optional<BasicSkuResponseDTO> any = skuResponseDTOList.stream()
-                    .filter(basicData -> basicData.getId().equals(cartItemDO.getSkuId()))
-                    .findAny();
+                .filter(basicData -> basicData.getId().equals(cartItemDO.getSkuId()))
+                .findAny();
             if (any.isPresent()) {
                 BasicSkuResponseDTO data = any.get();
                 cartSkuResponseDTO.setSkuName(data.getName());
@@ -151,7 +151,8 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
                 cartSkuResponseDTO.setNumber(cartItemDO.getNumber());
                 if (NumberUtil.isLess(data.getPrice(), cartItemDO.getSkuTotalPrice())) {
                     cartSkuResponseDTO.setHasReductionPrice(true);
-                    cartSkuResponseDTO.setReductionPrice(NumberUtil.sub(cartItemDO.getSkuTotalPrice(), data.getPrice()));
+                    cartSkuResponseDTO
+                        .setReductionPrice(NumberUtil.sub(cartItemDO.getSkuTotalPrice(), data.getPrice()));
                 } else {
                     cartSkuResponseDTO.setHasReductionPrice(false);
                 }
@@ -165,8 +166,8 @@ public class ListCartHandler extends AbstractCommonHandler<Void, CartItemDO, Car
         cartListResponseDTO.setCarts(skuList);
         Integer totalNumber = skuList.stream().mapToInt(CartSkuResponseDTO::getNumber).sum();
         BigDecimal totalPrice = skuList.stream()
-                .map(CartSkuResponseDTO::getSkuTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .map(CartSkuResponseDTO::getSkuTotalPrice)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
         cartListResponseDTO.setTotalNumber(totalNumber);
         cartListResponseDTO.setTotalPrice(totalPrice);
         return ResultUtil.success(cartListResponseDTO);

@@ -45,7 +45,7 @@ public class RequestUtil {
      * 获取request
      */
     public static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
     }
 
     /**

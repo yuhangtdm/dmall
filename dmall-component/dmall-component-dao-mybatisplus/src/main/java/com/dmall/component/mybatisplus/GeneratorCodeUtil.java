@@ -31,10 +31,9 @@ public class GeneratorCodeUtil {
         generator.setBusiness("pms");
         generator.setDatabaseUrl(StrUtil.format(generator.getDatabaseUrl(), "pms"));
         generator.setGenerateCustomer(true);
-        generator.setTableNames(new String[]{"pms_sku_audit"});
+        generator.setTableNames(new String[] {"pms_sku_audit"});
         moduleGenerator(generator);
     }
-
 
     /**
      * 生成文件的主方法
@@ -44,7 +43,8 @@ public class GeneratorCodeUtil {
         // 全局配置
         GlobalConfig globalConfig = getGlobalConfig(generator.getModule());
         // 数据源配置
-        DataSourceConfig dataSourceConfig = getDataSourceConfig(generator.getDatabaseUrl(), generator.getDatabaseUserName(), generator.getDatabasePassword());
+        DataSourceConfig dataSourceConfig = getDataSourceConfig(generator.getDatabaseUrl(),
+            generator.getDatabaseUserName(), generator.getDatabasePassword());
         // 包配置
         PackageConfig packageConfig = getPackageConfig(generator);
         // 策略配置
@@ -57,14 +57,14 @@ public class GeneratorCodeUtil {
         DMallVelocityTemplateEngine templateEngine = new DMallVelocityTemplateEngine();
         templateEngine.setGenerator(generator);
         dMallAutoGenerator
-                .setGlobalConfig(globalConfig)
-                .setDataSource(dataSourceConfig)
-                .setPackageInfo(packageConfig)
-                .setStrategy(strategyConfig)
-                .setTemplate(templateConfig)
-                // 配置自定义的生成引擎
-                .setTemplateEngine(templateEngine)
-                .execute();
+            .setGlobalConfig(globalConfig)
+            .setDataSource(dataSourceConfig)
+            .setPackageInfo(packageConfig)
+            .setStrategy(strategyConfig)
+            .setTemplate(templateConfig)
+            // 配置自定义的生成引擎
+            .setTemplateEngine(templateEngine)
+            .execute();
 
     }
 
@@ -74,34 +74,35 @@ public class GeneratorCodeUtil {
     private static GlobalConfig getGlobalConfig(String module) {
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setOpen(false)
-                //生成文件的输出目录
-                .setOutputDir(System.getProperty(MybatisPlusConstants.USER_DIR)
-                        + StrUtil.format(MybatisPlusConstants.GENERATOR_MODULE_NAME, module, module)
-                        + MybatisPlusConstants.SRC_MAIN_JAVA)
-                //是否覆盖已有文件 默认覆盖
-                .setFileOverride(true)
-                .setBaseResultMap(true)
-                .setBaseColumnList(true)
-                .setActiveRecord(false)
-                .setIdType(IdType.ID_WORKER)
-                .setAuthor(MybatisPlusConstants.AUTHOR)
-                .setDateType(DateType.ONLY_DATE)
-                // 修改实体后缀 和 服务实现类前缀
-                .setEntityName(MybatisPlusConstants.ENTITY_NAME)
-                .setServiceImplName(MybatisPlusConstants.SERVICE_NAME);
+            // 生成文件的输出目录
+            .setOutputDir(System.getProperty(MybatisPlusConstants.USER_DIR)
+                + StrUtil.format(MybatisPlusConstants.GENERATOR_MODULE_NAME, module, module)
+                + MybatisPlusConstants.SRC_MAIN_JAVA)
+            // 是否覆盖已有文件 默认覆盖
+            .setFileOverride(true)
+            .setBaseResultMap(true)
+            .setBaseColumnList(true)
+            .setActiveRecord(false)
+            .setIdType(IdType.ID_WORKER)
+            .setAuthor(MybatisPlusConstants.AUTHOR)
+            .setDateType(DateType.ONLY_DATE)
+            // 修改实体后缀 和 服务实现类前缀
+            .setEntityName(MybatisPlusConstants.ENTITY_NAME)
+            .setServiceImplName(MybatisPlusConstants.SERVICE_NAME);
         return globalConfig;
     }
 
     /**
      * 配置数据源
      */
-    private static DataSourceConfig getDataSourceConfig(String databaseUrl, String databaseUserName, String databasePassword) {
+    private static DataSourceConfig getDataSourceConfig(String databaseUrl, String databaseUserName,
+        String databasePassword) {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
-                .setDriverName(MybatisPlusConstants.DRIVER_NAME)
-                .setUsername(databaseUserName)
-                .setPassword(databasePassword)
-                .setUrl(StrUtil.format(MybatisPlusConstants.DB_URL, databaseUrl));
+            .setDriverName(MybatisPlusConstants.DRIVER_NAME)
+            .setUsername(databaseUserName)
+            .setPassword(databasePassword)
+            .setUrl(StrUtil.format(MybatisPlusConstants.DB_URL, databaseUrl));
         return dataSourceConfig;
     }
 
@@ -111,8 +112,8 @@ public class GeneratorCodeUtil {
     private static PackageConfig getPackageConfig(GeneratorDTO generator) {
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setEntity(MybatisPlusConstants.ENTITY_PACKAGE_NAME)
-                .setParent(MybatisPlusConstants.PACKAGE_PARENT_NAME)
-                .setModuleName(generator.getBusiness() + StringPool.DOT + MybatisPlusConstants.PACKAGE_GENERATOR_NAME);
+            .setParent(MybatisPlusConstants.PACKAGE_PARENT_NAME)
+            .setModuleName(generator.getBusiness() + StringPool.DOT + MybatisPlusConstants.PACKAGE_GENERATOR_NAME);
         return packageConfig;
     }
 
@@ -121,14 +122,14 @@ public class GeneratorCodeUtil {
      */
     private static StrategyConfig getStrategyConfig(String tablePrefix, String... tableNames) {
         StrategyConfig strategyConfig = new StrategyConfig();
-        //使用lombok
+        // 使用lombok
         strategyConfig.setEntityLombokModel(true)
-                // 实体名称驼峰命名
-                .setNaming(NamingStrategy.underline_to_camel)
-                // 实体属性驼峰命名
-                .setColumnNaming(NamingStrategy.underline_to_camel)
-                // 表前缀
-                .setTablePrefix(tablePrefix + StrUtil.UNDERLINE);
+            // 实体名称驼峰命名
+            .setNaming(NamingStrategy.underline_to_camel)
+            // 实体属性驼峰命名
+            .setColumnNaming(NamingStrategy.underline_to_camel)
+            // 表前缀
+            .setTablePrefix(tablePrefix + StrUtil.UNDERLINE);
         if (tableNames != null) {
             strategyConfig.setInclude(tableNames);
         }
@@ -152,11 +153,11 @@ public class GeneratorCodeUtil {
     private static TemplateConfig getTemplateConfig() {
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setEntity(MybatisPlusConstants.TEMPLATES_ENTITY) // entity模板采用自定义模板
-                .setMapper(MybatisPlusConstants.TEMPLATES_MAPPER)// mapper模板采用自定义模板
-                .setXml(null) // xml采用自定义模板
-                .setService(MybatisPlusConstants.TEMPLATES_SERVICE) // service接口采用自定义模板
-                .setServiceImpl(MybatisPlusConstants.TEMPLATES_SERVICE_IMPL) // serviceImpl模板采用自定义模板
-                .setController(null); // 不生成controller
+            .setMapper(MybatisPlusConstants.TEMPLATES_MAPPER)// mapper模板采用自定义模板
+            .setXml(null) // xml采用自定义模板
+            .setService(MybatisPlusConstants.TEMPLATES_SERVICE) // service接口采用自定义模板
+            .setServiceImpl(MybatisPlusConstants.TEMPLATES_SERVICE_IMPL) // serviceImpl模板采用自定义模板
+            .setController(null); // 不生成controller
         return templateConfig;
 
     }

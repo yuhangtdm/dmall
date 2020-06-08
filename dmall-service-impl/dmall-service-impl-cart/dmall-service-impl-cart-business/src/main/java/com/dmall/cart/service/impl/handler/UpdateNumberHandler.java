@@ -25,7 +25,8 @@ import java.util.List;
  * @author: created by hang.yu on 2020/3/14 17:13
  */
 @Component
-public class UpdateNumberHandler extends AbstractCommonHandler<UpdateNumberRequestDTO, CartItemDO, CartListResponseDTO> {
+public class UpdateNumberHandler
+    extends AbstractCommonHandler<UpdateNumberRequestDTO, CartItemDO, CartListResponseDTO> {
 
     @Autowired
     private ListCartHandler listCartHandler;
@@ -52,7 +53,8 @@ public class UpdateNumberHandler extends AbstractCommonHandler<UpdateNumberReque
             AddCartUtil.notLoginAddCart(requestDTO.getNumber(), OperateEnum.UPDATE, skuData);
         } else {
             List<CartItemDO> cartItemDOS = cartCacheService.list(login.getId());
-            CartItemDO cartItemDO = AddCartUtil.loginAddCart(requestDTO.getNumber(), OperateEnum.ADD, skuData, login, cartItemDOS);
+            CartItemDO cartItemDO =
+                AddCartUtil.loginAddCart(requestDTO.getNumber(), OperateEnum.ADD, skuData, login, cartItemDOS);
             cartMapper.updateById(cartItemDO);
             cartCacheService.insert(login.getId(), cartItemDO);
         }

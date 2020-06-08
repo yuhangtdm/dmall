@@ -26,6 +26,7 @@ public enum OrderReceiveStatusEnum implements CodeDescEnum<Integer> {
      * 全部收货
      */
     ALL(3, "全部收货");
+
     private final Integer code;
 
     private final String desc;

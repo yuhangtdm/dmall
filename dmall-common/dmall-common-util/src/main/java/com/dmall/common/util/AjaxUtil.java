@@ -8,15 +8,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AjaxUtil {
 
-    private AjaxUtil() {
-    }
+    private AjaxUtil() {}
 
     private static final String HEADER = "X-Requested-With";
 
     private static final String AJAX_REQUEST = "XMLHttpRequest";
 
     /**
-     * 判断是否是  Ajax 请求
+     * 判断是否是 Ajax 请求
      */
     public static boolean isAjax(HttpServletRequest request) {
         return AJAX_REQUEST.equals(request.getHeader(HEADER));

@@ -32,15 +32,15 @@ public class PageBrandHandler extends AbstractCommonHandler<PageBrandRequestDTO,
     @Override
     public BaseResult<ResponsePage<BrandResponseDTO>> processor(PageBrandRequestDTO requestDTO) {
         LambdaQueryWrapper<BrandDO> queryWrapper = Wrappers.<BrandDO>lambdaQuery()
-                .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
-                .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
-                .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
+            .like(StrUtil.isNotBlank(requestDTO.getName()), BrandDO::getName, requestDTO.getName())
+            .like(StrUtil.isNotBlank(requestDTO.getEnglishName()), BrandDO::getEnglishName, requestDTO.getEnglishName())
+            .eq(StrUtil.isNotBlank(requestDTO.getFirstLetter()), BrandDO::getFirstLetter, requestDTO.getFirstLetter());
 
         Page<BrandDO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         IPage<BrandDO> brandDOIPage = brandMapper.selectPage(page, queryWrapper);
         List<BrandResponseDTO> record = brandDOIPage.getRecords().stream()
-                .map(doo -> doConvertDto(doo, BrandResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(doo -> doConvertDto(doo, BrandResponseDTO.class))
+            .collect(Collectors.toList());
 
         return ResultUtil.success(new ResponsePage(brandDOIPage.getTotal(), record));
     }

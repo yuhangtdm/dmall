@@ -63,7 +63,6 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
     @Autowired
     private UploadApplyCredentialsHandler uploadApplyCredentialsHandler;
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BaseResult applyRefund(@RequestBody OrderApplyRefundRequestDTO requestDTO) {
@@ -82,7 +81,8 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
     }
 
     @Override
-    public BaseResult<ResponsePage<AfterSalePageResponseDTO>> afterSalePage(@RequestBody AfterSalePageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<AfterSalePageResponseDTO>>
+        afterSalePage(@RequestBody AfterSalePageRequestDTO requestDTO) {
         return afterSalePageHandler.handler(requestDTO);
     }
 
@@ -122,7 +122,8 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
     }
 
     @Override
-    public BaseResult<ResponsePage<MyAfterSalePageResponseDTO>> myAfterSalePage(@RequestBody MyAfterSalePageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<MyAfterSalePageResponseDTO>>
+        myAfterSalePage(@RequestBody MyAfterSalePageRequestDTO requestDTO) {
         return myAfterSalePageHandler.handler(requestDTO);
     }
 }

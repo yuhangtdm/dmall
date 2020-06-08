@@ -11,8 +11,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtil {
 
-    private StringUtil() {
-    }
+    private StringUtil() {}
 
     /**
      * ISO-8859-1
@@ -28,8 +27,7 @@ public class StringUtil {
      * ISO转utf-8解决乱码问题
      */
     public static String getIsoToUtf8(String str) {
-        String newStr = StrUtil.EMPTY;
-        ;
+        String newStr = StrUtil.EMPTY;;
         if (StringUtils.isBlank(str)) {
             return newStr;
         }

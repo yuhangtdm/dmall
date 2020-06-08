@@ -14,7 +14,7 @@ import java.util.Map;
  * @author: created by hang.yu on 2019/12/29 19:17
  */
 @Slf4j
-//@Component
+// @Component
 public class CacheInitRunner implements CommandLineRunner {
 
     private static final String METHOD_NAME = "selectAll";

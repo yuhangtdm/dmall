@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020-04-05 16:03:43
  */
 @Component
-public class GetBmsDeliverWarehouseHandler extends AbstractCommonHandler<Long, DeliverWarehouseDO, DeliverWarehouseResponseDTO> {
+public class GetBmsDeliverWarehouseHandler
+    extends AbstractCommonHandler<Long, DeliverWarehouseDO, DeliverWarehouseResponseDTO> {
 
     @Autowired
     private DeliverWarehouseMapper deliverWarehouseMapper;

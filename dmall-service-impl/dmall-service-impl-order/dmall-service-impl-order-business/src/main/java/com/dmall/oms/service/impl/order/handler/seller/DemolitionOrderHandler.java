@@ -107,7 +107,7 @@ public class DemolitionOrderHandler extends AbstractCommonHandler<DemolitionOrde
             orderLogSupport.insert(orderDO.getId(), OrderOperateEnum.SPLIT, true, LOG_CONTENT);
         } else {
             orderLogSupport.insert(orderDO.getId(), OrderOperateEnum.SPLIT, true,
-                    StrUtil.format(LOG_CONTENT_SPLIT, subOrderIds.deleteCharAt(subOrderIds.lastIndexOf(","))));
+                StrUtil.format(LOG_CONTENT_SPLIT, subOrderIds.deleteCharAt(subOrderIds.lastIndexOf(","))));
         }
         syncEsOrderSupport.sendOrderEsMq(orderDO.getId());
         return ResultUtil.success(requestDTO.getOrderId());

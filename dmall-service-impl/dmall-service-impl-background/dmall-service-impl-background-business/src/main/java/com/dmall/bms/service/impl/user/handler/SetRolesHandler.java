@@ -57,8 +57,8 @@ public class SetRolesHandler extends AbstractCommonHandler<CheckedDTO, UserRoleD
         userRoleSupport.deleteByUserId(requestDTO.getId());
         for (Long roleId : requestDTO.getRelateIds()) {
             UserRoleDO userRoleDO = new UserRoleDO()
-                    .setUserId(requestDTO.getId())
-                    .setRoleId(roleId);
+                .setUserId(requestDTO.getId())
+                .setRoleId(roleId);
             userRoleMapper.insert(userRoleDO);
         }
         return ResultUtil.success(requestDTO.getId());

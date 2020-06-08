@@ -107,5 +107,4 @@ public class RefundRecordDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

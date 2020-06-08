@@ -105,5 +105,4 @@ public class MemberReceiveAddressDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

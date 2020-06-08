@@ -26,10 +26,10 @@ public class OrderItemListHandler extends AbstractCommonHandler<Long, OrderItemD
     @Override
     public BaseResult<List<OrderItemListResponseDTO>> processor(Long orderId) {
         List<OrderItemDO> orderItemList = orderItemMapper.selectList(Wrappers.<OrderItemDO>lambdaQuery()
-                .eq(OrderItemDO::getOrderId, orderId));
+            .eq(OrderItemDO::getOrderId, orderId));
         List<OrderItemListResponseDTO> collect = orderItemList.stream()
-                .map(orderItemDO -> doConvertDto(orderItemDO, OrderItemListResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(orderItemDO -> doConvertDto(orderItemDO, OrderItemListResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }
 }

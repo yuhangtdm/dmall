@@ -38,7 +38,7 @@ public class ResetPasswordHandler extends AbstractCommonHandler<ResetPasswordReq
     public BaseResult<String> processor(ResetPasswordRequestDTO requestDTO) {
         // 验证码不能过期
         String key = cacheKeySupport.generateForgetPassword(requestDTO.getEmail());
-        String code = (String) redisTemplate.opsForValue().get(key);
+        String code = (String)redisTemplate.opsForValue().get(key);
         if (StrUtil.isBlank(code)) {
             return ResultUtil.fail(MmsErrorEnum.CHECK_CODE_EXPIRED);
         }

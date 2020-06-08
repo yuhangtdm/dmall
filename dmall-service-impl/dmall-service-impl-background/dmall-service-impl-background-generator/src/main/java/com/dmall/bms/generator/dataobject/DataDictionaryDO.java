@@ -87,5 +87,4 @@ public class DataDictionaryDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

@@ -76,7 +76,8 @@ public class HttpClientConfiguration {
      **/
     @Bean(destroyMethod = "shutdown")
     public IdleConnectionEvictor idleConnectionEvictor() {
-        return new IdleConnectionEvictor(cm(), httpClientProperties.getMaxIdleTime(), httpClientProperties.getTimeUnit());
+        return new IdleConnectionEvictor(cm(), httpClientProperties.getMaxIdleTime(),
+            httpClientProperties.getTimeUnit());
     }
 
     @Bean

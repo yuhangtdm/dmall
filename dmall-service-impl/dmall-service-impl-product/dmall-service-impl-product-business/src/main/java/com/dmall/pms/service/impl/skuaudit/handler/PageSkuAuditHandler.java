@@ -23,7 +23,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-04-25 14:49:35
  */
 @Component
-public class PageSkuAuditHandler extends AbstractCommonHandler<PageSkuAuditRequestDTO, SkuAuditDO, SkuAuditResponseDTO> {
+public class PageSkuAuditHandler
+    extends AbstractCommonHandler<PageSkuAuditRequestDTO, SkuAuditDO, SkuAuditResponseDTO> {
 
     @Autowired
     private SkuAuditMapper skuAuditMapper;
@@ -31,12 +32,13 @@ public class PageSkuAuditHandler extends AbstractCommonHandler<PageSkuAuditReque
     @Override
     public BaseResult<ResponsePage<SkuAuditResponseDTO>> processor(PageSkuAuditRequestDTO requestDTO) {
         LambdaQueryWrapper<SkuAuditDO> wrapper = Wrappers.<SkuAuditDO>lambdaQuery()
-                .eq(requestDTO.getProductId() != null, SkuAuditDO::getProductId, requestDTO.getProductId())
-                .eq(requestDTO.getSkuId() != null, SkuAuditDO::getSkuId, requestDTO.getSkuId())
-                .eq(requestDTO.getStatus() != null, SkuAuditDO::getStatus, requestDTO.getStatus());
+            .eq(requestDTO.getProductId() != null, SkuAuditDO::getProductId, requestDTO.getProductId())
+            .eq(requestDTO.getSkuId() != null, SkuAuditDO::getSkuId, requestDTO.getSkuId())
+            .eq(requestDTO.getStatus() != null, SkuAuditDO::getStatus, requestDTO.getStatus());
         IPage<SkuAuditDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = skuAuditMapper.selectPage(page, wrapper);
-        List<SkuAuditResponseDTO> list = page.getRecords().stream().map(skuAuditDO -> doConvertDto(skuAuditDO, SkuAuditResponseDTO.class))
+        List<SkuAuditResponseDTO> list =
+            page.getRecords().stream().map(skuAuditDO -> doConvertDto(skuAuditDO, SkuAuditResponseDTO.class))
                 .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage(page.getTotal(), list));
     }

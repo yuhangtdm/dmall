@@ -28,7 +28,6 @@ public class SsoProperties {
      */
     private Integer portalTtlDay = 1;
 
-
     @PostConstruct
     public void check() {
 

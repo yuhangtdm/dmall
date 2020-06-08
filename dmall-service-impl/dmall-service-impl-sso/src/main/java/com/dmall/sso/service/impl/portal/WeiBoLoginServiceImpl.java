@@ -58,13 +58,11 @@ public class WeiBoLoginServiceImpl implements WeiBoLoginService {
     @Value("${dmall.weibo.redirect_uri}")
     private String redirectUri;
 
-
     @Override
     public BaseResult<PortalLoginResponseDTO> login(String code) {
         // 获取ACCESS_TOKEN
         String result = httpClientUtil.post(ACCESS_TOKEN_URL, getParamMap(code));
-        Map<String, String> accessTokenObject = JsonUtil.fromJson(result, new TypeReference<Map<String, String>>() {
-        });
+        Map<String, String> accessTokenObject = JsonUtil.fromJson(result, new TypeReference<Map<String, String>>() {});
         if (accessTokenObject == null || StrUtil.isNotBlank(accessTokenObject.get("error_code"))) {
             log.error("获取ACCESS_TOKEN错误,{}", result);
             return ResultUtil.fail(SsoErrorEnum.WEI_BO_ERROR);
@@ -80,7 +78,8 @@ public class WeiBoLoginServiceImpl implements WeiBoLoginService {
             return ResultUtil.fail(SsoErrorEnum.WEI_BO_ERROR);
         }
         // 调用member接口注册
-        BaseResult<PortalMemberDTO> weiBoLogin = thirdPartyPlatformFeign.weiBoLogin(getWeiBoLoginRequestDTO(userInfoObject));
+        BaseResult<PortalMemberDTO> weiBoLogin =
+            thirdPartyPlatformFeign.weiBoLogin(getWeiBoLoginRequestDTO(userInfoObject));
 
         return weiBoLoginHandler.handler(weiBoLogin.getData());
     }

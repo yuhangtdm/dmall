@@ -34,10 +34,10 @@ public class TabPermissionHandler extends AbstractCommonHandler<Long, Permission
     public BaseResult<List<TabPermissionResponseDTO>> processor(Long roleId) {
         List<PermissionDO> permissionList = permissionMapper.selectList(Wrappers.emptyWrapper());
         Map<String, List<PermissionDO>> collect = permissionList.stream()
-                .collect(Collectors.groupingBy(PermissionDO::getAppId, Collectors.toList()));
+            .collect(Collectors.groupingBy(PermissionDO::getAppId, Collectors.toList()));
         List<Long> permissionIds = rolePermissionSupport.listByRoleId(roleId).stream()
-                .map(RolePermissionDO::getPermissionId)
-                .collect(Collectors.toList());
+            .map(RolePermissionDO::getPermissionId)
+            .collect(Collectors.toList());
         return ResultUtil.success(PermissionSupport.getTabPermissionResponseDTOS(collect, permissionIds));
     }
 }

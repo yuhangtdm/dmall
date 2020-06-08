@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -30,6 +29,5 @@ public class ListBrandRequestDTO implements Serializable {
     private String firstLetter;
 
     @ApiModelProperty(value = "商品分类id", required = true, position = 4)
-    @NotNull(message = "商品分类id不能为空")
     private Set<Long> categoryIds;
 }

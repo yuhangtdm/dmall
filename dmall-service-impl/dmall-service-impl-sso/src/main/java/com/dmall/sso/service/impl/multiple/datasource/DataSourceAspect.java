@@ -18,24 +18,24 @@ import org.springframework.stereotype.Component;
 @Order(-1)
 public class DataSourceAspect {
 
-  /*  @Pointcut("execution(public *  com.dmall.sso.service.impl.admin.*.*(..))")
+    /*  @Pointcut("execution(public *  com.dmall.sso.service.impl.admin.*.*(..))")
     public void admin() {
     }
-
+    
     @Pointcut("execution(public *  com.dmall.sso.service.impl.portal.*.*(..))")
     public void portal() {
     }
-
+    
     @Before("admin()")
     public void doBeforeAdmin() {
         DataSourceContextHolder.setDataSource(DataSourceEnum.ADMIN.name());
     }
-
+    
     @Before("portal()")
     public void doBeforePortal() {
         DataSourceContextHolder.setDataSource(DataSourceEnum.PORTAL.name());
     }
-
+    
     @After("admin() && portal()" )
     public void doAfter() {
         DataSourceContextHolder.clear();

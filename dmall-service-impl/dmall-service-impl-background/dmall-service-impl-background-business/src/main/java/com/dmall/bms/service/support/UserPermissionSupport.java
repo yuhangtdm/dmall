@@ -25,7 +25,7 @@ public class UserPermissionSupport {
 
     public List<UserPermissionDO> listSubByUserId(Long userId) {
         return userPermissionMapper.selectList(Wrappers.<UserPermissionDO>lambdaQuery()
-                .eq(UserPermissionDO::getUserId, userId)
-                .eq(UserPermissionDO::getType, OperationEnum.SUB.getCode()));
+            .eq(UserPermissionDO::getUserId, userId)
+            .eq(UserPermissionDO::getType, OperationEnum.SUB.getCode()));
     }
 }

@@ -75,5 +75,4 @@ public class UserRoleDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

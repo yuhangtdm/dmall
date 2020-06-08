@@ -45,7 +45,7 @@ public class DeleteOrderHandler extends AbstractCommonHandler<Long, OrderDO, Lon
         OrderDO orderDO = omsValidate.validateOrder(orderId);
         omsValidate.authentication(orderDO.getCreator());
         if (!OrderStatusEnum.CANCELED.getCode().equals(orderDO.getStatus()) ||
-                !OrderStatusEnum.COMPLETED.getCode().equals(orderDO.getStatus())) {
+            !OrderStatusEnum.COMPLETED.getCode().equals(orderDO.getStatus())) {
             return ResultUtil.fail(OmsErrorEnum.DELETE_STATUS_ERROR);
         }
 

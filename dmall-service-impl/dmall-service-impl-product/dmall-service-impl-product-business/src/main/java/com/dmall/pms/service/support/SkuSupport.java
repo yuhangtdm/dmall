@@ -9,7 +9,6 @@ import com.dmall.common.util.IdGeneratorUtil;
 import com.dmall.pms.api.dto.product.request.attributevalue.AddSkuRequestDTO;
 import com.dmall.pms.api.dto.product.request.attributevalue.SkuSpecificationsRequestDTO;
 import com.dmall.pms.api.dto.product.response.get.SkuListResponseDTO;
-import com.dmall.pms.api.enums.SkuAuditStatusEnum;
 import com.dmall.pms.generator.dataobject.*;
 import com.dmall.pms.generator.mapper.CategorySkuMapper;
 import com.dmall.pms.generator.mapper.ProductMapper;
@@ -91,8 +90,8 @@ public class SkuSupport {
             // skuAttributeValueDO
             for (SkuSpecificationsRequestDTO skuSpecification : addSkuRequestDTO.getSkuSpecifications()) {
                 ProductAttributeValueDO productAttributeValueDO = productAttributeValueSupport
-                        .getByProductIdAndAttributeValue(productId, skuSpecification.getAttributeId(),
-                                skuSpecification.getAttributeValue());
+                    .getByProductIdAndAttributeValue(productId, skuSpecification.getAttributeId(),
+                        skuSpecification.getAttributeValue());
                 if (productAttributeValueDO != null) {
                     SkuAttributeValueDO skuAttributeValueDO = new SkuAttributeValueDO();
                     skuAttributeValueDO.setProductId(productId);
@@ -109,21 +108,21 @@ public class SkuSupport {
      */
     public List<SkuListResponseDTO> getSkuList(Long productId) {
         return selectByProductId(productId).stream()
-                .map(skuDO -> {
-                    SkuListResponseDTO skuListResponseDTO = new SkuListResponseDTO();
-                    skuListResponseDTO.setSkuId(skuDO.getId());
-                    skuListResponseDTO.setPrice(skuDO.getPrice());
-                    skuListResponseDTO.setStock(skuDO.getStock());
-                    SkuExtDO skuExtDO = skuExtSupport.getBySkuId(skuDO.getId());
-                    if (skuExtDO != null) {
-                        String skuSpecificationsJson = skuExtDO.getSkuSpecificationsJson();
-                        JSONObject skuSpecifications = JSONObject.parseObject(skuSpecificationsJson);
-                        skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), StrUtil.COMMA));
-                    }
-                    return skuListResponseDTO;
-                }).collect(Collectors.toList());
+            .map(skuDO -> {
+                SkuListResponseDTO skuListResponseDTO = new SkuListResponseDTO();
+                skuListResponseDTO.setSkuId(skuDO.getId());
+                skuListResponseDTO.setSkuName(skuDO.getName());
+                skuListResponseDTO.setPrice(skuDO.getPrice());
+                skuListResponseDTO.setStock(skuDO.getStock());
+                SkuExtDO skuExtDO = skuExtSupport.getBySkuId(skuDO.getId());
+                if (skuExtDO != null) {
+                    String skuSpecificationsJson = skuExtDO.getSkuSpecificationsJson();
+                    JSONObject skuSpecifications = JSONObject.parseObject(skuSpecificationsJson);
+                    skuListResponseDTO.setSpecifications(CollUtil.join(skuSpecifications.values(), StrUtil.COMMA));
+                }
+                return skuListResponseDTO;
+            }).collect(Collectors.toList());
     }
-
 
     /**
      * 根据productId删除sku相关数据

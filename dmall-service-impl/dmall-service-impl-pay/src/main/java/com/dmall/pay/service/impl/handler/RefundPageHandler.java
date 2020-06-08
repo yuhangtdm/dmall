@@ -25,7 +25,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/16 23:18
  */
 @Component
-public class RefundPageHandler extends AbstractCommonHandler<RefundPageRequestDTO, RefundRecordDO, RefundPageResponseDTO> {
+public class RefundPageHandler
+    extends AbstractCommonHandler<RefundPageRequestDTO, RefundRecordDO, RefundPageResponseDTO> {
 
     @Autowired
     private RefundRecordMapper refundRecordMapper;
@@ -36,8 +37,8 @@ public class RefundPageHandler extends AbstractCommonHandler<RefundPageRequestDT
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
 
         LambdaQueryWrapper<RefundRecordDO> wrapper = Wrappers.<RefundRecordDO>lambdaQuery()
-                .eq(requestDTO.getAfterSaleId() != null, RefundRecordDO::getAfterSaleId, requestDTO.getAfterSaleId())
-                .eq(RefundRecordDO::getCreator, portalMemberDTO.getId());
+            .eq(requestDTO.getAfterSaleId() != null, RefundRecordDO::getAfterSaleId, requestDTO.getAfterSaleId())
+            .eq(RefundRecordDO::getCreator, portalMemberDTO.getId());
         page = refundRecordMapper.selectPage(page, wrapper);
         List<RefundPageResponseDTO> collect = page.getRecords().stream().map(refundRecord -> {
             RefundPageResponseDTO refundPageResponse = new RefundPageResponseDTO();

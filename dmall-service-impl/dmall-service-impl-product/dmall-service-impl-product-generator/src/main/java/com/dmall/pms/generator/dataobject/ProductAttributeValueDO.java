@@ -100,12 +100,14 @@ public class ProductAttributeValueDO implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductAttributeValueDO that = (ProductAttributeValueDO) o;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        ProductAttributeValueDO that = (ProductAttributeValueDO)o;
         return Objects.equals(productId, that.productId) &&
-                Objects.equals(attributeId, that.attributeId) &&
-                Objects.equals(attributeValue, that.attributeValue);
+            Objects.equals(attributeId, that.attributeId) &&
+            Objects.equals(attributeValue, that.attributeValue);
     }
 
     @Override

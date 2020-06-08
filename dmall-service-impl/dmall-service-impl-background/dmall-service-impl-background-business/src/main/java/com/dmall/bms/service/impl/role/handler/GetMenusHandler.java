@@ -24,7 +24,7 @@ public class GetMenusHandler extends AbstractCommonHandler<Long, RoleMenuDO, Lis
     @Override
     public BaseResult<List<String>> processor(Long roleId) {
         List<String> menuIds = roleMenuSupport.listByRoleId(roleId).stream()
-                .map(RoleMenuDO::getMenuId).map(String::valueOf).collect(Collectors.toList());
+            .map(RoleMenuDO::getMenuId).map(String::valueOf).collect(Collectors.toList());
         return ResultUtil.success(menuIds);
     }
 }

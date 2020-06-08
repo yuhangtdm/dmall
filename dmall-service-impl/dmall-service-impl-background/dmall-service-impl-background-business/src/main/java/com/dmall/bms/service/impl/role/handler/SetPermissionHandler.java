@@ -62,28 +62,28 @@ public class SetPermissionHandler extends AbstractCommonHandler<CheckedDTO, Role
         if (CollUtil.isEmpty(listByRoleId)) {
             for (Long permissionId : permissionIds) {
                 RolePermissionDO rolePermissionDO = new RolePermissionDO()
-                        .setRoleId(requestDTO.getId())
-                        .setPermissionId(permissionId);
+                    .setRoleId(requestDTO.getId())
+                    .setPermissionId(permissionId);
                 rolePermissionMapper.insert(rolePermissionDO);
             }
         } else {
             // 先删后增
             List<Long> oldPermissionIds = listByRoleId.stream().map(RolePermissionDO::getPermissionId)
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
             List<Long> insertPermissionIds = permissionIds.stream()
-                    .filter(permissionId -> !oldPermissionIds.contains(permissionId))
-                    .collect(Collectors.toList());
+                .filter(permissionId -> !oldPermissionIds.contains(permissionId))
+                .collect(Collectors.toList());
             List<Long> deletePermissionIds = oldPermissionIds.stream()
-                    .filter(permissionId -> !permissionIds.contains(permissionId))
-                    .collect(Collectors.toList());
+                .filter(permissionId -> !permissionIds.contains(permissionId))
+                .collect(Collectors.toList());
             if (CollUtil.isNotEmpty(deletePermissionIds)) {
                 rolePermissionSupport.delete(requestDTO.getId(), deletePermissionIds);
             }
             if (CollUtil.isNotEmpty(insertPermissionIds)) {
                 for (Long permissionId : insertPermissionIds) {
                     RolePermissionDO rolePermissionDO = new RolePermissionDO()
-                            .setRoleId(requestDTO.getId())
-                            .setPermissionId(permissionId);
+                        .setRoleId(requestDTO.getId())
+                        .setPermissionId(permissionId);
                     rolePermissionMapper.insert(rolePermissionDO);
                 }
             }

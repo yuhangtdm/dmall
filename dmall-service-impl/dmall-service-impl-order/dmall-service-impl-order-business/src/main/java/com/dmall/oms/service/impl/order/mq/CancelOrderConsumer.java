@@ -28,7 +28,8 @@ import java.util.Date;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(topic = MqConstants.DELAY_CANCEL_ORDER_TOPIC, consumerGroup = OrderConstants.DELAY_CANCEL_ORDER_CONSUMER)
+@RocketMQMessageListener(topic = MqConstants.DELAY_CANCEL_ORDER_TOPIC,
+    consumerGroup = OrderConstants.DELAY_CANCEL_ORDER_CONSUMER)
 public class CancelOrderConsumer implements RocketMQListener<Long> {
 
     @Autowired

@@ -45,7 +45,8 @@ public interface OrderAfterSaleService {
 
     @PostMapping("/seller/age")
     @ApiOperation(value = "卖家售后分页")
-    BaseResult<ResponsePage<AfterSalePageResponseDTO>> afterSalePage(@RequestBody @Valid AfterSalePageRequestDTO requestDTO);
+    BaseResult<ResponsePage<AfterSalePageResponseDTO>>
+        afterSalePage(@RequestBody @Valid AfterSalePageRequestDTO requestDTO);
 
     @GetMapping("/detail/{afterSaleId}")
     @ApiImplicitParam(name = "afterSaleId", value = "售后单号", required = true, dataType = "int", paramType = "path")
@@ -78,6 +79,7 @@ public interface OrderAfterSaleService {
 
     @PostMapping("/buyer/Page")
     @ApiOperation(value = "买家售后单分页")
-    BaseResult<ResponsePage<MyAfterSalePageResponseDTO>> myAfterSalePage(@RequestBody @Valid MyAfterSalePageRequestDTO requestDTO);
+    BaseResult<ResponsePage<MyAfterSalePageResponseDTO>>
+        myAfterSalePage(@RequestBody @Valid MyAfterSalePageRequestDTO requestDTO);
 
 }

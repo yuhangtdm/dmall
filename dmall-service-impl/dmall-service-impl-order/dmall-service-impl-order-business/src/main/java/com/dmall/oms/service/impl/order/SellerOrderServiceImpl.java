@@ -52,7 +52,8 @@ public class SellerOrderServiceImpl implements SellerOrderService {
     private ProductSaleCountHandler productSaleCountHandler;
 
     @Override
-    public BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>> demolitionOrderPage(@RequestBody DemolitionOrderPageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>>
+        demolitionOrderPage(@RequestBody DemolitionOrderPageRequestDTO requestDTO) {
         return demolitionOrderPageHandler.handler(requestDTO);
     }
 
@@ -68,7 +69,8 @@ public class SellerOrderServiceImpl implements SellerOrderService {
     }
 
     @Override
-    public BaseResult<ResponsePage<DeliverOrderPageResponseDTO>> deliverOrderPage(@RequestBody DeliverOrderPageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<DeliverOrderPageResponseDTO>>
+        deliverOrderPage(@RequestBody DeliverOrderPageRequestDTO requestDTO) {
         return deliverOrderPageHandler.handler(requestDTO);
     }
 

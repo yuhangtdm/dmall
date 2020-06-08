@@ -37,5 +37,6 @@ public enum StarEnum implements CodeEnum<Integer> {
      */
     FIVE(5),
     ;
+
     private final Integer code;
 }

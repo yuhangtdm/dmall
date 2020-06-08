@@ -23,12 +23,15 @@ public class SkuListResponseDTO implements Serializable {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long skuId;
 
-    @ApiModelProperty(value = "价格", position = 2)
+    @ApiModelProperty(value = "sku名称", position = 2)
+    private String skuName;
+
+    @ApiModelProperty(value = "价格", position = 3)
     private BigDecimal price;
 
-    @ApiModelProperty(value = "库存", position = 3)
+    @ApiModelProperty(value = "库存", position = 4)
     private Integer stock;
 
-    @ApiModelProperty(value = "规格", position = 4)
+    @ApiModelProperty(value = "规格", position = 5)
     private String specifications;
 }

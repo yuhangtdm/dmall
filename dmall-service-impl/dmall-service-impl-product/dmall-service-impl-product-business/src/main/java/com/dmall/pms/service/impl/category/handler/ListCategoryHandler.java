@@ -27,7 +27,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-02 23:18:00
  */
 @Component
-public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryRequestDTO, CategoryDO, CategoryResponseDTO> {
+public class ListCategoryHandler
+    extends AbstractCommonHandler<ListCategoryRequestDTO, CategoryDO, CategoryResponseDTO> {
 
     @Autowired
     private CategoryMapper categoryMapper;
@@ -38,20 +39,21 @@ public class ListCategoryHandler extends AbstractCommonHandler<ListCategoryReque
     @Override
     public BaseResult<List<CategoryResponseDTO>> processor(ListCategoryRequestDTO requestDTO) {
         List<CategoryDO> categoryDOList;
-        if (com.dmall.common.util.ObjectUtil.allEmpty(requestDTO.getName(), requestDTO.getParentId(), requestDTO.getLevel())) {
+        if (com.dmall.common.util.ObjectUtil.allEmpty(requestDTO.getName(), requestDTO.getParentId(),
+            requestDTO.getLevel())) {
             categoryDOList = categoryCacheService.selectAll();
         } else {
             LambdaQueryWrapper<CategoryDO> queryWrapper = Wrappers.<CategoryDO>lambdaQuery()
-                    .like(StrUtil.isNotBlank(requestDTO.getName()), CategoryDO::getName, requestDTO.getName())
-                    .eq(ObjectUtil.isNotNull(requestDTO.getParentId()), CategoryDO::getParentId, requestDTO.getParentId())
-                    .eq(ObjectUtil.isNotNull(requestDTO.getLevel()), CategoryDO::getLevel, requestDTO.getLevel())
-                    .orderByAsc(CategoryDO::getSort);
+                .like(StrUtil.isNotBlank(requestDTO.getName()), CategoryDO::getName, requestDTO.getName())
+                .eq(ObjectUtil.isNotNull(requestDTO.getParentId()), CategoryDO::getParentId, requestDTO.getParentId())
+                .eq(ObjectUtil.isNotNull(requestDTO.getLevel()), CategoryDO::getLevel, requestDTO.getLevel())
+                .orderByAsc(CategoryDO::getSort);
             categoryDOList = categoryMapper.selectList(queryWrapper);
         }
         List<CategoryResponseDTO> list = categoryDOList.stream()
-                .filter(Objects::nonNull)
-                .map(doo -> doConvertDto(doo, CategoryResponseDTO.class))
-                .collect(Collectors.toList());
+            .filter(Objects::nonNull)
+            .map(doo -> doConvertDto(doo, CategoryResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(list);
     }
 

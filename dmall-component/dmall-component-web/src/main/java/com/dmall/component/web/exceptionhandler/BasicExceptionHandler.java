@@ -86,7 +86,8 @@ public class BasicExceptionHandler {
      * 请求参数类型不合法异常
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public String methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
+    public String methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex,
+        HttpServletRequest request) {
         log.error("enter the MethodArgumentTypeMismatchException Handler,", ex);
         return getCustomException(request, ResultUtil.fail(BasicStatusEnum.PARAM_TYPE_ERROR));
     }

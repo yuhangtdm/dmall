@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2019-12-22 15:09:35
  */
 @Service
-public class ISkuAttributeValueServiceImpl extends ServiceImpl<SkuAttributeValueMapper, SkuAttributeValueDO> implements ISkuAttributeValueService {
+public class ISkuAttributeValueServiceImpl extends ServiceImpl<SkuAttributeValueMapper, SkuAttributeValueDO>
+    implements ISkuAttributeValueService {
 
 }

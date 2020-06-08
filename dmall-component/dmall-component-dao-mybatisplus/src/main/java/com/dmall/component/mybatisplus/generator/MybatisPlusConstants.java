@@ -26,7 +26,6 @@ public interface MybatisPlusConstants {
      */
     String DB_URL = "jdbc:mysql://{}?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
 
-
     /**
      * 驱动名称
      */
@@ -51,7 +50,6 @@ public interface MybatisPlusConstants {
      * api包名
      */
     String API = "api";
-
 
     /**
      * request包名

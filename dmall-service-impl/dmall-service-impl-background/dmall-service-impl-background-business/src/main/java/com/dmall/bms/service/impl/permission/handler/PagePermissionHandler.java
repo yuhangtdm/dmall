@@ -23,7 +23,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-01-13 23:04:03
  */
 @Component
-public class PagePermissionHandler extends AbstractCommonHandler<PagePermissionRequestDTO, PermissionDO, PermissionResponseDTO> {
+public class PagePermissionHandler
+    extends AbstractCommonHandler<PagePermissionRequestDTO, PermissionDO, PermissionResponseDTO> {
 
     @Autowired
     private PermissionMapper permissionMapper;
@@ -31,13 +32,13 @@ public class PagePermissionHandler extends AbstractCommonHandler<PagePermissionR
     @Override
     public BaseResult<ResponsePage<PermissionResponseDTO>> processor(PagePermissionRequestDTO requestDTO) {
         LambdaQueryWrapper wrapper = PermissionSupport.buildWrapper(requestDTO.getAppId(), requestDTO.getBusiness(),
-                requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
+            requestDTO.getName(), requestDTO.getUri(), requestDTO.getMethod());
 
         IPage<PermissionDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = permissionMapper.selectPage(page, wrapper);
         List<PermissionResponseDTO> collect = page.getRecords().stream()
-                .map(userDO -> doConvertDto(userDO, PermissionResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(userDO -> doConvertDto(userDO, PermissionResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 

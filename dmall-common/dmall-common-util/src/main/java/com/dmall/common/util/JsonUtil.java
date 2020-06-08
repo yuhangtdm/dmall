@@ -36,7 +36,6 @@ public class JsonUtil {
         objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
     }
 
-
     /**
      * 对象转json字符串
      */
@@ -45,7 +44,7 @@ public class JsonUtil {
             return null;
         }
         try {
-            return obj instanceof String ? (String) obj : objectMapper.writeValueAsString(obj);
+            return obj instanceof String ? (String)obj : objectMapper.writeValueAsString(obj);
         } catch (Exception e) {
             log.error("parse object to string error", e);
             return null;
@@ -60,7 +59,8 @@ public class JsonUtil {
             return null;
         }
         try {
-            return obj instanceof String ? (String) obj : objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+            return obj instanceof String ? (String)obj
+                : objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (Exception e) {
             log.error("parse object to string error", e);
             return null;
@@ -75,7 +75,7 @@ public class JsonUtil {
             return null;
         }
         try {
-            return clazz.equals(String.class) ? (T) str : objectMapper.readValue(str, clazz);
+            return clazz.equals(String.class) ? (T)str : objectMapper.readValue(str, clazz);
         } catch (Exception e) {
             log.error("parse string to object error,", e);
             return null;

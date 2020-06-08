@@ -38,5 +38,4 @@ public enum CommentEnum implements CodeDescEnum<Integer> {
      */
     private final String desc;
 
-
 }

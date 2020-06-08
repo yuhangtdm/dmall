@@ -20,7 +20,6 @@ public class PermissionDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     /**
      * id
      */
@@ -82,6 +81,5 @@ public class PermissionDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

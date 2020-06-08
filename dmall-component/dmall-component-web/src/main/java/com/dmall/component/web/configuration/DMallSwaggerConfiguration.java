@@ -34,8 +34,8 @@ import java.util.List;
 
 /**
  * @description: Swagger配置
- * 访问地址(swagger原生页面)：http://项目实际地址/swagger-ui.html
- * 访问地址(bootstrap美化页面)：http://项目实际地址/doc.html
+ *               访问地址(swagger原生页面)：http://项目实际地址/swagger-ui.html
+ *               访问地址(bootstrap美化页面)：http://项目实际地址/doc.html
  * @author: created by hang.yu on 2019/10/16 22:28
  */
 @Slf4j
@@ -58,7 +58,8 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
     @Override
     @PostConstruct
     public void check() {
-        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties", JsonUtil.toJsonPretty(dMallSwaggerProperties));
+        log.info("init -> [{}],properties:\n{}", "DMallSwaggerProperties",
+            JsonUtil.toJsonPretty(dMallSwaggerProperties));
         if (dMallSwaggerProperties.getEnabled() && StrUtil.isBlank(dMallSwaggerProperties.getBasePackage())) {
             throw new ComponentException(WebErrorEnum.NO_BASE_PACKAGE);
         }
@@ -73,22 +74,21 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
         for (ErrorCodeEnum errorEnum : errorEnums) {
             try {
                 responseMessageList.add(new ResponseMessageBuilder().code(Integer.parseInt(errorEnum.getCode()))
-                        .message(errorEnum.getMsg()).build());
+                    .message(errorEnum.getMsg()).build());
             } catch (Exception e) {
                 log.error("status not valid,{}", errorEnum);
             }
         }
         return new Docket(DocumentationType.SWAGGER_2)
-                .globalResponseMessage(RequestMethod.GET, responseMessageList)
-                .globalResponseMessage(RequestMethod.POST, responseMessageList)
-                .globalResponseMessage(RequestMethod.PUT, responseMessageList)
-                .globalResponseMessage(RequestMethod.DELETE, responseMessageList)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage(dMallSwaggerProperties.getBasePackage()))
-                .paths(PathSelectors.any())
-                .build()
-                ;
+            .globalResponseMessage(RequestMethod.GET, responseMessageList)
+            .globalResponseMessage(RequestMethod.POST, responseMessageList)
+            .globalResponseMessage(RequestMethod.PUT, responseMessageList)
+            .globalResponseMessage(RequestMethod.DELETE, responseMessageList)
+            .apiInfo(apiInfo())
+            .select()
+            .apis(RequestHandlerSelectors.basePackage(dMallSwaggerProperties.getBasePackage()))
+            .paths(PathSelectors.any())
+            .build();
     }
 
     /**
@@ -96,12 +96,13 @@ public class DMallSwaggerConfiguration implements BasicConfiguration {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title(dMallSwaggerProperties.getTitle())
-                .description(dMallSwaggerProperties.getDescription())
-                .termsOfServiceUrl(dMallSwaggerProperties.getServiceUrl())
-                .version(dMallSwaggerProperties.getVersion())
-                .contact(new Contact(dMallSwaggerProperties.getContactName(), dMallSwaggerProperties.getContactUrl(), dMallSwaggerProperties.getContactEmail()))
-                .build();
+            .title(dMallSwaggerProperties.getTitle())
+            .description(dMallSwaggerProperties.getDescription())
+            .termsOfServiceUrl(dMallSwaggerProperties.getServiceUrl())
+            .version(dMallSwaggerProperties.getVersion())
+            .contact(new Contact(dMallSwaggerProperties.getContactName(), dMallSwaggerProperties.getContactUrl(),
+                dMallSwaggerProperties.getContactEmail()))
+            .build();
     }
 
 }

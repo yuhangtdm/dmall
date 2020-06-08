@@ -103,6 +103,7 @@ public enum MmsErrorEnum implements ErrorCodeEnum {
     MEMBER_COLLECTION_SKU_ERROR("1219", "您不可取消他人收藏的sku"),
 
     ;
+
     /**
      * 错误码
      */

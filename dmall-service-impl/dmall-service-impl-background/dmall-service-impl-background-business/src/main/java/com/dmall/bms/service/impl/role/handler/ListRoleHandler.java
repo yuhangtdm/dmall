@@ -28,10 +28,10 @@ public class ListRoleHandler extends AbstractCommonHandler<ListRoleRequestDTO, R
     @Override
     public BaseResult<List<RoleResponseDTO>> processor(ListRoleRequestDTO requestDTO) {
         List<RoleDO> roleList = roleMapper.selectList(Wrappers.<RoleDO>lambdaQuery()
-                .eq(StrUtil.isNotBlank(requestDTO.getName()), RoleDO::getName, requestDTO.getName()));
+            .eq(StrUtil.isNotBlank(requestDTO.getName()), RoleDO::getName, requestDTO.getName()));
         List<RoleResponseDTO> collect = roleList.stream()
-                .map(roleDO -> doConvertDto(roleDO, RoleResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(roleDO -> doConvertDto(roleDO, RoleResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }
 

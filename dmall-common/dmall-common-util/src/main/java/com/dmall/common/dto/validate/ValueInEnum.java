@@ -5,7 +5,6 @@ import com.dmall.common.enums.base.CodeEnum;
 import javax.validation.Constraint;
 import java.lang.annotation.*;
 
-
 /**
  * @description: ValueInEnum
  * @author: created by hang.yu on 2019/11/23 17:57

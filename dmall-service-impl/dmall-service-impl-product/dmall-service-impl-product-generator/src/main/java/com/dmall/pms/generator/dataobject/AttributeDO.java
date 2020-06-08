@@ -92,5 +92,4 @@ public class AttributeDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

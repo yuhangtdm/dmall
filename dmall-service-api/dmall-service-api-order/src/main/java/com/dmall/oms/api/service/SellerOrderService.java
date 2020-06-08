@@ -28,7 +28,8 @@ public interface SellerOrderService {
 
     @GetMapping("/demolitionOrderPage")
     @ApiOperation(value = "拆单分页")
-    BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>> demolitionOrderPage(@RequestBody @Valid DemolitionOrderPageRequestDTO requestDTO);
+    BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>>
+        demolitionOrderPage(@RequestBody @Valid DemolitionOrderPageRequestDTO requestDTO);
 
     @GetMapping("/demolitionOrder")
     @ApiOperation(value = "拆单")
@@ -41,7 +42,8 @@ public interface SellerOrderService {
 
     @PostMapping("/deliverOrderPage")
     @ApiOperation(value = "待发货分页")
-    BaseResult<ResponsePage<DeliverOrderPageResponseDTO>> deliverOrderPage(@RequestBody @Valid DeliverOrderPageRequestDTO requestDTO);
+    BaseResult<ResponsePage<DeliverOrderPageResponseDTO>>
+        deliverOrderPage(@RequestBody @Valid DeliverOrderPageRequestDTO requestDTO);
 
     @PostMapping("/deliver")
     @ApiOperation(value = "发货")

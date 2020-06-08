@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2020-02-22 23:31:54
  */
 @Service
-public class IMemberCollectionSkuServiceImpl extends ServiceImpl<MemberCollectionSkuMapper, MemberCollectionSkuDO> implements IMemberCollectionSkuService {
+public class IMemberCollectionSkuServiceImpl extends ServiceImpl<MemberCollectionSkuMapper, MemberCollectionSkuDO>
+    implements IMemberCollectionSkuService {
 
 }

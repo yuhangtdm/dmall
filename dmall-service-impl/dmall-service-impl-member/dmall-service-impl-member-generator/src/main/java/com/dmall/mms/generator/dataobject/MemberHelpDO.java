@@ -75,5 +75,4 @@ public class MemberHelpDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

@@ -19,7 +19,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/4/2 23:27
  */
 @Component
-public class CreatePaymentHandler extends AbstractCommonHandler<CreatePaymentRequestDTO, PaymentInfoDO, CreatePaymentResponseDTO> {
+public class CreatePaymentHandler
+    extends AbstractCommonHandler<CreatePaymentRequestDTO, PaymentInfoDO, CreatePaymentResponseDTO> {
 
     @Autowired
     private PaymentTypeFactory paymentTypeFactory;

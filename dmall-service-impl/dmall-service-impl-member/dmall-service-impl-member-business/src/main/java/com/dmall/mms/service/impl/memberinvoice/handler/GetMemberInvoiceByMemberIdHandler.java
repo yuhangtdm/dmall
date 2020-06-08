@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/3/28 10:23
  */
 @Component
-public class GetMemberInvoiceByMemberIdHandler extends AbstractCommonHandler<Long, MemberInvoiceDO, MemberInvoiceResponseDTO> {
+public class GetMemberInvoiceByMemberIdHandler
+    extends AbstractCommonHandler<Long, MemberInvoiceDO, MemberInvoiceResponseDTO> {
 
     @Autowired
     private MemberInvoiceMapper memberInvoiceMapper;
@@ -24,7 +25,7 @@ public class GetMemberInvoiceByMemberIdHandler extends AbstractCommonHandler<Lon
     @Override
     public BaseResult<MemberInvoiceResponseDTO> processor(Long memberId) {
         MemberInvoiceDO memberInvoiceDO = memberInvoiceMapper.selectOne(Wrappers.<MemberInvoiceDO>lambdaQuery()
-                .eq(MemberInvoiceDO::getCreator, memberId));
+            .eq(MemberInvoiceDO::getCreator, memberId));
         if (memberInvoiceDO == null) {
             return ResultUtil.fail(MmsErrorEnum.MEMBER_INVOICE_EXISTS);
         }

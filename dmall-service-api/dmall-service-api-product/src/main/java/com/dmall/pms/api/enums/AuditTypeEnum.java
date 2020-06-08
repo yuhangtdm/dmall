@@ -28,6 +28,7 @@ public enum AuditTypeEnum implements CodeDescEnum<Integer> {
     SKU_UPDATE(3, "修改sku信息"),
 
     ;
+
     private final Integer code;
 
     private final String desc;

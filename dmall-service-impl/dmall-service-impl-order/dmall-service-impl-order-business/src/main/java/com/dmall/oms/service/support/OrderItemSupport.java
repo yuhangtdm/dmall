@@ -29,7 +29,8 @@ public class OrderItemSupport {
      * 根据子订单号查询
      */
     public List<OrderItemDO> listBySubOrderId(Long subOrderId) {
-        return orderItemMapper.selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getSubOrderId, subOrderId));
+        return orderItemMapper
+            .selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getSubOrderId, subOrderId));
     }
 
     /**
@@ -43,7 +44,8 @@ public class OrderItemSupport {
      * 根据商品Id查询
      */
     public List<OrderItemDO> listByProductId(Long productId) {
-        return orderItemMapper.selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getProductId, productId));
+        return orderItemMapper
+            .selectList(Wrappers.lambdaQuery(new OrderItemDO()).eq(OrderItemDO::getProductId, productId));
     }
 
     /**
@@ -51,8 +53,7 @@ public class OrderItemSupport {
      */
     public OrderItemDO findByOrderIdAndSkuId(Long orderId, Long skuId) {
         return orderItemMapper.selectOne(Wrappers.lambdaQuery(new OrderItemDO())
-                .eq(OrderItemDO::getOrderId, orderId)
-                .eq(OrderItemDO::getSkuId, skuId)
-        );
+            .eq(OrderItemDO::getOrderId, orderId)
+            .eq(OrderItemDO::getSkuId, skuId));
     }
 }

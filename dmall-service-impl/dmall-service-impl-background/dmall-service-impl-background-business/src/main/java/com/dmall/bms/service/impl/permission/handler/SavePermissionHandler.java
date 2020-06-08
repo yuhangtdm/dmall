@@ -27,7 +27,8 @@ public class SavePermissionHandler extends AbstractCommonHandler<SavePermissionR
     @Override
     public BaseResult<Long> validate(SavePermissionRequestDTO requestDTO) {
         // 请求方式+uri唯一
-        PermissionDO byUriAndMethod = permissionSupport.getByUriAndMethod(requestDTO.getAppId(), requestDTO.getUri(), requestDTO.getMethod());
+        PermissionDO byUriAndMethod =
+            permissionSupport.getByUriAndMethod(requestDTO.getAppId(), requestDTO.getUri(), requestDTO.getMethod());
         if (byUriAndMethod != null) {
             return ResultUtil.fail(BackGroundErrorEnum.URI_METHOD_EXIST);
         }

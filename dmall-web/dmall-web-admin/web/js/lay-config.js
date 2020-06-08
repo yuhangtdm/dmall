@@ -30,4 +30,5 @@ layui.config({
     formSelects: 'formSelects/formSelects', // formSelects扩展
     dtree: 'dtree/dtree',
     tableEdit: 'tableEdit/tableEdit',
+    tableMerge: 'tableMerge/tableMerge'
 });

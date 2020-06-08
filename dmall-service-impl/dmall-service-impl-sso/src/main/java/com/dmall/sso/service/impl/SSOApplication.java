@@ -27,5 +27,4 @@ public class SSOApplication {
         SpringApplication.run(SSOApplication.class, args);
     }
 
-
 }

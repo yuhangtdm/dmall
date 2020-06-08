@@ -31,5 +31,4 @@ public enum PermissionTypeEnum implements CodeDescEnum<Integer> {
 
     private final String desc;
 
-
 }

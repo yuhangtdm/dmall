@@ -46,7 +46,7 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
         AttributeDO attributeDO = pmsValidate.validateAttribute(requestDTO.getId());
         // 公共属性不能修改为普通属性
         if (TypeEnum.PUBLIC.getCode().equals(attributeDO.getType())
-                && TypeEnum.NORMAL.getCode().equals(requestDTO.getType())) {
+            && TypeEnum.NORMAL.getCode().equals(requestDTO.getType())) {
             // 该属性已经挂载多个商品分类
             List<CategoryAttributeDO> list = categoryAttributeSupport.listByAttributeId(requestDTO.getId());
             if (CollUtil.isNotEmpty(list) && list.size() > 1) {
@@ -54,12 +54,13 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
             }
         }
         // 校验展示名称唯一
-        AttributeDO attributeDO1 = attributeSupport.getByShowName(attributeDO.getCategoryId(), requestDTO.getShowName());
+        AttributeDO attributeDO1 =
+            attributeSupport.getByShowName(attributeDO.getCategoryId(), requestDTO.getShowName());
         if (attributeDO1 != null && !attributeDO1.getId().equals(attributeDO.getId())) {
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_NAME_EXIST);
         }
         return pmsValidate.attributeValidate(requestDTO.getInputType(), requestDTO.getInputList(),
-                requestDTO.getHandAddStatus());
+            requestDTO.getHandAddStatus());
 
     }
 
@@ -69,7 +70,7 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
         AttributeDO updateDO = dtoConvertDo(requestDTO, AttributeDO.class);
         // 修改名称
         updateDO.setName(StrUtil.format("{}_{}", attributeDO.getName().split(StrUtil.UNDERLINE)[0],
-                requestDTO.getShowName()));
+            requestDTO.getShowName()));
         attributeCacheService.updateById(updateDO);
         return ResultUtil.success();
     }

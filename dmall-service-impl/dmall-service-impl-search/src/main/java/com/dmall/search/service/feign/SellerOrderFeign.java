@@ -8,5 +8,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/4/25 16:35
  */
 @FeignClient(value = "dmall-service-impl-order")
-public interface SellerOrderFeign extends SellerOrderService {
-}
+public interface SellerOrderFeign extends SellerOrderService {}

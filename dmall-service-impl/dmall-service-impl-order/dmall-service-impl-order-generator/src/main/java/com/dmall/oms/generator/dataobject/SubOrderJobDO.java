@@ -80,5 +80,4 @@ public class SubOrderJobDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

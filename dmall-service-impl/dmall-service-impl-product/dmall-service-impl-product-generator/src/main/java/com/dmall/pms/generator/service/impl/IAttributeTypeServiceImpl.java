@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-11-24
  */
 @Service
-public class IAttributeTypeServiceImpl extends ServiceImpl<AttributeTypeMapper, AttributeTypeDO> implements IAttributeTypeService {
+public class IAttributeTypeServiceImpl extends ServiceImpl<AttributeTypeMapper, AttributeTypeDO>
+    implements IAttributeTypeService {
 
 }

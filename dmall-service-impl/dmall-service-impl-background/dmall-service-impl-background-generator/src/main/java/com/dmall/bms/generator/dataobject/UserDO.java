@@ -107,5 +107,4 @@ public class UserDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

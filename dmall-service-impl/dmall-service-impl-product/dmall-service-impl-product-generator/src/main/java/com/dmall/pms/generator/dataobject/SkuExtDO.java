@@ -92,5 +92,4 @@ public class SkuExtDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

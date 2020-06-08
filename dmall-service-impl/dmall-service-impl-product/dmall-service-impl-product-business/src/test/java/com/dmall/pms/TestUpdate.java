@@ -43,10 +43,10 @@ public class TestUpdate {
         attributeTypeDO.setId(1L);
         attributeTypeDO.setCategoryId(2L);
         LambdaUpdateWrapper<AttributeTypeDO> updateWrapper = Wrappers.<AttributeTypeDO>update().lambda()
-                .eq(AttributeTypeDO::getId, 1L)
-                .set(AttributeTypeDO::getCategoryId, null)
-                .set(AttributeTypeDO::getCascadeCategoryId, null);
-//        attributeTypeMapper.update(null, updateWrapper);
+            .eq(AttributeTypeDO::getId, 1L)
+            .set(AttributeTypeDO::getCategoryId, null)
+            .set(AttributeTypeDO::getCascadeCategoryId, null);
+        // attributeTypeMapper.update(null, updateWrapper);
 
         attributeTypeMapper.updateById(attributeTypeDO);
     }
@@ -65,14 +65,13 @@ public class TestUpdate {
         List<AttributeDO> attributeList = attributeMapper.selectList(Wrappers.emptyWrapper());
         for (AttributeDO attributeDO : attributeList) {
             String[] s = attributeDO.getName().split("_");
-            CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>
-                    lambdaQuery().eq(CategoryDO::getLevel, LevelEnum.ONE.getCode())
+            CategoryDO categoryDO = categoryMapper
+                .selectOne(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getLevel, LevelEnum.ONE.getCode())
                     .eq(CategoryDO::getName, s[0]));
             attributeDO.setCategoryId(categoryDO.getId());
             attributeMapper.updateById(attributeDO);
         }
 
     }
-
 
 }

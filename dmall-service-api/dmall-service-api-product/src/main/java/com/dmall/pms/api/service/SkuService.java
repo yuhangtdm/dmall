@@ -54,7 +54,8 @@ public interface SkuService {
     @PostMapping("/batchUpload/{id}")
     @ApiOperation(value = "批量上传sku图片")
     @ApiImplicitParam(name = "id", value = "skuId", required = true, dataType = "int", paramType = "path")
-    BaseResult<UploadResult> batchUpload(@PathVariable("id") Long id, @NotNull(message = "sku图片数组不能为空") MultipartFile[] files);
+    BaseResult<UploadResult> batchUpload(@PathVariable("id") Long id,
+        @NotNull(message = "sku图片数组不能为空") MultipartFile[] files);
 
     @PostMapping("/saveSkuMedia")
     @ApiOperation(value = "4.保存sku图片信息,返回skuId")

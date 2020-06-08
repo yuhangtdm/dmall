@@ -24,7 +24,7 @@ public class OrderAfterSaleLogSupport {
      * 插入售后日志记录
      */
     public void insertAfterSaleLog(Long afterSaleId, AfterSaleLogTypeEnum logType,
-                                   AfterSaleLogTitleEnum logTitle, String logContent) {
+        AfterSaleLogTitleEnum logTitle, String logContent) {
         OrderAfterSaleLogDO orderAfterSaleLogDO = new OrderAfterSaleLogDO();
         orderAfterSaleLogDO.setAfterSaleApplyId(afterSaleId);
         orderAfterSaleLogDO.setLogType(logType.getCode());
@@ -38,6 +38,6 @@ public class OrderAfterSaleLogSupport {
      */
     public List<OrderAfterSaleLogDO> listByAfterSaleId(Long afterSaleId) {
         return orderAfterSaleLogMapper.selectList(Wrappers.<OrderAfterSaleLogDO>lambdaQuery()
-                .eq(OrderAfterSaleLogDO::getAfterSaleApplyId, afterSaleId));
+            .eq(OrderAfterSaleLogDO::getAfterSaleApplyId, afterSaleId));
     }
 }

@@ -23,7 +23,8 @@ import java.util.List;
  * @author: created by hang.yu on 2020/4/16 22:50
  */
 @Component
-public class MyAfterSalePageHandler extends AbstractCommonHandler<MyAfterSalePageRequestDTO, OrderAfterSaleApplyDO, MyAfterSalePageResponseDTO> {
+public class MyAfterSalePageHandler
+    extends AbstractCommonHandler<MyAfterSalePageRequestDTO, OrderAfterSaleApplyDO, MyAfterSalePageResponseDTO> {
 
     @Autowired
     private MyAfterSalePageMapper afterSalePageMapper;
@@ -32,7 +33,7 @@ public class MyAfterSalePageHandler extends AbstractCommonHandler<MyAfterSalePag
     public BaseResult<ResponsePage<MyAfterSalePageResponseDTO>> processor(MyAfterSalePageRequestDTO requestDTO) {
         Page page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<MyAfterSalePageResponseDTO> myAfterSalePageResponseDTOS =
-                afterSalePageMapper.myAfterSalePage(page, buildRequest(requestDTO));
+            afterSalePageMapper.myAfterSalePage(page, buildRequest(requestDTO));
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), myAfterSalePageResponseDTOS));
     }
 

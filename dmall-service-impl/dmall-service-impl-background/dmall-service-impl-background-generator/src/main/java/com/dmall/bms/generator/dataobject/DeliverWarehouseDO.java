@@ -115,5 +115,4 @@ public class DeliverWarehouseDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

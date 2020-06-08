@@ -27,7 +27,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttributeTypeRequestDTO, AttributeTypeDO, AttributeTypeResponseDTO> {
+public class PageAttributeTypeHandler
+    extends AbstractCommonHandler<PageAttributeTypeRequestDTO, AttributeTypeDO, AttributeTypeResponseDTO> {
 
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
@@ -35,12 +36,12 @@ public class PageAttributeTypeHandler extends AbstractCommonHandler<PageAttribut
     @Override
     public BaseResult<ResponsePage<AttributeTypeResponseDTO>> processor(PageAttributeTypeRequestDTO requestDTO) {
         LambdaQueryWrapper<AttributeTypeDO> queryWrapper = LambdaQueryWrapperBuilder
-                .queryWrapper(requestDTO.getCategoryId(), requestDTO.getShowName());
+            .queryWrapper(requestDTO.getCategoryId(), requestDTO.getShowName());
         IPage<AttributeTypeDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = attributeTypeMapper.selectPage(page, queryWrapper);
         List<AttributeTypeResponseDTO> record = page.getRecords().stream()
-                .map(doo -> doConvertDto(doo, AttributeTypeResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(doo -> doConvertDto(doo, AttributeTypeResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage(page.getTotal(), record));
     }
 

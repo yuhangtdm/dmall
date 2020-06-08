@@ -90,5 +90,4 @@ public class MemberSafeDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

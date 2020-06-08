@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
-public class UpdateMemberReceiveAddressHandler extends AbstractCommonHandler<UpdateMemberReceiveAddressRequestDTO, MemberReceiveAddressDO, Long> {
+public class UpdateMemberReceiveAddressHandler
+    extends AbstractCommonHandler<UpdateMemberReceiveAddressRequestDTO, MemberReceiveAddressDO, Long> {
 
     @Autowired
     private MemberReceiveAddressMapper memberReceiveAddressMapper;

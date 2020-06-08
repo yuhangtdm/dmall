@@ -33,13 +33,13 @@ public class PageUserHandler extends AbstractCommonHandler<PageUserRequestDTO, U
     public BaseResult<ResponsePage<UserResponseDTO>> processor(PageUserRequestDTO requestDTO) {
         IPage<UserDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         LambdaQueryWrapper<UserDO> like = Wrappers.<UserDO>lambdaQuery()
-                .like(StrUtil.isNotBlank(requestDTO.getNickName()), UserDO::getNickName, requestDTO.getNickName())
-                .like(StrUtil.isNotBlank(requestDTO.getRealName()), UserDO::getRealName, requestDTO.getRealName())
-                .like(StrUtil.isNotBlank(requestDTO.getPhone()), UserDO::getPhone, requestDTO.getPhone());
+            .like(StrUtil.isNotBlank(requestDTO.getNickName()), UserDO::getNickName, requestDTO.getNickName())
+            .like(StrUtil.isNotBlank(requestDTO.getRealName()), UserDO::getRealName, requestDTO.getRealName())
+            .like(StrUtil.isNotBlank(requestDTO.getPhone()), UserDO::getPhone, requestDTO.getPhone());
         page = userMapper.selectPage(page, like);
         List<UserResponseDTO> collect = page.getRecords().stream()
-                .map(userDO -> doConvertDto(userDO, UserResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(userDO -> doConvertDto(userDO, UserResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 

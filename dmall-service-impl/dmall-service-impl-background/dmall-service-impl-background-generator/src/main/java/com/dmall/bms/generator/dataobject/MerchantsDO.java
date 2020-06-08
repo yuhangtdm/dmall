@@ -80,5 +80,4 @@ public class MerchantsDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

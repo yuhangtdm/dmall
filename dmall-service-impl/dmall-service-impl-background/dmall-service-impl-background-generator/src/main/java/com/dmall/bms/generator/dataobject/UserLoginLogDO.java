@@ -85,5 +85,4 @@ public class UserLoginLogDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

@@ -17,7 +17,8 @@ public class CommonFilterUtil {
     /**
      * 后台系统过滤
      */
-    public static boolean adminFilter(HttpServletRequest request, String requestMapping, AdminProperties adminProperties) {
+    public static boolean adminFilter(HttpServletRequest request, String requestMapping,
+        AdminProperties adminProperties) {
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {
             return false;
@@ -29,7 +30,8 @@ public class CommonFilterUtil {
         return adminProperties.getWhiteList().contains(requestMapping);
     }
 
-    public static boolean adminAuthFilter(HttpServletRequest request, String requestMapping, AdminProperties adminProperties) {
+    public static boolean adminAuthFilter(HttpServletRequest request, String requestMapping,
+        AdminProperties adminProperties) {
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {
             return false;
@@ -41,7 +43,8 @@ public class CommonFilterUtil {
         return adminProperties.getAuthWhiteList().contains(requestMapping);
     }
 
-    public static boolean portalFilter(HttpServletRequest request, String requestMapping, PortalProperties portalProperties) {
+    public static boolean portalFilter(HttpServletRequest request, String requestMapping,
+        PortalProperties portalProperties) {
         String header = request.getHeader(Constants.SOURCE);
         if (StrUtil.isBlank(header)) {
             return false;

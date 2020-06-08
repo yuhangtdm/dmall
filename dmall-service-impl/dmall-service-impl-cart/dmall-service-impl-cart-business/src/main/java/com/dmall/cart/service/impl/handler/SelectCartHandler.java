@@ -52,15 +52,13 @@ public class SelectCartHandler extends AbstractCommonHandler<SelectCartRequestDT
         return listCartHandler.handler(null);
     }
 
-
     /**
      * 未登录时修改购物车
      */
     private void notLoginUpdateCart(Integer type, List<Long> skuIds) {
         // 查询cookie中的购物车数据
         String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), AddCartUtil.COOKIE_NAME, true);
-        List<CartDTO> carts = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {
-        });
+        List<CartDTO> carts = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
 
         if (CollUtil.isNotEmpty(carts)) {
             for (CartDTO cartDTO : carts) {
@@ -69,7 +67,7 @@ public class SelectCartHandler extends AbstractCommonHandler<SelectCartRequestDT
                 }
             }
             CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME, JsonUtil.toJson(carts),
-                    AddCartUtil.COOKIE_STORE_TIME, true);
+                AddCartUtil.COOKIE_STORE_TIME, true);
         }
     }
 
@@ -80,7 +78,8 @@ public class SelectCartHandler extends AbstractCommonHandler<SelectCartRequestDT
         List<CartItemDO> cartItemDOS = cartCacheService.list(memberId);
         for (CartItemDO cartItemDO : cartItemDOS) {
             if (skuIds.contains(cartItemDO.getSkuId())) {
-                cartItemDO.setChecked(type.equals(SelectTypeEnum.CHECK.getCode()) ? YNEnum.Y.getCode() : YNEnum.N.getCode());
+                cartItemDO
+                    .setChecked(type.equals(SelectTypeEnum.CHECK.getCode()) ? YNEnum.Y.getCode() : YNEnum.N.getCode());
                 cartCacheService.insert(memberId, cartItemDO);
                 cartItemMapper.updateById(cartItemDO);
             }

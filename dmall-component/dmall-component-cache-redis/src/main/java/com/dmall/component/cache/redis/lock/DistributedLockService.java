@@ -1,7 +1,6 @@
 package com.dmall.component.cache.redis.lock;
 
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 
 import java.time.Duration;
@@ -26,8 +25,8 @@ public class DistributedLockService {
     /**
      * 加锁
      *
-     * @param key     锁的key
-     * @param value   锁的值
+     * @param key 锁的key
+     * @param value 锁的值
      * @param timeout 锁的过期时间
      */
     public Boolean getLock(String key, String value, long timeout) {
@@ -37,11 +36,11 @@ public class DistributedLockService {
     /**
      * 解锁
      *
-     * @param key       锁的key
+     * @param key 锁的key
      * @param requestId 锁的值
      */
     public Boolean releaseLock(String key, String requestId) {
-        return (Boolean) redisTemplate.execute(redisScript, Collections.singletonList(key), requestId);
+        return (Boolean)redisTemplate.execute(redisScript, Collections.singletonList(key), requestId);
     }
 
 }

@@ -39,7 +39,7 @@ public class SetDefaultReceiveAddressHandler extends AbstractCommonHandler<Long,
         MemberReceiveAddressDO addressDO = new MemberReceiveAddressDO();
         addressDO.setDefaultStatus(YNEnum.N.getCode());
         memberReceiveAddressMapper.update(addressDO, Wrappers.<MemberReceiveAddressDO>lambdaUpdate()
-                .eq(MemberReceiveAddressDO::getCreator, loginMember.getId()));
+            .eq(MemberReceiveAddressDO::getCreator, loginMember.getId()));
         // 将当前地址设置为默认
         MemberReceiveAddressDO defaultAddress = new MemberReceiveAddressDO();
         defaultAddress.setId(id);

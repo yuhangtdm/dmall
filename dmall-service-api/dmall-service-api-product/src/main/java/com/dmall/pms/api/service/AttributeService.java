@@ -46,5 +46,4 @@ public interface AttributeService {
     @ApiOperation(value = "属性分页")
     BaseResult<ResponsePage<AttributeResponseDTO>> page(@Valid @RequestBody PageAttributeRequestDTO requestDTO);
 
-
 }

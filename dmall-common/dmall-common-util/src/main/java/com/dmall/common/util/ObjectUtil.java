@@ -13,8 +13,7 @@ import java.util.Objects;
  */
 public class ObjectUtil extends StringUtils {
 
-    private ObjectUtil() {
-    }
+    private ObjectUtil() {}
 
     /**
      * 根据条件获取正确的值
@@ -40,23 +39,23 @@ public class ObjectUtil extends StringUtils {
         }
         // 字符串
         if (obj instanceof String) {
-            if (ObjectUtil.isBlank((String) obj)) {
+            if (ObjectUtil.isBlank((String)obj)) {
                 return true;
             }
         }
 
         // 集合
         if (obj instanceof Collection) {
-            Collection collection = (Collection) obj;
+            Collection collection = (Collection)obj;
             if (collection.isEmpty()) {
                 return true;
             }
             return collection.stream().allMatch(Objects::isNull);
         }
 
-        //map
+        // map
         if (obj instanceof Map) {
-            Map map = (Map) obj;
+            Map map = (Map)obj;
             return map.isEmpty();
         }
 
@@ -99,7 +98,6 @@ public class ObjectUtil extends StringUtils {
         return true;
     }
 
-
     /**
      * 判断一组对象 是否全部不为空
      */
@@ -120,9 +118,8 @@ public class ObjectUtil extends StringUtils {
             return false;
         }
         return object instanceof Collection
-                || object instanceof Map
-                || object.getClass().isArray();
+            || object instanceof Map
+            || object.getClass().isArray();
     }
-
 
 }

@@ -97,5 +97,4 @@ public class MemberCollectionSkuDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

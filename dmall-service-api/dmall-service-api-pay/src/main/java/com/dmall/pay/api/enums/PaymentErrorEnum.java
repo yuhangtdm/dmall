@@ -39,7 +39,6 @@ public enum PaymentErrorEnum implements ErrorCodeEnum {
 
     ;
 
-
     /**
      * 错误码
      */

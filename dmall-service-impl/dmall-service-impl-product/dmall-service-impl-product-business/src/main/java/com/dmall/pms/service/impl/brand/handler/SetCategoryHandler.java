@@ -68,15 +68,15 @@ public class SetCategoryHandler extends AbstractCommonHandler<CheckedDTO, Catego
         } else {
             // 先删后增
             List<Long> oldCategoryIds = listByBrandId.stream().map(CategoryBrandDO::getCategoryId)
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
             // 新增的集合
             List<Long> insertCategoryIds = categoryIds.stream()
-                    .filter(menuId -> !oldCategoryIds.contains(menuId))
-                    .collect(Collectors.toList());
+                .filter(menuId -> !oldCategoryIds.contains(menuId))
+                .collect(Collectors.toList());
             // 删除的集合
             List<Long> deleteCategoryIds = oldCategoryIds.stream()
-                    .filter(menuId -> !categoryIds.contains(menuId))
-                    .collect(Collectors.toList());
+                .filter(menuId -> !categoryIds.contains(menuId))
+                .collect(Collectors.toList());
             if (CollUtil.isNotEmpty(deleteCategoryIds)) {
                 categoryBrandSupport.delete(requestDTO.getId(), deleteCategoryIds);
             }
@@ -93,8 +93,8 @@ public class SetCategoryHandler extends AbstractCommonHandler<CheckedDTO, Catego
     private void insert(CheckedDTO requestDTO, Collection<Long> categoryIds) {
         for (Long categoryId : categoryIds) {
             CategoryBrandDO categoryBrandDO = new CategoryBrandDO()
-                    .setBrandId(requestDTO.getId())
-                    .setCategoryId(categoryId);
+                .setBrandId(requestDTO.getId())
+                .setCategoryId(categoryId);
             CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
             categoryBrandDO.setCascadeCategoryId(categoryDO.getPath());
             categoryBrandMapper.insert(categoryBrandDO);

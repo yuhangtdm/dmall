@@ -25,7 +25,8 @@ import java.util.Date;
  * @author: created by hang.yu on 2020/4/15 22:47
  */
 @Component
-public class WriteLogisticsNoHandler extends AbstractCommonHandler<WriteLogisticsNoRequestDTO, OrderAfterSaleApplyDO, Long> {
+public class WriteLogisticsNoHandler
+    extends AbstractCommonHandler<WriteLogisticsNoRequestDTO, OrderAfterSaleApplyDO, Long> {
 
     private static final String LOG_CONTENT = "填写了物流单号:{}";
 
@@ -53,7 +54,7 @@ public class WriteLogisticsNoHandler extends AbstractCommonHandler<WriteLogistic
         orderAfterSaleApplyMapper.updateById(orderAfterSaleApplyDO);
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.MEMBER,
-                AfterSaleLogTitleEnum.WRITE_LOGISTICS_NO, StrUtil.format(LOG_CONTENT, requestDTO.getLogisticsNo()));
+            AfterSaleLogTitleEnum.WRITE_LOGISTICS_NO, StrUtil.format(LOG_CONTENT, requestDTO.getLogisticsNo()));
         return ResultUtil.success(orderAfterSaleApplyDO.getId());
     }
 }

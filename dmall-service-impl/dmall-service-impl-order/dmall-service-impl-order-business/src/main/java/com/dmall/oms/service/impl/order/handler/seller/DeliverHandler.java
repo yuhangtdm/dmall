@@ -81,7 +81,8 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
             return ResultUtil.fail(OmsErrorEnum.DELIVER_PERSON_WAREHOUSE_EMPTY);
         }
         // 获取仓库信息
-        BaseResult<DeliverWarehouseResponseDTO> warehouseBaseResult = deliverWarehouseFeign.get(adminUser.getWarehouseId());
+        BaseResult<DeliverWarehouseResponseDTO> warehouseBaseResult =
+            deliverWarehouseFeign.get(adminUser.getWarehouseId());
         if (!warehouseBaseResult.getResult()) {
             return ResultUtil.fail(warehouseBaseResult.getCode(), warehouseBaseResult.getMsg());
         }
@@ -96,10 +97,10 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
 
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(subOrderDO.getOrderId());
         Optional<SubOrderDO> any = subOrderList.stream()
-                .filter(subOrder -> SubOrderStatusEnum.WAIT_SHIP.getCode().equals(subOrder.getStatus())).findAny();
+            .filter(subOrder -> SubOrderStatusEnum.WAIT_SHIP.getCode().equals(subOrder.getStatus())).findAny();
         // 插入订单日志记录
         orderLogSupport.insert(subOrderDO.getOrderId(), OrderOperateEnum.DELIVER, true, subOrderDO.getId(),
-                StrUtil.format(LOG_CONTENT, subOrderDO.getId()));
+            StrUtil.format(LOG_CONTENT, subOrderDO.getId()));
         OrderDO orderDO = orderMapper.selectById(subOrderDO.getId());
         orderDO.setDeliverStatus(OrderDeliverStatusEnum.PART.getCode());
         if (!any.isPresent()) {
@@ -111,7 +112,8 @@ public class DeliverHandler extends AbstractCommonHandler<DeliverRequestDTO, Sub
         // 修改订单
         orderMapper.updateById(orderDO);
         // 发货后 15天 自动确认收货 新增定时任务
-        int jobId = xxlJobSupport.addJob(OrderConstants.AUTO_RECEIVE_HANDLER, String.valueOf(requestDTO.getSubOrderId()),
+        int jobId =
+            xxlJobSupport.addJob(OrderConstants.AUTO_RECEIVE_HANDLER, String.valueOf(requestDTO.getSubOrderId()),
                 StrUtil.format(JOB_DESC, requestDTO.getSubOrderId()), CronUtil.getCronAddDay(OrderConstants.DELAY_DAY));
         subOrderJobSupport.insert(subOrderDO.getId(), jobId, JobTypeEnum.AUTO_RECEIVE);
         // 同步到es

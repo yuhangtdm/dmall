@@ -12,7 +12,7 @@ import java.util.TimeZone;
 
 /**
  * @description: 网关启动类
- * 访问路由规则 : API网关地址+访问的服务名称+接口URI
+ *               访问路由规则 : API网关地址+访问的服务名称+接口URI
  * @author: created by hang.yu on 2019/10/16 20:35
  */
 @SpringBootApplication

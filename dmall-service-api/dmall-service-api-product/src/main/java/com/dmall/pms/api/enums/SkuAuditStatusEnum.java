@@ -26,6 +26,7 @@ public enum SkuAuditStatusEnum implements CodeDescEnum<Integer> {
      * 审核不通过
      */
     AUDIT_NOT_PASS(3, "审核不通过");
+
     private final Integer code;
 
     private final String desc;

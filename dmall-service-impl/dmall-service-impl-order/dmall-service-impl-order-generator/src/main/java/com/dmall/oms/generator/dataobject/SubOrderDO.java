@@ -138,5 +138,4 @@ public class SubOrderDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

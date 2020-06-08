@@ -82,5 +82,4 @@ public class SkuAuditDO implements Serializable {
      */
     private String isDeleted;
 
-
 }

@@ -74,5 +74,4 @@ public class RoleMenuDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

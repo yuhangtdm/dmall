@@ -32,8 +32,8 @@ public class QiNiuConfiguration implements BasicConfiguration {
     public void check() {
         log.info("init -> [{}],properties:\n{}", "QiNiuProperties", JsonUtil.toJsonPretty(qiNiuProperties));
         if (qiNiuProperties.getEnabled()) {
-            if (ObjectUtil.containsEmpty(qiNiuProperties.getAccessKey(), qiNiuProperties.getSecretKey()
-                    , qiNiuProperties.getBucket(), qiNiuProperties.getDomain())) {
+            if (ObjectUtil.containsEmpty(qiNiuProperties.getAccessKey(), qiNiuProperties.getSecretKey(),
+                qiNiuProperties.getBucket(), qiNiuProperties.getDomain())) {
                 throw new ComponentException(QiNiuErrorEnum.QI_NIU_CONFIG_ERROR);
             }
         }

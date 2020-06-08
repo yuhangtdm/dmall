@@ -22,6 +22,7 @@ public enum InvoiceHeaderTypeEnum implements CodeDescEnum<Integer> {
      */
     COMPANY(2, "公司"),
     ;
+
     private final Integer code;
 
     private final String desc;

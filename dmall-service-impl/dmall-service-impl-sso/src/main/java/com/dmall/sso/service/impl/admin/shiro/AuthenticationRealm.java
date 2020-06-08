@@ -32,8 +32,9 @@ public class AuthenticationRealm extends AuthorizingRealm {
      * 认证
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String phone = (String) authenticationToken.getPrincipal();
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
+        throws AuthenticationException {
+        String phone = (String)authenticationToken.getPrincipal();
         UserDO userDO = userSupport.getByPhone(phone);
         if (userDO == null) {
             throw new UnknownAccountException();
@@ -47,8 +48,8 @@ public class AuthenticationRealm extends AuthorizingRealm {
         adminUserDTO.setSource(Constants.ADMIN_USER);
         // 密码加密和比较交给shiro
         return new SimpleAuthenticationInfo(adminUserDTO, userDO.getPassword(),
-                ByteSource.Util.bytes(userDO.getPhone()),
-                getName());
+            ByteSource.Util.bytes(userDO.getPhone()),
+            getName());
     }
 
     @Override

@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/11 21:20
  */
 @Component
-public class CommentPageHandler extends AbstractCommonHandler<CommentPageRequestDTO, SubOrderDO, CommentPageResponseDTO> {
+public class CommentPageHandler
+    extends AbstractCommonHandler<CommentPageRequestDTO, SubOrderDO, CommentPageResponseDTO> {
 
     @Autowired
     private CommentMapper commentMapper;
@@ -54,7 +55,8 @@ public class CommentPageHandler extends AbstractCommonHandler<CommentPageRequest
                 buyerOrderItemDTO.setSkuMainPic(commentSkuDbDTO.getSkuMainPic());
                 buyerOrderItemDTO.setSkuNumber(commentSkuDbDTO.getSkuNumber());
                 buyerOrderItemDTO.setSkuTotalPrice(commentSkuDbDTO.getSkuTotalPrice());
-                buyerOrderItemDTO.setCanAfterSale(SubOrderStatusEnum.COMPLETED.getCode().equals(commentPageDbDTO.getSubOrderStatus()));
+                buyerOrderItemDTO.setCanAfterSale(
+                    SubOrderStatusEnum.COMPLETED.getCode().equals(commentPageDbDTO.getSubOrderStatus()));
                 return buyerOrderItemDTO;
             }).collect(Collectors.toList());
             responseDTO.setSkuList(skuList);

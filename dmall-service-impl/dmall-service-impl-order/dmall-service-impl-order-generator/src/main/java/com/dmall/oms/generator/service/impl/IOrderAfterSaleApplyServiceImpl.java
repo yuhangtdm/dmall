@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2020-04-13 21:52:35
  */
 @Service
-public class IOrderAfterSaleApplyServiceImpl extends ServiceImpl<OrderAfterSaleApplyMapper, OrderAfterSaleApplyDO> implements IOrderAfterSaleApplyService {
+public class IOrderAfterSaleApplyServiceImpl extends ServiceImpl<OrderAfterSaleApplyMapper, OrderAfterSaleApplyDO>
+    implements IOrderAfterSaleApplyService {
 
 }

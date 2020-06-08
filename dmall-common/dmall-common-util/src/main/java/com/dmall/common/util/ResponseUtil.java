@@ -48,6 +48,6 @@ public class ResponseUtil {
      * 获取HttpServletResponse对象
      */
     public static HttpServletResponse getResponse() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse();
     }
 }

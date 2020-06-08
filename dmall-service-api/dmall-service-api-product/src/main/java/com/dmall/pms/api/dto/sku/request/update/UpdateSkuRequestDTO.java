@@ -25,7 +25,6 @@ public class UpdateSkuRequestDTO implements Serializable {
     @NotNull(message = "sku基本信息不能为空")
     private BasicSkuRequestDTO basicSkuRequestDTO;
 
-
     @ApiModelProperty(value = "商品属性值id列表", position = 2)
     private List<Long> productAttributeValueList;
 

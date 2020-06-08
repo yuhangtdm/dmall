@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @description: SsoErrorEnum  1600开头
+ * @description: SsoErrorEnum 1600开头
  * @author: created by hang.yu on 2020/4/25 14:10
  */
 @Getter
@@ -47,13 +47,13 @@ public enum SsoErrorEnum implements ErrorCodeEnum {
      */
     MEMBER_INVALID("1606", "您的账号已被锁定,请联系管理员"),
 
-
     /**
      * 微博暂时无法正常使用
      */
     WEI_BO_ERROR("1607", "微博暂时无法正常使用"),
 
     ;
+
     /**
      * 错误码
      */

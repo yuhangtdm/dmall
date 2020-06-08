@@ -97,5 +97,4 @@ public class MenuDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

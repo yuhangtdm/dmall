@@ -62,7 +62,8 @@ public class PermissionImportAllHandler extends AbstractCommonHandler<Void, Perm
                     body.getPaths().forEach((k, v) -> {
 
                         if (v.getGet() != null) {
-                            PermissionDO get = permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.GET.name());
+                            PermissionDO get =
+                                permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.GET.name());
                             if (get == null) {
                                 PermissionDO permissionDO = new PermissionDO();
                                 permissionDO.setAppId(value.getCode());
@@ -75,7 +76,8 @@ public class PermissionImportAllHandler extends AbstractCommonHandler<Void, Perm
 
                         }
                         if (v.getPost() != null) {
-                            PermissionDO post = permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.POST.name());
+                            PermissionDO post =
+                                permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.POST.name());
                             if (post == null) {
                                 PermissionDO permissionDO = new PermissionDO();
                                 permissionDO.setAppId(value.getCode());
@@ -87,7 +89,8 @@ public class PermissionImportAllHandler extends AbstractCommonHandler<Void, Perm
                             }
                         }
                         if (v.getDelete() != null) {
-                            PermissionDO delete = permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.DELETE.name());
+                            PermissionDO delete =
+                                permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.DELETE.name());
                             if (delete == null) {
                                 PermissionDO permissionDO = new PermissionDO();
                                 permissionDO.setAppId(value.getCode());
@@ -99,7 +102,8 @@ public class PermissionImportAllHandler extends AbstractCommonHandler<Void, Perm
                             }
                         }
                         if (v.getPut() != null) {
-                            PermissionDO put = permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.PUT.name());
+                            PermissionDO put =
+                                permissionSupport.getByUriAndMethod(value.getCode(), k, HttpMethod.PUT.name());
                             if (put == null) {
                                 PermissionDO permissionDO = new PermissionDO();
                                 permissionDO.setAppId(value.getCode());

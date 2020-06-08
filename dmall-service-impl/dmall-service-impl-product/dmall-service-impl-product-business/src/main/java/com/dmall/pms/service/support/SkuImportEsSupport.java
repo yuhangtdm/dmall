@@ -26,18 +26,18 @@ public class SkuImportEsSupport {
      */
     public void sendSyncSkuMq(Long skuId) {
         rocketMQTemplate.sendAndReceive(MqConstants.SYNC_ES_SKU, skuId,
-                new RocketMQLocalRequestCallback() {
-                    @Override
-                    public void onSuccess(Object message) {
-                        log.info("send mq success{}", message);
-                    }
+            new RocketMQLocalRequestCallback() {
+                @Override
+                public void onSuccess(Object message) {
+                    log.info("send mq success{}", message);
+                }
 
-                    @SneakyThrows
-                    @Override
-                    public void onException(Throwable e) {
-                        log.error("send mq error", e);
-                        throw new BusinessException(BasicStatusEnum.FAIL);
-                    }
-                }, 3000);
+                @SneakyThrows
+                @Override
+                public void onException(Throwable e) {
+                    log.error("send mq error", e);
+                    throw new BusinessException(BasicStatusEnum.FAIL);
+                }
+            }, 3000);
     }
 }

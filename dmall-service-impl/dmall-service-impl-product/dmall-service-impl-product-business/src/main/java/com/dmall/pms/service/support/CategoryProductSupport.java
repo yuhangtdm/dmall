@@ -23,7 +23,7 @@ public class CategoryProductSupport {
      */
     public List<CategoryProductDO> listByCategoryId(Long categoryId) {
         return categoryProductMapper.selectList(Wrappers.<CategoryProductDO>lambdaQuery()
-                .eq(CategoryProductDO::getCategoryId, categoryId));
+            .eq(CategoryProductDO::getCategoryId, categoryId));
     }
 
     /**
@@ -31,6 +31,6 @@ public class CategoryProductSupport {
      */
     public List<CategoryProductDO> listByProductId(Long productId) {
         return categoryProductMapper.selectList(Wrappers.<CategoryProductDO>lambdaQuery()
-                .eq(CategoryProductDO::getProductId, productId));
+            .eq(CategoryProductDO::getProductId, productId));
     }
 }

@@ -27,6 +27,7 @@ public enum SplitEnum implements CodeDescEnum<Integer> {
     IS(3, "已拆分"),
 
     ;
+
     private final Integer code;
 
     private final String desc;

@@ -59,12 +59,11 @@ public class DeleteCartHandler extends AbstractCommonHandler<DeleteCartRequestDT
         // 查询cookie中的购物车数据
         String cartJson = CookieUtil.getCookie(RequestUtil.getRequest(), AddCartUtil.COOKIE_NAME, true);
         if (StrUtil.isNotBlank(cartJson)) {
-            List<CartDTO> carts = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {
-            });
+            List<CartDTO> carts = JsonUtil.fromJson(cartJson, new TypeReference<List<CartDTO>>() {});
             if (CollUtil.isNotEmpty(carts)) {
                 carts.removeIf(next -> skuIds.contains(next.getSkuId()));
                 CookieUtil.addCookie(ResponseUtil.getResponse(), AddCartUtil.COOKIE_NAME, JsonUtil.toJson(carts),
-                        AddCartUtil.COOKIE_STORE_TIME, true);
+                    AddCartUtil.COOKIE_STORE_TIME, true);
             }
         }
     }
@@ -75,6 +74,6 @@ public class DeleteCartHandler extends AbstractCommonHandler<DeleteCartRequestDT
     private void loginDeleteCart(Long memberId, List<Long> skuIds) {
         cartCacheService.delete(memberId, skuIds);
         cartItemMapper.delete(Wrappers.<CartItemDO>lambdaQuery().eq(CartItemDO::getMemberId, memberId)
-                .in(CartItemDO::getSkuId, skuIds));
+            .in(CartItemDO::getSkuId, skuIds));
     }
 }

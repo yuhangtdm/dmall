@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/3/25 23:31
  */
 @Component
-@RocketMQMessageListener(topic = MqConstants.SYNC_ES_SKU, consumerGroup = SaveOrUpdateSkuEsConsumer.SYNC_ES_SKU_CONSUMER)
+@RocketMQMessageListener(topic = MqConstants.SYNC_ES_SKU,
+    consumerGroup = SaveOrUpdateSkuEsConsumer.SYNC_ES_SKU_CONSUMER)
 public class SaveOrUpdateSkuEsConsumer implements RocketMQListener<Long> {
 
     /**

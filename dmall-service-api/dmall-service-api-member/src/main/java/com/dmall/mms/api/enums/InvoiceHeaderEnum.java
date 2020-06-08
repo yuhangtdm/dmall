@@ -21,6 +21,7 @@ public enum InvoiceHeaderEnum implements CodeDescEnum<Integer> {
      * 公司
      */
     COMPANY(2, "公司");
+
     /**
      * code
      */

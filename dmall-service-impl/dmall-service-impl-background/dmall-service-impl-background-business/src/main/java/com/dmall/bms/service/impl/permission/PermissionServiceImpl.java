@@ -41,7 +41,6 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private PagePermissionHandler pagePermissionHandler;
 
-
     @Autowired
     private PermissionImportAllHandler permissionImportAllHandler;
 

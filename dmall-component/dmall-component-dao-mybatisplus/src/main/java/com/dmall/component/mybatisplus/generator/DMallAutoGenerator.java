@@ -40,8 +40,7 @@ public class DMallAutoGenerator extends AutoGenerator {
     public InjectionConfig getInjectionConfig(ConfigBuilder config) {
         InjectionConfig injectionConfig = new InjectionConfig() {
             @Override
-            public void initMap() {
-            }
+            public void initMap() {}
         };
 
         injectionConfig.setFileCreate(new DMallFileCreate() {
@@ -57,13 +56,13 @@ public class DMallAutoGenerator extends AutoGenerator {
                 }
                 // 判断自定义文件夹是否需要创建,这里调用默认的方法
                 checkDir(filePath);
-                //对于已存在的文件，只需覆盖 XML
+                // 对于已存在的文件，只需覆盖 XML
                 File file = new File(filePath);
                 boolean exist = file.exists();
                 if (exist) {
                     return DMallFileType.XML == fileType;
                 }
-                //不存在的文件都需要创建
+                // 不存在的文件都需要创建
                 return true;
             }
 
@@ -78,14 +77,14 @@ public class DMallAutoGenerator extends AutoGenerator {
                 }
                 // 判断自定义文件夹是否需要创建,这里调用默认的方法
                 checkDir(filePath);
-                //对于已存在的文件，只需重复生成 entity
+                // 对于已存在的文件，只需重复生成 entity
                 File file = new File(filePath);
                 boolean exist = file.exists();
                 if (exist) {
                     // 实体文件需要腹泻
                     return FileType.ENTITY == fileType;
                 }
-                //不存在的文件都需要创建
+                // 不存在的文件都需要创建
                 return true;
             }
         });
@@ -98,9 +97,10 @@ public class DMallAutoGenerator extends AutoGenerator {
             public String outputFile(TableInfo tableInfo) {
                 String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
                 return System.getProperty(MybatisPlusConstants.USER_DIR)
-                        + StrUtil.format(MybatisPlusConstants.GENERATOR_MODULE_NAME, getGenerator().getModule(), getGenerator().getModule())
-                        + MybatisPlusConstants.SRC_MAIN_RESOURCES
-                        + StrUtil.format(MybatisPlusConstants.MAPPER_NAME_TEMPLATE, entityName);
+                    + StrUtil.format(MybatisPlusConstants.GENERATOR_MODULE_NAME, getGenerator().getModule(),
+                        getGenerator().getModule())
+                    + MybatisPlusConstants.SRC_MAIN_RESOURCES
+                    + StrUtil.format(MybatisPlusConstants.MAPPER_NAME_TEMPLATE, entityName);
             }
         };
         list.add(xmlOutConfig);
@@ -110,7 +110,8 @@ public class DMallAutoGenerator extends AutoGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
-                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.SAVE.getCode(), FileEnum.REQUEST_DTO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.SAVE.getCode(),
+                    FileEnum.REQUEST_DTO.getCode());
             }
         };
         list.add(saveOutConfig);
@@ -120,7 +121,8 @@ public class DMallAutoGenerator extends AutoGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
-                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.UPDATE.getCode(), FileEnum.REQUEST_DTO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.UPDATE.getCode(),
+                    FileEnum.REQUEST_DTO.getCode());
             }
         };
         list.add(updateOutConfig);
@@ -130,7 +132,8 @@ public class DMallAutoGenerator extends AutoGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
-                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.LIST.getCode(), FileEnum.REQUEST_DTO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.LIST.getCode(),
+                    FileEnum.REQUEST_DTO.getCode());
             }
         };
         list.add(listOutConfig);
@@ -140,7 +143,8 @@ public class DMallAutoGenerator extends AutoGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
-                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.PAGE.getCode(), FileEnum.REQUEST_DTO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.REQUEST, HandlerEnum.PAGE.getCode(),
+                    FileEnum.REQUEST_DTO.getCode());
             }
         };
         list.add(pageOutConfig);
@@ -150,7 +154,8 @@ public class DMallAutoGenerator extends AutoGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String entityName = StrUtil.removeSuffix(tableInfo.getEntityName(), FileEnum.DO.getCode());
-                return getDtoPath(entityName, MybatisPlusConstants.RESPONSE, StrUtil.EMPTY, FileEnum.RESPONSE_DTO.getCode());
+                return getDtoPath(entityName, MybatisPlusConstants.RESPONSE, StrUtil.EMPTY,
+                    FileEnum.RESPONSE_DTO.getCode());
             }
         };
         list.add(responseOutConfig);
@@ -235,7 +240,6 @@ public class DMallAutoGenerator extends AutoGenerator {
         };
         list.add(pageHandlerOutConfig);
 
-
         injectionConfig.setFileOutConfigList(list);
         return injectionConfig;
     }
@@ -245,16 +249,16 @@ public class DMallAutoGenerator extends AutoGenerator {
      */
     private String getDtoPath(String entityName, String operation, String prefix, String suffix) {
         StringBuilder append = api()
-                .append(MybatisPlusConstants.DTO)
-                .append(File.separator)
-                .append(entityName.toLowerCase())
-                .append(File.separator)
-                .append(operation)
-                .append(File.separator)
-                .append(prefix)
-                .append(entityName)
-                .append(suffix)
-                .append(StringPool.DOT_JAVA);
+            .append(MybatisPlusConstants.DTO)
+            .append(File.separator)
+            .append(entityName.toLowerCase())
+            .append(File.separator)
+            .append(operation)
+            .append(File.separator)
+            .append(prefix)
+            .append(entityName)
+            .append(suffix)
+            .append(StringPool.DOT_JAVA);
         return append.toString();
     }
 
@@ -263,11 +267,11 @@ public class DMallAutoGenerator extends AutoGenerator {
      */
     private String getServicePath(String entityName) {
         StringBuilder append = api()
-                .append(MybatisPlusConstants.SERVICE)
-                .append(File.separator)
-                .append(entityName)
-                .append(FileEnum.SERVICE_API.getCode())
-                .append(StringPool.DOT_JAVA);
+            .append(MybatisPlusConstants.SERVICE)
+            .append(File.separator)
+            .append(entityName)
+            .append(FileEnum.SERVICE_API.getCode())
+            .append(StringPool.DOT_JAVA);
         return append.toString();
     }
 
@@ -276,9 +280,9 @@ public class DMallAutoGenerator extends AutoGenerator {
      */
     private String getServiceImplPath(String entityName) {
         StringBuilder append = impl(entityName)
-                .append(entityName)
-                .append(FileEnum.SERVICE_IMPL.getCode())
-                .append(StringPool.DOT_JAVA);
+            .append(entityName)
+            .append(FileEnum.SERVICE_IMPL.getCode())
+            .append(StringPool.DOT_JAVA);
         return append.toString();
     }
 
@@ -287,12 +291,12 @@ public class DMallAutoGenerator extends AutoGenerator {
      */
     private String getHandlerPath(String entityName, String operator) {
         return impl(entityName)
-                .append(MybatisPlusConstants.HANDLER)
-                .append(File.separator)
-                .append(operator)
-                .append(entityName)
-                .append(FileEnum.HANDLER.getCode())
-                .append(StringPool.DOT_JAVA).toString();
+            .append(MybatisPlusConstants.HANDLER)
+            .append(File.separator)
+            .append(operator)
+            .append(entityName)
+            .append(FileEnum.HANDLER.getCode())
+            .append(StringPool.DOT_JAVA).toString();
     }
 
     /**
@@ -300,14 +304,14 @@ public class DMallAutoGenerator extends AutoGenerator {
      */
     private StringBuilder api() {
         return new StringBuilder()
-                .append(System.getProperty(MybatisPlusConstants.USER_DIR))
-                .append(StrUtil.format(MybatisPlusConstants.API_MODULE_NAME, generator.getModule()))
-                .append(MybatisPlusConstants.SRC_MAIN_JAVA)
-                .append(MybatisPlusConstants.COM_DMALL)
-                .append(generator.getBusiness())
-                .append(File.separator)
-                .append(MybatisPlusConstants.API)
-                .append(File.separator);
+            .append(System.getProperty(MybatisPlusConstants.USER_DIR))
+            .append(StrUtil.format(MybatisPlusConstants.API_MODULE_NAME, generator.getModule()))
+            .append(MybatisPlusConstants.SRC_MAIN_JAVA)
+            .append(MybatisPlusConstants.COM_DMALL)
+            .append(generator.getBusiness())
+            .append(File.separator)
+            .append(MybatisPlusConstants.API)
+            .append(File.separator);
     }
 
     /**
@@ -315,18 +319,19 @@ public class DMallAutoGenerator extends AutoGenerator {
      */
     private StringBuilder impl(String entityName) {
         return new StringBuilder()
-                .append(System.getProperty(MybatisPlusConstants.USER_DIR))
-                .append(StrUtil.format(MybatisPlusConstants.BUSINESS_MODULE_NAME, generator.getModule(), generator.getModule()))
-                .append(MybatisPlusConstants.SRC_MAIN_JAVA)
-                .append(MybatisPlusConstants.COM_DMALL)
-                .append(generator.getBusiness())
-                .append(File.separator)
-                .append(MybatisPlusConstants.SERVICE)
-                .append(File.separator)
-                .append(MybatisPlusConstants.IMPL)
-                .append(File.separator)
-                .append(entityName.toLowerCase())
-                .append(File.separator);
+            .append(System.getProperty(MybatisPlusConstants.USER_DIR))
+            .append(
+                StrUtil.format(MybatisPlusConstants.BUSINESS_MODULE_NAME, generator.getModule(), generator.getModule()))
+            .append(MybatisPlusConstants.SRC_MAIN_JAVA)
+            .append(MybatisPlusConstants.COM_DMALL)
+            .append(generator.getBusiness())
+            .append(File.separator)
+            .append(MybatisPlusConstants.SERVICE)
+            .append(File.separator)
+            .append(MybatisPlusConstants.IMPL)
+            .append(File.separator)
+            .append(entityName.toLowerCase())
+            .append(File.separator);
     }
 
 }

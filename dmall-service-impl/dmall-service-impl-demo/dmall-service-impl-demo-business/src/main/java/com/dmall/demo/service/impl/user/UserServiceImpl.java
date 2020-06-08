@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PageUserHandler pageUserHandler;
 
-
     @Override
     public BaseResult<Long> save(@RequestBody SaveUserRequestDTO requestDTO) {
         return saveUserHandler.handler(requestDTO);

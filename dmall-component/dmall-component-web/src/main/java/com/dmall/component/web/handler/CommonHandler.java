@@ -1,6 +1,5 @@
 package com.dmall.component.web.handler;
 
-
 import com.dmall.common.dto.BaseResult;
 
 /**

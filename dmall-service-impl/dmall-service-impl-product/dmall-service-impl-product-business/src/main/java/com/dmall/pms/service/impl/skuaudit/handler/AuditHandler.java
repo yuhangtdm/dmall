@@ -47,5 +47,4 @@ public class AuditHandler extends AbstractCommonHandler<AuditRequestDTO, SkuAudi
         return ResultUtil.success(skuAuditDO.getId());
     }
 
-
 }

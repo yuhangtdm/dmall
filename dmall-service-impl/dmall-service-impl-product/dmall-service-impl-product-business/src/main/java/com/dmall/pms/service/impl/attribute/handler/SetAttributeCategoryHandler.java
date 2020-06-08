@@ -31,7 +31,8 @@ import java.util.stream.Collectors;
  */
 @Component
 @Deprecated
-public class SetAttributeCategoryHandler extends AbstractCommonHandler<SetAttributeCategoryRequestDTO, CategoryAttributeDO, Void> {
+public class SetAttributeCategoryHandler
+    extends AbstractCommonHandler<SetAttributeCategoryRequestDTO, CategoryAttributeDO, Void> {
 
     @Autowired
     private AttributeCacheService attributeCacheService;
@@ -55,7 +56,7 @@ public class SetAttributeCategoryHandler extends AbstractCommonHandler<SetAttrib
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_ID_INVALID);
         }
         if (TypeEnum.NORMAL.getCode().equals(attributeDO.getType())
-                && requestDTO.getCategoryIds().size() > 1) {
+            && requestDTO.getCategoryIds().size() > 1) {
             return ResultUtil.fail(PmsErrorEnum.SET_CATEGORY_ERROR);
         }
         List<CategoryDO> categoryDOS = categoryMapper.selectBatchIds(requestDTO.getCategoryIds());
@@ -64,8 +65,8 @@ public class SetAttributeCategoryHandler extends AbstractCommonHandler<SetAttrib
         }
         // 必须是三级分类
         Optional<Boolean> any = categoryDOS.stream()
-                .map(categoryDO -> !LevelEnum.THREE.getCode().equals(categoryDO.getLevel()))
-                .findAny();
+            .map(categoryDO -> !LevelEnum.THREE.getCode().equals(categoryDO.getLevel()))
+            .findAny();
         if (any.isPresent()) {
             return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
         }
@@ -75,7 +76,7 @@ public class SetAttributeCategoryHandler extends AbstractCommonHandler<SetAttrib
     @Override
     public BaseResult processor(SetAttributeCategoryRequestDTO requestDTO) {
         List<CategoryAttributeDO> listByAttributeId = categoryAttributeSupport
-                .listByAttributeId(requestDTO.getAttributeId());
+            .listByAttributeId(requestDTO.getAttributeId());
         Set<Long> categoryIds = requestDTO.getCategoryIds();
         // 角色列表为空 只是新增
         if (CollUtil.isEmpty(listByAttributeId)) {
@@ -83,15 +84,15 @@ public class SetAttributeCategoryHandler extends AbstractCommonHandler<SetAttrib
         } else {
             // 先删后增
             List<Long> oldCategoryIds = listByAttributeId.stream().map(CategoryAttributeDO::getCategoryId)
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
             // 新增的集合
             List<Long> insertCategoryIds = categoryIds.stream()
-                    .filter(menuId -> !oldCategoryIds.contains(menuId))
-                    .collect(Collectors.toList());
+                .filter(menuId -> !oldCategoryIds.contains(menuId))
+                .collect(Collectors.toList());
             // 删除的集合
             List<Long> deleteCategoryIds = oldCategoryIds.stream()
-                    .filter(menuId -> !categoryIds.contains(menuId))
-                    .collect(Collectors.toList());
+                .filter(menuId -> !categoryIds.contains(menuId))
+                .collect(Collectors.toList());
             if (CollUtil.isNotEmpty(deleteCategoryIds)) {
                 categoryAttributeSupport.delete(requestDTO.getAttributeId(), deleteCategoryIds);
             }
@@ -108,9 +109,9 @@ public class SetAttributeCategoryHandler extends AbstractCommonHandler<SetAttrib
     private void insert(SetAttributeCategoryRequestDTO requestDTO, Collection<Long> categoryIds) {
         for (Long categoryId : categoryIds) {
             CategoryAttributeDO categoryAttributeDO = new CategoryAttributeDO()
-                    .setAttributeId(requestDTO.getAttributeId())
-                    .setCanScreen(requestDTO.getCanScreen())
-                    .setCategoryId(categoryId);
+                .setAttributeId(requestDTO.getAttributeId())
+                .setCanScreen(requestDTO.getCanScreen())
+                .setCategoryId(categoryId);
             CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
             categoryAttributeDO.setCascadeCategoryId(categoryDO.getPath());
             categoryAttributeMapper.insert(categoryAttributeDO);

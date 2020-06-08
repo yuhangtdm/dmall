@@ -32,7 +32,6 @@ public interface MemberInvoiceService {
     @ApiImplicitParam(name = "id", value = "会员发票id", required = true, dataType = "int", paramType = "path")
     BaseResult<Long> delete(@PathVariable("id") Long id);
 
-
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询会员发票")
     @ApiImplicitParam(name = "id", value = "会员发票id", required = true, dataType = "int", paramType = "path")

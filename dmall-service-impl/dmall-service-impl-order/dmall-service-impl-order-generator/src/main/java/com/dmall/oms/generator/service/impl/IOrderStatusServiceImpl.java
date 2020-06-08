@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2020-03-11 22:46:57
  */
 @Service
-public class IOrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, OrderStatusDO> implements IOrderStatusService {
+public class IOrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, OrderStatusDO>
+    implements IOrderStatusService {
 
 }

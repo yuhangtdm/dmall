@@ -66,10 +66,12 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
     private List<BuyerOrderItemDTO> buildSkuList(OrderDO orderDO, Long subOrderId) {
         if (SplitEnum.NOT_NEED.getCode().equals(orderDO.getSplit())) {
             // 无需拆单
-            return orderItemSupport.listByOrderId(orderDO.getId()).stream().map(this::getOrderItemDTO).collect(Collectors.toList());
+            return orderItemSupport.listByOrderId(orderDO.getId()).stream().map(this::getOrderItemDTO)
+                .collect(Collectors.toList());
         } else {
             // 已拆成多单
-            return orderItemSupport.listBySubOrderId(subOrderId).stream().map(this::getOrderItemDTO).collect(Collectors.toList());
+            return orderItemSupport.listBySubOrderId(subOrderId).stream().map(this::getOrderItemDTO)
+                .collect(Collectors.toList());
         }
 
     }
@@ -89,8 +91,8 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
         receiverDTO.setName(orderDO.getReceiverName());
         receiverDTO.setPhone(orderDO.getReceiverPhone());
         receiverDTO.setAddress(StrUtil.format("{}{}{}{}",
-                orderDO.getReceiverProvince(), orderDO.getReceiverCity(),
-                orderDO.getReceiverRegion(), orderDO.getReceiverDetailAddress()));
+            orderDO.getReceiverProvince(), orderDO.getReceiverCity(),
+            orderDO.getReceiverRegion(), orderDO.getReceiverDetailAddress()));
         return receiverDTO;
     }
 
@@ -130,7 +132,8 @@ public class BuyerOrderDetailHandler extends AbstractCommonHandler<Long, OrderDO
         List<OrderStatusDO> orderStatusList = orderStatusSupport.listByOrderId(orderId);
         return orderStatusList.stream().map(orderStatusDO -> {
             OrderStatusDTO orderStatusDTO = new OrderStatusDTO();
-            orderStatusDTO.setOrderStatus(EnumUtil.getCodeDescEnum(OrderStatusEnum.class, orderStatusDO.getOrderStatus()));
+            orderStatusDTO
+                .setOrderStatus(EnumUtil.getCodeDescEnum(OrderStatusEnum.class, orderStatusDO.getOrderStatus()));
             orderStatusDTO.setCreateTime(orderStatusDO.getGmtCreated());
             return orderStatusDTO;
         }).collect(Collectors.toList());

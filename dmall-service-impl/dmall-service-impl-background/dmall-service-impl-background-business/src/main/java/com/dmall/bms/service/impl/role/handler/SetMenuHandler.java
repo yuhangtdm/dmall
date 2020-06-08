@@ -62,8 +62,8 @@ public class SetMenuHandler extends AbstractCommonHandler<CheckedDTO, RoleMenuDO
         if (CollUtil.isEmpty(listByRoleId)) {
             for (Long menuId : menuIds) {
                 RoleMenuDO roleMenuDO = new RoleMenuDO()
-                        .setRoleId(requestDTO.getId())
-                        .setMenuId(menuId);
+                    .setRoleId(requestDTO.getId())
+                    .setMenuId(menuId);
                 roleMenuMapper.insert(roleMenuDO);
             }
         } else {
@@ -71,20 +71,20 @@ public class SetMenuHandler extends AbstractCommonHandler<CheckedDTO, RoleMenuDO
             List<Long> oldMenuIds = listByRoleId.stream().map(RoleMenuDO::getMenuId).collect(Collectors.toList());
             // 新增的集合
             List<Long> insertMenuIds = menuIds.stream()
-                    .filter(menuId -> !oldMenuIds.contains(menuId))
-                    .collect(Collectors.toList());
+                .filter(menuId -> !oldMenuIds.contains(menuId))
+                .collect(Collectors.toList());
             // 删除的集合
             List<Long> deleteMenuIds = oldMenuIds.stream()
-                    .filter(menuId -> !menuIds.contains(menuId))
-                    .collect(Collectors.toList());
+                .filter(menuId -> !menuIds.contains(menuId))
+                .collect(Collectors.toList());
             if (CollUtil.isNotEmpty(deleteMenuIds)) {
                 roleMenuSupport.delete(requestDTO.getId(), deleteMenuIds);
             }
             if (CollUtil.isNotEmpty(insertMenuIds)) {
                 for (Long menuId : insertMenuIds) {
                     RoleMenuDO roleMenuDO = new RoleMenuDO()
-                            .setRoleId(requestDTO.getId())
-                            .setMenuId(menuId);
+                        .setRoleId(requestDTO.getId())
+                        .setMenuId(menuId);
                     roleMenuMapper.insert(roleMenuDO);
                 }
             }

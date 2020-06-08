@@ -36,9 +36,9 @@ public class AdminPermissionFilter extends PathMatchingFilter {
 
     @Override
     protected boolean onPreHandle(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue)
-            throws Exception {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        throws Exception {
+        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletResponse response = (HttpServletResponse)servletResponse;
 
         String requestMapping = RequestMappingUtil.getValue(request);
         boolean filter = CommonFilterUtil.adminAuthFilter(request, requestMapping, adminProperties);
@@ -51,7 +51,8 @@ public class AdminPermissionFilter extends PathMatchingFilter {
         }
         // 调用sso获取权限数据
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
-        BaseResult<List<PermissionResponseDTO>> listBaseResult = adminPermissionFeign.listPermissions(adminUserDTO.getPhone());
+        BaseResult<List<PermissionResponseDTO>> listBaseResult =
+            adminPermissionFeign.listPermissions(adminUserDTO.getPhone());
         if (!listBaseResult.getResult()) {
             ResponseUtil.writeJson(response, listBaseResult);
             return false;

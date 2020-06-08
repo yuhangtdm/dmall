@@ -39,12 +39,12 @@ public class UserTabPermissionHandler extends AbstractCommonHandler<Long, Permis
         // 获取所有的权限
         List<PermissionDO> permissionList = permissionMapper.selectList(Wrappers.emptyWrapper());
         Map<String, List<PermissionDO>> collect = permissionList.stream()
-                .collect(Collectors.groupingBy(PermissionDO::getAppId, Collectors.toList()));
+            .collect(Collectors.groupingBy(PermissionDO::getAppId, Collectors.toList()));
         // 获取用户的权限
         List<Long> permissionIds = userPermissionsMapper.listAllByUserId(userId);
         List<Long> subPermissionIds = userPermissionSupport.listSubByUserId(userId).stream()
-                .map(UserPermissionDO::getPermissionId)
-                .collect(Collectors.toList());
+            .map(UserPermissionDO::getPermissionId)
+            .collect(Collectors.toList());
         // 去除减权限
         permissionIds.removeAll(subPermissionIds);
         List<TabPermissionResponseDTO> result = PermissionSupport.getTabPermissionResponseDTOS(collect, permissionIds);

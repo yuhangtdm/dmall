@@ -31,5 +31,4 @@ public class DMallMybatisPlusProperties {
      */
     private Boolean format = Boolean.TRUE;
 
-
 }

@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-04-05 16:03:43
  */
 @Component
-public class ListDeliverWarehouseHandler extends AbstractCommonHandler<ListDeliverWarehouseRequestDTO, DeliverWarehouseDO, DeliverWarehouseResponseDTO> {
+public class ListDeliverWarehouseHandler
+    extends AbstractCommonHandler<ListDeliverWarehouseRequestDTO, DeliverWarehouseDO, DeliverWarehouseResponseDTO> {
 
     @Autowired
     private DeliverWarehouseMapper deliverWarehouseMapper;
@@ -27,10 +28,10 @@ public class ListDeliverWarehouseHandler extends AbstractCommonHandler<ListDeliv
     @Override
     public BaseResult<List<DeliverWarehouseResponseDTO>> processor(ListDeliverWarehouseRequestDTO requestDTO) {
         List<DeliverWarehouseDO> list = deliverWarehouseMapper.selectList(Wrappers.<DeliverWarehouseDO>lambdaQuery()
-                .eq(DeliverWarehouseDO::getMerchantsId, requestDTO.getMerchantsId()));
+            .eq(DeliverWarehouseDO::getMerchantsId, requestDTO.getMerchantsId()));
         List<DeliverWarehouseResponseDTO> result = list.stream()
-                .map(deliverWarehouseDO -> doConvertDto(deliverWarehouseDO, DeliverWarehouseResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(deliverWarehouseDO -> doConvertDto(deliverWarehouseDO, DeliverWarehouseResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(result);
     }
 

@@ -11,7 +11,6 @@ import cn.hutool.core.util.RandomUtil;
 @Deprecated
 public class NoUtil {
 
-
     /**
      * 生成商品编号时间戳+四位随机数
      */

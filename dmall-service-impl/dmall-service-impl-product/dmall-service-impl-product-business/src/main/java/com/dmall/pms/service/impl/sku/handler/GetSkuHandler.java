@@ -52,12 +52,12 @@ public class GetSkuHandler extends AbstractCommonHandler<Long, SkuDO, GetSkuResp
         // sku媒体列表信息
         getSkuResponseDTO.setMediaList(skuMediaSupport.listBySkuId(id));
         // sku属性值信息
-        getSkuResponseDTO.setSkuAttributeValue(skuAttributeValueSupport.getSkuAttributeValue(skuDO.getId(), skuDO.getBrandId()));
+        getSkuResponseDTO
+            .setSkuAttributeValue(skuAttributeValueSupport.getSkuAttributeValue(skuDO.getId(), skuDO.getBrandId()));
         // sku扩展信息
         getSkuResponseDTO.setSkuExt(skuExtSupport.getSkuExt(id));
         return ResultUtil.success(getSkuResponseDTO);
     }
-
 
     private BasicSkuResponseDTO getBasicSkuResponseDTO(SkuDO skuDO) {
         BasicSkuResponseDTO basicSku = BeanUtil.copyProperties(skuDO, BasicSkuResponseDTO.class);

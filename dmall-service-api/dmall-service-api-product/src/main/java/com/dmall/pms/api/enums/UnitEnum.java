@@ -21,6 +21,7 @@ public enum UnitEnum implements CodeDescEnum<String> {
      */
     G("g", "克"),
     ;
+
     private final String code;
 
     private final String desc;

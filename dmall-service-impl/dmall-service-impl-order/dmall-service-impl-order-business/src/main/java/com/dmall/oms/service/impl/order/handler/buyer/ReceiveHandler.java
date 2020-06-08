@@ -59,7 +59,6 @@ public class ReceiveHandler extends AbstractCommonHandler<Long, OrderDO, Long> {
 
     private static final String JOB_DESC = "子订单:{}已确认收货,skuIds:{},15天后自动好评";
 
-
     @Override
     public BaseResult<Long> processor(Long subOrderId) {
         // 子订单存在
@@ -77,9 +76,9 @@ public class ReceiveHandler extends AbstractCommonHandler<Long, OrderDO, Long> {
         subOrderMapper.updateById(subOrderDO);
         // 判断是否需要修改
         List<SubOrderDO> subOrderList = subOrderSupport.listByOrderId(orderDO.getId());
-        List<SubOrderDO> completedList = subOrderList.stream().filter(subOrder ->
-                SubOrderStatusEnum.COMPLETED.getCode().equals(subOrder.getStatus()))
-                .collect(Collectors.toList());
+        List<SubOrderDO> completedList = subOrderList.stream()
+            .filter(subOrder -> SubOrderStatusEnum.COMPLETED.getCode().equals(subOrder.getStatus()))
+            .collect(Collectors.toList());
 
         if (subOrderList.size() == completedList.size()) {
             orderDO.setStatus(OrderStatusEnum.COMPLETED.getCode());
@@ -89,17 +88,16 @@ public class ReceiveHandler extends AbstractCommonHandler<Long, OrderDO, Long> {
         List<OrderItemDO> orderItemList = orderItemSupport.listBySubOrderId(subOrderId);
 
         String skuIds = orderItemList.stream().map(OrderItemDO::getSkuId).map(String::valueOf)
-                .collect(Collectors.joining(StrUtil.COMMA));
+            .collect(Collectors.joining(StrUtil.COMMA));
 
         String param = StrUtil.format("{}:{}", subOrderId, skuIds);
         // 确认收货 15天 自动好评 新增定时任务
         int xxlJobId = xxlJobSupport.addJob(OrderConstants.AUTO_GOOD_COMMENT_HANDLER, param,
-                StrUtil.format(JOB_DESC, subOrderId, skuIds), CronUtil.getCronAddDay(OrderConstants.DELAY_DAY));
+            StrUtil.format(JOB_DESC, subOrderId, skuIds), CronUtil.getCronAddDay(OrderConstants.DELAY_DAY));
         subOrderJobSupport.insert(subOrderId, xxlJobId, JobTypeEnum.AUTO_GOOD_COMMENT);
         // 同步到es
         syncEsOrderSupport.sendOrderEsMq(orderDO.getId());
         return ResultUtil.success(subOrderId);
     }
-
 
 }

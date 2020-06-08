@@ -99,5 +99,4 @@ public class CartItemDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

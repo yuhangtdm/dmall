@@ -23,7 +23,7 @@ public class DTreeUtil {
      */
     public static List<DTreeResponseDTO> build(List<DTreeResponseDTO> treeList, Long parentId) {
         Map<Long, DTreeResponseDTO> treeMap = treeList.stream()
-                .collect(Collectors.toMap(DTreeResponseDTO::getId, responseDTO -> responseDTO));
+            .collect(Collectors.toMap(DTreeResponseDTO::getId, responseDTO -> responseDTO));
         List<DTreeResponseDTO> tree = Lists.newArrayList();
         // 添加自身以及子节点
         treeMap.forEach((k, v) -> {

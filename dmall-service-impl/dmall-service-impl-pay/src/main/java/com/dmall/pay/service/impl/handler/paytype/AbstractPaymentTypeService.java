@@ -36,8 +36,8 @@ public abstract class AbstractPaymentTypeService implements PaymentTypeService {
         PaymentInfoDO paymentInfo = new PaymentInfoDO();
         // 先更新该订单的所有支付记录为无效
         paymentInfoMapper.update(null, Wrappers.lambdaUpdate(paymentInfo)
-                .eq(PaymentInfoDO::getOrderId, requestDTO.getOrderId())
-                .set(PaymentInfoDO::getStatus, YNEnum.N.getCode()));
+            .eq(PaymentInfoDO::getOrderId, requestDTO.getOrderId())
+            .set(PaymentInfoDO::getStatus, YNEnum.N.getCode()));
         // 在插入支付记录
         paymentInfo.setOrderId(requestDTO.getOrderId());
         paymentInfo.setPaymentType(requestDTO.getPaymentType());

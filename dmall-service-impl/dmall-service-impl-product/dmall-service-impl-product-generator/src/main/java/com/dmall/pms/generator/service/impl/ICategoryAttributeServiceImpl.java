@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2019-12-19 20:57:18
  */
 @Service
-public class ICategoryAttributeServiceImpl extends ServiceImpl<CategoryAttributeMapper, CategoryAttributeDO> implements ICategoryAttributeService {
+public class ICategoryAttributeServiceImpl extends ServiceImpl<CategoryAttributeMapper, CategoryAttributeDO>
+    implements ICategoryAttributeService {
 
 }

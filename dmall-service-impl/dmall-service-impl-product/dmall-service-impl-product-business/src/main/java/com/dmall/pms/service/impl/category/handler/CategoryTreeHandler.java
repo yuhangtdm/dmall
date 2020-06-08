@@ -43,16 +43,17 @@ public class CategoryTreeHandler extends AbstractCommonHandler<CategoryTreeDTO, 
         // 获取树的源数据
         List<CategoryDO> categoryDOList;
         if (parentId == 0L) {
-            categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().orderByAsc(CategoryDO::getSort));
+            categoryDOList =
+                categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery().orderByAsc(CategoryDO::getSort));
         } else {
             categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
-                    .like(CategoryDO::getPath, categoryDO.getPath())
-                    .orderByAsc(CategoryDO::getSort));
+                .like(CategoryDO::getPath, categoryDO.getPath())
+                .orderByAsc(CategoryDO::getSort));
         }
 
         List<DTreeResponseDTO> treeList = categoryDOList.stream()
-                .map(doo -> buildTreeResponse(doo, requestDTO.getType()))
-                .collect(Collectors.toList());
+            .map(doo -> buildTreeResponse(doo, requestDTO.getType()))
+            .collect(Collectors.toList());
 
         return ResultUtil.success(DTreeUtil.build(treeList, parentId));
     }
@@ -68,7 +69,7 @@ public class CategoryTreeHandler extends AbstractCommonHandler<CategoryTreeDTO, 
         // 默认不展开
         responseDTO.setSpread(false);
         responseDTO.setParent(LevelEnum.ONE.getCode().equals(doo.getLevel())
-                || LevelEnum.TWO.getCode().equals(doo.getLevel()));
+            || LevelEnum.TWO.getCode().equals(doo.getLevel()));
         TreeDisabledTypeEnum typeEnum = EnumUtil.getCodeDescEnum(TreeDisabledTypeEnum.class, type);
         if (typeEnum != null) {
             switch (typeEnum) {
@@ -90,17 +91,17 @@ public class CategoryTreeHandler extends AbstractCommonHandler<CategoryTreeDTO, 
                 }
                 case ONE_TWO: {
                     responseDTO.setDisabled(LevelEnum.ONE.getCode().equals(doo.getLevel())
-                            || LevelEnum.TWO.getCode().equals(doo.getLevel()));
+                        || LevelEnum.TWO.getCode().equals(doo.getLevel()));
                     break;
                 }
                 case ONE_THREE: {
                     responseDTO.setDisabled(LevelEnum.ONE.getCode().equals(doo.getLevel())
-                            || LevelEnum.THREE.getCode().equals(doo.getLevel()));
+                        || LevelEnum.THREE.getCode().equals(doo.getLevel()));
                     break;
                 }
                 case TWO_THREE: {
                     responseDTO.setDisabled(LevelEnum.TWO.getCode().equals(doo.getLevel())
-                            || LevelEnum.THREE.getCode().equals(doo.getLevel()));
+                        || LevelEnum.THREE.getCode().equals(doo.getLevel()));
                     break;
                 }
                 case ONE_TWO_THREE: {

@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/3/28 10:23
  */
 @Component
-public class SaveMemberInvoiceHandler extends AbstractCommonHandler<SaveMemberInvoiceRequestDTO, MemberInvoiceDO, Long> {
+public class SaveMemberInvoiceHandler
+    extends AbstractCommonHandler<SaveMemberInvoiceRequestDTO, MemberInvoiceDO, Long> {
 
     @Autowired
     private MemberInvoiceMapper memberInvoiceMapper;
@@ -23,7 +24,7 @@ public class SaveMemberInvoiceHandler extends AbstractCommonHandler<SaveMemberIn
     @Override
     public BaseResult<Long> validate(SaveMemberInvoiceRequestDTO requestDTO) {
         return MemberInvoiceValidate.validate(requestDTO.getInvoiceHeader(), requestDTO.getPersonalName(),
-                requestDTO.getCompanyName(), requestDTO.getCustomerTaxNumber());
+            requestDTO.getCompanyName(), requestDTO.getCustomerTaxNumber());
     }
 
     @Override

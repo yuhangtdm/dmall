@@ -23,7 +23,8 @@ public class RolePermissionSupport {
      * 根据角色id查询列表
      */
     public List<RolePermissionDO> listByRoleId(Long roleId) {
-        return rolePermissionMapper.selectList(Wrappers.<RolePermissionDO>lambdaQuery().eq(RolePermissionDO::getRoleId, roleId));
+        return rolePermissionMapper
+            .selectList(Wrappers.<RolePermissionDO>lambdaQuery().eq(RolePermissionDO::getRoleId, roleId));
     }
 
     /**
@@ -31,7 +32,7 @@ public class RolePermissionSupport {
      */
     public void delete(Long roleId, Collection<Long> permissionIds) {
         rolePermissionMapper.delete(Wrappers.<RolePermissionDO>lambdaQuery()
-                .eq(RolePermissionDO::getRoleId, roleId)
-                .in(RolePermissionDO::getPermissionId, permissionIds));
+            .eq(RolePermissionDO::getRoleId, roleId)
+            .in(RolePermissionDO::getPermissionId, permissionIds));
     }
 }

@@ -35,7 +35,8 @@ public class UpdateBrandHandler extends AbstractCommonHandler<UpdateBrandRequest
         // 品牌必须存在
         pmsValidate.validateBrand(requestDTO.getId());
         // 品牌名称唯一
-        BrandDO nameBrand = brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, requestDTO.getName()));
+        BrandDO nameBrand =
+            brandMapper.selectOne(Wrappers.<BrandDO>lambdaQuery().eq(BrandDO::getName, requestDTO.getName()));
         if (nameBrand != null && ObjectUtil.notEqual(nameBrand.getId(), requestDTO.getId())) {
             return ResultUtil.fail(PmsErrorEnum.BRAND_NAME_UNIQUE);
         }

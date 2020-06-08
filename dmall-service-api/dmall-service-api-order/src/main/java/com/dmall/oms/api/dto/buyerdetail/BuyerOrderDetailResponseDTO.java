@@ -42,5 +42,4 @@ public class BuyerOrderDetailResponseDTO implements Serializable {
     @ApiModelProperty(value = "订单项列表", position = 8)
     private List<BuyerOrderItemDTO> skuList;
 
-
 }

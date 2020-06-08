@@ -36,8 +36,8 @@ public class PageSkuHandler extends AbstractCommonHandler<PageSkuRequestDTO, Sku
     public BaseResult<ResponsePage<PageSkuResponseDTO>> processor(PageSkuRequestDTO requestDTO) {
         Page<PageSkuResponseDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<PageSkuResponseDTO> skuList = skuPageMapper.skuPage(page, requestDTO).stream()
-                .map(skuPageVO -> doConvertDto(skuPageVO, PageSkuResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(skuPageVO -> doConvertDto(skuPageVO, PageSkuResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), skuList));
     }
 

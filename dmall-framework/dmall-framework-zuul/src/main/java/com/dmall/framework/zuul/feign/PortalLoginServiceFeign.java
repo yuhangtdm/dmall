@@ -8,5 +8,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/2/26 16:41
  */
 @FeignClient(value = "dmall-service-impl-sso")
-public interface PortalLoginServiceFeign extends PortalLoginService {
-}
+public interface PortalLoginServiceFeign extends PortalLoginService {}

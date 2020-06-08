@@ -15,10 +15,8 @@ public class ConsumerInOrder {
 
     public static final String NAME_SERVER = "192.168.38.163:9876;192.168.38.164:9876";
 
-
     public static void main(String[] args) throws Exception {
-        DefaultMQPushConsumer consumer = new
-                DefaultMQPushConsumer("orderGroup");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("orderGroup");
         consumer.setNamesrvAddr(NAME_SERVER);
         /**
          * 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费<br>
@@ -37,11 +35,12 @@ public class ConsumerInOrder {
                 context.setAutoCommit(true);
                 for (MessageExt msg : msgs) {
                     // 可以看到每个queue有唯一的consume线程来消费, 订单对每个queue(分区)有序
-                    System.out.println("consumeThread=" + Thread.currentThread().getName() + "queueId=" + msg.getQueueId() + ", content:" + new String(msg.getBody()));
+                    System.out.println("consumeThread=" + Thread.currentThread().getName() + "queueId="
+                        + msg.getQueueId() + ", content:" + new String(msg.getBody()));
                 }
 
                 try {
-                    //模拟业务逻辑处理中...
+                    // 模拟业务逻辑处理中...
                     TimeUnit.SECONDS.sleep(random.nextInt(10));
                 } catch (Exception e) {
                     e.printStackTrace();

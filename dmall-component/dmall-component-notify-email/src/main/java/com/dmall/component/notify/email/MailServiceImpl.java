@@ -37,7 +37,7 @@ public class MailServiceImpl implements MailService {
     /**
      * 简单文本邮件
      *
-     * @param to      收件人
+     * @param to 收件人
      * @param subject 主题
      * @param content 内容
      */
@@ -60,13 +60,13 @@ public class MailServiceImpl implements MailService {
     /**
      * 简单html邮件
      *
-     * @param to          收件人
-     * @param subject     主题
+     * @param to 收件人
+     * @param subject 主题
      * @param htmlContent 内容
      */
     @Override
     public void sendHtmlMail(String to, String subject, String htmlContent) {
-        //获取MimeMessage对象
+        // 获取MimeMessage对象
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper;
         try {
@@ -90,8 +90,8 @@ public class MailServiceImpl implements MailService {
     /**
      * 动态html邮件
      *
-     * @param to       收件人
-     * @param subject  主题
+     * @param to 收件人
+     * @param subject 主题
      * @param template 模板内容
      * @param valueMap 填充内容
      */
@@ -123,10 +123,10 @@ public class MailServiceImpl implements MailService {
     /**
      * 带附件的邮件
      *
-     * @param to      收件人
+     * @param to 收件人
      * @param subject 主题
      * @param content 内容
-     * @param files   附件
+     * @param files 附件
      */
     @Override
     public void sendAttachmentsMail(String to, String subject, String content, List<File> files) {
@@ -149,7 +149,8 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendAttachmentsMail(String to, String subject, String template, Map<String, Object> valueMap, List<File> files) {
+    public void sendAttachmentsMail(String to, String subject, String template, Map<String, Object> valueMap,
+        List<File> files) {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper;
         try {

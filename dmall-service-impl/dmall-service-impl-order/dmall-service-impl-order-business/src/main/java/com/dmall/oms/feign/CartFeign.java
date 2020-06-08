@@ -8,5 +8,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/3/28 17:49
  */
 @FeignClient(value = "dmall-service-impl-cart")
-public interface CartFeign extends CartService {
-}
+public interface CartFeign extends CartService {}

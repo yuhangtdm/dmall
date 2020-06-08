@@ -123,8 +123,8 @@ public class HttpClientUtil {
     /**
      * 发送 post请求（带文件）
      *
-     * @param httpUrl   地址
-     * @param maps      参数
+     * @param httpUrl 地址
+     * @param maps 参数
      * @param fileLists 附件
      */
     public String post(String httpUrl, Map<String, String> maps, List<File> fileLists) {
@@ -175,18 +175,19 @@ public class HttpClientUtil {
             for (String key : data.keySet()) {
                 if (data.get(key) instanceof String) {
                     try {
-                        meBuilder.addPart(key, new StringBody((String) data.get(key), Charset.forName(DEFAULT_CHARSET)));
+                        meBuilder.addPart(key, new StringBody((String)data.get(key), Charset.forName(DEFAULT_CHARSET)));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
                 } else if (data.get(key) instanceof byte[]) {
-                    ByteArrayBody byteArrayBody = new ByteArrayBody((byte[]) data.get(key), ContentType.DEFAULT_BINARY, key);
+                    ByteArrayBody byteArrayBody =
+                        new ByteArrayBody((byte[])data.get(key), ContentType.DEFAULT_BINARY, key);
                     meBuilder.addPart(FILE_PART, byteArrayBody);
                 } else if (data.get(key) instanceof File) {
-                    FileBody fileBody = new FileBody((File) data.get(key));
+                    FileBody fileBody = new FileBody((File)data.get(key));
                     meBuilder.addPart(FILE_PART, fileBody);
                 } else if (data.get(key) instanceof InputStream) {
-                    InputStreamBody inputStreamBody = new InputStreamBody((InputStream) data.get(key), key);
+                    InputStreamBody inputStreamBody = new InputStreamBody((InputStream)data.get(key), key);
                     meBuilder.addPart(FILE_PART, inputStreamBody);
                 }
             }
@@ -201,10 +202,12 @@ public class HttpClientUtil {
      */
     public String get(String url) {
         HttpGet httpGet = new HttpGet(url);
-        httpGet.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        httpGet.setHeader("Accept",
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
         httpGet.setHeader("Accept-Encoding", "gzip, deflate");
         httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
-        httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36");
+        httpGet.setHeader("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36");
 
         return sendHttpGet(httpGet);
     }

@@ -49,7 +49,8 @@ public class SaveAttributeHandler extends AbstractCommonHandler<SaveAttributeReq
         if (!LevelEnum.ONE.getCode().equals(categoryDO.getLevel())) {
             return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_INVALID);
         }
-        return pmsValidate.attributeValidate(requestDTO.getInputType(), requestDTO.getInputList(), requestDTO.getHandAddStatus());
+        return pmsValidate.attributeValidate(requestDTO.getInputType(), requestDTO.getInputList(),
+            requestDTO.getHandAddStatus());
     }
 
     @Override

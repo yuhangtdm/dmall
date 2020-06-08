@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
-public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void, MemberReceiveAddressDO, ReceiveAddressResponseDTO> {
+public class ListMemberReceiveAddressHandler
+    extends AbstractCommonHandler<Void, MemberReceiveAddressDO, ReceiveAddressResponseDTO> {
 
     @Autowired
     private MemberReceiveAddressMapper memberReceiveAddressMapper;
@@ -30,7 +31,8 @@ public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void,
     @Override
     public BaseResult<List<ReceiveAddressResponseDTO>> processor(Void aVoid) {
         // 查询地址列表
-        List<MemberReceiveAddressDO> list = memberReceiveAddressMapper.selectList(Wrappers.<MemberReceiveAddressDO>lambdaQuery()
+        List<MemberReceiveAddressDO> list =
+            memberReceiveAddressMapper.selectList(Wrappers.<MemberReceiveAddressDO>lambdaQuery()
                 .orderByDesc(MemberReceiveAddressDO::getModifier));
 
         if (CollUtil.isEmpty(list)) {
@@ -49,8 +51,8 @@ public class ListMemberReceiveAddressHandler extends AbstractCommonHandler<Void,
             Collections.swap(list, 0, index);
         }
         List<ReceiveAddressResponseDTO> collect = list.stream()
-                .map(addressDO -> doConvertDto(addressDO, ReceiveAddressResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(addressDO -> doConvertDto(addressDO, ReceiveAddressResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }
 

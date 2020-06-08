@@ -17,7 +17,6 @@ public enum LoginTypeEnum implements CodeDescEnum<String> {
 
     ;
 
-
     private final String code;
 
     private final String desc;

@@ -20,7 +20,8 @@ public class BasicErrorAttributes extends DefaultErrorAttributes {
     public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
         Map<String, Object> errorAttributes = new LinkedHashMap<>();
         if (webRequest.getAttribute(WebConstants.DATA, RequestAttributes.SCOPE_REQUEST) != null) {
-            BaseResult baseResult = (BaseResult) webRequest.getAttribute(WebConstants.DATA, RequestAttributes.SCOPE_REQUEST);
+            BaseResult baseResult =
+                (BaseResult)webRequest.getAttribute(WebConstants.DATA, RequestAttributes.SCOPE_REQUEST);
             if (baseResult != null) {
                 errorAttributes.put(WebConstants.RESULT, baseResult.getResult());
                 errorAttributes.put(WebConstants.CODE, baseResult.getCode());

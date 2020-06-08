@@ -22,9 +22,7 @@ public enum CancelTypeEnum implements CodeDescEnum<Integer> {
     AUTO(2, "自动取消"),
     ;
 
-
     private final Integer code;
 
     private final String desc;
 }
-

@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-04-25 14:49:35
  */
 @Component
-public class ListSkuAuditHandler extends AbstractCommonHandler<ListSkuAuditRequestDTO, SkuAuditDO, SkuAuditResponseDTO> {
+public class ListSkuAuditHandler
+    extends AbstractCommonHandler<ListSkuAuditRequestDTO, SkuAuditDO, SkuAuditResponseDTO> {
 
     @Autowired
     private SkuAuditMapper skuAuditMapper;
@@ -27,10 +28,10 @@ public class ListSkuAuditHandler extends AbstractCommonHandler<ListSkuAuditReque
     @Override
     public BaseResult<List<SkuAuditResponseDTO>> processor(ListSkuAuditRequestDTO requestDTO) {
         List<SkuAuditResponseDTO> skuList = skuAuditMapper.selectList(Wrappers.<SkuAuditDO>lambdaQuery()
-                .eq(requestDTO.getProductId() != null, SkuAuditDO::getProductId, requestDTO.getProductId())
-                .eq(requestDTO.getSkuId() != null, SkuAuditDO::getSkuId, requestDTO.getSkuId())
-                .eq(requestDTO.getStatus() != null, SkuAuditDO::getStatus, requestDTO.getStatus())
-        ).stream().map(skuAuditDO -> doConvertDto(skuAuditDO, SkuAuditResponseDTO.class)).collect(Collectors.toList());
+            .eq(requestDTO.getProductId() != null, SkuAuditDO::getProductId, requestDTO.getProductId())
+            .eq(requestDTO.getSkuId() != null, SkuAuditDO::getSkuId, requestDTO.getSkuId())
+            .eq(requestDTO.getStatus() != null, SkuAuditDO::getStatus, requestDTO.getStatus())).stream()
+            .map(skuAuditDO -> doConvertDto(skuAuditDO, SkuAuditResponseDTO.class)).collect(Collectors.toList());
         return ResultUtil.success(skuList);
     }
 

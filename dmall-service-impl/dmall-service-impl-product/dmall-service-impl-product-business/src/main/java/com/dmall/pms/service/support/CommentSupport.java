@@ -28,8 +28,8 @@ public class CommentSupport {
      */
     public Integer countByProductId(Long productId, Integer level) {
         return commentMapper.selectCount(Wrappers.<CommentDO>lambdaQuery()
-                .eq(CommentDO::getProductId, productId)
-                .eq(CommentDO::getLevel, level));
+            .eq(CommentDO::getProductId, productId)
+            .eq(CommentDO::getLevel, level));
     }
 
     /**
@@ -37,9 +37,8 @@ public class CommentSupport {
      */
     public Integer countByProductIdHasPic(Long productId) {
         return commentMapper.selectCount(Wrappers.<CommentDO>lambdaQuery()
-                .eq(CommentDO::getProductId, productId)
-                .isNotNull(CommentDO::getMedias)
-        );
+            .eq(CommentDO::getProductId, productId)
+            .isNotNull(CommentDO::getMedias));
     }
 
     /**
@@ -54,8 +53,8 @@ public class CommentSupport {
      */
     public Integer countBySkuId(Long skuId, Integer level) {
         return commentMapper.selectCount(Wrappers.<CommentDO>lambdaQuery()
-                .eq(CommentDO::getSkuId, skuId)
-                .eq(CommentDO::getLevel, level));
+            .eq(CommentDO::getSkuId, skuId)
+            .eq(CommentDO::getLevel, level));
     }
 
     /**
@@ -63,8 +62,7 @@ public class CommentSupport {
      */
     public Integer countBySkuIdHasPic(Long skuId) {
         return commentMapper.selectCount(Wrappers.<CommentDO>lambdaQuery()
-                .eq(CommentDO::getSkuId, skuId)
-                .isNotNull(CommentDO::getMedias)
-        );
+            .eq(CommentDO::getSkuId, skuId)
+            .isNotNull(CommentDO::getMedias));
     }
 }

@@ -26,6 +26,7 @@ public enum GenderEnum implements CodeDescDataEnum<Integer, String> {
      */
     SECRECY("n", "未知", 3),
     ;
+
     private final String code;
 
     private final String desc;

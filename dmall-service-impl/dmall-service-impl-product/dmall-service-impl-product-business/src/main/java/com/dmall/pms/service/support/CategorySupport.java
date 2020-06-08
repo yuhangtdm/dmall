@@ -71,9 +71,9 @@ public class CategorySupport {
             return Lists.newArrayList(categoryDO.getId());
         }
         List<CategoryDO> categoryDOList = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
-                .like(CategoryDO::getPath, categoryDO.getPath()));
+            .like(CategoryDO::getPath, categoryDO.getPath()));
         return categoryDOList.stream().filter(category -> LevelEnum.THREE.getCode().equals(category.getLevel()))
-                .map(CategoryDO::getId).collect(Collectors.toList());
+            .map(CategoryDO::getId).collect(Collectors.toList());
     }
 
     /**

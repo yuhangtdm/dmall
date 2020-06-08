@@ -16,7 +16,7 @@ import java.util.Map;
  * @description: 多数据源配置(弃用)
  * @author: created by hang.yu on 2020/2/25 20:35
  */
-//@Configuration
+// @Configuration
 public class MyBatisConfiguration {
 
     @Bean(name = "db1")
@@ -37,14 +37,14 @@ public class MyBatisConfiguration {
     @Bean
     @Primary
     public DataSource multipleDataSource(@Qualifier("db1") DataSource admin,
-                                         @Qualifier("db2") DataSource portal) {
+        @Qualifier("db2") DataSource portal) {
         MultipleDataSource multipleDataSource = new MultipleDataSource();
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DataSourceEnum.ADMIN.name(), admin);
         targetDataSources.put(DataSourceEnum.PORTAL.name(), portal);
-        //添加数据源
+        // 添加数据源
         multipleDataSource.setTargetDataSources(targetDataSources);
-        //设置默认数据源
+        // 设置默认数据源
         multipleDataSource.setDefaultTargetDataSource(admin);
         return multipleDataSource;
     }

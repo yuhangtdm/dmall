@@ -34,8 +34,8 @@ public class AdminUserFilter extends PathMatchingFilter {
     @Override
     protected boolean preHandle(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletResponse response = (HttpServletResponse)servletResponse;
 
         String requestMapping = RequestMappingUtil.getValue(request);
         boolean filter = CommonFilterUtil.adminFilter(request, requestMapping, adminProperties);

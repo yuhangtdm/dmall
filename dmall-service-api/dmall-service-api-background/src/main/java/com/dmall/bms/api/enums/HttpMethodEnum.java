@@ -36,5 +36,4 @@ public enum HttpMethodEnum implements CodeDescEnum<String> {
 
     private final String desc;
 
-
 }

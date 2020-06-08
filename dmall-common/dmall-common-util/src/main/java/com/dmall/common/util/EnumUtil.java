@@ -16,8 +16,7 @@ import java.util.Objects;
  */
 public class EnumUtil {
 
-    private EnumUtil() {
-    }
+    private EnumUtil() {}
 
     /**
      * 获取枚举对象
@@ -26,7 +25,7 @@ public class EnumUtil {
         if (enumClazz.isEnum()) {
             for (CodeDescEnum enumConstant : enumClazz.getEnumConstants()) {
                 if (Objects.equals(enumConstant.getCode(), code)) {
-                    return (E) enumConstant;
+                    return (E)enumConstant;
                 }
             }
         }
@@ -50,7 +49,7 @@ public class EnumUtil {
             return null;
         }
         if (codeDescEnum instanceof CodeDescDataEnum) {
-            CodeDescDataEnum<T, CODE> keyValueDataEnum = (CodeDescDataEnum) codeDescEnum;
+            CodeDescDataEnum<T, CODE> keyValueDataEnum = (CodeDescDataEnum)codeDescEnum;
             return keyValueDataEnum.getData();
         }
         return null;
@@ -63,7 +62,7 @@ public class EnumUtil {
         List<CODE> codeList = Lists.newArrayList();
         if (enumClazz.isEnum()) {
             for (CodeEnum enumConstant : enumClazz.getEnumConstants()) {
-                codeList.add((CODE) enumConstant.getCode());
+                codeList.add((CODE)enumConstant.getCode());
             }
         }
         return codeList;

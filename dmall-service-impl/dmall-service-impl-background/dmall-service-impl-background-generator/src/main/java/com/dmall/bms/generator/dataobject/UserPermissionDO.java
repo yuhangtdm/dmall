@@ -80,5 +80,4 @@ public class UserPermissionDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

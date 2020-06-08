@@ -30,6 +30,6 @@ public class SubOrderJobSupport {
      */
     public SubOrderJobDO findBySubOrderId(Long subOrderId) {
         return subOrderJobMapper.selectOne(Wrappers.<SubOrderJobDO>lambdaQuery()
-                .eq(SubOrderJobDO::getSubOrderId, subOrderId));
+            .eq(SubOrderJobDO::getSubOrderId, subOrderId));
     }
 }

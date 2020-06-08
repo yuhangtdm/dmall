@@ -27,7 +27,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/5 11:29
  */
 @Component
-public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderPageRequestDTO, DeliverOrderPageDbDTO, DeliverOrderPageResponseDTO> {
+public class DeliverOrderPageHandler
+    extends AbstractCommonHandler<DeliverOrderPageRequestDTO, DeliverOrderPageDbDTO, DeliverOrderPageResponseDTO> {
 
     @Autowired
     private AdminPermissionFeign roleFeign;
@@ -53,8 +54,8 @@ public class DeliverOrderPageHandler extends AbstractCommonHandler<DeliverOrderP
         Page<DeliverOrderPageDbDTO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         List<DeliverOrderPageDbDTO> deliverOrderPageDbDTOS = deliverOrderPageMapper.deliverOrderPage(page, requestDTO);
         List<DeliverOrderPageResponseDTO> collect = deliverOrderPageDbDTOS.stream()
-                .map(deliverOrderPageDbDTO -> doConvertDto(deliverOrderPageDbDTO, DeliverOrderPageResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(deliverOrderPageDbDTO -> doConvertDto(deliverOrderPageDbDTO, DeliverOrderPageResponseDTO.class))
+            .collect(Collectors.toList());
 
         return ResultUtil.success(new ResponsePage(page.getTotal(), collect));
     }

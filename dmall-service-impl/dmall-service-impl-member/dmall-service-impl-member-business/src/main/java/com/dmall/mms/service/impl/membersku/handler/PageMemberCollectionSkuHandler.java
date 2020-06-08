@@ -32,7 +32,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020-02-23 19:41:03
  */
 @Component
-public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRequestDTO, MemberCollectionSkuDO, MemberCollectionSkuResponseDTO> {
+public class PageMemberCollectionSkuHandler
+    extends AbstractCommonHandler<PageRequestDTO, MemberCollectionSkuDO, MemberCollectionSkuResponseDTO> {
 
     @Autowired
     private MemberCollectionSkuMapper memberCollectionSkuMapper;
@@ -48,14 +49,14 @@ public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRe
         PortalMemberDTO loginMember = PortalMemberContextHolder.get();
 
         LambdaQueryWrapper<MemberCollectionSkuDO> wrapper = Wrappers.<MemberCollectionSkuDO>lambdaQuery()
-                .eq(MemberCollectionSkuDO::getCreator, loginMember.getId())
-                .orderByDesc(MemberCollectionSkuDO::getCreator);
+            .eq(MemberCollectionSkuDO::getCreator, loginMember.getId())
+            .orderByDesc(MemberCollectionSkuDO::getCreator);
 
         IPage<MemberCollectionSkuDO> page = new Page<>(requestDTO.getCurrent(), requestDTO.getSize());
         page = memberCollectionSkuMapper.selectPage(page, wrapper);
         List<MemberCollectionSkuResponseDTO> collect = page.getRecords().stream()
-                .map(memberCollectionSkuDO -> doConvertDto(memberCollectionSkuDO, MemberCollectionSkuResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(memberCollectionSkuDO -> doConvertDto(memberCollectionSkuDO, MemberCollectionSkuResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(new ResponsePage<>(page.getTotal(), collect));
     }
 
@@ -75,7 +76,7 @@ public class PageMemberCollectionSkuHandler extends AbstractCommonHandler<PageRe
         result.setSkuStatus(YNEnum.Y.getCode());
         if (result.getPrice().compareTo(basicSku.getPrice()) < 0) {
             result.setPriceReductionTag(StrUtil.format(PRICE_REDUCTION_TAG,
-                    result.getPrice().subtract(basicSku.getPrice())));
+                result.getPrice().subtract(basicSku.getPrice())));
         }
     }
 

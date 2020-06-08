@@ -23,7 +23,7 @@ public class CategoryBrandSupport {
      */
     public List<CategoryBrandDO> listByCategoryId(Long categoryId) {
         return categoryBrandMapper.selectList(Wrappers.<CategoryBrandDO>lambdaQuery()
-                .eq(CategoryBrandDO::getCategoryId, categoryId));
+            .eq(CategoryBrandDO::getCategoryId, categoryId));
     }
 
     /**
@@ -31,14 +31,15 @@ public class CategoryBrandSupport {
      */
     public List<CategoryBrandDO> listByBrandId(Long brandId) {
         return categoryBrandMapper.selectList(Wrappers.<CategoryBrandDO>lambdaQuery()
-                .eq(CategoryBrandDO::getBrandId, brandId));
+            .eq(CategoryBrandDO::getBrandId, brandId));
     }
 
     /**
      * 根据商品分类id删除
      */
     public void deleteByCategoryId(Long categoryId) {
-        categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, categoryId));
+        categoryBrandMapper
+            .delete(Wrappers.<CategoryBrandDO>lambdaQuery().eq(CategoryBrandDO::getCategoryId, categoryId));
     }
 
     /**
@@ -50,8 +51,7 @@ public class CategoryBrandSupport {
 
     public void delete(Long brandId, List<Long> categoryIds) {
         categoryBrandMapper.delete(Wrappers.<CategoryBrandDO>lambdaQuery()
-                .eq(CategoryBrandDO::getBrandId, brandId)
-                .in(CategoryBrandDO::getCategoryId, categoryIds)
-        );
+            .eq(CategoryBrandDO::getBrandId, brandId)
+            .in(CategoryBrandDO::getCategoryId, categoryIds));
     }
 }

@@ -67,24 +67,25 @@ public class CommentHandler extends AbstractCommonHandler<CommentRequestDTO, Sub
         // 子订单 评价状态默认是 部分评价
         subOrderDO.setCommentStatus(OrderCommentStatusEnum.PART.getCode());
         orderDO.setCommentStatus(OrderCommentStatusEnum.PART.getCode());
-        List<Long> skuIds = requestDTO.getCommentSkuList().stream().map(CommentSkuDTO::getSkuId).collect(Collectors.toList());
+        List<Long> skuIds =
+            requestDTO.getCommentSkuList().stream().map(CommentSkuDTO::getSkuId).collect(Collectors.toList());
 
         List<OrderItemDO> subOrderItemList = orderItemSupport.listBySubOrderId(subOrderDO.getId());
         commentOrderItem(skuIds, subOrderItemList);
-        //  判断是否该子订单的订单项是否全部都已评价
+        // 判断是否该子订单的订单项是否全部都已评价
         List<OrderItemDO> subItemList = orderItemSupport.listBySubOrderId(subOrderDO.getOrderId());
         Optional<OrderItemDO> subItem = subItemList.stream()
-                .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
-                .findAny();
+            .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
+            .findAny();
         if (!subItem.isPresent()) {
             subOrderDO.setCommentStatus(OrderCommentStatusEnum.ALL.getCode());
         }
         subOrderMapper.updateById(subOrderDO);
-        //  判断是否该订单的订单项是否全部都已评价
+        // 判断是否该订单的订单项是否全部都已评价
         List<OrderItemDO> orderItemList = orderItemSupport.listByOrderId(subOrderDO.getOrderId());
         Optional<OrderItemDO> item = orderItemList.stream()
-                .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
-                .findAny();
+            .filter(orderItemDO -> YNEnum.N.getCode().equals(orderItemDO.getCommentStatus()))
+            .findAny();
         if (!item.isPresent()) {
             orderDO.setCommentStatus(OrderCommentStatusEnum.ALL.getCode());
         }
@@ -103,7 +104,7 @@ public class CommentHandler extends AbstractCommonHandler<CommentRequestDTO, Sub
      */
     private void commentOrderItem(List<Long> skuIds, List<OrderItemDO> orderItemList) {
         List<OrderItemDO> waitCommentOrderItemList = orderItemList.stream()
-                .filter(orderItem -> skuIds.contains(orderItem.getSkuId())).collect(Collectors.toList());
+            .filter(orderItem -> skuIds.contains(orderItem.getSkuId())).collect(Collectors.toList());
         for (OrderItemDO orderItemDO : waitCommentOrderItemList) {
             if (YNEnum.Y.getCode().equals(orderItemDO.getCommentStatus())) {
                 throw new BusinessException(OmsErrorEnum.COMMENT_ERROR);

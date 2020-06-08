@@ -17,7 +17,6 @@ public class RocketMqConsumer {
 
     public static final String NAME_SERVER = "192.168.38.163:9876;192.168.38.164:9876";
 
-
     public static void main(String[] args) throws Exception {
         loadBalance();
     }
@@ -32,19 +31,19 @@ public class RocketMqConsumer {
         consumer.setNamesrvAddr(NAME_SERVER);
         // 订阅Topic
         consumer.subscribe("syncTopic", "*");
-        //负载均衡模式消费
+        // 负载均衡模式消费
         consumer.setMessageModel(MessageModel.CLUSTERING);
         // 注册回调函数，处理消息
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
-                                                            ConsumeConcurrentlyContext context) {
+                ConsumeConcurrentlyContext context) {
                 System.out.printf("%s Receive New Messages: %s %n",
-                        Thread.currentThread().getName(), msgs);
+                    Thread.currentThread().getName(), msgs);
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });
-        //启动消息者
+        // 启动消息者
         consumer.start();
         System.out.printf("Consumer Started.%n");
     }
@@ -59,19 +58,19 @@ public class RocketMqConsumer {
         consumer.setNamesrvAddr("localhost:9876");
         // 订阅Topic
         consumer.subscribe("Test", "*");
-        //广播模式消费
+        // 广播模式消费
         consumer.setMessageModel(MessageModel.BROADCASTING);
         // 注册回调函数，处理消息
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
-                                                            ConsumeConcurrentlyContext context) {
+                ConsumeConcurrentlyContext context) {
                 System.out.printf("%s Receive New Messages: %s %n",
-                        Thread.currentThread().getName(), msgs);
+                    Thread.currentThread().getName(), msgs);
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });
-        //启动消息者
+        // 启动消息者
         consumer.start();
         System.out.printf("Consumer Started.%n");
     }

@@ -22,6 +22,7 @@ public enum OrderByEnum implements CodeDescEnum<String> {
      */
     DESC("DESC", "降序"),
     ;
+
     private final String code;
 
     private final String desc;

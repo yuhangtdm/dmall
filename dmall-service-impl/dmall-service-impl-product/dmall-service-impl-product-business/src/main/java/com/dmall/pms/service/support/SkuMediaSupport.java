@@ -27,25 +27,26 @@ public class SkuMediaSupport {
      */
     public void saveOrDeleteSkuMedia(Long productId, Long skuId, List<MediaRequestDTO> mediaList) {
         List<SkuMediaDO> mediaDoList = iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery()
-                .eq(SkuMediaDO::getSkuId, skuId));
+            .eq(SkuMediaDO::getSkuId, skuId));
         if (CollUtil.isEmpty(mediaDoList)) {
             List<SkuMediaDO> skuMediaList = mediaList.stream()
-                    .map(mediaRequestDTO -> buildSkuMediaDO(productId, skuId, mediaRequestDTO))
-                    .collect(Collectors.toList());
+                .map(mediaRequestDTO -> buildSkuMediaDO(productId, skuId, mediaRequestDTO))
+                .collect(Collectors.toList());
             iSkuMediaService.saveBatch(skuMediaList);
         } else {
             List<Long> oldMediaIds = mediaDoList.stream().map(SkuMediaDO::getId)
-                    .collect(Collectors.toList());
-            List<Long> newMediaIds = mediaList.stream().map(MediaRequestDTO::getSkuMediaId).collect(Collectors.toList());
+                .collect(Collectors.toList());
+            List<Long> newMediaIds =
+                mediaList.stream().map(MediaRequestDTO::getSkuMediaId).collect(Collectors.toList());
             // 删除的id集合
             List<Long> deleteIdList = oldMediaIds.stream()
-                    .filter(mediaId -> !newMediaIds.contains(mediaId))
-                    .collect(Collectors.toList());
+                .filter(mediaId -> !newMediaIds.contains(mediaId))
+                .collect(Collectors.toList());
             // 新增的
             List<SkuMediaDO> skuMediaList = mediaList.stream()
-                    .filter(mediaDTO -> mediaDTO.getSkuMediaId() == null)
-                    .map(mediaDTO -> buildSkuMediaDO(productId, skuId, mediaDTO))
-                    .collect(Collectors.toList());
+                .filter(mediaDTO -> mediaDTO.getSkuMediaId() == null)
+                .map(mediaDTO -> buildSkuMediaDO(productId, skuId, mediaDTO))
+                .collect(Collectors.toList());
             iSkuMediaService.saveBatch(skuMediaList);
             if (CollUtil.isNotEmpty(deleteIdList)) {
                 iSkuMediaService.remove(Wrappers.<SkuMediaDO>lambdaQuery().in(SkuMediaDO::getId, deleteIdList));
@@ -57,7 +58,8 @@ public class SkuMediaSupport {
      * 获取skuMedia列表
      */
     public List<MediaResponseDTO> listBySkuId(Long skuId) {
-        List<SkuMediaDO> list = iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
+        List<SkuMediaDO> list =
+            iSkuMediaService.list(Wrappers.<SkuMediaDO>lambdaQuery().eq(SkuMediaDO::getSkuId, skuId));
         return list.stream().map(skuMediaDO -> {
             MediaResponseDTO mediaResponseDTO = new MediaResponseDTO();
             mediaResponseDTO.setSkuMediaId(skuMediaDO.getId());

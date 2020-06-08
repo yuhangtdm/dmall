@@ -62,7 +62,8 @@ public class LoginHandler extends AbstractCommonHandler<PortalLoginRequestDTO, M
         String token = IdUtil.simpleUUID();
         PortalMemberDTO portalMemberDTO = getPortalMemberDTO(memberDO, token);
         // 设置缓存
-        redisTemplate.opsForValue().set(StrUtil.format("portal_{}", token), portalMemberDTO, ssoProperties.getPortalTtlDay(), TimeUnit.DAYS);
+        redisTemplate.opsForValue().set(StrUtil.format("portal_{}", token), portalMemberDTO,
+            ssoProperties.getPortalTtlDay(), TimeUnit.DAYS);
         // 插入登录日志
         insertLoginLog(memberDO, token);
         // 返回
@@ -72,7 +73,6 @@ public class LoginHandler extends AbstractCommonHandler<PortalLoginRequestDTO, M
 
         return ResultUtil.success(portalLoginResponseDTO);
     }
-
 
     private void insertLoginLog(MemberDO memberDO, String token) {
         MemberLoginLogDO memberLoginLogDO = new MemberLoginLogDO();

@@ -42,9 +42,9 @@ public class LogAdvice implements MethodInterceptor {
         long start = System.currentTimeMillis();
         WebLog webLog = new WebLog();
         try {
-            //获取当前请求对象
+            // 获取当前请求对象
             HttpServletRequest request = RequestUtil.getRequest();
-            //记录请求信息
+            // 记录请求信息
             Method method = invocation.getMethod();
             webLog.setRequestIp(request.getRemoteAddr());
             AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
@@ -63,7 +63,8 @@ public class LogAdvice implements MethodInterceptor {
             webLog.setStartTime(new Date());
             webLog.setClassName(method.getDeclaringClass().getName());
             webLog.setMethodName(method.getName());
-            webLog.setEnv(environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : Constants.LOCAL);
+            webLog.setEnv(
+                environment.getActiveProfiles().length == 1 ? environment.getActiveProfiles()[0] : Constants.LOCAL);
             webLog.setAppName(environment.getProperty("spring.application.name"));
             webLog.setThreadName(Thread.currentThread().getName());
             webLog.setTitle(webLog.getClassName() + StrUtil.C_DOT + webLog.getMethodName());
@@ -115,7 +116,7 @@ public class LogAdvice implements MethodInterceptor {
 
     private boolean originalParam(Class<?> clazz) {
         return clazz == HttpServletRequest.class || clazz == HttpServletResponse.class
-                || clazz == HttpSession.class || clazz == MultipartFile.class;
+            || clazz == HttpSession.class || clazz == MultipartFile.class;
     }
 
 }

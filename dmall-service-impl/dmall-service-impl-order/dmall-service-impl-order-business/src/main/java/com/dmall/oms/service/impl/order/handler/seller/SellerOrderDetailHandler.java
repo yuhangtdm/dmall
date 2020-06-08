@@ -75,12 +75,13 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
      */
     private List<SellerOrderStatusDTO> buildOrderStatusList(Long orderId) {
         return orderStatusSupport.listByOrderId(orderId).stream()
-                .map(orderStatusDO -> {
-                    SellerOrderStatusDTO orderStatus = new SellerOrderStatusDTO();
-                    orderStatus.setOrderStatus(EnumUtil.getCodeDescEnum(OrderStatusEnum.class, orderStatusDO.getOrderStatus()));
-                    orderStatus.setCreateTime(orderStatusDO.getGmtCreated());
-                    return orderStatus;
-                }).collect(Collectors.toList());
+            .map(orderStatusDO -> {
+                SellerOrderStatusDTO orderStatus = new SellerOrderStatusDTO();
+                orderStatus
+                    .setOrderStatus(EnumUtil.getCodeDescEnum(OrderStatusEnum.class, orderStatusDO.getOrderStatus()));
+                orderStatus.setCreateTime(orderStatusDO.getGmtCreated());
+                return orderStatus;
+            }).collect(Collectors.toList());
     }
 
     /**
@@ -154,9 +155,11 @@ public class SellerOrderDetailHandler extends AbstractCommonHandler<Long, OrderD
         sellerInvoice.setOpenInvoice(orderDO.getOpenInvoice());
         sellerInvoice.setInvoiceNumber(orderDO.getInvoiceNumber());
         sellerInvoice.setInvoiceType(orderDO.getInvoiceType());
-        sellerInvoice.setInvoiceHeader(EnumUtil.getCodeDescEnum(InvoiceHeaderTypeEnum.class, orderDO.getInvoiceHeader()));
+        sellerInvoice
+            .setInvoiceHeader(EnumUtil.getCodeDescEnum(InvoiceHeaderTypeEnum.class, orderDO.getInvoiceHeader()));
         sellerInvoice.setPersonalName(orderDO.getPersonalName());
-        sellerInvoice.setInvoiceContent(EnumUtil.getCodeDescEnum(InvoiceContentEnum.class, orderDO.getInvoiceContent()));
+        sellerInvoice
+            .setInvoiceContent(EnumUtil.getCodeDescEnum(InvoiceContentEnum.class, orderDO.getInvoiceContent()));
         sellerInvoice.setCompanyName(orderDO.getCompanyName());
         sellerInvoice.setCustomerTaxNumber(orderDO.getCustomerTaxNumber());
         sellerInvoice.setInvoiceReceiverPhone(orderDO.getInvoiceReceiverPhone());

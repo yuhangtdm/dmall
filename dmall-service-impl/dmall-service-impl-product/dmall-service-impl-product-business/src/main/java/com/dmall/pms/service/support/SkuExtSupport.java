@@ -47,16 +47,18 @@ public class SkuExtSupport {
      * 设置sku扩展表
      */
     public void setSkuExt(Long productId, Long skuId, List<Long> productAttributeValueList,
-                          String detailHtml, String detailMobileHtml) {
+        String detailHtml, String detailMobileHtml) {
         ProductExtResponseDTO extResponse = productAttributeValueSupport.getProductAttributeValue(productId, null);
         // 规格
         JSONObject specificationsObj = new JSONObject();
         for (ProductAttributeResponseDTO specification : extResponse.getSpecifications()) {
             AttributeDO attributeDO = attributeCacheService.selectById(specification.getAttributeId());
             Optional<ProductAttributeValueResponseDTO> any = specification.getAttributeValues().stream()
-                    .filter(specifications -> productAttributeValueList.contains(specifications.getProductAttributeValueId()))
-                    .findAny();
-            any.ifPresent(attributeValue -> specificationsObj.put(attributeDO.getShowName(), attributeValue.getAttributeValue()));
+                .filter(
+                    specifications -> productAttributeValueList.contains(specifications.getProductAttributeValueId()))
+                .findAny();
+            any.ifPresent(
+                attributeValue -> specificationsObj.put(attributeDO.getShowName(), attributeValue.getAttributeValue()));
         }
 
         // 卖点
@@ -64,9 +66,11 @@ public class SkuExtSupport {
         for (ProductAttributeResponseDTO salePoint : extResponse.getSalePoints()) {
             AttributeDO attributeDO = attributeCacheService.selectById(salePoint.getAttributeId());
             Optional<ProductAttributeValueResponseDTO> any = salePoint.getAttributeValues().stream()
-                    .filter(specificationsDTO -> productAttributeValueList.contains(specificationsDTO.getProductAttributeValueId()))
-                    .findAny();
-            any.ifPresent(productAttributeValue -> saleObj.put(attributeDO.getShowName(), productAttributeValue.getAttributeValue()));
+                .filter(specificationsDTO -> productAttributeValueList
+                    .contains(specificationsDTO.getProductAttributeValueId()))
+                .findAny();
+            any.ifPresent(productAttributeValue -> saleObj.put(attributeDO.getShowName(),
+                productAttributeValue.getAttributeValue()));
         }
 
         // 参数
@@ -78,8 +82,9 @@ public class SkuExtSupport {
             for (ProductAttributeResponseDTO paramValue : param.getParams()) {
                 AttributeDO attributeDO = attributeCacheService.selectById(paramValue.getAttributeId());
                 Optional<ProductAttributeValueResponseDTO> any = paramValue.getAttributeValues().stream()
-                        .filter(specificationsDTO -> productAttributeValueList.contains(specificationsDTO.getProductAttributeValueId()))
-                        .findAny();
+                    .filter(specificationsDTO -> productAttributeValueList
+                        .contains(specificationsDTO.getProductAttributeValueId()))
+                    .findAny();
                 if (any.isPresent()) {
                     JSONObject obj = new JSONObject();
                     obj.put(PARAM_KEY, attributeDO.getShowName());

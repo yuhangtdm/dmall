@@ -35,7 +35,6 @@ public class AdminUserZuulFilter extends ZuulFilter {
     @Autowired
     private WhiteListProperties whiteListProperties;
 
-
     /**
      * 过滤器类型，有pre、routing、post、error四种。
      */
@@ -84,7 +83,8 @@ public class AdminUserZuulFilter extends ZuulFilter {
         if (StrUtil.isBlank(header)) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.SOURCE_NOT_BLANK)));
-            requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
+            requestContext.getResponse()
+                .setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
         }
         // 只拦截后台请求
@@ -97,7 +97,8 @@ public class AdminUserZuulFilter extends ZuulFilter {
         if (StrUtil.isBlank(token)) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN)));
-            requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
+            requestContext.getResponse()
+                .setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
         }
         // 调用sso服务验证token
@@ -107,7 +108,8 @@ public class AdminUserZuulFilter extends ZuulFilter {
             requestContext.setSendZuulResponse(false);
             // token验证失败 未登录
             requestContext.setResponseBody(JsonUtil.toJson(checkResult));
-            requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
+            requestContext.getResponse()
+                .setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
         }
         AdminUserDTO adminUserDTO = checkResult.getData();
@@ -116,4 +118,3 @@ public class AdminUserZuulFilter extends ZuulFilter {
         return null;
     }
 }
-

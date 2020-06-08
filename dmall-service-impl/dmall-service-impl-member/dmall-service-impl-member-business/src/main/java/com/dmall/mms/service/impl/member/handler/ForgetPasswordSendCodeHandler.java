@@ -56,7 +56,7 @@ public class ForgetPasswordSendCodeHandler extends AbstractCommonHandler<String,
         value.put("code", code);
         // 发送邮件
         mailServiceImpl.sendHtmlMail(email, config.getProperty("forgetPasswordSubject", "忘记密码"),
-                TEMPLATE, value);
+            TEMPLATE, value);
         // 缓存验证码
         redisTemplate.opsForValue().set(key, code, Duration.ofMinutes(config.getIntProperty("cacheTime", 3)));
         return ResultUtil.success(loginMember.getId());

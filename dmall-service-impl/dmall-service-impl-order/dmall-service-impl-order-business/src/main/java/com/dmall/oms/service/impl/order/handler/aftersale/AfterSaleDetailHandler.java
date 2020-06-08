@@ -19,7 +19,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2020/4/15 22:12
  */
 @Component
-public class AfterSaleDetailHandler extends AbstractCommonHandler<Long, OrderAfterSaleApplyDO, AfterSaleDetailResponseDTO> {
+public class AfterSaleDetailHandler
+    extends AbstractCommonHandler<Long, OrderAfterSaleApplyDO, AfterSaleDetailResponseDTO> {
 
     @Autowired
     private AfterSaleSupport afterSaleSupport;

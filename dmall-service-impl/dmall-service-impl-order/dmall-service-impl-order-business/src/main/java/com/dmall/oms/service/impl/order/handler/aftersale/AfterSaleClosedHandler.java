@@ -49,7 +49,7 @@ public class AfterSaleClosedHandler extends AbstractCommonHandler<Long, OrderAft
         } else {
             // 非 已申请和待寄回不可关闭
             if (!AfterSaleStatusEnum.APPLY.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
-                    !AfterSaleStatusEnum.WAIT_SEND_BACK.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
+                !AfterSaleStatusEnum.WAIT_SEND_BACK.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
                 return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_CLOSED);
             }
         }
@@ -58,7 +58,7 @@ public class AfterSaleClosedHandler extends AbstractCommonHandler<Long, OrderAft
         orderAfterSaleApplyMapper.updateById(orderAfterSaleApplyDO);
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.MEMBER,
-                AfterSaleLogTitleEnum.CLOSED, StrUtil.format(LOG_CONTENT, orderAfterSaleApplyDO.getId()));
+            AfterSaleLogTitleEnum.CLOSED, StrUtil.format(LOG_CONTENT, orderAfterSaleApplyDO.getId()));
         return ResultUtil.success(afterSaleId);
     }
 }

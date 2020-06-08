@@ -18,7 +18,8 @@ import org.springframework.stereotype.Component;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class UpdateAttributeTypeHandler extends AbstractCommonHandler<UpdateAttributeTypeRequestDTO, AttributeTypeDO, Long> {
+public class UpdateAttributeTypeHandler
+    extends AbstractCommonHandler<UpdateAttributeTypeRequestDTO, AttributeTypeDO, Long> {
 
     @Autowired
     private AttributeTypeCacheService attributeTypeCacheService;

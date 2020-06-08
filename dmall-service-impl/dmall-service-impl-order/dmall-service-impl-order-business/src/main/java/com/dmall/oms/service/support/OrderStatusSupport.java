@@ -33,8 +33,7 @@ public class OrderStatusSupport {
      */
     public List<OrderStatusDO> listByOrderId(Long orderId) {
         return orderStatusMapper.selectList(Wrappers.<OrderStatusDO>lambdaQuery()
-                .eq(OrderStatusDO::getOrderId, orderId)
-                .orderByAsc(OrderStatusDO::getGmtCreated)
-        );
+            .eq(OrderStatusDO::getOrderId, orderId)
+            .orderByAsc(OrderStatusDO::getGmtCreated));
     }
 }

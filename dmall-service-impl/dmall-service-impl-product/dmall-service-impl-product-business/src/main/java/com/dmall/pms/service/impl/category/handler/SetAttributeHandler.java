@@ -48,8 +48,8 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     public BaseResult validate(SetAttributeRequestDTO requestDTO) {
         // 属性列表不能重复
         Set<Long> attributeIds = requestDTO.getAttributes().stream()
-                .map(AttributeIdsDTO::getAttributeId)
-                .collect(Collectors.toSet());
+            .map(AttributeIdsDTO::getAttributeId)
+            .collect(Collectors.toSet());
         if (requestDTO.getAttributes().size() != attributeIds.size()) {
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_ID_REPEATED);
         }
@@ -64,7 +64,7 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     @Override
     public BaseResult processor(SetAttributeRequestDTO requestDTO) {
         List<CategoryAttributeDO> listByCategoryId = categoryAttributeSupport
-                .listByCategoryId(requestDTO.getCategoryId());
+            .listByCategoryId(requestDTO.getCategoryId());
         List<AttributeIdsDTO> attributes = requestDTO.getAttributes();
         List<Long> attributeIds = attributes.stream().map(AttributeIdsDTO::getAttributeId).collect(Collectors.toList());
         // 角色列表为空 只是新增
@@ -73,15 +73,15 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
         } else {
             // 先删后增
             List<Long> oldAttributeIds = listByCategoryId.stream().map(CategoryAttributeDO::getAttributeId)
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
             // 新增的集合
             List<AttributeIdsDTO> insertAttributes = attributes.stream()
-                    .filter(attributeIdsDTO -> !oldAttributeIds.contains(attributeIdsDTO.getAttributeId()))
-                    .collect(Collectors.toList());
+                .filter(attributeIdsDTO -> !oldAttributeIds.contains(attributeIdsDTO.getAttributeId()))
+                .collect(Collectors.toList());
             // 删除的集合
             List<Long> deleteAttributeIds = oldAttributeIds.stream()
-                    .filter(attributeId -> !attributeIds.contains(attributeId))
-                    .collect(Collectors.toList());
+                .filter(attributeId -> !attributeIds.contains(attributeId))
+                .collect(Collectors.toList());
             if (CollUtil.isNotEmpty(deleteAttributeIds)) {
                 categoryAttributeSupport.delete(deleteAttributeIds, requestDTO.getCategoryId());
             }
@@ -90,12 +90,12 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
             }
             // 修改是否可筛选
             attributes.stream().filter(attributeIdsDTO -> oldAttributeIds.contains(attributeIdsDTO.getAttributeId()))
-                    .forEach(attributeIdsDTO -> {
-                        CategoryAttributeDO categoryAttributeDO = categoryAttributeSupport
-                                .get(attributeIdsDTO.getAttributeId(), requestDTO.getCategoryId());
-                        categoryAttributeDO.setCanScreen(attributeIdsDTO.getCanScreen());
-                        categoryAttributeMapper.updateById(categoryAttributeDO);
-                    });
+                .forEach(attributeIdsDTO -> {
+                    CategoryAttributeDO categoryAttributeDO = categoryAttributeSupport
+                        .get(attributeIdsDTO.getAttributeId(), requestDTO.getCategoryId());
+                    categoryAttributeDO.setCanScreen(attributeIdsDTO.getCanScreen());
+                    categoryAttributeMapper.updateById(categoryAttributeDO);
+                });
         }
         return ResultUtil.success();
     }
@@ -106,9 +106,9 @@ public class SetAttributeHandler extends AbstractCommonHandler<SetAttributeReque
     private void insert(Long categoryId, List<AttributeIdsDTO> attributes) {
         for (AttributeIdsDTO attribute : attributes) {
             CategoryAttributeDO categoryAttributeDO = new CategoryAttributeDO()
-                    .setAttributeId(attribute.getAttributeId())
-                    .setCanScreen(attribute.getCanScreen())
-                    .setCategoryId(categoryId);
+                .setAttributeId(attribute.getAttributeId())
+                .setCanScreen(attribute.getCanScreen())
+                .setCategoryId(categoryId);
             CategoryDO categoryDO = categoryCacheService.selectById(categoryId);
             categoryAttributeDO.setCascadeCategoryId(categoryDO.getPath());
             categoryAttributeMapper.insert(categoryAttributeDO);

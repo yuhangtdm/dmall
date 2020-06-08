@@ -15,7 +15,6 @@ import java.io.Serializable;
 @ApiModel(value = "SaveMemberCollectionSkuRequestDTO", description = "会员收藏sku请求实体")
 public class SaveMemberCollectionSkuRequestDTO implements Serializable {
 
-
     @ApiModelProperty(value = "skuId", position = 1, required = true)
     @NotNull
     private Long skuId;

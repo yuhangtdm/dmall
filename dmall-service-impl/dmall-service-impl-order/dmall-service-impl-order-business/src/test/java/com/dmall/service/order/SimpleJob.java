@@ -6,5 +6,4 @@ package com.dmall.service.order;
  */
 public class SimpleJob {
 
-
 }

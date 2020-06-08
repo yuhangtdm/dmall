@@ -57,7 +57,6 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-
     @Override
     public BaseResult<ToTradeResponseDTO> processor(ToTradeRequestDTO requestDTO) {
         // 获取登录的会员信息
@@ -71,31 +70,31 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
         return getTradeResponse(skuFuture, addressFuture, invoiceFuture, requestDTO.getTradeSku(), loginMember.getId());
     }
 
-
     /**
      * 异步获取sku数据
      */
     private List<SkuResponseDTO> getSkuList(ToTradeRequestDTO requestDTO) {
-        List<Long> skuIds = requestDTO.getTradeSku().stream().map(TradeSkuRequestDTO::getSkuId).collect(Collectors.toList());
+        List<Long> skuIds =
+            requestDTO.getTradeSku().stream().map(TradeSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, Integer> skuCountMap = requestDTO.getTradeSku().stream()
-                .collect(Collectors.toMap(TradeSkuRequestDTO::getSkuId, TradeSkuRequestDTO::getCount));
+            .collect(Collectors.toMap(TradeSkuRequestDTO::getSkuId, TradeSkuRequestDTO::getCount));
         BaseResult<List<BasicSkuResponseDTO>> listBaseResult = skuFeign.getBasic(skuIds);
         if (!listBaseResult.getResult()) {
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
         return listBaseResult.getData().stream()
-                .map(basicSku -> {
-                    SkuResponseDTO skuResponseDTO = new SkuResponseDTO();
-                    skuResponseDTO.setSkuId(basicSku.getId());
-                    skuResponseDTO.setSkuName(basicSku.getName());
-                    skuResponseDTO.setSkuSpecificationsJson(basicSku.getSkuSpecificationsJson());
-                    skuResponseDTO.setSkuNumber(skuCountMap.get(basicSku.getId()));
-                    skuResponseDTO.setSkuPrice(basicSku.getPrice());
-                    skuResponseDTO.setSkuTotalPrice(NumberUtil.mul(basicSku.getPrice(), skuResponseDTO.getSkuNumber()));
-                    skuResponseDTO.setHasStock(basicSku.getSalableStock() > 0);
-                    skuResponseDTO.setWeight(basicSku.getWeight());
-                    return skuResponseDTO;
-                }).collect(Collectors.toList());
+            .map(basicSku -> {
+                SkuResponseDTO skuResponseDTO = new SkuResponseDTO();
+                skuResponseDTO.setSkuId(basicSku.getId());
+                skuResponseDTO.setSkuName(basicSku.getName());
+                skuResponseDTO.setSkuSpecificationsJson(basicSku.getSkuSpecificationsJson());
+                skuResponseDTO.setSkuNumber(skuCountMap.get(basicSku.getId()));
+                skuResponseDTO.setSkuPrice(basicSku.getPrice());
+                skuResponseDTO.setSkuTotalPrice(NumberUtil.mul(basicSku.getPrice(), skuResponseDTO.getSkuNumber()));
+                skuResponseDTO.setHasStock(basicSku.getSalableStock() > 0);
+                skuResponseDTO.setWeight(basicSku.getWeight());
+                return skuResponseDTO;
+            }).collect(Collectors.toList());
     }
 
     /**
@@ -107,19 +106,19 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
             throw new BusinessException(BasicStatusEnum.FAIL);
         }
         return listBaseResult.getData().stream()
-                .map(addressResponseDTO -> {
-                    AddressResponseDTO addressResponse = new AddressResponseDTO();
-                    addressResponse.setId(addressResponseDTO.getId());
-                    addressResponse.setName(addressResponseDTO.getName());
-                    addressResponse.setPhone(addressResponseDTO.getPhone());
-                    addressResponse.setDefaultStatus(addressResponseDTO.getDefaultStatus());
-                    addressResponse.setProvince(addressResponseDTO.getProvince());
-                    addressResponse.setCity(addressResponseDTO.getCity());
-                    addressResponse.setRegion(addressResponseDTO.getRegion());
-                    addressResponse.setDetailAddress(addressResponseDTO.getDetailAddress());
-                    return addressResponse;
-                })
-                .collect(Collectors.toList());
+            .map(addressResponseDTO -> {
+                AddressResponseDTO addressResponse = new AddressResponseDTO();
+                addressResponse.setId(addressResponseDTO.getId());
+                addressResponse.setName(addressResponseDTO.getName());
+                addressResponse.setPhone(addressResponseDTO.getPhone());
+                addressResponse.setDefaultStatus(addressResponseDTO.getDefaultStatus());
+                addressResponse.setProvince(addressResponseDTO.getProvince());
+                addressResponse.setCity(addressResponseDTO.getCity());
+                addressResponse.setRegion(addressResponseDTO.getRegion());
+                addressResponse.setDetailAddress(addressResponseDTO.getDetailAddress());
+                return addressResponse;
+            })
+            .collect(Collectors.toList());
     }
 
     /**
@@ -148,10 +147,10 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
      * 构建返回数据
      */
     private BaseResult<ToTradeResponseDTO> getTradeResponse(Future<List<SkuResponseDTO>> skuFuture,
-                                                            Future<List<AddressResponseDTO>> addressFuture,
-                                                            Future<InvoiceResponseDTO> invoiceFuture,
-                                                            List<TradeSkuRequestDTO> tradeSku,
-                                                            Long memberId) {
+        Future<List<AddressResponseDTO>> addressFuture,
+        Future<InvoiceResponseDTO> invoiceFuture,
+        List<TradeSkuRequestDTO> tradeSku,
+        Long memberId) {
         ToTradeResponseDTO tradeResponseDTO = new ToTradeResponseDTO();
         try {
             tradeResponseDTO.setSkuList(skuFuture.get());
@@ -162,11 +161,11 @@ public class ToTradeHandler extends AbstractCommonHandler<ToTradeRequestDTO, Voi
             tradeResponseDTO.setSkuTotalNumber(totalSkuNumber);
             // sku总价格
             BigDecimal totalSkuPrice = tradeResponseDTO.getSkuList().stream().map(SkuResponseDTO::getSkuTotalPrice)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
             tradeResponseDTO.setSkuTotalPrice(totalSkuPrice);
             tradeResponseDTO.setFreightPrice(FreightPriceUtil.getFreightPrice(totalSkuPrice));
             tradeResponseDTO.setTotalPrice(NumberUtil.add(tradeResponseDTO.getSkuTotalPrice(),
-                    tradeResponseDTO.getFreightPrice()));
+                tradeResponseDTO.getFreightPrice()));
         } catch (Exception e) {
             return ResultUtil.fail(BasicStatusEnum.FAIL);
         }

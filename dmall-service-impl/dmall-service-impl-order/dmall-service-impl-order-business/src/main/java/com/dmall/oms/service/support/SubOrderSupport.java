@@ -22,6 +22,6 @@ public class SubOrderSupport {
      */
     public List<SubOrderDO> listByOrderId(Long orderId) {
         return subOrderMapper.selectList(Wrappers.<SubOrderDO>lambdaQuery()
-                .eq(SubOrderDO::getOrderId, orderId));
+            .eq(SubOrderDO::getOrderId, orderId));
     }
 }

@@ -43,9 +43,12 @@ public class PageCommentHandler extends AbstractCommonHandler<PageCommentRequest
         } else {
             Long productId = requestDTO.getProductId();
             commentResponseDTO.setCommentCount(commentSupport.countByProductId(productId));
-            commentResponseDTO.setGoodCommentCount(commentSupport.countByProductId(productId, CommentEnum.GOOD.getCode()));
-            commentResponseDTO.setMiddleCommentCount(commentSupport.countByProductId(productId, CommentEnum.MIDDLE.getCode()));
-            commentResponseDTO.setBadCommentCount(commentSupport.countByProductId(productId, CommentEnum.BAD.getCode()));
+            commentResponseDTO
+                .setGoodCommentCount(commentSupport.countByProductId(productId, CommentEnum.GOOD.getCode()));
+            commentResponseDTO
+                .setMiddleCommentCount(commentSupport.countByProductId(productId, CommentEnum.MIDDLE.getCode()));
+            commentResponseDTO
+                .setBadCommentCount(commentSupport.countByProductId(productId, CommentEnum.BAD.getCode()));
             commentResponseDTO.setHasPicCommentCount(commentSupport.countByProductIdHasPic(productId));
         }
         return ResultUtil.success(commentResponseDTO);

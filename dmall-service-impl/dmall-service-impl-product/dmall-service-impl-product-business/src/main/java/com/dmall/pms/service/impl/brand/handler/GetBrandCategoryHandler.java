@@ -35,8 +35,8 @@ public class GetBrandCategoryHandler extends AbstractCommonHandler<Long, Categor
             return ResultUtil.fail(PmsErrorEnum.BRAND_NOT_EXIST);
         }
         List<String> collect = categoryBrandSupport.listByBrandId(brandId)
-                .stream().map(categoryBrandDO -> String.valueOf(categoryBrandDO.getCategoryId()))
-                .collect(Collectors.toList());
+            .stream().map(categoryBrandDO -> String.valueOf(categoryBrandDO.getCategoryId()))
+            .collect(Collectors.toList());
         return ResultUtil.success(collect);
     }
 }

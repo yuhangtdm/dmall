@@ -14,9 +14,9 @@ public class XxlJobUtil {
      * 构建XxlJobInfo
      *
      * @param jobName 任务名称
-     * @param param   任务参数
+     * @param param 任务参数
      * @param jobDesc 描述
-     * @param cron    表达式
+     * @param cron 表达式
      */
     public static XxlJobInfo buildXxlJobInfo(String jobName, String param, String jobDesc, String cron) {
         XxlJobInfo xxlJobInfo = new XxlJobInfo();

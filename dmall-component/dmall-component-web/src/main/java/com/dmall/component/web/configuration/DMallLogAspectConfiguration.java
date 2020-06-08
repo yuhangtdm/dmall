@@ -47,8 +47,8 @@ public class DMallLogAspectConfiguration implements BasicConfiguration {
     public AspectJExpressionPointcutAdvisor configurabledvisor() {
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
         String expression = "@within(org.springframework.web.bind.annotation.RestController) " +
-                "|| @within(org.springframework.stereotype.Controller) " +
-                "&& execution(public * " + dMallLogProperties.getPointcut() + "..*(..))";
+            "|| @within(org.springframework.stereotype.Controller) " +
+            "&& execution(public * " + dMallLogProperties.getPointcut() + "..*(..))";
         advisor.setExpression(expression);
         advisor.setAdvice(logAdvice(environment));
         return advisor;

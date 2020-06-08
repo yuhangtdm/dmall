@@ -28,7 +28,7 @@ public class IdGeneratorUtil {
      * 数据库使用 char(25) 存储
      *
      * @param tenantId 租户ID，5 位
-     * @param module   业务模块ID，2 位
+     * @param module 业务模块ID，2 位
      * @return 返回批次号
      */
     public synchronized String batchId(int tenantId, int module) {
@@ -52,4 +52,3 @@ public class IdGeneratorUtil {
     }
 
 }
- 

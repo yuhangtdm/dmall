@@ -26,7 +26,7 @@ public class ListCommentHandler extends AbstractCommonHandler<Long, CommentDO, L
     @Override
     public BaseResult<List<CommentPageResponseDTO>> processor(Long subOrderId) {
         List<CommentDO> commentList = commentMapper.selectList(Wrappers.<CommentDO>lambdaQuery()
-                .eq(CommentDO::getSubOrderId, subOrderId));
+            .eq(CommentDO::getSubOrderId, subOrderId));
         List<CommentPageResponseDTO> collect = commentList.stream().map(commentDO -> {
             CommentPageResponseDTO responseDTO = new CommentPageResponseDTO();
             responseDTO.setId(commentDO.getId());

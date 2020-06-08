@@ -18,7 +18,6 @@ public class CommentPageDbDTO {
      */
     private Long subOrderId;
 
-
     /**
      * 订单号
      */
@@ -43,7 +42,6 @@ public class CommentPageDbDTO {
      * 收货人姓名
      */
     private String receiverName;
-
 
     /**
      * 订单的sku列表

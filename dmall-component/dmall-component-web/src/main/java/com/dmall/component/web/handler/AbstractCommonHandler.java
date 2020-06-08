@@ -60,13 +60,11 @@ public abstract class AbstractCommonHandler<ReqDTO, DO, ResDTO> implements Commo
     /**
      * 子类可以重写,自定义转换do
      */
-    protected void customerConvertDo(DO result, ReqDTO dto) {
-    }
+    protected void customerConvertDo(DO result, ReqDTO dto) {}
 
     /**
      * 子类可以重写,自定义转换dto
      */
-    protected void customerConvertDto(ResDTO result, DO doo) {
-    }
+    protected void customerConvertDto(ResDTO result, DO doo) {}
 
 }

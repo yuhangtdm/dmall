@@ -92,5 +92,4 @@ public class MemberInvoiceDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

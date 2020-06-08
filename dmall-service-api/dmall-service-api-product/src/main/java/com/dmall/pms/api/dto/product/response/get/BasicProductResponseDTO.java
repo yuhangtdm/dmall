@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -31,5 +32,11 @@ public class BasicProductResponseDTO {
 
     @ApiModelProperty(value = "上市时间", position = 5)
     private Date onMarketTime;
+
+    @ApiModelProperty(value = "商品单位", position = 6)
+    private String unit;
+
+    @ApiModelProperty(value = "商品重量", position = 7)
+    private BigDecimal weight;
 
 }

@@ -76,7 +76,6 @@ public enum OrderOperateEnum implements CodeDescEnum<Integer> {
      */
     COMMENT(13, "评价"),
 
-
     ;
 
     private final Integer code;

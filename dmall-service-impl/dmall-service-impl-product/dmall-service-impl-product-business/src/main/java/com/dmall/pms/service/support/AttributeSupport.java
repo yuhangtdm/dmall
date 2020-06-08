@@ -21,8 +21,8 @@ public class AttributeSupport {
      */
     public AttributeDO getByShowName(Long categoryId, String showName) {
         return attributeMapper.selectOne(Wrappers.<AttributeDO>lambdaQuery()
-                .eq(AttributeDO::getCategoryId, categoryId)
-                .eq(AttributeDO::getShowName, showName));
+            .eq(AttributeDO::getCategoryId, categoryId)
+            .eq(AttributeDO::getShowName, showName));
     }
 
 }

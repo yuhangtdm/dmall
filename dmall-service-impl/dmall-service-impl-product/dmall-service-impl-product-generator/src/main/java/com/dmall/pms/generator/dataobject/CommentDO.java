@@ -115,5 +115,4 @@ public class CommentDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

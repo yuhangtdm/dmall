@@ -26,7 +26,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttributeTypeRequestDTO, AttributeTypeDO, AttributeTypeResponseDTO> {
+public class ListAttributeTypeHandler
+    extends AbstractCommonHandler<ListAttributeTypeRequestDTO, AttributeTypeDO, AttributeTypeResponseDTO> {
 
     @Autowired
     private AttributeTypeMapper attributeTypeMapper;
@@ -50,14 +51,16 @@ public class ListAttributeTypeHandler extends AbstractCommonHandler<ListAttribut
             attributeTypeDOS = attributeTypeCacheService.selectAll();
         } else {
             LambdaQueryWrapper<AttributeTypeDO> queryWrapper = Wrappers.<AttributeTypeDO>lambdaQuery()
-                    .in(CollUtil.isNotEmpty(requestDTO.getCategoryIds()), AttributeTypeDO::getCategoryId, requestDTO.getCategoryIds())
-                    .like(StrUtil.isNotBlank(requestDTO.getShowName()), AttributeTypeDO::getShowName, requestDTO.getShowName());
+                .in(CollUtil.isNotEmpty(requestDTO.getCategoryIds()), AttributeTypeDO::getCategoryId,
+                    requestDTO.getCategoryIds())
+                .like(StrUtil.isNotBlank(requestDTO.getShowName()), AttributeTypeDO::getShowName,
+                    requestDTO.getShowName());
             attributeTypeDOS = attributeTypeMapper.selectList(queryWrapper);
         }
         List<AttributeTypeResponseDTO> list = attributeTypeDOS.stream()
-                .filter(Objects::nonNull)
-                .map(doo -> doConvertDto(doo, AttributeTypeResponseDTO.class))
-                .collect(Collectors.toList());
+            .filter(Objects::nonNull)
+            .map(doo -> doConvertDto(doo, AttributeTypeResponseDTO.class))
+            .collect(Collectors.toList());
         return ResultUtil.success(list);
     }
 

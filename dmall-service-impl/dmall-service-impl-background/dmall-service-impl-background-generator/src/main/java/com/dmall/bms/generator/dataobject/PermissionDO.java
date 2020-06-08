@@ -51,7 +51,6 @@ public class PermissionDO implements Serializable {
      */
     private String method;
 
-
     /**
      * 创建人
      */
@@ -82,6 +81,5 @@ public class PermissionDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

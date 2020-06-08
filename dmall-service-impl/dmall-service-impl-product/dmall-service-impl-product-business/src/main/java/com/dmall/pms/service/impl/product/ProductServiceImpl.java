@@ -1,6 +1,5 @@
 package com.dmall.pms.service.impl.product;
 
-
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.dto.ResponsePage;
 import com.dmall.common.dto.UploadResult;

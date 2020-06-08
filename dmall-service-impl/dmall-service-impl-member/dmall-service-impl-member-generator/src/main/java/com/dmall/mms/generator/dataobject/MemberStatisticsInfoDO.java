@@ -120,5 +120,4 @@ public class MemberStatisticsInfoDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

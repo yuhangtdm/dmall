@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/5/27 22:20
  */
 @Component
-public class GetAttributeIdsHandler extends AbstractCommonHandler<Long, CategoryAttributeDO, List<CanScreenResponseDTO>> {
+public class GetAttributeIdsHandler
+    extends AbstractCommonHandler<Long, CategoryAttributeDO, List<CanScreenResponseDTO>> {
 
     @Autowired
     private CategoryAttributeSupport categoryAttributeSupport;
@@ -32,14 +33,14 @@ public class GetAttributeIdsHandler extends AbstractCommonHandler<Long, Category
     public BaseResult<List<CanScreenResponseDTO>> processor(Long categoryId) {
         pmsValidate.validateThreeLevelCategory(categoryId);
         List<CanScreenResponseDTO> result = categoryAttributeSupport.listByCategoryId(categoryId)
-                .stream().map(categoryAttributeDO -> {
-                    CanScreenResponseDTO canScreen = new CanScreenResponseDTO();
-                    canScreen.setId(String.valueOf(categoryAttributeDO.getAttributeId()));
-                    canScreen.setName(categoryAttributeDO.getCanScreen());
-                    canScreen.setValue(EnumUtil.getDesc(CanScreenEnum.class, categoryAttributeDO.getCanScreen()));
-                    return canScreen;
-                })
-                .collect(Collectors.toList());
+            .stream().map(categoryAttributeDO -> {
+                CanScreenResponseDTO canScreen = new CanScreenResponseDTO();
+                canScreen.setId(String.valueOf(categoryAttributeDO.getAttributeId()));
+                canScreen.setName(categoryAttributeDO.getCanScreen());
+                canScreen.setValue(EnumUtil.getDesc(CanScreenEnum.class, categoryAttributeDO.getCanScreen()));
+                return canScreen;
+            })
+            .collect(Collectors.toList());
         return ResultUtil.success(result);
     }
 }

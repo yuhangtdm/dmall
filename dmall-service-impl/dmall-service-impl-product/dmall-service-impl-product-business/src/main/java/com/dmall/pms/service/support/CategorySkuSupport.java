@@ -37,7 +37,8 @@ public class CategorySkuSupport {
      * 根据商品分类id查询列表
      */
     public List<CategorySkuDO> listByCategoryId(Long categoryId) {
-        return categorySkuMapper.selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getCategoryId, categoryId));
+        return categorySkuMapper
+            .selectList(Wrappers.<CategorySkuDO>lambdaQuery().eq(CategorySkuDO::getCategoryId, categoryId));
     }
 
     /**

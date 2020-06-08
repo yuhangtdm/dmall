@@ -75,5 +75,4 @@ public class CouponDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

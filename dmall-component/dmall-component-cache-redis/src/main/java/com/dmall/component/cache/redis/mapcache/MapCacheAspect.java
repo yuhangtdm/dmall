@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * @description: mapCache切面
- * 适用于数据量不大的db实体缓存,缓存内容是map,hashKey取id,hashValue取实体对象
+ *               适用于数据量不大的db实体缓存,缓存内容是map,hashKey取id,hashValue取实体对象
  * @author: created by hang.yu on 2019/11/23 22:35
  */
 @Slf4j
@@ -33,24 +33,19 @@ public class MapCacheAspect {
     private final MapCacheUtil mapCacheUtil;
 
     @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapListCache)")
-    public void mapListCache() {
-    }
+    public void mapListCache() {}
 
     @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapGetCache)")
-    public void mapGetCache() {
-    }
+    public void mapGetCache() {}
 
     @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapDeleteCache)")
-    public void mapDeleteCache() {
-    }
+    public void mapDeleteCache() {}
 
     @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapPostCache)")
-    public void mapPostCache() {
-    }
+    public void mapPostCache() {}
 
     @Pointcut("@annotation(com.dmall.component.cache.redis.mapcache.MapPutCache)")
-    public void mapPutCache() {
-    }
+    public void mapPutCache() {}
 
     /**
      * map缓存切面方法 用于获取list的方法
@@ -60,12 +55,12 @@ public class MapCacheAspect {
     public Object mapListCache(ProceedingJoinPoint joinPoint) {
         try {
             Object[] args = joinPoint.getArgs();
-            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
             String className = joinPoint.getTarget().getClass().getName();
             MapCacheable mapCacheable = validate(joinPoint);
             MapListCache mapListCache = methodSignature.getMethod().getAnnotation(MapListCache.class);
             String key = ObjectUtil.or(StrUtil.isNotBlank(mapListCache.key()), mapListCache.key(),
-                    mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
+                mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
             StopWatch stopWatch = new StopWatch();
             stopWatch.start();
             List<Object> values = mapCacheUtil.values(key);
@@ -76,7 +71,7 @@ public class MapCacheAspect {
             } else {
                 log.info("cache miss,key:{}", key);
                 Object result = joinPoint.proceed(args);
-                List<Object> list = (List) result;
+                List<Object> list = (List)result;
                 for (Object o : list) {
                     Long id = getIdValue(o);
                     if (id != null) {
@@ -100,12 +95,12 @@ public class MapCacheAspect {
     public Object mapGetCache(ProceedingJoinPoint joinPoint) {
         try {
             Object[] args = joinPoint.getArgs();
-            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
             MapCacheable mapCacheable = validate(joinPoint);
             MapGetCache mapGetCache = methodSignature.getMethod().getAnnotation(MapGetCache.class);
             String className = joinPoint.getTarget().getClass().getName();
             String key = ObjectUtil.or(StrUtil.isNotBlank(mapGetCache.key()), mapGetCache.key(),
-                    mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
+                mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
             StopWatch stopWatch = new StopWatch();
             stopWatch.start();
             Object cacheResult = mapCacheUtil.get(key, String.valueOf(args[0]));
@@ -133,11 +128,11 @@ public class MapCacheAspect {
     public Object mapPostCache(ProceedingJoinPoint joinPoint) {
         try {
             Object[] args = joinPoint.getArgs();
-            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
             MapCacheable mapCacheable = validate(joinPoint);
             MapPostCache mapPostCache = methodSignature.getMethod().getAnnotation(MapPostCache.class);
             String key = StrUtil.isBlank(mapPostCache.key()) ? mapCacheUtil.getKey(mapCacheable.cacheNames(),
-                    joinPoint.getTarget().getClass().getName()) : mapPostCache.key();
+                joinPoint.getTarget().getClass().getName()) : mapPostCache.key();
             Object result = joinPoint.proceed(args);
             // 取入参的id
             Long id = getIdValue(args[0]);
@@ -158,12 +153,12 @@ public class MapCacheAspect {
     public Object mapPutCache(ProceedingJoinPoint joinPoint) {
         try {
             Object[] args = joinPoint.getArgs();
-            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
             MapPutCache mapPutCache = methodSignature.getMethod().getAnnotation(MapPutCache.class);
             MapCacheable mapCacheable = validate(joinPoint);
             String className = joinPoint.getTarget().getClass().getName();
             String key = ObjectUtil.or(StrUtil.isNotBlank(mapPutCache.key()), mapPutCache.key(),
-                    mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
+                mapCacheUtil.getKey(mapCacheable.cacheNames(), className));
             Object result = joinPoint.proceed(args);
             // 取返回值的id
             Long id = getIdValue(result);
@@ -177,7 +172,6 @@ public class MapCacheAspect {
         }
     }
 
-
     /**
      * map切面缓存方法 用于删除缓存的方法
      */
@@ -186,10 +180,10 @@ public class MapCacheAspect {
         try {
             Object[] args = joinPoint.getArgs();
             MapCacheable mapCacheable = validate(joinPoint);
-            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
             MapDeleteCache mapDeleteCache = methodSignature.getMethod().getAnnotation(MapDeleteCache.class);
             String key = ObjectUtil.or(StrUtil.isNotBlank(mapDeleteCache.key()), mapDeleteCache.key(),
-                    mapCacheUtil.getKey(mapCacheable.cacheNames(), joinPoint.getTarget().getClass().getName()));
+                mapCacheUtil.getKey(mapCacheable.cacheNames(), joinPoint.getTarget().getClass().getName()));
             Object result = joinPoint.proceed(args);
             mapCacheUtil.delete(key, String.valueOf(args[0]));
             log.info("delete cache success,key:{},hashKey:{}", key, args[0]);
@@ -208,9 +202,9 @@ public class MapCacheAspect {
         Long id = null;
         if (tableId != null) {
             String value = tableId.value();
-            id = (Long) ReflectUtil.getFieldValue(result, value);
+            id = (Long)ReflectUtil.getFieldValue(result, value);
         } else {
-            id = (Long) ReflectUtil.getFieldValue(result, Constants.ID);
+            id = (Long)ReflectUtil.getFieldValue(result, Constants.ID);
         }
         return id;
     }
@@ -225,6 +219,5 @@ public class MapCacheAspect {
         }
         return mapCacheable;
     }
-
 
 }

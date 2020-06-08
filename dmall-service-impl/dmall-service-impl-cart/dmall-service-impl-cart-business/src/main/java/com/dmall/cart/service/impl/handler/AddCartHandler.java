@@ -50,7 +50,8 @@ public class AddCartHandler extends AbstractCommonHandler<AddCartRequestDTO, Car
             AddCartUtil.notLoginAddCart(requestDTO.getNumber(), OperateEnum.ADD, skuData);
         } else {
             List<CartItemDO> cartItemDOS = cartCacheService.list(login.getId());
-            CartItemDO cartItemDO = AddCartUtil.loginAddCart(requestDTO.getNumber(), OperateEnum.ADD, skuData, login, cartItemDOS);
+            CartItemDO cartItemDO =
+                AddCartUtil.loginAddCart(requestDTO.getNumber(), OperateEnum.ADD, skuData, login, cartItemDOS);
             handlerCart(login, cartItemDO);
         }
         return ResultUtil.success(getAddCartResponse(requestDTO, skuData));

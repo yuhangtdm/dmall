@@ -16,6 +16,7 @@ public enum MenuTargetEnum implements CodeDescEnum<String> {
 
     BLANK("_blank", "_blank"),
     ;
+
     private final String code;
 
     private final String desc;

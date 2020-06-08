@@ -23,5 +23,4 @@ public class AfterSaleDetailResponseDTO implements Serializable {
     @ApiModelProperty(value = "售后商品信息", position = 2)
     private BuyerOrderItemDTO buyerOrderItem;
 
-
 }

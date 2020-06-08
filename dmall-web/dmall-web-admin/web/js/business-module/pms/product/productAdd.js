@@ -1,8 +1,7 @@
-layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
+layui.use(['form', 'crud', 'dtree'], function () {
     var $ = layui.jquery,
         form = layui.form,
         dtree = layui.dtree,
-        formSelects = layui.formSelects,
         crud = layui.crud;
 
     var parentIndex = layer.index;
@@ -10,7 +9,6 @@ layui.use(['form', 'crud', 'dtree', 'formSelects'], function () {
     var allAttributeArr = [];
     // 属性类别列表
     var allAttributeTypeArr = [];
-
     // 规格列表
     var specificationsArr = [];
     // 卖点列表

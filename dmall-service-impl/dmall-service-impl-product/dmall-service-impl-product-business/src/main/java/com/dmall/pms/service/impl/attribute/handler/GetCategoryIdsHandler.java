@@ -30,8 +30,8 @@ public class GetCategoryIdsHandler extends AbstractCommonHandler<Long, CategoryA
     public BaseResult<List<String>> processor(Long attributeId) {
         pmsValidate.validateAttribute(attributeId);
         List<String> result = categoryAttributeSupport.listByAttributeId(attributeId)
-                .stream().map(CategoryAttributeDO::getCategoryId)
-                .map(String::valueOf).collect(Collectors.toList());
+            .stream().map(CategoryAttributeDO::getCategoryId)
+            .map(String::valueOf).collect(Collectors.toList());
         return ResultUtil.success(result);
     }
 }

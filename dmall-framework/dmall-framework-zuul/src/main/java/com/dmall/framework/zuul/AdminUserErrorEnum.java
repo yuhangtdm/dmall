@@ -12,7 +12,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AdminUserErrorEnum implements ErrorCodeEnum {
 
-
     /**
      * source不能为空
      */

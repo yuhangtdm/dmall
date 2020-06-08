@@ -170,5 +170,4 @@ public class MemberDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

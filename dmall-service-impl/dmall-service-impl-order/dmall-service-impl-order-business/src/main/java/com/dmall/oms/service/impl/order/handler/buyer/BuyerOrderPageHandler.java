@@ -35,7 +35,8 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/9 22:36
  */
 @Component
-public class BuyerOrderPageHandler extends AbstractCommonHandler<BuyerOrderPageRequestDTO, OrderDO, BuyerOrderPageResponseDTO> {
+public class BuyerOrderPageHandler
+    extends AbstractCommonHandler<BuyerOrderPageRequestDTO, OrderDO, BuyerOrderPageResponseDTO> {
 
     @Autowired
     private ESDao esDao;
@@ -56,7 +57,8 @@ public class BuyerOrderPageHandler extends AbstractCommonHandler<BuyerOrderPageR
 
         // 搜索
         if (StrUtil.isNotBlank(requestDTO.getSkuName())) {
-            esSearch.setSearchFields(Lists.newArrayList(new SearchField(EsConstants.SEARCH_FIELDS, requestDTO.getSkuName())));
+            esSearch.setSearchFields(
+                Lists.newArrayList(new SearchField(EsConstants.SEARCH_FIELDS, requestDTO.getSkuName())));
         }
 
         // 过滤
@@ -64,17 +66,19 @@ public class BuyerOrderPageHandler extends AbstractCommonHandler<BuyerOrderPageR
 
         // 订单状态
         if (requestDTO.getOrderStatus() != null) {
-            FilterField filterField = new FilterField(EsConstants.FILTER_ORDER_STATUS, new Object[]{requestDTO.getOrderStatus()});
+            FilterField filterField =
+                new FilterField(EsConstants.FILTER_ORDER_STATUS, new Object[] {requestDTO.getOrderStatus()});
             filterFields.add(filterField);
         }
         // 订单id
         if (requestDTO.getOrderId() != null) {
-            FilterField filterField = new FilterField(EsConstants.FILTER_ORDER_ID, new Object[]{requestDTO.getOrderId()});
+            FilterField filterField =
+                new FilterField(EsConstants.FILTER_ORDER_ID, new Object[] {requestDTO.getOrderId()});
             filterFields.add(filterField);
         }
         // 订单创建人
         PortalMemberDTO portalMemberDTO = PortalMemberContextHolder.get();
-        FilterField filterField = new FilterField(EsConstants.FILTER_CREATOR, new Object[]{portalMemberDTO.getId()});
+        FilterField filterField = new FilterField(EsConstants.FILTER_CREATOR, new Object[] {portalMemberDTO.getId()});
         filterFields.add(filterField);
         esSearch.setFilterFields(filterFields);
 
@@ -83,7 +87,7 @@ public class BuyerOrderPageHandler extends AbstractCommonHandler<BuyerOrderPageR
 
         // 设置分页
         esSearch.setEsPage(new ESPage(requestDTO.getCurrent() * requestDTO.getSize(),
-                requestDTO.getSize()));
+            requestDTO.getSize()));
 
         esSearch.setClazz(OrderEsDTO.class);
         return esSearch;

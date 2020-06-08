@@ -19,7 +19,8 @@ import java.util.List;
  * @author: created by hang.yu on 2019/12/16 16:43
  */
 @Component
-public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttributeRequestDTO, SkuAttributeValueDO, Long> {
+public class SaveSkuAttributeHandler
+    extends AbstractCommonHandler<SaveSkuAttributeRequestDTO, SkuAttributeValueDO, Long> {
 
     @Autowired
     private SkuSupport skuSupport;
@@ -49,6 +50,5 @@ public class SaveSkuAttributeHandler extends AbstractCommonHandler<SaveSkuAttrib
         skuExtSupport.setSkuExt(productId, skuId, productAttributeValueList, null, null);
         return ResultUtil.success(skuId);
     }
-
 
 }

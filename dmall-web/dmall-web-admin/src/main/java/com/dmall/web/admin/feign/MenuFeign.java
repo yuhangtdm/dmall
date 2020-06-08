@@ -9,5 +9,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/5/5 21:22
  */
 @FeignClient(value = "dmall-service-impl-background", configuration = FeignRequestConfiguration.class)
-public interface MenuFeign extends MenuService {
-}
+public interface MenuFeign extends MenuService {}

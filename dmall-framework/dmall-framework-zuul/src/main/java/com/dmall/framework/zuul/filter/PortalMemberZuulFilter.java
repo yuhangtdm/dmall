@@ -87,7 +87,8 @@ public class PortalMemberZuulFilter extends ZuulFilter {
         if (StrUtil.isBlank(header)) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(AdminUserErrorEnum.SOURCE_NOT_BLANK)));
-            requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
+            requestContext.getResponse()
+                .setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             return null;
         }
         // 只拦截前台请求
@@ -101,7 +102,8 @@ public class PortalMemberZuulFilter extends ZuulFilter {
             requestContext.setSendZuulResponse(false);
             if (AjaxUtil.isAjax(request)) {
                 requestContext.setResponseBody(JsonUtil.toJson(ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN)));
-                requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
+                requestContext.getResponse()
+                    .setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
             } else {
                 // 重定向到登录地址
                 try {
@@ -120,7 +122,8 @@ public class PortalMemberZuulFilter extends ZuulFilter {
             // token验证失败 未登录
             if (AjaxUtil.isAjax(request)) {
                 requestContext.setResponseBody(JsonUtil.toJson(checkResult));
-                requestContext.getResponse().setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
+                requestContext.getResponse()
+                    .setContentType(ContentType.JSON.toString(Charset.forName(Constants.DEFAULT_CHARSET)));
                 return null;
             } else {
                 // 重定向到登录地址
@@ -138,4 +141,3 @@ public class PortalMemberZuulFilter extends ZuulFilter {
         return null;
     }
 }
-

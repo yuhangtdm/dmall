@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-11-24
  */
 @Service
-public class ICategoryBrandServiceImpl extends ServiceImpl<CategoryBrandMapper, CategoryBrandDO> implements ICategoryBrandService {
+public class ICategoryBrandServiceImpl extends ServiceImpl<CategoryBrandMapper, CategoryBrandDO>
+    implements ICategoryBrandService {
 
 }

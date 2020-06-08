@@ -54,7 +54,6 @@ public class OrderReturnApplyDO implements Serializable {
      */
     private Long reasonId;
 
-
     /**
      * 类型 1-仅退款;2-退货;3-换货
      */
@@ -175,6 +174,5 @@ public class OrderReturnApplyDO implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private String isDeleted;
-
 
 }

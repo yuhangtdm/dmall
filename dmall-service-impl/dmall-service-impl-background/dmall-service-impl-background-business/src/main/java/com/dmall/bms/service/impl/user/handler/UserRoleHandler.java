@@ -31,7 +31,8 @@ public class UserRoleHandler extends AbstractCommonHandler<Long, RoleDO, UserRol
     @Override
     public BaseResult<List<UserRoleResponseDTO>> processor(Long userId) {
         List<RoleDO> roleList = roleMapper.selectList(Wrappers.emptyWrapper());
-        List<Long> roleIds = userRoleSupport.listByUserId(userId).stream().map(UserRoleDO::getRoleId).collect(Collectors.toList());
+        List<Long> roleIds =
+            userRoleSupport.listByUserId(userId).stream().map(UserRoleDO::getRoleId).collect(Collectors.toList());
         List<UserRoleResponseDTO> result = roleList.stream().map(roleDO -> {
             UserRoleResponseDTO userRoleResponseDTO = new UserRoleResponseDTO();
             userRoleResponseDTO.setRoleId(roleDO.getId());

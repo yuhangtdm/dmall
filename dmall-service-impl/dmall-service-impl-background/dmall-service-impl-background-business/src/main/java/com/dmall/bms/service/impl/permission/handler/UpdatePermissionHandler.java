@@ -33,7 +33,8 @@ public class UpdatePermissionHandler extends AbstractCommonHandler<UpdatePermiss
         }
 
         // 请求方式+uri唯一
-        PermissionDO byUriAndMethod = permissionSupport.getByUriAndMethod(permissionDO.getAppId(), requestDTO.getUri(), requestDTO.getMethod());
+        PermissionDO byUriAndMethod =
+            permissionSupport.getByUriAndMethod(permissionDO.getAppId(), requestDTO.getUri(), requestDTO.getMethod());
         if (byUriAndMethod != null && !byUriAndMethod.getId().equals(permissionDO.getId())) {
             return ResultUtil.fail(BackGroundErrorEnum.URI_METHOD_EXIST);
         }

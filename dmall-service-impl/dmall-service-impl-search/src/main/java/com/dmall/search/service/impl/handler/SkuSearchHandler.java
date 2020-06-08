@@ -55,15 +55,15 @@ public class SkuSearchHandler extends AbstractCommonHandler<SearchRequestDTO, Sk
         esSearch.setTypeName(EsConstants.TYPE_NAME);
         // 搜索
         if (StrUtil.isNotBlank(requestDTO.getKeyword())) {
-            List<SearchField> searchFields = Arrays.stream(EsConstants.SEARCH_FIELDS).map(key ->
-                    new SearchField(key, requestDTO.getKeyword())).collect(Collectors.toList());
+            List<SearchField> searchFields = Arrays.stream(EsConstants.SEARCH_FIELDS)
+                .map(key -> new SearchField(key, requestDTO.getKeyword())).collect(Collectors.toList());
             esSearch.setSearchFields(searchFields);
         }
         // 过滤
         List<FilterField> filterFields = Lists.newArrayList();
         // 分类
         if (requestDTO.getCat() != null) {
-            FilterField filterField = new FilterField(EsConstants.FILTER_CATEGORY, new Object[]{requestDTO.getCat()});
+            FilterField filterField = new FilterField(EsConstants.FILTER_CATEGORY, new Object[] {requestDTO.getCat()});
             filterFields.add(filterField);
         }
         if (StrUtil.isNotBlank(requestDTO.getEv())) {
@@ -121,8 +121,8 @@ public class SkuSearchHandler extends AbstractCommonHandler<SearchRequestDTO, Sk
      */
     private List<BrandDTO> getBrandList(List<SkuEsDTO> data) {
         List<BrandDTO> collect = data.stream().map(SkuEsDTO::getBrandDTO).collect(Collectors.toList());
-        return collect.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() ->
-                new TreeSet<>(Comparator.comparing(BrandDTO::getBrandId))), ArrayList::new));
+        return collect.stream().collect(Collectors.collectingAndThen(
+            Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(BrandDTO::getBrandId))), ArrayList::new));
 
     }
 
@@ -160,8 +160,8 @@ public class SkuSearchHandler extends AbstractCommonHandler<SearchRequestDTO, Sk
         }
         page.setData(page.getData().subList(start, end));
         List<SkuEsResponseDTO> collect = page.getData().stream()
-                .map(skuEsDTO -> BeanUtil.copyProperties(skuEsDTO, SkuEsResponseDTO.class))
-                .collect(Collectors.toList());
+            .map(skuEsDTO -> BeanUtil.copyProperties(skuEsDTO, SkuEsResponseDTO.class))
+            .collect(Collectors.toList());
         return new ResponsePage<>(page.getCount(), collect);
     }
 

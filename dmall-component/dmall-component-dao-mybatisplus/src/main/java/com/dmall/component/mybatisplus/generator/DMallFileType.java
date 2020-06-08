@@ -6,7 +6,6 @@ package com.dmall.component.mybatisplus.generator;
  */
 public enum DMallFileType {
 
-
     /**
      * SERVICE_API
      */

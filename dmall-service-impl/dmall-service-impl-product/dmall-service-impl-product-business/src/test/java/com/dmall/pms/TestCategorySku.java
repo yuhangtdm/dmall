@@ -42,8 +42,7 @@ public class TestCategorySku {
             List<CategorySkuDO> categorySkuDOS = categorySkuSupport.listBySkuId(skuDO.getId());
             for (CategorySkuDO categorySkuDO : categorySkuDOS) {
                 boolean b = list.stream().anyMatch(categorySku -> {
-                    return categorySku.getCategoryId().equals(categorySkuDO.getCategoryId()
-                    );
+                    return categorySku.getCategoryId().equals(categorySkuDO.getCategoryId());
                 });
                 if (list.size() == 0) {
                     b = false;
@@ -53,7 +52,8 @@ public class TestCategorySku {
                 }
             }
 
-            List<Long> collect = categorySkuDOS.stream().filter(categorySkuDO -> !list.contains(categorySkuDO)).map(CategorySkuDO::getId)
+            List<Long> collect =
+                categorySkuDOS.stream().filter(categorySkuDO -> !list.contains(categorySkuDO)).map(CategorySkuDO::getId)
                     .collect(Collectors.toList());
             if (CollUtil.isNotEmpty(collect)) {
                 categorySkuMapper.deleteBatchIds(collect);

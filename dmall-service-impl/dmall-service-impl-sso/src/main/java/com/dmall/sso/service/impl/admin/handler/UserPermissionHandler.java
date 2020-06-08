@@ -32,8 +32,8 @@ public class UserPermissionHandler extends AbstractCommonHandler<String, Permiss
 
         // 返回的数据
         List<PermissionResponseDTO> result = permissionDOS.stream()
-                .filter(permissionResponse -> !ids.contains(permissionResponse.getId()))
-                .collect(Collectors.toList());
+            .filter(permissionResponse -> !ids.contains(permissionResponse.getId()))
+            .collect(Collectors.toList());
         return ResultUtil.success(result);
     }
 }

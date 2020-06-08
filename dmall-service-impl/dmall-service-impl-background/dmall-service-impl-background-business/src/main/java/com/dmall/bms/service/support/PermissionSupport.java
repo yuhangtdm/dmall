@@ -28,30 +28,31 @@ public class PermissionSupport {
     @Autowired
     private PermissionMapper permissionMapper;
 
-
     /**
      * 根据uri和method查询实体
      */
     public PermissionDO getByUriAndMethod(String appId, String uri, String method) {
         return permissionMapper.selectOne(Wrappers.<PermissionDO>lambdaQuery()
-                .eq(PermissionDO::getAppId, appId)
-                .eq(PermissionDO::getUri, uri)
-                .eq(PermissionDO::getMethod, method));
+            .eq(PermissionDO::getAppId, appId)
+            .eq(PermissionDO::getUri, uri)
+            .eq(PermissionDO::getMethod, method));
     }
 
     /**
      * 构建公共的wrapper
      */
-    public static LambdaQueryWrapper buildWrapper(String appId, String business, String name, String uri, String method) {
+    public static LambdaQueryWrapper buildWrapper(String appId, String business, String name, String uri,
+        String method) {
         return Wrappers.<PermissionDO>lambdaQuery()
-                .eq(StrUtil.isNotBlank(appId), PermissionDO::getAppId, appId)
-                .like(StrUtil.isNotBlank(business), PermissionDO::getBusiness, business)
-                .like(StrUtil.isNotBlank(name), PermissionDO::getName, name)
-                .eq(StrUtil.isNotBlank(uri), PermissionDO::getUri, uri)
-                .eq(StrUtil.isNotBlank(method), PermissionDO::getMethod, method);
+            .eq(StrUtil.isNotBlank(appId), PermissionDO::getAppId, appId)
+            .like(StrUtil.isNotBlank(business), PermissionDO::getBusiness, business)
+            .like(StrUtil.isNotBlank(name), PermissionDO::getName, name)
+            .eq(StrUtil.isNotBlank(uri), PermissionDO::getUri, uri)
+            .eq(StrUtil.isNotBlank(method), PermissionDO::getMethod, method);
     }
 
-    public static List<TabPermissionResponseDTO> getTabPermissionResponseDTOS(Map<String, List<PermissionDO>> collect, List<Long> permissionIds) {
+    public static List<TabPermissionResponseDTO> getTabPermissionResponseDTOS(Map<String, List<PermissionDO>> collect,
+        List<Long> permissionIds) {
         List<TabPermissionResponseDTO> result = Lists.newArrayList();
         collect.forEach((k, v) -> {
             TabPermissionResponseDTO response = new TabPermissionResponseDTO();
@@ -59,7 +60,7 @@ public class PermissionSupport {
             response.setAppName(EnumUtil.getDesc(AppEnum.class, k));
             List<BusinessDTO> businessList = Lists.newArrayList();
             Map<String, List<PermissionDO>> businessMap = v.stream().collect(Collectors
-                    .groupingBy(PermissionDO::getBusiness, Collectors.toList()));
+                .groupingBy(PermissionDO::getBusiness, Collectors.toList()));
             businessMap.forEach((b, l) -> {
                 BusinessDTO business = new BusinessDTO();
                 business.setName(b);

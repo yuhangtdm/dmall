@@ -103,11 +103,13 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         if (redisTemplate.opsForValue().get(key) == null) {
             return ResultUtil.fail(OmsErrorEnum.SUBMIT_REPEAT);
         }
-        List<Long> skuIds = requestDTO.getOrderSku().stream().map(OrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
+        List<Long> skuIds =
+            requestDTO.getOrderSku().stream().map(OrderSkuRequestDTO::getSkuId).collect(Collectors.toList());
         Map<Long, OrderSkuRequestDTO> skuMap = requestDTO.getOrderSku().stream()
-                .collect(Collectors.toMap(OrderSkuRequestDTO::getSkuId, orderSkuRequestDTO -> orderSkuRequestDTO));
+            .collect(Collectors.toMap(OrderSkuRequestDTO::getSkuId, orderSkuRequestDTO -> orderSkuRequestDTO));
         // step2. 调用sku校验接口
-        BaseResult<List<BasicSkuResponseDTO>> skuResponse = skuFeign.createOrderCheck(buildCheckOrderRequest(requestDTO));
+        BaseResult<List<BasicSkuResponseDTO>> skuResponse =
+            skuFeign.createOrderCheck(buildCheckOrderRequest(requestDTO));
         if (!skuResponse.getResult()) {
             return ResultUtil.fail(skuResponse.getCode(), skuResponse.getMsg());
         }
@@ -138,7 +140,6 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
         redisTemplate.delete(key);
         return ResultUtil.success(orderDO.getId());
     }
-
 
     /**
      * 插入主订单表
@@ -190,7 +191,8 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     /**
      * 插入订单项表
      */
-    private void insertOrderItem(Map<Long, OrderSkuRequestDTO> skuMap, BaseResult<List<BasicSkuResponseDTO>> skuResponse, OrderDO orderDO) {
+    private void insertOrderItem(Map<Long, OrderSkuRequestDTO> skuMap,
+        BaseResult<List<BasicSkuResponseDTO>> skuResponse, OrderDO orderDO) {
         for (BasicSkuResponseDTO sku : skuResponse.getData()) {
             OrderItemDO orderItemDO = new OrderItemDO();
             orderItemDO.setOrderId(orderDO.getId());
@@ -214,21 +216,20 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
      */
     private void sendDelayMq(OrderDO orderDO) {
         rocketMQTemplate.sendAndReceive(MqConstants.DELAY_CANCEL_ORDER_TOPIC, orderDO.getId(),
-                new RocketMQLocalRequestCallback() {
-                    @Override
-                    public void onSuccess(Object message) {
-                        log.info("send mq success{}", message);
-                    }
+            new RocketMQLocalRequestCallback() {
+                @Override
+                public void onSuccess(Object message) {
+                    log.info("send mq success{}", message);
+                }
 
-                    @SneakyThrows
-                    @Override
-                    public void onException(Throwable e) {
-                        log.error("send mq error", e);
-                        throw new BusinessException(BasicStatusEnum.FAIL);
-                    }
-                }, 1000, RocketMQDelayLevelEnum.SEVENTEEN.getCode());
+                @SneakyThrows
+                @Override
+                public void onException(Throwable e) {
+                    log.error("send mq error", e);
+                    throw new BusinessException(BasicStatusEnum.FAIL);
+                }
+            }, 1000, RocketMQDelayLevelEnum.SEVENTEEN.getCode());
     }
-
 
     /**
      * 构建校验订单请求实体
@@ -236,13 +237,13 @@ public class CreateOrderHandler extends AbstractCommonHandler<CreateOrderRequest
     private CheckCreateOrderRequestDTO buildCheckOrderRequest(CreateOrderRequestDTO requestDTO) {
         CheckCreateOrderRequestDTO checkCreateOrderRequestDTO = new CheckCreateOrderRequestDTO();
         List<CheckOrderSkuRequestDTO> checkOrderList = requestDTO.getOrderSku().stream()
-                .map(orderSkuRequestDTO -> {
-                    CheckOrderSkuRequestDTO checkOrderSkuRequestDTO = new CheckOrderSkuRequestDTO();
-                    checkOrderSkuRequestDTO.setSkuId(orderSkuRequestDTO.getSkuId());
-                    checkOrderSkuRequestDTO.setCount(orderSkuRequestDTO.getNumber());
-                    checkOrderSkuRequestDTO.setSkuPrice(orderSkuRequestDTO.getSkuPrice());
-                    return checkOrderSkuRequestDTO;
-                }).collect(Collectors.toList());
+            .map(orderSkuRequestDTO -> {
+                CheckOrderSkuRequestDTO checkOrderSkuRequestDTO = new CheckOrderSkuRequestDTO();
+                checkOrderSkuRequestDTO.setSkuId(orderSkuRequestDTO.getSkuId());
+                checkOrderSkuRequestDTO.setCount(orderSkuRequestDTO.getNumber());
+                checkOrderSkuRequestDTO.setSkuPrice(orderSkuRequestDTO.getSkuPrice());
+                return checkOrderSkuRequestDTO;
+            }).collect(Collectors.toList());
         checkCreateOrderRequestDTO.setOrderSku(checkOrderList);
         checkCreateOrderRequestDTO.setTotalSkuPrice(requestDTO.getTotalSkuPrice());
         checkCreateOrderRequestDTO.setFreightPrice(requestDTO.getFreightPrice());

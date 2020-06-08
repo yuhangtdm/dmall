@@ -28,11 +28,13 @@ public class AttributeValueDTO implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AttributeValueDTO that = (AttributeValueDTO) o;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        AttributeValueDTO that = (AttributeValueDTO)o;
         return Objects.equals(attributeValueId, that.attributeValueId) ||
-                Objects.equals(attributeValueName, that.attributeValueName);
+            Objects.equals(attributeValueName, that.attributeValueName);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class RequestMappingUtil {
             if (handler == null) {
                 return null;
             }
-            HandlerMethod handlerMethod = (HandlerMethod) handler.getHandler();
+            HandlerMethod handlerMethod = (HandlerMethod)handler.getHandler();
             for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()) {
                 RequestMappingInfo k = entry.getKey();
                 HandlerMethod v = entry.getValue();

@@ -31,6 +31,7 @@ public enum SourceTypeEnum implements CodeDescEnum<Integer> {
      */
     WEIBO(4, "微博"),
     ;
+
     private final Integer code;
 
     private final String desc;

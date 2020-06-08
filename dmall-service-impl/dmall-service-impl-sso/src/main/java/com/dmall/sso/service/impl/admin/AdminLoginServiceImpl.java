@@ -54,7 +54,8 @@ public class AdminLoginServiceImpl implements AdminLoginService {
      * 登录
      */
     public BaseResult<AdminLoginResponseDTO> login(@RequestBody AdminLoginRequestDTO requestDTO) {
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(requestDTO.getPhone(), requestDTO.getPassword());
+        UsernamePasswordToken usernamePasswordToken =
+            new UsernamePasswordToken(requestDTO.getPhone(), requestDTO.getPassword());
         Subject subject = SecurityUtils.getSubject();
         // 登录
         try {
@@ -69,18 +70,18 @@ public class AdminLoginServiceImpl implements AdminLoginService {
             throw new BusinessException(SsoErrorEnum.AUTHENTICATION_FAILED);
         }
 
-        AdminUserDTO adminUserDTO = (AdminUserDTO) subject.getPrincipal();
+        AdminUserDTO adminUserDTO = (AdminUserDTO)subject.getPrincipal();
         String token = IdUtil.simpleUUID();
 
         if (requestDTO.getRememberMe() != null && requestDTO.getRememberMe()) {
             // 30天免登录
             adminUserDTO.setRememberMe(true);
             redisTemplate.opsForValue().set(token, adminUserDTO,
-                    REMEMBER_ME, TimeUnit.DAYS);
+                REMEMBER_ME, TimeUnit.DAYS);
         } else {
             adminUserDTO.setRememberMe(false);
             redisTemplate.opsForValue().set(token, adminUserDTO,
-                    ssoProperties.getAdminTtlDay(), TimeUnit.DAYS);
+                ssoProperties.getAdminTtlDay(), TimeUnit.DAYS);
         }
         // 将token和用户账号关联
         mapCacheUtil.put(adminUserDTO.getPhone(), token, token);
@@ -93,7 +94,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Override
     public BaseResult<Void> logout(String token) {
-        AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
+        AdminUserDTO adminUserDTO = (AdminUserDTO)redisTemplate.opsForValue().get(token);
         if (adminUserDTO != null) {
             redisTemplate.delete(Lists.newArrayList(token));
             mapCacheUtil.delete(adminUserDTO.getPhone(), token);
@@ -105,7 +106,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
      * 校验token是否存在
      */
     public BaseResult<AdminUserDTO> checkToken(@RequestParam String token) {
-        AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
+        AdminUserDTO adminUserDTO = (AdminUserDTO)redisTemplate.opsForValue().get(token);
         if (adminUserDTO == null) {
             return ResultUtil.fail(BasicStatusEnum.USER_NOT_LOGIN);
         }
@@ -128,7 +129,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         List<Object> values = mapCacheUtil.values(requestDTO.getPhone());
         List<String> tokens = values.stream().map(Object::toString).collect(Collectors.toList());
         for (String token : tokens) {
-            AdminUserDTO adminUserDTO = (AdminUserDTO) redisTemplate.opsForValue().get(token);
+            AdminUserDTO adminUserDTO = (AdminUserDTO)redisTemplate.opsForValue().get(token);
             if (adminUserDTO != null) {
                 adminUserDTO.setNickName(requestDTO.getNickName());
                 adminUserDTO.setPhone(requestDTO.getPhone());

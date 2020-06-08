@@ -30,24 +30,26 @@ import java.util.stream.Collectors;
  * @author: created by hang.yu on 2020/4/4 23:19
  */
 @Component
-public class DemolitionOrderPageHandler extends AbstractCommonHandler<DemolitionOrderPageRequestDTO, OrderDO, DemolitionOrderPageResponseDTO> {
+public class DemolitionOrderPageHandler
+    extends AbstractCommonHandler<DemolitionOrderPageRequestDTO, OrderDO, DemolitionOrderPageResponseDTO> {
 
     @Autowired
     private OrderMapper orderMapper;
 
     @Override
-    public BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>> processor(DemolitionOrderPageRequestDTO requestDTO) {
+    public BaseResult<ResponsePage<DemolitionOrderPageResponseDTO>>
+        processor(DemolitionOrderPageRequestDTO requestDTO) {
         DateTime startDayTime = DateUtil.beginOfDay(requestDTO.getCreateTime());
         DateTime endDayTime = DateUtil.endOfDay(requestDTO.getCreateTime());
 
         LambdaQueryWrapper<OrderDO> queryWrapper = Wrappers.<OrderDO>lambdaQuery()
-                .like(requestDTO.getOrderId() != null, OrderDO::getId, requestDTO.getOrderId())
-                .eq(requestDTO.getSource() != null, OrderDO::getSource, requestDTO.getSource())
-                .eq(requestDTO.getMemberId() != null, OrderDO::getCreator, requestDTO.getMemberId())
-                .eq(requestDTO.getIsSplit() != null, OrderDO::getSplit, requestDTO.getIsSplit())
-                .eq(requestDTO.getCancelType() != null, OrderDO::getCancelType, requestDTO.getCancelType())
-                .eq(requestDTO.getOrderStatus() != null, OrderDO::getStatus, requestDTO.getOrderStatus())
-                .between(OrderDO::getGmtCreated, startDayTime, endDayTime);
+            .like(requestDTO.getOrderId() != null, OrderDO::getId, requestDTO.getOrderId())
+            .eq(requestDTO.getSource() != null, OrderDO::getSource, requestDTO.getSource())
+            .eq(requestDTO.getMemberId() != null, OrderDO::getCreator, requestDTO.getMemberId())
+            .eq(requestDTO.getIsSplit() != null, OrderDO::getSplit, requestDTO.getIsSplit())
+            .eq(requestDTO.getCancelType() != null, OrderDO::getCancelType, requestDTO.getCancelType())
+            .eq(requestDTO.getOrderStatus() != null, OrderDO::getStatus, requestDTO.getOrderStatus())
+            .between(OrderDO::getGmtCreated, startDayTime, endDayTime);
 
         IPage<OrderDO> page = new Page(requestDTO.getCurrent(), requestDTO.getSize());
         page = orderMapper.selectPage(page, queryWrapper);

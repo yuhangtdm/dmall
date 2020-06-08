@@ -75,5 +75,4 @@ public class RolePermissionDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

@@ -103,6 +103,7 @@ public enum RocketMQDelayLevelEnum implements CodeDescEnum<Integer> {
     EIGHTEEN(18, "2h"),
 
     ;
+
     private final Integer code;
 
     private final String desc;

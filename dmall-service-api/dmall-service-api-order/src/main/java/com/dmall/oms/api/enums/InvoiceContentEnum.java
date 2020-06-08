@@ -22,6 +22,7 @@ public enum InvoiceContentEnum implements CodeDescEnum<Integer> {
      */
     DETAIL(2, "商品明细"),
     ;
+
     private final Integer code;
 
     private final String desc;

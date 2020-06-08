@@ -8,5 +8,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/4/5 17:00
  */
 @FeignClient(value = "dmall-service-impl-background")
-public interface DeliverWarehouseFeign extends DeliverWarehouseService {
-}
+public interface DeliverWarehouseFeign extends DeliverWarehouseService {}

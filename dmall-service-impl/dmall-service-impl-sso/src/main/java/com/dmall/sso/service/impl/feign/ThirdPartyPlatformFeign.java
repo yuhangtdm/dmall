@@ -8,5 +8,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author: created by hang.yu on 2020/3/1 21:49
  */
 @FeignClient("dmall-service-impl-member")
-public interface ThirdPartyPlatformFeign extends ThirdPartyPlatformService {
-}
+public interface ThirdPartyPlatformFeign extends ThirdPartyPlatformService {}

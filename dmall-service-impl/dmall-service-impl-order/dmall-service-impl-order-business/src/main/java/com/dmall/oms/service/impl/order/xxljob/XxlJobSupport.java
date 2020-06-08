@@ -35,7 +35,7 @@ public class XxlJobSupport {
      */
     public int addJob(String jobName, String param, String jobDesc, String cron) {
         ResponseEntity<ReturnT> jobResponseEntity = restTemplate.postForEntity(xxlJobAdminUrl + ADD_JOB,
-                XxlJobUtil.buildXxlJobInfo(jobName, param, jobDesc, cron), ReturnT.class);
+            XxlJobUtil.buildXxlJobInfo(jobName, param, jobDesc, cron), ReturnT.class);
         ReturnT body = jobResponseEntity.getBody();
         if (HttpStatus.OK != jobResponseEntity.getStatusCode() || body == null) {
             throw new BusinessException(OmsErrorEnum.CREATE_JOB_ERROR);
@@ -52,7 +52,7 @@ public class XxlJobSupport {
      */
     public void deleteJob(int jobId) {
         ResponseEntity<ReturnT> jobResponseEntity = restTemplate.getForEntity(
-                StrUtil.format("{}{}?id={}", xxlJobAdminUrl, DELETE_JOB, jobId), ReturnT.class);
+            StrUtil.format("{}{}?id={}", xxlJobAdminUrl, DELETE_JOB, jobId), ReturnT.class);
         log.info("delete job,{}", jobResponseEntity);
     }
 }

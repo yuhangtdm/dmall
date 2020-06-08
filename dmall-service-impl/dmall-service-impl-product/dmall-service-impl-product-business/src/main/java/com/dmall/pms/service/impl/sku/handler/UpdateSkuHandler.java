@@ -67,10 +67,11 @@ public class UpdateSkuHandler extends AbstractCommonHandler<UpdateSkuRequestDTO,
         // sku图片信息
         skuMediaSupport.saveOrDeleteSkuMedia(sku.getProductId(), sku.getId(), requestDTO.getMediaList());
         // sku属性信息
-        skuAttributeValueSupport.setSkuAttributeValue(sku.getProductId(), sku.getId(), requestDTO.getProductAttributeValueList());
+        skuAttributeValueSupport.setSkuAttributeValue(sku.getProductId(), sku.getId(),
+            requestDTO.getProductAttributeValueList());
         // sku扩展信息
         skuExtSupport.setSkuExt(sku.getProductId(), sku.getId(), requestDTO.getProductAttributeValueList(),
-                requestDTO.getDetailHtml(), requestDTO.getDetailMobileHtml());
+            requestDTO.getDetailHtml(), requestDTO.getDetailMobileHtml());
         skuAuditSupport.insert(skuDO.getProductId(), skuDO.getId(), AuditTypeEnum.SKU_UPDATE);
         return ResultUtil.success(skuDO.getId());
     }

@@ -24,7 +24,8 @@ import java.util.Optional;
  * @author: created by hang.yu on 2019-12-03 19:56:05
  */
 @Component
-public class BatchSaveAttributeTypeHandler extends AbstractCommonHandler<BatchSaveAttributeTypeRequestDTO, AttributeTypeDO, Void> {
+public class BatchSaveAttributeTypeHandler
+    extends AbstractCommonHandler<BatchSaveAttributeTypeRequestDTO, AttributeTypeDO, Void> {
 
     @Autowired
     private AttributeTypeCacheService attributeTypeCacheService;

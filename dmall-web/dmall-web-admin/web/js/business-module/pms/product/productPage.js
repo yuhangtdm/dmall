@@ -1,12 +1,16 @@
-layui.use(['form', 'table', 'crud'], function () {
+layui.use(['form', 'table', 'crud', 'dtree'], function () {
     var $ = layui.jquery,
         form = layui.form,
         table = layui.table,
+        dtree = layui.dtree,
         crud = layui.crud;
 
     // 初始化表格数据
     crud.initPage('product', pmsUrl + '/product/page', buildColumn());
-
+    crud.selectTree('selTree', pmsUrl + '/category/tree/0/4', 'only');
+    crud.initSelect('brand', pmsUrl + '/brand/list');
+    crud.initDate('onMarketTimeStart');
+    crud.initDate('onMarketTimeEnd');
     /**
      * 构建table列
      */
@@ -20,7 +24,11 @@ layui.use(['form', 'table', 'crud'], function () {
                 {field: 'brandName', title: '商品名称'},
                 {field: 'unit', title: '单位'},
                 {field: 'weight', title: '重量'},
-                {field: 'onMarketTime', title: '上市时间', templet: "<div>{{layui.crud.formatDate(d.onMarketTime,'yyyy-MM-dd')}}</div>"},
+                {
+                    field: 'onMarketTime',
+                    title: '上市时间',
+                    templet: "<div>{{layui.crud.formatDate(d.onMarketTime,'yyyy-MM-dd')}}</div>"
+                },
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
                 {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 350}
             ]
@@ -29,6 +37,13 @@ layui.use(['form', 'table', 'crud'], function () {
 
     // 监听搜索操作
     form.on('submit(formSearch)', function (data) {
+        var checked = dtree.getCheckbarJsonArrParam("selTree");
+        if (checked.nodeId.length > 0) {
+            data.field.categoryId = checked.nodeId[0];
+        } else {
+            data.field.categoryId = '';
+        }
+        console.log(data)
         return crud.search('product', data);
     });
 

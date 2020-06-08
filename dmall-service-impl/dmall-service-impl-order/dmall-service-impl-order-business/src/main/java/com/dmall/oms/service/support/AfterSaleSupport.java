@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 public class AfterSaleSupport {
 
     private static final List<Integer> STATUS = Lists.newArrayList(AfterSaleStatusEnum.APPLY.getCode(),
-            AfterSaleStatusEnum.WAIT_SEND_BACK.getCode(), AfterSaleStatusEnum.RE_PROGRESS.getCode(),
-            AfterSaleStatusEnum.REFUND_PROGRESS.getCode());
+        AfterSaleStatusEnum.WAIT_SEND_BACK.getCode(), AfterSaleStatusEnum.RE_PROGRESS.getCode(),
+        AfterSaleStatusEnum.REFUND_PROGRESS.getCode());
 
     @Autowired
     private OrderAfterSaleApplyMapper orderAfterSaleApplyMapper;
@@ -47,7 +47,7 @@ public class AfterSaleSupport {
      */
     public List<OrderAfterSaleApplyDO> listByOrderId(Long orderId) {
         return orderAfterSaleApplyMapper.selectList(Wrappers.<OrderAfterSaleApplyDO>lambdaQuery()
-                .eq(OrderAfterSaleApplyDO::getOrderId, orderId));
+            .eq(OrderAfterSaleApplyDO::getOrderId, orderId));
     }
 
     /**
@@ -55,7 +55,7 @@ public class AfterSaleSupport {
      */
     public List<OrderAfterSaleApplyDO> listByOrderItemId(Long orderItemId) {
         return orderAfterSaleApplyMapper.selectList(Wrappers.<OrderAfterSaleApplyDO>lambdaQuery()
-                .eq(OrderAfterSaleApplyDO::getOrderItemId, orderItemId));
+            .eq(OrderAfterSaleApplyDO::getOrderItemId, orderItemId));
     }
 
     /**
@@ -63,14 +63,15 @@ public class AfterSaleSupport {
      */
     public List<OrderAfterSaleApplyDO> listInNotDeleteStatus(Long orderId) {
         return orderAfterSaleApplyMapper.selectList(Wrappers.<OrderAfterSaleApplyDO>lambdaQuery()
-                .eq(OrderAfterSaleApplyDO::getOrderId, orderId)
-                .in(OrderAfterSaleApplyDO::getStatus, STATUS));
+            .eq(OrderAfterSaleApplyDO::getOrderId, orderId)
+            .in(OrderAfterSaleApplyDO::getStatus, STATUS));
     }
 
     /**
      * 构建申请退款实体
      */
-    public static ApplyRefundRequestDTO buildApplyRefundRequest(OrderItemDO orderItemDO, Integer paymentType, String reason) {
+    public static ApplyRefundRequestDTO buildApplyRefundRequest(OrderItemDO orderItemDO, Integer paymentType,
+        String reason) {
         ApplyRefundRequestDTO applyRefundRequestDTO = new ApplyRefundRequestDTO();
         applyRefundRequestDTO.setOrderId(orderItemDO.getOrderId());
         applyRefundRequestDTO.setOrderItemId(orderItemDO.getId());
@@ -87,7 +88,7 @@ public class AfterSaleSupport {
     public static StockRequestDTO buildStockRequest(OrderItemDO orderItemDO) {
         StockRequestDTO stockRequestDTO = new StockRequestDTO();
         List<SkuStockRequestDTO> skuList = Lists.newArrayList(new SkuStockRequestDTO()
-                .setSkuId(orderItemDO.getSkuId()).setNumber(orderItemDO.getSkuNumber()));
+            .setSkuId(orderItemDO.getSkuId()).setNumber(orderItemDO.getSkuNumber()));
         stockRequestDTO.setSku(skuList);
         return stockRequestDTO;
     }
@@ -97,8 +98,9 @@ public class AfterSaleSupport {
      */
     public List<AfterSaleDTO> buildAfterSaleList(Long orderId) {
         List<OrderAfterSaleApplyDO> orderAfterSaleApplyList = listByOrderId(orderId);
-        return orderAfterSaleApplyList.stream().map(orderAfterSaleApplyDO -> buildAfterSale(orderAfterSaleApplyDO.getId()))
-                .collect(Collectors.toList());
+        return orderAfterSaleApplyList.stream()
+            .map(orderAfterSaleApplyDO -> buildAfterSale(orderAfterSaleApplyDO.getId()))
+            .collect(Collectors.toList());
     }
 
     /**
@@ -106,8 +108,9 @@ public class AfterSaleSupport {
      */
     public List<AfterSaleDTO> buildAfterSaleListByOrderItemId(Long orderItemId) {
         List<OrderAfterSaleApplyDO> orderAfterSaleApplyList = listByOrderItemId(orderItemId);
-        return orderAfterSaleApplyList.stream().map(orderAfterSaleApplyDO -> buildAfterSale(orderAfterSaleApplyDO.getId()))
-                .collect(Collectors.toList());
+        return orderAfterSaleApplyList.stream()
+            .map(orderAfterSaleApplyDO -> buildAfterSale(orderAfterSaleApplyDO.getId()))
+            .collect(Collectors.toList());
     }
 
     /**
@@ -127,7 +130,8 @@ public class AfterSaleSupport {
         afterSaleDTO.setType(EnumUtil.getCodeDescEnum(AfterSaleTypeEnum.class, orderAfterSaleApplyDO.getType()));
         afterSaleDTO.setStatus(EnumUtil.getCodeDescEnum(AfterSaleStatusEnum.class, orderAfterSaleApplyDO.getStatus()));
 
-        List<OrderAfterSaleLogDO> orderAfterSaleLogList = orderAfterSaleLogSupport.listByAfterSaleId(orderAfterSaleApplyDO.getId());
+        List<OrderAfterSaleLogDO> orderAfterSaleLogList =
+            orderAfterSaleLogSupport.listByAfterSaleId(orderAfterSaleApplyDO.getId());
         List<AfterSaleLogDTO> saleLogList = orderAfterSaleLogList.stream().map(orderAfterSaleLogDO -> {
             AfterSaleLogDTO afterSaleLog = new AfterSaleLogDTO();
             afterSaleLog.setLogId(orderAfterSaleLogDO.getId());

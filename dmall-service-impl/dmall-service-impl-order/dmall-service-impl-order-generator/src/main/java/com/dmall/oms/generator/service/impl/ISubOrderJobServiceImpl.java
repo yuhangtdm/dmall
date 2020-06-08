@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author: created by hang.yu on 2020-04-18 21:31:27
  */
 @Service
-public class ISubOrderJobServiceImpl extends ServiceImpl<SubOrderJobMapper, SubOrderJobDO> implements ISubOrderJobService {
+public class ISubOrderJobServiceImpl extends ServiceImpl<SubOrderJobMapper, SubOrderJobDO>
+    implements ISubOrderJobService {
 
 }

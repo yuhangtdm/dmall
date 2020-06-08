@@ -22,6 +22,7 @@ public enum SourceEnum implements CodeDescEnum<String> {
      */
     PORTAL("portal", "商城前台"),
     ;
+
     private final String code;
 
     private final String desc;

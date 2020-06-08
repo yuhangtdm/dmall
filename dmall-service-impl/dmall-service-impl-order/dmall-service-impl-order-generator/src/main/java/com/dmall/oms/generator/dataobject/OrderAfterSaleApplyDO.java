@@ -193,5 +193,4 @@ public class OrderAfterSaleApplyDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

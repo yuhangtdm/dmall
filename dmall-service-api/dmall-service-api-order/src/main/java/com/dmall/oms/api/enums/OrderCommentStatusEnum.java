@@ -26,6 +26,7 @@ public enum OrderCommentStatusEnum implements CodeDescEnum<Integer> {
      * 全部评价
      */
     ALL(3, "全部评价");
+
     private final Integer code;
 
     private final String desc;

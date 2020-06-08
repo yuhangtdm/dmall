@@ -75,8 +75,10 @@ public class ImportSkuToEsHandler {
             // 查询商品
             ProductDO productDO = productMapper.selectById(skuDO.getProductId());
             // 查询分类
-            List<Long> categoryIds = categoryProductMapper.selectList(Wrappers.<CategoryProductDO>lambdaQuery().eq(CategoryProductDO::getProductId, productDO.getId()))
-                    .stream().map(CategoryProductDO::getCategoryId).collect(Collectors.toList());
+            List<Long> categoryIds = categoryProductMapper
+                .selectList(
+                    Wrappers.<CategoryProductDO>lambdaQuery().eq(CategoryProductDO::getProductId, productDO.getId()))
+                .stream().map(CategoryProductDO::getCategoryId).collect(Collectors.toList());
 
             // 构建es对象
             SkuEsDTO skuEsDTO = new SkuEsDTO();
@@ -87,7 +89,8 @@ public class ImportSkuToEsHandler {
             skuEsDTO.setSkuDescription(skuDO.getDescription());
             skuEsDTO.setSkuMainPic(skuDO.getPic());
             skuEsDTO.setSkuStock(skuDO.getStock());
-            skuEsDTO.setSkuCommentCount(commentMapper.selectCount(Wrappers.<CommentDO>lambdaQuery().eq(CommentDO::getSkuId, skuDO.getId())));
+            skuEsDTO.setSkuCommentCount(
+                commentMapper.selectCount(Wrappers.<CommentDO>lambdaQuery().eq(CommentDO::getSkuId, skuDO.getId())));
             BaseResult<Integer> skuSaleCountResult = sellerOrderFeign.skuSaleCount(skuDO.getId());
             if (!skuSaleCountResult.getResult()) {
                 throw new BusinessException(BasicStatusEnum.FAIL);
@@ -107,24 +110,25 @@ public class ImportSkuToEsHandler {
             brandDTO.setBrandLogo(brandDO.getLogo());
             skuEsDTO.setBrandDTO(brandDTO);
 
-
             List<AttributeDTO> attributeList = Lists.newArrayList();
             List<Long> attributeValues = skuAttributeValueMapper.selectList(Wrappers.<SkuAttributeValueDO>lambdaQuery()
-                    .eq(SkuAttributeValueDO::getSkuId, skuDO.getId())).stream()
-                    .distinct()
-                    .map(SkuAttributeValueDO::getProductAttributeValueId)
-                    .collect(Collectors.toList());
-            List<ProductAttributeValueDO> productAttributeValues = productAttributeValueMapper.selectBatchIds(attributeValues);
+                .eq(SkuAttributeValueDO::getSkuId, skuDO.getId())).stream()
+                .distinct()
+                .map(SkuAttributeValueDO::getProductAttributeValueId)
+                .collect(Collectors.toList());
+            List<ProductAttributeValueDO> productAttributeValues =
+                productAttributeValueMapper.selectBatchIds(attributeValues);
 
             // 按照属性分组
             Map<Long, List<ProductAttributeValueDO>> attributeMap =
-                    productAttributeValues.stream().collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
+                productAttributeValues.stream().collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
             for (Map.Entry<Long, List<ProductAttributeValueDO>> entry : attributeMap.entrySet()) {
                 Long attrId = entry.getKey();
                 List<ProductAttributeValueDO> v = entry.getValue();
                 for (Long categoryId : categoryIds) {
                     // 去数据库查询是否可选
-                    CategoryAttributeDO categoryAttributeDO = categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
+                    CategoryAttributeDO categoryAttributeDO =
+                        categoryAttributeMapper.selectOne(Wrappers.<CategoryAttributeDO>lambdaQuery()
                             .eq(CategoryAttributeDO::getCategoryId, categoryId)
                             .eq(CategoryAttributeDO::getAttributeId, attrId));
                     if (categoryAttributeDO != null) {

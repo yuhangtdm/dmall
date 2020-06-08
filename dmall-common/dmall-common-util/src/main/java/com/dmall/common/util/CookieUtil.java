@@ -13,14 +13,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CookieUtil {
 
-    private CookieUtil() {
-    }
+    private CookieUtil() {}
 
     /**
      * 添加cookie
      */
     public static void addCookie(HttpServletResponse response, String name, String value,
-                                 int maxAge, boolean isEncode) {
+        int maxAge, boolean isEncode) {
         if (isEncode) {
             // 解决中文问题
             value = URLUtil.encodeAll(value);
@@ -54,7 +53,7 @@ public class CookieUtil {
         for (Cookie cookie : cookies) {
             if (cookie != null) {
                 if (cookieName.equals(cookie.getName())) {
-                    if (isDecoder) {//如果涉及中文
+                    if (isDecoder) {// 如果涉及中文
                         return URLUtil.decode(cookie.getValue());
                     } else {
                         return cookie.getValue();
@@ -64,6 +63,5 @@ public class CookieUtil {
         }
         return null;
     }
-
 
 }

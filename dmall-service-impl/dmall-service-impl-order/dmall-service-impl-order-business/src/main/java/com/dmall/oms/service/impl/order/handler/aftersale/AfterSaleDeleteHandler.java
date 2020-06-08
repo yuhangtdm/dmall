@@ -46,8 +46,8 @@ public class AfterSaleDeleteHandler extends AbstractCommonHandler<Long, OrderAft
         }
         // 非 已完成 和 已关闭状态 和 已拒绝不可删除
         if (!AfterSaleStatusEnum.COMPLETED.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
-                !AfterSaleStatusEnum.CLOSED.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
-                !AfterSaleStatusEnum.REFUSE.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
+            !AfterSaleStatusEnum.CLOSED.getCode().equals(orderAfterSaleApplyDO.getStatus()) &&
+            !AfterSaleStatusEnum.REFUSE.getCode().equals(orderAfterSaleApplyDO.getStatus())) {
             return ResultUtil.fail(OmsErrorEnum.AFTER_SALE_DELETE);
         }
         orderAfterSaleApplyDO.setStatus(AfterSaleStatusEnum.DELETED.getCode());
@@ -55,7 +55,7 @@ public class AfterSaleDeleteHandler extends AbstractCommonHandler<Long, OrderAft
         orderAfterSaleApplyMapper.updateById(orderAfterSaleApplyDO);
         // 新增售后日志记录
         orderAfterSaleLogSupport.insertAfterSaleLog(orderAfterSaleApplyDO.getId(), AfterSaleLogTypeEnum.MEMBER,
-                AfterSaleLogTitleEnum.DELETED, StrUtil.format(LOG_CONTENT, orderAfterSaleApplyDO.getId()));
+            AfterSaleLogTitleEnum.DELETED, StrUtil.format(LOG_CONTENT, orderAfterSaleApplyDO.getId()));
         return ResultUtil.success(afterSaleId);
     }
 }

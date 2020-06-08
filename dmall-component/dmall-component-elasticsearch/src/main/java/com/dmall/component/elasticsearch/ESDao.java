@@ -56,10 +56,10 @@ public class ESDao<T> {
     /**
      * 新增或更新文档
      *
-     * @param t         文档对象
+     * @param t 文档对象
      * @param indexName 索引名称
-     * @param typeName  类型名称
-     * @param id        id
+     * @param typeName 类型名称
+     * @param id id
      */
     public void saveOrUpdate(T t, String indexName, String typeName, Long id) {
         if (t == null) {
@@ -93,8 +93,8 @@ public class ESDao<T> {
      * 删除文档
      *
      * @param indexName 索引名称
-     * @param typeName  类型名称
-     * @param id        id
+     * @param typeName 类型名称
+     * @param id id
      */
     public void delete(String indexName, String typeName, Long id) {
         basicCheck(indexName, typeName, id);
@@ -120,26 +120,29 @@ public class ESDao<T> {
             throw new ComponentException(ESErrorEnum.NO_SEARCH);
         }
         checkEs(esSearch.getIndexName(), esSearch.getTypeName());
-        return search(esSearch.getIndexName(), esSearch.getTypeName(), esSearch.getSearchFields(), esSearch.getFilterFields(),
-                esSearch.getRangeField(), esSearch.getHighLightField(), esSearch.getEsPage(), esSearch.getSortField(), esSearch.getClazz());
+        return search(esSearch.getIndexName(), esSearch.getTypeName(), esSearch.getSearchFields(),
+            esSearch.getFilterFields(),
+            esSearch.getRangeField(), esSearch.getHighLightField(), esSearch.getEsPage(), esSearch.getSortField(),
+            esSearch.getClazz());
 
     }
 
     /**
      * 搜索的核心方法
      *
-     * @param indexName      索引名称
-     * @param typeName       类型名称
-     * @param searchFields   查询的字段
-     * @param filterFields   过滤的字段
+     * @param indexName 索引名称
+     * @param typeName 类型名称
+     * @param searchFields 查询的字段
+     * @param filterFields 过滤的字段
      * @param highLightField 高亮的字段
-     * @param rangeField     范围过滤
-     * @param esPage         分页对象
-     * @param sortField      排序字段
-     * @param clazz          查询的返回对象
+     * @param rangeField 范围过滤
+     * @param esPage 分页对象
+     * @param sortField 排序字段
+     * @param clazz 查询的返回对象
      */
-    private ResponsePage<T> search(String indexName, String typeName, List<SearchField> searchFields, List<FilterField> filterFields,
-                                   RangeField rangeField, String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
+    private ResponsePage<T> search(String indexName, String typeName, List<SearchField> searchFields,
+        List<FilterField> filterFields,
+        RangeField rangeField, String highLightField, ESPage esPage, SortField sortField, Class<T> clazz) {
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         // 布尔过滤器
@@ -148,7 +151,8 @@ public class ESDao<T> {
         // 过滤
         if (!CollectionUtils.isEmpty(filterFields)) {
             filterFields.forEach(filterField -> {
-                QueryBuilder termQueryBuilder = new TermsQueryBuilder(filterField.getFieldName(), filterField.getFieldValues());
+                QueryBuilder termQueryBuilder =
+                    new TermsQueryBuilder(filterField.getFieldName(), filterField.getFieldValues());
                 // 多个过滤条件是且的关系 用 must
                 boolQueryBuilder.filter(termQueryBuilder);
             });
@@ -157,7 +161,8 @@ public class ESDao<T> {
         // 关键词搜索
         if (!CollectionUtils.isEmpty(searchFields)) {
             searchFields.forEach(searchField -> {
-                MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder(searchField.getFieldName(), searchField.getFieldValue());
+                MatchQueryBuilder matchQueryBuilder =
+                    new MatchQueryBuilder(searchField.getFieldName(), searchField.getFieldValue());
                 // 多个搜索用或的关系 should
                 boolQueryBuilder.should(matchQueryBuilder);
             });
@@ -192,7 +197,6 @@ public class ESDao<T> {
         if (sortField != null) {
             searchSourceBuilder.sort(sortField.getFieldName(), sortField.getSortOrder());
         }
-
 
         String dslStr = searchSourceBuilder.toString();
         log.info("query dsl:\n{}", dslStr);
@@ -255,9 +259,9 @@ public class ESDao<T> {
         Long id = null;
         if (esId != null) {
             String value = esId.value();
-            id = (Long) ReflectUtil.getFieldValue(result, value);
+            id = (Long)ReflectUtil.getFieldValue(result, value);
         } else {
-            id = (Long) ReflectUtil.getFieldValue(result, Constants.ID);
+            id = (Long)ReflectUtil.getFieldValue(result, Constants.ID);
         }
         return id;
     }

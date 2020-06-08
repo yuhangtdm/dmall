@@ -49,7 +49,7 @@ public interface CategoryService {
     @ApiImplicitParam(name = "parentId", value = "上级id", required = true, dataType = "int", paramType = "path")
     @GetMapping("/tree/{parentId}/{type}")
     BaseResult<List<DTreeResponseDTO>> tree(@PathVariable("parentId") Long parentId,
-                                            @PathVariable("type") Integer type);
+        @PathVariable("type") Integer type);
 
     @PostMapping("/setAttribute")
     @ApiOperation(value = "设置商品属性")

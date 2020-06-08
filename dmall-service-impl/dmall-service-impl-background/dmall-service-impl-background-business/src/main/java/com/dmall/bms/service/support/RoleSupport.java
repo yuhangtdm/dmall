@@ -23,7 +23,7 @@ public class RoleSupport {
      */
     public RoleDO getByName(String name) {
         return roleMapper.selectOne(Wrappers.<RoleDO>lambdaQuery()
-                .eq(RoleDO::getName, name));
+            .eq(RoleDO::getName, name));
     }
 
 }

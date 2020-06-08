@@ -10,14 +10,14 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
 /**
- * @description: feign拦截器   设置用户信息到Header中
+ * @description: feign拦截器 设置用户信息到Header中
  * @author: created by hang.yu on 2020/1/7 22:41
  */
 public class FeignRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        //从应用上下文中取出user信息，放入Feign的请求头中
+        // 从应用上下文中取出user信息，放入Feign的请求头中
         AdminUserDTO adminUserDTO = AdminUserContextHolder.get();
         if (adminUserDTO != null) {
             String userJson = JsonUtil.toJson(adminUserDTO);

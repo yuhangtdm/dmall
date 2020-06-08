@@ -30,7 +30,6 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
     @Autowired
     private PmsValidate pmsValidate;
 
-
     @Override
     public BaseResult<Long> validate(Long id) {
         // 校验商品是否已删除

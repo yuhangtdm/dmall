@@ -52,7 +52,8 @@ public interface BuyerOrderService {
 
     @PostMapping("/page")
     @ApiOperation(value = "买家端订单列表")
-    BaseResult<ResponsePage<BuyerOrderPageResponseDTO>> sellerOrderPage(@RequestBody @Valid BuyerOrderPageRequestDTO requestDTO);
+    BaseResult<ResponsePage<BuyerOrderPageResponseDTO>>
+        sellerOrderPage(@RequestBody @Valid BuyerOrderPageRequestDTO requestDTO);
 
     @GetMapping("/detail/{subOrderId}")
     @ApiImplicitParam(name = "subOrderId", value = "子订单号", required = true, dataType = "int", paramType = "path")

@@ -45,7 +45,8 @@ public class WeiBoLoginHandler extends AbstractCommonHandler<PortalMemberDTO, Me
         requestDTO.setToken(token);
 
         // 设置缓存
-        redisTemplate.opsForValue().set(StrUtil.format("portal_{}", token), requestDTO, ssoProperties.getPortalTtlDay(), TimeUnit.DAYS);
+        redisTemplate.opsForValue().set(StrUtil.format("portal_{}", token), requestDTO, ssoProperties.getPortalTtlDay(),
+            TimeUnit.DAYS);
         // 插入登录日志
         insertLoginLog(requestDTO);
 

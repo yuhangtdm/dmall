@@ -92,5 +92,4 @@ public class SkuMediaDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }

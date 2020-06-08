@@ -85,5 +85,4 @@ public class OrderAfterSaleLogDO implements Serializable {
     @TableLogic
     private String isDeleted;
 
-
 }
