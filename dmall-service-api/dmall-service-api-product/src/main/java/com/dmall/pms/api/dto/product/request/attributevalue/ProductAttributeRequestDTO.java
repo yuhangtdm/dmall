@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "ProductAttributeRequestDTO", description = "商品请求属性信息")
-public class ProductAttributeRequestDTO {
+public class ProductAttributeRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 9135037558597443936L;
 
     @ApiModelProperty(value = "销售规格", required = true, position = 1)
     @Valid
@@ -27,7 +30,7 @@ public class ProductAttributeRequestDTO {
     @Valid
     private List<SalePointRequestDTO> salePoints;
 
-    @ApiModelProperty(value = "参数列表", required = true, position = 2)
+    @ApiModelProperty(value = "参数列表", required = true, position = 3)
     @Valid
     private List<ParamValueRequestDTO> params;
 }

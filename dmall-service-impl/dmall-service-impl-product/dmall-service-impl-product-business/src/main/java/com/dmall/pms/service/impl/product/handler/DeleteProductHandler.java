@@ -34,6 +34,7 @@ public class DeleteProductHandler extends AbstractCommonHandler<Long, ProductDO,
     public BaseResult<Long> validate(Long id) {
         // 校验商品是否已删除
         pmsValidate.validateProduct(id);
+        // todo 校验没有上架的sku。
         return ResultUtil.success();
     }
 

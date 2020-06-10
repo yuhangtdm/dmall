@@ -35,7 +35,7 @@ public class SelectController {
     }
 
     @RequestMapping("/select")
-    public BaseResult select() {
+    public BaseResult<List<SelectVO>> select() {
         return ResultUtil.success(buildSelect());
     }
 

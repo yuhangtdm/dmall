@@ -1,10 +1,12 @@
 package com.dmall.pms.api.dto.product.request;
 
 import com.dmall.common.dto.PageRequestDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -30,9 +32,13 @@ public class PageProductRequestDTO extends PageRequestDTO {
     private String name;
 
     @ApiModelProperty(value = "上市时间起", position = 9)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date onMarketTimeStart;
 
     @ApiModelProperty(value = "上市时间至", position = 10)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date onMarketTimeEnd;
 
 }

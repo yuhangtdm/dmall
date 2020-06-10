@@ -1,5 +1,4 @@
 package com.dmall.web.admin.controller;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.bms.api.dto.menu.response.MenuTreeResponseDTO;
@@ -34,6 +33,7 @@ public class IndexController {
         }
         return ResultUtil.success(buildVo(menuTreeResult.getData()));
     }
+
 
     /**
      * 构建返回出参

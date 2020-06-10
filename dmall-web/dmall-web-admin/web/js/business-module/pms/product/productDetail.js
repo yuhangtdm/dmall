@@ -7,6 +7,7 @@ layui.use(['form', 'crud', 'table', 'tableMerge'], function () {
 
     crud.get(pmsUrl + '/product/' + id, function (response) {
         var data = response.data;
+        console.log(data);
         crud.dataForm(data.basicProduct, 'basicProductForm');
         var ext = data.ext;
         crud.dataForm(ext, 'basicProductForm');

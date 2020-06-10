@@ -62,6 +62,9 @@ public class SkuServiceImpl implements SkuService {
     private OnPublishHandler onPublishHandler;
 
     @Autowired
+    private OffPublishHandler offPublishHandler;
+
+    @Autowired
     private GetBasicSkuHandler getBasicSkuHandler;
 
     @Autowired
@@ -116,7 +119,7 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     public BaseResult<Long> offPublish(Long id) {
-        return null;
+        return offPublishHandler.handler(id);
     }
 
     @Override

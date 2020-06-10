@@ -82,7 +82,9 @@ public class ProductAttributeValueSupport {
                 } else {
                     ProductAttributeValueDO productAttributeValueDO = find(list, specification.getAttributeId(),
                         productId, specificationsValue);
-                    productAttributeValueDO.setIsSpecifications(YNEnum.Y.getCode());
+                    if (productAttributeValueDO != null){
+                        productAttributeValueDO.setIsSpecifications(YNEnum.Y.getCode());
+                    }
                 }
                 JSONObject object = new JSONObject();
                 object.put(VALUE, specificationsValue);
@@ -107,7 +109,9 @@ public class ProductAttributeValueSupport {
                 } else {
                     ProductAttributeValueDO productAttributeValueDO =
                         find(list, salePoint.getAttributeId(), productId, salePointValue);
-                    productAttributeValueDO.setIsSellingPoint(YNEnum.Y.getCode());
+                    if (productAttributeValueDO != null){
+                        productAttributeValueDO.setIsSellingPoint(YNEnum.Y.getCode());
+                    }
                 }
             }
         }
@@ -128,7 +132,9 @@ public class ProductAttributeValueSupport {
                 } else {
                     ProductAttributeValueDO productAttributeValueDO =
                         find(list, param.getAttributeId(), productId, paramValue);
-                    productAttributeValueDO.setIsParam(YNEnum.Y.getCode());
+                    if (productAttributeValueDO != null){
+                        productAttributeValueDO.setIsParam(YNEnum.Y.getCode());
+                    }
                 }
             }
         }

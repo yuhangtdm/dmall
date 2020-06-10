@@ -23,10 +23,10 @@
                 and pp.name like '%${request.name}%'
             </if>
             <if test="request.onMarketTimeStart != null">
-                and pp.onMarketTime <![CDATA[ >= ]]>  #{request.onMarketTimeStart}
+                and pp.on_market_time <![CDATA[ >= ]]>  #{request.onMarketTimeStart}
             </if>
             <if test="request.onMarketTimeEnd != null">
-                and pp.onMarketTime <![CDATA[ <= ]]>   #{request.onMarketTimeEnd}
+                and pp.on_market_time <![CDATA[ <= ]]>   #{request.onMarketTimeEnd}
             </if>
         </where>
     </select>
