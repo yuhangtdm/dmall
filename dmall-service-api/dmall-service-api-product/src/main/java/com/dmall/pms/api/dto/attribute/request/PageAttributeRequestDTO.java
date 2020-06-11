@@ -4,7 +4,6 @@ import com.dmall.common.dto.PageRequestDTO;
 import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.pms.api.enums.HandAddStatusEnum;
 import com.dmall.pms.api.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,15 +24,12 @@ public class PageAttributeRequestDTO extends PageRequestDTO {
     @ApiModelProperty(value = "展示名称", position = 6)
     private String showName;
 
-    @ApiModelProperty(value = "属性类型 1-普通属性;2-公共属性", position = 7)
-    @ValueInEnum(TypeEnum.class)
-    private Integer type;
 
-    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 8)
+    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 7)
     @ValueInEnum(InputTypeEnum.class)
     private Integer inputType;
 
-    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 9)
+    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 8)
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
 

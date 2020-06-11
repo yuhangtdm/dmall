@@ -55,7 +55,6 @@ public class PageAttributeHandler
                     .eq(AttributeDO::getCategoryId, requestDTO.getCategoryId())
                     .like(StrUtil.isNotBlank(requestDTO.getShowName()), AttributeDO::getShowName,
                         requestDTO.getShowName())
-                    .eq(ObjectUtil.isNotEmpty(requestDTO.getType()), AttributeDO::getType, requestDTO.getType())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getInputType()), AttributeDO::getInputType,
                         requestDTO.getInputType())
                     .eq(ObjectUtil.isNotEmpty(requestDTO.getHandAddStatus()), AttributeDO::getHandAddStatus,

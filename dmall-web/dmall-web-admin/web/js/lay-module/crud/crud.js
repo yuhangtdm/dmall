@@ -25,8 +25,8 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
             get: function (url, callBack, parentIndex) {
                 get(url, callBack, parentIndex);
             },
-            post: function (url, requestData, callBack) {
-                post(url, requestData, callBack);
+            post: function (url, requestData, callBack, query) {
+                post(url, requestData, callBack, query);
             },
             put: function (url, requestData, callBack) {
                 put(url, requestData, callBack);
@@ -150,7 +150,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
          * post请求
          * loading成功 要求请求必须异步
          */
-        function post(url, requestData, callback) {
+        function post(url, requestData, callback, query) {
             var loading;
             $.ajax({
                 type: 'POST',
@@ -159,13 +159,19 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                 data: JSON.stringify(requestData),
                 contentType: 'application/json;charset=utf-8',
                 beforeSend: function (request) {
-                    loading = layer.msg('正在提交', {icon: 16, shade: 0.3, time: 0});
+                    if (!query) {
+                        loading = layer.msg('正在提交', {icon: 16, shade: 0.3, time: 0});
+                    }
                     request.setRequestHeader("source", "admin");
                     request.setRequestHeader("token", getToken());
                 },
                 success: function (response) {
                     if (response.code === '0') {
-                        successBack(response, callback);
+                        if (query) {
+                            callback(response);
+                        } else {
+                            successBack(response, callback);
+                        }
                     } else if (response.code === '408') {
                         // 用户未登陆 跳转登录页面
                         errorBack('登录已失效', function () {
@@ -176,7 +182,9 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                     }
                 },
                 complete: function () {
-                    layer.close(loading);
+                    if (!query) {
+                        layer.close(loading);
+                    }
                 },
                 error: function () {
                     layer.msg('服务器冒烟了', {icon: 2})
@@ -943,7 +951,7 @@ layui.define(['layer', 'table', 'form', 'miniPage', 'formSelects', 'laydate', 'i
                         sel.val(value);
                     }
                     form.render();
-                })
+                }, true);
             }
         }
 

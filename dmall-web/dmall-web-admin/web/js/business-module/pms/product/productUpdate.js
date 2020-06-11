@@ -1,7 +1,7 @@
-layui.use(['form', 'crud', 'dtree'], function () {
+layui.use(['form', 'crud',  'table'], function () {
     var $ = layui.jquery,
         form = layui.form,
-        dtree = layui.dtree,
+        table = layui.table,
         crud = layui.crud;
 
     var parentIndex = layer.index;
@@ -15,9 +15,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
     var salePointArr = [];
     // 参数列表
     var paramArr = [];
-    // sku列表
-    var skuArr = [];
-
     var body = $("body");
 
     // 初始化页面
@@ -27,49 +24,48 @@ layui.use(['form', 'crud', 'dtree'], function () {
      * 页面初始化函数
      */
     function init() {
+        // 初始化数据
+        initData();
         crud.initSelect('unit');
         crud.initDate('onMarketTime');
-        initData();
-
     }
 
     /**
      * 初始化数据
      */
     function initData() {
+        // 查询商品详情
         crud.get(pmsUrl + '/product/' + id, function (response) {
             var data = response.data;
             crud.dataForm(data.basicProduct, 'basicProductForm');
             var ext = data.ext;
             crud.dataForm(ext, 'basicProductForm');
+            // 获取属性
             getAllAttribute(ext);
+            initSku(data.skuList);
+        }, true);
+    }
+
+    /**
+     * 初始化sku列表
+     */
+    function initSku(skuList) {
+        table.render({
+            elem: '#skuTable',
+            cols: [[
+                {field: 'skuId', title: 'sku编号'},
+                {field: 'skuName', title: 'sku名称'},
+                {field: 'price', title: 'sku价格'},
+                {field: 'stock', title: 'sku库存'},
+                {field: 'specifications', title: 'sku规格'},
+            ]],
+            data: skuList
         });
     }
 
-    function buildAttributes(arr, result) {
-        for (var i = 0; i < arr.length; i++) {
-            var specification = arr[i];
-            var inputList = findInputList(specification.attributeId);
-            var input = '';
-            var attributeValues = [];
-            if (inputList) {
-                // 所有选中的值
-                var arr1 = getAttributeValues(specification.attributeValues);
-                console.log(arr1)
-                input = getInput(arr1, inputList);
-                console.log(input)
-                attributeValues = getOption(arr1, input);
-                console.log(attributeValues)
-            }
-            var spe = {
-                'attributeId': specification.attributeId,
-                'attributeValues': attributeValues,
-                'input': input
-            };
-            result.push(spe);
-        }
-    }
-    
+    /**
+     * 获取属性
+     */
     function getAllAttribute(ext) {
         var attributeObj = {
             "threeCategoryIds": ext.categoryIds
@@ -78,9 +74,12 @@ layui.use(['form', 'crud', 'dtree'], function () {
         crud.post(pmsUrl + '/attribute/list', attributeObj, function (response) {
             allAttributeArr = response.data;
             getAllAttributeType(ext);
-        });
+        }, true);
     }
 
+    /**
+     * 获取属性类别
+     */
     function getAllAttributeType(ext) {
         var attributeTypeObj = {
             "categoryIds": ext.categoryIds
@@ -90,33 +89,92 @@ layui.use(['form', 'crud', 'dtree'], function () {
             allAttributeTypeArr = response.data;
             buildAttributes(ext.specifications, specificationsArr);
             buildAttributes(ext.salePoints, salePointArr);
+            buildAttributeTypes(ext.params);
+            // 初始化页面
             initAttribute('specifications');
             initAttribute('salePoint');
             initParam();
-            console.log(specificationsArr);
         });
     }
 
+    /**
+     * 构建属性
+     */
+    function buildAttributes(arr, result) {
+        for (var i = 0; i < arr.length; i++) {
+            var specification = arr[i];
+            var inputList = findInputList(specification.attributeId);
+            // 所有选中的值
+            var arr1 = getAttributeValues(specification.attributeValues);
+            var input = getInput(arr1, inputList);
+            var attributeValues = getOption(arr1, input);
+            var spe = {
+                'attributeId': specification.attributeId,
+                'attributeValues': attributeValues,
+                'input': input
+            };
+            result.push(spe);
+        }
+    }
+
+    /**
+     * 构建属性类别
+     */
+    function buildAttributeTypes(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            var param = arr[i];
+            var params = param.params;
+            for (var j = 0; j < params.length; j++) {
+                var paramValue = params[j];
+                var inputList = findInputList(paramValue.attributeId);
+                var arr1 = getAttributeValues(paramValue.attributeValues);
+                var input = getInput(arr1, inputList);
+                var attributeValues = getOption(arr1, input);
+                var attributeType = {
+                    'attributeTypeId': param.attributeTypeId,
+                    'attributeId': paramValue.attributeId,
+                    'attributeValues': attributeValues,
+                    'input': input
+                };
+                paramArr.push(attributeType);
+            }
+        }
+    }
+
+    /**
+     * 获取input的值
+     */
     function getInput(arr1, inputList) {
         var arr2 = [];
+        if (!inputList) {
+            return arr1.join(',');
+        }
+        var inputArr = inputList.split(',');
         for (var i = 0; i < arr1.length; i++) {
-            if (inputList.indexOf(arr1[i]) === -1) {
+            if (!crud.contains(inputArr, arr1[i])) {
                 arr2.push(arr1[i]);
             }
         }
         return arr2.join(',');
     }
 
+    /**
+     * 获取选中框的值
+     */
     function getOption(arr1, input) {
         var arr2 = [];
+        var inputArr = input.split(',');
         for (var i = 0; i < arr1.length; i++) {
-            if (input.indexOf(arr1[i]) === -1) {
+            if (!crud.contains(inputArr, arr1[i])) {
                 arr2.push(arr1[i]);
             }
         }
         return arr2;
     }
 
+    /**
+     * 获取属性值列表
+     */
     function getAttributeValues(attributeValues) {
         var arr = [];
         for (var i = 0; i < attributeValues.length; i++) {
@@ -255,7 +313,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
     form.on('select(attribute)', function (data) {
         var parentId = $(data.elem).parent().parent().parent().attr("index");
         var type = $(data.elem).parent().parent().parent().attr("type");
-
         if (type === 'specifications') {
             selectAttr(specificationsArr, parentId, data);
             initAttribute(type);
@@ -380,14 +437,12 @@ layui.use(['form', 'crud', 'dtree'], function () {
         $('#' + type + "_" + parentId + ' input[type=checkbox]:checked').each(function () {
             arr.push($(this).val());
         });
-        console.log(arr)
         if (type === 'specifications') {
             setAttributeValues(specificationsArr, arr, parentId);
         } else if (type === 'salePoint') {
             setAttributeValues(salePointArr, arr, parentId);
         } else {
             setAttributeValues(paramArr, arr, parentId);
-            console.log(paramArr)
         }
     });
 
@@ -400,46 +455,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
                 attrArr[i].attributeValues = arr;
             }
         }
-    }
-
-    /**
-     * 初始化sku列表
-     */
-    function initSkuList() {
-        var skuHtml = '';
-        for (var k = 0; k < skuArr.length; k++) {
-            var sku = skuArr[k];
-            skuHtml += '<div id="sku_" ' + k + '" index="' + k + '"  class="layui-form-item"><div class="layui-inline">';
-            var skuSpecifications = sku.skuSpecifications;
-            for (var i = 0; i < specificationsArr.length; i++) {
-                var specification = specificationsArr[i];
-                skuHtml += '<label class="layui-form-label">选择' + findAttributeName(specification.attributeId) + '</label>';
-                skuHtml += '<div class="layui-input-inline"><select lay-filter="attributeValue"><option value=""></option>';
-                if (specification.attributeValues) {
-                    for (var j = 0; j < specification.attributeValues.length; j++) {
-                        var attributeValue = specification.attributeValues[j];
-                        if (skuSpecifications[i].attributeValue && skuSpecifications[i].attributeValue === attributeValue) {
-                            skuHtml += '<option selected  value="' + attributeValue + '">' + attributeValue + '</option>';
-                        } else {
-                            skuHtml += '<option  value="' + attributeValue + '">' + attributeValue + '</option>';
-                        }
-                    }
-                }
-                skuHtml += '</select></div>';
-            }
-            skuHtml += '<label class="layui-form-label">价格</label>';
-            skuHtml += '<div class="layui-input-inline"><input type="text" value="' + sku.price + '" placeholder="请输入价格" class="layui-input"></div>';
-            skuHtml += '<label class="layui-form-label">库存</label>';
-            skuHtml += '<div class="layui-input-inline"><input type="number" value="' + sku.stock + '" placeholder="请输入库存" class="layui-input"></div>';
-            skuHtml += '&nbsp;<button type="button" class="layui-btn layui-btn-primary skuAdd">+</button>&nbsp;';
-            if (skuArr.length !== 1) {
-                skuHtml += '<a type="button" class="layui-btn layui-btn-primary skuSub">-</a>';
-            }
-            skuHtml += '</div></div><br/>';
-        }
-
-        $("#skuList").html('').append(skuHtml);
-        form.render();
     }
 
     /**
@@ -460,6 +475,9 @@ layui.use(['form', 'crud', 'dtree'], function () {
         }
     });
 
+    /**
+     * 设置input框的内容
+     */
     function setInput(attrArr, input, parentId) {
         for (var i = 0; i < attrArr.length; i++) {
             if (i === parseInt(parentId)) {
@@ -469,17 +487,8 @@ layui.use(['form', 'crud', 'dtree'], function () {
     }
 
     /**
-     * 获取属性值
+     * 获取inputList
      */
-    function findAttributeName(attributeId) {
-        for (var j = 0; j < allAttributeArr.length; j++) {
-            if (attributeId === allAttributeArr[j].id) {
-                return allAttributeArr[j].showName;
-            }
-        }
-        return '';
-    }
-
     function findInputList(attributeId) {
         for (var j = 0; j < allAttributeArr.length; j++) {
             if (attributeId === allAttributeArr[j].id) {
@@ -490,29 +499,9 @@ layui.use(['form', 'crud', 'dtree'], function () {
     }
 
     /**
-     * 构建sku列表
+     * 提交数据
      */
-    function buildSkuArr() {
-        skuArr = [];
-        var sku = {
-            skuSpecifications: [],
-            price: '',
-            stock: ''
-        }
-        for (var i = 0; i < specificationsArr.length; i++) {
-            var specification = {
-                'attributeId': specificationsArr[i].attributeId,
-                'attributeValue': specificationsArr[i].attributeValues
-            }
-            sku.skuSpecifications.push(specification);
-        }
-        skuArr.push(sku);
-        initSkuList();
-    }
-
-    // 提交数据
     $("#submit").bind('click', function () {
-
         // 基本信息
         var basicProduct = {
             'name': $("#name").val(),
@@ -521,44 +510,39 @@ layui.use(['form', 'crud', 'dtree'], function () {
             'weight': $("#weight").val(),
             'onMarketTime': $("#onMarketTime").val(),
         }
-
-        specificationsArr = specificationsArr.filter(function (element, index) {
-            return element.attributeId;
-        });
-        salePointArr = salePointArr.filter(function (element, index) {
-            return element.attributeId;
-        });
-        paramArr = paramArr.filter(function (element, index) {
-            return element.attributeTypeId && element.attributeId;
-        });
-
-        pushInput(specificationsArr);
-        pushInput(salePointArr);
-        pushInput(paramArr);
-
-        var productAttribute = {
-            specifications: specificationsArr,
-            salePoints: salePointArr,
-            params: paramArr
-        }
-        var checked = dtree.getCheckbarJsonArrParam("selTree");
-        // 商品属性信息
-        var ext = {
-            'categoryIds': checked.nodeId,
-            'brandId': $("#brand").val(),
-            'productAttribute': productAttribute
-        }
         // 提交的对象
         var submitObj = {
-            'basicProduct': basicProduct,
-            'ext': ext
+            'id': $("#id").val(),
+            'basicProduct': basicProduct
         };
-        console.log(submitObj)
-        crud.post(pmsUrl + '/product', submitObj, function () {
+
+        if (skuArr.length > 0) {
+            specificationsArr = specificationsArr.filter(function (element) {
+                return element.attributeId;
+            });
+            salePointArr = salePointArr.filter(function (element) {
+                return element.attributeId;
+            });
+            paramArr = paramArr.filter(function (element, index) {
+                return element.attributeTypeId && element.attributeId;
+            });
+            pushInput(specificationsArr);
+            pushInput(salePointArr);
+            pushInput(paramArr);
+            submitObj.ext = {
+                specifications: specificationsArr,
+                salePoints: salePointArr,
+                params: paramArr
+            };
+        }
+        crud.put(pmsUrl + '/product', submitObj, function () {
             layer.close(parentIndex);
         })
     })
 
+    /**
+     * 将input的值转化为属性值
+     */
     function pushInput(attributeArr) {
         for (var i = 0; i < attributeArr.length; i++) {
             var input = attributeArr[i].input;

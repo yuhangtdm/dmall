@@ -9,22 +9,32 @@ layui.use(['form', 'crud', 'dtree'], function () {
     var allAttributeArr = [];
     // 属性类别列表
     var allAttributeTypeArr = [];
-    // 规格列表
+    // 添加的规格列表
     var specificationsArr = [];
-    // 卖点列表
+    // 添加的卖点列表
     var salePointArr = [];
-    // 参数列表
+    // 添加的参数列表
     var paramArr = [];
-    // sku列表
-    var skuArr = [];
 
     var body = $("body");
 
     // 初始化页面
     init();
 
-    // 商品分类选中事件
-    dtree.on("chooseDone('selTree')", function (obj) {
+    /**
+     * 页面初始化函数
+     */
+    function init() {
+        crud.initSelect('unit');
+        crud.initDate('onMarketTime');
+        crud.selectTree('addCategory', pmsUrl + '/category/tree/0/4', 'all');
+        crud.initSelect('brand');
+    }
+
+    /**
+     * 商品分类选中事件
+     */
+    dtree.on("chooseDone('addCategory')", function (obj) {
         var arr = [];
         for (var i = 0; i < obj.checkbarParams.length; i++) {
             arr.push(obj.checkbarParams[i].nodeId);
@@ -81,16 +91,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
     });
 
     /**
-     * 页面初始化函数
-     */
-    function init() {
-        crud.initSelect('unit');
-        crud.initDate('onMarketTime');
-        crud.selectTree('selTree', pmsUrl + '/category/tree/0/4', 'all');
-        crud.initSelect('brand');
-    }
-
-    /**
      * 初始化参数
      */
     function initParam() {
@@ -144,7 +144,8 @@ layui.use(['form', 'crud', 'dtree'], function () {
         var attributeHtml = '';
         for (var i = 0; i < arr.length; i++) {
             if (type) {
-                attributeHtml += '<div id="' + type + "_" + i + '" index="' + i + '" type="' + type + '" class="layui-form-item"><div class="layui-inline">';
+                attributeHtml += '<div id="' + type + "_" + i + '" index="' + i + '" type="' + type + '" class="layui-form-item">'
+                    + '<div class="layui-inline">';
             }
             var attribute = arr[i];
             attributeHtml += '<label class="layui-form-label">选择属性</label>';
@@ -159,7 +160,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
                 }
             }
             attributeHtml += '</select></div>';
-
             if (selected) {
                 attributeHtml = getAttributeValueHtml(selected, attribute, attributeHtml);
             }
@@ -172,7 +172,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
         return attributeHtml;
 
     }
-
 
     /**
      * 获取属性值html
@@ -343,19 +342,15 @@ layui.use(['form', 'crud', 'dtree'], function () {
         var parentId = $(data.elem).parent().parent().parent().attr("index");
         var type = $(data.elem).parent().parent().parent().attr("type");
         var arr = [];
-        console.log(parentId)
-        console.log(type)
         $('#' + type + "_" + parentId + ' input[type=checkbox]:checked').each(function () {
             arr.push($(this).val());
         });
-        console.log(arr)
         if (type === 'specifications') {
             setAttributeValues(specificationsArr, arr, parentId);
         } else if (type === 'salePoint') {
             setAttributeValues(salePointArr, arr, parentId);
         } else {
             setAttributeValues(paramArr, arr, parentId);
-            console.log(paramArr)
         }
     });
 
@@ -448,27 +443,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
         return '';
     }
 
-    /**
-     * 构建sku列表
-     */
-    function buildSkuArr() {
-        skuArr = [];
-        var sku = {
-            skuSpecifications: [],
-            price: '',
-            stock: ''
-        }
-        for (var i = 0; i < specificationsArr.length; i++) {
-            var specification = {
-                'attributeId': specificationsArr[i].attributeId,
-                'attributeValue': specificationsArr[i].attributeValues
-            }
-            sku.skuSpecifications.push(specification);
-        }
-        skuArr.push(sku);
-        initSkuList();
-    }
-
     // 提交数据
     $("#submit").bind('click', function () {
 
@@ -481,10 +455,10 @@ layui.use(['form', 'crud', 'dtree'], function () {
             'onMarketTime': $("#onMarketTime").val(),
         }
 
-        specificationsArr = specificationsArr.filter(function (element, index) {
+        specificationsArr = specificationsArr.filter(function (element) {
             return element.attributeId;
         });
-        salePointArr = salePointArr.filter(function (element, index) {
+        salePointArr = salePointArr.filter(function (element) {
             return element.attributeId;
         });
         paramArr = paramArr.filter(function (element, index) {
@@ -500,7 +474,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
             salePoints: salePointArr,
             params: paramArr
         }
-        var checked = dtree.getCheckbarJsonArrParam("selTree");
+        var checked = dtree.getCheckbarJsonArrParam("addCategory");
         // 商品属性信息
         var ext = {
             'categoryIds': checked.nodeId,
@@ -512,12 +486,14 @@ layui.use(['form', 'crud', 'dtree'], function () {
             'basicProduct': basicProduct,
             'ext': ext
         };
-        console.log(submitObj)
         crud.post(pmsUrl + '/product', submitObj, function () {
             layer.close(parentIndex);
         })
     })
 
+    /**
+     * 将input的值转化为属性值
+     */
     function pushInput(attributeArr) {
         for (var i = 0; i < attributeArr.length; i++) {
             var input = attributeArr[i].input;

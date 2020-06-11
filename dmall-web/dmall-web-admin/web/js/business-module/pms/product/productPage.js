@@ -8,7 +8,7 @@ layui.use(['form', 'table', 'crud', 'dtree'], function () {
     // 初始化表格数据
     crud.initPage('product', pmsUrl + '/product/page', buildColumn());
     crud.selectTree('selTree', pmsUrl + '/category/tree/0/4', 'only');
-    crud.initSelect('brand', pmsUrl + '/brand/list');
+    // crud.initSelect('brand', pmsUrl + '/brand/list');
     crud.initDate('onMarketTimeStart');
     crud.initDate('onMarketTimeEnd');
     /**
@@ -65,9 +65,6 @@ layui.use(['form', 'table', 'crud', 'dtree'], function () {
                 break;
             case 'update':
                 crud.open('/page/pms/product/productUpdate.html', '修改商品');
-                break;
-            case 'delete':
-                crud.delete("确定删除该商品?", pmsUrl + '/product/' + data.id);
                 break;
         }
     });

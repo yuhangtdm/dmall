@@ -11,7 +11,6 @@ import com.dmall.pms.api.enums.LevelEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
 import com.dmall.pms.generator.dataobject.CategoryDO;
-import com.dmall.pms.generator.mapper.AttributeMapper;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.impl.attribute.mapper.AttributeListMapper;
 import com.dmall.pms.service.validate.PmsValidate;
@@ -29,9 +28,6 @@ import java.util.stream.Collectors;
 @Component
 public class ListAttributeHandler
     extends AbstractCommonHandler<ListAttributeRequestDTO, AttributeDO, AttributeResponseDTO> {
-
-    @Autowired
-    private AttributeMapper attributeMapper;
 
     @Autowired
     private AttributeCacheService attributeCacheService;
@@ -61,8 +57,8 @@ public class ListAttributeHandler
     @Override
     public BaseResult<List<AttributeResponseDTO>> processor(ListAttributeRequestDTO requestDTO) {
         List<AttributeDO> attributeDOS;
-        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getShowName(), requestDTO.getType(),
-            requestDTO.getHandAddStatus(), requestDTO.getInputType(), requestDTO.getThreeCategoryIds())) {
+        if (ObjectUtil.allEmpty(requestDTO.getCategoryId(), requestDTO.getShowName(), requestDTO.getHandAddStatus(),
+            requestDTO.getInputType(), requestDTO.getThreeCategoryIds())) {
             attributeDOS = attributeCacheService.selectAll();
         } else {
             attributeDOS = attributeListMapper.listAttribute(requestDTO);

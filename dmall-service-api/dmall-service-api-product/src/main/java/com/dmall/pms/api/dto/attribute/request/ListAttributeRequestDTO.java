@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.attribute.request;
 import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.pms.api.enums.HandAddStatusEnum;
 import com.dmall.pms.api.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,19 +26,15 @@ public class ListAttributeRequestDTO implements Serializable {
     @ApiModelProperty(value = "展示名称", position = 2)
     private String showName;
 
-    @ApiModelProperty(value = "属性类型 1-普通属性;2-公共属性", position = 3)
-    @ValueInEnum(TypeEnum.class)
-    private Integer type;
-
-    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 4)
+    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 3)
     @ValueInEnum(InputTypeEnum.class)
     private Integer inputType;
 
-    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 5)
+    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 4)
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
 
-    @ApiModelProperty(value = "三级分类id", required = true, position = 6)
+    @ApiModelProperty(value = "三级分类id", required = true, position = 5)
     private Set<Long> threeCategoryIds;
 
 }

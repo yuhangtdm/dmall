@@ -55,10 +55,6 @@ public class SetAttributeCategoryHandler
         if (attributeDO == null) {
             return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_ID_INVALID);
         }
-        if (TypeEnum.NORMAL.getCode().equals(attributeDO.getType())
-            && requestDTO.getCategoryIds().size() > 1) {
-            return ResultUtil.fail(PmsErrorEnum.SET_CATEGORY_ERROR);
-        }
         List<CategoryDO> categoryDOS = categoryMapper.selectBatchIds(requestDTO.getCategoryIds());
         if (categoryDOS.size() != requestDTO.getCategoryIds().size()) {
             return ResultUtil.fail(PmsErrorEnum.CATEGORY_NOT_EXIST);

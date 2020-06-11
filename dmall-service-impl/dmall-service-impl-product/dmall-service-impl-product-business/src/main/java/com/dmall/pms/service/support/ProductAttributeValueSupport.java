@@ -82,7 +82,7 @@ public class ProductAttributeValueSupport {
                 } else {
                     ProductAttributeValueDO productAttributeValueDO = find(list, specification.getAttributeId(),
                         productId, specificationsValue);
-                    if (productAttributeValueDO != null){
+                    if (productAttributeValueDO != null) {
                         productAttributeValueDO.setIsSpecifications(YNEnum.Y.getCode());
                     }
                 }
@@ -109,7 +109,7 @@ public class ProductAttributeValueSupport {
                 } else {
                     ProductAttributeValueDO productAttributeValueDO =
                         find(list, salePoint.getAttributeId(), productId, salePointValue);
-                    if (productAttributeValueDO != null){
+                    if (productAttributeValueDO != null) {
                         productAttributeValueDO.setIsSellingPoint(YNEnum.Y.getCode());
                     }
                 }
@@ -132,7 +132,7 @@ public class ProductAttributeValueSupport {
                 } else {
                     ProductAttributeValueDO productAttributeValueDO =
                         find(list, param.getAttributeId(), productId, paramValue);
-                    if (productAttributeValueDO != null){
+                    if (productAttributeValueDO != null) {
                         productAttributeValueDO.setIsParam(YNEnum.Y.getCode());
                     }
                 }
@@ -156,43 +156,30 @@ public class ProductAttributeValueSupport {
         List<ProductAttributeResponseDTO> salePoints = Lists.newArrayList();
         List<ParamResponseDTO> params = Lists.newArrayList();
         // 规格
-        Map<Long, List<ProductAttributeValueDO>> specificationsMap = list.stream()
-            .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSpecifications()))
-            .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
-        specificationsMap.forEach((k, v) -> {
-            ProductAttributeResponseDTO productAttributeResponse = new ProductAttributeResponseDTO();
-            productAttributeResponse.setAttributeId(k);
-            AttributeDO attributeDO = attributeCacheService.selectById(k);
-            productAttributeResponse.setAttributeName(attributeDO.getShowName());
-            List<ProductAttributeValueResponseDTO> specificationsValues = v.stream().map(productAttributeValue -> {
-                ProductAttributeValueResponseDTO attributeValueResponse = new ProductAttributeValueResponseDTO();
-                attributeValueResponse.setProductAttributeValueId(productAttributeValue.getId());
-                attributeValueResponse.setAttributeValue(productAttributeValue.getAttributeValue());
-                attributeValueResponse.setPic(productAttributeValue.getPic());
-                return attributeValueResponse;
-            }).collect(Collectors.toList());
-            productAttributeResponse.setAttributeValues(specificationsValues);
-            specifications.add(productAttributeResponse);
-        });
+        buildSpecifications(list, specifications);
         // 卖点
-        Map<Long, List<ProductAttributeValueDO>> salePointMap = list.stream()
-            .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSellingPoint()))
-            .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
-        salePointMap.forEach((k, v) -> {
-            ProductAttributeResponseDTO salePointResponse = new ProductAttributeResponseDTO();
-            AttributeDO attributeDO = attributeCacheService.selectById(k);
-            salePointResponse.setAttributeId(k);
-            salePointResponse.setAttributeName(attributeDO.getShowName());
-            List<ProductAttributeValueResponseDTO> salePointValues = v.stream().map(productAttributeValue -> {
-                ProductAttributeValueResponseDTO attributeValueResponse = new ProductAttributeValueResponseDTO();
-                attributeValueResponse.setProductAttributeValueId(productAttributeValue.getId());
-                attributeValueResponse.setAttributeValue(productAttributeValue.getAttributeValue());
-                return attributeValueResponse;
-            }).collect(Collectors.toList());
-            salePointResponse.setAttributeValues(salePointValues);
-            salePoints.add(salePointResponse);
-        });
+        buildSalePoints(list, salePoints);
         // 参数
+        buildParams(list, params);
+        List<Long> categoryIds = categoryProductSupport.listByProductId(productId).stream()
+            .map(CategoryProductDO::getCategoryId)
+            .collect(Collectors.toList());
+        List<String> cascadeCategoryNames = categoryIds.stream()
+            .map(categoryId -> categorySupport.getCascadeCategoryName(categoryId)).collect(Collectors.toList());
+
+        ProductExtResponseDTO response = new ProductExtResponseDTO();
+        response.setCategoryIds(categoryIds);
+        response.setCascadeCategoryNames(cascadeCategoryNames);
+        response.setBrandId(brandId);
+        BrandDO brandDO = brandCacheService.selectById(brandId);
+        response.setBrandName(brandDO.getName());
+        response.setSpecifications(specifications);
+        response.setSalePoints(salePoints);
+        response.setParams(params);
+        return response;
+    }
+
+    private void buildParams(List<ProductAttributeValueDO> list, List<ParamResponseDTO> params) {
         Map<Long, List<ProductAttributeValueDO>> paramMap = list.stream()
             .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsParam()))
             .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeTypeId));
@@ -221,21 +208,48 @@ public class ProductAttributeValueSupport {
             paramResponse.setParams(paramValueResponseList);
             params.add(paramResponse);
         });
-        List<Long> categoryIds = categoryProductSupport.listByProductId(productId).stream()
-            .map(CategoryProductDO::getCategoryId)
-            .collect(Collectors.toList());
-        List<String> cascadeCategoryNames = categoryIds.stream()
-            .map(categoryId -> categorySupport.getCascadeCategoryName(categoryId)).collect(Collectors.toList());
-        ProductExtResponseDTO response = new ProductExtResponseDTO();
-        response.setCategoryIds(categoryIds);
-        response.setCascadeCategoryNames(cascadeCategoryNames);
-        response.setBrandId(brandId);
-        BrandDO brandDO = brandCacheService.selectById(brandId);
-        response.setBrandName(brandDO.getName());
-        response.setSpecifications(specifications);
-        response.setSalePoints(salePoints);
-        response.setParams(params);
-        return response;
+    }
+
+    private void buildSalePoints(List<ProductAttributeValueDO> list, List<ProductAttributeResponseDTO> salePoints) {
+        Map<Long, List<ProductAttributeValueDO>> salePointMap = list.stream()
+            .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSellingPoint()))
+            .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
+        salePointMap.forEach((k, v) -> {
+            ProductAttributeResponseDTO salePointResponse = new ProductAttributeResponseDTO();
+            AttributeDO attributeDO = attributeCacheService.selectById(k);
+            salePointResponse.setAttributeId(k);
+            salePointResponse.setAttributeName(attributeDO.getShowName());
+            List<ProductAttributeValueResponseDTO> salePointValues = v.stream().map(productAttributeValue -> {
+                ProductAttributeValueResponseDTO attributeValueResponse = new ProductAttributeValueResponseDTO();
+                attributeValueResponse.setProductAttributeValueId(productAttributeValue.getId());
+                attributeValueResponse.setAttributeValue(productAttributeValue.getAttributeValue());
+                return attributeValueResponse;
+            }).collect(Collectors.toList());
+            salePointResponse.setAttributeValues(salePointValues);
+            salePoints.add(salePointResponse);
+        });
+    }
+
+    private void buildSpecifications(List<ProductAttributeValueDO> list,
+        List<ProductAttributeResponseDTO> specifications) {
+        Map<Long, List<ProductAttributeValueDO>> specificationsMap = list.stream()
+            .filter(productAttributeValue -> Constants.Y.equals(productAttributeValue.getIsSpecifications()))
+            .collect(Collectors.groupingBy(ProductAttributeValueDO::getAttributeId));
+        specificationsMap.forEach((k, v) -> {
+            ProductAttributeResponseDTO productAttributeResponse = new ProductAttributeResponseDTO();
+            productAttributeResponse.setAttributeId(k);
+            AttributeDO attributeDO = attributeCacheService.selectById(k);
+            productAttributeResponse.setAttributeName(attributeDO.getShowName());
+            List<ProductAttributeValueResponseDTO> specificationsValues = v.stream().map(productAttributeValue -> {
+                ProductAttributeValueResponseDTO attributeValueResponse = new ProductAttributeValueResponseDTO();
+                attributeValueResponse.setProductAttributeValueId(productAttributeValue.getId());
+                attributeValueResponse.setAttributeValue(productAttributeValue.getAttributeValue());
+                attributeValueResponse.setPic(productAttributeValue.getPic());
+                return attributeValueResponse;
+            }).collect(Collectors.toList());
+            productAttributeResponse.setAttributeValues(specificationsValues);
+            specifications.add(productAttributeResponse);
+        });
     }
 
     /**

@@ -3,11 +3,9 @@ layui.use(['form', 'crud', 'table', 'tableMerge'], function () {
     var table = layui.table;
     var tableMerge = layui.tableMerge;
 
-    var parentIndex = layer.index;
-
+    // 请求数据
     crud.get(pmsUrl + '/product/' + id, function (response) {
         var data = response.data;
-        console.log(data);
         crud.dataForm(data.basicProduct, 'basicProductForm');
         var ext = data.ext;
         crud.dataForm(ext, 'basicProductForm');
@@ -27,7 +25,8 @@ layui.use(['form', 'crud', 'table', 'tableMerge'], function () {
             for (var j = 0; j < specification.attributeValues.length; j++) {
                 var row = {
                     'attributeName': specification.attributeName,
-                    'attributeValue': specification.attributeValues[j].attributeValue
+                    'attributeValue': specification.attributeValues[j].attributeValue,
+                    'pic': specification.attributeValues[j].pic
                 }
                 tableData.push(row);
             }
@@ -36,7 +35,8 @@ layui.use(['form', 'crud', 'table', 'tableMerge'], function () {
             elem: '#specificationsTable',
             cols: [[
                 {field: 'attributeName', merge: true, title: '规格名称', width: 150},
-                {field: 'attributeValue', title: '规格值列表'}
+                {field: 'attributeValue', title: '规格值列表'},
+                {field: 'pic', title: '规格值配图', templet: "<div>{{layui.crud.showImg(d.pic)}}</div>"}
             ]],
             data: tableData,
             done: function () {
@@ -122,4 +122,5 @@ layui.use(['form', 'crud', 'table', 'tableMerge'], function () {
             data: skuList
         });
     }
+
 });

@@ -3,7 +3,6 @@ package com.dmall.pms.api.dto.attribute.request;
 import com.dmall.common.dto.validate.ValueInEnum;
 import com.dmall.pms.api.enums.HandAddStatusEnum;
 import com.dmall.pms.api.enums.InputTypeEnum;
-import com.dmall.pms.api.enums.TypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,18 +29,15 @@ public class UpdateAttributeRequestDTO implements Serializable {
     @NotBlank(message = "展示名称不能为空")
     private String showName;
 
-    @ApiModelProperty(value = "属性类型 1-普通属性;2-公共属性", position = 3)
-    @ValueInEnum(TypeEnum.class)
-    private Integer type;
 
-    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 4)
+    @ApiModelProperty(value = "属性录入方式 1-手工录入;2-从列表获取", position = 3)
     @ValueInEnum(InputTypeEnum.class)
     private Integer inputType;
 
-    @ApiModelProperty(value = "可选值列表", position = 5)
+    @ApiModelProperty(value = "可选值列表", position = 4)
     private String inputList;
 
-    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 6)
+    @ApiModelProperty(value = "是否支持手动新增 Y-支持;N-不支持", position = 5)
     @ValueInEnum(HandAddStatusEnum.class)
     private String handAddStatus;
 

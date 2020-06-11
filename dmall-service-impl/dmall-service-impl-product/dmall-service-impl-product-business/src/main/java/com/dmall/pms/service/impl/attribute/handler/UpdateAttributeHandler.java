@@ -1,6 +1,5 @@
 package com.dmall.pms.service.impl.attribute.handler;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dmall.common.dto.BaseResult;
 import com.dmall.common.util.ResultUtil;
@@ -9,17 +8,13 @@ import com.dmall.pms.api.dto.attribute.request.UpdateAttributeRequestDTO;
 import com.dmall.pms.api.enums.HandAddStatusEnum;
 import com.dmall.pms.api.enums.InputTypeEnum;
 import com.dmall.pms.api.enums.PmsErrorEnum;
-import com.dmall.pms.api.enums.TypeEnum;
 import com.dmall.pms.generator.dataobject.AttributeDO;
-import com.dmall.pms.generator.dataobject.CategoryAttributeDO;
 import com.dmall.pms.service.impl.attribute.cache.AttributeCacheService;
 import com.dmall.pms.service.support.AttributeSupport;
 import com.dmall.pms.service.support.CategoryAttributeSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @description: 修改属性处理器
@@ -44,15 +39,6 @@ public class UpdateAttributeHandler extends AbstractCommonHandler<UpdateAttribut
     public BaseResult validate(UpdateAttributeRequestDTO requestDTO) {
         // 查询属性
         AttributeDO attributeDO = pmsValidate.validateAttribute(requestDTO.getId());
-        // 公共属性不能修改为普通属性
-        if (TypeEnum.PUBLIC.getCode().equals(attributeDO.getType())
-            && TypeEnum.NORMAL.getCode().equals(requestDTO.getType())) {
-            // 该属性已经挂载多个商品分类
-            List<CategoryAttributeDO> list = categoryAttributeSupport.listByAttributeId(requestDTO.getId());
-            if (CollUtil.isNotEmpty(list) && list.size() > 1) {
-                return ResultUtil.fail(PmsErrorEnum.ATTRIBUTE_TYPE_INVALID);
-            }
-        }
         // 校验展示名称唯一
         AttributeDO attributeDO1 =
             attributeSupport.getByShowName(attributeDO.getCategoryId(), requestDTO.getShowName());
