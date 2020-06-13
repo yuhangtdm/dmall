@@ -58,7 +58,7 @@ public class SkuSupport {
     /**
      * 根据商品id查询列表
      */
-    public List<SkuDO> selectByProductId(Long productId) {
+    public List<SkuDO> listByProductId(Long productId) {
         return skuMapper.selectList(Wrappers.<SkuDO>lambdaQuery().eq(SkuDO::getProductId, productId));
     }
 
@@ -107,7 +107,7 @@ public class SkuSupport {
      * 获取商品的sku
      */
     public List<SkuListResponseDTO> getSkuList(Long productId) {
-        return selectByProductId(productId).stream()
+        return listByProductId(productId).stream()
             .map(skuDO -> {
                 SkuListResponseDTO skuListResponseDTO = new SkuListResponseDTO();
                 skuListResponseDTO.setSkuId(skuDO.getId());

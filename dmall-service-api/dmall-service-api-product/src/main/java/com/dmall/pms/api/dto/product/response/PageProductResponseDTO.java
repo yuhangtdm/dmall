@@ -36,9 +36,6 @@ public class PageProductResponseDTO implements Serializable {
     @ApiModelProperty(value = "品牌名称", position = 7)
     private String brandName;
 
-    @ApiModelProperty(value = "上市时间", position = 9)
-    private Date onMarketTime;
-
     @ApiModelProperty(value = "单位", position = 10)
     private String unit;
 

@@ -31,14 +31,5 @@ public class PageProductRequestDTO extends PageRequestDTO {
     @ApiModelProperty(value = "商品名称", position = 8)
     private String name;
 
-    @ApiModelProperty(value = "上市时间起", position = 9)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date onMarketTimeStart;
-
-    @ApiModelProperty(value = "上市时间至", position = 10)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date onMarketTimeEnd;
 
 }

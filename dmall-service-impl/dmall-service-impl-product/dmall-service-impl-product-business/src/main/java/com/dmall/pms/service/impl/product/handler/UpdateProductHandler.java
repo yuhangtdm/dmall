@@ -9,11 +9,11 @@ import com.dmall.pms.api.dto.product.request.BasicProductRequestDTO;
 import com.dmall.pms.api.dto.product.request.update.UpdateProductRequestDTO;
 import com.dmall.pms.api.enums.PmsErrorEnum;
 import com.dmall.pms.generator.dataobject.ProductDO;
-import com.dmall.pms.generator.dataobject.SkuAttributeValueDO;
+import com.dmall.pms.generator.dataobject.SkuDO;
 import com.dmall.pms.generator.mapper.ProductMapper;
 import com.dmall.pms.service.support.ProductAttributeValueSupport;
 import com.dmall.pms.service.support.ProductSupport;
-import com.dmall.pms.service.support.SkuAttributeValueSupport;
+import com.dmall.pms.service.support.SkuSupport;
 import com.dmall.pms.service.validate.PmsValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
     private ProductAttributeValueSupport productAttributeValueSupport;
 
     @Autowired
-    private SkuAttributeValueSupport skuAttributeValueSupport;
+    private SkuSupport skuSupport;
 
     @Autowired
     private ProductSupport productSupport;
@@ -53,9 +53,12 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
             return ResultUtil.fail(PmsErrorEnum.PRODUCT_NAME_EXISTS);
         }
         // 该商品下已有sku属性值 不用校验商品属性
-        List<SkuAttributeValueDO> skuAttributeValues = skuAttributeValueSupport.listByProductId(requestDTO.getId());
-        if (CollUtil.isEmpty(skuAttributeValues)) {
+        List<SkuDO> skuList = skuSupport.listByProductId(requestDTO.getId());
+        if (CollUtil.isEmpty(skuList)) {
             return ResultUtil.success();
+        }
+        if (requestDTO.getExt() == null) {
+            return ResultUtil.fail(PmsErrorEnum.PRODUCT_EXT_NULL);
         }
         return pmsValidate.attributeValidate(requestDTO.getExt());
     }
@@ -66,9 +69,7 @@ public class UpdateProductHandler extends AbstractCommonHandler<UpdateProductReq
         productDO.setId(requestDTO.getId());
         // 更新商品
         productMapper.updateById(productDO);
-        // 更新商品-属性 无sku才进行更新
-        List<SkuAttributeValueDO> skuAttributeValueDOS = skuAttributeValueSupport.listByProductId(requestDTO.getId());
-        if (CollUtil.isEmpty(skuAttributeValueDOS)) {
+        if (requestDTO.getExt() != null) {
             productAttributeValueSupport.saveProductAttributeValue(productDO, requestDTO.getExt());
         }
         return ResultUtil.success(requestDTO.getId());

@@ -11,9 +11,6 @@
             <if test="request.showName != null and request.showName != ''">
                 and a.show_name like '%${request.showName}%'
             </if>
-            <if test="request.type != null ">
-                and a.type = #{request.type}
-            </if>
             <if test="request.inputType != null ">
                 and a.input_type = #{request.inputType}
             </if>

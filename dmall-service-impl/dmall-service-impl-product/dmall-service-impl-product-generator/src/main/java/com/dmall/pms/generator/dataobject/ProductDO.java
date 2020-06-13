@@ -68,11 +68,6 @@ public class ProductDO implements Serializable {
     private String remark;
 
     /**
-     * 上市时间
-     */
-    private Date onMarketTime;
-
-    /**
      * 增值业务
      */
     private String addServices;

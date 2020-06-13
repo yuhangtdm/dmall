@@ -31,6 +31,5 @@ public class UpdateProductRequestDTO implements Serializable {
 
     @ApiModelProperty(value = "商品属性信息", required = true, position = 3)
     @Valid
-    @NotNull(message = "商品属性信息不能为空")
     private ProductAttributeRequestDTO ext;
 }

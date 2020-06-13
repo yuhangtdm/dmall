@@ -1,4 +1,4 @@
-layui.use(['form', 'crud',  'table'], function () {
+layui.use(['form', 'crud', 'table'], function () {
     var $ = layui.jquery,
         form = layui.form,
         table = layui.table,
@@ -15,6 +15,8 @@ layui.use(['form', 'crud',  'table'], function () {
     var salePointArr = [];
     // 参数列表
     var paramArr = [];
+    // sku列表
+    var skuArr = [];
     var body = $("body");
 
     // 初始化页面
@@ -27,7 +29,6 @@ layui.use(['form', 'crud',  'table'], function () {
         // 初始化数据
         initData();
         crud.initSelect('unit');
-        crud.initDate('onMarketTime');
     }
 
     /**
@@ -43,6 +44,7 @@ layui.use(['form', 'crud',  'table'], function () {
             // 获取属性
             getAllAttribute(ext);
             initSku(data.skuList);
+            skuArr = data.skuList;
         }, true);
     }
 
@@ -94,7 +96,7 @@ layui.use(['form', 'crud',  'table'], function () {
             initAttribute('specifications');
             initAttribute('salePoint');
             initParam();
-        });
+        }, true);
     }
 
     /**
@@ -147,15 +149,15 @@ layui.use(['form', 'crud',  'table'], function () {
     function getInput(arr1, inputList) {
         var arr2 = [];
         if (!inputList) {
-            return arr1.join(',');
+            return arr1.join('|');
         }
-        var inputArr = inputList.split(',');
+        var inputArr = inputList.split('|');
         for (var i = 0; i < arr1.length; i++) {
             if (!crud.contains(inputArr, arr1[i])) {
                 arr2.push(arr1[i]);
             }
         }
-        return arr2.join(',');
+        return arr2.join('|');
     }
 
     /**
@@ -163,7 +165,7 @@ layui.use(['form', 'crud',  'table'], function () {
      */
     function getOption(arr1, input) {
         var arr2 = [];
-        var inputArr = input.split(',');
+        var inputArr = input.split('\\|');
         for (var i = 0; i < arr1.length; i++) {
             if (!crud.contains(inputArr, arr1[i])) {
                 arr2.push(arr1[i]);
@@ -203,14 +205,28 @@ layui.use(['form', 'crud',  'table'], function () {
                 }
             }
             attributeTypeHtml += '</select></div>';
-            var attributeArr = [];
-            var attribute = {
-                'attributeId': attrType.attributeId,
-                'attributeValues': attrType.attributeValues,
-                'input': ''
+
+            attributeTypeHtml += '<label class="layui-form-label">选择属性</label>';
+            attributeTypeHtml += '<div class="layui-input-inline"><select lay-filter="attribute"><option value=""></option>';
+            var selected2 = null;
+            for (var k = 0; k < allAttributeArr.length; k++) {
+                if (attrType.attributeId !== '' && attrType.attributeId === allAttributeArr[k].id) {
+                    selected2 = allAttributeArr[k];
+                    attributeTypeHtml += '<option selected value="' + allAttributeArr[k].id + '">' + allAttributeArr[k].showName + '</option>';
+                } else {
+                    attributeTypeHtml += '<option  value="' + allAttributeArr[k].id + '">' + allAttributeArr[k].showName + '</option>';
+                }
             }
-            attributeArr.push(attribute);
-            attributeTypeHtml += getAttributeHtml(attributeArr);
+            attributeTypeHtml += '</select></div>';
+
+            if (selected2) {
+                attributeTypeHtml = getAttributeValueHtml(selected, attrType, attributeTypeHtml);
+            }
+            attributeTypeHtml += '&nbsp;<button type="button" class="layui-btn layui-btn-primary add">+</button>&nbsp;';
+            if (paramArr.length !== 1) {
+                attributeTypeHtml += '<a type="button" class="layui-btn layui-btn-primary sub">-</a>';
+            }
+            attributeTypeHtml += '</div></div><br/>';
         }
         $("#param").html('').append(attributeTypeHtml);
         form.render();
@@ -257,7 +273,7 @@ layui.use(['form', 'crud',  'table'], function () {
                 attributeHtml = getAttributeValueHtml(selected, attribute, attributeHtml);
             }
             attributeHtml += '&nbsp;<button type="button" class="layui-btn layui-btn-primary add">+</button>&nbsp;';
-            if (specificationsArr.length !== 1) {
+            if (arr.length !== 1) {
                 attributeHtml += '<a type="button" class="layui-btn layui-btn-primary sub">-</a>';
             }
             attributeHtml += '</div></div><br/>';
@@ -323,6 +339,8 @@ layui.use(['form', 'crud',  'table'], function () {
             for (var i = 0; i < paramArr.length; i++) {
                 if (i === parseInt(parentId)) {
                     paramArr[i].attributeId = data.value;
+                    paramArr[i].attributeValues = [];
+                    paramArr[i].input = '';
                 }
             }
             initParam();
@@ -336,6 +354,8 @@ layui.use(['form', 'crud',  'table'], function () {
         for (var i = 0; i < arr.length; i++) {
             if (i === parseInt(parentId)) {
                 arr[i].attributeId = data.value;
+                arr[i].attributeValues = [];
+                arr[i].input = '';
             }
         }
     }
@@ -498,6 +518,15 @@ layui.use(['form', 'crud',  'table'], function () {
         return '';
     }
 
+    function findAttr(arr, id) {
+        for (var j = 0; j < arr.length; j++) {
+            if (id === arr[j].attributeId) {
+                return arr[j];
+            }
+        }
+        return null;
+    }
+
     /**
      * 提交数据
      */
@@ -507,8 +536,7 @@ layui.use(['form', 'crud',  'table'], function () {
             'name': $("#name").val(),
             'description': $("#description").val(),
             'unit': $("#unit").val(),
-            'weight': $("#weight").val(),
-            'onMarketTime': $("#onMarketTime").val(),
+            'weight': $("#weight").val()
         }
         // 提交的对象
         var submitObj = {
@@ -516,7 +544,7 @@ layui.use(['form', 'crud',  'table'], function () {
             'basicProduct': basicProduct
         };
 
-        if (skuArr.length > 0) {
+        if (skuArr.length === 0) {
             specificationsArr = specificationsArr.filter(function (element) {
                 return element.attributeId;
             });
@@ -547,8 +575,8 @@ layui.use(['form', 'crud',  'table'], function () {
         for (var i = 0; i < attributeArr.length; i++) {
             var input = attributeArr[i].input;
             if (input) {
-                var arr = input.split(",");
-                for (var j = 0; j < attributeArr.length; j++) {
+                var arr = input.split("|");
+                for (var j = 0; j < arr.length; j++) {
                     if (arr[j]) {
                         attributeArr[i].attributeValues.push(arr[j]);
                     }

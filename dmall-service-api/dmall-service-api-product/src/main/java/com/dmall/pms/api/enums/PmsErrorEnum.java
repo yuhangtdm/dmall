@@ -231,6 +231,11 @@ public enum PmsErrorEnum implements ErrorCodeEnum {
      * 该属性不存在
      */
     ATTRIBUTE_NAME_EXIST("1143", "该属性名称不存在"),
+
+    /**
+     * 商品属性不能为空
+     */
+    PRODUCT_EXT_NULL("1144","商品属性不能为空"),
     ;
 
     /**

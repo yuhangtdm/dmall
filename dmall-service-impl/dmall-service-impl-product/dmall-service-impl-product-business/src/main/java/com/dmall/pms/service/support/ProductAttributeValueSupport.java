@@ -134,6 +134,7 @@ public class ProductAttributeValueSupport {
                         find(list, param.getAttributeId(), productId, paramValue);
                     if (productAttributeValueDO != null) {
                         productAttributeValueDO.setIsParam(YNEnum.Y.getCode());
+                        productAttributeValueDO.setAttributeTypeId(param.getAttributeTypeId());
                     }
                 }
             }

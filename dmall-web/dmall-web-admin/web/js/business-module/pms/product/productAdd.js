@@ -26,7 +26,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
      */
     function init() {
         crud.initSelect('unit');
-        crud.initDate('onMarketTime');
         crud.selectTree('addCategory', pmsUrl + '/category/tree/0/4', 'all');
         crud.initSelect('brand');
     }
@@ -48,7 +47,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
                 $("#brand").append("<option value=" + response.data[i].id + ">" + response.data[i].name + "</option>");
             }
             form.render();
-        });
+        }, true);
         var attributeObj = {
             "threeCategoryIds": arr
         }
@@ -71,7 +70,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
             salePointArr.push(salePoint);
             initAttribute('specifications');
             initAttribute('salePoint');
-        });
+        }, true);
 
         var attributeTypeObj = {
             "categoryIds": arr
@@ -82,12 +81,13 @@ layui.use(['form', 'crud', 'dtree'], function () {
             var attributeType = {
                 'attributeTypeId': '',
                 'attributeId': '',
-                'attributeValues': []
+                'attributeValues': [],
+                'input':''
             };
             paramArr = [];
             paramArr.push(attributeType);
             initParam(paramArr, allAttributeTypeArr, allAttributeArr);
-        });
+        }, true);
     });
 
     /**
@@ -99,7 +99,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
             attributeTypeHtml += '<div id=param_' + i + ' index ="' + i + '" type="param" class="layui-form-item"><div class="layui-inline">';
             var attrType = paramArr[i];
             attributeTypeHtml += '<label class="layui-form-label">选择属性类别</label>';
-            attributeTypeHtml += '<div class="layui-input-inline"><select lay-filter="attributeType"><option value=""></option>';
+            attributeTypeHtml += '<div class="layui-input-inline"><select  lay-search="" lay-filter="attributeType"><option value=""></option>';
             var selected = null;
             for (var j = 0; j < allAttributeTypeArr.length; j++) {
                 if (attrType.attributeTypeId && attrType.attributeTypeId === allAttributeTypeArr[j].id) {
@@ -110,14 +110,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
                 }
             }
             attributeTypeHtml += '</select></div>';
-            var attributeArr = [];
-            var attribute = {
-                'attributeId': attrType.attributeId,
-                'attributeValues': attrType.attributeValues,
-                'input': ''
-            }
-            attributeArr.push(attribute);
-            attributeTypeHtml += getAttributeHtml(attributeArr);
+            attributeTypeHtml += getAttributeHtml(paramArr);
         }
         $("#param").html('').append(attributeTypeHtml);
         form.render();
@@ -149,7 +142,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
             }
             var attribute = arr[i];
             attributeHtml += '<label class="layui-form-label">选择属性</label>';
-            attributeHtml += '<div class="layui-input-inline"><select lay-filter="attribute"><option value=""></option>';
+            attributeHtml += '<div class="layui-input-inline"><select  lay-search="" lay-filter="attribute"><option value=""></option>';
             var selected = null;
             for (var j = 0; j < allAttributeArr.length; j++) {
                 if (attribute.attributeId !== '' && attribute.attributeId === allAttributeArr[j].id) {
@@ -164,7 +157,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
                 attributeHtml = getAttributeValueHtml(selected, attribute, attributeHtml);
             }
             attributeHtml += '&nbsp;<button type="button" class="layui-btn layui-btn-primary add">+</button>&nbsp;';
-            if (specificationsArr.length !== 1) {
+            if (arr.length !== 1) {
                 attributeHtml += '<a type="button" class="layui-btn layui-btn-primary sub">-</a>';
             }
             attributeHtml += '</div></div><br/>';
@@ -196,19 +189,18 @@ layui.use(['form', 'crud', 'dtree'], function () {
             if (attribute.handAddStatus === 'Y') {
                 attributeHtml += '<label class="layui-form-label">新增属性值</label>';
                 if (attr.input) {
-                    attributeHtml += '<div class="layui-input-inline"><input type="text" value="' + attr.input + '"  name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
+                    attributeHtml += '<div class="layui-input-inline"><textarea  name="attributeValue" class="layui-textarea"  placeholder="多个用|隔开,按回车生效">' + attr.input + '</textarea></div>';
                 } else {
-                    attributeHtml += '<div class="layui-input-inline"><input type="text"   name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
-
+                    attributeHtml += '<div class="layui-input-inline"><textarea  name="attributeValue" class="layui-textarea" placeholder="多个用|隔开,按回车生效"></textarea></div>';
                 }
             }
         } else {
             // 手工录入
             attributeHtml += '<label class="layui-form-label">新增属性值</label>';
             if (attr.input) {
-                attributeHtml += '<div class="layui-input-inline"><input type="text" value="' + attr.input + '"  name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
+                attributeHtml += '<div class="layui-input-inline"><textarea  name="attributeValue" class="layui-textarea"  placeholder="多个用|隔开,按回车生效">' + attr.input + '</textarea></div>';
             } else {
-                attributeHtml += '<div class="layui-input-inline"><input type="text"  name="attributeValue" placeholder="多个用逗号隔开,按回车生效" class="layui-input"></div>';
+                attributeHtml += '<div class="layui-input-inline"><textarea  name="attributeValue" class="layui-textarea" placeholder="多个用|隔开,按回车生效"></textarea></div>';
             }
         }
         return attributeHtml;
@@ -220,7 +212,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
     form.on('select(attribute)', function (data) {
         var parentId = $(data.elem).parent().parent().parent().attr("index");
         var type = $(data.elem).parent().parent().parent().attr("type");
-
         if (type === 'specifications') {
             selectAttr(specificationsArr, parentId, data);
             initAttribute(type);
@@ -231,6 +222,8 @@ layui.use(['form', 'crud', 'dtree'], function () {
             for (var i = 0; i < paramArr.length; i++) {
                 if (i === parseInt(parentId)) {
                     paramArr[i].attributeId = data.value;
+                    paramArr[i].attributeValues = [];
+                    paramArr[i].input = '';
                 }
             }
             initParam();
@@ -244,6 +237,8 @@ layui.use(['form', 'crud', 'dtree'], function () {
         for (var i = 0; i < arr.length; i++) {
             if (i === parseInt(parentId)) {
                 arr[i].attributeId = data.value;
+                arr[i].attributeValues = [];
+                arr[i].input = '';
             }
         }
     }
@@ -366,59 +361,20 @@ layui.use(['form', 'crud', 'dtree'], function () {
     }
 
     /**
-     * 初始化sku列表
-     */
-    function initSkuList() {
-        var skuHtml = '';
-        for (var k = 0; k < skuArr.length; k++) {
-            var sku = skuArr[k];
-            skuHtml += '<div id="sku_" ' + k + '" index="' + k + '"  class="layui-form-item"><div class="layui-inline">';
-            var skuSpecifications = sku.skuSpecifications;
-            for (var i = 0; i < specificationsArr.length; i++) {
-                var specification = specificationsArr[i];
-                skuHtml += '<label class="layui-form-label">选择' + findAttributeName(specification.attributeId) + '</label>';
-                skuHtml += '<div class="layui-input-inline"><select lay-filter="attributeValue"><option value=""></option>';
-                if (specification.attributeValues) {
-                    for (var j = 0; j < specification.attributeValues.length; j++) {
-                        var attributeValue = specification.attributeValues[j];
-                        if (skuSpecifications[i].attributeValue && skuSpecifications[i].attributeValue === attributeValue) {
-                            skuHtml += '<option selected  value="' + attributeValue + '">' + attributeValue + '</option>';
-                        } else {
-                            skuHtml += '<option  value="' + attributeValue + '">' + attributeValue + '</option>';
-                        }
-                    }
-                }
-                skuHtml += '</select></div>';
-            }
-            skuHtml += '<label class="layui-form-label">价格</label>';
-            skuHtml += '<div class="layui-input-inline"><input type="text" value="' + sku.price + '" placeholder="请输入价格" class="layui-input"></div>';
-            skuHtml += '<label class="layui-form-label">库存</label>';
-            skuHtml += '<div class="layui-input-inline"><input type="number" value="' + sku.stock + '" placeholder="请输入库存" class="layui-input"></div>';
-            skuHtml += '&nbsp;<button type="button" class="layui-btn layui-btn-primary skuAdd">+</button>&nbsp;';
-            if (skuArr.length !== 1) {
-                skuHtml += '<a type="button" class="layui-btn layui-btn-primary skuSub">-</a>';
-            }
-            skuHtml += '</div></div><br/>';
-        }
-
-        $("#skuList").html('').append(skuHtml);
-        form.render();
-    }
-
-    /**
      * 绑定新增属性值的回车事件
      */
     $(document).bind('keypress', "input[name=attributeValue]", function (event) {
         if (event.keyCode === 13) {
             event.preventDefault();
+            console.log(event.target.value);
             var index = $(event.target).parent().parent().parent().attr("index");
             var type = $(event.target).parent().parent().parent().attr("type");
             if (type === 'specifications') {
                 setInput(specificationsArr, event.target.value, index);
             } else if (type === 'salePoint') {
-                setInput(salePointArr, $(this).val(), index);
+                setInput(salePointArr, event.target.value, index);
             } else {
-                setInput(paramArr, $(this).val(), index);
+                setInput(paramArr, event.target.value, index);
             }
         }
     });
@@ -431,18 +387,6 @@ layui.use(['form', 'crud', 'dtree'], function () {
         }
     }
 
-    /**
-     * 获取属性值
-     */
-    function findAttributeName(attributeId) {
-        for (var j = 0; j < allAttributeArr.length; j++) {
-            if (attributeId === allAttributeArr[j].id) {
-                return allAttributeArr[j].showName;
-            }
-        }
-        return '';
-    }
-
     // 提交数据
     $("#submit").bind('click', function () {
 
@@ -451,8 +395,7 @@ layui.use(['form', 'crud', 'dtree'], function () {
             'name': $("#name").val(),
             'description': $("#description").val(),
             'unit': $("#unit").val(),
-            'weight': $("#weight").val(),
-            'onMarketTime': $("#onMarketTime").val(),
+            'weight': $("#weight").val()
         }
 
         specificationsArr = specificationsArr.filter(function (element) {
@@ -498,8 +441,8 @@ layui.use(['form', 'crud', 'dtree'], function () {
         for (var i = 0; i < attributeArr.length; i++) {
             var input = attributeArr[i].input;
             if (input) {
-                var arr = input.split(",");
-                for (var j = 0; j < attributeArr.length; j++) {
+                var arr = input.split("|");
+                for (var j = 0; j < arr.length; j++) {
                     if (arr[j]) {
                         attributeArr[i].attributeValues.push(arr[j]);
                     }

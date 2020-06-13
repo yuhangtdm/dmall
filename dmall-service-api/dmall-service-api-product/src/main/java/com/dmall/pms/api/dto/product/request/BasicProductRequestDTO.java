@@ -37,11 +37,6 @@ public class BasicProductRequestDTO implements Serializable {
     @ApiModelProperty(value = "商品重量", position = 4)
     private BigDecimal weight;
 
-    @ApiModelProperty(value = "上市时间", position = 5)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date onMarketTime;
-
     @ApiModelProperty(value = "商品图片", position = 6)
     private String pic;
 

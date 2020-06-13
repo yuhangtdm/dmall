@@ -9,8 +9,6 @@ layui.use(['form', 'table', 'crud', 'dtree'], function () {
     crud.initPage('product', pmsUrl + '/product/page', buildColumn());
     crud.selectTree('selTree', pmsUrl + '/category/tree/0/4', 'only');
     // crud.initSelect('brand', pmsUrl + '/brand/list');
-    crud.initDate('onMarketTimeStart');
-    crud.initDate('onMarketTimeEnd');
     /**
      * 构建table列
      */
@@ -24,11 +22,6 @@ layui.use(['form', 'table', 'crud', 'dtree'], function () {
                 {field: 'brandName', title: '商品名称'},
                 {field: 'unit', title: '单位'},
                 {field: 'weight', title: '重量'},
-                {
-                    field: 'onMarketTime',
-                    title: '上市时间',
-                    templet: "<div>{{layui.crud.formatDate(d.onMarketTime,'yyyy-MM-dd')}}</div>"
-                },
                 {field: 'gmtModified', title: '修改时间', templet: "<div>{{layui.crud.formatDate(d.gmtModified)}}</div>"},
                 {fixed: 'right', title: '操作', toolbar: '#currentTableBar', width: 350}
             ]
@@ -64,7 +57,7 @@ layui.use(['form', 'table', 'crud', 'dtree'], function () {
                 crud.open('/page/pms/product/productDetail.html', '商品详情');
                 break;
             case 'update':
-                crud.open('/page/pms/product/productUpdate.html', '修改商品');
+                crud.openT('/page/pms/product/productUpdate.html', '修改商品');
                 break;
         }
     });
