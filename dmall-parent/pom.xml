@@ -38,7 +38,7 @@
         <httpclient.version>4.5.10</httpclient.version>
         <jsoup.version>1.12.1</jsoup.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
-        <shiro-spring.version>1.4.0</shiro-spring.version>
+        <shiro-spring.version>1.7.0</shiro-spring.version>
         <zipkin.version>2.10.1</zipkin.version>
         <zipkin.elasticsearch.version>2.8.4</zipkin.elasticsearch.version>
         <activemq-pool.version>5.15.9</activemq-pool.version>
