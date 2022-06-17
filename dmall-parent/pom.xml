@@ -28,7 +28,7 @@
         <druid.version>1.1.10</druid.version>
         <spring-boot-admin.version>2.1.5</spring-boot-admin.version>
         <nacos-config-spring-boot.version>0.2.1</nacos-config-spring-boot.version>
-        <fastjson.version>1.2.54</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <logstash.logback.version>5.3</logstash.logback.version>
         <elasticsearch.jest.version>5.3.3</elasticsearch.jest.version>
         <elasticsearch.jna.version>4.5.1</elasticsearch.jna.version>
